@@ -99,7 +99,7 @@ parameters:
     displayName: Git Repository URL
     description: The URL of the repository with your application source code.
     required: true
-    value: https://github.com/bcgov/PIMS.git
+    value: https://github.com/bcgov/PSP.git
   - name: SOURCE_REPOSITORY_REF
     displayName: Git Reference
     description:
@@ -129,7 +129,7 @@ parameters:
     description: Target namespace reference (i.e. '354028-tools')
     displayName: Namespace
     required: true
-    value: 354028-tools
+    value: 3cd915-tools
   - name: CPU_REQUEST
     description: Minimal CPU needed to run
     displayName: CPU Request

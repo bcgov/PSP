@@ -30,7 +30,7 @@ parameters:
     displayName: "OpenShift Project Namespace"
     description: "The namespace of the OpenShift project containing the application."
     required: true
-    value: "354028"
+    value: "3cd915"
 
   - name: APP_DOMAIN
     displayName: "Application Hostname"

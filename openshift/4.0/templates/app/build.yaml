@@ -21,7 +21,7 @@ parameters:
     displayName: "OpenShift Project Namespace"
     description: "The namespace of the OpenShift project containing the application."
     required: true
-    value: "354028"
+    value: "3cd915"
   - name: ENV_NAME
     displayName: "Environment name"
     description: "The name for this environment [dev, test, prod, tools]"
@@ -50,7 +50,7 @@ parameters:
     displayName: "GIT Source Repo URL"
     description: "A GIT URL to your source code."
     required: true
-    value: "https://github.com/bcgov/PIMS.git"
+    value: "https://github.com/bcgov/PSP.git"
   - name: GIT_REF
     displayName: "Git Reference"
     description: "The git reference or branch."

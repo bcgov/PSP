@@ -18,7 +18,7 @@ parameters:
     displayName: "OpenShift Project Namespace"
     description: "The namespace of the OpenShift project containing the application."
     required: true
-    value: "354028"
+    value: "3cd915"
   - name: ENV_NAME
     displayName: "Environment name"
     description: "The name for this environment [dev, test, prod, tools]"
@@ -36,7 +36,7 @@ parameters:
     description:
       "The exposed hostname that will route to the the React frontend, if left blank a
       value will be defaulted."
-    value: "proxy-caddy-pims-dev.apps.silver.devops.gov.bc.ca"
+    value: ""
   - name: APP_PORT
     displayName: "Application Port"
     description: "The port used to communicate with the Pod"
