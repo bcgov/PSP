@@ -34,7 +34,6 @@ source "$(dirname ${0})/envars"
     sed -e "s|\${THIS_FILE}|${THIS_FILE}|g"
   exit 1
 }
-set -e
 # Echo commands and dry run warnings
 #
 display_helper() {

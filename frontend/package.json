@@ -20,6 +20,7 @@
     "lodash": "4.17.21",
     "moment": "2.25.3",
     "moment-timezone": "0.5.31",
+    "npm": "^7.8.0",
     "query-string": "6.12.1",
     "react": "16.12.0",
     "react-app-polyfill": "1.0.5",
@@ -54,7 +55,7 @@
     "text-mask-addons": "3.8.0",
     "tiles-in-bbox": "1.0.2",
     "tiny-invariant": "1.1.0",
-    "typescript": "3.8.3",
+    "typescript": "^3.9.9",
     "yup": "0.28.3"
   },
   "devDependencies": {
