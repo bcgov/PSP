@@ -34,7 +34,7 @@ source "$(dirname ${0})/envars"
     sed -e "s|\${THIS_FILE}|${THIS_FILE}|g"
   exit 1
 }
-
+set -e
 # Echo commands and dry run warnings
 #
 display_helper() {
@@ -98,3 +98,4 @@ start_build() {
   #
   display_helper "${OC_CANCEL_BUILD}" "${OC_START_BUILD}"
 }
+set -e
