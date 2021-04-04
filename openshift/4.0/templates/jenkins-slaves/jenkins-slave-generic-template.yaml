@@ -70,7 +70,7 @@ objects:
           <containers>
             <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
               <name>jnlp</name>
-              <image>docker-registry.default.svc:5000/${NAMESPACE}/${NAME}</image>
+              <image>172.50.0.2:5000/openshift/jenkins-slave-zap</image>
               <privileged>false</privileged>
               <alwaysPullImage>false</alwaysPullImage>
               <workingDir>/tmp</workingDir>
