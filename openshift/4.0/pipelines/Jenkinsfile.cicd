@@ -78,7 +78,7 @@ pipeline {
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APP_NAME = sh(script: 'echo "${APP_NAME:-pims}"', returnStdout: true).trim()
     DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
-    VANITY_URL = sh(script: 'echo "${VANITY_URL:-https://pims-dev.apps.silver.devops.gov.bc.ca/}"', returnStdout: true).trim()
+    VANITY_URL = sh(script: 'echo "${VANITY_URL:-https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/}"', returnStdout: true).trim()
 
     // To enable pipeline verbose debug output set to "true"
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-false}"', returnStdout: true).trim()
