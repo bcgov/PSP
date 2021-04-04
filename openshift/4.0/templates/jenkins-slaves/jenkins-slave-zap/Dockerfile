@@ -16,14 +16,14 @@ RUN yum install -y epel-release && \
     firefox nss_wrapper java-1.8.0-openjdk-headless \
     java-1.8.0-openjdk-devel nss_wrapper && \
     yum clean all && \
-    curl https://bootstrap.pypa.io/3.5/get-pip.py --output get-pip.py && chmod 755 get-pip.py && ./get-pip.py && \
+    curl https://bootstrap.pypa.io/pip/3.5/get-pip.py --output get-pip.py && chmod 755 get-pip.py && ./get-pip.py && \
     pip install --upgrade pip && \
     pip install zapcli && \
     pip install python-owasp-zap-v2.4 && \
     mkdir -p /zap/{wrk,webswing} && \
     mkdir -p /var/lib/jenkins/.vnc
 
-# Copy the entrypoint
+# Copy the entrypoint 
 COPY configuration/* /var/lib/jenkins/
 COPY configuration/run-jnlp-client /usr/local/bin/run-jnlp-client
 
