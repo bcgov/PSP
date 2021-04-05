@@ -45,7 +45,7 @@ objects:
           targetPort: 50000
       selector:
         name: ${APP_NAME}
-      clusterIP: 10.98.49.99
+      clusterIP: 10.98.48.99
       type: ClusterIP
       sessionAffinity: None
     status:

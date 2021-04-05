@@ -18,6 +18,7 @@ pipeline {
   agent any
   options {
     disableResume()
+	disableConcurrentBuilds() 
     buildDiscarder(logRotator(numToKeepStr: '5')) // keep 5 builds only
   }
   environment {
@@ -112,7 +113,7 @@ pipeline {
     stage('Version Prompt') {
       when {
         anyOf {
-          expression { env.GIT_BRANCH == 'origin/master' }
+          expression { env.GIT_BRANCH == 'origin/dev' }
           expression { new Boolean(env.ENABLE_VERSION_PROMPT) }
         }
       }

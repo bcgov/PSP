@@ -43,7 +43,7 @@ parameters:
     displayName: "Application URI"
     description: "The URI to the application being deployed."
     required: true
-    value: "https://pims-dev.apps.silver.devops.gov.bc.ca/"
+    value: "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/"
   - name: ENV_NAME
     displayName: "Environment name"
     description: "The name for the environment that the build will be deployed to [dev, test, prod]"
