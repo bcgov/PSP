@@ -13,7 +13,7 @@ objects:
       name: "prometheus-service-volume-claim"
       labels:
         name: prometheus-service-volume-claim
-      namespace: jcxjin-tools
+      namespace: 3cd915-tools
     spec:
       storageClassName: netapp-block-standard
       accessModes:
@@ -27,7 +27,7 @@ objects:
     apiVersion: v1
     metadata:
       name: pims-prometheus-tools-config
-      namespace: jcxjin-tools
+      namespace: 3cd915-tools
       annotations:
         description: Prometheus scraping configuration
       labels:
@@ -44,16 +44,19 @@ objects:
         scrape_configs:
         - job_name: 'pims-prometheus-dev'   
           scheme: https
+          metrics_path: /probe
           static_configs:
           - targets: 
             - ${PIMS_DEV_API_URL}
         - job_name: 'pims-prometheus-test'
-          scheme: https   
+          scheme: https
+          metrics_path: /probe          
           static_configs:
           - targets: 
             - ${PIMS_TEST_API_URL}
         - job_name: 'pims-prometheus-prod'
-          scheme: https   
+          scheme: https
+          metrics_path: /probe          
           static_configs:
           - targets: 
             - ${PIMS_PROD_API_URL}
@@ -63,14 +66,14 @@ objects:
       name: ${PROMETHEUS_SERVICE_ACCOUNT_NAME}
       labels:
         name: ${PROMETHEUS_SERVICE_ACCOUNT_NAME}
-      namespace: jcxjin-tools
+      namespace: 3cd915-tools
   - kind: Route
     apiVersion: v1
     metadata:
       labels:
         name: prometheus
       name: prometheus
-      namespace: jcxjin-tools
+      namespace: 3cd915-tools
     spec:
       host: ${DOMAIN}
       to:
@@ -87,7 +90,7 @@ objects:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/scheme: http
-      namespace: jcxjin-tools
+      namespace: 3cd915-tools
       labels:
         metrics-infra: prometheus
         name: prometheus
@@ -104,7 +107,7 @@ objects:
     apiVersion: v1
     metadata:
       name: pims-monitoring-tools
-      namespace: jcxjin-tools
+      namespace: 3cd915-tools
       annotations:
         description: "Defines how to deploy pims prometheus"
       labels:
@@ -161,7 +164,7 @@ objects:
                   cpu: 100m
                   memory: 2Gi
                 limits:
-                  cpu: 1
+                  cpu: 200m
                   memory: 4Gi
               volumeMounts:
                 - name: "pims-monitoring-prometheus-config-volume"
@@ -205,17 +208,17 @@ parameters:
     displayName: PIMS Dev API URL
     description: PIMS Dev API URL
     required: true
-    value: pims-dev.pathfinder.gov.bc.ca
+    value: pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca
   - name: PIMS_TEST_API_URL
     displayName: PIMS Test API URL
     description: PIMS Test API URL
     required: true
-    value: pims-test.pathfinder.gov.bc.ca
+    value: pims-app-3cd915-test.apps.silver.devops.gov.bc.ca
   - name: PIMS_PROD_API_URL
     displayName: PIMS Prod API URL
     description: PIMS Prod API URL
     required: true
-    value: pims-prod.pathfinder.gov.bc.ca
+    value: pims-app-uat-3cd915-tools.apps.silver.devops.gov.bc.ca  
   - name: PROMETHEUS_SERVICE_ACCOUNT_NAME
     displayName: PIMS Prometheus Service Account Name
     description: PIMS Prometheus Service Account Name
@@ -225,9 +228,9 @@ parameters:
     displayName: Project Name
     description: Project Name
     required: true
-    value: "jcxjin-tools"
+    value: "3cd915-tools"
   - name: DOMAIN
     displayName: Project Name
     description: Project Name
     required: true
-    value: "pims-prometheus.pathfinder.gov.bc.ca"
+    value: "pims-prometheus-3cd915-tools.apps.silver.devops.gov.bc.ca"

@@ -35,7 +35,7 @@ parameters:
   - name: INSTANCE
     displayName: "Unique Identifier"
     description: "A unique identifier to allow for multiple instances (i.e. '-01')."
-    value: ""
+    value: "-uat"
 
   - name: IMAGE_TAG
     displayName: "Image Tag Name"
@@ -95,11 +95,6 @@ parameters:
     displayName: "API Path"
     required: true
     value: "/api"
-  - name: API_SERVICE_NAME
-    description: "The name of the api service in OpenShift"
-    displayName: "API Path"
-    required: true
-    value: "pims-api"
 
   - name: REPLICAS
     displayName: "Pod Replicas"
@@ -189,7 +184,7 @@ objects:
         "realm": "${KEYCLOAK_REALM}",
         "auth-server-url": "${KEYCLOAK_AUTHORITY_URL}",
         "ssl-required": "external",
-        "resource": "${APP_NAME}-${ROLE_NAME}-uat",
+        "resource": "${APP_NAME}-${ROLE_NAME}",
         "public-client": true,
         "confidential-port": 0
         }'
@@ -249,7 +244,7 @@ objects:
                 - name: API_URL
                   value: ${API_URL}
                 - name: API_SERVICE_NAME
-                  value: ${API_SERVICE_NAME}
+                  value: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
                 - name: API_PATH
                   value: ${API_PATH}
                 - name: RealIpFrom

@@ -1,8 +1,8 @@
 {
   "Realm": {
-    "Name": "pims",
-    "DisplayName": "PIMS",
-    "DisplayNameHtml": "<a>PIMS</a>",
+    "Name": "72x8v9rw",
+    "DisplayName": "MoTI PIMS Production Environment",
+    "DisplayNameHtml": "<a>MoTI PIMS Production Environment</a>",
     "Roles": [
       {
         "Name": "admin-agencies",
@@ -132,7 +132,7 @@
     "Groups": [
       {
         "Name": "Agency Administrator",
-        "RealmRoles": ["agency-administrator"]
+        "RealmRoles": [ "agency-administrator" ]
       },
       {
         "Name": "Assistant Deputy Minister",
@@ -143,7 +143,8 @@
           "sensitive-view",
           "project-add",
           "project-edit",
-          "project-view"
+          "project-view",
+          "property-delete"
         ]
       },
       {
@@ -155,7 +156,8 @@
           "sensitive-view",
           "project-add",
           "project-edit",
-          "project-view"
+          "project-view",
+          "property-delete"
         ]
       },
       {
@@ -167,7 +169,8 @@
           "sensitive-view",
           "project-add",
           "project-edit",
-          "project-view"
+          "project-view",
+          "property-delete"
         ]
       },
       {
@@ -179,7 +182,8 @@
           "sensitive-view",
           "project-add",
           "project-edit",
-          "project-view"
+          "project-view",
+          "property-delete"
         ]
       },
       {
@@ -193,12 +197,13 @@
           "sensitive-view",
           "project-add",
           "project-edit",
-          "project-view"
+          "project-view",
+          "property-delete"
         ]
       },
       {
         "Name": "System Administrator",
-        "RealmRoles": ["system-administrator"]
+        "RealmRoles": [ "system-administrator" ]
       },
       {
         "Name": "SRES",
@@ -212,11 +217,11 @@
       },
       {
         "Name": "SRES Financial Manager",
-        "RealmRoles": ["reports-view", "reports-spl", "reports-spl-admin"]
+        "RealmRoles": [ "reports-view", "reports-spl", "reports-spl-admin" ]
       },
       {
         "Name": "SRES Financial Reporter",
-        "RealmRoles": ["reports-view", "reports-spl"]
+        "RealmRoles": [ "reports-view", "reports-spl" ]
       }
     ],
     "Clients": [
@@ -233,8 +238,11 @@
         "Protocol": "openid-connect",
         "BearerOnly": true,
         "AuthorizationServicesEnabled": false,
-        "RedirectUris": ["https://pims.gov.bc.ca/api/*"],
-        "WebOrigins": ["*"],
+        "RedirectUris": [ 
+			"https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*",
+			"https://pims.th.gov.bc.ca/api/*"
+			],
+        "WebOrigins": [ "*" ],
         "Attributes": {
           "login_theme": "bcgov-v2"
         }
@@ -253,16 +261,16 @@
         "ImplicitFlowEnabled": false,
         "DirectAccessGrantsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims.gov.bc.ca",
-        "RedirectUris": [
-          "https://pims.gov.bc.ca/*",
-          "https://pims.apps.silver.devops.gov.bc.ca/*"
-        ],
+        "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
+        "RedirectUris": [ 
+			"https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/*",
+			"https://pims.th.gov.bc.ca/*"
+			],
         "BaseUrl": "/",
-        "WebOrigins": [
-          "https://pims.gov.bc.ca",
-          "https://pims.apps.silver.devops.gov.bc.ca"
-        ],
+        "WebOrigins": [ 
+			"https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
+			"https://pims.th.gov.bc.ca"
+			],
         "ProtocolMappers": [
           {
             "Name": "agencies",
@@ -449,16 +457,10 @@
         "DirectAccessGrantsEnabled": true,
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims.gov.bc.ca/api",
-        "RedirectUris": [
-          "https://pims.gov.bc.ca/api/*",
-          "https://pims.apps.silver.devops.gov.bc.ca/api/*"
-        ],
+        "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api",
+        "RedirectUris": [ "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*" ],
         "BaseUrl": "/",
-        "WebOrigins": [
-          "https://pims.gov.bc.ca",
-          "https://pims.apps.silver.devops.gov.bc.ca"
-        ],
+        "WebOrigins": [ "*" ],
         "ServiceAccount": {
           "RealmRoles": [
             "system-administrator",
@@ -468,7 +470,7 @@
           "ClientRoles": [
             {
               "ClientId": "realm-management",
-              "ClientRoles": ["realm-admin"]
+              "ClientRoles": [ "realm-admin" ]
             }
           ]
         },
@@ -492,15 +494,9 @@
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": true,
         "RootUrl": "https://pims.gov.bc.ca/api",
-        "RedirectUris": [
-          "https://pims.gov.bc.ca/api/*",
-          "https://pims.apps.silver.devops.gov.bc.ca/api/*"
-        ],
+        "RedirectUris": [ "https://pims.gov.bc.ca/api/*" ],
         "BaseUrl": "/",
-        "WebOrigins": [
-          "https://pims.gov.bc.ca",
-          "https://pims.apps.silver.devops.gov.bc.ca"
-        ],
+        "WebOrigins": [ "*" ],
         "ProtocolMappers": [
           {
             "Name": "agencies",

@@ -1,0 +1,101 @@
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"v1","kind":"ResourceQuota","metadata":{"annotations":{},"labels":{"devops.gov.bc.ca/argocd-app":"3cd915","environment":"tools","name":"3cd915","provisioned-by":"argocd"},"name":"compute-long-running-quota","namespace":"3cd915-tools"},"spec":{"hard":{"limits.cpu":"8","limits.memory":"32Gi","pods":"100","requests.cpu":"4","requests.memory":"16Gi"},"scopes":["NotTerminating","NotBestEffort"]}}
+  selfLink: /api/v1/namespaces/3cd915-tools/resourcequotas/compute-long-running-quota
+  resourceVersion: '831338757'
+  name: compute-long-running-quota
+  uid: 78023528-7174-45fd-a09b-432466890b00
+  creationTimestamp: '2021-01-22T00:45:22Z'
+  managedFields:
+    - manager: argocd-application-controller
+      operation: Update
+      apiVersion: v1
+      time: '2021-01-22T00:45:22Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            .: {}
+            'f:devops.gov.bc.ca/argocd-app': {}
+            'f:environment': {}
+            'f:name': {}
+            'f:provisioned-by': {}
+        'f:spec':
+          'f:hard':
+            .: {}
+            'f:limits.cpu': {}
+            'f:limits.memory': {}
+            'f:pods': {}
+            'f:requests.cpu': {}
+            'f:requests.memory': {}
+          'f:scopes': {}
+    - manager: cluster-policy-controller
+      operation: Update
+      apiVersion: v1
+      time: '2021-01-22T00:45:22Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:hard':
+            .: {}
+            'f:limits.cpu': {}
+            'f:limits.memory': {}
+            'f:pods': {}
+            'f:requests.cpu': {}
+            'f:requests.memory': {}
+    - manager: kube-apiserver
+      operation: Update
+      apiVersion: v1
+      time: '2021-04-06T05:11:05Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:used':
+            'f:limits.cpu': {}
+            'f:limits.memory': {}
+            'f:pods': {}
+            'f:requests.cpu': {}
+            'f:requests.memory': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2021-04-06T05:11:05Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:used': {}
+  namespace: 3cd915-tools
+  labels:
+    devops.gov.bc.ca/argocd-app: 3cd915
+    environment: tools
+    name: 3cd915
+    provisioned-by: argocd
+spec:
+  hard:
+    limits.cpu: '8'
+    limits.memory: 32Gi
+    pods: '100'
+    requests.cpu: '4'
+    requests.memory: 16Gi
+  scopes:
+    - NotTerminating
+    - NotBestEffort
+status:
+  hard:
+    limits.cpu: '8'
+    limits.memory: 32Gi
+    pods: '100'
+    requests.cpu: '4'
+    requests.memory: 16Gi
+  used:
+    limits.cpu: 7500m
+    limits.memory: 18688Mi
+    pods: '8'
+    requests.cpu: 1150m
+    requests.memory: 3860Mi

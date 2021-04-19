@@ -31,6 +31,10 @@ parameters:
     displayName: "Unique Identifier"
     description: "A unique identifier to allow for multiple instances (i.e. '-01')."
     value: ""
+  - name: INSTANCELABEL
+    displayName: "Unique Identifier"
+    description: "A unique identifier to allow for multiple instances (i.e. '-01')."
+    value: ""
   - name: IMAGE_TAG
     displayName: "Image Tag Name"
     description: "The image tag that will be used for this deployment.
@@ -188,7 +192,6 @@ objects:
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
-        instance: ${INSTANCE}
       type: ClusterIP
       sessionAffinity: None
 
@@ -311,7 +314,6 @@ objects:
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
-        instance: ${INSTANCE}
     spec:
       strategy:
         type: Rolling
@@ -337,7 +339,6 @@ objects:
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
-        instance: ${INSTANCE}
       template:
         metadata:
           name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
@@ -346,7 +347,6 @@ objects:
             app: ${APP_NAME}
             role: ${ROLE_NAME}
             env: ${ENV_NAME}
-            instance: ${INSTANCE}
         spec:
           containers:
             - name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
@@ -437,9 +437,9 @@ objects:
                   port: ${{APP_PORT}}
                   scheme: ${HEALTH_SCHEME}
                 initialDelaySeconds: 1
-                periodSeconds: 10
+                periodSeconds: 60
                 successThreshold: 1
-                timeoutSeconds: 3
+                timeoutSeconds: 30
               livenessProbe:
                 failureThreshold: 3
                 httpGet:
@@ -447,6 +447,6 @@ objects:
                   port: ${{APP_PORT}}
                   scheme: ${HEALTH_SCHEME}
                 initialDelaySeconds: 1
-                periodSeconds: 10
+                periodSeconds: 60
                 successThreshold: 1
-                timeoutSeconds: 3
+                timeoutSeconds: 30

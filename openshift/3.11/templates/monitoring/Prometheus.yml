@@ -1,0 +1,266 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: prometheus
+  annotations:
+    "openshift.io/display-name": Prometheus
+    description: |
+      Prometheus server.
+    iconClass: fa fa-cogs
+    tags: "metrics,monitoring,prometheus"
+parameters:
+- description: The location of the grafana image
+  name: IMAGE_PROMETHEUS
+  value: docker.io/prom/prometheus:v2.9.2
+- description: External URL for the prometheus route
+  name: ROUTE_URL
+  value: ""
+- name: COMMON_NAMESPACE
+  description: The value of common namespace
+  required: true
+  value: "3cd915"
+- name: PEN_NAMESPACE
+  description: The value of pen namespace
+  required: true
+- description: The environment to instantiate heapster under. Defaults to 'environment'.
+  name: ENVIRONMENT
+  value: environment
+- description: PROD URL for PEN Request - no default
+  name: PEN_REQUEST_URL
+  value: ""
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: prometheus
+    labels:
+      name: prometheus
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      name: prometheus
+    name: prometheus
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+  spec:
+    host: "${ROUTE_URL}"
+    to:
+      name: prometheus
+      kind: Service
+      weight: 100
+    tls:
+      termination: edge
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: prometheus
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/scheme: http
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      metrics-infra: prometheus
+      name: prometheus
+  spec:
+    ports:
+    - name: prometheus
+      port: 80
+      protocol: TCP
+      targetPort: 9090
+    selector:
+      app: prometheus
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: prometheus
+      name: prometheus
+    name: prometheus
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: prometheus
+    template:
+      metadata:
+        labels:
+          app: prometheus
+          name: prometheus
+        name: prometheus
+      spec:
+        serviceAccountName: prometheus
+        containers:
+        - args:
+            - '--volume-dir=/etc/config'
+            - '--webhook-url=http://127.0.0.1:9090/-/reload'
+          image: 'jimmidyson/configmap-reload:v0.2.2'
+          imagePullPolicy: IfNotPresent
+          name: prometheus-prometheus-service-configmap-reload
+          resources:
+            requests:
+              cpu: "5m"
+              memory: "10Mi"
+            limits:
+              cpu: "10m"
+              memory: "20Mi"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          env:
+            - name: TZ
+              value: "America/Vancouver"
+          volumeMounts:
+            - mountPath: /etc/config
+              name: config-volume
+              readOnly: true
+        - args:
+            - '--config.file=/etc/config/prometheus.yml'
+            - '--storage.tsdb.path=/data'
+            - '--web.console.libraries=/etc/prometheus/console_libraries'
+            - '--web.console.templates=/etc/prometheus/consoles'
+            - '--web.enable-lifecycle'
+          image: '${IMAGE_PROMETHEUS}'
+          env:
+            - name: TZ
+              value: "America/Vancouver"
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /-/healthy
+              port: 9090
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
+          name: prometheus-prometheus-service
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 20
+            httpGet:
+              path: /-/ready
+              port: 9090
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: "20m"
+              memory: "100Mi"
+            limits:
+              cpu: "40m"
+              memory: "200Mi"
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/config
+              name: config-volume
+            - mountPath: /data
+              name: prometheus-data
+        volumes:
+         - configMap:
+            defaultMode: 420
+            name: prometheus-service
+           name: config-volume
+         - name: prometheus-data
+           persistentVolumeClaim:
+              claimName: prometheus-service
+              
+- apiVersion: v1
+  kind: "PersistentVolumeClaim"
+  metadata:
+    name: "prometheus-service"
+    labels:
+      name: prometheus  
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+  spec:
+     storageClassName: netapp-block-standard
+     accessModes:
+      - ReadWriteOnce
+     resources:
+       requests:
+         storage: 5Gi
+  volumeName: "prometheus-service"
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    labels:
+      name: prometheus  
+    name: prometheus-service
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+  data:
+     alerts: |
+       {}
+     prometheus.rules: |
+       groups:
+       - name: example-rules
+         interval: 30s # defaults to global interval
+         rules:
+         - alert: "Node Down"
+           expr: up{job="kubernetes-nodes"} == 0
+           annotations:
+             miqTarget: "ContainerNode"
+             severity: "ERROR"
+             url: "https://www.example.com/node_down_fixing_instructions"
+             message: "Node {{$labels.instance}} is down"
+         - alert: "Too Many Pods"
+           expr: sum(kubelet_running_pod_count) > 15
+           annotations:
+             miqTarget: "ExtManagementSystem"  
+             severity: "ERROR"
+             url: "https://www.example.com/too_many_pods_fixing_instructions"
+             message: "Too many running pods"
+         - alert: "Node CPU Usage"
+           expr: (100 - (avg by (instance) (irate(node_cpu{app="prometheus-node-exporter",mode="idle"}[5m])) * 100)) > 3
+           for: 30s
+           labels:
+             severity: "ERROR"
+           annotations:
+             miqTarget: "ExtManagementSystem"
+             severity: "ERROR"
+             url: "https://www.example.com/too_many_pods_fixing_instructions"
+             message: "{{$labels.instance}}: CPU usage is above 4% (current value is: {{ $value }})"
+     prometheus.yml: |
+       global:
+         evaluation_interval: 1m
+         scrape_interval: 1m
+         scrape_timeout: 10s
+       rule_files:
+       - /etc/config/rules
+       - /etc/config/alerts
+       scrape_configs:
+       - job_name: blackbox
+         metrics_path: /probe
+         params:
+           module: [http_2xx]
+         static_configs:
+           - targets:
+             - https://pims-app-${COMMON_NAMESPACE}-dev.apps.silver.devops.gov.bc.ca/
+             - https://pims-app-${COMMON_NAMESPACE}-dev.apps.silver.devops.gov.bc.ca/nginx_status
+             - https://pims-app-${COMMON_NAMESPACE}-dev.apps.silver.devops.gov.bc.ca/api/health/live
+             - https://pims-app-${COMMON_NAMESPACE}-test.apps.silver.devops.gov.bc.ca/nginx_status
+             - https://pims-app-${COMMON_NAMESPACE}-test.apps.silver.devops.gov.bc.ca/api/health/live
+             - https://pims-app-uat-${COMMON_NAMESPACE}-tools.apps.silver.devops.gov.bc.ca/
+             - https://pims-app-uat-${COMMON_NAMESPACE}-tools.apps.silver.devops.gov.bc.ca/api/health/live              
+             - http://grafana-${COMMON_NAMESPACE}-tools.apps.silver.devops.gov.bc.ca.gov.bc.ca
+         relabel_configs:
+           - source_labels: [__address__]
+             target_label: __param_target
+           - source_labels: [__param_target]
+             target_label: instance
+           - target_label: __address__
+             replacement: blackbox-${COMMON_NAMESPACE}-tools.apps.silver.devops.gov.bc.ca # Blackbox exporter.
+       - job_name: prometheus
+         static_configs:
+         - targets:
+           - localhost:9090
+     rules: |
+       {}

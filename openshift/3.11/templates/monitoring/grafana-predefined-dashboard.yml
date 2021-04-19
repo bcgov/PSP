@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-predefined-dashboards-config
-  namespace: jcxjin-tools
+  namespace: 3cd915-tools
   labels:
     name: grafana
 data:

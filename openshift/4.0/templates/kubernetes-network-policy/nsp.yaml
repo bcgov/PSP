@@ -11,7 +11,7 @@ parameters:
     displayName: "The Application Name"
     description: "The name of the application."
     required: true
-    value: "354028-dev"
+    value: "3cd915-prod"
 objects:
   # Disable all communication by default.
   - kind: NetworkPolicy

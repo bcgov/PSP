@@ -93,6 +93,8 @@ objects:
         metrics-infra: grafana
         name: grafana
       annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/scheme: https
         service.alpha.openshift.io/serving-cert-secret-name: grafana-tls
     spec:
       ports:
@@ -143,8 +145,8 @@ objects:
           serviceAccountName: ${GRAFANA_SERVICE_ACCOUNT_NAME}
           containers:
             - name: oauth-proxy
-              image: openshift/oauth-proxy:v1.0.0
-              imagePullPolicy: IfNotPresent
+              image: "${IMAGE_GRAFANA}"
+              imagePullPolicy: Always
               ports:
                 - containerPort: 8443
                   name: public
@@ -233,14 +235,23 @@ parameters:
     displayName: Project Name
     description: Project Name
     required: true
-    value: "jcxjin-tools"
+    value: "3cd915-tools"
   - name: PROMETHEUS_DATASOURCE_URL
     displayName: Prometheus datasources
     description: Prometheus datasources
     required: true
-    value: "https://pims-prometheus.pathfinder.gov.bc.ca"
+    value: "https://pims-prometheus-3cd915-tools.apps.silver.devops.gov.bc.ca" 
   - name: DOMAIN
     displayName: Application route domain
     description: Application route domain
     required: true
-    value: "pims-grafana.pathfinder.gov.bc.ca"
+    value: "pims-grafana-3cd915-tools.apps.silver.devops.gov.bc.ca"
+  - name: IMAGE_REGISTRY
+    displayName: Application route domain
+    description: Application route domain
+    required: true
+    value: "image-registry.openshift-image-registry.svc:5000"   
+  - name: IMAGE_GRAFANA
+    value: docker.io/grafana/grafana:master 
+    description: The location of the grafana image
+    required: true

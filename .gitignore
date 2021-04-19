@@ -1,6 +1,5 @@
 **/sh.exe.stackdump
 bash.exe.stackdump
-frontend/node_modules/
 *.env
 .vs
 *.orig

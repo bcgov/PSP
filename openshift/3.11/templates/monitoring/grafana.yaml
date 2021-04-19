@@ -1,0 +1,1774 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: grafana
+  annotations:
+    "openshift.io/display-name": Grafana
+    description: |
+      Grafana server with patched Prometheus datasource.
+    iconClass: fa fa-cogs
+    tags: "metrics,monitoring,grafana,prometheus"
+parameters:
+- description: The location of the grafana image
+  name: IMAGE_GRAFANA
+  value: docker.io/grafana/grafana:master 
+- description: External URL for the grafana route
+  name: ROUTE_URL
+  value: ""
+- name: COMMON_NAMESPACE
+  description: The value of common namespace
+  required: true
+- name: PEN_NAMESPACE
+  description: The value of pen namespace
+  required: true
+- description: The environment to instantiate heapster under. Defaults to 'environment'.
+  name: ENVIRONMENT
+  value: environment
+- description: The environment to instantiate heapster under. No default.
+  name: PEN_REQUEST_URL
+  value: ""
+- description: The list of comma separated email addresses. This mailing list will receive support updates. 
+  name: EMAIL_SUPPORT_LIST
+  value: none
+- name: APP_USERNAME
+  generate: expression
+  from: '[a-zA-Z0-9]{10}'
+- name: APP_PASSWORD
+  generate: expression
+  from: '[a-zA-Z0-9]{32}'
+
+custom:
+  environments:
+    dev: DEV
+    test: TEST
+    prod: PROD
+  
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: grafana
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: grafana
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  spec:
+    host: "${ROUTE_URL}"
+    port:
+      targetPort: grafana
+    to:
+      name: grafana
+      kind: Service
+      weight: 100
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: grafana
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/scheme: https
+      service.alpha.openshift.io/serving-cert-secret-name: grafana-tls
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  spec:
+    ports:
+    - name: grafana
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      name: grafana
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      name: grafana
+    name: grafana
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: grafana
+    template:
+      metadata:
+        labels:
+          name: grafana
+        name: grafana
+      spec:
+        serviceAccountName: grafana
+        containers:
+        - name: grafana
+          image: ${IMAGE_GRAFANA}
+          env:
+            - name: TZ
+              value: "America/Vancouver"
+          ports:
+          - name: grafana-http
+            containerPort: 3000
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "100Mi"
+            limits:
+              cpu: "100m"
+              memory: "200Mi"
+          volumeMounts:
+            - mountPath: /etc/grafana
+              name: grafana-config
+            - mountPath: /var/lib/grafana
+              name: grafana-data
+            - mountPath: /var/log/grafana
+              name: grafana-log
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: openshift-monitoring-grafana-datasource-volume
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: grafana-dashboards-config
+            - mountPath: /dashboards
+              name: grafana-predefined-dashboards-config
+            - mountPath: /etc/grafana/provisioning/notifiers
+              name: grafana-notification-channel-config
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: grafana-config
+          name: grafana-config
+        - emptyDir: {}
+          name: grafana-data
+        - emptyDir: {}
+          name: grafana-log
+        - name: openshift-monitoring-grafana-datasource-volume
+          secret:
+            defaultMode: 420
+            secretName: openshift-monitoring-grafana-datasource
+        - configMap:
+            defaultMode: 420
+            name: grafana-dashboards-config
+          name: grafana-dashboards-config
+        - configMap:
+            defaultMode: 420
+            name: grafana-predefined-dashboards-config
+          name: grafana-predefined-dashboards-config
+        - configMap:
+            defaultMode: 420
+            name: grafana-notification-channel-config
+          name: grafana-notification-channel-config
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: openshift-monitoring-grafana-datasource
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  stringData:
+    datasources.yaml: |-
+      apiVersion: 1
+      datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: https://prometheus-${COMMON_NAMESPACE}-${ENVIRONMENT}.apps.silver.devops.gov.bc.ca/
+
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: grafana-notification-channel-config
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  data:
+    notification-channel-provider.yaml: |-
+      apiVersion: 1
+    
+      notifiers:
+        - name: Support Team
+          type: email
+          uid: notifier1
+          org_id: 1
+          is_default: true
+          send_reminder: false
+          settings:
+            addresses: "${EMAIL_SUPPORT_LIST}"
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: grafana-config
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  data:
+    grafana.ini: |-
+      [paths]
+      data = /var/lib/grafana
+      logs = /var/log/grafana
+      plugins = /var/lib/grafana/plugins
+      
+      [server]
+      root_url = https://grafana-${COMMON_NAMESPACE}-${ENVIRONMENT}.apps.silver.devops.gov.bc.ca/
+      
+      [log]
+      # Either "console", "file", "syslog". Default is console and  file
+      # Use space to separate multiple modes, e.g. "console file"
+      mode = console
+      
+      [auth]
+      # Set to true to disable (hide) the login form, useful if you use OAuth
+      #disable_login_form = false 
+      disable_login_form = false
+
+      [security]
+      # default admin user, created on startup
+      admin_user = ${APP_USERNAME}
+      admin_password = ${APP_PASSWORD}
+            
+      [auth.anonymous]
+      # enable anonymous access 
+      enabled = true
+      
+      # specify organization name that should be used for unauthenticated users
+      org_id = 1
+      
+      # specify role for unauthenticated users
+      org_role = Viewer
+      
+      [smtp]
+      enabled = true
+      from_address = pims@gov.bc.ca
+      from_name = PIMS Grafana
+      host = apps.smtp.gov.bc.ca:25
+      skip_verify = true
+
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: grafana-dashboards-config
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  data:
+    dashboards-provider.yaml: |-
+      apiVersion: 1
+
+      providers:
+        #  an unique provider name
+        - name: 'predefined-dashboards'
+          #  org id. will default to orgId 1 if not specified
+          orgId: 1
+          #  name of the dashboard folder. Required
+          folder: ''
+          #  folder UID. will be automatically generated if not specified
+          folderUid: ''
+          #  provider type. Required
+          type: file
+          #  disable dashboard deletion
+          disableDeletion: false
+          #  enable dashboard editing
+          editable: true
+          #  how often Grafana will scan for changed dashboards
+          updateIntervalSeconds: 10
+          #  allow updating provisioned dashboards from the UI
+          allowUiUpdates: false
+          options:
+            #  path to dashboard files on disk. Required
+            path: /dashboards
+            
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: grafana-predefined-dashboards-config
+    namespace: "${COMMON_NAMESPACE}-${ENVIRONMENT}"
+    labels:
+      name: grafana
+  data:
+    dashboard-pims-alerts.json: |-
+      {
+        "annotations": {
+          "list": [
+            {
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "type": "dashboard"
+            }
+          ]
+        },
+        "editable": true,
+        "gnetId": null,
+        "graphTooltip": 0,
+        "links": [],
+        "panels": [
+          {
+            "collapsed": false,
+            "datasource": "Prometheus",
+            "gridPos": {
+              "h": 1,
+              "w": 24,
+              "x": 0,
+              "y": 0
+            },
+            "id": 15,
+            "panels": [],
+            "title": "${ENVIRONMENT} Environment",
+            "type": "row"
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "1m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS API Monitor (DEV). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS API Monitor (DEV)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "description": "",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 0,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 2,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-${COMMON_NAMESPACE}-dev.apps.silver.devops.gov.bc.ca/health/live\",job=\"pims\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS API Monitor (${DEV})",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "1m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS API Monitor (TEST). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS API Monitor (TEST)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 3,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 3,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-${COMMON_NAMESPACE}-test.apps.silver.devops.gov.bc.ca/health/live\",job=\"pims\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS API Monitor (TEST)",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "5m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS API Monitor (UAT). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS API Monitor (UAT)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 6,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 4,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-uat-${COMMON_NAMESPACE}-tools.apps.silver.devops.gov.bc.ca/actuator/health\",job=\"blackbox\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS API Monitor (UAT)",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "5m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS API Monitor (PROD). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS API Monitor (PROD)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 9,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 5,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-${COMMON_NAMESPACE}-prod.apps.silver.devops.gov.bc.ca/health/live\",job=\"blackbox\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PEN Demographics API Monitor (${ENVIRONMENT})",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "5m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS APP Monitor (DEV). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS APP Frontend Monitor (DEV)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 12,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 6,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-${PEN_NAMESPACE}-dev.apps.silver.devops.gov.bc.ca/nginx_status\",job=\"pims\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS Frontend Monitor (DEV)",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "5m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS Frontend Monitor (TEST). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS Frontend Monitor (TEST)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 15,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 7,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-3cd915-test.apps.silver.devops.gov.bc.ca/nginx_status\",job=\"pims\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS Frontend Monitor (TEST)",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "alert": {
+              "alertRuleTags": {},
+              "conditions": [
+                {
+                  "evaluator": {
+                    "params": [
+                      1
+                    ],
+                    "type": "lt"
+                  },
+                  "operator": {
+                    "type": "and"
+                  },
+                  "query": {
+                    "params": [
+                      "A",
+                      "5m",
+                      "now"
+                    ]
+                  },
+                  "reducer": {
+                    "params": [],
+                    "type": "min"
+                  },
+                  "type": "query"
+                }
+              ],
+              "executionErrorState": "alerting",
+              "for": "5m",
+              "frequency": "1m",
+              "handler": 1,
+              "message": "PIMS Frontend Monitor (UAT). If this message shows \"Alerting\", the service is down.",
+              "name": "PIMS Frontend Monitor (UAT)",
+              "noDataState": "alerting",
+              "notifications": []
+            },
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 18,
+              "y": 1
+            },
+            "hiddenSeries": false,
+            "id": 8,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-uat-3cd915-tools.apps.silver.devops.gov.bc.ca/nginx_status\",job=\"pims\"}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "lt",
+                "value": 1
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS Frontend Monitor (UAT)",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": true,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "Prometheus",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {},
+                "links": []
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 3,
+              "x": 18,
+              "y": 10
+            },
+            "hiddenSeries": false,
+            "id": 72,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": false,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.0-fa766158pre",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-${COMMON_NAMESPACE}-dev.apps.silver.devops.gov.bc.ca/api/health/live\",job=\"pims\"}",
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "PIMS API Monitor (DEV)",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+        ],
+        "refresh": "10s",
+        "schemaVersion": 26,
+        "style": "dark",
+        "tags": [],
+        "templating": {
+          "list": []
+        },
+        "time": {
+          "from": "now-6h",
+          "to": "now"
+        },
+        "timepicker": {
+          "refresh_intervals": [
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+          ]
+        },
+        "timezone": "",
+        "title": "Property Information Management System Alerts",
+        "uid": "sVID2XlWknew",
+        "version": 1
+      }
+    dashboard-pims-status.json: |-
+      {
+        "annotations": {
+          "list": [
+            {
+              "builtIn": 1,
+              "datasource": "-- Grafana --",
+              "enable": true,
+              "hide": true,
+              "iconColor": "rgba(0, 211, 255, 1)",
+              "name": "Annotations & Alerts",
+              "type": "dashboard"
+            }
+          ]
+        },
+        "editable": true,
+        "gnetId": null,
+        "graphTooltip": 0,
+        "links": [],
+        "panels": [
+          {
+            "collapsed": false,
+            "datasource": "Prometheus",
+            "gridPos": {
+              "h": 1,
+              "w": 24,
+              "x": 0,
+              "y": 0
+            },
+            "id": 15,
+            "panels": [],
+            "title": "DEV Environment",
+            "type": "row"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#299c46",
+              "rgba(237, 129, 40, 0.89)",
+              "#d44a3a"
+            ],
+            "datasource": "Prometheus",
+            "description": "",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {}
+              },
+              "overrides": []
+            },
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "gridPos": {
+              "h": 6,
+              "w": 2,
+              "x": 0,
+              "y": 1
+            },
+            "id": 26,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "$$hashKey": "object:150",
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "$$hashKey": "object:151",
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false,
+              "ymax": null,
+              "ymin": null
+            },
+            "tableColumn": "{instance=\" https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api/health\", job=\"pims\"}",
+            "targets": [
+              {
+                "expr": "probe_success{instance=\" https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/api/health\",job=\"pims\"}*-1",
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "thresholds": "-0.5,0",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "PIMS Backend",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+              {
+                "$$hashKey": "object:153",
+                "op": "=",
+                "text": "DOWN",
+                "value": "0"
+              },
+              {
+                "$$hashKey": "object:154",
+                "op": "=",
+                "text": "UP",
+                "value": "-1"
+              }
+            ],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#299c46",
+              "rgba(237, 129, 40, 0.89)",
+              "#d44a3a"
+            ],
+            "datasource": "Prometheus",
+            "description": "",
+            "editable": true,
+            "error": false,
+            "fieldConfig": {
+              "defaults": {
+                "custom": {}
+              },
+              "overrides": []
+            },
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "gridPos": {
+              "h": 6,
+              "w": 2,
+              "x": 2,
+              "y": 1
+            },
+            "id": 31,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "$$hashKey": "object:234",
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "$$hashKey": "object:235",
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "{instance=\"https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca\", job=\"pims\"}",
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/",job=\"pims\"}*-1",
+                "interval": "",
+                "legendFormat": "",
+                "refId": "A"
+              }
+            ],
+            "thresholds": "-0.5,0",
+            "title": "PIMS Frontend",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+              {
+                "$$hashKey": "object:237",
+                "op": "=",
+                "text": "DOWN",
+                "value": 0
+              },
+              {
+                "$$hashKey": "object:238",
+                "op": "=",
+                "text": "UP",
+                "value": -1
+              }
+            ],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#299c46",
+              "rgba(237, 129, 40, 0.89)",
+              "#d44a3a"
+            ],
+            "datasource": "Prometheus",
+            "editable": true,
+            "error": false,
+            "fieldConfig": {
+              "defaults": {
+                "custom": {}
+              },
+              "overrides": []
+            },
+            "format": "none",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "gridPos": {
+              "h": 6,
+              "w": 2,
+              "x": 4,
+              "y": 1
+            },
+            "id": 3,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "{instance=\"https://pims-app-${COMMON_NAMESPACE}-test.apps.silver.devops.gov.bc.ca/api/health/live\", job=\"pims\"}",
+            "targets": [
+              {
+                "expr": "probe_success{instance=\"https://pims-app-${COMMON_NAMESPACE}-test.apps.silver.devops.gov.bc.ca/api/health/live\",job=\"pims\"}*-1",
+                "refId": "A"
+              }
+            ],
+            "thresholds": "-0.5,0",
+            "title": "PIMS API TEST",
+            "type": "singlestat",
+            "valueFontSize": "100%",
+            "valueMaps": [
+              {
+                "op": "=",
+                "text": "DOWN",
+                "value": 0
+              },
+              {
+                "op": "=",
+                "text": "UP",
+                "value": -1
+              }
+            ],
+            "valueName": "current"
+          }
+        ],
+        "refresh": "10s",
+        "schemaVersion": 26,
+        "style": "dark",
+        "tags": [],
+        "templating": {
+          "list": []
+        },
+        "time": {
+          "from": "now-15m",
+          "to": "now"
+        },
+        "timepicker": {
+          "refresh_intervals": [
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+          ]
+        },
+        "timezone": "utc",
+        "title": "Property Information Management System Status",
+        "uid": "homedashboard",
+        "version": 1
+      }

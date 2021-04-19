@@ -1,0 +1,172 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: blackbox
+  annotations:
+    "openshift.io/display-name": Prometheus blackbox-exporter
+    description: |
+      A monitoring solution for an OpenShift cluster - collect and gather metrics and alerts from nodes, services, and the infrastructure. This is a tech preview feature.
+    iconClass: fa fa-cogs
+    tags: "monitoring, prometheus, alertmanager, time-series"
+ 
+parameters:
+  - name: APP_NAME
+    description: "Value for app label."
+ 
+  - name: NAME_SPACE
+    description: "The name of the namespace (Openshift project)"
+ 
+objects:
+ 
+ 
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: ${APP_NAME}
+    namespace: "${NAME_SPACE}"
+  spec:
+    port:
+      targetPort: ${APP_NAME}
+    to:
+      kind: Service
+      name: ${APP_NAME}
+      weight: 100
+    tls:
+      termination: edge
+    wildcardPolicy: None
+ 
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      name: ${APP_NAME}
+    name: ${APP_NAME}
+    namespace: "${NAME_SPACE}"
+  spec:
+    ports:
+    - name: ${APP_NAME}
+      port: 9115
+      protocol: TCP
+      targetPort: http-port
+    selector:
+      app: ${APP_NAME}
+ 
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: ${APP_NAME}
+    labels:
+      app: ${APP_NAME}
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: ${APP_NAME}
+      app: ${APP_NAME}
+    template:
+      metadata:
+        labels:
+          deploymentconfig: ${APP_NAME}
+          app: ${APP_NAME}
+      spec:
+        containers:
+          - name: ${APP_NAME}
+            image: prom/blackbox-exporter:v0.18.0
+            ports:
+              - name: http-port
+                containerPort: 9115
+                protocol: TCP			
+            args:
+              - "--config.file=/etc/blackbox_exporter/blackbox.yaml"
+            imagePullPolicy: IfNotPresent
+            resources:
+            requests:
+              cpu: "10m"
+              memory: "50Mi"
+            limits:
+              cpu: "50m"
+              memory: "100Mi"
+            livenessProbe:
+              httpGet:
+                path: /health
+                port: http-port
+            readinessProbe:
+              httpGet:
+                path: /health
+                port: http-port
+            volumeMounts:
+            - name: blackbox-volume
+              mountPath: /etc/blackbox_exporter
+          - name: configmap-reload
+            image:  jimmidyson/configmap-reload:v0.4.0
+            imagePullPolicy: "IfNotPresent"
+            args:
+              - --volume-dir=/etc/blackbox_exporter
+              - --webhook-url=http://localhost:9115/-/reload
+            volumeMounts:
+            - name: blackbox-volume
+              mountPath: /etc/blackbox_exporter
+              readOnly: true
+        volumes:
+          - name: blackbox-volume
+            configMap:
+              defaultMode: 420
+              name: blackbox-config-map
+    triggers:
+      - type: ConfigChange
+ 
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: blackbox-config-map
+    namespace: "${NAME_SPACE}"
+  data:
+    blackbox.yaml: |
+      modules:
+        http_2xx:
+          prober: http
+          http:
+            method: GET
+        http_org_ca_2xx:
+          prober: http
+          http:
+            method: GET
+            tls_config:
+              ca_file: "/etc/blackbox_exporter/ca.crt"
+        http_post_2xx:
+          prober: http
+          http:
+            method: POST
+        tcp_connect:
+          prober: tcp
+        pop3s_banner:
+          prober: tcp
+          tcp:
+            query_response:
+            - expect: "^+OK"
+            tls: true
+            tls_config:
+              insecure_skip_verify: false
+        ssh_banner:
+          prober: tcp
+          tcp:
+            query_response:
+            - expect: "^SSH-2.0-"
+        irc_banner:
+          prober: tcp
+          tcp:
+            query_response:
+            - send: "NICK prober"
+            - send: "USER prober prober prober :prober"
+            - expect: "PING :([^ ]+)"
+              send: "PONG ${1}"
+            - expect: "^:[^ ]+ 001"
+        icmp:
+          prober: icmp
+        tcp_connect_tls:
+          prober: tcp
+          tcp:
+            tls: true
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+       Your Certificate
+      -----END CERTIFICATE-----

@@ -22,7 +22,11 @@ parameters:
     displayName: OpenShift Project Namespace
     description: The namespace of the OpenShift project containing the deployed application.
     required: true
-    value: "354028"
+    value: "3cd915"
+  - name: INSTANCE
+    displayName: "Unique Identifier"
+    description: "A unique identifier to allow for multiple instances (i.e. '-01')."
+    value: ""
 
   - name: IMAGE_NAME
     displayName: Source Image Name
@@ -223,7 +227,7 @@ objects:
   - kind: NetworkPolicy
     apiVersion: networking.k8s.io/v1
     metadata:
-      name: pod-from-pod-permit-${NAME}-${ROLE_NAME}-${DATABASE_ROLE_NAME}
+      name: pod-from-pod-permit-${NAME}-${ROLE_NAME}-${DATABASE_ROLE_NAME}${INSTANCE}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
     spec:
       #description: Allow database pod(s) to receive communication from backup pod(s).
@@ -244,26 +248,26 @@ objects:
   - kind: ConfigMap
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
     data:
-      backup.conf: "0 1 * * * default ./backup.sh -s\nmssql=${APP_NAME}-${DATABASE_ROLE_NAME}:1433/${DATABASE_NAME}"
+      backup.conf: "0 1 * * * default ./backup.sh -s\nmssql=${APP_NAME}-${DATABASE_ROLE_NAME}${INSTANCE}:1433/${DATABASE_NAME}"
 
   # Backup configuration settings.
   - kind: ConfigMap
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}-settings
+      name: ${APP_NAME}-${ROLE_NAME}-settings${INSTANCE}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       annotations:
         description: "Backup configuration settings"
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}-settings
+        name: ${APP_NAME}-${ROLE_NAME}-settings${INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
@@ -278,10 +282,10 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}-verification
+      name: ${APP_NAME}-${ROLE_NAME}-verification${INSTANCE}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}-verification
+        name: ${APP_NAME}-${ROLE_NAME}-verification${INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
@@ -297,10 +301,10 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
         app: ${APP_NAME}
         env: ${ENV_NAME}
         role: ${ROLE_NAME}
@@ -315,7 +319,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - ${APP_NAME}-${ROLE_NAME}
+              - ${APP_NAME}-${ROLE_NAME}${INSTANCE}
             from:
               kind: ImageStreamTag
               namespace: ${PROJECT_NAMESPACE}-tools
@@ -327,29 +331,29 @@ objects:
         role: ${ROLE_NAME}
       template:
         metadata:
-          name: ${APP_NAME}-${ROLE_NAME}
+          name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
           labels:
-            name: ${APP_NAME}-${ROLE_NAME}
+            name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
             app: ${APP_NAME}
             env: ${ENV_NAME}
             role: ${ROLE_NAME}
         spec:
           volumes:
             # This volume will need to be created by the database deployment configuration.
-            - name: ${APP_NAME}-${DATABASE_ROLE_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${DATABASE_ROLE_NAME}-${ROLE_NAME}${INSTANCE}
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${DATABASE_ROLE_NAME}-${ROLE_NAME}
-            - name: ${APP_NAME}-${ROLE_NAME}-verification
+                claimName: ${APP_NAME}-${DATABASE_ROLE_NAME}-${ROLE_NAME}${INSTANCE}
+            - name: ${APP_NAME}-${ROLE_NAME}-verification${INSTANCE}
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${ROLE_NAME}-verification
-            - name: ${APP_NAME}-${ROLE_NAME}-config
+                claimName: ${APP_NAME}-${ROLE_NAME}-verification${INSTANCE}
+            - name: ${APP_NAME}-${ROLE_NAME}-config${INSTANCE}
               configMap:
-                name: ${APP_NAME}-${ROLE_NAME}
+                name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
                 items:
                   - key: ${CONFIG_FILE_NAME}
                     path: ${CONFIG_FILE_NAME}
           containers:
-            - name: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
               image: ""
               ports: []
               env:
@@ -376,37 +380,37 @@ objects:
                 - name: DATABASE_USER
                   valueFrom:
                     secretKeyRef:
-                      name: ${APP_NAME}-${DATABASE_ROLE_NAME}
+                      name: ${APP_NAME}-${DATABASE_ROLE_NAME}${INSTANCE}
                       key: ${DATABASE_USER_KEY_NAME}
                 - name: DATABASE_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${APP_NAME}-${DATABASE_ROLE_NAME}
+                      name: ${APP_NAME}-${DATABASE_ROLE_NAME}${INSTANCE}
                       key: ${DATABASE_PASSWORD_KEY_NAME}
                 - name: MSSQL_SA_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${APP_NAME}-${DATABASE_ROLE_NAME}
+                      name: ${APP_NAME}-${DATABASE_ROLE_NAME}${INSTANCE}
                       key: ${DATABASE_SA_PASSWORD_KEY_NAME}
                 - name: FTP_URL
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}-settings
+                      name: ${APP_NAME}-${ROLE_NAME}-settings${INSTANCE}
                       key: ftp-url
                 - name: FTP_USER
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}-settings
+                      name: ${APP_NAME}-${ROLE_NAME}-settings${INSTANCE}
                       key: ftp-user
                 - name: FTP_PASSWORD
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}-settings
+                      name: ${APP_NAME}-${ROLE_NAME}-settings${INSTANCE}
                       key: ftp-password
                 - name: WEBHOOK_URL
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}-settings
+                      name: ${APP_NAME}-${ROLE_NAME}-settings${INSTANCE}
                       key: webhook-url
                 - name: ENVIRONMENT_FRIENDLY_NAME
                   value: "${ENVIRONMENT_FRIENDLY_NAME}"
@@ -420,10 +424,10 @@ objects:
                   cpu: ${CPU_LIMIT}
                   memory: ${MEMORY_LIMIT}
               volumeMounts:
-                - name: ${APP_NAME}-${DATABASE_ROLE_NAME}-${ROLE_NAME}
+                - name: ${APP_NAME}-${DATABASE_ROLE_NAME}-${ROLE_NAME}${INSTANCE}
                   mountPath: ${BACKUP_DIR}
-                - name: ${APP_NAME}-${ROLE_NAME}-verification
+                - name: ${APP_NAME}-${ROLE_NAME}-verification${INSTANCE}
                   mountPath: ${VERIFICATION_VOLUME_MOUNT_PATH}
-                - name: ${APP_NAME}-${ROLE_NAME}-config
+                - name: ${APP_NAME}-${ROLE_NAME}-config${INSTANCE}
                   mountPath: ${CONFIG_MOUNT_PATH}${CONFIG_FILE_NAME}
                   subPath: ${CONFIG_FILE_NAME}
