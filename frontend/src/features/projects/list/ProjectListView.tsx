@@ -45,51 +45,9 @@ interface IProjectFilterState {
   statusId?: string;
   agencyId?: string;
   assessWorkflow?: boolean;
-  agencies?: number;
-  fiscalYaer?: number;
+  agencies?: number | null;
+  fiscalYear?: number | null;
 }
-
-const initialValues = {
-  name: '',
-  statusId: '',
-  agencyId: '',
-};
-
-const getProjectReportUrl = (filter: IProjectFilter) =>
-  `${ENVIRONMENT.apiUrl}/reports/projects?${filter ? queryString.stringify(filter) : ''}`;
-
-export const getProjectFinancialReportUrl = (filter?: IProjectFilter) =>
-  `${ENVIRONMENT.apiUrl}/reports/projects/surplus/properties/list?${
-    filter ? queryString.stringify(filter) : ''
-  }`;
-
-const FileIcon = styled(Button)`
-  background-color: white !important;
-  color: ${variables.primaryColor} !important;
-`;
-
-const initialQuery: IProjectFilter = {
-  page: 1,
-  quantity: 10,
-};
-
-export const getServerQuery = (state: {
-  pageIndex: number;
-  pageSize: number;
-  filter: IProjectFilterState;
-  agencyIds?: number[];
-}) => {
-  const { pageIndex, pageSize, filter: search } = state;
-
-  const query: any = {
-    ...initialQuery,
-    // TODO: this field is not yet implemented in FilterBar
-    page: pageIndex + 1,
-    quantity: pageSize,
-    ...search,
-  };
-  return query;
-};
 
 export enum PageMode {
   DEFAULT,
@@ -100,9 +58,23 @@ interface IProps {
   filterable?: boolean;
   title: string;
   mode?: PageMode;
+  defaultFilter?: IProjectFilterState;
 }
 
-const ProjectListView: React.FC<IProps> = ({ filterable, title, mode }) => {
+const initialValues = {
+  name: '',
+  statusId: '',
+  agencyId: '',
+  agencies: null,
+  fiscalYear: null,
+};
+
+export const ProjectListView: React.FC<IProps> = ({
+  filterable,
+  title,
+  mode,
+  defaultFilter = initialValues,
+}) => {
   const lookupCodes = useLookupCodeHelpers();
   const agencies = useMemo(() => lookupCodes.getByType(API.AGENCY_CODE_SET_NAME), [lookupCodes]);
   const projectStatuses = useAppSelector(state => state.projectStatuses as any);
@@ -125,7 +97,7 @@ const ProjectListView: React.FC<IProps> = ({ filterable, title, mode }) => {
   );
 
   // Filtering and pagination state
-  const [filter, setFilter] = useState<IProjectFilterState>({});
+  const [filter, setFilter] = useState<IProjectFilterState>({ ...initialValues, ...defaultFilter });
   const [clearSelected, setClearSelected] = useState(false);
   const [pageSize, setPageSize] = useState(10);
   const [pageIndex, setPageIndex] = useState(0);
@@ -300,7 +272,7 @@ const ProjectListView: React.FC<IProps> = ({ filterable, title, mode }) => {
       <div className="filter-container">
         {filterable && (
           <FilterBar<IProjectFilterState>
-            initialValues={initialValues}
+            initialValues={{ ...initialValues, ...defaultFilter }}
             onChange={handleFilterChange}
           >
             <Col xs={2} className="bar-item">
@@ -410,14 +382,40 @@ const ProjectListView: React.FC<IProps> = ({ filterable, title, mode }) => {
   );
 };
 
-export const ProjectApprovalRequestListView = () => {
-  return (
-    <ProjectListView
-      filterable={false}
-      mode={PageMode.APPROVAL}
-      title="Surplus Property Program Projects - Approval Requests"
-    />
-  );
+const getProjectReportUrl = (filter: IProjectFilter) =>
+  `${ENVIRONMENT.apiUrl}/reports/projects?${filter ? queryString.stringify(filter) : ''}`;
+
+export const getProjectFinancialReportUrl = (filter?: IProjectFilter) =>
+  `${ENVIRONMENT.apiUrl}/reports/projects/surplus/properties/list?${
+    filter ? queryString.stringify(filter) : ''
+  }`;
+
+const FileIcon = styled(Button)`
+  background-color: white !important;
+  color: ${variables.primaryColor} !important;
+`;
+
+const initialQuery: IProjectFilter = {
+  page: 1,
+  quantity: 10,
+};
+
+export const getServerQuery = (state: {
+  pageIndex: number;
+  pageSize: number;
+  filter: IProjectFilterState;
+  agencyIds?: number[];
+}) => {
+  const { pageIndex, pageSize, filter: search } = state;
+
+  const query: any = {
+    ...initialQuery,
+    // TODO: this field is not yet implemented in FilterBar
+    page: pageIndex + 1,
+    quantity: pageSize,
+    ...search,
+  };
+  return query;
 };
 
 const projectListView = () => <ProjectListView title="My Agency's Projects" filterable={true} />;

@@ -299,7 +299,7 @@ describe('ERP Approval Step', () => {
         {
           projectId: project.id ?? 1,
           agencyId: project.agencyId,
-          response: AgencyResponses.Ignore,
+          response: AgencyResponses.Unsubscribe,
         },
       ];
 
