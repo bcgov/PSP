@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { render, cleanup, wait } from '@testing-library/react';
+import { render, cleanup, wait, screen, act } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/dom';
 import { useApi, PimsAPI, IGeocoderResponse, IGeocoderPidsResponse } from 'hooks/useApi';
 import * as API from 'constants/API';
 import * as _ from 'lodash';
-import { useLayerQuery, handleParcelDataLayerResponse } from 'components/maps/leaflet/LayerPopup';
+import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 
 jest.mock(
   'react-visibility-sensor',
@@ -99,10 +99,7 @@ const featureResponse = {
   type: 'FeatureCollection',
 };
 jest.mock('components/maps/leaflet/LayerPopup');
-(useLayerQuery as jest.Mock).mockReturnValue({
-  findOneWhereContains: async () => featureResponse,
-  findByPid: async () => featureResponse,
-});
+const handleParcelDataLayerResponse = jest.fn();
 
 jest.mock('hooks/useApi');
 ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
@@ -148,6 +145,12 @@ describe('MapSideBarContainer Geocoder functionality', () => {
         subject: 'test',
       },
     });
+    (useLayerQuery as jest.Mock).mockReturnValue({
+      findOneWhereContains: async () => featureResponse,
+      findByPid: async () => featureResponse,
+      findByPin: async () => featureResponse,
+      handleParcelDataLayerResponse,
+    });
     mockAxios.onAny().reply(200, {});
   });
   afterEach(() => {
@@ -170,7 +173,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
         });
 
         const suggestion = getByText('12345 fake st.');
-        expect(suggestion).toBeVisible();
+        expect(suggestion).toBeTruthy();
 
         suggestion.click();
         const addressSearchButton = getByTestId('address-search-button');
@@ -209,7 +212,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
         });
 
         const suggestion = getByText('12345 fake st.');
-        expect(suggestion).toBeVisible();
+        expect(suggestion).toBeTruthy();
 
         suggestion.click();
         const addressSearchButton = getByTestId('address-search-button');
@@ -249,7 +252,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
         });
 
         const suggestion = getByText('12345 fake st.');
-        expect(suggestion).toBeVisible();
+        expect(suggestion).toBeTruthy();
 
         suggestion.click();
         const addressSearchButton = getByTestId('address-search-button');
@@ -297,7 +300,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
         });
 
         const suggestion = getByText('12345 fake st.');
-        expect(suggestion).toBeVisible();
+        expect(suggestion).toBeTruthy();
 
         suggestion.click();
         const addressSearchButton = getByTestId('address-search-button');
@@ -305,5 +308,114 @@ describe('MapSideBarContainer Geocoder functionality', () => {
       });
       expect(findOneWhereContains).toHaveBeenCalled();
     });
+  });
+});
+
+describe('MapSideBarContainer PID/PIN search functionality', () => {
+  // clear mocks before each test
+  beforeEach(() => {
+    (useKeycloak as jest.Mock).mockReturnValue({
+      keycloak: {
+        userInfo: {
+          agencies: [1],
+          roles: [Claims.PROPERTY_EDIT],
+        },
+        subject: 'test',
+      },
+    });
+    (useLayerQuery as jest.Mock).mockReturnValue({
+      findOneWhereContains: async () => featureResponse,
+      findByPid: async () => featureResponse,
+      findByPin: async () => featureResponse,
+      handleParcelDataLayerResponse,
+    });
+    mockAxios.reset();
+    mockAxios.onAny().reply(200, {});
+  });
+  afterEach(() => {
+    history.push({ search: '' });
+    cleanup();
+    jest.clearAllMocks();
+  });
+  it('searches by pid and calls expected handle function', async () => {
+    // clear mocks before each test
+    history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+    const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+    mockAxios.onGet().reply(200, parcel);
+    const { getByTestId, container } = renderContainer({});
+    const searchAddress = container.querySelector(`input[name="data.searchPid"]`);
+    act(() => {
+      fireEvent.change(searchAddress!, {
+        target: {
+          value: '123-456-789',
+        },
+      });
+    });
+    const addressSearchButton = getByTestId('pid-search-button');
+    addressSearchButton.click();
+    await wait(async () => expect(handleParcelDataLayerResponse).toHaveBeenCalledTimes(1));
+  });
+
+  it('searches by pid and populates form if match found', async () => {
+    // clear mocks before each test
+    history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+    const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+    mockAxios.onGet().reply(200, [parcel]);
+    const { getByTestId, container } = renderContainer({});
+    const searchAddress = container.querySelector(`input[name="data.searchPid"]`);
+    act(() => {
+      fireEvent.change(searchAddress!, {
+        target: {
+          value: '123-456-789',
+        },
+      });
+    });
+    await wait(async () => {
+      const addressSearchButton = getByTestId('pid-search-button');
+      addressSearchButton.click();
+    });
+    await wait(() => expect(screen.getByDisplayValue('1234 mock Street')).toBeTruthy());
+  });
+
+  it('searches by pin and calls expected handle function', async () => {
+    // clear mocks before each test
+    history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+    const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+    mockAxios.onGet().reply(200, parcel);
+    const { getByTestId, container } = renderContainer({});
+    const searchAddress = container.querySelector(`input[name="data.searchPin"]`);
+    act(() => {
+      fireEvent.change(searchAddress!, {
+        target: {
+          value: '123456789',
+        },
+      });
+    });
+    await wait(async () => {
+      const addressSearchButton = getByTestId('pin-search-button');
+      addressSearchButton.click();
+    });
+    await wait(async () => expect(handleParcelDataLayerResponse).toHaveBeenCalledTimes(1));
+  });
+
+  it('searches by pin and populates form if match found', async () => {
+    // clear mocks before each test
+    history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+    const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+    mockAxios.onGet().reply(200, [parcel]);
+    const { getByTestId, container } = renderContainer({});
+    const searchAddress = container.querySelector(`input[name="data.searchPin"]`);
+    act(() => {
+      fireEvent.change(searchAddress!, {
+        target: {
+          value: '123456789',
+        },
+      });
+    });
+    await wait(async () => {
+      const addressSearchButton = getByTestId('pin-search-button');
+      addressSearchButton.click();
+    });
+    await wait(() => expect(screen.getByDisplayValue('1234 mock Street')).toBeTruthy());
   });
 });

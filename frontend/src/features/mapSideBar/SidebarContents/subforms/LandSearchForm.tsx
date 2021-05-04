@@ -77,6 +77,7 @@ const LandSearchForm = ({
             field={withNameSpace(nameSpace, 'searchPid')}
           />
           <SearchButton
+            data-testid="pid-search-button"
             onClick={(e: any) => {
               e.preventDefault();
               handlePidChange(searchPid, nameSpace);
@@ -100,6 +101,7 @@ const LandSearchForm = ({
             type="number"
           />
           <SearchButton
+            data-testid="pin-search-button"
             onClick={(e: any) => {
               e.preventDefault();
               handlePinChange(searchPin, nameSpace);

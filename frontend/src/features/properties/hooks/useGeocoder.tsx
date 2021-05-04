@@ -6,7 +6,6 @@ import useCodeLookups from 'hooks/useLookupCodes';
 import {
   useLayerQuery,
   PARCELS_LAYER_URL,
-  handleParcelDataLayerResponse,
   saveParcelDataLayerResponse,
 } from 'components/maps/leaflet/LayerPopup';
 import { LatLng } from 'leaflet';
@@ -102,7 +101,7 @@ const useGeocoder = ({ formikRef, fetchPimsOrLayerParcel }: IUseGeocoderProps) =
         newValues.pid = parcelPid;
         const parcelLayerSearchCallback = () => {
           const response = parcelsService.findByPid(parcelPid);
-          handleParcelDataLayerResponse(response, dispatch);
+          parcelsService.handleParcelDataLayerResponse(response, dispatch);
         };
         fetchPimsOrLayerParcel &&
           fetchPimsOrLayerParcel({ pid: parcelPid }, parcelLayerSearchCallback, nameSpace);
@@ -119,7 +118,7 @@ const useGeocoder = ({ formikRef, fetchPimsOrLayerParcel }: IUseGeocoderProps) =
               if (pid) {
                 const parcelLayerSearchCallback = () => {
                   const response = parcelsService.findByPid(pid);
-                  handleParcelDataLayerResponse(response, dispatch);
+                  parcelsService.handleParcelDataLayerResponse(response, dispatch);
                 };
                 fetchPimsOrLayerParcel &&
                   fetchPimsOrLayerParcel({ pid: pid }, parcelLayerSearchCallback, nameSpace);
