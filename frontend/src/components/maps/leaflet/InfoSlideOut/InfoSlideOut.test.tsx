@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import InfoSlideOut from './InfoSlideOut';
 import 'leaflet/dist/leaflet.css';
-import { fireEvent, prettyDOM, waitFor } from '@testing-library/dom';
+import { fireEvent, waitFor } from '@testing-library/dom';
 import { Button } from 'react-bootstrap';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -18,7 +18,6 @@ import {
   IPopUpContext,
 } from 'components/maps/providers/PropertyPopUpProvider';
 import { PimsAPI, useApi } from 'hooks/useApi';
-import { IParcel, IBuilding } from 'actions/parcelsActions';
 import { render, wait, screen, cleanup } from '@testing-library/react';
 import { mockKeycloak } from 'features/projects/dispose/testUtils';
 import { Claims } from 'constants/index';

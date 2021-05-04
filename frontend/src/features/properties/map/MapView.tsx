@@ -4,7 +4,7 @@ import './MapView.scss';
 import { Map as LeafletMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
-import { IProperty, storeParcelDetail, IPropertyDetail } from 'actions/parcelsActions';
+import { IProperty, IPropertyDetail } from 'actions/parcelsActions';
 import { LeafletMouseEvent } from 'leaflet';
 import useParamSideBar from '../../mapSideBar/hooks/useQueryParamSideBar';
 import { saveClickLatLng as saveLeafletMouseEvent } from 'reducers/LeafletMouseSlice';
@@ -79,9 +79,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
           agencies={agencies}
           administrativeAreas={administrativeAreas}
           lotSizes={lotSizes}
-          onMarkerPopupClose={() => {
-            dispatch(storeParcelDetail(null));
-          }}
           onViewportChanged={(mapFilterModel: MapViewportChangeEvent) => {
             if (!loadedProperties) {
               setLoadedProperties(true);
