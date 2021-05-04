@@ -163,7 +163,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
     matchingParcel.parcels = getIn(values, withNameSpace(nameSpace, 'parcels'));
     matchingParcel.searchPid = getIn(values, withNameSpace(nameSpace, 'searchPid'));
     matchingParcel.searchPin = getIn(values, withNameSpace(nameSpace, 'searchPin'));
-    matchingParcel.searchAddress = getIn(values, withNameSpace(nameSpace, 'seachAddress'));
+    matchingParcel.searchAddress = getIn(values, withNameSpace(nameSpace, 'seachAddress')) ?? '';
     matchingParcel.evaluations = getMergedFinancials(
       matchingParcel.evaluations,
       Object.values(EvaluationKeys),
@@ -216,7 +216,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
   const handlePidChange = (pid: string, nameSpace?: string) => {
     const parcelLayerSearchCallback = () => {
       const response = parcelLayerService.findByPid(pid);
-      handleParcelDataLayerResponse(response, dispatch);
+      parcelLayerService.handleParcelDataLayerResponse(response, dispatch);
     };
     fetchPimsOrLayerParcel({ pid }, parcelLayerSearchCallback, nameSpace);
   };
@@ -225,7 +225,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
   const handlePinChange = (pin: string, nameSpace?: string) => {
     const parcelLayerSearchCallback = () => {
       const response = parcelLayerService.findByPin(pin);
-      handleParcelDataLayerResponse(response, dispatch);
+      parcelLayerService.handleParcelDataLayerResponse(response, dispatch);
     };
     fetchPimsOrLayerParcel({ pin }, parcelLayerSearchCallback, nameSpace);
   };
@@ -277,7 +277,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
       ? parcelLayerService.findByPid(properties.PID)
       : parcelLayerService.findByPin(properties.PIN);
 
-    handleParcelDataLayerResponse(response, dispatch, latLng);
+    parcelLayerService.handleParcelDataLayerResponse(response, dispatch, latLng);
   };
 
   React.useEffect(() => {

@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { render, cleanup, wait } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 
 import { act } from 'react-dom/test-utils';
 import { ToastContainer } from 'react-toastify';
@@ -19,8 +19,12 @@ import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
-import { screen } from '@testing-library/dom';
+import { screen, prettyDOM } from '@testing-library/dom';
 import { fireEvent } from '@testing-library/dom';
+import * as API from 'constants/API';
+import * as _ from 'lodash';
+import { saveClickLatLng } from 'reducers/LeafletMouseSlice';
+import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 
 jest.mock(
   'react-visibility-sensor',
@@ -31,10 +35,36 @@ jest.mock(
 const mockAxios = new MockAdapter(axios);
 
 jest.mock('@react-keycloak/web');
+jest.spyOn(_, 'debounce').mockImplementation(
+  jest.fn((fn: any) => {
+    // fn.cancel = jest.fn();
+    // fn.flush = jest.fn();
+    return fn as ((...args: any[]) => any) & _.Cancelable;
+  }),
+);
+
+const featureResponse = {
+  features: [
+    {
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [1, 2] },
+      properties: { PID: '123-456-789' },
+    },
+  ],
+  type: 'FeatureCollection',
+};
+jest.mock('components/maps/leaflet/LayerPopup');
+const handleParcelDataLayerResponse = jest.fn();
 
 const mockStore = configureMockStore([thunk]);
 const getStore = (parcelDetail?: IParcel) =>
   mockStore({
+    [reducerTypes.LEAFLET_CLICK_EVENT]: {
+      mapClickEvent: {
+        originalEvent: { timeStamp: 1 },
+        latlng: { lat: 1, lng: 2 },
+      },
+    },
     [reducerTypes.NETWORK]: {
       [actionTypes.GET_PARCEL_DETAIL]: {
         status: 200,
@@ -48,7 +78,17 @@ const getStore = (parcelDetail?: IParcel) =>
       parcels: [],
       draftParcels: [],
     },
-    [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
+    [reducerTypes.LOOKUP_CODE]: {
+      lookupCodes: [
+        { name: 'BC', code: 'BC', id: '1', isDisabled: false, type: API.PROVINCE_CODE_SET_NAME },
+        {
+          name: 'Victoria',
+          id: '1',
+          isDisabled: false,
+          type: API.AMINISTRATIVE_AREA_CODE_SET_NAME,
+        },
+      ],
+    },
     [reducerTypes.PARCEL]: { parcels: [], draftParcels: [] },
   });
 
@@ -89,6 +129,12 @@ describe('Parcel Detail MapSideBarContainer', () => {
         subject: 'test',
       },
     });
+    (useLayerQuery as jest.Mock).mockReturnValue({
+      findOneWhereContains: async () => featureResponse,
+      findByPid: async () => featureResponse,
+      handleParcelDataLayerResponse: handleParcelDataLayerResponse,
+    });
+    mockAxios.reset();
     mockAxios.onAny().reply(200, {});
   });
   afterEach(() => {
@@ -132,7 +178,7 @@ describe('Parcel Detail MapSideBarContainer', () => {
       renderContainer({
         store: getStore(mockDetails[0]),
       });
-      wait(() => expect(history.location.pathname).toEqual('/mapview'));
+      wait(() => expect(history.location.pathname).toEqual('/mapview/'));
     });
   });
   describe('edit button display as rem', () => {
@@ -185,6 +231,23 @@ describe('Parcel Detail MapSideBarContainer', () => {
         const editButton = await queryByTestId('edit');
         expect(editButton).not.toBeInTheDocument();
       });
+    });
+  });
+  describe('move pin functionality', () => {
+    it('sets form values based on the map click location', async () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+      const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+      mockAxios.reset();
+      mockAxios.onGet().reply(200, [{ ...parcel, propertyTypeId: 0 }]);
+      renderContainer({});
+      act(() => {
+        const landSearchMarker = screen.getByTestId('land-search-marker');
+        fireEvent.click(landSearchMarker);
+        history.push('/mapview/?sidebar=false&sidebarContext=addBareLand&disabled=false');
+      });
+      await wait(() => expect(screen.queryByText('Address')).toBeNull());
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+      await wait(() => expect(screen.getByDisplayValue('1234 mock Street')).toBeVisible());
     });
   });
   describe('edit button display as admin', () => {
@@ -240,6 +303,71 @@ describe('Parcel Detail MapSideBarContainer', () => {
     beforeEach(() => {
       mockAxios.resetHistory();
       mockAxios.reset();
+    });
+
+    it('displays the leased land other form when the corresponding radio button is clicked', async () => {
+      // setup
+      history.push('/mapview/?sidebar=true&buildingId=1&disabled=false');
+      const building = {
+        ...mockBuildingWithAssociatedLand,
+        name: 'Modify assoc. land 12345',
+        parcels: [],
+      };
+      mockAxios.onGet().reply(200, building);
+      const { findByText, getByLabelText, getByText } = renderContainer({});
+
+      mockAxios.onPut().reply(200, building);
+      await act(async () => {
+        const reviewButton = await findByText('Review & Submit');
+        reviewButton.click();
+        const modifyButton = await findByText('Modify Associated Land');
+        modifyButton.click();
+      });
+      await wait(async () => {
+        expect(mockAxios.history.put.length).toBe(1);
+        const associatedLandText = await screen.findByText('Modify assoc. land 12345');
+        expect(associatedLandText).toBeVisible();
+      });
+
+      // act
+      const ownershipButton = await findByText('Land Ownership');
+      ownershipButton.click();
+      const otherRadio = getByLabelText('Other');
+      otherRadio.click();
+      expect(getByText('Describe the land ownership situation for this parcel.')).toBeVisible();
+    });
+    it('displays the leased land owned form when the corresponding radio button is clicked', async () => {
+      // setup
+      history.push('/mapview/?sidebar=true&buildingId=1&disabled=false');
+      const building = {
+        ...mockBuildingWithAssociatedLand,
+        name: 'Modify assoc. land 12345',
+        parcels: [],
+      };
+      mockAxios.onGet().reply(200, building);
+      const { findByText, getByLabelText, getByText } = renderContainer({});
+
+      mockAxios.onPut().reply(200, building);
+      await act(async () => {
+        const reviewButton = await findByText('Review & Submit');
+        reviewButton.click();
+        const modifyButton = await findByText('Modify Associated Land');
+        modifyButton.click();
+      });
+      await wait(async () => {
+        expect(mockAxios.history.put.length).toBe(1);
+        const associatedLandText = await screen.findByText('Modify assoc. land 12345');
+        expect(associatedLandText).toBeVisible();
+      });
+
+      // act
+      const ownershipButton = await findByText('Land Ownership');
+      ownershipButton.click();
+      const ownedRadio = getByLabelText('This building is on land owned by my agency');
+      ownedRadio.click();
+      expect(
+        getByText('Click Continue to enter the details of this associated parcel'),
+      ).toBeVisible();
     });
     it('saves the building when clicked', async () => {
       await act(async () => {

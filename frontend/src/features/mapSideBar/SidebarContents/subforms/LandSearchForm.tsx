@@ -129,6 +129,7 @@ const LandSearchForm = ({
             displayErrorTooltips
           />
           <SearchButton
+            data-testid="address-search-button"
             disabled={!geocoderResponse}
             onClick={(e: any) => {
               e.preventDefault();
@@ -153,6 +154,7 @@ const LandSearchForm = ({
               }}
             >
               <SearchMarkerButton
+                data-testid="land-search-marker"
                 type="button"
                 onClick={(e: any) => {
                   setMovingPinNameSpace(nameSpace ?? '');
