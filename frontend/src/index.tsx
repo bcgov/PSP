@@ -11,7 +11,7 @@ import ReactDOM from 'react-dom';
 import App, { store } from './App';
 import * as serviceWorker from './serviceWorker.ignore';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
-import { KeycloakProvider } from '@react-keycloak/web';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { Provider } from 'react-redux';
 import getKeycloakEventHandler from 'utils/KeycloakEventHandler';
 import { AuthStateContextProvider } from 'contexts/authStateContext';
@@ -23,8 +23,8 @@ import LoginLoading from 'features/account/LoginLoading';
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
-    <KeycloakProvider
-      keycloak={keycloak}
+    <ReactKeycloakProvider
+      authClient={keycloak}
       LoadingComponent={
         <EmptyLayout>
           <LoginLoading />
@@ -39,7 +39,7 @@ const Index = () => {
           </Router>
         </AuthStateContextProvider>
       </Provider>
-    </KeycloakProvider>
+    </ReactKeycloakProvider>
   );
 };
 
