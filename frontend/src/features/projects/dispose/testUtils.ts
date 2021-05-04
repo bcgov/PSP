@@ -1,5 +1,4 @@
 import { getCurrentFiscalYear } from 'utils';
-import { getCurrentFiscal } from './../common/projectConverter';
 import {
   IProjectTask,
   DisposeWorkflowStatus,
