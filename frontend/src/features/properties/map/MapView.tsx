@@ -32,7 +32,6 @@ interface MapViewProps {
   disableMapFilterBar?: boolean;
   disabled?: boolean;
   showParcelBoundaries?: boolean;
-  onMarkerClick?: (obj: IProperty) => void;
   onMarkerPopupClosed?: (obj: IPropertyDetail) => void;
 }
 
@@ -79,9 +78,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
           agencies={agencies}
           administrativeAreas={administrativeAreas}
           lotSizes={lotSizes}
-          onMarkerPopupClose={() => {
-            dispatch(storeParcelDetail(null));
-          }}
           onViewportChanged={(mapFilterModel: MapViewportChangeEvent) => {
             if (!loadedProperties) {
               setLoadedProperties(true);

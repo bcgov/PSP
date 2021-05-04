@@ -165,7 +165,6 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
               }}
             />
             <div className="vl"></div>
-
             <AgencyCol>
               {showAllAgencySelect ? (
                 <PropertyFilterAgencyOptions disabled={findMoreOpen} agencies={agencies} />
