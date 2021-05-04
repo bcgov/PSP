@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`header renders correctly 1`] = `
+exports[`Header tests Header renders correctly 1`] = `
 .c0 {
   border-left: 2px solid white;
   font-size: 34px;
@@ -47,7 +47,7 @@ exports[`header renders correctly 1`] = `
       <h1
         className="longAppName"
       >
-        Property Inventory Management System
+        Default Tenant Name
       </h1>
       <h1
         className="shortAppName"
