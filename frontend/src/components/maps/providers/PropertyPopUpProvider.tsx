@@ -2,7 +2,7 @@ import { noop } from 'lodash';
 import React from 'react';
 import { IParcel, IBuilding } from 'actions/parcelsActions';
 
-interface IPopUpContext {
+export interface IPopUpContext {
   propertyInfo: IParcel | IBuilding | null;
   setPropertyInfo: (propertyInfo: IParcel | IBuilding | null) => void;
   propertyTypeID: number | null;
@@ -20,14 +20,25 @@ export const PropertyPopUpContext = React.createContext<IPopUpContext>({
   setLoading: noop,
 });
 
+interface IPopUpContextComponent {
+  values?: Partial<IPopUpContext>;
+}
+
 /**
  * Allows for the property information to be sent to the map
  * when the user clicks on a marker
  */
-export const PropertyPopUpContextProvider: React.FC = ({ children }) => {
-  const [propertyInfo, setPropertyInfo] = React.useState<IParcel | IBuilding | null>(null);
-  const [propertyTypeID, setPropertyTypeID] = React.useState<number | null>(null);
-  const [loading, setLoading] = React.useState<boolean>(false);
+export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
+  children,
+  values,
+}) => {
+  const [propertyInfo, setPropertyInfo] = React.useState<IParcel | IBuilding | null>(
+    values?.propertyInfo ?? null,
+  );
+  const [propertyTypeID, setPropertyTypeID] = React.useState<number | null>(
+    values?.propertyTypeID ?? null,
+  );
+  const [loading, setLoading] = React.useState<boolean>(values?.loading ?? false);
   return (
     <PropertyPopUpContext.Provider
       value={{
