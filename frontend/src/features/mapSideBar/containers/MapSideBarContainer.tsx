@@ -12,11 +12,7 @@ import { FormikValues, setIn, getIn } from 'formik';
 import { useState } from 'react';
 import useGeocoder from 'features/properties/hooks/useGeocoder';
 import { isMouseEventRecent } from 'utils';
-import {
-  handleParcelDataLayerResponse,
-  PARCELS_LAYER_URL,
-  useLayerQuery,
-} from 'components/maps/leaflet/LayerPopup';
+import { PARCELS_LAYER_URL, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { LeafletMouseEvent, LatLng } from 'leaflet';
 import AssociatedLandForm from '../SidebarContents/AssociatedLandForm';
 import { toast } from 'react-toastify';

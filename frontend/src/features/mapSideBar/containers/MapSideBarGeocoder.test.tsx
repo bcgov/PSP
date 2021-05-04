@@ -6,25 +6,22 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
-import { act } from 'react-dom/test-utils';
 import { ToastContainer } from 'react-toastify';
 import MapSideBarContainer from './MapSideBarContainer';
 import { noop } from 'lodash';
 import * as reducerTypes from 'constants/reducerTypes';
 import * as actionTypes from 'constants/actionTypes';
 import { IParcel } from 'actions/parcelsActions';
-import { mockDetails, mockBuildingWithAssociatedLand, mockParcel } from 'mocks/filterDataMock';
+import { mockDetails } from 'mocks/filterDataMock';
 import VisibilitySensor from 'react-visibility-sensor';
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
-import { screen, prettyDOM, findByText } from '@testing-library/dom';
 import { fireEvent } from '@testing-library/dom';
 import { useApi, PimsAPI, IGeocoderResponse, IGeocoderPidsResponse } from 'hooks/useApi';
 import * as API from 'constants/API';
 import * as _ from 'lodash';
-import { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 import { useLayerQuery, handleParcelDataLayerResponse } from 'components/maps/leaflet/LayerPopup';
 
 jest.mock(
@@ -163,9 +160,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
       history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
       const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
       mockAxios.onGet().reply(200, parcel);
-      const { getByText, getByTestId, getByDisplayValue, container, findByText } = renderContainer(
-        {},
-      );
+      const { getByText, getByTestId, container } = renderContainer({});
       const searchAddress = container.querySelector(`input[name="data.searchAddress"]`);
       await wait(async () => {
         fireEvent.change(searchAddress!, {
@@ -292,7 +287,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
       history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
       const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
       mockAxios.onGet().reply(200, parcel);
-      const { getByText, getByTestId, container, findByDisplayValue } = renderContainer({});
+      const { getByText, getByTestId, container } = renderContainer({});
       const searchAddress = container.querySelector(`input[name="data.searchAddress"]`);
       await wait(async () => {
         fireEvent.change(searchAddress!, {

@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import { render, cleanup, wait } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import { act } from 'react-dom/test-utils';
 import { ToastContainer } from 'react-toastify';
@@ -19,11 +19,10 @@ import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
-import { screen, prettyDOM } from '@testing-library/dom';
+import { screen } from '@testing-library/dom';
 import { fireEvent } from '@testing-library/dom';
 import * as API from 'constants/API';
 import * as _ from 'lodash';
-import { saveClickLatLng } from 'reducers/LeafletMouseSlice';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 
 jest.mock(
