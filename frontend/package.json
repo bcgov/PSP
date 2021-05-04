@@ -101,7 +101,6 @@
     "@types/yup": "0.26.32",
     "axios-mock-adapter": "1.17.0",
     "cross-env": "7.0.2",
-    "node-sass": "4.14.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "enzyme-to-json": "3.4.4",
@@ -110,6 +109,7 @@
     "husky": "4.2.3",
     "jest-sonar-reporter": "2.0.0",
     "jest-styled-components": "7.0.2",
+    "node-sass": "4.14.1",
     "prettier": "1.19.1",
     "pretty": "2.0.0",
     "pretty-quick": "2.0.1",
@@ -144,6 +144,16 @@
       "!<rootDir>/src/serviceWorker.**",
       "!<rootDir>/src/setupProxy.*",
       "!<rootDir>/src/setupTests.*"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "test-config",
+      "interfaces",
+      "jestGlobalMocks.ts",
+      ".module.ts",
+      "<rootDir>/src/index.tsx",
+      ".mock.ts",
+      ".ignore.ts"
     ],
     "coverageThreshold": {
       "global": {
