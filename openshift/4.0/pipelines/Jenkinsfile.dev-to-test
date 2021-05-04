@@ -21,13 +21,13 @@ pipeline {
 
     CI = "true"
     PATHFINDER_URL = "apps.silver.devops.gov.bc.ca"
-    VANITY_URL="https://pims-test.apps.silver.devops.gov.bc.ca/"
+    VANITY_URL="https://pims-app-3cd915-test.apps.silver.devops.gov.bc.ca/"
 
     // The name of your application
     APP_NAME = "pims"
 
     // The name of the project namespace(s).
-    NAME_SPACE = "354028"
+    NAME_SPACE = "3cd915"
 
     // We are promoting DEV -> TEST with this pipeline
     SOURCE = "dev"
