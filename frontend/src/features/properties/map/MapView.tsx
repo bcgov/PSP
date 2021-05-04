@@ -32,7 +32,6 @@ interface MapViewProps {
   disableMapFilterBar?: boolean;
   disabled?: boolean;
   showParcelBoundaries?: boolean;
-  onMarkerClick?: (obj: IProperty) => void;
   onMarkerPopupClosed?: (obj: IPropertyDetail) => void;
 }
 
