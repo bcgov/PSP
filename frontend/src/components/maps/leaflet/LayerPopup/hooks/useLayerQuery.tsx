@@ -34,6 +34,16 @@ export interface IUserLayerQuery {
    * @param city
    */
   findByAdministrative: (city: string) => Promise<Feature | null>;
+  /**
+   * Standard logic to handle a parcel layer data response, independent of whether this is a lat/lng or pid query response.
+   * @param response axios response
+   * @param dispatch redux store, required to save results.
+   */
+  handleParcelDataLayerResponse: (
+    response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
+    dispatch: Dispatch<any>,
+    latLng?: LatLng,
+  ) => Promise<void>;
 }
 
 /**
@@ -178,5 +188,11 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
     [baseUrl, parcelLayerData],
   );
 
-  return { findOneWhereContains, findByPid, findByPin, findByAdministrative };
+  return {
+    findOneWhereContains,
+    findByPid,
+    findByPin,
+    findByAdministrative,
+    handleParcelDataLayerResponse,
+  };
 };
