@@ -3,12 +3,6 @@ export enum AccountActive {
   NO = 'No',
 }
 
-export const accountActiveToBool = (status: string): boolean | undefined => {
-  if (!status) return undefined;
-
-  return status === AccountActive.YES;
-};
-
 export interface IUserRecord {
   id: string;
   email?: string;

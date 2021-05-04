@@ -34,6 +34,7 @@ exports[`Empty Header renders 1`] = `
   >
     <div
       class="spinner-border text-warning"
+      data-testid="filter-backdrop-loading"
     />
   </div>
   <div
