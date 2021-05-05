@@ -42,7 +42,7 @@ const ErrorTabs: React.FunctionComponent<IErrorTabsProps> = ({
         id="approvalTabs"
         mountOnEnter={true}
         unmountOnExit={true}
-        onSelect={(key: string) => setCurrentTab(key)}
+        onSelect={(key: string | null) => setCurrentTab(key)}
       >
         {rest.children}
       </Tabs>

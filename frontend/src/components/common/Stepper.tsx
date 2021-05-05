@@ -10,7 +10,7 @@ export interface IStep {
   completed: boolean;
   canGoToStep: boolean;
   validation?: {
-    schema: ObjectSchema<object>;
+    schema: ObjectSchema<any>;
     nameSpace: (currentTab: number) => string;
   };
 }

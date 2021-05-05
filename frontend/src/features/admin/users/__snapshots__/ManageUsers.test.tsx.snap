@@ -202,7 +202,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <svg
               fill="currentColor"
               height="20"
-              size="20"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 512 512"
@@ -231,7 +230,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <svg
               fill="currentColor"
               height="20"
-              size="20"
               stroke="currentColor"
               stroke-width="0"
               viewBox="0 0 512 512"
@@ -258,7 +256,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         data-testid="excel-icon"
         fill="currentColor"
         height="36"
-        size="36"
         stroke="currentColor"
         stroke-width="0"
         viewBox="0 0 384 512"
@@ -858,7 +855,9 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                       class="Menu-options list-group"
                     >
                       <div
+                        aria-disabled="true"
                         class="Menu-item list-group-item disabled"
+                        tabindex="-1"
                       >
                         Enable
                       </div>
@@ -1037,7 +1036,9 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                         Enable
                       </div>
                       <div
+                        aria-disabled="true"
                         class="Menu-item list-group-item disabled"
+                        tabindex="-1"
                       >
                         Disable
                       </div>
@@ -1066,7 +1067,9 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         >
           <a
             aria-disabled="true"
+            aria-label="Previous page"
             class="page-link"
+            rel="prev"
             role="button"
             tabindex="0"
           >
@@ -1091,7 +1094,9 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         >
           <a
             aria-disabled="true"
+            aria-label="Next page"
             class="page-link"
+            rel="next"
             role="button"
             tabindex="0"
           >

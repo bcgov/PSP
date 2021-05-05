@@ -33,7 +33,10 @@ exports[`Manage access requests Snapshot matches 1`] = `
           <div
             className="filter col"
           >
-            <div>
+            <div
+              onClick={[Function]}
+              onTouchEnd={[Function]}
+            >
               <div
                 className="Menu-root"
               >
@@ -101,7 +104,10 @@ exports[`Manage access requests Snapshot matches 1`] = `
           <div
             className="col"
           >
-            <div>
+            <div
+              onClick={[Function]}
+              onTouchEnd={[Function]}
+            >
               <div
                 className="Menu-root"
               >
@@ -196,7 +202,6 @@ exports[`Manage access requests Snapshot matches 1`] = `
                 <svg
                   fill="currentColor"
                   height={20}
-                  size={20}
                   stroke="currentColor"
                   strokeWidth="0"
                   style={
@@ -230,7 +235,6 @@ exports[`Manage access requests Snapshot matches 1`] = `
                 <svg
                   fill="currentColor"
                   height={20}
-                  size={20}
                   stroke="currentColor"
                   strokeWidth="0"
                   style={
@@ -746,7 +750,10 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title=""
             >
-              <div>
+              <div
+                onClick={[Function]}
+                onTouchEnd={[Function]}
+              >
                 <div
                   className="Menu-root"
                 >
@@ -808,10 +815,12 @@ exports[`Manage access requests Snapshot matches 1`] = `
                         Approve
                       </div>
                       <div
+                        aria-disabled={true}
                         className="Menu-item list-group-item disabled"
                         data-rb-event-key={null}
                         disabled={false}
                         onClick={[Function]}
+                        tabIndex={-1}
                       >
                         Hold
                       </div>
@@ -851,9 +860,11 @@ exports[`Manage access requests Snapshot matches 1`] = `
         >
           <a
             aria-disabled="true"
+            aria-label="Previous page"
             className="page-link"
             onClick={[Function]}
             onKeyPress={[Function]}
+            rel="prev"
             role="button"
             tabIndex="0"
           >
@@ -880,9 +891,11 @@ exports[`Manage access requests Snapshot matches 1`] = `
         >
           <a
             aria-disabled="true"
+            aria-label="Next page"
             className="page-link"
             onClick={[Function]}
             onKeyPress={[Function]}
+            rel="next"
             role="button"
             tabIndex="0"
           >
@@ -890,7 +903,10 @@ exports[`Manage access requests Snapshot matches 1`] = `
           </a>
         </li>
       </ul>
-      <div>
+      <div
+        onClick={[Function]}
+        onTouchEnd={[Function]}
+      >
         <div
           className="Menu-root"
         >

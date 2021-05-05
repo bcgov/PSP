@@ -45,7 +45,6 @@ exports[`GRE Transfer Step renders correctly 1`] = `
       <svg
         fill="currentColor"
         height="64"
-        size="64"
         stroke="currentColor"
         stroke-width="0"
         style="color: rgb(32, 167, 77);"

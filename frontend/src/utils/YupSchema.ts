@@ -225,36 +225,41 @@ export const LandSchema = Yup.object().shape({
     otherwise: Yup.array(),
   }),
 });
+
+export const PidPinSchema = Yup.object().shape(
+  {
+    pid: Yup.string().when('pin', {
+      is: (pin: string | any[]) => pin && pin.length > 0,
+      then: Yup.string().nullable(),
+      otherwise: Yup.string()
+        .matches(/\d\d\d[\s-]?\d\d\d[\s-]?\d\d\d/, 'PID must be in the format ###-###-###')
+        .required('PID or PIN Required'),
+    }),
+    pin: Yup.string().when('pid', {
+      is: (pid: string) => pid && /\d\d\d-\d\d\d-\d\d\d/.test(pid),
+      then: Yup.string().nullable(),
+      otherwise: Yup.string()
+        .nullable()
+        .required('PID or PIN Required')
+        .max(9, 'Please enter a valid PIN no longer than 9 digits.'),
+    }),
+  },
+  [['pin', 'pid']],
+);
+
 export const ParcelSchema = Yup.object()
-  .shape(
-    {
-      pid: Yup.string().when('pin', {
-        is: (val: string | any[]) => val && val.length > 0,
-        then: Yup.string().nullable(),
-        otherwise: Yup.string()
-          .matches(/\d\d\d[\s-]?\d\d\d[\s-]?\d\d\d/, 'PID must be in the format ###-###-###')
-          .required('PID or PIN Required'),
-      }),
-      pin: Yup.string().when('pid', {
-        is: (val: string) => val && /\d\d\d-\d\d\d-\d\d\d/.test(val),
-        then: Yup.string().nullable(),
-        otherwise: Yup.string()
-          .nullable()
-          .required('PID or PIN Required')
-          .max(9, 'Please enter a valid PIN no longer than 9 digits.'),
-      }),
-      buildings: Yup.array(),
-      financials: Yup.array()
-        .compact((financial: any) => financial.year !== currentYear)
-        .of(FinancialYear),
-      agencyId: Yup.number()
-        .transform(emptyStringToNull)
-        .typeError('Selection from list required.')
-        .required('Required'),
-    },
-    [['pin', 'pid']],
-  )
-  .concat(LandSchema);
+  .shape({
+    buildings: Yup.array(),
+    financials: Yup.array()
+      .compact((financial: any) => financial.year !== currentYear)
+      .of(FinancialYear),
+    agencyId: Yup.number()
+      .transform(emptyStringToNull)
+      .typeError('Selection from list required.')
+      .required('Required'),
+  })
+  .concat(LandSchema)
+  .concat(PidPinSchema);
 
 export const FilterBarSchema = Yup.object().shape(
   {

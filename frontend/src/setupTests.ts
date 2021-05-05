@@ -5,23 +5,23 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 
-var localStorageMock = (function() {
+var localStorageMock = (function () {
   var store: any = {};
 
   return {
-    getKeys: function() {
+    getKeys: function () {
       return store;
     },
-    getItem: function(key: string) {
+    getItem: function (key: string) {
       return store[key] || null;
     },
-    setItem: function(key: string, value: any) {
+    setItem: function (key: string, value: any) {
       store[key] = value.toString();
     },
-    removeItem: function(key: string) {
+    removeItem: function (key: string) {
       store[key] = undefined;
     },
-    clear: function() {
+    clear: function () {
       store = {};
     },
   };

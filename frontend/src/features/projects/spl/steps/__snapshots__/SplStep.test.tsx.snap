@@ -48,7 +48,6 @@ exports[`SPL Approval Step close out form tab renders correctly 1`] = `
       <svg
         fill="currentColor"
         height="64"
-        size="64"
         stroke="currentColor"
         stroke-width="0"
         style="color: rgb(32, 167, 77);"
@@ -83,7 +82,6 @@ exports[`SPL Approval Step close out form tab renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-projectInformation"
         role="tab"
-        tabindex="-1"
       >
         Project Information
       </a>
@@ -95,7 +93,6 @@ exports[`SPL Approval Step close out form tab renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-documentation"
         role="tab"
-        tabindex="-1"
       >
         Documentation
       </a>
@@ -107,7 +104,6 @@ exports[`SPL Approval Step close out form tab renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-enhancedReferralProcess"
         role="tab"
-        tabindex="-1"
       >
         Enhanced Referral Process
       </a>
@@ -119,7 +115,6 @@ exports[`SPL Approval Step close out form tab renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-surplusPropertyList"
         role="tab"
-        tabindex="-1"
       >
         Surplus Properties List
       </a>
@@ -1171,7 +1166,6 @@ exports[`SPL Approval Step renders correctly 1`] = `
       <svg
         fill="currentColor"
         height="64"
-        size="64"
         stroke="currentColor"
         stroke-width="0"
         style="color: rgb(32, 167, 77);"
@@ -1206,7 +1200,6 @@ exports[`SPL Approval Step renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-projectInformation"
         role="tab"
-        tabindex="-1"
       >
         Project Information
       </a>
@@ -1218,7 +1211,6 @@ exports[`SPL Approval Step renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-documentation"
         role="tab"
-        tabindex="-1"
       >
         Documentation
       </a>
@@ -1230,7 +1222,6 @@ exports[`SPL Approval Step renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-enhancedReferralProcess"
         role="tab"
-        tabindex="-1"
       >
         Enhanced Referral Process
       </a>
@@ -1253,7 +1244,6 @@ exports[`SPL Approval Step renders correctly 1`] = `
         href="#"
         id="approvalTabs-tab-closeOutForm"
         role="tab"
-        tabindex="-1"
       >
         Close Out Form
       </a>
