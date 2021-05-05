@@ -6,6 +6,16 @@ import { ITenantConfig } from './ITenantConfig';
  */
 export const defaultTenant = {
   title: 'Default Tenant Name',
+  logo: {
+    favicon: '',
+    image: '',
+    imageWithText: '',
+  },
+  login: {
+    title: '',
+    heading: '',
+    body: '',
+  },
 };
 
 /**
