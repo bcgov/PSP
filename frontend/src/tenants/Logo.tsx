@@ -16,7 +16,7 @@ interface ILogoProps
  * @returns Image containing the
  */
 export const Logo = ({ withText = false, ...rest }: ILogoProps) => {
-  const { logo } = tenant();
+  const { logo } = tenant;
   return (
     <img
       {...rest}

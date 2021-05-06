@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import { tenant } from 'tenants';
 
 /**
  * The IENotSupportedPage prevents users from entering PIMS
@@ -10,7 +11,7 @@ export const IENotSupportedPage: React.FC = () => {
   return (
     <Container className="unauth" fluid={true}>
       <br></br>
-      <h1>PIMS does not support Internet Explorer</h1>
+      <h1>{tenant.shortName} does not support Internet Explorer</h1>
       <br></br>
       <h6>Please use a supported internet browser such as Chrome, Firefox or Edge.</h6>
     </Container>

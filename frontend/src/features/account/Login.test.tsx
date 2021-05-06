@@ -12,6 +12,7 @@ import {} from 'reducers/networkReducer';
 import { IGenericNetworkAction } from 'actions/genericActions';
 import { Provider } from 'react-redux';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
+import { setTenant } from 'tenants';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
@@ -98,6 +99,8 @@ describe('login', () => {
   });
 
   it('unAuthenticated users are shown the login screen', () => {
+    process.env.REACT_APP_TENANT = 'CITZ';
+    setTenant();
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const { getAllByRole } = renderLogin();
     expect(getAllByRole('heading')[0]).toHaveTextContent(

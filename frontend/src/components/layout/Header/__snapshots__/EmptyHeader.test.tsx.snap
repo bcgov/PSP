@@ -33,8 +33,7 @@ exports[`Empty Header renders 1`] = `
     <img
       alt="PIMS logo"
       class="pims-logo"
-      height="50"
-      src="logo_only.png"
+      src=""
     />
   </span>
   <div
@@ -46,7 +45,7 @@ exports[`Empty Header renders 1`] = `
       <h1
         class="longAppName"
       >
-        Property Inventory Management System
+        Default Tenant Name
       </h1>
       <h1
         class="shortAppName"

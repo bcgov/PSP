@@ -6,6 +6,7 @@ import { ITenantConfig } from './ITenantConfig';
  */
 export const defaultTenant = {
   title: 'Default Tenant Name',
+  shortName: 'PIMS',
   logo: {
     favicon: '',
     image: '',
@@ -18,20 +19,25 @@ export const defaultTenant = {
   },
 };
 
+// This ensures the tenant information is set once.
+export let tenant: ITenantConfig = defaultTenant;
+
 /**
  * Provides the configuration settings for the specified tenant value in the environment variables.
  * Environment variable "REACT_APP_TENANT".
- * @returns Tenant configuration settings.
+ * Call this function at the beginning of the application to set the global variable.
+ * @returns {ITenantConfig} Tenant configuration settings.
  */
-export const tenant = (): ITenantConfig => {
+export const setTenant = (): ITenantConfig => {
   switch (process.env.REACT_APP_TENANT) {
     case 'MOTI':
-      return MOTIConfig;
+      tenant = MOTIConfig;
+      break;
     case 'CITZ':
-      return CITZConfig;
-    default:
-      return defaultTenant;
+      tenant = CITZConfig;
+      break;
   }
+  return tenant;
 };
 
 export default tenant;

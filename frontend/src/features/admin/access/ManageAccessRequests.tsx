@@ -20,6 +20,7 @@ import { AccessRequestFilter } from './components/Filter';
 import { IFilterData, getUpdateAccessRequestPageIndex } from 'actions/accessRequestActions';
 import { columnDefinitions } from './constants/constants';
 import { AccessRequestDetails } from './components/Details';
+import { tenant } from 'tenants';
 
 const ManageAccessRequests = () => {
   const dispatch = useDispatch();
@@ -86,7 +87,7 @@ const ManageAccessRequests = () => {
     <div className="manage-access-requests">
       <div className="ScrollContainer">
         <Container fluid className="TableToolbar">
-          <span className="title mr-auto">PIMS Guests (Pending Approval)</span>
+          <span className="title mr-auto">{tenant.shortName} Guests (Pending Approval)</span>
         </Container>
         <div className="search-bar">
           <AccessRequestFilter

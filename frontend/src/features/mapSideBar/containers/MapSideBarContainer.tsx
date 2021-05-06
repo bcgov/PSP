@@ -36,6 +36,7 @@ import { withNameSpace } from 'utils/formUtils';
 import { PropertyTypes, Claims, EvaluationKeys, FiscalKeys } from 'constants/index';
 import { useBuildingApi } from '../hooks/useBuildingApi';
 import { fireMapRefreshEvent } from 'components/maps/hooks/useMapRefreshEvent';
+import { tenant } from 'tenants';
 
 interface IMapSideBarContainerProps {
   refreshParcels: Function;
@@ -639,7 +640,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
           <>
             <FloatCheck size={32}></FloatCheck>
             <SuccessText>Success!</SuccessText>
-            <p>PIMS has been updated with all of your changes</p>
+            <p>{tenant.shortName} has been updated with all of your changes</p>
           </>
         }
         display={showUpdatedModal}

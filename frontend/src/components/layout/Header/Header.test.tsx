@@ -12,7 +12,7 @@ import { ILookupCode } from 'actions/lookupActions';
 import * as reducerTypes from 'constants/reducerTypes';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import Claims from 'constants/claims';
-import { MOTIConfig, CITZConfig } from 'tenants';
+import { MOTIConfig, CITZConfig, setTenant } from 'tenants';
 
 jest.mock('@react-keycloak/web');
 afterEach(() => {
@@ -64,6 +64,7 @@ describe('Header tests', () => {
 
   it('Header renders for MOTI tenant', async () => {
     process.env.REACT_APP_TENANT = 'MOTI';
+    setTenant();
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const header = render(
       <Provider store={store}>
@@ -78,6 +79,7 @@ describe('Header tests', () => {
 
   it('Header renders for CITZ tenant', async () => {
     process.env.REACT_APP_TENANT = 'CITZ';
+    setTenant();
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const header = render(
       <Provider store={store}>

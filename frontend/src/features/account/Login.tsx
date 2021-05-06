@@ -25,7 +25,7 @@ const Login = () => {
   const activated = useSelector<RootState, IGenericNetworkAction>(
     state => (state.network as any)[actionTypes.ADD_ACTIVATE_USER] as IGenericNetworkAction,
   );
-  const { login } = tenant();
+  const { login } = tenant;
 
   if (!keycloak) {
     return <Spinner animation="border"></Spinner>;

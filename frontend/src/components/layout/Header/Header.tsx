@@ -53,8 +53,8 @@ export const Header = () => {
       </Navbar.Brand>
       <Nav className="title mr-auto">
         <Nav.Item>
-          <h1 className="longAppName">{tenant().title}</h1>
-          <h1 className="shortAppName">PIMS</h1>
+          <h1 className="longAppName">{tenant.title}</h1>
+          <h1 className="shortAppName">{tenant.shortName}</h1>
         </Nav.Item>
       </Nav>
       {keycloak.obj.authenticated && <UserProfile />}

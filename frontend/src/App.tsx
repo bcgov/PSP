@@ -13,6 +13,7 @@ import OnLoadActions from 'OnLoadActions';
 import { ToastContainer } from 'react-toastify';
 import PublicLayout from 'layouts/PublicLayout';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import { setTenant } from 'tenants';
 
 export const store = configureStore();
 
@@ -20,6 +21,7 @@ const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const dispatch = useDispatch();
+  React.useMemo(() => setTenant(), []);
 
   useEffect(() => {
     if (keycloak?.authenticated) {
