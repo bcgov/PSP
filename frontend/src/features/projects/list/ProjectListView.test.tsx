@@ -16,6 +16,8 @@ import { useKeycloak } from '@react-keycloak/web';
 import Claims from 'constants/claims';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
+import { fillInput } from 'utils/testUtils';
+import { fireEvent } from '@testing-library/dom';
 
 const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});
@@ -151,6 +153,25 @@ describe('Project list view tests', () => {
       const noResults = await findByText('No rows to display');
       expect(noResults).toBeVisible();
       expect(container.querySelector('span[class="spinner-border"]')).not.toBeInTheDocument();
+    });
+  });
+
+  it('Can reset the search filter', async () => {
+    mockedService.getProjectList.mockResolvedValue({
+      quantity: 0,
+      total: 0,
+      page: 1,
+      pageIndex: 0,
+      items: [],
+    });
+
+    await act(async () => {
+      const { container, getByDisplayValue, getByTestId } = testRender();
+      await fillInput(container, 'name', 'test');
+      expect(getByDisplayValue('test')).toBeVisible();
+      const resetButton = getByTestId('reset-button');
+      fireEvent.click(resetButton);
+      expect(container.querySelector(`input[name="name"]`)).toHaveValue('');
     });
   });
 
