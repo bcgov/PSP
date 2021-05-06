@@ -22,8 +22,18 @@ import { render, wait, screen, cleanup } from '@testing-library/react';
 import { mockKeycloak } from 'features/projects/dispose/testUtils';
 import { Claims } from 'constants/index';
 import { mockParcel, mockBuildingWithAssociatedLand } from 'mocks/filterDataMock';
+import { useKeycloak } from '@react-keycloak/web';
 
 jest.mock('@react-keycloak/web');
+(useKeycloak as jest.Mock).mockReturnValue({
+  keycloak: {
+    userInfo: {
+      agencies: [1],
+      roles: [],
+    },
+    subject: 'test',
+  },
+});
 
 Enzyme.configure({ adapter: new Adapter() });
 const history = createMemoryHistory();
