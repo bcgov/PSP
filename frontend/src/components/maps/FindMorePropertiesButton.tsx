@@ -51,7 +51,7 @@ export const FindMorePropertiesButton: React.FC<IFindMorePropertiesButton> = ({
       <div style={{ display: 'flex' }}>
         <TitleForSaleSign size={42} />
         <h3 style={{ color: variables.primaryColor }}>{buttonText}</h3>
-        <CloseButton onClick={() => document.body.click()} />
+        <CloseButton data-testid="close-button" onClick={() => document.body.click()} />
       </div>
     );
     return (

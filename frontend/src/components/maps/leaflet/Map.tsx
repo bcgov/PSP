@@ -67,7 +67,6 @@ export type MapProps = {
   mapRef: React.RefObject<ReactLeafletMap<LeafletMapProps, LeafletMap>>;
   selectedProperty?: IPropertyDetail | null;
   onMarkerClick?: (obj: IProperty, position?: [number, number]) => void;
-  onMarkerPopupClose?: (obj: IPropertyDetail) => void;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
   onMapClick?: (e: LeafletMouseEvent) => void;
   disableMapFilterBar?: boolean;
@@ -286,7 +285,7 @@ const Map: React.FC<MapProps> = ({
     let displayConfig = {};
     let title = 'Municipality Information';
     let feature = {};
-    if (municipality.features.length === 1) {
+    if (municipality?.features?.length === 1) {
       properties = municipality.features[0].properties!;
       displayConfig = municipalityLayerPopupConfig;
       feature = municipality.features[0];
@@ -295,7 +294,7 @@ const Map: React.FC<MapProps> = ({
         : undefined;
     }
 
-    if (parcel.features.length === 1) {
+    if (parcel?.features?.length === 1) {
       title = 'Parcel Information';
       properties = parcel.features[0].properties!;
       displayConfig = parcelLayerPopupConfig;

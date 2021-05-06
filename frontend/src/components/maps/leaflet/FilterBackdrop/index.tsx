@@ -23,7 +23,7 @@ const Backdrop = styled.div`
 const FilterBackdrop: React.FC<FilterBackdropProps> = ({ show }) => {
   return show ? (
     <Backdrop>
-      <Spinner animation="border" variant="warning" />
+      <Spinner animation="border" variant="warning" data-testid="filter-backdrop-loading" />
     </Backdrop>
   ) : null;
 };

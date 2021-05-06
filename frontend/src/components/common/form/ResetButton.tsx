@@ -11,6 +11,7 @@ const ResetButton: React.FC<ButtonProps> = ({ ...props }) => {
   return (
     <TooltipWrapper toolTipId="map-filter-reset-tooltip" toolTip="Reset Filter">
       <Button
+        data-testid="reset-button"
         id="reset-button"
         type="reset"
         variant="info"

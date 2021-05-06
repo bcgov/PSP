@@ -9,11 +9,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const componentRender = () => {
   let component = create(
     <div>
-      <FilterBar
-        initialValues={{ username: 'test', firstName: 'user' }}
-        onReset={() => {}}
-        onSearch={() => {}}
-      />
+      <FilterBar initialValues={{ username: 'test', firstName: 'user' }} onChange={() => {}} />
     </div>,
   );
   return component;
