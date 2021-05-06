@@ -27,7 +27,6 @@ export { default as GreTransferForm } from './forms/GreTransferForm';
 
 export { default as useStepForm } from './hooks/useStepForm';
 export { default as useProject } from './hooks/useProject';
-export { default as useAgencyResponseTable } from './hooks/useAgencyResponseTable';
 
 export * from './slices/projectSlice';
 export * from './slices/projectTasksSlice';

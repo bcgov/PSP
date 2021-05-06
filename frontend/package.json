@@ -144,6 +144,16 @@
       "!<rootDir>/src/setupProxy.*",
       "!<rootDir>/src/setupTests.*"
     ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "test-config",
+      "interfaces",
+      "jestGlobalMocks.ts",
+      ".module.ts",
+      "<rootDir>/src/index.tsx",
+      ".mock.ts",
+      ".ignore.ts"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 45,
