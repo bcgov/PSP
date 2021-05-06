@@ -10,7 +10,9 @@ import { useKeycloak } from '@react-keycloak/web';
 import * as API from 'constants/API';
 import { ILookupCode } from 'actions/lookupActions';
 import * as reducerTypes from 'constants/reducerTypes';
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, wait, act } from '@testing-library/react';
+import { fillInput } from 'utils/testUtils';
+import { useApi, PimsAPI, IGeocoderResponse } from 'hooks/useApi';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -39,6 +41,24 @@ jest.mock('@react-keycloak/web');
     subject: 'test',
   },
 });
+jest.mock('hooks/useApi');
+((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
+  searchAddress: async () => {
+    return [
+      {
+        siteId: '1',
+        fullAddress: '12345 fake st.',
+        address1: '4321 fake st.',
+        administrativeArea: 'Victoria',
+        provinceCode: 'BC',
+        latitude: 1,
+        longitude: 2,
+        score: 100,
+      },
+    ] as IGeocoderResponse[];
+  },
+});
+jest.mock('lodash/debounce', () => jest.fn(fn => fn));
 
 const getBuildingForm = (disabled: boolean) => {
   return (
@@ -63,7 +83,7 @@ const buildingForm = (
         setBuildingToAssociateLand={noop}
         goToAssociatedLand={noop}
         setMovingPinNameSpace={noop}
-        nameSpace="building"
+        nameSpace="data"
       />
     </Router>
   </Provider>
@@ -78,6 +98,71 @@ describe('Building Form', () => {
   it('displays identification page on initial load', () => {
     const { getByText } = render(buildingForm);
     expect(getByText(/building information/i)).toBeInTheDocument();
+  });
+
+  it('updates form content based on geocoder response', async () => {
+    const { getByText, getByDisplayValue, container } = render(buildingForm);
+    const input = container.querySelector(`input[name="data.address.line1"]`);
+    await wait(() => {
+      fireEvent.change(input!, {
+        target: {
+          value: '123 fake st.',
+        },
+      });
+    });
+    const suggestion = getByText('12345 fake st.');
+    expect(suggestion).toBeVisible();
+
+    suggestion.click();
+    expect(getByDisplayValue('Victoria')).toBeVisible();
+    expect(getByDisplayValue('4321 fake st.')).toBeVisible();
+  });
+
+  it('displays a modal if geocoder selection to overwrite existing data.', async () => {
+    const { getByText, getByDisplayValue, container } = render(buildingForm);
+    const address = container.querySelector(`input[name="data.address.line1"]`);
+    await fillInput(container, 'data.latitude', '12.29');
+
+    await wait(() => {
+      fireEvent.change(address!, {
+        target: {
+          value: '123 fake st.',
+        },
+      });
+    });
+    act(() => {
+      const suggestion = getByText('12345 fake st.');
+      expect(suggestion).toBeVisible();
+      suggestion.click();
+    });
+    const updateButton = getByText('Update');
+    updateButton.click();
+    expect(getByDisplayValue('Victoria')).toBeVisible();
+    expect(getByDisplayValue('4321 fake st.')).toBeVisible();
+    expect(container.querySelector(`input[name="data.latitude"]`)).toHaveValue(1);
+  });
+
+  it('displays a modal if geocoder selection would overwrite existing data and allows cancel', async () => {
+    const { getByText, container } = render(buildingForm);
+    const address = container.querySelector(`input[name="data.address.line1"]`);
+    await fillInput(container, 'data.latitude', '12.29');
+
+    await wait(() => {
+      fireEvent.change(address!, {
+        target: {
+          value: '123 fake st.',
+        },
+      });
+    });
+    act(() => {
+      const suggestion = getByText('12345 fake st.');
+      expect(suggestion).toBeVisible();
+      suggestion.click();
+    });
+
+    const updateButton = getByText('Cancel');
+    updateButton.click();
+    expect(container.querySelector(`input[name="data.latitude"]`)).toHaveValue(12.29);
   });
 
   it('building form goes to corresponding steps', async () => {

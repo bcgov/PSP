@@ -395,6 +395,7 @@ exports[`Land Form component renders correctly 1`] = `
                       </div>
                       <button
                         class="Button Button--icon-only bg-warning btn btn-primary"
+                        data-testid="pid-search-button"
                         id="search-button"
                         type="submit"
                       >
@@ -439,6 +440,7 @@ exports[`Land Form component renders correctly 1`] = `
                       </div>
                       <button
                         class="Button Button--icon-only bg-warning btn btn-primary"
+                        data-testid="pin-search-button"
                         id="search-button"
                         type="submit"
                       >
@@ -489,6 +491,7 @@ exports[`Land Form component renders correctly 1`] = `
                       </div>
                       <button
                         class="Button Button--disabled Button--icon-only bg-warning btn btn-primary"
+                        data-testid="address-search-button"
                         disabled=""
                         id="search-button"
                         type="submit"
@@ -536,6 +539,7 @@ exports[`Land Form component renders correctly 1`] = `
                         <div>
                           <button
                             class="c4"
+                            data-testid="land-search-marker"
                             type="button"
                           >
                             <svg

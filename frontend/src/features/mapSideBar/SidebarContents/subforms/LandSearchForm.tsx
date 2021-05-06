@@ -77,6 +77,7 @@ const LandSearchForm = ({
             field={withNameSpace(nameSpace, 'searchPid')}
           />
           <SearchButton
+            data-testid="pid-search-button"
             onClick={(e: any) => {
               e.preventDefault();
               handlePidChange(searchPid, nameSpace);
@@ -100,6 +101,7 @@ const LandSearchForm = ({
             type="number"
           />
           <SearchButton
+            data-testid="pin-search-button"
             onClick={(e: any) => {
               e.preventDefault();
               handlePinChange(searchPin, nameSpace);
@@ -129,6 +131,7 @@ const LandSearchForm = ({
             displayErrorTooltips
           />
           <SearchButton
+            data-testid="address-search-button"
             disabled={!geocoderResponse}
             onClick={(e: any) => {
               e.preventDefault();
@@ -153,6 +156,7 @@ const LandSearchForm = ({
               }}
             >
               <SearchMarkerButton
+                data-testid="land-search-marker"
                 type="button"
                 onClick={(e: any) => {
                   setMovingPinNameSpace(nameSpace ?? '');

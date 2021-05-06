@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Building Form component renders correctly 1`] = `
-.c8 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -15,7 +15,7 @@ exports[`Building Form component renders correctly 1`] = `
   align-content: center;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -98,7 +98,7 @@ exports[`Building Form component renders correctly 1`] = `
   cursor: default;
 }
 
-.c6 {
+.c7 {
   top: 20px;
   right: 20px;
   border: 0px;
@@ -109,16 +109,26 @@ exports[`Building Form component renders correctly 1`] = `
   display: flex;
 }
 
-.c4 {
+.c5 {
   float: left;
 }
 
-.c5 {
+.c6 {
   border: 1px solid filterBackgroundColor;
   border-radius: 4px;
   text-align: left;
   padding: 8px 12px 10px;
   margin-bottom: 10px;
+}
+
+.c4 {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 {
@@ -147,7 +157,7 @@ exports[`Building Form component renders correctly 1`] = `
   min-height: 100px;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -164,7 +174,7 @@ exports[`Building Form component renders correctly 1`] = `
   bottom: -20px;
 }
 
-.c10 {
+.c11 {
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
@@ -393,8 +403,8 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <input
                           class="form-control"
-                          id="input-building.name"
-                          name="building.name"
+                          id="input-data.name"
+                          name="data.name"
                           value=""
                         />
                       </div>
@@ -412,8 +422,8 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <textarea
                           class="form-control"
-                          id="input-building.description"
-                          name="building.description"
+                          id="input-data.description"
+                          name="data.description"
                         />
                       </div>
                     </div>
@@ -442,11 +452,11 @@ exports[`Building Form component renders correctly 1`] = `
                               aria-haspopup="listbox"
                               autocomplete="off"
                               class="rbt-input-main form-control rbt-input"
-                              id="building.agencyId-field"
-                              name="building.agencyId"
+                              id="data.agencyId-field"
+                              name="data.agencyId"
                               role="combobox"
                               type="text"
-                              value=""
+                              value="agencyVal"
                             />
                             <input
                               aria-hidden="true"
@@ -477,8 +487,8 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <select
                           class="form-control"
-                          id="input-building.buildingPredominateUseId-fast"
-                          name="building.buildingPredominateUseId"
+                          id="input-data.buildingPredominateUseId-fast"
+                          name="data.buildingPredominateUseId"
                           required=""
                           type="number"
                         >
@@ -503,8 +513,8 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <select
                           class="form-control"
-                          id="input-building.buildingConstructionTypeId-fast"
-                          name="building.buildingConstructionTypeId"
+                          id="input-data.buildingConstructionTypeId-fast"
+                          name="data.buildingConstructionTypeId"
                           required=""
                           type="number"
                         >
@@ -529,12 +539,26 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <input
                           class="input-small form-control"
-                          id="input-building.buildingFloorCount"
-                          name="building.buildingFloorCount"
+                          id="input-data.buildingFloorCount"
+                          name="data.buildingFloorCount"
                           style="width: 100px;"
                           type="number"
                           value=""
                         />
+                      </div>
+                    </div>
+                    <div
+                      class="row"
+                    >
+                      <p
+                        class="label"
+                      >
+                        Project Number(s)
+                      </p>
+                      <div
+                        class="c4"
+                      >
+                        SPP-10000
                       </div>
                     </div>
                     <div
@@ -567,14 +591,14 @@ exports[`Building Form component renders correctly 1`] = `
                             >
                               <input
                                 class="form-check-input"
-                                id="input-building.isSensitive"
-                                name="building.isSensitive"
+                                id="input-data.isSensitive"
+                                name="data.isSensitive"
                                 type="radio"
                                 value="false"
                               />
                               <label
                                 class="form-check-label"
-                                for="input-building.isSensitive"
+                                for="input-data.isSensitive"
                                 title=""
                               >
                                 Yes
@@ -585,14 +609,14 @@ exports[`Building Form component renders correctly 1`] = `
                             >
                               <input
                                 class="form-check-input"
-                                id="input-building.isSensitive-2"
-                                name="building.isSensitive"
+                                id="input-data.isSensitive-2"
+                                name="data.isSensitive"
                                 type="radio"
                                 value="false"
                               />
                               <label
                                 class="form-check-label"
-                                for="input-building.isSensitive-2"
+                                for="input-data.isSensitive-2"
                                 title=""
                               >
                                 No
@@ -609,7 +633,7 @@ exports[`Building Form component renders correctly 1`] = `
                   class="row"
                 >
                   <h4
-                    class="c4"
+                    class="c5"
                   >
                     Strategic Real Estate Classification
                   </h4>
@@ -635,8 +659,8 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <select
                           class="form-control"
-                          id="input-building.classificationId-fast"
-                          name="building.classificationId"
+                          id="input-data.classificationId-fast"
+                          name="data.classificationId"
                           required=""
                           style="margin-top: 5px; display: flex;"
                           type="number"
@@ -654,7 +678,7 @@ exports[`Building Form component renders correctly 1`] = `
                     class="col-md-6"
                   >
                     <div
-                      class="c5"
+                      class="c6"
                     >
                       <p
                         style="font-size: 11px;"
@@ -696,9 +720,9 @@ exports[`Building Form component renders correctly 1`] = `
                           >
                             <input
                               class="form-control"
-                              field="building.address.line1"
-                              id="input-building.address.line1"
-                              name="building.address.line1"
+                              field="data.address.line1"
+                              id="input-data.address.line1"
+                              name="data.address.line1"
                               required=""
                               value=""
                             />
@@ -731,8 +755,8 @@ exports[`Building Form component renders correctly 1`] = `
                               aria-haspopup="listbox"
                               autocomplete="off"
                               class="rbt-input-main form-control rbt-input"
-                              id="building.address.administrativeArea-field"
-                              name="building.address.administrativeArea"
+                              id="data.address.administrativeArea-field"
+                              name="data.address.administrativeArea"
                               role="combobox"
                               type="text"
                               value=""
@@ -763,8 +787,8 @@ exports[`Building Form component renders correctly 1`] = `
                         <select
                           class="form-select form-control"
                           disabled=""
-                          id="input-building.address.provinceId"
-                          name="building.address.provinceId"
+                          id="input-data.address.provinceId"
+                          name="data.address.provinceId"
                         >
                           <option
                             value=""
@@ -787,8 +811,8 @@ exports[`Building Form component renders correctly 1`] = `
                       >
                         <input
                           class="input-small form-control"
-                          id="input-building.address.postal"
-                          name="building.address.postal"
+                          id="input-data.address.postal"
+                          name="data.address.postal"
                           style="width: 120px;"
                           value=""
                         />
@@ -822,7 +846,7 @@ exports[`Building Form component renders correctly 1`] = `
                         >
                           <div>
                             <button
-                              class="c6"
+                              class="c7"
                             >
                               <svg>
                                 draft-building-icon.svg
@@ -844,8 +868,8 @@ exports[`Building Form component renders correctly 1`] = `
                         >
                           <input
                             class="input-medium form-control"
-                            id="input-building.latitude"
-                            name="building.latitude"
+                            id="input-data.latitude"
+                            name="data.latitude"
                             type="number"
                             value=""
                           />
@@ -864,8 +888,8 @@ exports[`Building Form component renders correctly 1`] = `
                         >
                           <input
                             class="input-medium form-control"
-                            id="input-building.longitude"
-                            name="building.longitude"
+                            id="input-data.longitude"
+                            name="data.longitude"
                             type="number"
                             value=""
                           />
@@ -881,10 +905,10 @@ exports[`Building Form component renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="c7"
+            class="c8"
           >
             <div
-              class="c8"
+              class="c9"
             >
               <div
                 class="SresManual"
@@ -912,13 +936,13 @@ exports[`Building Form component renders correctly 1`] = `
                 </div>
               </div>
               <small
-                class="c9 p-1 mr-2"
+                class="c10 p-1 mr-2"
               >
                 Inventory Policy
               </small>
             </div>
             <span
-              class="c10"
+              class="c11"
             />
             <button
               class="btn btn-primary btn-sm"
