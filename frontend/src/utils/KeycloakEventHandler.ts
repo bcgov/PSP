@@ -9,7 +9,6 @@ const getKeycloakEventHandler = (keycloak: KeycloakInstance) => {
     eventType: AuthClientEvent,
     error?: AuthClientError | undefined,
   ) => {
-    debugger;
     if (eventType === 'onAuthSuccess') {
       store.dispatch(saveJwt(keycloak.token!));
     } else if (eventType === 'onAuthRefreshSuccess') {
