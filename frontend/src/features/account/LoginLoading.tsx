@@ -1,8 +1,8 @@
 import './Login.scss';
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import PIMSlogo from 'assets/images/PIMSlogo/logo_with_text.png';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import { Logo } from 'tenants';
 
 /**
  * Display a placeholder of the PIMS login screen when keycloak is being initialized.
@@ -12,7 +12,7 @@ const LoginLoading = () => {
     <Container className="login" fluid={true}>
       <FilterBackdrop show={true}></FilterBackdrop>
       <Container className="unauth" fluid={true}>
-        <img className="pims-logo" src={PIMSlogo} alt="PIMS logo" />
+        <Logo withText={true} />
         <Row className="sign-in">
           <Col xs={1} md={3} />
           <Col xs={16} md={6} className="block">

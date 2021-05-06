@@ -17,7 +17,8 @@ exports[`Manage access requests Snapshot matches 1`] = `
       <span
         className="title mr-auto"
       >
-        PIMS Guests (Pending Approval)
+        PIMS
+         Guests (Pending Approval)
       </span>
     </div>
     <div

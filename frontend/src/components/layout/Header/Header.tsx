@@ -2,8 +2,6 @@ import './Header.scss';
 
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import BClogoUrl from 'assets/images/logo-banner.svg';
-import PIMSlogo from 'assets/images/PIMSlogo/logo_only.png';
 import { useHistory } from 'react-router-dom';
 import { IGenericNetworkAction } from 'actions/genericActions';
 import { RootState } from 'reducers/rootReducer';
@@ -15,6 +13,8 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import styled from 'styled-components';
 import { tenant } from 'tenants';
 import { ErrorModal } from './ErrorModal';
+import { Logo } from 'tenants';
+import { BCGovLogo } from 'components/common/BCGovLogo';
 
 /**
  * A header component that includes the navigation bar.
@@ -46,21 +46,15 @@ export const Header = () => {
     <Navbar expand className="App-header">
       <Navbar.Brand className="brand-box">
         <a target="_blank" rel="noopener noreferrer" href="https://www2.gov.bc.ca/gov/content/home">
-          <img
-            className="bc-gov-icon"
-            src={BClogoUrl}
-            width="156"
-            height="43"
-            alt="Government of BC logo"
-          />
+          <BCGovLogo />
         </a>
         <VerticalBar />
-        <img className="pims-logo" src={PIMSlogo} height="50" alt="PIMS logo" />
+        <Logo height={50} />
       </Navbar.Brand>
       <Nav className="title mr-auto">
         <Nav.Item>
-          <h1 className="longAppName">{tenant().title}</h1>
-          <h1 className="shortAppName">PIMS</h1>
+          <h1 className="longAppName">{tenant.title}</h1>
+          <h1 className="shortAppName">{tenant.shortName}</h1>
         </Nav.Item>
       </Nav>
       {keycloak.obj.authenticated && <UserProfile />}
