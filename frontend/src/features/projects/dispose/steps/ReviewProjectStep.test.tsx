@@ -9,6 +9,18 @@ import { Router } from 'react-router-dom';
 import ReviewProjectStep from './ReviewProjectStep';
 import { DisposeWorkflowStatus, ITask, IProject, IProjectTask } from '../../common';
 import { ProjectActions } from 'constants/actionTypes';
+import { useKeycloak } from '@react-keycloak/web';
+
+jest.mock('@react-keycloak/web');
+(useKeycloak as jest.Mock).mockReturnValue({
+  keycloak: {
+    userInfo: {
+      agencies: [1],
+      roles: [],
+    },
+    subject: 'test',
+  },
+});
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
