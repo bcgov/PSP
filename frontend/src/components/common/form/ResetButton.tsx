@@ -13,7 +13,6 @@ const ResetButton: React.FC<ButtonProps> = ({ ...props }) => {
       <Button
         data-testid="reset-button"
         id="reset-button"
-        data-testid="reset-button"
         type="reset"
         variant="info"
         {...props}

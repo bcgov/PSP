@@ -286,6 +286,7 @@ exports[`MapProperties View Renders the map 1`] = `
     >
       <div
         class="spinner-border text-warning"
+        data-testid="filter-backdrop-loading"
       />
     </div>
     <div

@@ -298,9 +298,12 @@ describe('MapFilterBar', () => {
     await wait(() => {
       expect(screen.getByText('Find available surplus properties')).toBeVisible();
     });
-    const closeFindMoreProperties = screen.getByTestId('close-button');
+    const closeFindMoreProperties = screen.getAllByTestId('close-button')[1];
     act(() => {
       fireEvent.click(closeFindMoreProperties);
+    });
+    await wait(() => {
+      expect(screen.queryByText('Find available surplus properties')).toBeNull();
     });
   });
 
@@ -315,8 +318,6 @@ describe('MapFilterBar', () => {
     await wait(() => {
       expect(fetchPropertyNames).toHaveBeenCalled();
     });
-    const option = await screen.findByDisplayValue('test');
-    fireEvent.click(option);
   });
 
   it('disables the property name and agencies fields when All Government is selected', () => {
