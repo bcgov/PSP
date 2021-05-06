@@ -2,7 +2,6 @@ import { KeycloakInstance } from 'keycloak-js';
 import getKeycloakEventHandler from './KeycloakEventHandler';
 import { saveJwt, clearJwt } from 'reducers/JwtSlice';
 import { setKeycloakReady } from 'reducers/keycloakReadySlice';
-import configureStore from 'configureStore';
 import { store } from 'App';
 
 jest.mock('reducers/JwtSlice', () => ({
