@@ -123,31 +123,6 @@ exports[`MapProperties View Renders the map 1`] = `
   top: 26px;
 }
 
-.c3 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -180,6 +155,31 @@ exports[`MapProperties View Renders the map 1`] = `
   color: darkVariantColor !important;
   width: 40px;
   height: 40px;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c15 {
