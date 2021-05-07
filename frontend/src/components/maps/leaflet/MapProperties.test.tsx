@@ -114,7 +114,7 @@ describe('MapProperties View', () => {
     mockAxios.onAny().reply(200);
     cleanup();
     history = createMemoryHistory();
-    delete window.ResizeObserver;
+    delete (window as any).ResizeObserver;
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       observe: jest.fn(),
       unobserve: jest.fn(),
