@@ -3,7 +3,6 @@ import './PropertyFilter.scss';
 import React, { useMemo, useRef, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import { Formik, getIn } from 'formik';
-import { ILookupCode } from 'actions/lookupActions';
 import { Form, Select } from '../../../components/common/form';
 import { FilterBarSchema } from 'utils/YupSchema';
 import ResetButton from 'components/common/form/ResetButton';
@@ -26,6 +25,7 @@ import { Claims } from 'constants/claims';
 import useLookupCodes from 'hooks/useLookupCodes';
 import { mapSelectOptionWithParent } from 'utils';
 import { useMyAgencies } from 'hooks/useMyAgencies';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 /**
  * PropertyFilter component properties.

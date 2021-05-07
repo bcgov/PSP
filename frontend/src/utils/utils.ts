@@ -1,4 +1,3 @@
-import { ILookupCode } from 'actions/lookupActions';
 import { startCase, isNull, isUndefined, isEmpty, lowerFirst, keys } from 'lodash';
 import { SelectOption } from 'components/common/form';
 import { FormikProps, getIn } from 'formik';
@@ -8,6 +7,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { success, error, request } from 'actions/genericActions';
 import moment from 'moment-timezone';
 import { IStatus } from 'features/projects/common';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 /**
  * Convert the specified 'input' value into a decimal or undefined.

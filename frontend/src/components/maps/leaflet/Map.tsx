@@ -11,7 +11,6 @@ import {
 } from 'react-leaflet';
 import { IProperty, IPropertyDetail, storeParcelDetail } from 'actions/parcelsActions';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ILookupCode } from 'actions/lookupActions';
 import BasemapToggle, { BasemapToggleEvent, BaseLayer } from '../BasemapToggle';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMapViewZoom, DEFAULT_MAP_ZOOM } from 'reducers/mapViewZoomSlice';
@@ -50,6 +49,7 @@ import { Claims } from '../../../constants';
 import InfoSlideOut from './InfoSlideOut/InfoSlideOut';
 import { PropertyPopUpContextProvider } from '../providers/PropertyPopUpProvider';
 import FilterBackdrop from './FilterBackdrop';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 export type MapViewportChangeEvent = {
   bounds: LatLngBounds | null;

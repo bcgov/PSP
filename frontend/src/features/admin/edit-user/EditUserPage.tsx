@@ -15,8 +15,8 @@ import { useHistory } from 'react-router-dom';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { formatApiDateTime } from 'utils';
 import useCodeLookups from 'hooks/useLookupCodes';
-import { ILookupCode } from 'actions/lookupActions';
 import { AUTHORIZATION_URL } from 'constants/strings';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 interface IEditUserPageProps extends IUserDetailParams {
   match?: any;

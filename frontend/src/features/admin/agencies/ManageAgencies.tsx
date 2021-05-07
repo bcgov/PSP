@@ -16,8 +16,8 @@ import { generateMultiSortCriteria } from 'utils';
 import { AgencyFilterBar } from './AgencyFilterBar';
 import useCodeLookups from 'hooks/useLookupCodes';
 import { useHistory } from 'react-router-dom';
-import { getFetchLookupCodeAction } from 'actionCreators/lookupCodeActionCreator';
 import { isEmpty } from 'lodash';
+import { useLookupCodes } from 'store/slices/lookupCodes';
 
 const ManageAgencies: React.FC = () => {
   const columns = useMemo(() => columnDefinitions, []);
@@ -91,10 +91,11 @@ const ManageAgencies: React.FC = () => {
     },
     [dispatch, filter, pageSize, sort],
   );
+  const { fetchLookupCodes } = useLookupCodes();
 
   useEffect(() => {
-    dispatch(getFetchLookupCodeAction());
-  }, [history, dispatch]);
+    fetchLookupCodes();
+  }, [fetchLookupCodes]);
 
   return (
     <Container fluid className="ManageAgencies">

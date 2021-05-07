@@ -9,7 +9,6 @@ import * as API from 'constants/API';
 import './EditAgencyPage.scss';
 import { useHistory } from 'react-router-dom';
 import useCodeLookups from 'hooks/useLookupCodes';
-import { ILookupCode } from 'actions/lookupActions';
 import {
   createAgency,
   deleteAgency,
@@ -21,6 +20,7 @@ import GenericModal from 'components/common/GenericModal';
 import { AgencyEditSchema } from 'utils/YupSchema';
 import service from 'features/properties/service';
 import TooltipWrapper from 'components/common/TooltipWrapper';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 interface IEditAgencyPageProps {
   /** id prop to identify which agency to edit */

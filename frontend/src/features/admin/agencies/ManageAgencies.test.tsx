@@ -4,7 +4,6 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as actionTypes from 'constants/actionTypes';
 import * as reducerTypes from 'constants/reducerTypes';
 import * as API from 'constants/API';
@@ -13,6 +12,7 @@ import { render, cleanup } from '@testing-library/react';
 import noop from 'lodash/noop';
 import { Formik } from 'formik';
 import { useKeycloak } from '@react-keycloak/web';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
