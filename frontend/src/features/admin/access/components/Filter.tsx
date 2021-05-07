@@ -8,14 +8,14 @@ import { useDispatch } from 'react-redux';
 import { getFetchLookupCodeAction } from 'actionCreators/lookupCodeActionCreator';
 import { Button } from 'components/common/form/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { IFilterData } from 'actions/accessRequestActions';
+import { IAccessRequestsFilterData } from 'store/slices/accessRequests';
 
 interface IProps {
-  initialValues?: IFilterData;
-  applyFilter: (filter: IFilterData) => void;
+  initialValues?: IAccessRequestsFilterData;
+  applyFilter: (filter: IAccessRequestsFilterData) => void;
 }
 
-export const defaultFilter: IFilterData = { searchText: '', role: '', agency: '' };
+export const defaultFilter: IAccessRequestsFilterData = { searchText: '', role: '', agency: '' };
 
 export const AccessRequestFilter = (props: IProps) => {
   const [filterState, setFilterState] = React.useState(props.initialValues || defaultFilter);

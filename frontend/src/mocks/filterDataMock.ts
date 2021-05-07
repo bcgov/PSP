@@ -1,8 +1,10 @@
+import { IAccessRequest } from 'interfaces';
 import { IBuilding } from './../actions/parcelsActions';
 import { ILookupCode } from '../actions/lookupActions';
 import { IParcel, IProperty } from 'actions/parcelsActions';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { Workflows } from 'constants/index';
+import { AccessRequestStatus } from 'constants/accessStatus';
 
 export const SELECTEDCLASSIFICATION = {
   name: 'Core Operational',
@@ -590,3 +592,45 @@ export const ACTIVE = {
   parcels: [],
   agency: 'FIN',
 } as IParcel;
+
+export const mockAccessRequest: IAccessRequest = {
+  id: 2,
+  userId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  status: AccessRequestStatus.OnHold,
+  note: '',
+  user: {
+    id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    displayName: 'User, Admin',
+    firstName: 'Admin',
+    lastName: 'User',
+    email: 'admin@pims.gov.bc.ca',
+    username: 'admin',
+    position: '',
+    createdOn: '2021-05-04T19:07:09.6920606',
+  },
+  agencies: [
+    {
+      description: '',
+      code: 'AG',
+      id: 251,
+      name: 'Attorney General',
+      isDisabled: false,
+      sortOrder: 0,
+      createdOn: '2021-05-07T00:37:06.2457312',
+    },
+  ],
+  roles: [
+    {
+      description: 'Real Estate Manager can manage properties within their agencies.',
+      id: 'aad8c03d-892c-4cc3-b992-5b41c4f2392c',
+      name: 'Real Estate Manager',
+      isDisabled: false,
+      sortOrder: 0,
+      createdOn: '2021-05-07T00:37:06.2457315',
+      updatedByName: 'unknown',
+      updatedByEmail: 'unknown',
+      rowVersion: 'AAAAAAAAJyM=',
+    },
+  ],
+  createdOn: '2021-05-07T00:37:06.2457303',
+};

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isEmpty } from 'lodash';
-import { store } from 'App';
 import { toast } from 'react-toastify';
+import { store } from 'store/store';
 
 const defaultEnvelope = (x: any) => ({ data: { records: x } });
 
