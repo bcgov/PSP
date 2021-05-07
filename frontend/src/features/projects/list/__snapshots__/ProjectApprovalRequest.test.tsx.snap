@@ -216,7 +216,6 @@ exports[`Project Approval Request list view Matches snapshot 1`] = `
                 color="black"
                 fill="currentColor"
                 height="20"
-                size="20"
                 stroke="currentColor"
                 stroke-width="0"
                 style="color: black;"
@@ -693,7 +692,9 @@ exports[`Project Approval Request list view Matches snapshot 1`] = `
         >
           <a
             aria-disabled="true"
+            aria-label="Previous page"
             class="page-link"
+            rel="prev"
             role="button"
             tabindex="0"
           >
@@ -718,7 +719,9 @@ exports[`Project Approval Request list view Matches snapshot 1`] = `
         >
           <a
             aria-disabled="true"
+            aria-label="Next page"
             class="page-link"
+            rel="next"
             role="button"
             tabindex="0"
           >

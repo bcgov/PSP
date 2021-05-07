@@ -31,18 +31,14 @@ import queryString from 'query-string';
 
 interface ISurplusPropertyListFormProps {
   isReadOnly?: boolean;
-  onClickProceedToSPL: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickRemoveFromSPL: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickPreMarketing: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickMarketedOn: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickContractInPlaceConditional: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => void;
-  onClickContractInPlaceUnconditional: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => void;
-  onClickDisposedExternally: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickGreTransferred: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickProceedToSPL: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickRemoveFromSPL: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickPreMarketing: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickMarketedOn: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickContractInPlaceConditional: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickContractInPlaceUnconditional: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickDisposedExternally: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickGreTransferred: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 /**
@@ -98,7 +94,7 @@ const SurplusPropertyListForm = ({
 
   const mainBtn = primaryButton(values.statusCode);
   const subdivisions =
-    values.properties.filter((property: IProperty) => property.propertyTypeId === 2) ?? [];
+    values?.properties?.filter((property: IProperty) => property.propertyTypeId === 2) ?? [];
   const parentParcels = _.uniqBy(_.flatten(subdivisions.map(s => s.parcels ?? [])), 'pid');
 
   const linkListItems = useMemo<ILinkListItem[]>(

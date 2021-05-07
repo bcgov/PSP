@@ -31,10 +31,9 @@ exports[`AppNavBar AppNavBar snapshot test. 1`] = `
       <NavbarCollapse
         className="links mr-auto"
       >
-        <Collapse
+        <ForwardRef
           appear={false}
           className="links mr-auto"
-          dimension="height"
           getDimensionValue={[Function]}
           in={false}
           mountOnEnter={false}
@@ -97,7 +96,6 @@ exports[`AppNavBar AppNavBar snapshot test. 1`] = `
                             <svg
                               fill="currentColor"
                               height={20}
-                              size={20}
                               stroke="currentColor"
                               strokeWidth="0"
                               style={
@@ -128,7 +126,7 @@ exports[`AppNavBar AppNavBar snapshot test. 1`] = `
               </Nav>
             </div>
           </Transition>
-        </Collapse>
+        </ForwardRef>
       </NavbarCollapse>
       <HelpContainer />
     </nav>

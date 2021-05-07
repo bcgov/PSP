@@ -41,7 +41,7 @@ const TooltipWrapper: React.FunctionComponent<ITooltipWrapperProps> = props => {
           </Tooltip>
         }
       >
-        {props.children}
+        {props.children ?? <></>}
       </OverlayTrigger>
     </>
   );

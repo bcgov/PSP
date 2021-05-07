@@ -110,7 +110,6 @@ const ReportControls: React.FunctionComponent<IReportControlsProps> = ({
                   <BSForm.Group controlId="select-from" className="ml-2">
                     <BSForm.Label>From: </BSForm.Label>
                     <BSForm.Control
-                      options={reportOptions}
                       as="select"
                       value={fromId}
                       disabled={values.isFinal}

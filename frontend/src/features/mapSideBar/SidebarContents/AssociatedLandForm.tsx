@@ -635,7 +635,7 @@ const AssociatedLandForm: React.FC<IAssociatedLandParentForm> = (
           persistable={false}
           persistProps={{
             name: 'associatedLand',
-            secret: keycloak.obj.subject,
+            secret: keycloak.obj.subject!,
             persistCallback: noop,
           }}
           onAddTab={(values: IAssociatedLand) => {

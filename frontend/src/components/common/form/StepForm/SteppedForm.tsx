@@ -133,8 +133,8 @@ export const SteppedForm = function<T extends object = {}>({
               id="steppedform-tabs"
               className={!getTabs ? 'hideTabs' : ''}
               activeKey={values.activeTab}
-              onSelect={(tab: string) => {
-                if (tab !== '') {
+              onSelect={(tab: string | null) => {
+                if (tab !== null && tab !== '') {
                   setFieldValue('activeTab', +tab);
                   onChangeTab && setSteps(onChangeTab(+tab));
                 }
@@ -144,7 +144,7 @@ export const SteppedForm = function<T extends object = {}>({
               {getFormikTabs(values.data).map((tab, index) => (
                 <Tab
                   title={tabTitle(tab.name, index, setTabToDeleteId)}
-                  eventKey={index}
+                  eventKey={index.toString()}
                   key={`stepped-tab-${index}`}
                 >
                   <StepperFormProvider steps={steps} tabs={getFormikTabs(values.data)}>
@@ -169,7 +169,7 @@ export const SteppedForm = function<T extends object = {}>({
                       onAddTab && onAddTab(values.data);
                       //add a new tab to the formik tab tracker.
                       setFieldValue('tabs', [
-                        ...values.tabs,
+                        ...(values.tabs ?? []),
                         { activeStep: 0, name: `Parcel ${(values?.tabs?.length ?? 0) + 1}` },
                       ]);
                       //set the current tab to the newly added tab.

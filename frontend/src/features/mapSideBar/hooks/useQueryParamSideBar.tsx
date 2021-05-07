@@ -3,7 +3,7 @@ import { useState, useCallback, useMemo } from 'react';
 import queryString from 'query-string';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as H from 'history';
-import dequal from 'dequal';
+import { dequal } from 'dequal';
 
 export type SidebarSize = 'narrow' | 'wide' | undefined;
 
