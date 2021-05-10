@@ -2,25 +2,26 @@ import * as React from 'react';
 import { Container } from 'react-bootstrap';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import { Table } from 'components/Table';
-import { IPaginate, toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 import * as API from 'constants/API';
 import { IAccessRequest } from 'interfaces';
 import './ManageAccessRequests.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
 import { IGenericNetworkAction } from 'actions/genericActions';
-import {
-  getAccessRequestsAction,
-  getAccessRequestsFilterAction,
-} from 'actionCreators/accessRequestActionCreator';
 import * as actionTypes from 'constants/actionTypes';
-import { IAccessRequestState } from 'reducers/accessRequestReducer';
 import { IAccessRequestModel } from './interfaces';
 import { AccessRequestFilter } from './components/Filter';
-import { IFilterData, getUpdateAccessRequestPageIndex } from 'actions/accessRequestActions';
 import { columnDefinitions } from './constants/constants';
 import { AccessRequestDetails } from './components/Details';
 import { tenant } from 'tenants';
+import { useAppSelector } from 'store/hooks';
+import {
+  updateAccessRequestPageIndex,
+  filterAccessRequestsAdmin,
+  useAccessRequests,
+  IAccessRequestsFilterData,
+} from 'store/slices/accessRequests';
 
 const ManageAccessRequests = () => {
   const dispatch = useDispatch();
@@ -33,34 +34,25 @@ const ManageAccessRequests = () => {
       (state.network as any)[actionTypes.UPDATE_REQUEST_ACCESS_ADMIN] as IGenericNetworkAction,
   );
 
-  const pagedAccessRequests = useSelector<RootState, IPaginate>(
-    state => (state.accessRequest as IAccessRequestState)?.pagedAccessRequests,
-  );
+  const pagedAccessRequests = useAppSelector(state => state.accessRequests.pagedAccessRequests);
 
-  const pageSize = useSelector<RootState, number>(
-    state => (state.accessRequest as IAccessRequestState)?.pageSize,
-  );
+  const pageSize = useAppSelector(state => state.accessRequests?.pageSize);
 
-  const pageIndex = useSelector<RootState, number>(
-    state => (state.accessRequest as IAccessRequestState).pageIndex,
-  );
+  const pageIndex = useAppSelector(state => state.accessRequests.pageIndex);
 
-  const filter = useSelector<RootState, IFilterData>(
-    state => (state.accessRequest as IAccessRequestState).filter,
-  );
+  const filter = useAppSelector(state => state.accessRequests.filter);
+
+  const { fetchAccessRequests } = useAccessRequests();
 
   React.useEffect(() => {
     if (!updateRequestAccessAdmin?.isFetching) {
-      const paginateParams: API.IPaginateAccessRequests = toFilteredApiPaginateParams<IFilterData>(
-        pageIndex,
-        pageSize,
-        '',
-        filter,
-      );
+      const paginateParams: API.IPaginateAccessRequests = toFilteredApiPaginateParams<
+        IAccessRequestsFilterData
+      >(pageIndex, pageSize, '', filter);
       paginateParams.status = AccessRequestStatus.OnHold;
-      dispatch(getAccessRequestsAction(paginateParams));
+      fetchAccessRequests(paginateParams);
     }
-  }, [updateRequestAccessAdmin, pageSize, dispatch, filter, pageIndex]);
+  }, [updateRequestAccessAdmin, pageSize, filter, pageIndex, fetchAccessRequests]);
 
   const requests = (pagedAccessRequests.items as IAccessRequest[]).map(
     ar =>
@@ -92,7 +84,7 @@ const ManageAccessRequests = () => {
         <div className="search-bar">
           <AccessRequestFilter
             initialValues={filter}
-            applyFilter={filter => dispatch(getAccessRequestsFilterAction(filter))}
+            applyFilter={filter => dispatch(filterAccessRequestsAdmin(filter))}
           />
         </div>
         {!!selectedRequest && (
@@ -107,7 +99,7 @@ const ManageAccessRequests = () => {
           data={requests}
           defaultCanSort={true}
           pageCount={Math.ceil(pagedAccessRequests.total / pageSize)}
-          onRequestData={req => dispatch(getUpdateAccessRequestPageIndex(req.pageIndex))}
+          onRequestData={req => dispatch(updateAccessRequestPageIndex(req.pageIndex))}
           onRowClick={showDetails}
           clickableTooltip="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
         />

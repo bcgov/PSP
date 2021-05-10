@@ -1,17 +1,9 @@
 import React, { useEffect } from 'react';
 import './AccessRequestPage.scss';
 import { Container, Row, Col, ButtonToolbar, Button, Alert } from 'react-bootstrap';
-import {
-  getCurrentAccessRequestAction,
-  getSubmitAccessRequestAction,
-  toAccessRequest,
-} from 'actionCreators/accessRequestActionCreator';
 import { IUserInfo, IAccessRequest } from 'interfaces';
 import { Formik } from 'formik';
 import { Form, Input, TextArea, Select } from '../../../components/common/form';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import { IAccessRequestState } from 'reducers/accessRequestReducer';
 import * as API from 'constants/API';
 import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from 'constants/strings';
 import { AccessRequestSchema } from 'utils/YupSchema';
@@ -22,6 +14,9 @@ import { Snackbar, ISnackbarState } from 'components/common/Snackbar';
 import useCodeLookups from 'hooks/useLookupCodes';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { AUTHORIZATION_URL } from 'constants/strings';
+import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
+import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
+import { useAppSelector } from 'store/hooks';
 
 interface IAccessRequestForm extends IAccessRequest {
   agency: number;
@@ -38,16 +33,14 @@ const AccessRequestPage = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const userInfo = keycloak?.userInfo as IUserInfo;
-  const dispatch = useDispatch();
+  const { fetchCurrentAccessRequest, addAccessRequest } = useAccessRequests();
   const [alert, setAlert] = React.useState<ISnackbarState>({});
 
   useEffect(() => {
-    dispatch(getCurrentAccessRequestAction());
-  }, [dispatch]);
+    fetchCurrentAccessRequest();
+  }, [fetchCurrentAccessRequest]);
 
-  const data = useSelector<RootState, IAccessRequestState>(
-    state => state.accessRequest as IAccessRequestState,
-  );
+  const data = useAppSelector(state => state.accessRequests);
 
   const { getByType, getPublicByType } = useCodeLookups();
   const agencies = getByType(API.AGENCY_CODE_SET_NAME);
@@ -70,8 +63,8 @@ const AccessRequestPage = () => {
     status: accessRequest?.status || AccessRequestStatus.OnHold,
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
-    agency: accessRequest?.agencies?.find(x => x).id,
-    role: accessRequest?.roles?.find(x => x).id,
+    agency: accessRequest?.agencies?.find(agency => agency).id,
+    role: accessRequest?.roles?.find(role => role).id,
     rowVersion: accessRequest?.rowVersion,
   };
 
@@ -135,7 +128,7 @@ const AccessRequestPage = () => {
             validationSchema={AccessRequestSchema}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                await dispatch(getSubmitAccessRequestAction(toAccessRequest(values)));
+                await addAccessRequest(toAccessRequest(values));
                 setAlert({
                   variant: 'success',
                   message: 'Your request has been submitted.',

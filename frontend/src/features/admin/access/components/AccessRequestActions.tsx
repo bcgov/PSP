@@ -1,19 +1,15 @@
 import { Dropdown } from 'react-bootstrap';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { IAccessRequest } from 'interfaces';
-import {
-  getSubmitAdminAccessRequestAction,
-  getAccessRequestsDeleteAction,
-} from 'actionCreators/accessRequestActionCreator';
 import { AccessRequestStatus } from 'constants/accessStatus';
+import { updateAccessRequestsAdmin, useAccessRequests } from 'store/slices/accessRequests';
 
 interface IAccessRequestActionsProps {
   selections: IAccessRequest[];
 }
 
 export const AccessRequestActions = (props: IAccessRequestActionsProps) => {
-  const dispatch = useDispatch();
+  const { removeAccessRequest } = useAccessRequests();
 
   const approveRequests = async () => {
     const items = props.selections.map(
@@ -30,13 +26,11 @@ export const AccessRequestActions = (props: IAccessRequestActionsProps) => {
   };
 
   const deleteRequests = async () => {
-    await Promise.all(
-      props.selections.map(req => getAccessRequestsDeleteAction(req.id, req)(dispatch)),
-    );
+    await Promise.all(props.selections.map(req => removeAccessRequest(req.id, req)));
   };
 
   const submit = async (items: IAccessRequest[]) => {
-    await Promise.all(items.map(req => getSubmitAdminAccessRequestAction(req)(dispatch)));
+    await Promise.all(items.map(req => updateAccessRequestsAdmin(req)));
   };
 
   const disabled = props.selections.length === 0;

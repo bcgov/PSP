@@ -8,7 +8,7 @@ import 'react-app-polyfill/stable';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App, { store } from './App';
+import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
@@ -18,6 +18,7 @@ import { AuthStateContextProvider } from 'contexts/authStateContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 import EmptyLayout from 'layouts/EmptyLayout';
 import LoginLoading from 'features/account/LoginLoading';
+import { store } from 'store/store';
 
 //@ts-ignore
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');

@@ -7,7 +7,7 @@ export const PARCEL = 'parcel';
 export const LOOKUP_CODE = 'lookupCode';
 
 // access requests
-export const ACCESS_REQUEST = 'accessRequest';
+export const ACCESS_REQUEST = 'accessRequests';
 
 // Users
 export const USERS = 'users';
