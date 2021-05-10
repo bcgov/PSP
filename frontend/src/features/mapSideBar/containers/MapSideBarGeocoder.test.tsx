@@ -35,10 +35,8 @@ const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 jest.spyOn(_, 'debounce').mockImplementation(
   jest.fn((fn: any) => {
-    // fn.cancel = jest.fn();
-    // fn.flush = jest.fn();
-    return fn as ((...args: any[]) => any) & _.Cancelable;
-  }),
+    return fn as (...args: any[]) => any;
+  }) as any,
 );
 
 const mockStore = configureMockStore([thunk]);
