@@ -64,7 +64,12 @@ parameters:
     description: "The name of the configuration file to be used for keycloak.json."
     required: true
     value: "keycloak.json"
-  - name: KEYCLOAK_CONFIG_MOUNT_PATH
+  - name: TENANT_CONFIG_FILE_NAME
+    displayName: "tenant.json Config File Name"
+    description: "The name of the configuration file to be used for tenant.json."
+    required: true
+    value: "tenant.json"
+  - name: CONFIG_MOUNT_PATH
     displayName: "keycloak.json Mount Path"
     description: "The path to use to mount the config file."
     required: true
@@ -189,10 +194,41 @@ objects:
         "realm": "${KEYCLOAK_REALM}",
         "auth-server-url": "${KEYCLOAK_AUTHORITY_URL}",
         "ssl-required": "external",
-        "resource": "${APP_NAME}-${ROLE_NAME}-uat",
+        "resource": "${APP_NAME}-${ROLE_NAME}",
         "public-client": true,
         "confidential-port": 0
         }'
+
+  # Tenant configuration settings.
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      annotations:
+        description: Tenant configuration settings
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
+    type: Opaque
+    data:
+      tenant.json: '{
+        "title": "Property Information Management System",
+        "logo": {
+          "favicon": "/tenants/MOTI/favicon.ico",
+          "image": "/tenants/MOTI/PIMS-logo.png",
+          "imageWithText": "/tenants/MOTI/PIMS-logo-with-text.png"
+        },
+        "login": {
+          "title": "TRAN Property Information Management System (PIMS)",
+          "heading":
+            "PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure",
+          "body":
+            "WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it."
+        }
+      }'
 
   # How the app will be deployed to the pod.
   - kind: DeploymentConfig
@@ -238,6 +274,12 @@ objects:
                 items:
                   - key: "${KEYCLOAK_CONFIG_FILE_NAME}"
                     path: "${KEYCLOAK_CONFIG_FILE_NAME}"
+            - name: "${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}"
+              configMap:
+                name: ${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}
+                items:
+                  - key: "${TENANT_CONFIG_FILE_NAME}"
+                    path: "${TENANT_CONFIG_FILE_NAME}"
           containers:
             - name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
               image: ""
@@ -263,8 +305,11 @@ objects:
                   memory: ${MEMORY_LIMIT}
               volumeMounts:
                 - name: "${APP_NAME}-${ROLE_NAME}-keycloak${INSTANCE}"
-                  mountPath: "${KEYCLOAK_CONFIG_MOUNT_PATH}${KEYCLOAK_CONFIG_FILE_NAME}"
+                  mountPath: "${CONFIG_MOUNT_PATH}${KEYCLOAK_CONFIG_FILE_NAME}"
                   subPath: "${KEYCLOAK_CONFIG_FILE_NAME}"
+                - name: "${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}"
+                  mountPath: "${CONFIG_MOUNT_PATH}/tenants/${TENANT_CONFIG_FILE_NAME}"
+                  subPath: "${TENANT_CONFIG_FILE_NAME}"
               livenessProbe:
                 httpGet:
                   path: "/nginx_status"

@@ -10,7 +10,7 @@ exports[`login login renders correctly 1`] = `
     <img
       alt="PIMS logo"
       className="pims-logo"
-      src=""
+      src="/tenants/MOTI/PIMS-logo-with-text.png"
     />
     <div
       className="sign-in row"
@@ -22,13 +22,13 @@ exports[`login login renders correctly 1`] = `
         className="block col-md-6 col-16"
       >
         <h1>
-          
+          TRAN Property Information Management System (PIMS)
         </h1>
         <h6>
-          
+          PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure
         </h6>
         <p>
-          
+          WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.
         </p>
         <button
           className="btn btn-primary"

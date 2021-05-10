@@ -43,7 +43,7 @@ exports[`Empty Header renders 1`] = `
     <img
       alt="PIMS logo"
       class="pims-logo"
-      src=""
+      src="/tenants/MOTI/PIMS-logo-with-text.png"
     />
     <div
       class="sign-in row"

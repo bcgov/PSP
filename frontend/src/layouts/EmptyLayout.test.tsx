@@ -1,10 +1,16 @@
+import React from 'react';
 import EmptyLayout from './EmptyLayout';
 import { render } from '@testing-library/react';
-import React from 'react';
+import { TenantProvider } from 'tenants';
 
 describe('Empty Layout', () => {
   it('renders', () => {
-    const { container } = render(<EmptyLayout></EmptyLayout>);
+    process.env.REACT_APP_TENANT = 'MOTI';
+    const { container } = render(
+      <TenantProvider>
+        <EmptyLayout></EmptyLayout>
+      </TenantProvider>,
+    );
     expect(container.firstChild).toMatchSnapshot();
   });
 });

@@ -26,7 +26,7 @@ parameters:
     displayName: Source Context Directory
     description: The source context directory.
     required: true
-    value: openshift/3.11/templates/base-images/nginx-runtime/
+    value: openshift/4.0/templates/base-images/nginx-runtime/
   - name: OUTPUT_IMAGE_TAG
     displayName: Output Image Tag
     description: The tag given to the built image.

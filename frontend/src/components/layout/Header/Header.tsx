@@ -11,7 +11,7 @@ import _ from 'lodash';
 import { UserProfile } from './UserProfile';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import styled from 'styled-components';
-import { tenant } from 'tenants';
+import { useTenant } from 'tenants';
 import { ErrorModal } from './ErrorModal';
 import { Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
@@ -28,6 +28,7 @@ export const Header = () => {
   }
   const [show, setShow] = React.useState(false);
   const handleShow = () => setShow(true);
+  const tenant = useTenant();
 
   const errors = useSelector<RootState, IGenericNetworkAction[]>(state => {
     const errors: IGenericNetworkAction[] = [];

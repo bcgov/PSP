@@ -23,6 +23,7 @@ import { useApi, PimsAPI, IGeocoderResponse, IGeocoderPidsResponse } from 'hooks
 import * as API from 'constants/API';
 import * as _ from 'lodash';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { TenantProvider, defaultTenant } from 'tenants';
 
 jest.mock(
   'react-visibility-sensor',
@@ -37,6 +38,12 @@ jest.spyOn(_, 'debounce').mockImplementation(
   jest.fn((fn: any) => {
     return fn as (...args: any[]) => any;
   }) as any,
+);
+jest.spyOn(global, 'fetch').mockImplementation(
+  () =>
+    Promise.resolve({
+      json: () => Promise.resolve(JSON.stringify(defaultTenant)),
+    }) as Promise<Response>,
 );
 
 const mockStore = configureMockStore([thunk]);
@@ -114,21 +121,23 @@ jest.mock('hooks/useApi');
 
 const renderContainer = ({ store }: any) =>
   render(
-    <Provider store={store ?? getStore()}>
-      <Router history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
-        <Route path="/mapView/:id?">
-          <MapSideBarContainer refreshParcels={noop} properties={[]} />
-        </Route>
-      </Router>
-    </Provider>,
+    <TenantProvider>
+      <Provider store={store ?? getStore()}>
+        <Router history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          <Route path="/mapView/:id?">
+            <MapSideBarContainer refreshParcels={noop} properties={[]} />
+          </Route>
+        </Router>
+      </Provider>
+    </TenantProvider>,
   );
 
 describe('MapSideBarContainer Geocoder functionality', () => {

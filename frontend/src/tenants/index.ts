@@ -1,4 +1,5 @@
 export * from './tenant';
 export * from './Logo';
-export { Config as MOTIConfig } from './MOTI/config';
-export { Config as CITZConfig } from './CITZ/config';
+export * from './config';
+export * from './ITenantConfig';
+export * from './useTenant';

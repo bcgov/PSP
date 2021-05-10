@@ -12,7 +12,7 @@ import { ILookupCode } from 'actions/lookupActions';
 import * as reducerTypes from 'constants/reducerTypes';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import Claims from 'constants/claims';
-import { MOTIConfig, CITZConfig, setTenant } from 'tenants';
+import { TenantProvider, config } from 'tenants';
 
 jest.mock('@react-keycloak/web');
 afterEach(() => {
@@ -40,7 +40,7 @@ describe('Header tests', () => {
     jest.resetModules();
     process.env = {
       ...OLD_ENV,
-      REACT_APP_TENANT: undefined,
+      REACT_APP_TENANT: 'TEST',
     };
   });
 
@@ -52,11 +52,13 @@ describe('Header tests', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const tree = renderer
       .create(
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>,
+        <TenantProvider>
+          <Provider store={store}>
+            <Router history={history}>
+              <Header />
+            </Router>
+          </Provider>
+        </TenantProvider>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
@@ -64,32 +66,34 @@ describe('Header tests', () => {
 
   it('Header renders for MOTI tenant', async () => {
     process.env.REACT_APP_TENANT = 'MOTI';
-    setTenant();
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const header = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </Provider>,
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Header />
+          </Router>
+        </Provider>
+      </TenantProvider>,
     );
-    const result = await header.findByText(MOTIConfig.title);
-    expect(result.innerHTML).toBe(MOTIConfig.title);
+    const result = await header.findByText(config['MOTI'].title);
+    expect(result.innerHTML).toBe(config['MOTI'].title);
   });
 
   it('Header renders for CITZ tenant', async () => {
     process.env.REACT_APP_TENANT = 'CITZ';
-    setTenant();
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const header = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </Provider>,
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Header />
+          </Router>
+        </Provider>
+      </TenantProvider>,
     );
-    const result = await header.findByText(CITZConfig.title);
-    expect(result.innerHTML).toBe(CITZConfig.title);
+    const result = await header.findByText(config['CITZ'].title);
+    expect(result.innerHTML).toBe(config['CITZ'].title);
   });
 
   it('User displays default if no user name information found', () => {
@@ -104,11 +108,13 @@ describe('Header tests', () => {
     });
 
     const { getByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Header />
-        </Router>
-      </Provider>,
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Header />
+          </Router>
+        </Provider>
+      </TenantProvider>,
     );
     const name = getByText('default');
     expect(name).toBeVisible();
@@ -129,11 +135,13 @@ describe('Header tests', () => {
       });
 
       const { getByText } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>,
+        <TenantProvider>
+          <Provider store={store}>
+            <Router history={history}>
+              <Header />
+            </Router>
+          </Provider>
+        </TenantProvider>,
       );
       const name = getByText('display name');
       expect(name).toBeVisible();
@@ -153,11 +161,13 @@ describe('Header tests', () => {
       });
 
       const { getByText } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>,
+        <TenantProvider>
+          <Provider store={store}>
+            <Router history={history}>
+              <Header />
+            </Router>
+          </Provider>
+        </TenantProvider>,
       );
       const name = getByText('firstName lastName');
       expect(name).toBeVisible();
@@ -176,11 +186,13 @@ describe('Header tests', () => {
         },
       });
       const { getByText } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>,
+        <TenantProvider>
+          <Provider store={store}>
+            <Router history={history}>
+              <Header />
+            </Router>
+          </Provider>
+        </TenantProvider>,
       );
       fireEvent.click(getByText(/test user/i));
       expect(getByText(/agencyVal/i)).toBeInTheDocument();

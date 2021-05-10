@@ -36,7 +36,7 @@ import { withNameSpace } from 'utils/formUtils';
 import { PropertyTypes, Claims, EvaluationKeys, FiscalKeys } from 'constants/index';
 import { useBuildingApi } from '../hooks/useBuildingApi';
 import { fireMapRefreshEvent } from 'components/maps/hooks/useMapRefreshEvent';
-import { tenant } from 'tenants';
+import { useTenant } from 'tenants';
 
 interface IMapSideBarContainerProps {
   refreshParcels: Function;
@@ -102,6 +102,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
     setDisabled,
     handleLocationChange,
   } = useParamSideBar(formikRef);
+  const tenant = useTenant();
 
   const { parcelDetail } = useSideBarParcelLoader({
     parcelId,
