@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tenant configuration Tenant returns correct CITZ configuration 1`] = `null`;
+
+exports[`Tenant configuration Tenant returns correct MOTI configuration 1`] = `null`;
+
+exports[`Tenant configuration Tenant returns correct default configuration 1`] = `null`;
+
+exports[`Tenant configuration Tenant returns correct non-existing configuration 1`] = `null`;

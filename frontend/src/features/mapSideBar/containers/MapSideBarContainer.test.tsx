@@ -24,6 +24,7 @@ import { fireEvent } from '@testing-library/dom';
 import * as API from 'constants/API';
 import * as _ from 'lodash';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { TenantProvider, defaultTenant } from 'tenants';
 
 jest.mock(
   'react-visibility-sensor',
@@ -38,6 +39,12 @@ jest.spyOn(_, 'debounce').mockImplementation(
   jest.fn((fn: any) => {
     return fn as (...args: any[]) => any;
   }) as any,
+);
+jest.spyOn(global, 'fetch').mockImplementation(
+  () =>
+    Promise.resolve({
+      json: () => Promise.resolve(JSON.stringify(defaultTenant)),
+    }) as Promise<Response>,
 );
 
 const featureResponse = {
@@ -97,24 +104,28 @@ const history = createMemoryHistory({
 
 const renderContainer = ({ store }: any) =>
   render(
-    <Provider store={store ?? getStore()}>
-      <Router history={history}>
-        <ToastContainer
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-        />
-        <Route path="/mapView/:id?">
-          <MapSideBarContainer refreshParcels={noop} properties={[]} />
-        </Route>
-      </Router>
-    </Provider>,
+    <TenantProvider>
+      <Provider store={store ?? getStore()}>
+        <Router history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          <Route path="/mapView/:id?">
+            <MapSideBarContainer refreshParcels={noop} properties={[]} />
+          </Route>
+        </Router>
+      </Provider>
+    </TenantProvider>,
   );
 
 describe('Parcel Detail MapSideBarContainer', () => {
+  process.env.REACT_APP_TENANT = 'CITZ';
+
   // clear mocks before each test
   beforeEach(() => {
     (useKeycloak as jest.Mock).mockReturnValue({
@@ -181,6 +192,7 @@ describe('Parcel Detail MapSideBarContainer', () => {
   describe('edit button display as rem', () => {
     beforeEach(() => {
       jest.resetAllMocks();
+      process.env.REACT_APP_TENANT = 'CITZ';
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           userInfo: {
@@ -250,6 +262,7 @@ describe('Parcel Detail MapSideBarContainer', () => {
   describe('edit button display as admin', () => {
     beforeEach(() => {
       jest.resetAllMocks();
+      process.env.REACT_APP_TENANT = 'CITZ';
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           userInfo: {
@@ -300,6 +313,7 @@ describe('Parcel Detail MapSideBarContainer', () => {
     beforeEach(() => {
       mockAxios.resetHistory();
       mockAxios.reset();
+      process.env.REACT_APP_TENANT = 'CITZ';
     });
 
     it('displays the leased land other form when the corresponding radio button is clicked', async () => {
@@ -522,6 +536,7 @@ describe('Parcel Detail MapSideBarContainer', () => {
         mockAxios.resetHistory();
         mockAxios.reset();
         jest.resetAllMocks();
+        process.env.REACT_APP_TENANT = 'CITZ';
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             userInfo: {

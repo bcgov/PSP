@@ -14,7 +14,6 @@ import { IAccessRequestModel } from './interfaces';
 import { AccessRequestFilter } from './components/Filter';
 import { columnDefinitions } from './constants/constants';
 import { AccessRequestDetails } from './components/Details';
-import { tenant } from 'tenants';
 import { useAppSelector } from 'store/hooks';
 import {
   updateAccessRequestPageIndex,
@@ -22,9 +21,11 @@ import {
   useAccessRequests,
   IAccessRequestsFilterData,
 } from 'store/slices/accessRequests';
+import { useTenant } from 'tenants';
 
 const ManageAccessRequests = () => {
   const dispatch = useDispatch();
+  const tenant = useTenant();
   const [selectedRequest, setSelectedRequest] = React.useState<IAccessRequestModel | undefined>(
     undefined,
   );

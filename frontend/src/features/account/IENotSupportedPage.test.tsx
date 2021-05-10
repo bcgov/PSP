@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { createMemoryHistory } from 'history';
 import renderer from 'react-test-renderer';
+import { TenantProvider } from 'tenants';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
@@ -25,14 +26,17 @@ describe('login error page', () => {
     cleanup();
   });
   it('login error page renders correctly', () => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     const history = createMemoryHistory();
     const tree = renderer
       .create(
-        <Provider store={store}>
-          <Router history={history}>
-            <IENotSupportedPage></IENotSupportedPage>
-          </Router>
-        </Provider>,
+        <TenantProvider>
+          <Provider store={store}>
+            <Router history={history}>
+              <IENotSupportedPage></IENotSupportedPage>
+            </Router>
+          </Provider>
+        </TenantProvider>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();

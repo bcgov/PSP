@@ -16,6 +16,7 @@ import { Router } from 'react-router-dom';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import { useKeycloak } from '@react-keycloak/web';
+import { TenantProvider } from 'tenants';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -83,14 +84,17 @@ const successStore = mockStore({
 });
 
 const componentRender = (store: any) => {
+  process.env.REACT_APP_TENANT = 'MOTI';
   let component = create(
-    <Formik initialValues={{}} onSubmit={noop}>
-      <Router history={history}>
-        <Provider store={store}>
-          <ManageAccessRequests />
-        </Provider>
-      </Router>
-    </Formik>,
+    <TenantProvider>
+      <Formik initialValues={{}} onSubmit={noop}>
+        <Router history={history}>
+          <Provider store={store}>
+            <ManageAccessRequests />
+          </Provider>
+        </Router>
+      </Formik>
+    </TenantProvider>,
   );
   return component;
 };

@@ -1,11 +1,12 @@
-import { ITenantConfig } from '../ITenantConfig';
-import { defaultTenant } from '..';
+import { defaultTenant, ITenantConfig } from '..';
 
-export const Config: ITenantConfig = {
+/**
+ * Tenant configuration settings for CITZ.
+ */
+export const config: ITenantConfig = {
   ...defaultTenant,
   ...{
     title: 'Property Inventory Management System',
-    shortName: 'PIMS',
     logo: {
       favicon: '/tenants/CITZ/favicon-16x16.ico',
       image: '/tenants/CITZ/logo_only.png',

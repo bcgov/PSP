@@ -19,28 +19,31 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import EmptyLayout from 'layouts/EmptyLayout';
 import LoginLoading from 'features/account/LoginLoading';
 import { store } from 'store/store';
+import { TenantProvider } from 'tenants';
 
 //@ts-ignore
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
-    <ReactKeycloakProvider
-      authClient={keycloak}
-      LoadingComponent={
-        <EmptyLayout>
-          <LoginLoading />
-        </EmptyLayout>
-      }
-      onEvent={getKeycloakEventHandler(keycloak)}
-    >
-      <Provider store={store}>
-        <AuthStateContextProvider>
-          <Router>
-            <App />
-          </Router>
-        </AuthStateContextProvider>
-      </Provider>
-    </ReactKeycloakProvider>
+    <TenantProvider>
+      <ReactKeycloakProvider
+        authClient={keycloak}
+        LoadingComponent={
+          <EmptyLayout>
+            <LoginLoading />
+          </EmptyLayout>
+        }
+        onEvent={getKeycloakEventHandler(keycloak)}
+      >
+        <Provider store={store}>
+          <AuthStateContextProvider>
+            <Router>
+              <App />
+            </Router>
+          </AuthStateContextProvider>
+        </Provider>
+      </ReactKeycloakProvider>
+    </TenantProvider>
   );
 };
 

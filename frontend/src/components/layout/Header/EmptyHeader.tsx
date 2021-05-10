@@ -3,13 +3,14 @@ import './Header.scss';
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import styled from 'styled-components';
-import { tenant, Logo } from 'tenants';
+import { useTenant, Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
 
 /**
  * Display an "empty" header bar with limited functionality as a placeholder
  */
 const EmptyHeader = () => {
+  const tenant = useTenant();
   return (
     <Navbar expand className="App-header">
       <Navbar.Brand className="brand-box">
@@ -17,7 +18,7 @@ const EmptyHeader = () => {
           <BCGovLogo />
         </a>
         <VerticalBar />
-        <Logo />
+        <Logo height={50} />
       </Navbar.Brand>
       <Nav className="title mr-auto">
         <Nav.Item>

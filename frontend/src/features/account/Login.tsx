@@ -10,7 +10,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as actionTypes from 'constants/actionTypes';
 import { useQuery } from 'hooks/use-query';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import { tenant, Logo } from 'tenants';
+import { useTenant, Logo } from 'tenants';
 
 /**
  * Login component provides information and links for the user to login.
@@ -25,7 +25,7 @@ const Login = () => {
   const activated = useSelector<RootState, IGenericNetworkAction>(
     state => (state.network as any)[actionTypes.ADD_ACTIVATE_USER] as IGenericNetworkAction,
   );
-  const { login } = tenant;
+  const tenant = useTenant();
 
   if (!keycloak) {
     return <Spinner animation="border"></Spinner>;
@@ -47,9 +47,9 @@ const Login = () => {
         <Row className="sign-in">
           <Col xs={1} md={3} />
           <Col xs={16} md={6} className="block">
-            <h1>{login.title}</h1>
-            <h6>{login.heading}</h6>
-            <p>{login.body}</p>
+            <h1>{tenant.login.title}</h1>
+            <h6>{tenant.login.heading}</h6>
+            <p>{tenant.login.body}</p>
             <Button variant="primary" onClick={() => keycloak.login()}>
               Sign In
             </Button>
