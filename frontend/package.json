@@ -130,7 +130,9 @@
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "check": "prettier --check \"./src/**/*.{js,jsx,ts,tsx,css,scss}\"",
     "pre-push:check": "npm run check && npm run lint",
-    "docu:server": "npx styleguidist server"
+    "docu:server": "npx styleguidist server",
+    "prepare": "cd .. && husky install frontend/.husky",
+    "pretty-quick": "pretty-quick"
   },
   "jest": {
     "resetMocks": false,
@@ -175,12 +177,6 @@
       "plugin:prettier/recommended"
     ],
     "rules": {}
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged",
-      "pre-push": "npm run pre-push:check"
-    }
   },
   "browserslist": {
     "production": [
