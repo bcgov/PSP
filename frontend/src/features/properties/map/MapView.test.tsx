@@ -115,16 +115,6 @@ const store = mockStore({
 
 let history = createMemoryHistory();
 describe('MapProperties View', () => {
-  beforeEach(() => {
-    ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
-        return createPoints(mockParcels);
-      }),
-      getParcel: async () => {
-        return {} as IParcel;
-      },
-    });
-  });
   const onMarkerClick = jest.fn();
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
@@ -134,6 +124,20 @@ describe('MapProperties View', () => {
     },
   });
   beforeEach(() => {
+    ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
+      loadProperties: jest.fn(async () => {
+        return createPoints(mockParcels);
+      }),
+      getParcel: async () => {
+        return {} as IParcel;
+      },
+    });
+    delete (window as any).ResizeObserver;
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }));
     onMarkerClick.mockClear();
     mockAxios.reset();
     jest.clearAllMocks();

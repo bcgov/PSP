@@ -314,7 +314,6 @@ exports[`MapProperties View Renders the map 1`] = `
                 <svg
                   fill="currentColor"
                   height="20"
-                  size="20"
                   stroke="currentColor"
                   stroke-width="0"
                   style="margin-right: 5px; margin-top: 2px;"
@@ -552,7 +551,6 @@ exports[`MapProperties View Renders the map 1`] = `
                   <svg
                     fill="currentColor"
                     height="20"
-                    size="20"
                     stroke="currentColor"
                     stroke-width="0"
                     viewBox="0 0 512 512"
@@ -581,7 +579,6 @@ exports[`MapProperties View Renders the map 1`] = `
                   <svg
                     fill="currentColor"
                     height="20"
-                    size="20"
                     stroke="currentColor"
                     stroke-width="0"
                     viewBox="0 0 512 512"
@@ -792,6 +789,7 @@ exports[`MapProperties View Renders the map 1`] = `
                         >
                           <div
                             class="c12 list-group-item"
+                            id="Administrative Boundaries"
                           >
                             <svg
                               class="c13"
@@ -828,6 +826,7 @@ exports[`MapProperties View Renders the map 1`] = `
                           </div>
                           <div
                             class="c12 list-group-item"
+                            id="firstNations"
                           >
                             <svg
                               class="c13"
@@ -864,6 +863,7 @@ exports[`MapProperties View Renders the map 1`] = `
                           </div>
                           <div
                             class="c12 list-group-item"
+                            id="landOwnership"
                           >
                             <svg
                               class="c13"
@@ -900,6 +900,7 @@ exports[`MapProperties View Renders the map 1`] = `
                           </div>
                           <div
                             class="c12 list-group-item"
+                            id="zoning"
                           >
                             <svg
                               class="c13"
