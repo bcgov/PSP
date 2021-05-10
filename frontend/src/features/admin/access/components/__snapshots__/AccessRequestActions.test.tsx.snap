@@ -3,7 +3,6 @@
 exports[`AccessRequestActions renders correctly 1`] = `
 <div
   className="dropdown"
-  onKeyDown={[Function]}
 >
   <button
     aria-expanded={false}

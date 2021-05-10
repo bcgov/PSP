@@ -3,7 +3,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col } from 'react-bootstrap';
-import configureStore from 'configureStore';
+
 import { getActivateUserAction } from 'actionCreators/usersActionCreator';
 import { getFetchLookupCodeAction } from 'actionCreators/lookupCodeActionCreator';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -14,8 +14,6 @@ import { ToastContainer } from 'react-toastify';
 import PublicLayout from 'layouts/PublicLayout';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import { setTenant } from 'tenants';
-
-export const store = configureStore();
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();

@@ -109,7 +109,7 @@ export const Check: React.FC<CheckProps> = ({
             isInvalid={!!touch && !!error}
             type={type}
             {...rest}
-            value={checked === true}
+            value={(checked === true) as any}
             placeholder={placeholder}
             checked={checked === true}
             onChange={() => {
@@ -134,7 +134,7 @@ export const Check: React.FC<CheckProps> = ({
               type={type}
               id={`input-${field}-2`}
               {...rest}
-              value={checked === false}
+              value={(checked === true) as any}
               placeholder={placeholder}
               checked={checked === false}
               onChange={(e: any) => {

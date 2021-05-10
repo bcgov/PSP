@@ -39,7 +39,6 @@ const LatLongForm = <T extends any>(props: LatLongFormProps & FormikProps<T>) =>
     },
     [props.nameSpace],
   );
-
   return (
     <div className="lat-long" style={{ position: 'relative' }}>
       <Row>

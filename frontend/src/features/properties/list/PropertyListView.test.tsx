@@ -13,16 +13,23 @@ import * as reducerTypes from 'constants/reducerTypes';
 import service from '../service';
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
-import { mockFlatProperty } from 'mocks/filterDataMock';
+import { mockFlatProperty, mockFlatBuildingProperty } from 'mocks/filterDataMock';
 import { IProperty } from '.';
+import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
+import { fillInput } from 'utils/testUtils';
+import { ToastContainer } from 'react-toastify';
+import { useApi } from 'hooks/useApi';
 
 // Set all module functions to jest.fn
 jest.mock('../service');
 jest.mock('@react-keycloak/web');
+jest.mock('hooks/useApi');
 
 const mockedService = service as jest.Mocked<typeof service>;
 
 const mockStore = configureMockStore([thunk]);
+
+window.open = jest.fn();
 
 const lCodes = {
   lookupCodes: [
@@ -44,7 +51,7 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});
 
-const setupTests = (items?: IProperty[]) => {
+const setupTests = (items?: IProperty[], buildingItems?: IProperty[]) => {
   // API "returns" no results
   mockedService.getPropertyList.mockResolvedValueOnce({
     quantity: 0,
@@ -52,6 +59,19 @@ const setupTests = (items?: IProperty[]) => {
     page: 1,
     pageIndex: 0,
     items: items ?? [],
+  });
+  if (!!buildingItems) {
+    mockedService.loadBuildings.mockResolvedValueOnce({
+      quantity: 0,
+      total: 0,
+      page: 1,
+      pageIndex: 0,
+      items: buildingItems ?? [],
+    });
+  }
+  (useApi as jest.Mock).mockReturnValue({
+    updateParcel: jest.fn(),
+    updateBuilding: jest.fn(),
   });
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
@@ -266,93 +286,10 @@ describe('Property list view', () => {
     });
   });
 
-  xit('Displays link to property details page', async () => {
-    const fakeId = 1;
-    mockedService.getPropertyList.mockResolvedValueOnce({
-      quantity: 10,
-      total: 2,
-      page: 1,
-      pageIndex: 0,
-      items: [
-        {
-          id: fakeId,
-          propertyTypeId: 0,
-          pid: '029-539-145',
-          classificationId: 0,
-          classification: 'Core Operational',
-          latitude: 50.1256825265,
-          longitude: -120.768029645,
-          description: 'Traditional site',
-          isSensitive: false,
-          agencyId: 19,
-          agency: 'Ministry of Advanced Education, Skills \u0026 Training',
-          agencyCode: 'AEST',
-          subAgency: 'Nichola Valley Institute of Technology',
-          subAgencyCode: 'NVIOT',
-          addressId: 1,
-          address: '4155 Belshaw St',
-          administrativeArea: 'Merritt',
-          province: 'British Columbia',
-          postal: 'V1K1R1',
-          market: 0.0,
-          netBook: 0.0,
-          assessedLand: 958000.0,
-          assessedLandDate: '2018-01-01T00:00:00',
-          landArea: 26.9,
-          landLegalDescription:
-            'LOT A SECTION 22 TOWNSHIP 91 KAMLOOPS DIVISION YALE DISTRICT PLAN EPP50042',
-          constructionTypeId: 0,
-          predominateUseId: 0,
-          occupantTypeId: 0,
-          floorCount: 0,
-          transferLeaseOnSale: false,
-          rentableArea: 0,
-          propertyType: 'property',
-        },
-        {
-          id: 5,
-          propertyTypeId: 1,
-          pid: '029-539-145',
-          classificationId: 0,
-          classification: 'Core Operational',
-          latitude: 50.1243991,
-          longitude: -120.7662049,
-          description: 'Student Residence',
-          isSensitive: false,
-          agencyId: 19,
-          agency: 'Ministry of Advanced Education, Skills \u0026 Training',
-          agencyCode: 'AEST',
-          subAgency: 'Nichola Valley Institute of Technology',
-          subAgencyCode: 'NVIOT',
-          addressId: 6,
-          address: '4155 Belshaw St',
-          administrativeArea: 'Merritt',
-          province: 'British Columbia',
-          postal: 'V1K1R1',
-          market: 0.0,
-          netBook: 0.0,
-          assessedLand: 958000.0,
-          assessedLandDate: '2018-01-01T00:00:00',
-          landArea: 26.9,
-          landLegalDescription:
-            'LOT A SECTION 22 TOWNSHIP 91 KAMLOOPS DIVISION YALE DISTRICT PLAN EPP50042',
-          parcelId: fakeId,
-          constructionTypeId: 2,
-          constructionType: 'Mixed',
-          predominateUseId: 19,
-          predominateUse: 'Dormitory/Residence Halls',
-          occupantTypeId: 0,
-          occupantType: 'Leased',
-          floorCount: 3,
-          tenancy: '100% Rental',
-          transferLeaseOnSale: false,
-          rentableArea: 0,
-          propertyType: 'property',
-        },
-      ],
-    });
+  it('rows act as clickable links to the property details page.', async () => {
+    setupTests([mockFlatProperty]);
 
-    const { findAllByRole } = render(
+    const { container } = render(
       <Provider store={store}>
         <Router history={history}>
           <PropertyListView />
@@ -360,12 +297,137 @@ describe('Property list view', () => {
       </Provider>,
     );
 
-    // assert we got a table with two rows and links to the details page
-    const links = await findAllByRole('link');
-    expect(links).toHaveLength(2);
-    expect(links[0]).toHaveAttribute(
-      'href',
-      '/mapview?disabled=true&loadDraft=false&parcelId=1&sidebar=true',
+    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    const cells = container.querySelectorAll('.td.clickable');
+    fireEvent.click(cells[0]);
+    await wait(async () => expect(window.open).toHaveBeenCalled());
+  });
+
+  it('rows can be edited by clicking the edit button', async () => {
+    setupTests([{ ...mockFlatProperty, id: 1 }]);
+
+    const { container, getByTestId } = render(
+      <Provider store={store}>
+        <Router history={history}>
+          <PropertyListView />
+        </Router>
+      </Provider>,
     );
+
+    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    const editButton = getByTestId('edit-icon');
+    fireEvent.click(editButton);
+    await wait(async () =>
+      expect(container.querySelector(`input[name="properties.0.assessedLand"]`)).toBeVisible(),
+    );
+  });
+
+  it('edit mode can be toggled on and off', async () => {
+    setupTests([{ ...mockFlatProperty, id: 1 }]);
+
+    const { container, getByTestId, getByText, queryByTestId, queryByText } = render(
+      <Provider store={store}>
+        <Router history={history}>
+          <PropertyListView />
+        </Router>
+      </Provider>,
+    );
+
+    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    const editButton = getByTestId('edit-icon');
+    fireEvent.click(editButton);
+    await wait(async () => {
+      expect(queryByTestId('edit-icon')).toBeNull();
+      expect(getByText('Cancel')).toBeVisible();
+    });
+    fireEvent.click(getByText('Cancel'));
+    await wait(async () => {
+      expect(queryByTestId('edit-icon')).toBeVisible();
+      expect(queryByText('Cancel')).toBeNull();
+    });
+  });
+
+  it('updates to financials made in edit mode can be saved', async () => {
+    setupTests([{ ...mockFlatProperty, id: 1 }]);
+
+    const { container, getByTestId, getByText } = render(
+      <Provider store={store}>
+        <Router history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          <PropertyListView />
+          <ToastContainer />
+        </Router>
+      </Provider>,
+    );
+
+    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    const editButton = getByTestId('edit-icon');
+    fireEvent.click(editButton);
+    await wait(async () => expect(getByText('Save edits')).toBeVisible());
+    await fillInput(container, 'properties.0.assessedLand', '12345');
+
+    (useApi().updateParcel as jest.MockedFunction<any>).mockResolvedValueOnce(mockParcel);
+    fireEvent.click(getByText('Save edits'));
+    await wait(() => expect(useApi().updateParcel).toHaveBeenCalled());
+  });
+
+  it('updates to financials made in edit mode that throw errors are handled', async () => {
+    setupTests([{ ...mockFlatProperty, id: 1 }]);
+
+    const { container, getByTestId, getByText } = render(
+      <Provider store={store}>
+        <Router history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          <PropertyListView />
+          <ToastContainer />
+        </Router>
+      </Provider>,
+    );
+
+    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    const editButton = getByTestId('edit-icon');
+    fireEvent.click(editButton);
+    await wait(async () => expect(getByText('Save edits')).toBeVisible());
+    await fillInput(container, 'properties.0.assessedLand', '12345');
+    (useApi().updateParcel as jest.MockedFunction<any>).mockImplementationOnce(() => {
+      throw Error;
+    });
+    fireEvent.click(getByText('Save edits'));
+    await wait(async () => {
+      expect(container.querySelector('.Toastify__toast-body')).toHaveTextContent(
+        'Failed to save changes for Test Property. undefined',
+      );
+    });
+  });
+
+  it('rows can be expanded by clicking the folder icon', async () => {
+    setupTests([mockFlatProperty], [mockFlatBuildingProperty]);
+
+    const { container, getByText } = render(
+      <Provider store={store}>
+        <Router history={history}>
+          <PropertyListView />
+        </Router>
+      </Provider>,
+    );
+
+    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    const cells = container.querySelectorAll('.td.expander');
+    fireEvent.click(cells[0]);
+    await wait(async () => expect(getByText('6460 Applecross Road')).toBeVisible());
   });
 });

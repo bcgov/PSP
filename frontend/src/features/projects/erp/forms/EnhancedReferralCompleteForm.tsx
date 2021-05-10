@@ -27,11 +27,11 @@ const OrText = styled.div`
 
 interface IEnhancedReferralCompleteFormProps {
   isReadOnly?: boolean;
-  onClickOnHold: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickGreTransferred: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickProceedToSpl: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickNotInSpl: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onClickDisposedExternally: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClickOnHold: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickGreTransferred: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickProceedToSpl: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickNotInSpl: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onClickDisposedExternally: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 /**

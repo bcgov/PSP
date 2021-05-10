@@ -4,48 +4,46 @@ import { Menu } from 'components/menu/Menu';
 import React from 'react';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { IAccessRequestModel } from '../interfaces';
-import { useDispatch, useStore } from 'react-redux';
+import { useStore } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
-import {
-  getSubmitAdminAccessRequestAction,
-  getAccessRequestsDeleteAction,
-} from 'actionCreators/accessRequestActionCreator';
+import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
 
 export const RowActions = (props: CellProps<IAccessRequestModel>) => {
   const accessRequest = props.row.original;
-  const dispatch = useDispatch();
   const store = useStore();
+  const { updateAccessRequest, removeAccessRequest } = useAccessRequests();
 
   const isStatusMatch = (value: AccessRequestStatus) => accessRequest.status === value;
 
-  const originalAccessRequest = (store.getState() as RootState).accessRequest.pagedAccessRequests.items.find(
+  const storedAccessRequest = (store.getState() as RootState).accessRequests.pagedAccessRequests.items.find(
     ar => ar.id === accessRequest.id,
   );
+  const originalAccessRequest = storedAccessRequest ? { ...storedAccessRequest } : undefined;
 
   const approve = () => {
     if (originalAccessRequest) {
       originalAccessRequest.status = AccessRequestStatus.Approved;
-      dispatch(getSubmitAdminAccessRequestAction(originalAccessRequest));
+      updateAccessRequest(originalAccessRequest);
     }
   };
   const decline = () => {
     if (originalAccessRequest) {
       originalAccessRequest.status = AccessRequestStatus.Declined;
-      dispatch(getSubmitAdminAccessRequestAction(originalAccessRequest));
+      updateAccessRequest(originalAccessRequest);
     }
   };
 
   const hold = () => {
     if (originalAccessRequest) {
       originalAccessRequest.status = AccessRequestStatus.OnHold;
-      dispatch(getSubmitAdminAccessRequestAction(originalAccessRequest));
+      updateAccessRequest(originalAccessRequest);
     }
   };
 
   const deleteRequest = () => {
     if (originalAccessRequest) {
       originalAccessRequest.status = AccessRequestStatus.OnHold;
-      dispatch(getAccessRequestsDeleteAction(originalAccessRequest.id, originalAccessRequest));
+      removeAccessRequest(originalAccessRequest.id, originalAccessRequest);
     }
   };
 

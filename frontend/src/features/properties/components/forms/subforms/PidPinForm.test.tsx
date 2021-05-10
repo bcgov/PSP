@@ -18,7 +18,7 @@ describe('PidPin sub-form', () => {
   beforeEach(() => {
     form = (
       <Formik<Partial<IParcel>>
-        initialValues={{ pid: '', pin: '', projectNumber: '' }}
+        initialValues={{ pid: '', pin: '' }}
         initialTouched={{ pid: true, pin: true }}
         validateOnChange={false}
         onSubmit={() => {}}

@@ -46,7 +46,6 @@ exports[`Review Summary View renders approved correctly 1`] = `
     <svg
       fill="currentColor"
       height="64"
-      size="64"
       stroke="currentColor"
       stroke-width="0"
       style="color: rgb(32, 167, 77);"
@@ -797,7 +796,6 @@ exports[`Review Summary View renders denied correctly 1`] = `
     <svg
       fill="currentColor"
       height="64"
-      size="64"
       stroke="currentColor"
       stroke-width="0"
       style="color: rgb(216, 41, 47);"
@@ -1548,7 +1546,6 @@ exports[`Review Summary View renders submitted correctly 1`] = `
     <svg
       fill="currentColor"
       height="64"
-      size="64"
       stroke="currentColor"
       stroke-width="0"
       style="color: rgb(46, 133, 64);"

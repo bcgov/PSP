@@ -6,7 +6,10 @@ exports[`Page size selector Snapshot matches 1`] = `
 }
 
 <div>
-  <div>
+  <div
+    onClick={[Function]}
+    onTouchEnd={[Function]}
+  >
     <div
       className="Menu-root"
     >

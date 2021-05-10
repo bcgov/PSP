@@ -26,7 +26,7 @@ export const AgencyInterest = ({ disabled = false }: IAgencyInterestProps) => {
   const agencies = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
   const agencyOptions = (agencies ?? []).map(c => mapLookupCodeWithParentString(c, agencies));
 
-  const onAddAgency = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+  const onAddAgency = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
     event.preventDefault();
     const selectedAgency = getIn(values, 'addAgencyResponse');
     const agency = agencies.find(a => ((a.id as unknown) as number) === parseInt(selectedAgency));

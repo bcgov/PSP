@@ -3,7 +3,6 @@ import parcelsReducer from 'reducers/parcelsReducer';
 import lookupCodeReducer from 'reducers/lookupCodeReducer';
 import * as reducerTypes from 'constants/reducerTypes';
 import networkReducer from './networkReducer';
-import accessRequestReducer from 'reducers/accessRequestReducer';
 import usersReducer from './usersReducer';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import leafletMouseSlice from './LeafletMouseSlice';
@@ -24,12 +23,13 @@ import filterSlice from './filterSlice';
 import agencyReducer from './agencyReducer';
 import agencyDetailReducer from './agencyDetailReducer';
 import parcelLayerDataSlice from './parcelLayerDataSlice';
+import { accessRequestsSlice } from 'store/slices/accessRequests';
 
 export const reducerObject = {
   loadingBar: loadingBarReducer,
   [reducerTypes.PARCEL]: parcelsReducer,
-  [reducerTypes.ACCESS_REQUEST]: accessRequestReducer,
   [reducerTypes.USERS]: usersReducer,
+  [reducerTypes.ACCESS_REQUEST]: accessRequestsSlice.reducer,
   [reducerTypes.GET_USER_DETAIL]: userDetailReducer,
   [reducerTypes.GET_AGENCY_DETAIL]: agencyDetailReducer,
   [reducerTypes.LOOKUP_CODE]: lookupCodeReducer,

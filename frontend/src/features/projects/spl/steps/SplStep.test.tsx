@@ -283,22 +283,16 @@ describe('SPL Approval Step', () => {
       const saveButton = screen.getByText(/Save/);
       mockAxios
         .onPut()
-        .reply(() => {
-          return [200, Promise.resolve({ properties: [], purchaser: 'purchaser' })];
-        })
+        .reply(200, { properties: [], purchaser: 'purchaser' })
         .onAny()
-        .reply(() => {
-          return [200, Promise.resolve({})];
-        });
+        .reply(200, { properties: [], purchaser: 'purchaser' });
 
       act(() => {
         saveButton.click();
       });
-
       await wait(async () => {
-        await findByDisplayValue('purchaser');
+        expect(await findByDisplayValue('purchaser')).toBeVisible();
       });
-      return;
     });
 
     it('spl disposes project', async () => {

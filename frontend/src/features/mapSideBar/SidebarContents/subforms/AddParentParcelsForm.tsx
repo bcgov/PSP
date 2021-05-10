@@ -13,7 +13,7 @@ import { withNameSpace } from 'utils/formUtils';
 import queryString from 'query-string';
 import { ISteppedFormValues } from 'components/common/form/StepForm';
 import { ISearchFields } from '../LandForm';
-import dequal from 'dequal';
+import { dequal } from 'dequal';
 import styled from 'styled-components';
 import { ILinkListItem, LinkList } from 'components/common/LinkList';
 

@@ -19,9 +19,13 @@ export type ButtonProps = ButtonPropsBase & {
   showSubmitting?: boolean;
   /** if true and showSubmitting is true, display the spinner */
   isSubmitting?: boolean;
+  /** default button text value */
+  defaultValue?: string | number | string[];
+  /** overwrite type from React.HTMLAttributes */
+  'aria-relevant'?: 'text' | 'all' | 'additions' | 'additions text' | 'removals';
 };
 
-export const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLButtonElement>> = ({
+export const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> = ({
   showSubmitting,
   isSubmitting,
   disabled,
