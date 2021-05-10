@@ -42,7 +42,8 @@ exports[`Empty Layout renders 1`] = `
           <img
             alt="PIMS logo"
             class="pims-logo"
-            src=""
+            height="50"
+            src="/tenants/MOTI/PIMS-logo.png"
           />
         </span>
         <div
@@ -54,13 +55,11 @@ exports[`Empty Layout renders 1`] = `
             <h1
               class="longAppName"
             >
-              Default Tenant Name
+              Property Information Management System
             </h1>
             <h1
               class="shortAppName"
-            >
-              PIMS
-            </h1>
+            />
           </div>
         </div>
       </nav>

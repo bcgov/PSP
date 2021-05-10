@@ -1,0 +1,14 @@
+{
+  "title": "Default Tenant Name test",
+  "shortName": "PIMS",
+  "logo": {
+    "favicon": "",
+    "image": "",
+    "imageWithText": ""
+  },
+  "login": {
+    "title": "",
+    "heading": "",
+    "body": ""
+  }
+}

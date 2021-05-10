@@ -1,7 +1,9 @@
-import { ITenantConfig } from '../ITenantConfig';
-import { defaultTenant } from '..';
+import { defaultTenant, ITenantConfig } from '..';
 
-export const Config: ITenantConfig = {
+/**
+ * Tenant configuration settings for MOTI.
+ */
+export const config: ITenantConfig = {
   ...defaultTenant,
   ...{
     title: 'Property Information Management System',

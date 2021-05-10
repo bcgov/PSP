@@ -1,5 +1,5 @@
 import React from 'react';
-import { tenant } from '.';
+import { useTenant } from '.';
 
 /**
  * Logo properties.
@@ -16,11 +16,11 @@ interface ILogoProps
  * @returns Image containing the
  */
 export const Logo = ({ withText = false, ...rest }: ILogoProps) => {
-  const { logo } = tenant;
+  const tenant = useTenant();
   return (
     <img
       {...rest}
-      src={withText ? logo.imageWithText : logo.image}
+      src={withText ? tenant.logo.imageWithText : tenant.logo.image}
       alt={rest.alt ?? 'PIMS logo'}
       className={rest.className ?? 'pims-logo'}
     />

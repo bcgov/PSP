@@ -19,6 +19,7 @@ import MapView from './MapView';
 import { noop } from 'lodash';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { TenantProvider } from 'tenants';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -147,17 +148,20 @@ describe('MapProperties View', () => {
   });
 
   const getMap = () => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     return (
-      <Provider store={store}>
-        <Router history={history}>
-          <MapView
-            disableMapFilterBar={false}
-            disabled={false}
-            showParcelBoundaries={true}
-            onMarkerPopupClosed={noop}
-          />
-        </Router>
-      </Provider>
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <MapView
+              disableMapFilterBar={false}
+              disabled={false}
+              showParcelBoundaries={true}
+              onMarkerPopupClosed={noop}
+            />
+          </Router>
+        </Provider>
+      </TenantProvider>
     );
   };
 

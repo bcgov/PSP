@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { tenant } from 'tenants';
+import { useTenant } from 'tenants';
 
 /**
  * The IENotSupportedPage prevents users from entering PIMS
@@ -8,6 +8,7 @@ import { tenant } from 'tenants';
  * libraries no longer support IE.
  */
 export const IENotSupportedPage: React.FC = () => {
+  const tenant = useTenant();
   return (
     <Container className="unauth" fluid={true}>
       <br></br>

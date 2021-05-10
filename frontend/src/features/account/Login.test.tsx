@@ -12,7 +12,7 @@ import {} from 'reducers/networkReducer';
 import { IGenericNetworkAction } from 'actions/genericActions';
 import { Provider } from 'react-redux';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
-import { setTenant } from 'tenants';
+import { TenantProvider } from 'tenants';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
@@ -26,13 +26,16 @@ const store = mockStore({
 
 //boilerplate function used by most tests to wrap the Login component with a router.
 const renderLogin = () => {
+  process.env.REACT_APP_TENANT = 'CITZ';
   const history = createMemoryHistory();
   return render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Login />
-      </Router>
-    </Provider>,
+    <TenantProvider>
+      <Provider store={store}>
+        <Router history={history}>
+          <Login />
+        </Router>
+      </Provider>
+    </TenantProvider>,
   );
 };
 
@@ -42,36 +45,43 @@ describe('login', () => {
   });
   it('login renders correctly', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
+    process.env.REACT_APP_TENANT = 'MOTI';
     const history = createMemoryHistory();
     const tree = renderer
       .create(
-        <Provider store={store}>
-          <Router history={history}>
-            <Login></Login>
-          </Router>
-        </Provider>,
+        <TenantProvider>
+          <Provider store={store}>
+            <Router history={history}>
+              <Login></Login>
+            </Router>
+          </Provider>
+        </TenantProvider>,
       )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('authenticated users are redirected to the mapview', () => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: { authenticated: true, userInfo: { groups: ['System Administrator'] } },
     });
     const history = createMemoryHistory();
 
     render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Login />
-        </Router>
-      </Provider>,
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Login />
+          </Router>
+        </Provider>
+      </TenantProvider>,
     );
     expect(history.location.pathname).toBe('/mapview');
   });
 
   it('new users are sent to the guest page', () => {
+    process.env.REACT_APP_TENANT = 'CITZ';
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: { authenticated: true, realmAccess: { roles: [{}] } },
     });
@@ -89,18 +99,18 @@ describe('login', () => {
     });
 
     render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Login />
-        </Router>
-      </Provider>,
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Login />
+          </Router>
+        </Provider>
+      </TenantProvider>,
     );
     expect(history.location.pathname).toBe('/access/request');
   });
 
   it('unAuthenticated users are shown the login screen', () => {
-    process.env.REACT_APP_TENANT = 'CITZ';
-    setTenant();
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const { getAllByRole } = renderLogin();
     expect(getAllByRole('heading')[0]).toHaveTextContent(
