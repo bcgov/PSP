@@ -1,26 +1,15 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import { getUsersAction } from 'actionCreators/usersActionCreator';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import { IPagedItems } from 'interfaces/pagedItems';
+import { useDispatch } from 'react-redux';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 import { IGenericNetworkAction } from 'actions/genericActions';
 import * as actionTypes from 'constants/actionTypes';
 import { IUser, IUsersFilter } from 'interfaces';
 import { IUserRecord } from './interfaces/IUserRecord';
-import { IUsersState } from 'reducers/usersReducer';
 import { UsersFilterBar } from './components/UsersFilterBar';
 import * as API from 'constants/API';
 import { Table } from 'components/Table';
 import { columnDefinitions } from './constants';
-import { TableSort } from 'components/Table/TableSort';
-import {
-  getUsersSortAction,
-  getUsersFilterAction,
-  getUsersPageIndexAction,
-  setUsersPageSize,
-} from 'actions/adminActions';
 import { formatApiDateTime, generateMultiSortCriteria } from 'utils';
 import styled from 'styled-components';
 import useCodeLookups from 'hooks/useLookupCodes';
@@ -33,6 +22,14 @@ import download from 'utils/download';
 import queryString from 'query-string';
 import { ENVIRONMENT } from 'constants/environment';
 import { IPaginateParams } from 'constants/API';
+import {
+  setUsersFilter,
+  setUsersPageIndex,
+  setUsersPageSize,
+  setUsersPageSort,
+  useUsers,
+} from 'store/slices/users';
+import { useAppSelector } from 'store/hooks';
 
 const TableContainer = styled(Container)`
   margin-top: 10px;
@@ -69,49 +66,48 @@ export const ManageUsers = () => {
   const roles = useMemo(() => getByType(API.ROLE_CODE_SET_NAME), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
 
-  const pagedUsers = useSelector<RootState, IPagedItems<IUser>>(state => {
-    return (state.users as IUsersState).pagedUsers;
+  const pagedUsers = useAppSelector(state => {
+    return state.users.pagedUsers;
   });
 
-  const pageSize = useSelector<RootState, number>(state => {
-    return (state.users as IUsersState).rowsPerPage;
+  const pageSize = useAppSelector(state => {
+    return state.users.rowsPerPage;
   });
 
-  const pageIndex = useSelector<RootState, number>(state => {
-    return (state.users as IUsersState).pageIndex;
+  const pageIndex = useAppSelector(state => {
+    return state.users.pageIndex;
   });
 
-  const sort = useSelector<RootState, TableSort<IUserRecord>>(state => {
-    return (state.users as IUsersState).sort;
+  const sort = useAppSelector(state => {
+    return state.users.sort;
   });
 
-  const filter = useSelector<RootState, IUsersFilter>(state => {
-    return (state.users as IUsersState).filter;
+  const filter = useAppSelector(state => {
+    return state.users.filter;
   });
 
-  const users = useSelector<RootState, IGenericNetworkAction>(
+  const users = useAppSelector(
     state => (state.network as any)[actionTypes.GET_USERS] as IGenericNetworkAction,
   );
 
   const onRequestData = useCallback(
     ({ pageIndex }) => {
-      dispatch(getUsersPageIndexAction(pageIndex));
+      dispatch(setUsersPageIndex(pageIndex));
     },
     [dispatch],
   );
 
+  const { fetchUsers } = useUsers();
   useEffect(() => {
-    dispatch(
-      getUsersAction(
-        toFilteredApiPaginateParams<IUsersFilter>(
-          pageIndex,
-          pageSize,
-          sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
-          filter,
-        ),
+    fetchUsers(
+      toFilteredApiPaginateParams<IUsersFilter>(
+        pageIndex,
+        pageSize,
+        sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
+        filter,
       ),
     );
-  }, [dispatch, sort, pageIndex, pageSize, filter]);
+  }, [sort, pageIndex, pageSize, filter, fetchUsers]);
 
   let userList = pagedUsers.items.map(
     (u: IUser): IUserRecord => ({
@@ -160,13 +156,13 @@ export const ManageUsers = () => {
         onChange={value => {
           (value as any)?.agency
             ? dispatch(
-                getUsersFilterAction({
+                setUsersFilter({
                   ...value,
                   agency: (_.find(agencies, { id: +(value as any)?.agency }) as any)?.name,
                 }),
               )
-            : dispatch(getUsersFilterAction({ ...value, agency: '' }));
-          dispatch(getUsersPageIndexAction(0));
+            : dispatch(setUsersFilter({ ...value, agency: '' }));
+          dispatch(setUsersPageIndex(0));
         }}
       />
       {
@@ -190,9 +186,9 @@ export const ManageUsers = () => {
               onRequestData={onRequestData}
               onSortChange={(column, direction) => {
                 if (!!direction) {
-                  dispatch(getUsersSortAction({ [column]: direction }));
+                  dispatch(setUsersPageSort({ [column]: direction }));
                 } else {
-                  dispatch(getUsersSortAction({}));
+                  dispatch(setUsersPageSort({}));
                 }
               }}
               sort={sort}

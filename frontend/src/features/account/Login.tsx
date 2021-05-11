@@ -5,12 +5,12 @@ import { Container, Row, Col, Button, Spinner, Jumbotron } from 'react-bootstrap
 import { useSelector } from 'react-redux';
 import { IGenericNetworkAction } from 'actions/genericActions';
 import { RootState } from 'reducers/rootReducer';
-import { NEW_PIMS_USER } from 'actionCreators/usersActionCreator';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as actionTypes from 'constants/actionTypes';
 import { useQuery } from 'hooks/use-query';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { useTenant, Logo } from 'tenants';
+import { NEW_PIMS_USER } from 'store/slices/users';
 
 /**
  * Login component provides information and links for the user to login.
