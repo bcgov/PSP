@@ -8,6 +8,63 @@ exports[`Empty Layout renders 1`] = `
   vertical-align: top;
 }
 
+.c1 {
+  bottom: 0;
+  padding: 10px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c1 a {
+  display: inline;
+}
+
+.c1 a:link,
+.c1 a:visited {
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 10px;
+  border-right: 1px solid #666;
+}
+
+.c1 a:hover,
+.c1 a:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c1 div.version {
+  color: #ffffff;
+  font-size: 12px;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 0 0 10px;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
+  text-align: right;
+}
+
 <div
   class="App container-fluid"
 >
@@ -74,34 +131,35 @@ exports[`Empty Layout renders 1`] = `
     <div
       class="px-0 container"
     >
-      <nav
-        class="footer navbar navbar-expand navbar-light"
+      <div
+        class="c1"
       >
         <a
-          class="nav-link"
           href="http://www.gov.bc.ca/gov/content/home/disclaimer"
         >
           Disclaimer
         </a>
         <a
-          class="nav-link"
           href="http://www.gov.bc.ca/gov/content/home/privacy"
         >
           Privacy
         </a>
         <a
-          class="nav-link"
           href="http://www.gov.bc.ca/gov/content/home/accessible-government"
         >
           Accessibility
         </a>
         <a
-          class="nav-link"
           href="http://www.gov.bc.ca/gov/content/home/copyright"
         >
           Copyright
         </a>
-      </nav>
+        <div
+          class="version"
+        >
+          v
+        </div>
+      </div>
     </div>
   </footer>
 </div>

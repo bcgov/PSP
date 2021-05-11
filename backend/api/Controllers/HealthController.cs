@@ -16,7 +16,6 @@ namespace Pims.Api.Controllers
     public class HealthController : ControllerBase
     {
         #region Variables
-        private readonly ILogger<HealthController> _logger;
         private readonly IWebHostEnvironment _environment;
         #endregion
 
@@ -25,10 +24,8 @@ namespace Pims.Api.Controllers
         /// Creates a new instances of a HealthController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="environment"></param>
-        /// <param name="logger"></param>
-        public HealthController(IWebHostEnvironment environment, ILogger<HealthController> logger)
+        public HealthController(IWebHostEnvironment environment)
         {
-            _logger = logger;
             _environment = environment;
         }
         #endregion
