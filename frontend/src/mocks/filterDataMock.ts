@@ -1,10 +1,10 @@
 import { IAccessRequest } from 'interfaces';
 import { IBuilding } from './../actions/parcelsActions';
-import { ILookupCode } from '../actions/lookupActions';
 import { IParcel, IProperty } from 'actions/parcelsActions';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { Workflows } from 'constants/index';
 import { AccessRequestStatus } from 'constants/accessStatus';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 export const SELECTEDCLASSIFICATION = {
   name: 'Core Operational',

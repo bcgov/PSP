@@ -1,13 +1,13 @@
 import { AgencyResponses, FormikTable, IProject } from '../../common';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import { ParentSelect } from 'components/common/form/ParentSelect';
 import { mapLookupCodeWithParentString } from 'utils';
 import { Button, Col, Row } from 'react-bootstrap';
 import { AgencyInterestColumns } from './AgencyInterestColumns';
 import useCodeLookups from 'hooks/useLookupCodes';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 export interface IAgencyInterestProps {
   /** Whether the controls are disabled. */

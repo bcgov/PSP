@@ -1,6 +1,6 @@
+import { lookupCodesSlice } from './../store/slices/lookupCodes/lookupCodesSlice';
 import { combineReducers } from 'redux';
 import parcelsReducer from 'reducers/parcelsReducer';
-import lookupCodeReducer from 'reducers/lookupCodeReducer';
 import * as reducerTypes from 'constants/reducerTypes';
 import networkReducer from './networkReducer';
 import usersReducer from './usersReducer';
@@ -32,7 +32,7 @@ export const reducerObject = {
   [reducerTypes.ACCESS_REQUEST]: accessRequestsSlice.reducer,
   [reducerTypes.GET_USER_DETAIL]: userDetailReducer,
   [reducerTypes.GET_AGENCY_DETAIL]: agencyDetailReducer,
-  [reducerTypes.LOOKUP_CODE]: lookupCodeReducer,
+  [reducerTypes.LOOKUP_CODE]: lookupCodesSlice.reducer,
   [reducerTypes.AGENCIES]: agencyReducer,
   [reducerTypes.NETWORK]: networkReducer,
   [reducerTypes.LEAFLET_CLICK_EVENT]: leafletMouseSlice.reducer,

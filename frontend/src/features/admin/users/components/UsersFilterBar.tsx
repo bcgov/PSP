@@ -2,10 +2,10 @@ import * as React from 'react';
 import FilterBar from 'components/SearchBar/FilterBar';
 import { Col } from 'react-bootstrap';
 import { Input, SelectOption, Select } from 'components/common/form';
-import { ILookupCode } from 'actions/lookupActions';
 import { IUsersFilter } from 'interfaces';
 import { mapLookupCodeWithParentString } from 'utils';
 import { ParentSelect } from 'components/common/form/ParentSelect';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 interface IProps {
   value: IUsersFilter;
