@@ -8,7 +8,7 @@ export const config: ITenantConfig = {
   ...{
     title: 'Property Inventory Management System',
     logo: {
-      favicon: '/tenants/CITZ/favicon-16x16.ico',
+      favicon: '/tenants/CITZ/favicon.ico',
       image: '/tenants/CITZ/logo_only.png',
       imageWithText: '/tenants/CITZ/logo_with_text.png',
     },
