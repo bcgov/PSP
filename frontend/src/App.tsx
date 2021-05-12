@@ -13,13 +13,11 @@ import { ToastContainer } from 'react-toastify';
 import PublicLayout from 'layouts/PublicLayout';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import { useLookupCodes } from 'store/slices/lookupCodes';
-import { useLookupCodes } from 'store/slices/lookupCodes';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const dispatch = useDispatch();
-  const { fetchLookupCodes } = useLookupCodes();
   const { fetchLookupCodes } = useLookupCodes();
 
   useEffect(() => {
