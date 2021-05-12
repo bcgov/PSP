@@ -8,7 +8,7 @@ export const useFavicon = () => {
   const tenant = useTenant();
 
   const favicon = document.getElementById('favicon') as HTMLLinkElement;
-  favicon.href = tenant.logo.favicon;
+  if (favicon) favicon.href = tenant.logo.favicon;
 
   return favicon;
 };
