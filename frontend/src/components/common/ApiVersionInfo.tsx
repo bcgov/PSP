@@ -7,17 +7,22 @@ import { IApiVersion, useApiHealth } from 'hooks/pims-api';
  * @returns ApiVersionInfo component.
  */
 export const ApiVersionInfo = () => {
-  const api = useApiHealth();
+  const { getVersion } = useApiHealth();
   const [version, setVersion] = React.useState<IApiVersion>();
 
   React.useEffect(() => {
-    api.getVersion().then(response => {
+    const get = async () => {
+      const response = await getVersion();
       setVersion(response.data);
-      return response.data;
-    });
-  }, [api]);
+    };
+    get();
+  }, [getVersion, setVersion]);
 
-  return <div className="version">v{version?.version}</div>;
+  return (
+    <div className="version" data-testid="version">
+      {version?.version ? `v${version.version ?? ''}` : 'api unavailable'}
+    </div>
+  );
 };
 
 export default ApiVersionInfo;

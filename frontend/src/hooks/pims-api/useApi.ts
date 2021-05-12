@@ -1,6 +1,6 @@
 import React from 'react';
 import { ENVIRONMENT } from 'constants/environment';
-import { CustomAxios } from 'customAxios';
+import CustomAxios from 'customAxios';
 
 /**
  * Common hook to make requests to the PIMS APi.

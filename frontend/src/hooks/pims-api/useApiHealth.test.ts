@@ -16,16 +16,6 @@ describe('useApiHealth testing suite', () => {
     jest.clearAllMocks();
   });
 
-  it('Has endpoints', () => {
-    renderHook(() => {
-      const api = useApiHealth();
-
-      expect(api.getLive).toBeDefined();
-      expect(api.getReady).toBeDefined();
-      expect(api.getVersion).toBeDefined();
-    });
-  });
-
   it('Get Health Version endpoint', () => {
     renderHook(async () => {
       const api = useApiHealth();

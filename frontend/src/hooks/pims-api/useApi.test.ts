@@ -1,3 +1,4 @@
+import { wait } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -7,13 +8,9 @@ import { useApi } from '.';
 const mockAxios = new MockAdapter(axios);
 
 describe('useApi testing suite', () => {
-  beforeEach(() => {
-    mockAxios.onGet('success').reply(200, 'success');
-    mockAxios.onGet('failure').reply(400, 'failure');
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
+    mockAxios.resetHistory();
   });
 
   it('useApi uses custom axios with baseURL', () => {
@@ -24,17 +21,26 @@ describe('useApi testing suite', () => {
     });
   });
 
-  it('useApi uses custom axios - success', () => {
-    renderHook(async () => {
-      const api = useApi();
+  it('useApi uses custom axios - success', async () => {
+    mockAxios.onGet('success').reply(200, 'success');
+
+    var api = {} as any;
+    renderHook(() => {
+      api = useApi();
+    });
+
+    await wait(async () => {
       const response = await api.get('success');
 
       expect(response.status).toBe(200);
       expect(response.data).toBe('success');
+      expect(mockAxios.history.get).toHaveLength(1);
     });
   });
 
   it('useApi uses custom axios - failure', () => {
+    mockAxios.onGet('failure').reply(400, 'failure');
+
     renderHook(async () => {
       const api = useApi();
       try {
@@ -42,6 +48,7 @@ describe('useApi testing suite', () => {
       } catch (error) {
         expect(error.response.status).toBe(400);
         expect(error.response.data).toBe('failure');
+        expect(mockAxios.history.get).toHaveLength(1);
       }
     });
   });

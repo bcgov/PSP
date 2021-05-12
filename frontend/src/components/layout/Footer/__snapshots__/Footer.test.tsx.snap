@@ -83,8 +83,9 @@ exports[`Footer renders correctly 1`] = `
   </a>
   <div
     className="version"
+    data-testid="version"
   >
-    v
+    api unavailable
   </div>
 </div>
 `;
