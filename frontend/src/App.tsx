@@ -13,12 +13,15 @@ import { ToastContainer } from 'react-toastify';
 import PublicLayout from 'layouts/PublicLayout';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import { useLookupCodes } from 'store/slices/lookupCodes';
+import { useFavicon } from 'hooks/useFavicon';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const dispatch = useDispatch();
   const { fetchLookupCodes } = useLookupCodes();
+
+  useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
