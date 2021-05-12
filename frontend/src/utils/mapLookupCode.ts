@@ -1,5 +1,5 @@
-import { ILookupCode } from 'actions/lookupActions';
 import { SelectOption } from 'components/common/form';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 /**
  * Convert an ILookupCode into a SelectOption.

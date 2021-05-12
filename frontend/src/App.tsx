@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { Col } from 'react-bootstrap';
 
 import { getActivateUserAction } from 'actionCreators/usersActionCreator';
-import { getFetchLookupCodeAction } from 'actionCreators/lookupCodeActionCreator';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import AppRouter from 'router';
@@ -13,18 +12,23 @@ import OnLoadActions from 'OnLoadActions';
 import { ToastContainer } from 'react-toastify';
 import PublicLayout from 'layouts/PublicLayout';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import { useLookupCodes } from 'store/slices/lookupCodes';
+import { useFavicon } from 'hooks/useFavicon';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const dispatch = useDispatch();
+  const { fetchLookupCodes } = useLookupCodes();
+
+  useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
       dispatch(getActivateUserAction());
-      dispatch(getFetchLookupCodeAction());
+      fetchLookupCodes();
     }
-  }, [dispatch, keycloak]);
+  }, [dispatch, keycloak, fetchLookupCodes]);
 
   return (
     <AuthStateContext.Consumer>

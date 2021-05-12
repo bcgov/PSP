@@ -3,7 +3,6 @@ import { isMouseEventRecent, squareMetersToHectares } from 'utils';
 import { AMINISTRATIVE_AREA_CODE_SET_NAME } from 'constants/API';
 import { useState } from 'react';
 import { IParcelLayerData, clearParcelLayerData } from 'reducers/parcelLayerDataSlice';
-import { ILookupCode } from 'actions/lookupActions';
 import { pidFormatter } from '../components/forms/subforms/PidPinForm';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +12,7 @@ import { toast } from 'react-toastify';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { getInitialValues } from 'features/mapSideBar/SidebarContents/LandForm';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 interface IUseParcelLayerDataProps {
   formikRef: React.MutableRefObject<FormikValues | undefined>;
