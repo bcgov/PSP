@@ -21,17 +21,20 @@ export interface LifecycleToasts {
  * Wrapper for axios to include authentication token and error handling.
  * @param param0 Axios parameters.
  */
-const CustomAxios = ({
+export const CustomAxios = ({
   lifecycleToasts,
   selector,
   envelope = defaultEnvelope,
+  baseURL,
 }: {
   lifecycleToasts?: LifecycleToasts;
   selector?: Function;
   envelope?: typeof defaultEnvelope;
+  baseURL?: string;
 } = {}) => {
   let loadingToastId: React.ReactText | undefined = undefined;
   const instance = axios.create({
+    baseURL,
     headers: {
       'Access-Control-Allow-Origin': '*',
       Authorization: `Bearer ${store.getState().jwt}`,

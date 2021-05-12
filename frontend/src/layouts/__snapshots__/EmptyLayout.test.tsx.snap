@@ -8,101 +8,162 @@ exports[`Empty Layout renders 1`] = `
   vertical-align: top;
 }
 
-<div
-  class="App container-fluid"
->
-  <header
-    class="header-layout fixed-top"
+.c1 {
+  bottom: 0;
+  padding: 10px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c1 a {
+  display: inline;
+}
+
+.c1 a:link,
+.c1 a:visited {
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 10px;
+  border-right: 1px solid #666;
+}
+
+.c1 a:hover,
+.c1 a:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c1 div.version {
+  color: #ffffff;
+  font-size: 12px;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 0 0 10px;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
+  text-align: right;
+}
+
+<div>
+  <div
+    class="App container-fluid"
   >
-    <div
-      class="px-0 container"
+    <header
+      class="header-layout fixed-top"
     >
-      <nav
-        class="App-header navbar navbar-expand navbar-light"
+      <div
+        class="px-0 container"
       >
-        <span
-          class="brand-box navbar-brand"
+        <nav
+          class="App-header navbar navbar-expand navbar-light"
+        >
+          <span
+            class="brand-box navbar-brand"
+          >
+            <a
+              href="https://www2.gov.bc.ca/gov/content/home"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img
+                alt="Government of BC logo"
+                class="bc-gov-icon"
+                height="43"
+                src="logo-banner.svg"
+                width="156"
+              />
+            </a>
+            <span
+              class="c0"
+            />
+            <img
+              alt="PIMS logo"
+              class="pims-logo"
+              height="50"
+              src="/tenants/MOTI/PIMS-logo.png"
+            />
+          </span>
+          <div
+            class="title mr-auto navbar-nav"
+          >
+            <div
+              class="nav-item"
+            >
+              <h1
+                class="longAppName"
+              >
+                Property Information Management System
+              </h1>
+              <h1
+                class="shortAppName"
+              />
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main
+      class="App-content"
+    />
+    <footer
+      class="footer-layout fixed-bottom"
+    >
+      <div
+        class="px-0 container"
+      >
+        <div
+          class="c1"
         >
           <a
-            href="https://www2.gov.bc.ca/gov/content/home"
-            rel="noopener noreferrer"
-            target="_blank"
+            href="http://www.gov.bc.ca/gov/content/home/disclaimer"
           >
-            <img
-              alt="Government of BC logo"
-              class="bc-gov-icon"
-              height="43"
-              src="logo-banner.svg"
-              width="156"
-            />
+            Disclaimer
           </a>
-          <span
-            class="c0"
-          />
-          <img
-            alt="PIMS logo"
-            class="pims-logo"
-            height="50"
-            src="/tenants/MOTI/PIMS-logo.png"
-          />
-        </span>
-        <div
-          class="title mr-auto navbar-nav"
-        >
-          <div
-            class="nav-item"
+          <a
+            href="http://www.gov.bc.ca/gov/content/home/privacy"
           >
-            <h1
-              class="longAppName"
-            >
-              Property Information Management System
-            </h1>
-            <h1
-              class="shortAppName"
-            />
+            Privacy
+          </a>
+          <a
+            href="http://www.gov.bc.ca/gov/content/home/accessible-government"
+          >
+            Accessibility
+          </a>
+          <a
+            href="http://www.gov.bc.ca/gov/content/home/copyright"
+          >
+            Copyright
+          </a>
+          <div
+            class="version"
+            data-testid="version"
+          >
+            api unavailable
           </div>
         </div>
-      </nav>
-    </div>
-  </header>
-  <main
-    class="App-content"
-  />
-  <footer
-    class="footer-layout fixed-bottom"
-  >
-    <div
-      class="px-0 container"
-    >
-      <nav
-        class="footer navbar navbar-expand navbar-light"
-      >
-        <a
-          class="nav-link"
-          href="http://www.gov.bc.ca/gov/content/home/disclaimer"
-        >
-          Disclaimer
-        </a>
-        <a
-          class="nav-link"
-          href="http://www.gov.bc.ca/gov/content/home/privacy"
-        >
-          Privacy
-        </a>
-        <a
-          class="nav-link"
-          href="http://www.gov.bc.ca/gov/content/home/accessible-government"
-        >
-          Accessibility
-        </a>
-        <a
-          class="nav-link"
-          href="http://www.gov.bc.ca/gov/content/home/copyright"
-        >
-          Copyright
-        </a>
-      </nav>
-    </div>
-  </footer>
+      </div>
+    </footer>
+  </div>
 </div>
 `;
