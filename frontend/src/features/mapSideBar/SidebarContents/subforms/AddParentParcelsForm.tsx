@@ -8,7 +8,7 @@ import { pidFormatter } from 'features/properties/components/forms/subforms/PidP
 import SearchButton from 'components/common/form/SearchButton';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
-import { IParcel } from 'actions/parcelsActions';
+import { IParcel } from 'interfaces';
 import { withNameSpace } from 'utils/formUtils';
 import queryString from 'query-string';
 import { ISteppedFormValues } from 'components/common/form/StepForm';

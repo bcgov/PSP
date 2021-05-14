@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import { FastCurrencyInput } from 'components/common/form/FastCurrencyInput';
-import { IProperty } from 'actions/parcelsActions';
+import { IProperty } from 'interfaces';
 import { CellProps } from 'react-table';
 import { formatMoney } from 'utils';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';

@@ -1,7 +1,7 @@
 // Redux reducers
 
 // Parcels
-export const PARCEL = 'parcel';
+export const PROPERTIES = 'properties';
 
 // Lookup Codes
 export const LOOKUP_CODE = 'lookupCode';

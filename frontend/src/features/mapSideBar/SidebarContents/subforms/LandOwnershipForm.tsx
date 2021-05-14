@@ -3,9 +3,9 @@ import './LandOwnershipForm.scss';
 import React, { useCallback, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { RadioButtonGroup } from 'components/common/form/RadioButtonGroup';
-import { LeasedLandTypes } from 'actions/parcelsActions';
 import { useFormikContext, getIn } from 'formik';
 import LeasedLandOther from './LeasedLandOther';
+import { LeasedLandTypes } from 'interfaces';
 
 interface IIdentificationProps {
   nameSpace?: any;

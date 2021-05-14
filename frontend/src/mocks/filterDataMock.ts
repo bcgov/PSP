@@ -1,6 +1,6 @@
-import { IAccessRequest } from 'interfaces';
-import { IBuilding } from './../actions/parcelsActions';
-import { IParcel, IProperty } from 'actions/parcelsActions';
+import { IPropertyDetail } from 'store/slices/properties';
+import { mockBuilding } from './../components/maps/leaflet/InfoSlideOut/InfoContent.test';
+import { IAccessRequest, IParcel, IProperty, IBuilding } from 'interfaces';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { Workflows } from 'constants/index';
 import { AccessRequestStatus } from 'constants/accessStatus';
@@ -184,6 +184,66 @@ export const mockParcel = {
   projectStatus: 'In ERP',
   projectWorkflow: Workflows.ERP,
 } as IParcel;
+
+export const mockProperty: IProperty = {
+  id: 0,
+  propertyTypeId: 0,
+  latitude: 23,
+  longitude: 23,
+  description: 'test',
+  isSensitive: false,
+  agencyId: 0,
+  agency: 'test',
+};
+
+export const mockBuildingDetail: IPropertyDetail = {
+  propertyTypeId: 1,
+  parcelDetail: mockBuilding,
+};
+
+export const mockParcelDetail: IPropertyDetail = {
+  propertyTypeId: 0,
+  parcelDetail: {
+    id: 3,
+    longitude: 1,
+    latitude: 2,
+    name: '3',
+    address: {
+      administrativeArea: '4',
+      line1: '5',
+      line2: '6',
+      postal: '7',
+      province: '8',
+      provinceId: '9',
+    },
+    buildings: [],
+    evaluations: [],
+    description: '10',
+    landArea: 11,
+    landLegalDescription: '12',
+    pid: '13',
+    isSensitive: false,
+    classification: '14',
+    agency: '16',
+    pin: 17,
+    classificationId: 18,
+    zoning: '20',
+    zoningPotential: '21',
+    agencyId: 22,
+    projectNumbers: ['24'],
+    assessedLand: 25,
+    assessedBuilding: 26,
+    encumbranceReason: '27',
+    parcels: [],
+    fiscals: [
+      {
+        fiscalYear: 2020,
+        key: 'Key',
+        value: 34,
+      },
+    ],
+  },
+};
 
 export const mockDetails = [
   {

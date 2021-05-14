@@ -6,13 +6,13 @@ import { Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { IParcel } from 'actions/parcelsActions';
 import { render } from '@testing-library/react';
 import { mockParcel, mockBuilding } from './InfoContent.test';
 import AssociatedParcelsList from './AssociatedParcelsList';
 import { Label } from 'components/common/Label';
 import { FaPlusSquare } from 'react-icons/fa';
 import AssociatedBuildingsList from './AssociatedBuildingsList';
+import { IParcel } from 'interfaces';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);

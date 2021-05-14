@@ -6,13 +6,13 @@ import { Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { IParcel, IBuilding } from 'actions/parcelsActions';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { render } from '@testing-library/react';
 import { noop } from 'lodash';
 import HeaderActions from './HeaderActions';
 import { mockParcel } from './InfoContent.test';
 import { useKeycloak } from '@react-keycloak/web';
+import { IParcel, IBuilding } from 'interfaces';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

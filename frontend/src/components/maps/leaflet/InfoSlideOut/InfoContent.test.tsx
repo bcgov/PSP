@@ -2,7 +2,6 @@ import * as React from 'react';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import InfoContent from './InfoContent';
-import { IParcel, IBuilding } from 'actions/parcelsActions';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { render } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
@@ -13,6 +12,7 @@ import * as API from 'constants/API';
 import { Workflows } from 'constants/workflows';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { IParcel, IBuilding } from 'interfaces';
 import { useKeycloak } from '@react-keycloak/web';
 
 jest.mock('@react-keycloak/web');
@@ -35,7 +35,7 @@ const mockParcelNoSub = {
   assessedBuilding: 10000,
   evaluations: [
     {
-      date: new Date(),
+      date: '2021-05-12T18:57:19.992Z',
       key: 'Assessed',
       value: 10000,
     },
@@ -85,7 +85,7 @@ export const mockBuilding = {
   assessedBuilding: 10000,
   evaluations: [
     {
-      date: new Date(),
+      date: '2021-05-12T18:57:19.992Z',
       key: 'Assessed',
       value: 11000,
     },
@@ -217,7 +217,7 @@ const ContentComponent = (
   );
 };
 
-describe('InfoContent View', () => {
+describe('InfoContent View functionality', () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });

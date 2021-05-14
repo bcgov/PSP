@@ -9,11 +9,11 @@ import { GeocoderAutoComplete } from 'features/properties/components/GeocoderAut
 import { getIn, useFormikContext } from 'formik';
 import ClickAwayListener from 'react-click-away-listener';
 import { IGeocoderResponse } from 'hooks/useApi';
-import { IParcel } from 'actions/parcelsActions';
 import { ISteppedFormValues } from 'components/common/form/StepForm';
 import { ISearchFields } from '../LandForm';
 import { ReactComponent as ParcelDraftIcon } from 'assets/images/draft-parcel-icon.svg';
 import styled from 'styled-components';
+import { IParcel } from 'interfaces';
 
 const SearchMarkerButton = styled.button`
   top: 20px;

@@ -13,7 +13,7 @@ import { Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { InventoryPolicy } from '../components/InventoryPolicy';
 import * as API from 'constants/API';
-import { IBuilding } from 'actions/parcelsActions';
+import { IBuilding } from 'interfaces';
 import { OccupancyForm } from './subforms/OccupancyForm';
 import { IdentificationForm } from './subforms/IdentificationForm';
 import { BuildingReviewPage } from './subforms/BuildingReviewPage';

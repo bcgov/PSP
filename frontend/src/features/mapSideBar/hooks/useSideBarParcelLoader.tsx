@@ -1,11 +1,11 @@
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { SidebarContextType } from './useQueryParamSideBar';
-import { fetchParcelDetail } from 'actionCreators/parcelsActionCreator';
 import { useDispatch } from 'react-redux';
 import React from 'react';
-import { IParcel } from 'actions/parcelsActions';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { useAsyncError } from 'hooks/useAsyncError';
+import { useProperties } from 'store/slices/properties';
+import { IParcel } from 'interfaces';
 
 interface IUseSideBarParcelLoader {
   /** whether or not the sidebar should be displayed */
@@ -29,16 +29,17 @@ const useSideBarParcelLoader = ({
   const dispatch = useDispatch();
   const hasBuildings = !!cachedParcelDetail?.buildings?.length;
   const throwError = useAsyncError();
+  const { fetchParcelDetail } = useProperties();
 
   useDeepCompareEffect(() => {
     const loadParcel = async () => {
       if (parcelId) {
         setSideBarContext(SidebarContextType.LOADING);
         try {
-          const response = await fetchParcelDetail({ id: parcelId as number })(dispatch);
+          const response = await fetchParcelDetail({ id: parcelId as number });
           setCachedParcelDetail({
             ...response,
-          });
+          } as IParcel);
         } catch (err) {
           throwError(err);
         }
@@ -87,7 +88,7 @@ const useSideBarParcelLoader = ({
   };
 
   return {
-    parcelDetail: cachedParcelDetail,
+    parcelDetail: { ...cachedParcelDetail } as IParcel,
   };
 };
 

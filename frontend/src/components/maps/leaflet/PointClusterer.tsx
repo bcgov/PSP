@@ -8,7 +8,6 @@ import { Spiderfier } from './Spiderfier';
 import { ICluster, PointFeature } from '../types';
 import { getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
 import useSupercluster from '../hooks/useSupercluster';
-import { IBuilding, IParcel, IPropertyDetail, IAddress, IProperty } from 'actions/parcelsActions';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useFilterContext } from '../providers/FIlterProvider';
 import Supercluster from 'supercluster';
@@ -18,11 +17,12 @@ import { useApi } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { PropertyTypes } from 'constants/propertyTypes';
 import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
-import * as parcelsActions from 'actions/parcelsActions';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { toast } from 'react-toastify';
+import { IPropertyDetail, storeBuildingDetail, storeParcelDetail } from 'store/slices/properties';
+import { IParcel, IBuilding, IAddress, IProperty } from 'interfaces';
 
 export type PointClustererProps = {
   points: Array<PointFeature>;
@@ -277,7 +277,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
           .then(building => {
             popUpContext.setPropertyInfo(building);
             if (!!building.parcels.length) {
-              dispatch(parcelsActions.storeBuildingDetail(building));
+              dispatch(storeBuildingDetail(building));
             }
           })
           .catch(() => {
@@ -346,9 +346,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   cluster.properties.propertyTypeId === PropertyTypes.PARCEL ||
                   cluster.properties.propertyTypeId === PropertyTypes.SUBDIVISION
                 ) {
-                  dispatch(parcelsActions.storeParcelDetail(convertedProperty as IParcel));
+                  dispatch(storeParcelDetail(convertedProperty as IParcel));
                 } else {
-                  dispatch(parcelsActions.storeBuildingDetail(convertedProperty as IBuilding));
+                  dispatch(storeBuildingDetail(convertedProperty as IBuilding));
                 }
                 onMarkerClick(); //open information slideout
                 if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
@@ -385,9 +385,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 m.properties.propertyTypeId === PropertyTypes.PARCEL ||
                 m.properties.propertyTypeId === PropertyTypes.SUBDIVISION
               ) {
-                dispatch(parcelsActions.storeParcelDetail(convertedProperty as IParcel));
+                dispatch(storeParcelDetail(convertedProperty));
               } else {
-                dispatch(parcelsActions.storeBuildingDetail(convertedProperty as IBuilding));
+                dispatch(storeBuildingDetail(convertedProperty));
               }
               onMarkerClick(); //open information slideout
               if (keycloak.canUserViewProperty(m.properties as IProperty)) {
@@ -428,7 +428,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               map={leaflet.map}
               onclick={() => {
                 popUpContext.setPropertyInfo(selected.parcelDetail);
-                popUpContext.setPropertyTypeID(selected.propertyTypeId);
+                popUpContext.setPropertyTypeID(selected.propertyTypeId ?? 0);
                 onMarkerClick();
               }}
             />

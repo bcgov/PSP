@@ -5,7 +5,7 @@ import PidPinForm from './PidPinForm';
 import useKeycloakWrapper, { IKeycloak } from 'hooks/useKeycloakWrapper';
 import { Formik, Form } from 'formik';
 import { fillInput } from 'utils/testUtils';
-import { IParcel } from 'actions/parcelsActions';
+import { IParcel } from 'interfaces';
 
 jest.mock('lodash/debounce', () => jest.fn(fn => fn));
 jest.mock('hooks/useKeycloakWrapper');

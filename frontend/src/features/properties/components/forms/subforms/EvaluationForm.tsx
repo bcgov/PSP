@@ -1,7 +1,6 @@
 import { Fragment, useMemo } from 'react';
 import React from 'react';
 import { FormikProps, useFormikContext, getIn } from 'formik';
-import { IEvaluation, IFiscal } from 'actions/parcelsActions';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import moment from 'moment';
@@ -11,6 +10,7 @@ import { Table } from 'components/Table';
 import { getNetbookCols, getAssessedCols } from './columns';
 import styled from 'styled-components';
 import { Row } from 'react-bootstrap';
+import { IEvaluation, IFiscal } from 'interfaces';
 
 interface EvaluationProps {
   /** the formik tracked namespace of this component */
@@ -108,8 +108,10 @@ export const getMergedFinancials = (
       (evaluation.fiscalYear as number) ?? moment(evaluation.date).year(),
     );
     if (index >= 0) {
-      evaluation.year = (evaluation.fiscalYear as number) ?? moment(evaluation.date).year();
-      placeholderFinancials[index] = evaluation;
+      const tempEvaluation = { ...evaluation };
+      tempEvaluation.year =
+        (tempEvaluation.fiscalYear as number) ?? moment(tempEvaluation.date).year();
+      placeholderFinancials[index] = tempEvaluation;
     }
   });
   return _.orderBy(placeholderFinancials, 'year', 'desc');

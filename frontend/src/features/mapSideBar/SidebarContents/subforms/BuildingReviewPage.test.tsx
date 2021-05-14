@@ -6,14 +6,14 @@ import pretty from 'pretty';
 import { BuildingReviewPage } from './BuildingReviewPage';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import * as reducerTypes from 'constants/reducerTypes';
 import { Provider } from 'react-redux';
 import moment from 'moment';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
-import { mockDetails } from 'mocks/filterDataMock';
+import { ILookupCode } from 'store/slices/lookupCodes';
+import { IParcel } from 'interfaces';
 
 const mockStore = configureMockStore([thunk]);
 const lCodes = {
@@ -25,8 +25,106 @@ const lCodes = {
 
 const store = mockStore({
   [reducerTypes.LOOKUP_CODE]: lCodes,
-  [reducerTypes.PARCEL]: { parcels: [] },
+  [reducerTypes.PROPERTIES]: { parcels: [] },
 });
+
+export const mockDetails = [
+  {
+    id: 1,
+    pid: '000-000-000',
+    pin: '',
+    projectNumber: '',
+    zoning: '',
+    zoningPotential: '',
+    classificationId: 1,
+    encumbranceReason: '',
+    agencyId: 1,
+    isSensitive: false,
+    latitude: 48,
+    longitude: 123,
+    propertyStatus: 'active',
+    classification: 'Core Operational',
+    name: 'test name',
+    description: 'test',
+    assessedLand: 10000,
+    assessedBuilding: 10000,
+    evaluations: [
+      {
+        date: new Date(),
+        key: 'Assessed',
+        value: 10000,
+      },
+    ],
+    fiscals: [
+      {
+        fiscalYear: 2020,
+        key: 'NetBook',
+        value: 10000,
+      },
+    ],
+    address: {
+      id: 1,
+      line1: '1234 mock Street',
+      line2: 'N/A',
+      administrativeArea: 'Victoria',
+      province: 'BC',
+      postal: 'V1V1V1',
+      provinceId: '1',
+    },
+    landArea: 123,
+    landLegalDescription: 'test',
+    buildings: [],
+    parcels: [],
+    agency: 'MOTI',
+    propertyTypeId: 0,
+  },
+  {
+    id: 2,
+    pid: '000-000-000',
+    pin: '',
+    zoning: '',
+    zoningPotential: '',
+    classificationId: 1,
+    encumbranceReason: '',
+    agencyId: 2,
+    isSensitive: false,
+    latitude: 50,
+    longitude: 133,
+    classification: 'Core Operational',
+    name: 'test name',
+    description: 'test',
+    assessedLand: 10000,
+    assessedBuilding: 10000,
+    address: {
+      id: 1,
+      line1: '1234 mock Street',
+      line2: 'N/A',
+      administrativeArea: 'Victoria',
+      provinceId: '1',
+      province: 'BC',
+      postal: 'V1V1V1',
+    },
+    landArea: 123,
+    landLegalDescription: 'test',
+    buildings: [],
+    parcels: [],
+    evaluations: [
+      {
+        date: new Date(),
+        key: 'Assessed',
+        value: 10000,
+      },
+    ],
+    fiscals: [
+      {
+        fiscalYear: 2020,
+        key: 'NetBook',
+        value: 10000,
+      },
+    ],
+    agency: 'HLTH',
+  },
+] as IParcel[];
 
 const form = (
   <Formik
@@ -35,7 +133,7 @@ const form = (
       assessedLand: '',
       evaluations: [{ year: moment().year(), key: EvaluationKeys.Assessed }],
       fiscals: [{ year: moment().year(), key: FiscalKeys.NetBook }],
-      parcels: mockDetails,
+      parcels: [...mockDetails],
     }}
     onSubmit={noop}
   >

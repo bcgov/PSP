@@ -15,7 +15,6 @@ import { MAX_ZOOM } from 'constants/strings';
 import { Link, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IBuilding, IParcel } from 'actions/parcelsActions';
 import { ReactComponent as BuildingSvg } from 'assets/images/icon-business.svg';
 import { AssociatedBuildingsList } from './AssociatedBuildingsList';
 import variables from '_variables.module.scss';
@@ -23,10 +22,11 @@ import { PropertyTypes } from 'constants/propertyTypes';
 import { LandSvg } from 'components/common/Icons';
 import AssociatedParcelsList from './AssociatedParcelsList';
 import FilterBackdrop from '../FilterBackdrop';
-import * as parcelsActions from 'actions/parcelsActions';
 import { useApi } from 'hooks/useApi';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { storeBuildingDetail } from 'store/slices/properties';
+import { IBuilding, IParcel } from 'interfaces';
 
 const InfoContainer = styled.div`
   margin-right: -10px;
@@ -271,7 +271,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
                     .then((building: IBuilding) => {
                       popUpContext.setPropertyInfo(building);
                       if (!!building.parcels.length) {
-                        dispatch(parcelsActions.storeBuildingDetail(building));
+                        dispatch(storeBuildingDetail(building));
                       }
                     })
                     .catch(() => {

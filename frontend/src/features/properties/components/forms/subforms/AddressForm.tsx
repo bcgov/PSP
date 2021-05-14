@@ -5,7 +5,7 @@ import _ from 'lodash';
 import * as API from 'constants/API';
 import { FastInput, Select } from 'components/common/form';
 import { mapLookupCode } from 'utils';
-import { IAddress } from 'actions/parcelsActions';
+import { IAddress } from 'interfaces';
 import { GeocoderAutoComplete } from '../../GeocoderAutoComplete';
 import { IGeocoderResponse } from 'hooks/useApi';
 import { TypeaheadField } from 'components/common/form/Typeahead';

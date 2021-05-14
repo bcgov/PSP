@@ -3,8 +3,6 @@ import MapSideBarLayout from '../components/MapSideBarLayout';
 import useParamSideBar, { SidebarContextType } from '../hooks/useQueryParamSideBar';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
-import { IParcel, IProperty, IBuilding, storeParcelDetail } from 'actions/parcelsActions';
-import { deleteParcel, fetchParcelsDetail } from 'actionCreators/parcelsActionCreator';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { BuildingForm, SubmitPropertySelector, LandForm } from '../SidebarContents';
 import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
@@ -29,7 +27,6 @@ import useSideBarBuildingLoader from '../hooks/useSideBarBuildingLoader';
 import { ViewOnlyBuildingForm, valuesToApiFormat } from '../SidebarContents/BuildingForm';
 import { Prompt } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
-import { deleteBuilding } from 'actionCreators/buildingActionCreator';
 import useSideBarBuildingWithParcelLoader from '../hooks/useSideBarBuildingWithParcelLoader';
 import variables from '_variables.module.scss';
 import { withNameSpace } from 'utils/formUtils';
@@ -37,6 +34,8 @@ import { PropertyTypes, Claims, EvaluationKeys, FiscalKeys } from 'constants/ind
 import { useBuildingApi } from '../hooks/useBuildingApi';
 import { fireMapRefreshEvent } from 'components/maps/hooks/useMapRefreshEvent';
 import { useTenant } from 'tenants';
+import { storeParcelDetail, useProperties } from 'store/slices/properties';
+import { IBuilding, IParcel, IProperty } from 'interfaces';
 
 interface IMapSideBarContainerProps {
   refreshParcels: Function;
@@ -123,6 +122,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
     showSideBar,
     disabled,
   });
+  const { fetchParcelsDetail, deleteParcel, deleteBuilding } = useProperties();
   const dispatch = useDispatch();
   const [movingPinNameSpace, setMovingPinNameSpace] = useState<string | undefined>(
     movingPinNameSpaceProp,
@@ -190,7 +190,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
       nameSpace?: string,
     ) => void = formikParcelDataPopulateCallback,
   ) => {
-    return fetchParcelsDetail(pidOrPin)(dispatch).then(resp => {
+    return fetchParcelsDetail(pidOrPin).then(resp => {
       const matchingParcel: (IParcel & ISearchFields) | undefined = resp?.data?.length
         ? _.first(
             _.filter(
@@ -249,7 +249,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
       }
       if (isParcel) {
         const query: any = { pin: properties?.PIN, pid: properties.PID };
-        fetchParcelsDetail(query)(dispatch).then((resp: any) => {
+        fetchParcelsDetail(query).then((resp: any) => {
           const matchingParcel: any = resp?.data?.length
             ? _.first(
                 _.filter(
@@ -570,10 +570,10 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
             switch (context) {
               case SidebarContextType.UPDATE_BUILDING:
               case SidebarContextType.VIEW_BUILDING:
-                await deleteBuilding(buildingDetail as IBuilding)(dispatch);
+                await deleteBuilding(buildingDetail as IBuilding);
                 break;
               default:
-                await deleteParcel(parcelDetail as IParcel)(dispatch);
+                await deleteParcel(parcelDetail as IParcel);
                 break;
             }
             fireMapRefreshEvent();

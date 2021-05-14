@@ -9,7 +9,6 @@ import { Button, Form as BSForm } from 'react-bootstrap';
 import styled from 'styled-components';
 import { InventoryPolicy } from '../components/InventoryPolicy';
 import * as API from 'constants/API';
-import { IBuilding, IParcel, LeasedLandTypes } from 'actions/parcelsActions';
 import { ParcelIdentificationForm } from './subforms/ParcelIdentificationForm';
 import { LandUsageForm } from './subforms/LandUsageForm';
 import { valuesToApiFormat as landValuesToApiFormat } from './LandForm';
@@ -44,6 +43,7 @@ import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import variables from '_variables.module.scss';
 import { fireMapRefreshEvent } from 'components/maps/hooks/useMapRefreshEvent';
+import { IAssociatedLand, IParcel, ILeasedLand, LeasedLandTypes } from 'interfaces';
 
 const Container = styled.div`
   background-color: #fff;
@@ -110,16 +110,6 @@ const ProgressBar = styled.div`
   background-color: ${variables.secondaryVariantColor};
 `;
 
-export interface IAssociatedLand extends IBuilding {
-  parcels: IParcel[];
-  leasedLandMetadata: ILeasedLand[];
-}
-
-export interface ILeasedLand {
-  ownershipNote: string;
-  type: LeasedLandTypes;
-  parcelId?: number;
-}
 /**
  * Create formiks initialValues by stitching together the default values provided by each subform.
  */

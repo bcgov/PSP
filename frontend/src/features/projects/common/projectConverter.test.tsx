@@ -8,7 +8,6 @@ import {
   toFlatProperty,
 } from './projectConverter';
 import moment, { Moment } from 'moment';
-import { IEvaluation, IFiscal } from 'actions/parcelsActions';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import {
@@ -19,6 +18,7 @@ import {
 } from '../dispose/testUtils';
 import { NoteTypes, PropertyTypes } from '../../../constants';
 import { getCurrentFiscalYear } from 'utils';
+import { IEvaluation, IFiscal } from 'interfaces';
 
 const createAppraisal = (date: Moment): IEvaluation => {
   return {

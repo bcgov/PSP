@@ -1,6 +1,6 @@
 import React from 'react';
 import { CellProps } from 'react-table';
-import { IProperty } from 'actions/parcelsActions';
+import { IProperty } from 'interfaces';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import { PropertyTypes } from 'constants/propertyTypes';

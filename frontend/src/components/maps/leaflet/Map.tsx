@@ -9,7 +9,6 @@ import {
   Popup,
   Map as ReactLeafletMap,
 } from 'react-leaflet';
-import { IProperty, IPropertyDetail, storeParcelDetail } from 'actions/parcelsActions';
 import { Container, Row, Col } from 'react-bootstrap';
 import BasemapToggle, { BasemapToggleEvent, BaseLayer } from '../BasemapToggle';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,7 +31,7 @@ import {
   PopupContentConfig,
 } from './LayerPopup/LayerPopupContent';
 import classNames from 'classnames';
-import { useLayerQuery } from './LayerPopup/hooks/useLayerQuery';
+import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { saveParcelLayerData } from 'reducers/parcelLayerDataSlice';
 import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
@@ -50,6 +49,8 @@ import InfoSlideOut from './InfoSlideOut/InfoSlideOut';
 import { PropertyPopUpContextProvider } from '../providers/PropertyPopUpProvider';
 import FilterBackdrop from './FilterBackdrop';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import { IProperty } from 'interfaces';
+import { IPropertyDetail, storeParcelDetail } from 'store/slices/properties';
 
 export type MapViewportChangeEvent = {
   bounds: LatLngBounds | null;

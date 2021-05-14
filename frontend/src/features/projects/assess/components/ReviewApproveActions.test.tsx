@@ -18,7 +18,7 @@ const history = createMemoryHistory();
 
 jest.mock('formik');
 jest.mock('hooks/useKeycloakWrapper');
-(useKeycloakWrapper as jest.Mock).mockReturnValue({ hasClaim: () => true });
+(useKeycloakWrapper as jest.Mock).mockReturnValue({ hasClaim: () => true, hasAgency: () => true });
 
 const mockSubmit = jest.fn();
 afterEach(() => {
