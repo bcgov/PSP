@@ -1,3 +1,5 @@
+import { IAgency } from './agency';
+import { IRole } from './role';
 export interface IUserDetails {
   id?: string;
   username?: string;
@@ -7,10 +9,11 @@ export interface IUserDetails {
   lastName?: string;
   position?: string | null;
   isDisabled?: boolean;
-  agencies: any[];
-  roles: any[];
+  agencies?: IAgency[];
+  roles?: IRole[];
   createdOn?: string;
   rowVersion?: string;
   note?: string;
   lastLogin?: string;
+  emailVerified?: boolean;
 }

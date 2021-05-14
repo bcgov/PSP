@@ -1,12 +1,11 @@
+import { usersSlice } from './../store/slices/users/usersSlice';
 import { lookupCodesSlice } from './../store/slices/lookupCodes/lookupCodesSlice';
 import { combineReducers } from 'redux';
 import parcelsReducer from 'reducers/parcelsReducer';
 import * as reducerTypes from 'constants/reducerTypes';
 import networkReducer from './networkReducer';
-import usersReducer from './usersReducer';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import leafletMouseSlice from './LeafletMouseSlice';
-import userDetailReducer from './userDetailReducer';
 import jwtSlice from './JwtSlice';
 import keycloakReadySlice from './keycloakReadySlice';
 import mapViewZoomSlice from './mapViewZoomSlice';
@@ -27,9 +26,8 @@ import { agenciesSlice } from 'store/slices/agencies/agenciesSlice';
 export const reducerObject = {
   loadingBar: loadingBarReducer,
   [reducerTypes.PARCEL]: parcelsReducer,
-  [reducerTypes.USERS]: usersReducer,
+  [reducerTypes.USERS]: usersSlice.reducer,
   [reducerTypes.ACCESS_REQUEST]: accessRequestsSlice.reducer,
-  [reducerTypes.GET_USER_DETAIL]: userDetailReducer,
   [reducerTypes.LOOKUP_CODE]: lookupCodesSlice.reducer,
   [reducerTypes.AGENCIES]: agenciesSlice.reducer,
   [reducerTypes.NETWORK]: networkReducer,

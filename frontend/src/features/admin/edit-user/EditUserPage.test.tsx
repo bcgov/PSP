@@ -2,7 +2,6 @@ import EditUserPage from './EditUserPage';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import { Provider } from 'react-redux';
 import * as reducerTypes from 'constants/reducerTypes';
@@ -14,6 +13,7 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import moment from 'moment-timezone';
 import { useKeycloak } from '@react-keycloak/web';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -53,12 +53,12 @@ const selectedUser = {
 };
 
 const store = mockStore({
-  [reducerTypes.GET_USER_DETAIL]: selectedUser,
+  [reducerTypes.USERS]: { userDetail: selectedUser },
   [reducerTypes.LOOKUP_CODE]: lCodes,
 });
 
 const noDateStore = mockStore({
-  [reducerTypes.GET_USER_DETAIL]: { ...selectedUser, lastLogin: null },
+  [reducerTypes.USERS]: { userDetail: { ...selectedUser, lastLogin: null } },
   [reducerTypes.LOOKUP_CODE]: lCodes,
 });
 
