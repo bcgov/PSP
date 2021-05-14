@@ -23,7 +23,7 @@ const getPropertyDetail = (
 };
 
 /**
- * The user reducer stores the complete list of lookup codes used within the application.
+ * The properties reducer provides actions to manage the displayed properties used within the application.
  */
 export const propertiesSlice = createSlice({
   name: PROPERTIES,

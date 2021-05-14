@@ -39,6 +39,9 @@ const buildingDeletingToasts: LifecycleToasts = {
 export const useProperties = () => {
   const dispatch = useDispatch();
 
+  /**
+   * fetch parcels, passing the current bounds of the map.
+   */
   const fetchParcels = useCallback(
     async (parcelBounds: API.IPropertySearchParams | null) => {
       if (
@@ -95,6 +98,11 @@ export const useProperties = () => {
     [dispatch],
   );
 
+  /**
+   * Make an AJAX request to fetch the specified 'parcel' from inventory.
+   * @param params unique id of the parcel
+   * @param position optional override for the lat/lng of the returned parcel.
+   */
   const fetchParcelDetail = useCallback(
     async (params: API.IParcelDetailParams, position?: [number, number]): Promise<IParcel> => {
       dispatch(request(actionTypes.GET_PARCEL_DETAIL));
@@ -116,6 +124,11 @@ export const useProperties = () => {
     [dispatch],
   );
 
+  /**
+   * Make an AJAX request to fetch the specified 'building' from inventory.
+   * @param params unique id of the building
+   * @param position optional override for the lat/lng of the returned building.
+   */
   const fetchBuildingDetail = useCallback(
     async (params: API.IBuildingDetailParams, position?: [number, number]): Promise<IBuilding> => {
       dispatch(request(actionTypes.GET_PARCEL_DETAIL));
@@ -137,6 +150,12 @@ export const useProperties = () => {
     [dispatch],
   );
 
+  /**
+   * Make an AJAX request to fetch the specified property ('parcel' or 'building') from inventory.
+   * @param id unique id of the property
+   * @param propertyTypeId either 0 for parcel or 1 for building
+   * @param position optional override for the lat/lng of the returned property.
+   */
   const fetchPropertyDetail = useCallback(
     async (id: number, propertyTypeId: 0 | 1, position?: [number, number]) => {
       return propertyTypeId === 0
@@ -146,6 +165,10 @@ export const useProperties = () => {
     [fetchParcelDetail, fetchBuildingDetail],
   );
 
+  /**
+   * Make an AJAX request to add the specified 'parcel' to inventory.
+   * @param parcel IParcel object to add to inventory.
+   */
   const createParcel = useCallback(
     async (parcel: IParcel) => {
       dispatch(request(actionTypes.ADD_PARCEL));
@@ -168,6 +191,10 @@ export const useProperties = () => {
     [dispatch],
   );
 
+  /**
+   * Make an AJAX request to update the specified 'parcel' from inventory, using the id.
+   * @param parcel IParcel object to update from inventory.
+   */
   const updateParcel = useCallback(
     async (parcel: IParcel) => {
       dispatch(request(actionTypes.UPDATE_PARCEL));
