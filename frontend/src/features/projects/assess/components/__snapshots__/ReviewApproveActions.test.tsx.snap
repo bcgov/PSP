@@ -28,20 +28,6 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
   margin: 0px 0px 10px 0px;
 }
 
-.c5 {
-  background-color: #deefff;
-  padding: 5px 15px;
-  margin: 0px 1px 5px 1px;
-}
-
-.c5 em {
-  color: darkVariantColor;
-}
-
-.c5 a {
-  color: slideOutBlue;
-}
-
 <div
   class="list-group"
 >
@@ -234,42 +220,15 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
         <div
           class="list-group-item"
         >
-          SPP-00001
+          <a
+            href="/projects?projectNumber=SPP-00001"
+          >
+            SPP-00001
+          </a>
           <br />
         </div>
       </div>
     </div>
   </div>
-  <div
-    class="c5 row"
-  >
-    <em>
-      For more information on this property, contact
-       
-      <a
-        href="mailto:RealPropertyDivision.Disposals@gov.bc.ca"
-      >
-        Strategic Real Estate Services (SRES)
-      </a>
-    </em>
-  </div>
 </div>
-`;
-
-exports[`Parcel Detail MapSideBarContainer basic data loading and display Empty parcel sidebar matches snapshot 1`] = `
-<div
-  class="Toastify"
-/>
-`;
-
-exports[`Parcel Detail MapSideBarContainer basic data loading and display parcel sidebar snapshot loads by id 1`] = `
-<div
-  class="Toastify"
-/>
-`;
-
-exports[`Parcel Detail MapSideBarContainer basic data loading and display sidebar is hidden 1`] = `
-<div
-  class="Toastify"
-/>
 `;
