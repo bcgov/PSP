@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Container, Row, ButtonToolbar, Button } from 'react-bootstrap';
 import { Check, Form, Input, Select, SelectOption } from '../../../components/common/form';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 import { IAgencyDetail } from 'interfaces';
 import { Formik } from 'formik';
 import * as API from 'constants/API';
 import './EditAgencyPage.scss';
 import { useHistory } from 'react-router-dom';
 import useCodeLookups from 'hooks/useLookupCodes';
-import {
-  createAgency,
-  deleteAgency,
-  fetchAgencyDetail,
-  getUpdateAgencyAction,
-} from 'actionCreators/agencyActionCreator';
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
 import GenericModal from 'components/common/GenericModal';
 import { AgencyEditSchema } from 'utils/YupSchema';
 import service from 'features/properties/service';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import { useAppSelector } from 'store/hooks';
+import { useAgencies } from 'store/slices/agencies/useAgencies';
 
 interface IEditAgencyPageProps {
   /** id prop to identify which agency to edit */
@@ -36,18 +31,17 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
   const newAgency = history.location.pathname.includes('/new');
   const [showDelete, setShowDelete] = useState(false);
   const [showFailed, setShowFailed] = useState(false);
+  const { fetchAgencyDetail, addAgency, updateAgency } = useAgencies();
   useEffect(() => {
     if (!newAgency) {
-      dispatch(fetchAgencyDetail({ id: agencyId }));
+      fetchAgencyDetail({ id: agencyId });
     }
-  }, [dispatch, agencyId, newAgency]);
+  }, [fetchAgencyDetail, agencyId, newAgency]);
 
   const { getByType } = useCodeLookups();
   const agencies = getByType(API.AGENCY_CODE_SET_NAME).filter(x => !x.parentId);
 
-  const agency = useSelector<RootState, IAgencyDetail>(
-    state => state.GET_AGENCY_DETAIL as IAgencyDetail,
-  );
+  const agency = useAppSelector(state => state.agencies.agencyDetail);
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
     label: code.name,
     value: code.id.toString(),
@@ -107,25 +101,23 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
             onSubmit={async (values, { setSubmitting, setStatus }) => {
               try {
                 if (!newAgency) {
-                  dispatch(
-                    getUpdateAgencyAction(
-                      { id: agencyId },
-                      {
-                        id: agency.id,
-                        name: values.name,
-                        code: values.code,
-                        email: values.email,
-                        isDisabled: values.isDisabled,
-                        sendEmail: values.sendEmail,
-                        addressTo: values.addressTo,
-                        parentId: values.parentId ? Number(values.parentId) : undefined,
-                        description: values.description,
-                        rowVersion: values.rowVersion,
-                      },
-                    ),
+                  updateAgency(
+                    { id: agencyId },
+                    {
+                      id: agency.id,
+                      name: values.name,
+                      code: values.code,
+                      email: values.email,
+                      isDisabled: values.isDisabled,
+                      sendEmail: values.sendEmail,
+                      addressTo: values.addressTo,
+                      parentId: values.parentId ? Number(values.parentId) : undefined,
+                      description: values.description,
+                      rowVersion: values.rowVersion,
+                    },
                   );
                 } else {
-                  const data = await createAgency({
+                  const data = await addAgency({
                     name: values.name,
                     code: values.code,
                     email: values.email,
@@ -134,7 +126,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
                     addressTo: values.addressTo,
                     parentId: Number(values.parentId),
                     description: values.description,
-                  })(dispatch);
+                  });
                   history.replace(`/admin/agency/${data.id}`);
                 }
               } catch (error) {
@@ -220,22 +212,25 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
 
 export default EditAgencyPage;
 
-const DeleteModal = ({ showDelete, setShowDelete, history, dispatch, agency }: any) => (
-  <GenericModal
-    message="Are you sure you want to permanently delete the agency?"
-    cancelButtonText="Cancel"
-    okButtonText="Delete"
-    display={showDelete}
-    handleOk={() => {
-      dispatch(deleteAgency(agency)).then(() => {
-        history.push('/admin/agencies');
-      });
-    }}
-    handleCancel={() => {
-      setShowDelete(false);
-    }}
-  />
-);
+const DeleteModal = ({ showDelete, setShowDelete, history, dispatch, agency }: any) => {
+  const { removeAgency } = useAgencies();
+  return (
+    <GenericModal
+      message="Are you sure you want to permanently delete the agency?"
+      cancelButtonText="Cancel"
+      okButtonText="Delete"
+      display={showDelete}
+      handleOk={() => {
+        removeAgency(agency).then(() => {
+          history.push('/admin/agencies');
+        });
+      }}
+      handleCancel={() => {
+        setShowDelete(false);
+      }}
+    />
+  );
+};
 
 const FailedDeleteModal = ({ showFailed, setShowFailed }: any) => (
   <GenericModal

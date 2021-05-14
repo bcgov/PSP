@@ -20,10 +20,9 @@ import splTabSlice from 'features/projects/spl/slices/splTabSlice';
 import projectStatusesSlice from 'features/projects/common/slices/projectStatusesSlice';
 import propertyNameSlice from 'features/properties/common/slices/propertyNameSlice';
 import filterSlice from './filterSlice';
-import agencyReducer from './agencyReducer';
-import agencyDetailReducer from './agencyDetailReducer';
 import parcelLayerDataSlice from './parcelLayerDataSlice';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
+import { agenciesSlice } from 'store/slices/agencies/agenciesSlice';
 
 export const reducerObject = {
   loadingBar: loadingBarReducer,
@@ -31,9 +30,8 @@ export const reducerObject = {
   [reducerTypes.USERS]: usersReducer,
   [reducerTypes.ACCESS_REQUEST]: accessRequestsSlice.reducer,
   [reducerTypes.GET_USER_DETAIL]: userDetailReducer,
-  [reducerTypes.GET_AGENCY_DETAIL]: agencyDetailReducer,
   [reducerTypes.LOOKUP_CODE]: lookupCodesSlice.reducer,
-  [reducerTypes.AGENCIES]: agencyReducer,
+  [reducerTypes.AGENCIES]: agenciesSlice.reducer,
   [reducerTypes.NETWORK]: networkReducer,
   [reducerTypes.LEAFLET_CLICK_EVENT]: leafletMouseSlice.reducer,
   [reducerTypes.PARCEL_LAYER_DATA]: parcelLayerDataSlice.reducer,

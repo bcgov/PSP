@@ -47,7 +47,7 @@ const selectedAgency = {
 };
 
 const store = mockStore({
-  [reducerTypes.GET_AGENCY_DETAIL]: selectedAgency,
+  [reducerTypes.AGENCIES]: { agencyDetail: selectedAgency },
   [reducerTypes.LOOKUP_CODE]: lCodes,
 });
 
