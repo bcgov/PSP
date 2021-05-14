@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: pims-app-tenant-config
+  annotations:
+    description: Deployment template for the tenant configuration file.
+    tags: pims,app
+parameters:
+  - name: APP_NAME
+    displayName: "App Name"
+    description: "The name of the application (grouped)."
+    required: true
+    value: "pims"
+  - name: ROLE_NAME
+    displayName: "Component Name"
+    description: "The name of the application role (e.g api, app, database)."
+    required: true
+    value: "app"
+  - name: PROJECT_NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift project containing the application."
+    required: true
+    value: "3cd915"
+  - name: ENV_NAME
+    displayName: "Environment name"
+    description: "The name for this environment [dev, test, prod, tools]"
+    required: true
+    value: "dev"
+  - name: INSTANCE
+    displayName: "Unique Identifier"
+    description: "A unique identifier to allow for multiple instances (i.e. '-01')."
+    value: ""
+
+  - name: TENANT
+    displayName: "Tenant unique identity"
+    description: "Tenant unique identity key."
+    value: "MOTI"
+  - name: TENANT_TITLE
+    displayName: "Tenant Application Title"
+    description: "Tenant application title."
+    value: "Property Information Management System"
+  - name: TENANT_COLOUR
+    displayName: "Tenant Background Colour"
+    description: "Tenant background colour used to identify environments."
+    value: "#003366"
+  - name: TENANT_LOGIN_TITLE
+    displayName: "Tenant Login Title"
+    description: "Tenant login page title."
+    value: "TRAN Property Information Management System (PIMS)"
+  - name: TENANT_LOGIN_HEADING
+    displayName: "Tenant Login Heading"
+    description: "Tenant login page heading."
+    value: "PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure"
+  - name: TENANT_LOGIN_BODY
+    displayName: "Tenant Login Body"
+    description: "Tenant login page message."
+    value: "WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it."
+objects:
+  # Tenant configuration settings.
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      annotations:
+        description: Tenant configuration settings
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}-tenant${INSTANCE}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
+    type: Opaque
+    data:
+      tenant.json: '{
+        "id": "${TENANT}",
+        "title": "${TENANT_TITLE}",
+        "colour": "${TENANT_COLOUR}",
+        "logo": {
+          "favicon": "/tenants/${TENANT}/favicon.ico",
+          "image": "/tenants/${TENANT}/PIMS-logo.png",
+          "imageWithText": "/tenants/${TENANT}/PIMS-logo-with-text.png"
+        },
+        "login": {
+          "title": "${TENANT_LOGIN_TITLE}",
+          "heading": "${TENANT_LOGIN_HEADING}",
+          "body": "${TENANT_LOGIN_BODY}"
+        }
+      }'

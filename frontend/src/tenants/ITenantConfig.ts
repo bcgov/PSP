@@ -2,10 +2,14 @@
  * Interface for tenant configuration settings.
  */
 export interface ITenantConfig {
+  // The unique identifier for the tenant.
+  id: string;
   // The name of the application to display in the header.
   title: string;
   // The shortname of the application.
   shortName: string;
+  // The colour to identify the environment.
+  colour: string;
   // The logos to display.
   logo: ITenantLogoConfig;
   // Login page settings.

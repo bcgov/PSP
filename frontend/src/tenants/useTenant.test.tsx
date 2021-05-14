@@ -57,7 +57,7 @@ describe('useTenant hook', () => {
       process.env.REACT_APP_TENANT = 'MOTI';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
-      expect(title).toContainHTML(JSON.stringify(config['MOTI']));
+      expect(title).toContainHTML(JSON.stringify({ ...defaultTenant, ...config['MOTI'] }));
     });
   });
 
@@ -66,7 +66,7 @@ describe('useTenant hook', () => {
       process.env.REACT_APP_TENANT = 'CITZ';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
-      expect(title).toContainHTML(JSON.stringify(config['CITZ']));
+      expect(title).toContainHTML(JSON.stringify({ ...defaultTenant, ...config['CITZ'] }));
     });
   });
 });

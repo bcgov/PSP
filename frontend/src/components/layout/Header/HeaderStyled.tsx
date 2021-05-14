@@ -1,6 +1,10 @@
-@import '../../../fonts.scss';
+import { Navbar } from 'react-bootstrap';
+import styled from 'styled-components';
 
-.App-header.navbar {
+/**
+ * Styled header component.
+ */
+export const HeaderStyled = styled(Navbar)`
   padding: 0 10px;
   min-height: 70px;
   color: #ffffff;
@@ -41,14 +45,13 @@
       cursor: pointer;
     }
   }
-}
-.modal-content .label {
-  font-weight: 700;
-}
 
-// show long App Name when space allows
-@media (min-width: 992px) {
-  .App-header.navbar {
+  .modal-content .label {
+    font-weight: 700;
+  }
+
+  // show long App Name when space allows
+  @media (min-width: 992px) {
     .longAppName {
       display: block;
       text-align: left;
@@ -58,4 +61,6 @@
       display: none;
     }
   }
-}
+`;
+
+export default HeaderStyled;

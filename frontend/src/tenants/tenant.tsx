@@ -34,7 +34,11 @@ export const TenantProvider: React.FC = props => {
         const config = JSON.parse(process.env.REACT_APP_TENANT);
         setTenant({ ...defaultTenant, ...config });
       } else {
-        setTenant(config[process.env.REACT_APP_TENANT] ?? defaultTenant);
+        setTenant(
+          config[process.env.REACT_APP_TENANT]
+            ? { ...defaultTenant, ...config[process.env.REACT_APP_TENANT] }
+            : defaultTenant,
+        );
       }
     } else {
       // Fetch the configuration file generated for the environment.

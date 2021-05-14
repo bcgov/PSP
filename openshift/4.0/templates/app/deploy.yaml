@@ -215,7 +215,9 @@ objects:
     type: Opaque
     data:
       tenant.json: '{
+        "id": "MOTI",
         "title": "Property Information Management System",
+        "colour": "#003366",
         "logo": {
           "favicon": "/tenants/MOTI/favicon.ico",
           "image": "/tenants/MOTI/PIMS-logo.png",

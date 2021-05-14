@@ -1,14 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty Layout renders 1`] = `
-.c0 {
+.c1 {
+  padding: 0 10px;
+  min-height: 70px;
+  color: #ffffff;
+}
+
+.c1 .longAppName {
+  display: none;
+}
+
+.c1 .shortAppName {
+  display: block;
+}
+
+.c1 .brand-box {
+  padding: 10px 0;
+}
+
+.c1 .brand-box .pims-logo {
+  margin: 0 10px;
+}
+
+.c1 .title h1 {
+  margin-top: 10px;
+  padding-left: 0px;
+  text-align: center;
+  font-size: 24px;
+  -webkit-text-decoration: none solid rgb(255,255,255);
+  text-decoration: none solid rgb(255,255,255);
+  font-family: 'BCSans',Fallback,sans-serif;
+  font-weight: 700;
+  white-space: normal;
+}
+
+.c1 .other {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row-reverse;
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0;
+}
+
+.c1 .other:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.c1 .modal-content .label {
+  font-weight: 700;
+}
+
+.c2 {
   border-left: 2px solid white;
   font-size: 34px;
   margin: 0 15px 0 25px;
   vertical-align: top;
 }
 
-.c1 {
+.c4 {
   bottom: 0;
   padding: 10px 0;
   display: -webkit-box;
@@ -34,12 +92,12 @@ exports[`Empty Layout renders 1`] = `
   align-content: flex-start;
 }
 
-.c1 a {
+.c4 a {
   display: inline;
 }
 
-.c1 a:link,
-.c1 a:visited {
+.c4 a:link,
+.c4 a:visited {
   color: #ffffff;
   font-size: 16px;
   font-family: 'BCSans',Fallback,sans-serif;
@@ -47,13 +105,13 @@ exports[`Empty Layout renders 1`] = `
   border-right: 1px solid #666;
 }
 
-.c1 a:hover,
-.c1 a:focus {
+.c4 a:hover,
+.c4 a:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c1 div.version {
+.c4 div.version {
   color: #ffffff;
   font-size: 12px;
   font-family: 'BCSans',Fallback,sans-serif;
@@ -65,18 +123,54 @@ exports[`Empty Layout renders 1`] = `
   text-align: right;
 }
 
+.c0 {
+  background-color: #003366;
+  border: none;
+  border-bottom: 2px solid $accent-color;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c3 {
+  background-color: #003366;
+  background-color: $primary-color;
+  border: none;
+  border-top: 2px solid $accent-color;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c3 a,
+.c3 h2 {
+  color: #fff;
+}
+
+@media (min-width:992px) {
+  .c1 .longAppName {
+    display: block;
+    text-align: left;
+    padding-left: 40px;
+  }
+
+  .c1 .shortAppName {
+    display: none;
+  }
+}
+
 <div>
   <div
     class="App container-fluid"
   >
     <header
-      class="header-layout fixed-top"
+      class="c0 header-layout fixed-top"
     >
       <div
         class="px-0 container"
       >
         <nav
-          class="App-header navbar navbar-expand navbar-light"
+          class="c1 App-header navbar navbar-expand navbar-light"
         >
           <span
             class="brand-box navbar-brand"
@@ -95,7 +189,7 @@ exports[`Empty Layout renders 1`] = `
               />
             </a>
             <span
-              class="c0"
+              class="c2"
             />
             <img
               alt="PIMS logo"
@@ -117,7 +211,9 @@ exports[`Empty Layout renders 1`] = `
               </h1>
               <h1
                 class="shortAppName"
-              />
+              >
+                PIMS
+              </h1>
             </div>
           </div>
         </nav>
@@ -127,13 +223,13 @@ exports[`Empty Layout renders 1`] = `
       class="App-content"
     />
     <footer
-      class="footer-layout fixed-bottom"
+      class="c3 footer-layout fixed-bottom"
     >
       <div
         class="px-0 container"
       >
         <div
-          class="c1"
+          class="c4"
         >
           <a
             href="http://www.gov.bc.ca/gov/content/home/disclaimer"

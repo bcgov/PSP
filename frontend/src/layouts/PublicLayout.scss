@@ -20,28 +20,3 @@
   /* for Firefox */
   min-height: 0;
 }
-
-.header-layout {
-  // colors
-  background-color: $primary-color;
-  border: none;
-  border-bottom: 2px solid $accent-color;
-
-  // sizing
-  flex-shrink: 0;
-}
-
-.footer-layout {
-  // colors
-  background-color: $primary-color;
-  border: none;
-  border-top: 2px solid $accent-color;
-
-  // sizing
-  flex-shrink: 0;
-
-  a,
-  h2 {
-    color: #fff;
-  }
-}

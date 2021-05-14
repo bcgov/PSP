@@ -6,6 +6,7 @@ import { defaultTenant, ITenantConfig } from '..';
 export const config: ITenantConfig = {
   ...defaultTenant,
   ...{
+    id: 'MOTI',
     title: 'Property Information Management System',
     logo: {
       favicon: '/tenants/MOTI/favicon.ico',

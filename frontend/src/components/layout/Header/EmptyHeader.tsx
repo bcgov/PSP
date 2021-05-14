@@ -1,10 +1,9 @@
-import './Header.scss';
-
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import styled from 'styled-components';
 import { useTenant, Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
+import { HeaderStyled } from './HeaderStyled';
+import { VerticalBar } from 'components/common/VerticalBar';
 
 /**
  * Display an "empty" header bar with limited functionality as a placeholder
@@ -12,7 +11,7 @@ import { BCGovLogo } from 'components/common/BCGovLogo';
 const EmptyHeader = () => {
   const tenant = useTenant();
   return (
-    <Navbar expand className="App-header">
+    <HeaderStyled expand className="App-header">
       <Navbar.Brand className="brand-box">
         <a target="_blank" rel="noopener noreferrer" href="https://www2.gov.bc.ca/gov/content/home">
           <BCGovLogo />
@@ -26,18 +25,8 @@ const EmptyHeader = () => {
           <h1 className="shortAppName">{tenant.shortName}</h1>
         </Nav.Item>
       </Nav>
-    </Navbar>
+    </HeaderStyled>
   );
 };
-
-/**
- * Styled VerticalBar component.
- */
-const VerticalBar = styled.span`
-  border-left: 2px solid white;
-  font-size: 34px;
-  margin: 0 15px 0 25px;
-  vertical-align: top;
-`;
 
 export default EmptyHeader;
