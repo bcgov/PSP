@@ -10,8 +10,8 @@ import { renderHook } from '@testing-library/react-hooks';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { mockBuilding } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
 import {
+  mockBuilding,
   mockBuildingDetail,
   mockParcel,
   mockParcelDetail,

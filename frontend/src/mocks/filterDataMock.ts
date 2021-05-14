@@ -1,5 +1,4 @@
 import { IPropertyDetail } from 'store/slices/properties';
-import { mockBuilding } from './../components/maps/leaflet/InfoSlideOut/InfoContent.test';
 import { IAccessRequest, IParcel, IProperty, IBuilding } from 'interfaces';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { Workflows } from 'constants/index';
@@ -151,7 +150,7 @@ export const mockParcel = {
   assessedBuilding: 11000,
   evaluations: [
     {
-      date: new Date(),
+      date: '2021-05-14T17:15:58.193Z',
       key: 'Assessed',
       value: 10000,
     },
@@ -184,6 +183,63 @@ export const mockParcel = {
   projectStatus: 'In ERP',
   projectWorkflow: Workflows.ERP,
 } as IParcel;
+
+export const mockBuilding = {
+  name: 'test name',
+  id: 100,
+  parcelId: '',
+  pid: '',
+  address: {
+    id: 1,
+    line1: '1234 mock Street',
+    administrativeArea: 'Victoria',
+    province: 'BC',
+    postal: 'V1V1V1',
+    provinceId: '1',
+  },
+  latitude: 48,
+  longitude: 123,
+  buildingConstructionTypeId: 0,
+  buildingConstructionType: 'Concrete',
+  classificationId: 1,
+  classification: 'Core Operational',
+  assessedLand: 10000,
+  assessedBuilding: 10000,
+  evaluations: [
+    {
+      date: '2021-05-12T18:57:19.992Z',
+      key: 'Assessed',
+      value: 11000,
+    },
+  ],
+  fiscals: [
+    {
+      fiscalYear: 2020,
+      key: 'NetBook',
+      value: 10000,
+    },
+  ],
+  rentableArea: 100,
+  totalArea: 200,
+  agency: 'AEST',
+  agencyId: 0,
+  agencyCode: 'KPU',
+  agencyFullName: 'Ministry of Advanced Education',
+  subAgency: 'KPU',
+  subAgencyFullName: 'Kwantlen Polytechnic University',
+  transferLeaseOnSale: false,
+  isSensitive: false,
+  buildingPredominateUse: 'University/College',
+  buildingPredominateUseId: 0,
+  buildingOccupantTypeId: 0,
+  encumbranceReason: '',
+  occupantName: 'test',
+  parcels: [mockParcel],
+  buildingTenancy: '100%',
+  projectNumbers: ['SPP-00001'],
+  projectStatus: 'On Market',
+  projectWorkflow: Workflows.SPL,
+} as IBuilding;
 
 export const mockProperty: IProperty = {
   id: 0,
