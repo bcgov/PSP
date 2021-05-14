@@ -1,10 +1,8 @@
 import './App.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Col } from 'react-bootstrap';
 
-import { getActivateUserAction } from 'actionCreators/usersActionCreator';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import AppRouter from 'router';
@@ -14,21 +12,21 @@ import PublicLayout from 'layouts/PublicLayout';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import { useLookupCodes } from 'store/slices/lookupCodes';
 import { useFavicon } from 'hooks/useFavicon';
+import { useUsers } from 'store/slices/users';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
-  const dispatch = useDispatch();
   const { fetchLookupCodes } = useLookupCodes();
-
+  const { activateUser } = useUsers();
   useFavicon();
 
   useEffect(() => {
     if (keycloak?.authenticated) {
-      dispatch(getActivateUserAction());
+      activateUser();
       fetchLookupCodes();
     }
-  }, [dispatch, keycloak, fetchLookupCodes]);
+  }, [keycloak, fetchLookupCodes, activateUser]);
 
   return (
     <AuthStateContext.Consumer>
