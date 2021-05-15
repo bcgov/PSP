@@ -27,7 +27,7 @@ let findOneWhereContains = jest.fn();
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
-const getStore = (values?: any) => mockStore(values ?? { parcel: { draftParcels: [] } });
+const getStore = (values?: any) => mockStore(values ?? { properties: { draftParcels: [] } });
 const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>
     <Router history={history}>{children}</Router>
@@ -112,7 +112,7 @@ describe('useActiveFeatureLayer hook tests', () => {
         }),
       {
         wrapper: getWrapper(
-          getStore({ parcel: { draftParcels: [{ geometry: { coordinates: [-122, 56] } }] } }),
+          getStore({ properties: { draftParcels: [{ geometry: { coordinates: [-122, 56] } }] } }),
         ),
       },
     );
@@ -135,7 +135,7 @@ describe('useActiveFeatureLayer hook tests', () => {
         }),
       {
         wrapper: getWrapper(
-          getStore({ parcel: { draftParcels: [{ geometry: { coordinates: [-122, 56] } }] } }),
+          getStore({ properties: { draftParcels: [{ geometry: { coordinates: [-122, 56] } }] } }),
         ),
       },
     );

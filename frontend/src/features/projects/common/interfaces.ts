@@ -1,6 +1,6 @@
 import { getCurrentFiscalYear } from '../../../utils/utils';
-import { IBuilding, IAddress, IEvaluation, IFiscal } from 'actions/parcelsActions';
 import { NoteTypes } from '../../../constants';
+import { IAddress, IBuilding, IEvaluation, IFiscal } from 'interfaces';
 
 /**
  * IProperty interface represents the model used for searching properties.

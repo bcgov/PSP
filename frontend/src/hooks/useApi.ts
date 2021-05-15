@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { useCallback } from 'react';
 import { IGeoSearchParams } from 'constants/API';
 import queryString from 'query-string';
-import { IBuilding, IParcel } from 'actions/parcelsActions';
+import { IBuilding, IParcel } from 'interfaces';
 import { IApiProperty } from 'features/projects/common';
 import { store } from 'store/store';
 

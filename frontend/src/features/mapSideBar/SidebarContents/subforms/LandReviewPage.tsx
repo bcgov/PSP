@@ -28,7 +28,7 @@ import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import moment from 'moment';
 import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
-import { IBuilding } from 'actions/parcelsActions';
+import { IBuilding } from 'interfaces';
 
 interface IReviewProps {
   nameSpace?: string;

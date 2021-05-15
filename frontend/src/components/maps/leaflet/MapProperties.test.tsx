@@ -1,7 +1,6 @@
 import React, { createRef } from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { IProperty, IParcelDetail, IParcel } from 'actions/parcelsActions';
 import Map from './Map';
 import { Map as LeafletMap } from 'leaflet';
 import { MapProps as LeafletMapProps, Marker, Map as ReactLeafletMap } from 'react-leaflet';
@@ -17,19 +16,24 @@ import { useKeycloak } from '@react-keycloak/web';
 import { useApi, PimsAPI } from 'hooks/useApi';
 import { createPoints } from './mapUtils';
 import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
-import { fetchPropertyNames } from 'actionCreators/propertyActionCreator';
+import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import axios from 'axios';
 
 import MockAdapter from 'axios-mock-adapter';
+import { IParcel, IProperty } from 'interfaces';
+import { IPropertyDetail } from 'store/slices/properties';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 Enzyme.configure({ adapter: new Adapter() });
 const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
-jest.mock('actionCreators/propertyActionCreator');
 
-(fetchPropertyNames as any).mockImplementation(jest.fn(() => () => ['test']));
+jest.mock('features/properties/common/slices/usePropertyNames');
+const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
+(usePropertyNames as any).mockImplementation(() => ({
+  fetchPropertyNames,
+}));
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
@@ -46,7 +50,7 @@ const mockParcels = [
 });
 
 // This will spoof the active parcel (the one that will populate the popup details)
-const mockDetails: IParcelDetail = {
+const mockDetails: IPropertyDetail = {
   propertyTypeId: 0,
   parcelDetail: {
     id: 1,
@@ -91,7 +95,7 @@ const mockDetails: IParcelDetail = {
 
 const store = mockStore({
   [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-  [reducerTypes.PARCEL]: { parcelDetail: mockDetails, draftParcels: [] },
+  [reducerTypes.PROPERTIES]: { parcelDetail: mockDetails, draftParcels: [] },
   [reducerTypes.LEAFLET_CLICK_EVENT]: { parcelDetail: mockDetails },
 });
 

@@ -2,7 +2,6 @@ import * as React from 'react';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import InfoContent from './InfoContent';
-import { IParcel, IBuilding } from 'actions/parcelsActions';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { render } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
@@ -13,7 +12,9 @@ import * as API from 'constants/API';
 import { Workflows } from 'constants/workflows';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { IParcel, IBuilding } from 'interfaces';
 import { useKeycloak } from '@react-keycloak/web';
+import { mockBuilding } from 'mocks/filterDataMock';
 
 jest.mock('@react-keycloak/web');
 
@@ -35,7 +36,7 @@ const mockParcelNoSub = {
   assessedBuilding: 10000,
   evaluations: [
     {
-      date: new Date(),
+      date: '2021-05-12T18:57:19.992Z',
       key: 'Assessed',
       value: 10000,
     },
@@ -61,63 +62,6 @@ const mockParcelNoSub = {
   parcels: [],
   agency: 'AEST',
 } as IParcel;
-
-export const mockBuilding = {
-  name: 'test name',
-  id: 100,
-  parcelId: '',
-  pid: '',
-  address: {
-    id: 1,
-    line1: '1234 mock Street',
-    administrativeArea: 'Victoria',
-    province: 'BC',
-    postal: 'V1V1V1',
-    provinceId: '1',
-  },
-  latitude: 48,
-  longitude: 123,
-  buildingConstructionTypeId: 0,
-  buildingConstructionType: 'Concrete',
-  classificationId: 1,
-  classification: 'Core Operational',
-  assessedLand: 10000,
-  assessedBuilding: 10000,
-  evaluations: [
-    {
-      date: new Date(),
-      key: 'Assessed',
-      value: 11000,
-    },
-  ],
-  fiscals: [
-    {
-      fiscalYear: 2020,
-      key: 'NetBook',
-      value: 10000,
-    },
-  ],
-  rentableArea: 100,
-  totalArea: 200,
-  agency: 'AEST',
-  agencyId: 0,
-  agencyCode: 'KPU',
-  agencyFullName: 'Ministry of Advanced Education',
-  subAgency: 'KPU',
-  subAgencyFullName: 'Kwantlen Polytechnic University',
-  transferLeaseOnSale: false,
-  isSensitive: false,
-  buildingPredominateUse: 'University/College',
-  buildingPredominateUseId: 0,
-  buildingOccupantTypeId: 0,
-  encumbranceReason: '',
-  occupantName: 'test',
-  parcels: [mockParcelNoSub],
-  buildingTenancy: '100%',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'On Market',
-  projectWorkflow: Workflows.SPL,
-} as IBuilding;
 
 export const mockParcel = {
   id: 1,
@@ -217,7 +161,7 @@ const ContentComponent = (
   );
 };
 
-describe('InfoContent View', () => {
+describe('InfoContent View functionality', () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });

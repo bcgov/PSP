@@ -6,13 +6,13 @@ import { Router } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { IParcel } from 'actions/parcelsActions';
 import { render } from '@testing-library/react';
-import { mockParcel, mockBuilding } from './InfoContent.test';
 import AssociatedParcelsList from './AssociatedParcelsList';
 import { Label } from 'components/common/Label';
 import { FaPlusSquare } from 'react-icons/fa';
 import AssociatedBuildingsList from './AssociatedBuildingsList';
+import { IParcel } from 'interfaces';
+import { mockBuilding, mockParcel } from 'mocks/filterDataMock';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
@@ -56,12 +56,16 @@ describe('Associated Buildings/Parcels view', () => {
   });
 
   it('Associated buildings list shows building name', () => {
-    const { getByText } = render(AsscBuildingsTab(mockParcel, true));
+    const { getByText } = render(
+      AsscBuildingsTab({ ...mockParcel, buildings: [mockBuilding] }, true),
+    );
     expect(getByText('test name')).toBeVisible();
   });
 
   it('Add associated building link does not appear if no permission', () => {
-    const { queryByText } = render(AsscBuildingsTab(mockParcel, false));
+    const { queryByText } = render(
+      AsscBuildingsTab({ ...mockParcel, buildings: [mockBuilding] }, false),
+    );
     expect(queryByText('Add a new Building')).toBeNull();
   });
 

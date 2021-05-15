@@ -16,7 +16,7 @@ import { useFormikContext, getIn } from 'formik';
 import useCodeLookups from 'hooks/useLookupCodes';
 import * as API from 'constants/API';
 import GenericModal from 'components/common/GenericModal';
-import { IBuilding } from 'actions/parcelsActions';
+import { IBuilding } from 'interfaces';
 import styled from 'styled-components';
 import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
 

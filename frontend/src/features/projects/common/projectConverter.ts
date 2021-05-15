@@ -7,12 +7,12 @@ import {
   AgencyResponses,
 } from './interfaces';
 import { IProject, IProperty } from '.';
-import { IFiscal, IEvaluation } from 'actions/parcelsActions';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import { getCurrentFiscalYear, formatDate, stringToNull } from 'utils';
 import _ from 'lodash';
 import moment from 'moment';
 import { NoteTypes, PropertyTypes, EvaluationKeys, PropertyTypeNames } from 'constants/index';
+import { IFiscal, IEvaluation } from 'interfaces';
 
 export const getCurrentFiscal = (fiscals: IFiscal[], key: FiscalKeys) => {
   const currentFiscal = getCurrentFiscalYear();

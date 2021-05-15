@@ -2,9 +2,7 @@ import React, { useState, useRef } from 'react';
 import Map, { MapViewportChangeEvent } from '../../../components/maps/leaflet/Map';
 import './MapView.scss';
 import { Map as LeafletMap } from 'react-leaflet';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import { IProperty, IPropertyDetail } from 'actions/parcelsActions';
+import { useDispatch } from 'react-redux';
 import { LeafletMouseEvent } from 'leaflet';
 import useParamSideBar from '../../mapSideBar/hooks/useQueryParamSideBar';
 import { saveClickLatLng as saveLeafletMouseEvent } from 'reducers/LeafletMouseSlice';
@@ -15,6 +13,8 @@ import { FilterProvider } from 'components/maps/providers/FIlterProvider';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import useCodeLookups from 'hooks/useLookupCodes';
+import { useAppSelector } from 'store/hooks';
+import { IPropertyDetail } from 'store/slices/properties';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {
@@ -37,12 +37,10 @@ interface MapViewProps {
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const lookupCodes = useCodeLookups();
-  const properties = useSelector<RootState, IProperty[]>(state => [...state.parcel.parcels]);
+  const properties = useAppSelector(state => [...state.properties.parcels]);
   const [loadedProperties, setLoadedProperties] = useState(false);
   const mapRef = useRef<LeafletMap>(null);
-  const propertyDetail = useSelector<RootState, IPropertyDetail | null>(
-    state => state.parcel.parcelDetail,
-  );
+  const propertyDetail = useAppSelector(state => state.properties.propertyDetail);
   const agencies = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
   const administrativeAreas = lookupCodes.getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME);
 

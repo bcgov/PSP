@@ -11,18 +11,21 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import * as reducerTypes from 'constants/reducerTypes';
-import { fetchPropertyNames } from 'actionCreators/propertyActionCreator';
-import { ILookupCode } from 'actions/lookupActions';
+import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import * as API from 'constants/API';
 import { fillInput } from 'utils/testUtils';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
-jest.mock('actionCreators/propertyActionCreator');
+jest.mock('features/properties/common/slices/usePropertyNames');
 
-(fetchPropertyNames as any).mockImplementation(jest.fn(() => () => Promise.resolve(['test'])));
+const fetchPropertyNames = jest.fn(() => Promise.resolve(['test']));
+(usePropertyNames as any).mockImplementation(() => ({
+  fetchPropertyNames,
+}));
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockKeycloak = (claims: string[]) => {

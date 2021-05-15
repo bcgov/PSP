@@ -8,12 +8,12 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { useKeycloak } from '@react-keycloak/web';
 import * as API from 'constants/API';
-import { ILookupCode } from 'actions/lookupActions';
 import * as reducerTypes from 'constants/reducerTypes';
 import { fireEvent, render, wait, screen } from '@testing-library/react';
 import { Classifications } from 'constants/classifications';
 import { fillInput } from 'utils/testUtils';
-import { IParcel } from 'actions/parcelsActions';
+import { IParcel } from 'interfaces';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -59,7 +59,7 @@ const lCodes = {
 
 const store = mockStore({
   [reducerTypes.LOOKUP_CODE]: lCodes,
-  [reducerTypes.PARCEL]: { parcels: [], draftParcels: [] },
+  [reducerTypes.PROPERTIES]: { parcels: [], draftParcels: [] },
 });
 
 const promise = Promise.resolve();

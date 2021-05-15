@@ -15,9 +15,9 @@ import { toast } from 'react-toastify';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import _ from 'lodash';
 import { IStep } from 'components/common/Stepper';
-import { ILeasedLand } from 'features/mapSideBar/SidebarContents/AssociatedLandForm';
 import variables from '_variables.module.scss';
 import AbbreviatedText from 'components/common/AbbreviatedText';
+import { ILeasedLand } from 'interfaces';
 
 const TabbedForm = styled(Form)`
   .hideTabs {

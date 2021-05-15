@@ -1,17 +1,16 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-import { IProperty, IParcelDetail, IParcel } from 'actions/parcelsActions';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import * as reducerTypes from 'constants/reducerTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { wait, fireEvent, render, cleanup, screen } from '@testing-library/react';
+import { wait, fireEvent, render, cleanup, screen, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { useKeycloak } from '@react-keycloak/web';
 import { useApi, PimsAPI } from 'hooks/useApi';
-import { fetchPropertyNames } from 'actionCreators/propertyActionCreator';
+import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import axios from 'axios';
 
 import MockAdapter from 'axios-mock-adapter';
@@ -20,16 +19,34 @@ import { noop } from 'lodash';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { TenantProvider } from 'tenants';
+import { IProperty, IParcel } from 'interfaces';
+import { IPropertyDetail, useProperties } from 'store/slices/properties';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 Enzyme.configure({ adapter: new Adapter() });
 const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
-jest.mock('actionCreators/propertyActionCreator');
 jest.mock('components/maps/leaflet/LayerPopup');
+jest.mock('features/properties/common/slices/usePropertyNames');
+jest.mock('store/slices/properties/useProperties');
 
-(fetchPropertyNames as any).mockImplementation(jest.fn(() => () => ['test']));
+const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
+(usePropertyNames as any).mockImplementation(() => ({
+  fetchPropertyNames,
+}));
+
+(useProperties as any).mockImplementation(() => ({
+  deleteParcel: jest.fn(),
+  deleteBuilding: jest.fn(),
+  updateParcel: jest.fn(),
+  createParcel: jest.fn(),
+  fetchPropertyDetail: jest.fn(),
+  fetchBuildingDetail: jest.fn(),
+  fetchParcelDetail: jest.fn(),
+  fetchParcelsDetail: jest.fn(),
+  fetchParcels: jest.fn(),
+}));
 
 const largeMockParcels = [
   { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
@@ -65,7 +82,7 @@ let findOneWhereContains = jest.fn();
 });
 
 // This will spoof the active parcel (the one that will populate the popup details)
-const mockDetails: IParcelDetail = {
+const mockDetails: IPropertyDetail = {
   propertyTypeId: 0,
   parcelDetail: {
     id: 1,
@@ -110,7 +127,7 @@ const mockDetails: IParcelDetail = {
 
 const store = mockStore({
   [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-  [reducerTypes.PARCEL]: { parcelDetail: mockDetails, draftParcels: [], parcels: mockParcels },
+  [reducerTypes.PROPERTIES]: { parcelDetail: mockDetails, draftParcels: [], parcels: mockParcels },
   [reducerTypes.LEAFLET_CLICK_EVENT]: { parcelDetail: mockDetails },
 });
 
@@ -174,19 +191,23 @@ describe('MapProperties View', () => {
   });
 
   it('Renders markers when provided', async () => {
-    await wait(() => {
-      const { container } = render(getMap());
-      expect(container.querySelector('.leaflet-marker-icon')).toBeVisible();
+    let map: any;
+    await act(async () => {
+      map = render(getMap());
     });
+    expect(map.container.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
   it('Rendered markers can be clicked', async () => {
-    await wait(() => {
-      const { container } = render(getMap());
-      const icon = container.querySelector('.leaflet-marker-icon');
-      expect(icon).toBeVisible();
-      fireEvent.click(icon!);
-      expect(screen.getByText('Property Info')).toBeVisible();
+    let map: any;
+    await act(async () => {
+      map = render(getMap());
     });
+    const cluster = map.container.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = map.container.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Info');
+    expect(text).toBeVisible();
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
@@ -249,7 +270,10 @@ describe('MapProperties View', () => {
       expect(map).toBeVisible();
       fireEvent.click(map!);
     });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({ lat: 48, lng: 123 });
+    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+      lat: 54.97761367069628,
+      lng: -129.37500000000003,
+    });
   });
 
   it('the map cannot be clicked if not interactive', async () => {
@@ -264,7 +288,10 @@ describe('MapProperties View', () => {
       expect(map).toBeVisible();
       fireEvent.click(map!);
     });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({ lat: 48, lng: 123 });
+    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+      lat: 54.97761367069628,
+      lng: -129.37500000000003,
+    });
   });
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {

@@ -1,4 +1,3 @@
-import { IPropertyDetail } from 'actions/parcelsActions';
 import { LayerPopupInformation } from '../leaflet/Map';
 import { geoJSON, Map as LeafletMap, GeoJSON, LatLng } from 'leaflet';
 import { useState } from 'react';
@@ -9,6 +8,7 @@ import { GeoJsonObject } from 'geojson';
 import { PointFeature } from '../types';
 import { useSelector } from 'react-redux';
 import { RootState } from 'reducers/rootReducer';
+import { IPropertyDetail } from 'store/slices/properties';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
@@ -37,7 +37,7 @@ const useActiveFeatureLayer = ({
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const draftProperties: PointFeature[] = useSelector<RootState, PointFeature[]>(
-    state => state.parcel.draftParcels,
+    state => state.properties.draftParcels,
   );
   if (!!mapRef.current && !activeFeatureLayer) {
     setActiveFeatureLayer(geoJSON().addTo(mapRef.current.leafletElement));

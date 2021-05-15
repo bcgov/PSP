@@ -14,9 +14,8 @@ import { IPropertyFilter } from './IPropertyFilter';
 import { TableSort } from 'components/Table/TableSort';
 import { FindMorePropertiesButton } from 'components/maps/FindMorePropertiesButton';
 import { TypeaheadField } from 'components/common/form/Typeahead';
-import { useDispatch } from 'react-redux';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { fetchPropertyNames } from 'actionCreators/propertyActionCreator';
+import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { PropertyFilterAgencyOptions } from './PropertyFilterAgencyOptions';
 import styled from 'styled-components';
@@ -79,7 +78,6 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   setTriggerFilterChanged,
 }) => {
   const [propertyFilter, setPropertyFilter] = React.useState<IPropertyFilter>(defaultFilter);
-  const dispatch = useDispatch();
   const keycloak = useKeycloakWrapper();
   const lookupCodes = useLookupCodes();
   const [initialLoad, setInitialLoad] = useState(false);
@@ -99,8 +97,9 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   );
   const classifications = lookupCodes.getPropertyClassificationOptions();
   const adminAreas = (adminAreaLookupCodes ?? []).map(c => mapLookupCode(c));
-  const [clear, setClear] = useState(false);
-  const [options, setOptions] = useState([]);
+  const [clear, setClear] = useState<boolean | undefined>(false);
+  const [options, setOptions] = useState<string[]>([]);
+  const { fetchPropertyNames } = usePropertyNames();
 
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
@@ -191,7 +190,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
                 placeholder="Property name"
                 onSearch={() => {
                   setInitialLoad(true);
-                  fetchPropertyNames(keycloak.agencyId!)(dispatch).then(results => {
+                  fetchPropertyNames(keycloak.agencyId!).then(results => {
                     setOptions(results);
                     setInitialLoad(false);
                   });

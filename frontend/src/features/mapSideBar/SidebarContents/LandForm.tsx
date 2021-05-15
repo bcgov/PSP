@@ -26,21 +26,18 @@ import {
   getMergedFinancials,
 } from 'features/properties/components/forms/subforms/EvaluationForm';
 import _ from 'lodash';
-import { useDispatch } from 'react-redux';
 import {
   ParcelSchema,
   LandIdentificationSchema,
   LandUsageSchema,
   ValuationSchema,
 } from 'utils/YupSchema';
-import { createParcel, updateParcel } from 'actionCreators/parcelsActionCreator';
 import { LandValuationForm } from './subforms/LandValuationForm';
 import { LandSteps } from 'constants/propertySteps';
 import useDraftMarkerSynchronizer from 'features/properties/hooks/useDraftMarkerSynchronizer';
 import useParcelLayerData from 'features/properties/hooks/useParcelLayerData';
 import { IStep } from 'components/common/Stepper';
 import DebouncedValidation from 'features/properties/components/forms/subforms/DebouncedValidation';
-import { IParcel } from 'actions/parcelsActions';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import { stringToNull } from 'utils';
@@ -49,6 +46,8 @@ import LastUpdatedBy from 'features/properties/components/LastUpdatedBy';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { PropertyTypes } from 'constants/index';
 import { fireMapRefreshEvent } from 'components/maps/hooks/useMapRefreshEvent';
+import { useProperties } from 'store/slices/properties';
+import { IParcel } from 'interfaces';
 
 const Container = styled.div`
   background-color: #fff;
@@ -337,8 +336,8 @@ export const ViewOnlyLandForm: React.FC<Partial<IParentLandForm>> = (props: {
  */
 const LandForm: React.FC<IParentLandForm> = (props: IParentLandForm) => {
   const keycloak = useKeycloakWrapper();
-  const dispatch = useDispatch();
   const api = useApi();
+  const { createParcel, updateParcel } = useProperties();
   const steps: IStep[] = [
     {
       route: 'identification',
@@ -473,10 +472,10 @@ const LandForm: React.FC<IParentLandForm> = (props: IParentLandForm) => {
           let response;
           try {
             if (!values.data.id) {
-              response = await createParcel(apiValues)(dispatch);
+              response = await createParcel(apiValues);
               props.setLandComplete(true);
             } else {
-              response = await updateParcel(apiValues)(dispatch);
+              response = await updateParcel(apiValues);
               props.setLandUpdateComplete(true);
             }
             fireMapRefreshEvent();

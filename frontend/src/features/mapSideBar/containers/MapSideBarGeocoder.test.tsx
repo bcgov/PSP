@@ -11,7 +11,6 @@ import MapSideBarContainer from './MapSideBarContainer';
 import { noop } from 'lodash';
 import * as reducerTypes from 'constants/reducerTypes';
 import * as actionTypes from 'constants/actionTypes';
-import { IParcel } from 'actions/parcelsActions';
 import { mockDetails } from 'mocks/filterDataMock';
 import VisibilitySensor from 'react-visibility-sensor';
 import { useKeycloak } from '@react-keycloak/web';
@@ -24,6 +23,7 @@ import * as API from 'constants/API';
 import * as _ from 'lodash';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { TenantProvider, defaultTenant } from 'tenants';
+import { IParcel } from 'interfaces';
 
 jest.mock(
   'react-visibility-sensor',
@@ -54,7 +54,7 @@ const getStore = (parcelDetail?: IParcel) =>
         status: 200,
       },
     },
-    [reducerTypes.PARCEL]: {
+    [reducerTypes.PROPERTIES]: {
       parcelDetail: {
         parcelDetail: parcelDetail,
         propertyTypeId: 0,
@@ -73,7 +73,7 @@ const getStore = (parcelDetail?: IParcel) =>
         },
       ],
     },
-    [reducerTypes.PARCEL]: { parcels: [], draftParcels: [] },
+    [reducerTypes.PROPERTIES]: { parcels: [], draftParcels: [] },
   });
 
 const history = createMemoryHistory({

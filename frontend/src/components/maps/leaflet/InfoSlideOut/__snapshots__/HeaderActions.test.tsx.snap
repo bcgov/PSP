@@ -48,7 +48,7 @@ exports[`HeaderActions View HeaderActions renders correctly 1`] = `
 </div>
 `;
 
-exports[`InfoContent View InfoContent renders correctly 1`] = `
+exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
 .c1 {
   margin: 0px;
   width: 300px;

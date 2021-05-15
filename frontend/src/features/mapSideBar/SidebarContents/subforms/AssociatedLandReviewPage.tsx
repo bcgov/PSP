@@ -20,7 +20,6 @@ import { noop } from 'lodash';
 import { useFormStepper } from 'components/common/form/StepForm';
 import { AssociatedLandSteps } from 'constants/propertySteps';
 import { formatMoney } from 'utils/numberFormatUtils';
-import { LeasedLandTypes } from 'actions/parcelsActions';
 import { formatFiscalYear } from 'utils';
 import { ParentSelect } from 'components/common/form/ParentSelect';
 import styled from 'styled-components';
@@ -30,6 +29,7 @@ import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import moment from 'moment';
 import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
+import { LeasedLandTypes } from 'interfaces';
 
 interface IReviewProps {
   nameSpace?: string;

@@ -1,6 +1,5 @@
-import { IAccessRequest } from 'interfaces';
-import { IBuilding } from './../actions/parcelsActions';
-import { IParcel, IProperty } from 'actions/parcelsActions';
+import { IPropertyDetail } from 'store/slices/properties';
+import { IAccessRequest, IParcel, IProperty, IBuilding } from 'interfaces';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { Workflows } from 'constants/index';
 import { AccessRequestStatus } from 'constants/accessStatus';
@@ -151,7 +150,7 @@ export const mockParcel = {
   assessedBuilding: 11000,
   evaluations: [
     {
-      date: new Date(),
+      date: '2021-05-14T17:15:58.193Z',
       key: 'Assessed',
       value: 10000,
     },
@@ -184,6 +183,123 @@ export const mockParcel = {
   projectStatus: 'In ERP',
   projectWorkflow: Workflows.ERP,
 } as IParcel;
+
+export const mockBuilding = {
+  name: 'test name',
+  id: 100,
+  parcelId: '',
+  pid: '',
+  address: {
+    id: 1,
+    line1: '1234 mock Street',
+    administrativeArea: 'Victoria',
+    province: 'BC',
+    postal: 'V1V1V1',
+    provinceId: '1',
+  },
+  latitude: 48,
+  longitude: 123,
+  buildingConstructionTypeId: 0,
+  buildingConstructionType: 'Concrete',
+  classificationId: 1,
+  classification: 'Core Operational',
+  assessedLand: 10000,
+  assessedBuilding: 10000,
+  evaluations: [
+    {
+      date: '2021-05-12T18:57:19.992Z',
+      key: 'Assessed',
+      value: 11000,
+    },
+  ],
+  fiscals: [
+    {
+      fiscalYear: 2020,
+      key: 'NetBook',
+      value: 10000,
+    },
+  ],
+  rentableArea: 100,
+  totalArea: 200,
+  agency: 'AEST',
+  agencyId: 0,
+  agencyCode: 'KPU',
+  agencyFullName: 'Ministry of Advanced Education',
+  subAgency: 'KPU',
+  subAgencyFullName: 'Kwantlen Polytechnic University',
+  transferLeaseOnSale: false,
+  isSensitive: false,
+  buildingPredominateUse: 'University/College',
+  buildingPredominateUseId: 0,
+  buildingOccupantTypeId: 0,
+  encumbranceReason: '',
+  occupantName: 'test',
+  parcels: [mockParcel],
+  buildingTenancy: '100%',
+  projectNumbers: ['SPP-00001'],
+  projectStatus: 'On Market',
+  projectWorkflow: Workflows.SPL,
+} as IBuilding;
+
+export const mockProperty: IProperty = {
+  id: 0,
+  propertyTypeId: 0,
+  latitude: 23,
+  longitude: 23,
+  description: 'test',
+  isSensitive: false,
+  agencyId: 0,
+  agency: 'test',
+};
+
+export const mockBuildingDetail: IPropertyDetail = {
+  propertyTypeId: 1,
+  parcelDetail: mockBuilding,
+};
+
+export const mockParcelDetail: IPropertyDetail = {
+  propertyTypeId: 0,
+  parcelDetail: {
+    id: 3,
+    longitude: 1,
+    latitude: 2,
+    name: '3',
+    address: {
+      administrativeArea: '4',
+      line1: '5',
+      line2: '6',
+      postal: '7',
+      province: '8',
+      provinceId: '9',
+    },
+    buildings: [],
+    evaluations: [],
+    description: '10',
+    landArea: 11,
+    landLegalDescription: '12',
+    pid: '13',
+    isSensitive: false,
+    classification: '14',
+    agency: '16',
+    pin: 17,
+    classificationId: 18,
+    zoning: '20',
+    zoningPotential: '21',
+    agencyId: 22,
+    projectNumbers: ['24'],
+    assessedLand: 25,
+    assessedBuilding: 26,
+    encumbranceReason: '27',
+    parcels: [],
+    fiscals: [
+      {
+        fiscalYear: 2020,
+        key: 'Key',
+        value: 34,
+      },
+    ],
+  },
+};
 
 export const mockDetails = [
   {

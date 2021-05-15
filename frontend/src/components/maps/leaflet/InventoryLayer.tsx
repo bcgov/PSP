@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { IBuilding, IParcel, IPropertyDetail } from 'actions/parcelsActions';
 import { IGeoSearchParams } from 'constants/API';
 import { BBox } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
@@ -9,8 +8,6 @@ import { toast } from 'react-toastify';
 import { PointFeature } from '../types';
 import PointClusterer from './PointClusterer';
 import { useApi } from 'hooks/useApi';
-import { useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
 import { flatten, uniqBy } from 'lodash';
 import { tilesInBbox } from 'tiles-in-bbox';
 import { useFilterContext } from '../providers/FIlterProvider';
@@ -18,6 +15,9 @@ import { MUNICIPALITY_LAYER_URL, useLayerQuery } from './LayerPopup';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
+import { useAppSelector } from 'store/hooks';
+import { IBuilding, IParcel } from 'interfaces';
+import { IPropertyDetail } from 'store/slices/properties';
 
 export type InventoryLayerProps = {
   /** Latitude and Longitude boundary of the layer. */
@@ -149,9 +149,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const { changed: filterChanged } = useFilterContext();
   const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
 
-  const draftProperties: PointFeature[] = useSelector<RootState, PointFeature[]>(
-    state => state.parcel.draftParcels,
-  );
+  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
 
   if (!map) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');

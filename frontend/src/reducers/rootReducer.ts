@@ -1,7 +1,7 @@
+import { propertiesSlice } from './../store/slices/properties/propertiesSlice';
 import { usersSlice } from './../store/slices/users/usersSlice';
 import { lookupCodesSlice } from './../store/slices/lookupCodes/lookupCodesSlice';
 import { combineReducers } from 'redux';
-import parcelsReducer from 'reducers/parcelsReducer';
 import * as reducerTypes from 'constants/reducerTypes';
 import networkReducer from './networkReducer';
 import { loadingBarReducer } from 'react-redux-loading-bar';
@@ -25,7 +25,7 @@ import { agenciesSlice } from 'store/slices/agencies/agenciesSlice';
 
 export const reducerObject = {
   loadingBar: loadingBarReducer,
-  [reducerTypes.PARCEL]: parcelsReducer,
+  [reducerTypes.PROPERTIES]: propertiesSlice.reducer,
   [reducerTypes.USERS]: usersSlice.reducer,
   [reducerTypes.ACCESS_REQUEST]: accessRequestsSlice.reducer,
   [reducerTypes.LOOKUP_CODE]: lookupCodesSlice.reducer,

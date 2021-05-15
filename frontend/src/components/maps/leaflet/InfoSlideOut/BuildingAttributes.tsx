@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { ListGroup } from 'react-bootstrap';
-import { IBuilding } from 'actions/parcelsActions';
 import { Label } from 'components/common/Label';
 import './InfoSlideOut.scss';
 import { formatMoney } from 'utils/numberFormatUtils';
 import { compareDate, OuterRow } from './InfoContent';
 import { ThreeColumnItem } from './ThreeColumnItem';
+import { IBuilding } from 'interfaces';
 
 interface IBuildingAttributes {
   /** the selected building information */

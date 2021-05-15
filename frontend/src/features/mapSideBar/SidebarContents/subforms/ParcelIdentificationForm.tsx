@@ -18,7 +18,6 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
 import useCodeLookups from 'hooks/useLookupCodes';
 import GenericModal from 'components/common/GenericModal';
-import { IParcel } from 'actions/parcelsActions';
 import { mapSelectOptionWithParent } from 'utils';
 import AddParentParcelsForm from './AddParentParcelsForm';
 import { PropertyTypes } from 'constants/propertyTypes';
@@ -29,6 +28,7 @@ import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectN
 import styled from 'styled-components';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useMyAgencies } from 'hooks/useMyAgencies';
+import { IParcel } from 'interfaces';
 
 interface IIdentificationProps {
   /** used for changign the agency - note that only select users will be able to edit this field */

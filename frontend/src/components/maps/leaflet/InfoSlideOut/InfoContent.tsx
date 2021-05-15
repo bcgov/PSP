@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ListGroup, Row } from 'react-bootstrap';
-import { IBuilding, IParcel } from 'actions/parcelsActions';
 import { Label } from 'components/common/Label';
 import { ParcelPIDPIN } from './ParcelPIDPIN';
 import ParcelAttributes from './ParcelAttributes';
@@ -14,6 +13,7 @@ import { useState } from 'react';
 import { ProjectNumberLink } from './ProjectNumberLink';
 import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
 import { Workflows } from 'constants/workflows';
+import { IBuilding, IParcel } from 'interfaces';
 
 /**
  * Compare two dates to evaluation which is earlier.
