@@ -5,10 +5,8 @@ import { createMemoryHistory } from 'history';
 import { render, cleanup, act } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import { Provider } from 'react-redux';
-import * as reducerTypes from 'constants/reducerTypes';
 import service from '../apiService';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
@@ -18,6 +16,7 @@ import { Formik } from 'formik';
 import { noop } from 'lodash';
 import { fillInput } from 'utils/testUtils';
 import { fireEvent } from '@testing-library/dom';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 
 const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});
@@ -99,7 +98,7 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
+  [lookupCodesSlice.name]: lCodes,
 });
 mockAxios.onAny().reply(200, {});
 const history = createMemoryHistory();

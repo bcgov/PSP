@@ -11,7 +11,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { mapLookupCode } from 'utils';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import { Snackbar, ISnackbarState } from 'components/common/Snackbar';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { AUTHORIZATION_URL } from 'constants/strings';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
@@ -42,7 +42,7 @@ const AccessRequestPage = () => {
 
   const data = useAppSelector(state => state.accessRequests);
 
-  const { getByType, getPublicByType } = useCodeLookups();
+  const { getByType, getPublicByType } = useLookupCodeHelpers();
   const agencies = getByType(API.AGENCY_CODE_SET_NAME);
   const roles = getPublicByType(API.ROLE_CODE_SET_NAME);
 
@@ -63,7 +63,7 @@ const AccessRequestPage = () => {
     status: accessRequest?.status || AccessRequestStatus.OnHold,
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
-    agency: accessRequest?.agencies?.find(agency => agency).id,
+    agency: accessRequest?.agencies?.find((agency: any) => agency).id,
     role: accessRequest?.roles?.find(role => role).id,
     rowVersion: accessRequest?.rowVersion,
   };

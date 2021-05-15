@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import UpdateInfoForm from './UpdateInfoForm';
-import * as reducerTypes from 'constants/reducerTypes';
 import { Formik } from 'formik';
 import { Form } from 'react-bootstrap';
 import { Router } from 'react-router-dom';
@@ -11,10 +10,12 @@ import { createMemoryHistory } from 'history';
 import { render, wait, fireEvent, cleanup } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import { ProjectActions } from 'constants/actionTypes';
 import { Classifications } from 'constants/classifications';
 import { UpdateInfoStepYupSchema } from '../../dispose';
 import { useKeycloak } from '@react-keycloak/web';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { ProjectActions } from '../slices/projectActions';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -75,13 +76,13 @@ const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});
 const store = mockStore({
   ...mockProject,
-  [reducerTypes.LOOKUP_CODE]: {
+  [lookupCodesSlice.name]: {
     lookupCodes: [
       { type: 'TierLevel', name: 'Tier 1', id: 1 },
       { type: 'TierLevel', name: 'Tier 2', id: 2 },
     ],
   },
-  [reducerTypes.NETWORK]: {
+  [networkSlice.name]: {
     [ProjectActions.GET_PROJECT]: {},
   },
 });

@@ -1,20 +1,14 @@
 import * as React from 'react';
 import { Container, Spinner } from 'react-bootstrap';
-import {
-  useProject,
-  updateWorkflowStatus,
-  IProject,
-  IProjectWrapper,
-  ReviewWorkflowStatus,
-} from '.';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
+import { useProject, updateWorkflowStatus, IProject, ReviewWorkflowStatus } from '.';
+import { useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchProjectWorkflow } from './projectsActionCreator';
 import queryString from 'query-string';
 import GenericModal from 'components/common/GenericModal';
+import { useAppSelector } from 'store/hooks';
 
 interface IApprovalTransitionPageProps {}
 
@@ -43,7 +37,7 @@ const ErrorMessage = () => {
 
 export const ApprovalTransitionPage: React.FunctionComponent<IApprovalTransitionPageProps> = props => {
   const { workflowStatuses } = useProject();
-  const project = useSelector<RootState, IProjectWrapper>(state => state.project).project;
+  const project = useAppSelector(state => state.project).project;
   const [isTransitioned, setIsTransitioned] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -60,7 +54,8 @@ export const ApprovalTransitionPage: React.FunctionComponent<IApprovalTransition
     if (project !== undefined && !isTransitioned) {
       // Look for a possible transition within the same workflow.
       const next = toStatus?.filter(
-        s => s.workflowCode === project.workflowCode && (!params.to || s.code === params.to),
+        (s: { workflowCode: string | undefined; code: string | string[] }) =>
+          s.workflowCode === project.workflowCode && (!params.to || s.code === params.to),
       );
       if (
         project.statusCode === ReviewWorkflowStatus.ApprovedForExemption ||

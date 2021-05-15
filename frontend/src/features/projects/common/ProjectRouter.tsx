@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 import { Switch, Redirect, useHistory } from 'react-router-dom';
 import { match as Match } from 'react-router-dom';
@@ -12,10 +12,7 @@ import {
   IProject,
   useProject,
 } from '../common';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import { IGenericNetworkAction } from 'actions/genericActions';
-import { ProjectActions } from 'constants/actionTypes';
+import { useDispatch } from 'react-redux';
 import { ReviewApproveStep } from '../assess';
 import queryString from 'query-string';
 import PrivateRoute from 'utils/PrivateRoute';
@@ -29,6 +26,8 @@ import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { ReviewWorkflowStatus } from '../common';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { toast } from 'react-toastify';
+import { useAppSelector } from 'store/hooks';
+import { ProjectActions } from './slices/projectActions';
 
 /**
  * Top level component ensures proper context provided to child assessment form pages.
@@ -42,8 +41,8 @@ const ProjectRouter = ({ location }: { match: Match; location: Location }) => {
   const projectNumber = queryString.parse(query).projectNumber;
   const { project } = useProject();
   const dispatch = useDispatch();
-  const getProjectRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.GET_PROJECT_WORKFLOW] as any,
+  const getProjectRequest = useAppSelector(
+    state => state.network[ProjectActions.GET_PROJECT_WORKFLOW] as any,
   );
   useEffect(() => {
     if (projectNumber !== null && projectNumber !== undefined) {

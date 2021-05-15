@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './ProjectDisposeView.scss';
 import { Container } from 'react-bootstrap';
 import { match as Match } from 'react-router-dom';
 import { StepContextProvider } from '.';
 import ProjectDisposeLayout from './ProjectDisposeLayout';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import queryString from 'query-string';
-import { RootState } from 'reducers/rootReducer';
-import { IGenericNetworkAction } from 'actions/genericActions';
-import { ProjectActions } from 'constants/actionTypes';
 import { clearProject, fetchProject } from '../common';
+import { useAppSelector } from 'store/hooks';
+import { ProjectActions } from '../common/slices/projectActions';
 
 /**
  * Top level component facilitates 'wizard' style multi-step form for disposing of projects.
@@ -19,8 +18,8 @@ const ProjectDisposeView = ({ match, location }: { match: Match; location: Locat
   const query = location?.search ?? {};
   const projectNumber = queryString.parse(query).projectNumber;
   const dispatch = useDispatch();
-  const getProjectRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.GET_PROJECT] as any,
+  const getProjectRequest = useAppSelector(
+    state => state.network[ProjectActions.GET_PROJECT] as any,
   );
   useEffect(() => {
     if (projectNumber !== null && projectNumber !== undefined) {

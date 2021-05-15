@@ -1,4 +1,3 @@
-import { request, success, error } from 'actions/genericActions';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import CustomAxios, { LifecycleToasts } from 'customAxios';
 import { ENVIRONMENT } from 'constants/environment';
@@ -7,6 +6,7 @@ import * as pimsToasts from 'constants/toasts';
 import * as API from 'constants/API';
 import { storeBuildingDetail } from 'store/slices/properties';
 import { IBuilding } from 'interfaces';
+import { logRequest, logSuccess, logError } from 'store/slices/network/networkSlice';
 
 const buildingCreatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.building.BUILDING_CREATING,
@@ -25,19 +25,25 @@ export const useBuildingApi = () => {
    * Create the passed building, creating or updating all attached parcels as needed. Return a promise
    */
   const createBuilding = (building: IBuilding) => async (dispatch: Function) => {
-    dispatch(request(actionTypes.ADD_BUILDING));
+    dispatch(logRequest(actionTypes.ADD_BUILDING));
     dispatch(showLoading());
     try {
       const { data, status } = await CustomAxios({ lifecycleToasts: buildingCreatingToasts }).post(
         ENVIRONMENT.apiUrl + API.BUILDING_ROOT,
         building,
       );
-      dispatch(success(actionTypes.ADD_BUILDING, status));
+      dispatch(logSuccess({ name: actionTypes.ADD_BUILDING, status }));
       dispatch(storeBuildingDetail(data));
       dispatch(hideLoading());
       return data;
     } catch (axiosError) {
-      dispatch(error(actionTypes.ADD_BUILDING, axiosError?.response?.status, axiosError));
+      dispatch(
+        logError({
+          name: actionTypes.ADD_BUILDING,
+          status: axiosError?.response?.status,
+          error: axiosError,
+        }),
+      );
       dispatch(hideLoading());
       throw Error(axiosError.response?.data.details);
     }
@@ -48,19 +54,25 @@ export const useBuildingApi = () => {
    * @param building
    */
   const updateBuilding = (building: IBuilding) => async (dispatch: Function) => {
-    dispatch(request(actionTypes.UPDATE_BUILDING));
+    dispatch(logRequest(actionTypes.UPDATE_BUILDING));
     dispatch(showLoading());
     try {
       const { data, status } = await CustomAxios({ lifecycleToasts: buildingUpdatingToasts }).put(
         ENVIRONMENT.apiUrl + API.BUILDING_ROOT + `/${building.id}`,
         building,
       );
-      dispatch(success(actionTypes.UPDATE_BUILDING, status));
+      dispatch(logSuccess({ name: actionTypes.UPDATE_BUILDING, status }));
       dispatch(storeBuildingDetail(data));
       dispatch(hideLoading());
       return data;
     } catch (axiosError) {
-      dispatch(error(actionTypes.UPDATE_BUILDING, axiosError?.response?.status, axiosError));
+      dispatch(
+        logError({
+          name: actionTypes.UPDATE_BUILDING,
+          status: axiosError?.response?.status,
+          error: axiosError,
+        }),
+      );
       dispatch(hideLoading());
       throw Error(axiosError.response?.data.details);
     }

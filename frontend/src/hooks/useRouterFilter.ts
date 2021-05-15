@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import React, { useCallback, useEffect, useState } from 'react';
-import { saveFilter } from 'reducers/filterSlice';
-import { RootState } from 'reducers/rootReducer';
+import { saveFilter } from 'store/slices/filter/filterSlice';
 import _ from 'lodash';
 import queryString from 'query-string';
 import { TableSort } from 'components/Table/TableSort';
 import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from 'utils';
 import { PropertyTypeNames } from 'constants/propertyTypeNames';
+import { useAppSelector } from 'store/hooks';
 
 /**
  * Extract the specified properties from the source object.
@@ -83,7 +83,7 @@ export const useRouterFilter = <T extends object>({
   setSorting,
 }: IRouterFilterProps<T>) => {
   const history = useHistory();
-  const reduxSearch = useSelector<RootState, any>(state => state.filter);
+  const reduxSearch = useAppSelector(state => state.filter);
   const [savedFilter] = useState(reduxSearch);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);

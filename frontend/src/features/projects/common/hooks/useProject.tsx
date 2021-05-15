@@ -1,9 +1,8 @@
-import { useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import { IStatus, IProjectWrapper } from '..';
+import { IStatus } from '..';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { initialValues } from '../interfaces';
+import { useAppSelector } from 'store/hooks';
 
 /**
  * Find the workflow project status transition for the current workflow and specified 'from' and 'to'.
@@ -28,8 +27,8 @@ const getStatusTransitionWorkflow = (
  * Provides a way to find a transition
  */
 const useProject = () => {
-  const project = useSelector<RootState, IProjectWrapper>(state => state.project).project;
-  const workflowStatuses = useSelector<RootState, IStatus[]>(state => state.projectWorkflow as any);
+  const project = useAppSelector(state => state.project).project;
+  const workflowStatuses = useAppSelector(state => state.projectWorkflow as any);
   const history = useHistory();
 
   return {

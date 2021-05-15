@@ -17,7 +17,7 @@ import { act } from 'react-dom/test-utils';
 import { screen, queryByText } from '@testing-library/dom';
 import { ToastContainer } from 'react-toastify';
 import { fillInput } from 'utils/testUtils';
-import * as reducerTypes from 'constants/reducerTypes';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 
 // Set all module functions to jest.fn
 jest.mock('../hooks/useProjectSnapshotApi');
@@ -85,7 +85,7 @@ const renderContainer = () =>
   render(
     <Provider
       store={mockStore({
-        [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
+        [lookupCodesSlice.name]: { lookupCodes: [] },
       })}
     >
       <Router history={history}>

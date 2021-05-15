@@ -26,9 +26,9 @@ import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import moment from 'moment';
 import { getAssociatedLandCols } from 'features/properties/components/forms/subforms/columns';
-import { FormikTable } from 'features/projects/common';
 import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
 import styled from 'styled-components';
+import FormikTable from 'components/common/FormikTable';
 
 interface IReviewProps {
   nameSpace?: string;

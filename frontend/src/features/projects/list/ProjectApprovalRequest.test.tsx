@@ -5,14 +5,13 @@ import { createMemoryHistory } from 'history';
 import { render, cleanup, wait } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import { Provider } from 'react-redux';
-import * as reducerTypes from 'constants/reducerTypes';
 import service from '../apiService';
 import { noop } from 'lodash';
 import { Formik } from 'formik';
 import { useKeycloak } from '@react-keycloak/web';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -89,7 +88,7 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
+  [lookupCodesSlice.name]: lCodes,
 });
 
 const history = createMemoryHistory();

@@ -1,6 +1,5 @@
 import { IPagedItems } from '../../../interfaces/pagedItems';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { request, success, error } from 'actions/genericActions';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
@@ -11,8 +10,8 @@ import { handleAxiosResponse } from 'utils';
 import * as pimsToasts from 'constants/toasts';
 import { useAppDispatch } from 'store/hooks';
 import { useCallback } from 'react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { storeUserDetails, storeUsers, updateUser } from './usersSlice';
+import { logRequest, logSuccess, logError } from '../network/networkSlice';
 
 const userToasts: LifecycleToasts = {
   loadingToast: pimsToasts.user.USER_UPDATING,
@@ -31,17 +30,23 @@ export const useUsers = () => {
    * @return the filtered, paged list of agencies.
    */
   const activate = useCallback(async (): Promise<IUser> => {
-    dispatch(request(actionTypes.ADD_ACTIVATE_USER));
+    dispatch(logRequest(actionTypes.ADD_ACTIVATE_USER));
     dispatch(showLoading());
     return CustomAxios()
       .post(ENVIRONMENT.apiUrl + API.ACTIVATE_USER(), null)
       .then((response: AxiosResponse) => {
-        dispatch(success(actionTypes.ADD_ACTIVATE_USER, response.status));
+        dispatch(logSuccess({ name: actionTypes.ADD_ACTIVATE_USER, status: response.status }));
         dispatch(hideLoading());
         return response.data;
       })
       .catch((axiosError: AxiosError) =>
-        dispatch(error(actionTypes.ADD_ACTIVATE_USER, axiosError?.response?.status, axiosError)),
+        dispatch(
+          logError({
+            name: actionTypes.ADD_ACTIVATE_USER,
+            status: axiosError?.response?.status,
+            error: axiosError,
+          }),
+        ),
       )
       .finally(() => dispatch(hideLoading()));
   }, [dispatch]);
@@ -52,17 +57,23 @@ export const useUsers = () => {
    */
   const fetch = useCallback(
     async (params: API.IPaginateParams): Promise<IPagedItems<IUser>> => {
-      dispatch(request(actionTypes.GET_USERS));
+      dispatch(logRequest(actionTypes.GET_USERS));
       dispatch(showLoading());
       return CustomAxios()
         .post(ENVIRONMENT.apiUrl + API.POST_USERS(), params)
         .then((response: AxiosResponse) => {
-          dispatch(success(actionTypes.GET_USERS));
+          dispatch(logSuccess({ name: actionTypes.GET_USERS }));
           dispatch(storeUsers(response.data));
           return response.data;
         })
         .catch((axiosError: AxiosError) =>
-          dispatch(error(actionTypes.GET_USERS, axiosError?.response?.status, axiosError)),
+          dispatch(
+            logError({
+              name: actionTypes.GET_USERS,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          ),
         )
         .finally(() => dispatch(hideLoading()));
     },
@@ -75,17 +86,25 @@ export const useUsers = () => {
    */
   const fetchDetail = useCallback(
     async (id: API.IAgencyDetailParams): Promise<IUserDetails> => {
-      dispatch(request(reducerTypes.GET_USER_DETAIL));
+      dispatch(logRequest(actionTypes.GET_USER_DETAIL));
       dispatch(showLoading());
       return CustomAxios()
         .get(ENVIRONMENT.apiUrl + API.USER_DETAIL(id))
         .then((response: AxiosResponse) => {
-          dispatch(success(reducerTypes.GET_USER_DETAIL));
+          dispatch(logSuccess({ name: actionTypes.GET_USER_DETAIL }));
           dispatch(storeUserDetails(response.data));
           dispatch(hideLoading());
           return response.data;
         })
-        .catch(() => dispatch(error(reducerTypes.GET_USER_DETAIL)))
+        .catch((axiosError: AxiosError) =>
+          dispatch(
+            logError({
+              name: actionTypes.GET_USER_DETAIL,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          ),
+        )
         .finally(() => dispatch(hideLoading()));
     },
     [dispatch],
@@ -107,7 +126,7 @@ export const useUsers = () => {
           return Promise.resolve(response);
         });
 
-      return handleAxiosResponse(dispatch, reducerTypes.PUT_USER_DETAIL, axiosPromise).catch(() => {
+      return handleAxiosResponse(dispatch, actionTypes.PUT_USER_DETAIL, axiosPromise).catch(() => {
         // swallow the exception, the error has already been displayed.
       });
     },

@@ -9,7 +9,7 @@ import {
   TextArea,
   FastDatePicker,
 } from 'components/common/form';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import _ from 'lodash';
 import { IAgencyResponseColumns } from 'features/projects/erp/forms/AgencyResponseForm';
@@ -30,7 +30,7 @@ const sumFinancialRows = (properties: IProperty[], key: string): string => {
 };
 
 const getEditableClassificationCell = (limitLabels?: string[]) => (cellInfo: any) => {
-  const classifications = useCodeLookups().getPropertyClassificationOptions();
+  const classifications = useLookupCodeHelpers().getPropertyClassificationOptions();
   const context = useFormikContext();
   return (
     <FastSelect

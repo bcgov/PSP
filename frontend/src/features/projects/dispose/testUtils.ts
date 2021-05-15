@@ -6,14 +6,19 @@ import {
   ReviewWorkflowStatus,
   ITask,
   SPPApprovalTabs,
+  projectSlice,
+  projectTasksSlice,
 } from '../common';
-import { ProjectActions } from 'constants/actionTypes';
-import * as reducerTypes from 'constants/reducerTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from 'constants/API';
 import { NoteTypes, PropertyTypes } from '../../../constants';
 import { useKeycloak } from '@react-keycloak/web';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import erpTabSlice from '../erp/slices/erpTabSlice';
+import splTabSlice from '../spl/slices/splTabSlice';
+import { ProjectActions } from '../common/slices/projectActions';
 
 export const mockKeycloak = (claims: string[], agencies: number[]) => {
   (useKeycloak as jest.Mock).mockReturnValue({
@@ -314,7 +319,7 @@ export const mockWorkflow = [
 const mockStore = configureMockStore([thunk]);
 export const getStore = (mockProject: IProject, tab?: SPPApprovalTabs) =>
   mockStore({
-    [reducerTypes.LOOKUP_CODE]: {
+    [lookupCodesSlice.name]: {
       lookupCodes: [
         {
           code: 'BCP',
@@ -333,13 +338,13 @@ export const getStore = (mockProject: IProject, tab?: SPPApprovalTabs) =>
         },
       ],
     },
-    [reducerTypes.ProjectReducers.PROJECT]: { project: mockProject },
-    [reducerTypes.ProjectReducers.TASKS]: tasks,
-    [reducerTypes.NETWORK]: {
+    [projectSlice.name]: { project: mockProject },
+    [projectTasksSlice.name]: tasks,
+    [networkSlice.name]: {
       [ProjectActions.GET_PROJECT]: {},
     },
-    [reducerTypes.ProjectReducers.ERP_TAB]: tab,
-    [reducerTypes.ProjectReducers.SPL_TAB]: tab,
+    [erpTabSlice.name]: tab,
+    [splTabSlice.name]: tab,
   });
 
 export const mockApiProjectParcel = {

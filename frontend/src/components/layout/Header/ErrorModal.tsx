@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, Modal, Button } from 'react-bootstrap';
-import { IGenericNetworkAction, clear } from 'actions/genericActions';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { logClear } from 'store/slices/network/networkSlice';
 
 export interface IErrorModalProps {
   // An array of network action errors.
@@ -24,7 +25,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
   const dispatch = useDispatch();
   const handleClose = () => setShow(false);
   const handleClear = () => {
-    errors.forEach(error => dispatch(clear(error.name)));
+    errors.forEach(error => dispatch(logClear(error.name)));
     setShow(false);
   };
 

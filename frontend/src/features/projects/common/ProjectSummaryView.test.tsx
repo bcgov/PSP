@@ -1,17 +1,25 @@
 import React from 'react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { ProjectActions } from 'constants/actionTypes';
 import { render } from '@testing-library/react';
 import { useKeycloak } from '@react-keycloak/web';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import { IProjectTask, ReviewWorkflowStatus, ITask, IProject } from '.';
+import {
+  IProjectTask,
+  ReviewWorkflowStatus,
+  ITask,
+  IProject,
+  projectSlice,
+  projectTasksSlice,
+} from '.';
 import { ProjectSummaryView } from '../dispose';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { ProjectActions } from './slices/projectActions';
 
 jest.mock('@react-keycloak/web');
 const mockKeycloak = (claims: string[]) => {
@@ -138,10 +146,10 @@ export const tasks: ITask[] = [
 
 const getStore = (statusCode?: string) =>
   mockStore({
-    [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-    [reducerTypes.ProjectReducers.PROJECT]: { project: getMockProject(statusCode) },
-    [reducerTypes.ProjectReducers.TASKS]: tasks,
-    [reducerTypes.NETWORK]: {
+    [lookupCodesSlice.name]: { lookupCodes: [] },
+    [projectSlice.name]: { project: getMockProject(statusCode) },
+    [projectTasksSlice.name]: tasks,
+    [networkSlice.name]: {
       [ProjectActions.GET_PROJECT]: {},
     },
   });

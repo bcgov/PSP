@@ -6,7 +6,7 @@ import {
 } from 'components/common/form/StepForm';
 import { useFormikContext, yupToFormErrors } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { noop } from 'lodash';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -144,7 +144,7 @@ const Form: React.FC<IBuildingForm> = ({
       ? +(formikProps.values.data.agencyId as any).value
       : +formikProps.values.data.agencyId,
   });
-  const { getOptionsByType, getPropertyClassificationOptions } = useCodeLookups();
+  const { getOptionsByType, getPropertyClassificationOptions } = useLookupCodeHelpers();
   const isViewOrUpdate = !!formikProps.values?.data?.id;
 
   const agencies = getOptionsByType(API.AGENCY_CODE_SET_NAME);

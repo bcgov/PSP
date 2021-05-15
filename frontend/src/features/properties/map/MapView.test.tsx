@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
-import * as reducerTypes from 'constants/reducerTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { wait, fireEvent, render, cleanup, screen, act } from '@testing-library/react';
@@ -20,7 +19,9 @@ import { createPoints } from 'components/maps/leaflet/mapUtils';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { TenantProvider } from 'tenants';
 import { IProperty, IParcel } from 'interfaces';
-import { IPropertyDetail, useProperties } from 'store/slices/properties';
+import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
+import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -126,9 +127,9 @@ const mockDetails: IPropertyDetail = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-  [reducerTypes.PROPERTIES]: { parcelDetail: mockDetails, draftParcels: [], parcels: mockParcels },
-  [reducerTypes.LEAFLET_CLICK_EVENT]: { parcelDetail: mockDetails },
+  [lookupCodesSlice.name]: { lookupCodes: [] },
+  [propertiesSlice.name]: { parcelDetail: mockDetails, draftParcels: [], parcels: mockParcels },
+  [leafletMouseSlice.name]: { parcelDetail: mockDetails },
 });
 
 let history = createMemoryHistory();

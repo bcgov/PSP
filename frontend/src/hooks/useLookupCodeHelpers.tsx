@@ -12,22 +12,29 @@ import { useAppSelector } from 'store/hooks';
 /**
  * Hook to return an array ILookupCode for specific types.
  */
-export function useCodeLookups() {
+export function useLookupCodeHelpers() {
   const keycloak = useKeycloakWrapper();
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
   const getCodeById = (type: string, id: string): string | undefined => {
-    return lookupCodes.filter(code => code.type === type && code.id === id)?.find(x => x)?.code;
+    return lookupCodes
+      .filter((code: { type: string; id: string }) => code.type === type && code.id === id)
+      ?.find((x: any) => x)?.code;
   };
 
   const getByType = useCallback(
-    (type: string) => lookupCodes.filter(code => code.type === type && code.isDisabled !== true),
+    (type: string) =>
+      lookupCodes.filter(
+        (code: { type: string; isDisabled: boolean }) =>
+          code.type === type && code.isDisabled !== true,
+      ),
     [lookupCodes],
   );
 
   const getPublicByType = useCallback(
     (type: string) =>
       lookupCodes.filter(
-        code => code.type === type && code.isDisabled === false && code.isPublic !== false,
+        (code: ILookupCode) =>
+          code.type === type && code.isDisabled === false && code.isPublic !== false,
       ),
     [lookupCodes],
   );
@@ -62,17 +69,17 @@ export function useCodeLookups() {
   ) => {
     const classifications = getByType(API.PROPERTY_CLASSIFICATION_CODE_SET_NAME);
     return filter
-      ? (classifications ?? []).map(c => mapLookupCode(c)).filter(filter)
+      ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c)).filter(filter)
       : !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)
       ? (classifications ?? [])
-          .map(c => mapLookupCode(c))
+          .map((c: ILookupCode) => mapLookupCode(c))
           .filter(
-            c =>
+            (c: { value: string | number }) =>
               +c.value !== Classifications.Demolished &&
               +c.value !== Classifications.Subdivided &&
               +c.value !== Classifications.Disposed,
           )
-      : (classifications ?? []).map(c => mapLookupCode(c));
+      : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
   };
 
   /**
@@ -82,7 +89,9 @@ export function useCodeLookups() {
    */
   const getAgencyFullName = (agencyCode?: string) => {
     const agencies = getByType(API.AGENCY_CODE_SET_NAME);
-    const agencyItem = agencies.find(listItem => listItem.code === agencyCode);
+    const agencyItem = agencies.find(
+      (listItem: { code: string | undefined }) => listItem.code === agencyCode,
+    );
     return agencyItem ? agencyItem.name : agencyCode;
   };
 
@@ -98,4 +107,4 @@ export function useCodeLookups() {
   };
 }
 
-export default useCodeLookups;
+export default useLookupCodeHelpers;

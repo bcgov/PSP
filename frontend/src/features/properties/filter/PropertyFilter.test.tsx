@@ -10,11 +10,12 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import * as reducerTypes from 'constants/reducerTypes';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import * as API from 'constants/API';
 import { fillInput } from 'utils/testUtils';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import filterSlice from 'store/slices/filter/filterSlice';
+import propertyNameSlice from '../common/slices/propertyNameSlice';
 
 const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.
@@ -95,9 +96,9 @@ const lCodes = {
 
 const getStore = (filter: any) =>
   mockStore({
-    [reducerTypes.FILTER]: filter,
-    [reducerTypes.PROPERTY_NAMES]: ['test'],
-    [reducerTypes.LOOKUP_CODE]: lCodes,
+    [filterSlice.name]: filter,
+    [propertyNameSlice.name]: ['test'],
+    [lookupCodesSlice.name]: lCodes,
   });
 
 const defaultFilter: IPropertyFilter = {

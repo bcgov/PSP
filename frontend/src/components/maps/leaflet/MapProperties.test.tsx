@@ -7,7 +7,6 @@ import { MapProps as LeafletMapProps, Marker, Map as ReactLeafletMap } from 'rea
 import { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
-import * as reducerTypes from 'constants/reducerTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { wait, fireEvent, render, cleanup } from '@testing-library/react';
@@ -21,7 +20,9 @@ import axios from 'axios';
 
 import MockAdapter from 'axios-mock-adapter';
 import { IParcel, IProperty } from 'interfaces';
-import { IPropertyDetail } from 'store/slices/properties';
+import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
+import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -94,9 +95,9 @@ const mockDetails: IPropertyDetail = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-  [reducerTypes.PROPERTIES]: { parcelDetail: mockDetails, draftParcels: [] },
-  [reducerTypes.LEAFLET_CLICK_EVENT]: { parcelDetail: mockDetails },
+  [lookupCodesSlice.name]: { lookupCodes: [] },
+  [propertiesSlice.name]: { parcelDetail: mockDetails, draftParcels: [] },
+  [leafletMouseSlice.name]: { parcelDetail: mockDetails },
 });
 
 // To check for alert message

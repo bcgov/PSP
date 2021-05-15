@@ -1,11 +1,9 @@
 import React from 'react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import * as actionTypes from 'constants/actionTypes';
 import { renderHook } from '@testing-library/react-hooks';
 import useStepper, {
   isStatusCompleted,
@@ -13,21 +11,25 @@ import useStepper, {
   getLastCompletedStatus,
   getNextWorkflowStatus,
 } from './useStepper';
-import { IProject } from 'features/projects/common';
+import { IProject, projectSlice } from 'features/projects/common';
 import { mockWorkflow } from '../testUtils';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
+import projectWorkflowSlice from 'features/projects/common/slices/projectWorkflowSlice';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
 
 const store = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: {},
-  [reducerTypes.ProjectReducers.WORKFLOW]: mockWorkflow,
-  [reducerTypes.NETWORK]: {
-    [actionTypes.ProjectActions.GET_PROJECT]: {
+  [projectSlice.name]: {},
+  [projectWorkflowSlice.name]: mockWorkflow,
+  [networkSlice.name]: {
+    [ProjectActions.GET_PROJECT]: {
       isFetching: false,
     },
   },
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
+  [lookupCodesSlice.name]: { lookupCodes: [] },
 });
 
 describe('useStepper hook functionality', () => {

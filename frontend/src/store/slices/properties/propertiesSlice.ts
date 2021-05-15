@@ -1,4 +1,3 @@
-import { PROPERTIES } from '../../../constants/reducerTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PointFeature } from 'components/maps/types';
 import { IProperty, IParcel, IBuilding } from 'interfaces';
@@ -26,7 +25,7 @@ const getPropertyDetail = (
  * The properties reducer provides actions to manage the displayed properties used within the application.
  */
 export const propertiesSlice = createSlice({
-  name: PROPERTIES,
+  name: 'properties',
   initialState: initialState,
   reducers: {
     storeParcels(state: IParcelState, action: PayloadAction<IProperty[]>) {

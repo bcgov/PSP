@@ -7,7 +7,7 @@ interface ISresManualProps {
   hideText?: boolean;
 }
 
-const SresManual: React.FunctionComponent<ISresManualProps> = ({
+export const SresManual: React.FunctionComponent<ISresManualProps> = ({
   clickUrl,
   hideText,
 }: ISresManualProps) => {

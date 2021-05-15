@@ -1,11 +1,9 @@
 import React from 'react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router, match as Match } from 'react-router-dom';
-import * as actionTypes from 'constants/actionTypes';
 import useStepForm from '../common/hooks/useStepForm';
 import { render } from '@testing-library/react';
 import useProject from '../common/hooks/useProject';
@@ -15,6 +13,11 @@ import { useKeycloak } from '@react-keycloak/web';
 import Claims from 'constants/claims';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { projectSlice } from '.';
+import projectWorkflowSlice from './slices/projectWorkflowSlice';
+import { ProjectActions } from './slices/projectActions';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -54,14 +57,14 @@ const loc = {
 } as Location;
 
 const store = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: { project: {} },
-  [reducerTypes.ProjectReducers.WORKFLOW]: mockWorkflow,
-  [reducerTypes.NETWORK]: {
-    [actionTypes.ProjectActions.GET_PROJECT_WORKFLOW]: {
+  [projectSlice.name]: { project: {} },
+  [projectWorkflowSlice.name]: mockWorkflow,
+  [networkSlice.name]: {
+    [ProjectActions.GET_PROJECT_WORKFLOW]: {
       isFetching: false,
     },
   },
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
+  [lookupCodesSlice.name]: { lookupCodes: [] },
 });
 
 const uiElement = (

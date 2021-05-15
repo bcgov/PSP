@@ -4,7 +4,7 @@ import { Col, Container } from 'react-bootstrap';
 import { Form, Input, TextArea } from 'components/common/form';
 import { IStepProps, projectNoDescription, EditButton } from '..';
 import styled from 'styled-components';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as API from 'constants/API';
 import { ParentSelect } from 'components/common/form/ParentSelect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -51,7 +51,7 @@ const ProjectDraftForm = ({
   setIsReadOnly,
   hideAgency,
 }: IStepProps & IProjectDraftFormProps) => {
-  const { getOptionsByType } = useCodeLookups();
+  const { getOptionsByType } = useLookupCodeHelpers();
   const keycloak = useKeycloakWrapper();
   const agencies = getOptionsByType(API.AGENCY_CODE_SET_NAME);
   const userAgency = agencies.find(a => Number(a.value) === Number(keycloak.agencyId));

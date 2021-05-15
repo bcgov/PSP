@@ -46,8 +46,6 @@ export const dateEnteredMarket = 'Date Entered Market required to change status 
 export const projectComments = `Please provide any variances between appraised, assessed, and sale price.`;
 export const ocgVarianceNote =
   'Please provide an explanation for the difference between the Financial Summary amount and the OCG Gain/Loss amount (if any)';
-export const appraisalDateWarning =
-  'You have entered an appraisal date that is older then the current appraisal date stored in PIMS. Are you sure that you would like to update PIMS to use this older date?';
 export const tabErrorWarning =
   'Please correct all of the highlighted errors within the red coloured tab(s) before continuing.';
 export const deleteProjectWarning = 'Are you sure that you want to delete this project?';

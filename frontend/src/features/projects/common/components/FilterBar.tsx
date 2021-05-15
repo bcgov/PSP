@@ -6,7 +6,7 @@ import { Formik, getIn, useFormikContext } from 'formik';
 import { Form, Select, InputGroup, Input } from 'components/common/form';
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
-import { useCodeLookups } from 'hooks/useLookupCodes';
+import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import * as API from 'constants/API';
 import { Classifications } from 'constants/classifications';
 import { TypeaheadField } from 'components/common/form/Typeahead';
@@ -56,7 +56,7 @@ type FilterBarProps = {
  * Filter bar for the Property List view
  */
 const FilterBar: React.FC<FilterBarProps> = ({ onChange, defaultFilter }) => {
-  const lookupCode = useCodeLookups();
+  const lookupCode = useLookupCodeHelpers();
   //restrict available agencies to user agencies.
   const agencies = lookupCode.getOptionsByType(API.AGENCY_CODE_SET_NAME);
   const classifications = lookupCode.getPropertyClassificationOptions(
@@ -65,7 +65,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onChange, defaultFilter }) => {
       +c.value !== Classifications.Disposed &&
       +c.value !== Classifications.Subdivided,
   );
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const adminAreas = lookupCodes
     .getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME)
     .map(c => mapLookupCode(c));

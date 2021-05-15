@@ -1,12 +1,10 @@
 import React from 'react';
 import ProjectDisposeView from './ProjectDisposeView';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router, match as Match } from 'react-router-dom';
-import * as actionTypes from 'constants/actionTypes';
 import { render, cleanup, act } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
@@ -14,6 +12,10 @@ import useStepper from './hooks/useStepper';
 import { noop } from 'lodash';
 import { useKeycloak } from '@react-keycloak/web';
 import * as redux from 'react-redux';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { projectSlice } from '../common';
+import { ProjectActions } from '../common/slices/projectActions';
+import projectWorkflowSlice from '../common/slices/projectWorkflowSlice';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -70,20 +72,20 @@ const mockWorkflow = [
 ];
 
 const store = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: {},
-  [reducerTypes.ProjectReducers.WORKFLOW]: mockWorkflow,
-  [reducerTypes.NETWORK]: {
-    [actionTypes.ProjectActions.GET_PROJECT]: {
+  [projectSlice.name]: {},
+  [projectWorkflowSlice.name]: mockWorkflow,
+  [networkSlice.name]: {
+    [ProjectActions.GET_PROJECT]: {
       isFetching: false,
     },
   },
 });
 
 const errorStore = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: {},
-  [reducerTypes.ProjectReducers.WORKFLOW]: mockWorkflow,
-  [reducerTypes.NETWORK]: {
-    [actionTypes.ProjectActions.GET_PROJECT]: {
+  [projectSlice.name]: {},
+  [projectWorkflowSlice.name]: mockWorkflow,
+  [networkSlice.name]: {
+    [ProjectActions.GET_PROJECT]: {
       isFetching: false,
       error: 'error',
     },

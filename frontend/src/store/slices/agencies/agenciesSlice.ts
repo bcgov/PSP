@@ -1,4 +1,3 @@
-import { AGENCIES } from './../../../constants/reducerTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPagedItems, IAgency, IAgencyDetail } from 'interfaces';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
@@ -27,7 +26,7 @@ export const initialState: IAgenciesState = {
  * The lookup code reducer stores the complete list of lookup codes used within the application.
  */
 export const agenciesSlice = createSlice({
-  name: AGENCIES,
+  name: 'agencies',
   initialState: initialState,
   reducers: {
     storeAgencies(state: IAgenciesState, action: PayloadAction<IPagedItems<IAgency>>) {

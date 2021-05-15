@@ -8,11 +8,11 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { useKeycloak } from '@react-keycloak/web';
 import * as API from 'constants/API';
-import * as reducerTypes from 'constants/reducerTypes';
 import { fireEvent, render, wait, act } from '@testing-library/react';
 import { fillInput } from 'utils/testUtils';
 import { useApi, PimsAPI, IGeocoderResponse } from 'hooks/useApi';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { propertiesSlice } from 'store/slices/properties';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -27,8 +27,8 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
-  [reducerTypes.PROPERTIES]: { parcels: [], draftParcels: [] },
+  [lookupCodesSlice.name]: lCodes,
+  [propertiesSlice.name]: { parcels: [], draftParcels: [] },
 });
 
 jest.mock('@react-keycloak/web');

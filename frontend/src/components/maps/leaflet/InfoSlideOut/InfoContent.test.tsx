@@ -6,7 +6,6 @@ import { PropertyTypes } from 'constants/propertyTypes';
 import { render } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as reducerTypes from 'constants/reducerTypes';
 import { Provider } from 'react-redux';
 import * as API from 'constants/API';
 import { Workflows } from 'constants/workflows';
@@ -15,6 +14,7 @@ import { createMemoryHistory } from 'history';
 import { IParcel, IBuilding } from 'interfaces';
 import { useKeycloak } from '@react-keycloak/web';
 import { mockBuilding } from 'mocks/filterDataMock';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 
@@ -140,7 +140,7 @@ const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
+  [lookupCodesSlice.name]: lCodes,
 });
 
 const ContentComponent = (

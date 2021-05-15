@@ -6,9 +6,7 @@ import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 import * as API from 'constants/API';
 import { IAccessRequest } from 'interfaces';
 import './ManageAccessRequests.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import { IGenericNetworkAction } from 'actions/genericActions';
+import { useDispatch } from 'react-redux';
 import * as actionTypes from 'constants/actionTypes';
 import { IAccessRequestModel } from './interfaces';
 import { AccessRequestFilter } from './components/Filter';
@@ -22,6 +20,7 @@ import {
   IAccessRequestsFilterData,
 } from 'store/slices/accessRequests';
 import { useTenant } from 'tenants';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 
 const ManageAccessRequests = () => {
   const dispatch = useDispatch();
@@ -30,9 +29,8 @@ const ManageAccessRequests = () => {
     undefined,
   );
   const columns = React.useMemo(() => columnDefinitions, []);
-  const updateRequestAccessAdmin = useSelector<RootState, IGenericNetworkAction>(
-    state =>
-      (state.network as any)[actionTypes.UPDATE_REQUEST_ACCESS_ADMIN] as IGenericNetworkAction,
+  const updateRequestAccessAdmin = useAppSelector(
+    state => state.network[actionTypes.UPDATE_REQUEST_ACCESS_ADMIN] as IGenericNetworkAction,
   );
 
   const pagedAccessRequests = useAppSelector(state => state.accessRequests.pagedAccessRequests);

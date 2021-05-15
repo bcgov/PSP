@@ -3,18 +3,18 @@ import { Navbar, Container, Row, Col, ButtonToolbar, Button } from 'react-bootst
 import { Form, Input, Select, SelectOption } from '../../../components/common/form';
 import { Formik, Field } from 'formik';
 import { UserUpdateSchema } from 'utils/YupSchema';
-import { IUserDetailParams } from 'constants/API';
 import * as API from 'constants/API';
 import './EditUserPage.scss';
 import { Label } from 'components/common/Label';
 import { useHistory } from 'react-router-dom';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { formatApiDateTime } from 'utils';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { AUTHORIZATION_URL } from 'constants/strings';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { useUsers } from 'store/slices/users';
 import { useAppSelector } from 'store/hooks';
+import { IUserDetailParams } from 'constants/API';
 
 interface IEditUserPageProps extends IUserDetailParams {
   match?: any;
@@ -29,7 +29,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
     fetchUserDetail({ id: userId });
   }, [userId, fetchUserDetail]);
 
-  const { getByType } = useCodeLookups();
+  const { getByType } = useLookupCodeHelpers();
   const agencies = getByType(API.AGENCY_CODE_SET_NAME);
   const roles = getByType(API.ROLE_CODE_SET_NAME);
 

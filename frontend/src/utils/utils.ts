@@ -4,10 +4,10 @@ import { FormikProps, getIn } from 'formik';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { AxiosError } from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { success, error, request } from 'actions/genericActions';
 import moment from 'moment-timezone';
 import { IStatus } from 'features/projects/common';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import { logRequest, logSuccess, logError } from 'store/slices/network/networkSlice';
 
 /**
  * Convert the specified 'input' value into a decimal or undefined.
@@ -141,16 +141,18 @@ export const handleAxiosResponse = (
   actionType: string,
   axiosPromise: Promise<any>,
 ): Promise<any> => {
-  dispatch(request(actionType));
+  dispatch(logRequest(actionType));
   dispatch(showLoading());
   return axiosPromise
     .then((response: any) => {
-      dispatch(success(actionType));
+      dispatch(logSuccess({ name: actionType }));
       dispatch(hideLoading());
       return response.data ?? response.payload;
     })
     .catch((axiosError: AxiosError) => {
-      dispatch(error(actionType, axiosError?.response?.status, axiosError));
+      dispatch(
+        logError({ name: actionType, status: axiosError?.response?.status, error: axiosError }),
+      );
       throw axiosError;
     })
     .finally(() => {

@@ -19,7 +19,6 @@ import AddressForm from 'features/properties/components/forms/subforms/AddressFo
 import { noop } from 'lodash';
 import styled from 'styled-components';
 import { ParentSelect } from 'components/common/form/ParentSelect';
-import { FormikTable } from 'features/projects/common';
 import { getAssociatedBuildingsCols } from 'features/properties/components/forms/subforms/columns';
 import { Classifications } from 'constants/classifications';
 import { formatFiscalYear } from 'utils';
@@ -29,6 +28,7 @@ import { FiscalKeys } from 'constants/fiscalKeys';
 import moment from 'moment';
 import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
 import { IBuilding } from 'interfaces';
+import FormikTable from 'components/common/FormikTable';
 
 interface IReviewProps {
   nameSpace?: string;

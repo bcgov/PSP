@@ -2,15 +2,14 @@ import './Login.scss';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button, Spinner, Jumbotron } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { IGenericNetworkAction } from 'actions/genericActions';
-import { RootState } from 'reducers/rootReducer';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as actionTypes from 'constants/actionTypes';
 import { useQuery } from 'hooks/use-query';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { useTenant, Logo } from 'tenants';
 import { NEW_PIMS_USER } from 'store/slices/users';
+import { useAppSelector } from 'store/hooks';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 
 /**
  * Login component provides information and links for the user to login.
@@ -22,8 +21,8 @@ const Login = () => {
   const keyCloakWrapper = useKeycloakWrapper();
   const keycloak = keyCloakWrapper.obj;
   const isIE = usingIE();
-  const activated = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[actionTypes.ADD_ACTIVATE_USER] as IGenericNetworkAction,
+  const activated = useAppSelector(
+    state => state.network[actionTypes.ADD_ACTIVATE_USER] as IGenericNetworkAction,
   );
   const tenant = useTenant();
 

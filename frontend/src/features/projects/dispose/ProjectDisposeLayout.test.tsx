@@ -1,12 +1,10 @@
 import React from 'react';
 import ProjectDisposeLayout from './ProjectDisposeLayout';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router, match as Match } from 'react-router-dom';
-import * as actionTypes from 'constants/actionTypes';
 import useStepper from './hooks/useStepper';
 import useStepForm from '../common/hooks/useStepForm';
 import { noop } from 'lodash';
@@ -15,6 +13,11 @@ import { act } from 'react-dom/test-utils';
 import useProject from '../common/hooks/useProject';
 import { mockWorkflow } from './testUtils';
 import { useKeycloak } from '@react-keycloak/web';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { projectSlice } from '../common';
+import projectWorkflowSlice from '../common/slices/projectWorkflowSlice';
+import { ProjectActions } from '../common/slices/projectActions';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -51,14 +54,14 @@ const loc = {
 } as Location;
 
 const store = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: {},
-  [reducerTypes.ProjectReducers.WORKFLOW]: mockWorkflow,
-  [reducerTypes.NETWORK]: {
-    [actionTypes.ProjectActions.GET_PROJECT]: {
+  [projectSlice.name]: {},
+  [projectWorkflowSlice.name]: mockWorkflow,
+  [networkSlice.name]: {
+    [ProjectActions.GET_PROJECT]: {
       isFetching: false,
     },
   },
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
+  [lookupCodesSlice.name]: { lookupCodes: [] },
 });
 
 const uiElement = (

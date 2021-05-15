@@ -1,6 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as genericActions from 'actions/genericActions';
 import * as API from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
 import { ENVIRONMENT } from 'constants/environment';
@@ -12,11 +11,13 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useAgencies } from './useAgencies';
 import { GET_AGENCIES } from 'constants/actionTypes';
 import { AGENCIES } from 'mocks/filterDataMock';
+import { networkSlice } from '../network/networkSlice';
+import { find } from 'lodash';
 
 const dispatch = jest.fn();
-const requestSpy = jest.spyOn(genericActions, 'request');
-const successSpy = jest.spyOn(genericActions, 'success');
-const errorSpy = jest.spyOn(genericActions, 'error');
+const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 afterEach(() => {
@@ -55,8 +56,8 @@ describe('fetchAgencies action creator', () => {
         useAgencies()
           .fetchAgencies({} as any)
           .then(() => {
-            expect(requestSpy).toHaveBeenCalledTimes(1);
-            expect(successSpy).toHaveBeenCalledTimes(1);
+            expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+            expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
             expect(currentStore.getActions()).toContainEqual({
               payload: mockResponse,
               type: 'agencies/storeAgencies',
@@ -77,8 +78,8 @@ describe('fetchAgencies action creator', () => {
         useAgencies()
           .fetchAgencies({} as any)
           .then(() => {
-            expect(requestSpy).toHaveBeenCalledTimes(1);
-            expect(errorSpy).toHaveBeenCalledTimes(1);
+            expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+            expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
             expect(currentStore.getActions()).not.toContainEqual({
               payload: mockResponse,
               type: GET_AGENCIES,
@@ -103,8 +104,8 @@ describe('getAgencyDetail action creator', () => {
         useAgencies()
           .fetchAgencyDetail({ id: AGENCIES[0].id } as any)
           .then(() => {
-            expect(requestSpy).toHaveBeenCalledTimes(1);
-            expect(successSpy).toHaveBeenCalledTimes(1);
+            expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+            expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
             expect(currentStore.getActions()).toContainEqual({
               payload: mockResponse,
               type: 'agencies/storeAgencyDetails',
@@ -125,8 +126,8 @@ describe('getAgencyDetail action creator', () => {
         useAgencies()
           .fetchAgencyDetail({ id: AGENCIES[0].id } as any)
           .then(() => {
-            expect(requestSpy).toHaveBeenCalledTimes(1);
-            expect(errorSpy).toHaveBeenCalledTimes(1);
+            expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+            expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
             expect(currentStore.getActions()).not.toContainEqual({
               payload: mockResponse,
               type: 'agencies/storeAgencyDetails',

@@ -6,6 +6,11 @@ export interface IParcelLayerData {
   data: { [key: string]: any };
 }
 
+export interface IParcelLayerDataState {
+  parcelLayerData: IParcelLayerData | null;
+  parcelLayerFeature: GeoJsonObject | null;
+}
+
 export const saveParcelLayerData = createAction<IParcelLayerData>('saveParcelLayerData');
 export const saveParcelLayerFeature = createAction<GeoJsonObject>('saveParcelLayerFeature');
 export const clearParcelLayerData = createAction('clearParcelLayerData');
@@ -17,7 +22,7 @@ export const clearParcelLayerFeature = createAction('clearParcelLayerFeature');
  */
 const parcelLayerDataSlice = createSlice({
   name: 'parcelLayerData',
-  initialState: { parcelLayerData: null, parcelLayerFeature: null },
+  initialState: { parcelLayerData: null, parcelLayerFeature: null } as IParcelLayerDataState,
   reducers: {},
   extraReducers: (builder: any) => {
     // note that redux-toolkit uses immer to prevent state from being mutated.

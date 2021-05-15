@@ -10,17 +10,16 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import AccessRequestPage from './AccessRequestPage';
-import { ILookupCode } from '../../../actions/lookupActions';
-import { IGenericNetworkAction } from '../../../actions/genericActions';
-import { NETWORK } from '../../../constants/reducerTypes';
 import * as actionTypes from '../../../constants/actionTypes';
 import * as API from 'constants/API';
-import * as reducerTypes from 'constants/reducerTypes';
 import { render, fireEvent, wait } from '@testing-library/react';
 import { fillInput } from 'utils/testUtils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useKeycloak } from '@react-keycloak/web';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -64,16 +63,16 @@ mockAxios.onAny().reply(200, {});
 
 // Simulating a succesful submit
 const successStore = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
-  [NETWORK]: {
+  [lookupCodesSlice.name]: lCodes,
+  [networkSlice.name]: {
     [actionTypes.ADD_REQUEST_ACCESS]: requestAccess,
   },
 });
 
 // Store without status of 200
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
-  [NETWORK]: {
+  [lookupCodesSlice.name]: lCodes,
+  [networkSlice.name]: {
     addRequestAccess: requestAccess,
   },
 });

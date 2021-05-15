@@ -1,4 +1,4 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
 import { IProjectTask } from '..';
 
 export const saveProjectTasks = createAction<IProjectTask[]>('saveProjectTasks');
@@ -12,10 +12,13 @@ const projectTasksSlice = createSlice({
   reducers: {},
   extraReducers: (builder: any) => {
     // note that redux-toolkit uses immer to prevent state from being mutated.
-    builder.addCase(saveProjectTasks, (state: any, action: any) => {
-      return action.payload;
-    });
-    builder.addCase(clearProjectTasks, (state: any) => {
+    builder.addCase(
+      saveProjectTasks,
+      (state: IProjectTask[], action: PayloadAction<IProjectTask[]>) => {
+        return action.payload;
+      },
+    );
+    builder.addCase(clearProjectTasks, (state: IProjectTask[]) => {
       return '';
     });
   },

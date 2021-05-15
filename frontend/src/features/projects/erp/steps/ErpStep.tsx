@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
 import { formatDate } from 'utils';
@@ -6,8 +5,7 @@ import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import StepErrorSummary from '../../common/components/StepErrorSummary';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 import {
   useStepForm,
   StepStatusIcon,
@@ -31,6 +29,7 @@ import './ErpStep.scss';
 import { ValidationGroup } from 'components/common/tabValidation';
 import { EnhancedReferralExemptionApprovedForSplSchema } from '../forms/erpYupSchema';
 import queryString from 'query-string';
+import { useAppSelector } from 'store/hooks';
 
 const CenterBoldText = styled.div`
   text-align: center;
@@ -46,7 +45,7 @@ const ErpStep = ({ formikRef }: IStepProps) => {
     project.statusCode === ReviewWorkflowStatus.NotInSpl
       ? SPPApprovalTabs.closeOutForm
       : SPPApprovalTabs.erp;
-  const currentTab = useSelector<RootState, string | null>(state => state.erpTab) ?? defaultTab;
+  const currentTab = useAppSelector(state => state.erpTab) ?? defaultTab;
   const dispatch = useDispatch();
   const history = useHistory();
   const initialValues: IProject = { ...project };

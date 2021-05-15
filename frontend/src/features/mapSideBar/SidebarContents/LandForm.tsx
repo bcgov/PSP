@@ -8,7 +8,7 @@ import { defaultInformationFormValues } from 'features/properties/components/for
 import { useFormikContext, yupToFormErrors } from 'formik';
 import { IGeocoderResponse, useApi } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { noop } from 'lodash';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -172,7 +172,7 @@ const Form: React.FC<ILandForm> = ({
   const isViewOrUpdate = !!initialValues.id;
 
   // lookup codes that will be used by subforms
-  const { getOptionsByType, getPropertyClassificationOptions } = useCodeLookups();
+  const { getOptionsByType, getPropertyClassificationOptions } = useLookupCodeHelpers();
   const agencies = getOptionsByType(API.AGENCY_CODE_SET_NAME);
   const classifications = getPropertyClassificationOptions();
   useDraftMarkerSynchronizer('data');

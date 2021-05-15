@@ -13,7 +13,7 @@ import { HARMFUL_DISCLOSURE_URL } from 'constants/strings';
 import { ClassificationForm } from './ClassificationForm';
 import { IGeocoderResponse } from 'hooks/useApi';
 import { useFormikContext, getIn } from 'formik';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as API from 'constants/API';
 import GenericModal from 'components/common/GenericModal';
 import { IBuilding } from 'interfaces';
@@ -65,7 +65,7 @@ export const IdentificationForm: React.FC<IIdentificationProps> = ({
     },
     [nameSpace],
   );
-  const { lookupCodes } = useCodeLookups();
+  const { lookupCodes } = useLookupCodeHelpers();
   const projectNumbers = getIn(formikProps.values, 'data.projectNumbers');
   const agencyId = getIn(formikProps.values, `data.agencyId`);
   const [privateProject, setPrivateProject] = useState(false);

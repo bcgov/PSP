@@ -1,7 +1,6 @@
 import { IAccessRequestsFilterData, IAccessRequestsState } from './interfaces';
 import { IAccessRequest, IPagedItems } from 'interfaces';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ACCESS_REQUEST } from 'constants/reducerTypes';
 
 export const MAX_ACCESS_RESULTS_PER_PAGE = 100;
 // First, define the reducer and action creators via `createSlice`
@@ -41,7 +40,7 @@ export const initialState: IAccessRequestsState = {
  * The access request slice manages the current access request, a list of all active access requests, and methods to sort and filter this list.
  */
 export const accessRequestsSlice = createSlice({
-  name: ACCESS_REQUEST,
+  name: 'accessRequests',
   initialState: initialState,
   reducers: {
     storeAccessRequests(

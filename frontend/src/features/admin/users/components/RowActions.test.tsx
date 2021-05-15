@@ -3,13 +3,13 @@ import { RowActions } from './RowActions';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as reducerTypes from 'constants/reducerTypes';
 import { fireEvent, render, wait } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { cleanup } from '@testing-library/react-hooks';
+import { usersSlice } from 'store/slices/users';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -31,7 +31,7 @@ const getItems = (disabled?: boolean) => [
 
 const getStore = (disabled?: boolean) =>
   mockStore({
-    [reducerTypes.USERS]: {
+    [usersSlice.name]: {
       pagedUsers: {
         pageIndex: 0,
         total: 1,

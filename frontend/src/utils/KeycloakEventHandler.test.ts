@@ -1,14 +1,14 @@
 import { KeycloakInstance } from 'keycloak-js';
 import getKeycloakEventHandler from './KeycloakEventHandler';
-import { saveJwt, clearJwt } from 'reducers/JwtSlice';
-import { setKeycloakReady } from 'reducers/keycloakReadySlice';
+import { saveJwt, clearJwt } from 'store/slices/jwt/JwtSlice';
+import { setKeycloakReady } from 'store/slices/keycloakReady/keycloakReadySlice';
 import { store } from 'store/store';
 
-jest.mock('reducers/JwtSlice', () => ({
+jest.mock('store/slices/jwt/JwtSlice', () => ({
   saveJwt: jest.fn(),
   clearJwt: jest.fn(),
 }));
-jest.mock('reducers/keycloakReadySlice');
+jest.mock('store/slices/keycloakReady/keycloakReadySlice');
 jest.mock('store/store', () => ({
   store: {
     dispatch: jest.fn(),

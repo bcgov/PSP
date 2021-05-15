@@ -5,7 +5,6 @@ import { Formik } from 'formik';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from 'constants/API';
-import * as reducerTypes from 'constants/reducerTypes';
 import { Provider } from 'react-redux';
 import AddParentParcelsForm from './AddParentParcelsForm';
 import { Router } from 'react-router-dom';
@@ -14,8 +13,9 @@ import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.tes
 import { fillInput } from 'utils/testUtils';
 import { ToastContainer } from 'react-toastify';
 import { useKeycloak } from '@react-keycloak/web';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IParcel } from 'interfaces';
+import { propertiesSlice } from 'store/slices/properties';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -37,8 +37,8 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
-  [reducerTypes.PROPERTIES]: { parcels: [] },
+  [lookupCodesSlice.name]: lCodes,
+  [propertiesSlice.name]: { parcels: [] },
 });
 
 const findMatchingPid = jest.fn();

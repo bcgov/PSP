@@ -8,8 +8,7 @@ import { formatDate } from 'utils';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 import StepErrorSummary from '../../common/components/StepErrorSummary';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 import {
   useStepForm,
   StepStatusIcon,
@@ -38,6 +37,7 @@ import { ApprovalActions } from 'features/projects/erp';
 import { DocumentationStepSchema } from 'features/projects/dispose';
 import { useHistory } from 'react-router-dom';
 import { toFlatProject } from 'features/projects/common/projectConverter';
+import { useAppSelector } from 'store/hooks';
 
 const CenterBoldText = styled.div`
   text-align: center;
@@ -73,7 +73,7 @@ const SplStep = ({ formikRef }: IStepProps) => {
     project?.statusCode === ReviewWorkflowStatus.Disposed
       ? SPPApprovalTabs.closeOutForm
       : SPPApprovalTabs.spl;
-  const currentTab = useSelector<RootState, string | null>(state => state.splTab) ?? defaultTab;
+  const currentTab = useAppSelector(state => state.splTab) ?? defaultTab;
   const dispatch = useDispatch();
   const history = useHistory();
 
