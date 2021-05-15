@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.IO;
 using Pims.Core.Extensions;
+using Serilog;
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Middleware
@@ -15,6 +19,7 @@ namespace Pims.Api.Helpers.Middleware
         #region Variables
         private readonly RequestDelegate _next;
         private readonly ILogger<LogRequestMiddleware> _logger;
+        private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
         #endregion
 
         #region Constructors
@@ -27,6 +32,7 @@ namespace Pims.Api.Helpers.Middleware
         {
             _next = next;
             _logger = logger;
+            _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
         }
         #endregion
 
@@ -38,10 +44,30 @@ namespace Pims.Api.Helpers.Middleware
         /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
-            _logger.LogInformation($"Received HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
+            context.Request.EnableBuffering();
+            await using var requestStream = _recyclableMemoryStreamManager.GetStream();
+            await context.Request.Body.CopyToAsync(requestStream);
+
+            string body;
+            requestStream.Position = 0;
+            using (var streamReader = new StreamReader(requestStream))
+            {
+                body = streamReader.ReadToEnd();
+            }
+
+            using (_logger.BeginScope("HTTP Response"))
+            {
+                if (!Log.IsEnabled(Serilog.Events.LogEventLevel.Debug)) _logger.LogInformation($"HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
+                _logger.LogDebug($"HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}" + (String.IsNullOrEmpty(body) ? String.Empty : $"{System.Environment.NewLine}Body: {body}"));
+            }
+
+
+            context.Request.Body.Position = 0;
 
             await _next(context);
         }
+
+
         #endregion
     }
 }

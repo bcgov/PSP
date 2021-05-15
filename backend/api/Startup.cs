@@ -319,15 +319,15 @@ namespace Pims.Api
                 options.RoutePrefix = this.Configuration.GetValue<string>("Swagger:RoutePrefix");
             });
 
-            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
-            app.UseMiddleware(typeof(ResponseTimeMiddleware));
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<ResponseTimeMiddleware>();
+            app.UseMiddleware<LogRequestMiddleware>();
+            app.UseMiddleware<LogResponseMiddleware>();
 
             //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors();
-
-            app.UseMiddleware(typeof(LogRequestMiddleware));
 
             app.UseAuthentication();
             app.UseAuthorization();
