@@ -1,7 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Review Approve Step renders correctly 1`] = `
-.c2 {
+.c2 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c2 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c2 span {
+  padding: 0;
+}
+
+.c3 {
   font-size: 12px;
   margin-top: -100px;
   max-width: 16.7%;
@@ -906,7 +924,7 @@ exports[`Review Approve Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c2 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -980,7 +998,7 @@ exports[`Review Approve Step renders correctly 1`] = `
           </svg>
         </h3>
         <div
-          class="ProjectNotes form-row"
+          class="c2 ProjectNotes form-row"
         >
           <div
             class="col-md-12 reviewRequired form-group col"
@@ -998,7 +1016,7 @@ exports[`Review Approve Step renders correctly 1`] = `
             />
           </div>
           <div
-            class="c2"
+            class="c3"
           >
             Please include the date the appraisal was completed
           </div>
@@ -1066,7 +1084,7 @@ exports[`Review Approve Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c2 ProjectNotes form-row"
     >
       <div
         class="col-md-12 reviewRequired form-group col"
@@ -1088,7 +1106,7 @@ exports[`Review Approve Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c2 ProjectNotes form-row"
     >
       <div
         class="col-md-12 reviewRequired form-group col"
@@ -1124,7 +1142,7 @@ exports[`Review Approve Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c2 ProjectNotes form-row"
     >
       <div
         class="col-md-12 reviewRequired form-group col"
@@ -1160,7 +1178,7 @@ exports[`Review Approve Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c2 ProjectNotes form-row"
     >
       <div
         class="col-md-12 reviewRequired form-group col"

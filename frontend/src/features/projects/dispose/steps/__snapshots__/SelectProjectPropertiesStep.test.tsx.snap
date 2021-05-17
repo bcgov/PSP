@@ -1,13 +1,148 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Select Project Properties Step renders correctly 1`] = `
+.c1 .filter-bar {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 1rem 1rem;
+}
+
+.c1 .filter-bar .bar-item .form-group {
+  padding: 0;
+  margin: 0;
+}
+
+.c1 .filter-bar .bar-item .input-group {
+  display: block;
+}
+
+.c1 .filter-bar .btn-warning {
+  color: white;
+  font-weight: bold;
+}
+
+.c1 .filter-bar .form-control {
+  border-radius: 0;
+}
+
+.c3 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c3 span {
+  padding: 0;
+}
+
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .small-filter .btn-link:focus,
+.c0 .small-filter .btn-link:active {
+  background: none !important;
+}
+
+.c0 .PropertyListViewSelect {
+  margin-bottom: 3rem;
+  padding: 0;
+}
+
+.c0 .PropertyListViewSelect .btn {
+  margin-bottom: 0.5rem;
+}
+
+.c0 .no-rows-message {
+  font-size: 14px;
+}
+
+.c0 .filter-container {
+  padding: 0;
+}
+
+.c0 .filter-container .map-filter-bar {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.c0 .filter-container .map-filter-bar .bar-item .form-group {
+  padding: 0;
+  margin: 0;
+}
+
+.c0 .filter-container .map-filter-bar .btn-warning {
+  color: white;
+  font-weight: bold;
+}
+
+.c0 .filter-container .map-filter-bar .form-control {
+  border-radius: 0;
+}
+
+.c0 .TableToolbar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  padding: 0.5rem 0;
+}
+
+.c0 .ScrollContainer {
+  padding: 1rem 0;
+  overflow-x: auto;
+  overflow-y: inherit;
+}
+
+.c0 .ScrollContainer table {
+  background-color: #fff;
+}
+
+.c0 .ScrollContainer .selected {
+  background-color: accentColor;
+}
+
+.c0 .DisposeForm {
+  padding: 1rem 3rem;
+}
+
+.c0 .invalid-feedback {
+  text-align: right;
+}
+
+.c2 {
   margin-left: 0.5rem;
   margin-bottom: 0.2rem;
 }
 
 <div
-  class="SelectProjectProperties container-fluid"
+  class="c0 SelectProjectProperties container-fluid"
 >
   <h3
     class="mr-auto"
@@ -25,7 +160,7 @@ exports[`Select Project Properties Step renders correctly 1`] = `
         novalidate=""
       >
         <div
-          class="filter-bar form-row"
+          class="c1 filter-bar form-row"
         >
           <div
             class="bar-item col"
@@ -216,7 +351,7 @@ exports[`Select Project Properties Step renders correctly 1`] = `
       Show
        
       <button
-        class="c0 btn btn-link"
+        class="c2 btn btn-link"
         style="color: rgb(26, 90, 150);"
         type="button"
       >
@@ -226,7 +361,7 @@ exports[`Select Project Properties Step renders correctly 1`] = `
       |
        
       <button
-        class="c0 btn btn-link"
+        class="c2 btn btn-link"
         type="button"
       >
         All
@@ -720,7 +855,7 @@ exports[`Select Project Properties Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c3 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"

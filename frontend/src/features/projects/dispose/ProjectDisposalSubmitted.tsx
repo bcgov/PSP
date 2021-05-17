@@ -1,9 +1,19 @@
-import './ProjectDisposalSubmitted.scss';
-
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as React from 'react';
 import { Container } from 'react-bootstrap';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import styled from 'styled-components';
+
 import StepStatusIcon from '../common/components/StepStatusIcon';
+
+const ProjectDisposalSubmittedContainer = styled(Container)`
+  padding-top: 5rem;
+  p:first-of-type {
+    margin-top: 5rem;
+  }
+  p {
+    text-align: left;
+  }
+`;
 
 /**
  * Display success message after all project disposal steps are completed successfully.
@@ -11,7 +21,7 @@ import StepStatusIcon from '../common/components/StepStatusIcon';
 export const ProjectDisposalSubmitted = () => {
   const keycloak = useKeycloakWrapper();
   return (
-    <Container className="ProjectDisposalSubmitted">
+    <ProjectDisposalSubmittedContainer className="ProjectDisposalSubmitted">
       <StepStatusIcon
         preIconLabel={`Thank you, ${keycloak.displayName ?? 'Pims User'}`}
         postIconLabel={'Application Successfully Submitted'}
@@ -26,7 +36,7 @@ export const ProjectDisposalSubmitted = () => {
         </a>
       </p>
       <p>You may check the status of your application under "View Projects"</p>
-    </Container>
+    </ProjectDisposalSubmittedContainer>
   );
 };
 

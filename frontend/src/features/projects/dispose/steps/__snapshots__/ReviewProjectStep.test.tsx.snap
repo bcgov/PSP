@@ -1,6 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
+.c1 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c1 span {
+  padding: 0;
+}
+
 .c0 {
   padding-left: 10px;
 }
@@ -850,7 +868,7 @@ exports[`renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="ProjectNotes form-row"
+      className="c1 ProjectNotes form-row"
     >
       <div
         className="col-md-10 form-group col"
@@ -876,7 +894,7 @@ exports[`renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="ProjectNotes form-row"
+      className="c1 ProjectNotes form-row"
     >
       <div
         className="col-md-10 form-group col"

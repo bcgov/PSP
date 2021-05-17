@@ -1,6 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Land Form component renders correctly 1`] = `
+.c7 {
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.c7 div {
+  border: solid 2px accentColor;
+  border-radius: 2rem;
+  display: inline-block;
+  background-color: white;
+}
+
+.c7 svg {
+  color: sresIconColor;
+  margin: 0.5rem;
+}
+
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -15,7 +33,7 @@ exports[`Land Form component renders correctly 1`] = `
   align-content: center;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -152,7 +170,7 @@ exports[`Land Form component renders correctly 1`] = `
   bottom: -20px;
 }
 
-.c8 {
+.c9 {
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
@@ -945,7 +963,7 @@ exports[`Land Form component renders correctly 1`] = `
               class="c6"
             >
               <div
-                class="SresManual"
+                class="c7 SresManual"
               >
                 <div>
                   <svg
@@ -969,13 +987,13 @@ exports[`Land Form component renders correctly 1`] = `
                 </div>
               </div>
               <small
-                class="c7 p-1 mr-2"
+                class="c8 p-1 mr-2"
               >
                 Inventory Policy
               </small>
             </div>
             <span
-              class="c8"
+              class="c9"
             />
             <button
               class="btn btn-primary btn-sm"

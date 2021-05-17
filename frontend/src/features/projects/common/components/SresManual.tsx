@@ -1,6 +1,23 @@
 import * as React from 'react';
 import { FiBookOpen } from 'react-icons/fi';
-import './SresManual.scss';
+import styled from 'styled-components';
+import variables from '_variables.module.scss';
+
+const SresManualDiv = styled.div`
+  text-align: center;
+  cursor: pointer;
+  div {
+    border: solid 2px ${variables.accentColor};
+    border-radius: 2rem;
+    display: inline-block;
+    background-color: white;
+  }
+  svg {
+    color: ${variables.sresIconColor};
+    margin: 0.5rem;
+  }
+  font-size: 10px;
+`;
 
 interface ISresManualProps {
   clickUrl?: string;
@@ -15,7 +32,7 @@ export const SresManual: React.FunctionComponent<ISresManualProps> = ({
     clickUrl ??
     'https://intranet.gov.bc.ca/assets/intranet/mtics/real-property/sres/process_manual_for_the_surplus_properties_program_-_feb_2020_-_version_2.pdf?';
   return (
-    <div className="SresManual" onClick={() => window.open(link, '_blank')}>
+    <SresManualDiv className="SresManual" onClick={() => window.open(link, '_blank')}>
       <div>
         <FiBookOpen size={28} />
       </div>
@@ -25,7 +42,7 @@ export const SresManual: React.FunctionComponent<ISresManualProps> = ({
           for the Surplus <br /> Properties Program
         </p>
       )}
-    </div>
+    </SresManualDiv>
   );
 };
 

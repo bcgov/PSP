@@ -1,5 +1,3 @@
-import './ProjectDisposalSubmitted.scss';
-
 import * as React from 'react';
 import { Container } from 'react-bootstrap';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';

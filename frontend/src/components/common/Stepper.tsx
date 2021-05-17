@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
 import classNames from 'classnames';
+import React, { Fragment } from 'react';
 import { FaCheck } from 'react-icons/fa';
-import './Stepper.scss';
 import { ObjectSchema } from 'yup';
 
 export interface IStep {

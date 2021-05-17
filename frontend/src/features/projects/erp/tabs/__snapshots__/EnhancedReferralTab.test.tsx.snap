@@ -1,7 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EnhancedReferralTab renders correctly 1`] = `
-.c0 {
+.c0 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c0 span {
+  padding: 0;
+}
+
+.c1 {
   margin: 0.75rem 2rem 0.75rem 2rem;
 }
 
@@ -193,7 +211,7 @@ exports[`EnhancedReferralTab renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="ProjectNotes form-row"
+      className="c0 ProjectNotes form-row"
     >
       <div
         className="col-md-12 reviewRequired form-group col"
@@ -546,7 +564,7 @@ exports[`EnhancedReferralTab renders correctly 1`] = `
         className="col"
       >
         <div
-          className="ProjectNotes form-row"
+          className="c0 ProjectNotes form-row"
         >
           <div
             className="col form-group col"
@@ -694,7 +712,7 @@ exports[`EnhancedReferralTab renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="c0"
+      className="c1"
     >
       OR
     </div>
@@ -763,7 +781,25 @@ exports[`EnhancedReferralTab renders correctly 1`] = `
 `;
 
 exports[`EnhancedReferralTab renders correctly when approved for exemption 1`] = `
-.c0 {
+.c0 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c0 span {
+  padding: 0;
+}
+
+.c1 {
   margin: 0.75rem 2rem 0.75rem 2rem;
 }
 
@@ -955,7 +991,7 @@ exports[`EnhancedReferralTab renders correctly when approved for exemption 1`] =
       </div>
     </div>
     <div
-      className="ProjectNotes form-row"
+      className="c0 ProjectNotes form-row"
     >
       <div
         className="col-md-12 reviewRequired form-group col"
@@ -1308,7 +1344,7 @@ exports[`EnhancedReferralTab renders correctly when approved for exemption 1`] =
         className="col"
       >
         <div
-          className="ProjectNotes form-row"
+          className="c0 ProjectNotes form-row"
         >
           <div
             className="col form-group col"
@@ -1456,7 +1492,7 @@ exports[`EnhancedReferralTab renders correctly when approved for exemption 1`] =
       </div>
     </div>
     <div
-      className="c0"
+      className="c1"
     >
       OR
     </div>

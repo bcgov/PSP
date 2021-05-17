@@ -12,6 +12,24 @@ exports[`GRE Transfer Step renders correctly 1`] = `
   font-family: 'BCSans',Fallback,sans-serif;
 }
 
+.c4 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c4 span {
+  padding: 0;
+}
+
 .c3 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -610,7 +628,7 @@ exports[`GRE Transfer Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-12 form-group col"
@@ -632,7 +650,7 @@ exports[`GRE Transfer Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-12 form-group col"
@@ -668,7 +686,7 @@ exports[`GRE Transfer Step renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-12 form-group col"

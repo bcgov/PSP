@@ -1,6 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Building Form component renders correctly 1`] = `
+.c10 {
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.c10 div {
+  border: solid 2px accentColor;
+  border-radius: 2rem;
+  display: inline-block;
+  background-color: white;
+}
+
+.c10 svg {
+  color: sresIconColor;
+  margin: 0.5rem;
+}
+
 .c9 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -15,7 +33,7 @@ exports[`Building Form component renders correctly 1`] = `
   align-content: center;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -174,7 +192,7 @@ exports[`Building Form component renders correctly 1`] = `
   bottom: -20px;
 }
 
-.c11 {
+.c12 {
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
@@ -908,7 +926,7 @@ exports[`Building Form component renders correctly 1`] = `
               class="c9"
             >
               <div
-                class="SresManual"
+                class="c10 SresManual"
               >
                 <div>
                   <svg
@@ -932,13 +950,13 @@ exports[`Building Form component renders correctly 1`] = `
                 </div>
               </div>
               <small
-                class="c10 p-1 mr-2"
+                class="c11 p-1 mr-2"
               >
                 Inventory Policy
               </small>
             </div>
             <span
-              class="c11"
+              class="c12"
             />
             <button
               class="btn btn-primary btn-sm"

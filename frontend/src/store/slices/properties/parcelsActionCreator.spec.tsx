@@ -1,7 +1,6 @@
 import { useProperties } from './useProperties';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as genericActions from 'actions/genericActions';
 import * as API from 'constants/API';
 import { IParcelDetailParams } from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
@@ -10,18 +9,20 @@ import { renderHook } from '@testing-library/react-hooks';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { mockBuilding } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
 import {
+  mockBuilding,
   mockBuildingDetail,
   mockParcel,
   mockParcelDetail,
   mockProperty,
 } from 'mocks/filterDataMock';
+import { networkSlice } from '../network/networkSlice';
+import { find } from 'lodash';
 
 const dispatch = jest.fn();
-const requestSpy = jest.spyOn(genericActions, 'request');
-const successSpy = jest.spyOn(genericActions, 'success');
-const errorSpy = jest.spyOn(genericActions, 'error');
+const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 beforeEach(() => {
@@ -52,8 +53,12 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchParcels(null)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
                 type: 'properties/storeParcels',
@@ -74,8 +79,10 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchParcels(null)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: mockResponse,
                 type: 'properties/storeParcels',
@@ -98,8 +105,12 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchParcelDetail(params)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: { position: undefined, property: mockResponse },
                 type: 'properties/storeParcelDetail',
@@ -121,8 +132,10 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchParcelDetail(params)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: { position: undefined, property: mockResponse },
                 type: 'properties/storeParcelDetail',
@@ -146,8 +159,12 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchBuildingDetail(params)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: { position: undefined, property: mockResponse },
                 type: 'STORE_BUILDING_DETAILS',
@@ -169,8 +186,10 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchBuildingDetail(params)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: { position: undefined, property: mockResponse },
                 type: 'STORE_BUILDING_DETAILS',
@@ -194,8 +213,12 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchParcelDetail(params)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: { position: undefined, property: mockResponse },
                 type: 'properties/storeParcelDetail',
@@ -217,8 +240,12 @@ describe('useProperties functions', () => {
           useProperties()
             .fetchPropertyDetail(1, 1, undefined)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: { position: undefined, property: mockResponse },
                 type: 'properties/storeBuildingDetail',
@@ -241,8 +268,12 @@ describe('useProperties functions', () => {
           useProperties()
             .createParcel(mockParcel)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
                 type: 'properties/storeParcelDetail',
@@ -263,8 +294,10 @@ describe('useProperties functions', () => {
           useProperties()
             .createParcel(mockParcel)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: mockResponse,
                 type: 'STORE_BUILDING_DETAILS',
@@ -288,8 +321,12 @@ describe('useProperties functions', () => {
           useProperties()
             .updateParcel(mockParcel)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
                 type: 'properties/storeParcelDetail',
@@ -311,8 +348,10 @@ describe('useProperties functions', () => {
           useProperties()
             .updateParcel(mockParcel)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: mockResponse,
                 type: 'properties/storeParcelDetail',
@@ -336,8 +375,12 @@ describe('useProperties functions', () => {
           useProperties()
             .deleteParcel(mockParcel)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: null,
                 type: 'properties/storeParcelDetail',
@@ -358,8 +401,10 @@ describe('useProperties functions', () => {
           useProperties()
             .deleteParcel(mockParcel)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: null,
                 type: 'properties/storeParcelDetail',
@@ -381,8 +426,12 @@ describe('useProperties functions', () => {
           useProperties()
             .deleteBuilding(mockBuilding)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: null,
                 type: 'properties/storeParcelDetail',
@@ -402,8 +451,10 @@ describe('useProperties functions', () => {
           useProperties()
             .deleteBuilding(mockBuilding)
             .catch(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: null,
                 type: 'properties/storeParcelDetail',
