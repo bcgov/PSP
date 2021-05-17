@@ -1,7 +1,8 @@
 import React from 'react';
 import EmptyLayout from './EmptyLayout';
 import { act, render } from '@testing-library/react';
-import { TenantProvider } from 'tenants';
+import { TenantConsumer, TenantProvider } from 'tenants';
+import { ThemeProvider } from 'styled-components';
 
 const mockGetVersion = jest.fn(async () => {
   return Promise.resolve({
@@ -25,7 +26,13 @@ describe('Empty Layout', () => {
     await act(async () => {
       const { container } = render(
         <TenantProvider>
-          <EmptyLayout></EmptyLayout>
+          <TenantConsumer>
+            {({ tenant }) => (
+              <ThemeProvider theme={{ tenant, css: {} }}>
+                <EmptyLayout></EmptyLayout>
+              </ThemeProvider>
+            )}
+          </TenantConsumer>
         </TenantProvider>,
       );
       expect(container).toMatchSnapshot();

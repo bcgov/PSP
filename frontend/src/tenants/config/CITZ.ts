@@ -18,6 +18,7 @@ export const config: ITenantConfig = {
       heading: 'PIMS enables you to search properties owned by the Government of British Columbia',
       body:
         'The data provided can assist your agency in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.',
+      backgroundImage: '/tenants/CITZ/background-image.png',
     },
   },
 };

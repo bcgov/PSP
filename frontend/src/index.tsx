@@ -19,30 +19,40 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import EmptyLayout from 'layouts/EmptyLayout';
 import LoginLoading from 'features/account/LoginLoading';
 import { store } from 'store/store';
-import { TenantProvider } from 'tenants';
+import { TenantConsumer, TenantProvider } from 'tenants';
+import { ThemeProvider } from 'styled-components';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+const css = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!./_variables.scss');
 
 //@ts-ignore
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
     <TenantProvider>
-      <ReactKeycloakProvider
-        authClient={keycloak}
-        LoadingComponent={
-          <EmptyLayout>
-            <LoginLoading />
-          </EmptyLayout>
-        }
-        onEvent={getKeycloakEventHandler(keycloak)}
-      >
-        <Provider store={store}>
-          <AuthStateContextProvider>
-            <Router>
-              <App />
-            </Router>
-          </AuthStateContextProvider>
-        </Provider>
-      </ReactKeycloakProvider>
+      <TenantConsumer>
+        {({ tenant }) => (
+          <ThemeProvider theme={{ tenant, css }}>
+            <ReactKeycloakProvider
+              authClient={keycloak}
+              LoadingComponent={
+                <EmptyLayout>
+                  <LoginLoading />
+                </EmptyLayout>
+              }
+              onEvent={getKeycloakEventHandler(keycloak)}
+            >
+              <Provider store={store}>
+                <AuthStateContextProvider>
+                  <Router>
+                    <App />
+                  </Router>
+                </AuthStateContextProvider>
+              </Provider>
+            </ReactKeycloakProvider>
+          </ThemeProvider>
+        )}
+      </TenantConsumer>
     </TenantProvider>
   );
 };

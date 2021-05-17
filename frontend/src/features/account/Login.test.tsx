@@ -1,41 +1,58 @@
 import React from 'react';
-import { createMemoryHistory } from 'history';
+import { createMemoryHistory, MemoryHistory } from 'history';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 import { useKeycloak } from '@react-keycloak/web';
 import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
+import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import Login from './Login';
 import { Provider } from 'react-redux';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
-import { TenantProvider } from 'tenants';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { TenantConsumer, TenantProvider } from 'tenants';
+import { ThemeProvider } from 'styled-components';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
 
-const store = mockStore({
+const defaultStore = mockStore({
   [networkSlice.name]: {
     [ADD_ACTIVATE_USER]: {},
   },
 });
 
+const TestLogin = ({
+  history,
+  store,
+}: {
+  history: MemoryHistory<unknown>;
+  store?: MockStoreEnhanced<unknown, {}>;
+}) => {
+  return (
+    <TenantProvider>
+      <TenantConsumer>
+        {({ tenant }) => (
+          <ThemeProvider theme={{ tenant, css: {} }}>
+            <Provider store={store ?? defaultStore}>
+              <Router history={history}>
+                <Login />
+              </Router>
+            </Provider>
+          </ThemeProvider>
+        )}
+      </TenantConsumer>
+    </TenantProvider>
+  );
+};
+
 //boilerplate function used by most tests to wrap the Login component with a router.
 const renderLogin = () => {
   process.env.REACT_APP_TENANT = 'CITZ';
   const history = createMemoryHistory();
-  return render(
-    <TenantProvider>
-      <Provider store={store}>
-        <Router history={history}>
-          <Login />
-        </Router>
-      </Provider>
-    </TenantProvider>,
-  );
+  return render(<TestLogin history={history} />);
 };
 
 describe('login', () => {
@@ -46,17 +63,7 @@ describe('login', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     process.env.REACT_APP_TENANT = 'MOTI';
     const history = createMemoryHistory();
-    const tree = renderer
-      .create(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Login></Login>
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      )
-      .toJSON();
+    const tree = renderer.create(<TestLogin history={history} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -66,16 +73,7 @@ describe('login', () => {
       keycloak: { authenticated: true, userInfo: { groups: ['System Administrator'] } },
     });
     const history = createMemoryHistory();
-
-    render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Login />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
+    render(<TestLogin history={history} />);
     expect(history.location.pathname).toBe('/mapview');
   });
 
@@ -97,15 +95,7 @@ describe('login', () => {
       },
     });
 
-    render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Login />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
+    render(<TestLogin history={history} store={store} />);
     expect(history.location.pathname).toBe('/access/request');
   });
 
