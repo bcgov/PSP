@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import StepStatusIcon from '../common/components/StepStatusIcon';
 
-const ProjectDisposalSubmittedContainer = styled(Container)`
+export const ProjectDisposalSubmittedContainer = styled(Container)`
   padding-top: 5rem;
   p:first-of-type {
     margin-top: 5rem;

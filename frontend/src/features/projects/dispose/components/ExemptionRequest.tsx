@@ -4,6 +4,7 @@ import { Check } from 'components/common/form';
 import { TextArea } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { useFormikContext, getIn } from 'formik';
+import styled from 'styled-components';
 
 export interface IProjectExemptionProps {
   /** the label of the ExemptionRequest checkbox */
@@ -58,7 +59,7 @@ export default function ExemptionRequest({
           <p>
             <i>{rationaleInstruction ?? 'Provide Rationale'}</i>
           </p>
-          <Form.Row className="ProjectExemptionRequestRationale">
+          <ExemptionRequestRow className="ProjectExemptionRequestRationale">
             <TextArea
               label={'Rationale'}
               field={rationaleField}
@@ -66,9 +67,22 @@ export default function ExemptionRequest({
               outerClassName="col-md-10"
               readOnly={submissionStep ? false : true}
             />
-          </Form.Row>
+          </ExemptionRequestRow>
         </>
       )}
     </React.Fragment>
   );
 }
+
+const ExemptionRequestRow = styled(Form.Row)`
+  .form-group {
+    display: flex;
+  }
+  .form-label {
+    flex: 0 0 16.7%;
+    max-width: 16.7%;
+  }
+  span {
+    padding: 0;
+  }
+`;
