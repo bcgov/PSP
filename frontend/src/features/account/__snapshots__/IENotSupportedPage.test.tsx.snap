@@ -6,6 +6,7 @@ exports[`login error page login error page renders correctly 1`] = `
 >
   <br />
   <h1>
+    PIMS
      does not support Internet Explorer
   </h1>
   <br />

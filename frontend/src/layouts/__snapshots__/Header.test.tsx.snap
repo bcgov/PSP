@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tenant Header Header CITZ background 1`] = `
+.c0 {
+  background-color: #003366;
+  border: none;
+  border-bottom: 2px solid $accent-color;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div>
+  <header
+    class="c0"
+  />
+</div>
+`;
+
+exports[`Tenant Header Header MOTI background 1`] = `
+.c0 {
+  background-color: #003366;
+  border: none;
+  border-bottom: 2px solid $accent-color;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div>
+  <header
+    class="c0"
+  />
+</div>
+`;
+
+exports[`Tenant Header Header black background 1`] = `
+.c0 {
+  background-color: black;
+  border: none;
+  border-bottom: 2px solid $accent-color;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div>
+  <header
+    class="c0"
+  />
+</div>
+`;
+
+exports[`Tenant Header Header default background 1`] = `
+.c0 {
+  background-color: #003366;
+  border: none;
+  border-bottom: 2px solid $accent-color;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+<div>
+  <header
+    class="c0"
+  />
+</div>
+`;

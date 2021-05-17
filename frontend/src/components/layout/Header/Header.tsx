@@ -1,5 +1,3 @@
-import './Header.scss';
-
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -10,11 +8,12 @@ import { FaBomb } from 'react-icons/fa';
 import _ from 'lodash';
 import { UserProfile } from './UserProfile';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import styled from 'styled-components';
 import { useTenant } from 'tenants';
 import { ErrorModal } from './ErrorModal';
 import { Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
+import { HeaderStyled } from './HeaderStyled';
+import { VerticalBar } from 'components/common/VerticalBar';
 
 /**
  * A header component that includes the navigation bar.
@@ -44,7 +43,7 @@ export const Header = () => {
     return errors;
   });
   return (
-    <Navbar expand className="App-header">
+    <HeaderStyled expand className="App-header">
       <Navbar.Brand className="brand-box">
         <a target="_blank" rel="noopener noreferrer" href="https://www2.gov.bc.ca/gov/content/home">
           <BCGovLogo />
@@ -65,7 +64,7 @@ export const Header = () => {
         ) : null}
       </Nav>
       <ErrorModal errors={errors} show={show} setShow={setShow}></ErrorModal>
-    </Navbar>
+    </HeaderStyled>
   );
 };
 
@@ -76,15 +75,5 @@ export const Header = () => {
  */
 const isNetworkError = (action: any): action is IGenericNetworkAction =>
   (action as IGenericNetworkAction).type === 'ERROR';
-
-/**
- * Styled component returns a vertical bar.
- */
-const VerticalBar = styled.span`
-  border-left: 2px solid white;
-  font-size: 34px;
-  margin: 0 15px 0 25px;
-  vertical-align: top;
-`;
 
 export default Header;

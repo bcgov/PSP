@@ -1,6 +1,12 @@
-@import '../../../fonts.scss';
+import { Navbar } from 'react-bootstrap';
+import styled from 'styled-components';
 
-.App-header.navbar {
+/**
+ * Styled component provides consistent css for the page header.
+ * Used by different layouts.
+ * Displays the page header background, title, and logo.
+ */
+export const HeaderStyled = styled(Navbar)`
   padding: 0 10px;
   min-height: 70px;
   color: #ffffff;
@@ -41,14 +47,13 @@
       cursor: pointer;
     }
   }
-}
-.modal-content .label {
-  font-weight: 700;
-}
 
-// show long App Name when space allows
-@media (min-width: 992px) {
-  .App-header.navbar {
+  .modal-content .label {
+    font-weight: 700;
+  }
+
+  // show long App Name when space allows
+  @media (min-width: 992px) {
     .longAppName {
       display: block;
       text-align: left;
@@ -58,4 +63,6 @@
       display: none;
     }
   }
-}
+`;
+
+export default HeaderStyled;

@@ -6,6 +6,7 @@ import { defaultTenant, ITenantConfig } from '..';
 export const config: ITenantConfig = {
   ...defaultTenant,
   ...{
+    id: 'CITZ',
     title: 'Property Inventory Management System',
     logo: {
       favicon: '/tenants/CITZ/favicon.ico',
