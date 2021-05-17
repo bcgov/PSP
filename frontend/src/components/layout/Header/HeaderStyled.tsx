@@ -2,7 +2,9 @@ import { Navbar } from 'react-bootstrap';
 import styled from 'styled-components';
 
 /**
- * Styled header component.
+ * Styled component provides consistent css for the page header.
+ * Used by different layouts.
+ * Displays the page header background, title, and logo.
  */
 export const HeaderStyled = styled(Navbar)`
   padding: 0 10px;
