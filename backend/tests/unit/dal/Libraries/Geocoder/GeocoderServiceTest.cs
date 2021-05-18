@@ -1,19 +1,20 @@
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Core.Exceptions;
 using Pims.Core.Http;
-using Pims.Core.Http.Models;
 using Pims.Core.Test;
+using Pims.Geocoder;
+using Pims.Geocoder.Configuration;
+using Pims.Geocoder.Models;
+using Pims.Geocoder.Parameters;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace Pims.Dal.Test.Libraries.Ches
+namespace Pims.Dal.Test.Libraries.Geocoder
 {
     [Trait("category", "unit")]
     [Trait("category", "geocoder")]
@@ -21,7 +22,264 @@ namespace Pims.Dal.Test.Libraries.Ches
     [ExcludeFromCodeCoverage]
     public class GeocoderServiceTest
     {
-        #region Tests
+        #region Constructors
+        [Fact]
+        public void GeocoderService_Constructur_WithKey()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+
+            // Act
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+
+            // Assert
+            service.Options.Should().NotBeNull();
+            service.Options.Key.Should().Be("test");
+        }
+
+        [Fact]
+        public void GeocoderService_Constructur_WithoutKey()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions());
+
+            // Act
+            var service = helper.Create<GeocoderService>(options);
+
+            // Assert
+            service.Options.Should().NotBeNull();
+            service.Options.Key.Should().BeNull();
+        }
+        #endregion
+
+        #region GetSiteAddressesAsync
+        [Fact]
+        public async Task GetSiteAddressesAsync_StringAddress_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Sites = {
+                    AddressesUrl = "/addresses"
+                },
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureCollectionModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureCollectionModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+
+            // Act
+            var result = await service.GetSiteAddressesAsync("address");
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/addresses?Ver=1.2&AddressString=address&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+
+        [Fact]
+        public async Task GetSiteAddressesAsync_StringAddress_Encoding_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureCollectionModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureCollectionModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+
+            // Act
+            var result = await service.GetSiteAddressesAsync("address with encoding");
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/addresses.json?Ver=1.2&AddressString=address%2Bwith%2Bencoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+
+        [Fact]
+        public async Task GetSiteAddressesAsync_StringAddress_Format_Encoding_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureCollectionModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureCollectionModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+
+            // Act
+            var result = await service.GetSiteAddressesAsync("address with encoding", "xml");
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/addresses.xml?Ver=1.2&AddressString=address%2Bwith%2Bencoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+
+        [Fact]
+        public async Task GetSiteAddressesAsync_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureCollectionModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureCollectionModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+            var parameters = new AddressesParameters()
+            {
+                AddressString = "address with encoding"
+            };
+
+            // Act
+            var result = await service.GetSiteAddressesAsync(parameters);
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/addresses.json?Ver=1.2&AddressString=address%20with%20encoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+
+        [Fact]
+        public async Task GetSiteAddressesAsync_Format_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureCollectionModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureCollectionModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+            var parameters = new AddressesParameters()
+            {
+                AddressString = "address with encoding"
+            };
+
+            // Act
+            var result = await service.GetSiteAddressesAsync(parameters, "xml");
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/addresses.xml?Ver=1.2&AddressString=address%20with%20encoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+        #endregion
+
+        #region GetPids
+        [Fact]
+        public async Task GetPids_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var sitePids = new SitePidsResponseModel();
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<SitePidsResponseModel>(It.IsAny<Uri>())).ReturnsAsync(sitePids);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+            var guid = new Guid("c6441436-8f28-470e-a0bd-7856c06d1ae7");
+
+            // Act
+            var result = await service.GetPids(guid);
+
+            // Assert
+            var uri = new Uri("https://geocoder.api.gov.bc.ca/parcels/pids/c6441436-8f28-470e-a0bd-7856c06d1ae7.json");
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<SitePidsResponseModel>(uri), Times.Once());
+            result.Should().Be(sitePids);
+        }
+
+        [Fact]
+        public async Task GetPids_Format_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var sitePids = new SitePidsResponseModel();
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<SitePidsResponseModel>(It.IsAny<Uri>())).ReturnsAsync(sitePids);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+            var guid = new Guid("c6441436-8f28-470e-a0bd-7856c06d1ae7");
+
+            // Act
+            var result = await service.GetPids(guid, "xml");
+
+            // Assert
+            var uri = new Uri("https://geocoder.api.gov.bc.ca/parcels/pids/c6441436-8f28-470e-a0bd-7856c06d1ae7.xml");
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<SitePidsResponseModel>(uri), Times.Once());
+            result.Should().Be(sitePids);
+        }
         #endregion
     }
 }

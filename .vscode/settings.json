@@ -41,5 +41,9 @@
       "username": "sa"
     }
   ],
-  "cSpell.words": ["keycloak", "pims"]
+  "cSpell.words": [
+    "Xunit",
+    "keycloak",
+    "pims"
+  ]
 }
