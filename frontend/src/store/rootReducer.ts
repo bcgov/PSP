@@ -19,6 +19,7 @@ import keycloakReadySlice from 'store/slices/keycloakReady/keycloakReadySlice';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import mapViewZoomSlice from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSlice';
+import { tenantsSlice } from './slices/tenants';
 
 export const reducer = {
   loadingBar: loadingBarReducer,
@@ -42,4 +43,5 @@ export const reducer = {
   [keycloakReadySlice.name]: keycloakReadySlice.reducer,
   [mapViewZoomSlice.name]: mapViewZoomSlice.reducer,
   [propertyNameSlice.name]: propertyNameSlice.reducer,
+  [tenantsSlice.name]: tenantsSlice.reducer,
 };

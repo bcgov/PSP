@@ -55,7 +55,7 @@ const HelpModalContentContainer: React.FunctionComponent<IHelpModalContentContai
         helpPage={helpPage}
       ></HelpBox>
       <hr></hr>
-      <h5>Submit a</h5>
+      <h5>Submit</h5>
       <HelpSubmitBox
         user={displayName ?? ''}
         email={email ?? ''}

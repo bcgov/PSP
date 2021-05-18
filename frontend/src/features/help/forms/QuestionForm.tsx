@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 import { Form } from 'react-bootstrap';
 import { Input, TextArea } from 'components/common/form';
 import { noop } from 'lodash';
-import { pimsSupportEmail } from '../constants/HelpText';
 import { IHelpForm } from '../interfaces';
 
 interface QuestionFormProps {
@@ -12,6 +11,7 @@ interface QuestionFormProps {
   /** Call this function whenever the form fields are updated to keep the mailto in sync with this form */
   setMailto: Function;
 }
+
 interface IQuestionForm extends IHelpForm {
   question: string;
 }
@@ -34,8 +34,10 @@ const QuestionForm: React.FunctionComponent<QuestionFormProps> = ({ formValues, 
       onSubmit={noop}
       validateOnMount={true}
       validate={(values: any) => {
-        const body = values.question;
-        const mailto = `mailto:${pimsSupportEmail}?subject=Question - ${formValues.page}&body=${body}`;
+        const mailto = {
+          subject: `Question - ${formValues.page}`,
+          body: values.question,
+        };
         setMailto(mailto);
       }}
     >
