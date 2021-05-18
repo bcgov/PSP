@@ -31,7 +31,6 @@ TARGET=${TARGET:-dev}
 SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY:-pims-api-${TARGET}}
 SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME:-PIMS Backend [${TARGET}]}
 SONAR_URL=${SONAR_URL:-https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca}
-SONAR_TOKEN=${SONAR_TOKEN:-872c1fef72c4d4fff20bb98aacdd0df95e6cc43b}
 
 BACKEND_DIR="${BACKEND_DIR:-../../../backend}"
 TEST_DIR="${TEST_DIR:-${BACKEND_DIR}/tests/unit}"
@@ -114,4 +113,3 @@ display_helper "${CMD_SONAR_BEGIN}" "${CMD_BUILD}" "dotnet test" "${CMD_SONAR_EN
 #
 # The final `coverage.opencover.xml` is the one we want
 # -----------------------------------------------------------------------------------------
-exec $SHELL;
