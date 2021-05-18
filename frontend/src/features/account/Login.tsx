@@ -1,4 +1,3 @@
-import './Login.scss';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button, Spinner, Jumbotron } from 'react-bootstrap';
@@ -10,6 +9,7 @@ import { useTenant, Logo } from 'tenants';
 import { NEW_PIMS_USER } from 'store/slices/users';
 import { useAppSelector } from 'store/hooks';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { LoginStyled } from './LoginStyled';
 
 /**
  * Login component provides information and links for the user to login.
@@ -40,7 +40,7 @@ const Login = () => {
   }
 
   return (
-    <Container className="login" fluid={true}>
+    <LoginStyled className="login" fluid={true}>
       <Container className="unauth" fluid={true}>
         <Logo withText={true} />
         <Row className="sign-in">
@@ -90,7 +90,7 @@ const Login = () => {
           <Col xs={1} md={3} />
         </Row>
       </Container>
-    </Container>
+    </LoginStyled>
   );
 };
 

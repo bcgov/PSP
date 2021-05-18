@@ -21,9 +21,9 @@ const FooterStyled = styled.footer<IFooterProps>`
   background-color: ${props => props.backgroundColor};
 
   // colors
-  background-color: $primary-color;
+  background-color: ${props => props.theme.css.primaryColor};
   border: none;
-  border-top: 2px solid $accent-color;
+  border-top: 2px solid ${props => props.theme.css.accentColor};
 
   // sizing
   flex-shrink: 0;

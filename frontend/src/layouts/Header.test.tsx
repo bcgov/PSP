@@ -1,8 +1,9 @@
 import React from 'react';
 import { act, render } from '@testing-library/react';
-import { TenantProvider, ITenantConfig, defaultTenant, config } from 'tenants';
+import { TenantProvider, ITenantConfig, defaultTenant, config, TenantConsumer } from 'tenants';
 import { useTenant } from 'tenants/useTenant';
 import { Header } from './Header';
+import { ThemeProvider } from 'styled-components';
 
 jest.mock('tenants/useTenant');
 const mockUseTenant = useTenant as jest.Mock<ITenantConfig>;
@@ -16,7 +17,13 @@ global.fetch = jest.fn(
 const testRender = () =>
   render(
     <TenantProvider>
-      <Header />
+      <TenantConsumer>
+        {({ tenant }) => (
+          <ThemeProvider theme={{ tenant, css: {} }}>
+            <Header />
+          </ThemeProvider>
+        )}
+      </TenantConsumer>
     </TenantProvider>,
   );
 

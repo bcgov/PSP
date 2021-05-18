@@ -23,6 +23,8 @@ export interface ITenantLoginConfig {
   heading: string;
   // Body of the login page.
   body: string;
+  // Path to the background image for the login page.
+  backgroundImage?: string;
 }
 
 export interface ITenantLogoConfig {

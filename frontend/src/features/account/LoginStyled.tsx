@@ -1,10 +1,17 @@
-@import '../../styles.scss';
-@import '../../colors.scss';
-@import '../../variables.scss';
+import { Container } from 'react-bootstrap';
+import styled from 'styled-components';
 
-.login {
-  height: calc(100vh - #{$footer-height} - #{$header-height});
-  background-image: url('../../assets/images/SeasideBlue.png');
+/**
+ * Styled component for login container.
+ * Provides css for the login page and applies the tenant configuration styling (background image and color).
+ */
+export const LoginStyled = styled(Container)`
+  height: ${props =>
+    `calc(100vh - ${props.theme.css.footerHeight} - ${props.theme.css.headerHeight})`};
+  background-image: ${props =>
+    props.theme.tenant.login.backgroundImage
+      ? `url("${props.theme.tenant.login.backgroundImage}")`
+      : ''};
   background-size: cover;
   background-position: center top;
   position: absolute;
@@ -21,7 +28,7 @@
       justify-content: center;
     }
     .block {
-      background-color: $filter-background-color;
+      background-color: ${props => props.theme.css.filterBackgroundColor};
       padding: 20px 0;
       max-width: 650px;
       max-height: 475px;
@@ -35,14 +42,14 @@
       font-weight: 700;
       font-size: 24px;
       font-style: italic;
-      color: $primary-color;
+      color: ${props => props.theme.css.primaryColor};
     }
     h6 {
       margin-bottom: 20px;
     }
     p {
       font-size: 12px;
-      color: $text-color;
+      color: ${props => props.theme.css.textColor};
       font-family: 'BCSans', Fallback, sans-serif;
       line-height: 130%;
       margin-left: 30px;
@@ -87,12 +94,14 @@
       margin: 20px auto;
     }
     .border-dark {
-      border-color: $primary-color !important;
-      color: $text-color !important;
+      border-color: ${props => props.theme.css.primaryColor} !important;
+      color: ${props => props.theme.css.textColor} !important;
     }
     .pims-logo {
       margin-left: -300px;
       margin-bottom: 10px;
     }
   }
-}
+`;
+
+export default LoginStyled;

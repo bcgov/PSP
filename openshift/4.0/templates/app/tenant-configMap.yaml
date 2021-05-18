@@ -83,6 +83,7 @@ objects:
         "login": {
           "title": "${TENANT_LOGIN_TITLE}",
           "heading": "${TENANT_LOGIN_HEADING}",
-          "body": "${TENANT_LOGIN_BODY}"
+          "body": "${TENANT_LOGIN_BODY}",
+          "backgroundImage": "/tenants/${TENANT}/background-image.jpg"
         }
       }'
