@@ -1,18 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Review Summary View renders approved correctly 1`] = `
-.c0 {
+.c1 {
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.c1 {
+.c2 {
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-family: 'BCSans',Fallback,sans-serif;
 }
 
-.c3 {
+.c4 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c4 span {
+  padding: 0;
+}
+
+.c5 {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -23,23 +41,27 @@ exports[`Review Summary View renders approved correctly 1`] = `
   flex-direction: row-reverse;
 }
 
-.c2 {
+.c0 button.btn-warning:disabled {
+  display: none;
+}
+
+.c3 {
   padding-left: 10px;
 }
 
-.c2 small {
+.c3 small {
   padding-top: 20px;
   vertical-align: middle;
 }
 
 <div
-  class="ProjectSummaryView container-fluid"
+  class="c0 ProjectSummaryView container-fluid"
 >
   <div
-    class="c0 [object Object]-status"
+    class="c1 [object Object]-status"
   >
     <h5
-      class="c1"
+      class="c2"
     >
       Approved for Surplus Property Program
     </h5>
@@ -58,7 +80,7 @@ exports[`Review Summary View renders approved correctly 1`] = `
       />
     </svg>
     <h5
-      class="c1"
+      class="c2"
     >
       Approval Date: Unknown Date
     </h5>
@@ -177,7 +199,7 @@ exports[`Review Summary View renders approved correctly 1`] = `
           </select>
         </div>
         <div
-          class="c2"
+          class="c3"
         >
           <small>
             Tier 1: Properties with a net value less than $1M.
@@ -669,7 +691,7 @@ exports[`Review Summary View renders approved correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -691,7 +713,7 @@ exports[`Review Summary View renders approved correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -728,7 +750,7 @@ exports[`Review Summary View renders approved correctly 1`] = `
       style="text-align: right;"
     />
     <div
-      class="c3"
+      class="c5"
     >
       <button
         class="btn btn-primary"
@@ -751,18 +773,36 @@ exports[`Review Summary View renders approved correctly 1`] = `
 `;
 
 exports[`Review Summary View renders denied correctly 1`] = `
-.c0 {
+.c1 {
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.c1 {
+.c2 {
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-family: 'BCSans',Fallback,sans-serif;
 }
 
-.c3 {
+.c4 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c4 span {
+  padding: 0;
+}
+
+.c5 {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -773,23 +813,27 @@ exports[`Review Summary View renders denied correctly 1`] = `
   flex-direction: row-reverse;
 }
 
-.c2 {
+.c0 button.btn-warning:disabled {
+  display: none;
+}
+
+.c3 {
   padding-left: 10px;
 }
 
-.c2 small {
+.c3 small {
   padding-top: 20px;
   vertical-align: middle;
 }
 
 <div
-  class="ProjectSummaryView container-fluid"
+  class="c0 ProjectSummaryView container-fluid"
 >
   <div
-    class="c0 [object Object]-status"
+    class="c1 [object Object]-status"
   >
     <h5
-      class="c1"
+      class="c2"
     >
       Submitted
     </h5>
@@ -808,7 +852,7 @@ exports[`Review Summary View renders denied correctly 1`] = `
       />
     </svg>
     <h5
-      class="c1"
+      class="c2"
     >
       test
     </h5>
@@ -927,7 +971,7 @@ exports[`Review Summary View renders denied correctly 1`] = `
           </select>
         </div>
         <div
-          class="c2"
+          class="c3"
         >
           <small>
             Tier 1: Properties with a net value less than $1M.
@@ -1419,7 +1463,7 @@ exports[`Review Summary View renders denied correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -1441,7 +1485,7 @@ exports[`Review Summary View renders denied correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -1478,7 +1522,7 @@ exports[`Review Summary View renders denied correctly 1`] = `
       style="text-align: right;"
     />
     <div
-      class="c3"
+      class="c5"
     >
       <button
         class="btn btn-primary"
@@ -1501,18 +1545,36 @@ exports[`Review Summary View renders denied correctly 1`] = `
 `;
 
 exports[`Review Summary View renders submitted correctly 1`] = `
-.c0 {
+.c1 {
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.c1 {
+.c2 {
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-family: 'BCSans',Fallback,sans-serif;
 }
 
-.c3 {
+.c4 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c4 span {
+  padding: 0;
+}
+
+.c5 {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1523,23 +1585,27 @@ exports[`Review Summary View renders submitted correctly 1`] = `
   flex-direction: row-reverse;
 }
 
-.c2 {
+.c0 button.btn-warning:disabled {
+  display: none;
+}
+
+.c3 {
   padding-left: 10px;
 }
 
-.c2 small {
+.c3 small {
   padding-top: 20px;
   vertical-align: middle;
 }
 
 <div
-  class="ProjectSummaryView container-fluid"
+  class="c0 ProjectSummaryView container-fluid"
 >
   <div
-    class="c0 [object Object]-status"
+    class="c1 [object Object]-status"
   >
     <h5
-      class="c1"
+      class="c2"
     >
       Submitted
     </h5>
@@ -1558,7 +1624,7 @@ exports[`Review Summary View renders submitted correctly 1`] = `
       />
     </svg>
     <h5
-      class="c1"
+      class="c2"
     >
       In Review
     </h5>
@@ -1677,7 +1743,7 @@ exports[`Review Summary View renders submitted correctly 1`] = `
           </select>
         </div>
         <div
-          class="c2"
+          class="c3"
         >
           <small>
             Tier 1: Properties with a net value less than $1M.
@@ -2169,7 +2235,7 @@ exports[`Review Summary View renders submitted correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -2191,7 +2257,7 @@ exports[`Review Summary View renders submitted correctly 1`] = `
       </div>
     </div>
     <div
-      class="ProjectNotes form-row"
+      class="c4 ProjectNotes form-row"
     >
       <div
         class="col-md-10 form-group col"
@@ -2228,7 +2294,7 @@ exports[`Review Summary View renders submitted correctly 1`] = `
       style="text-align: right;"
     />
     <div
-      class="c3"
+      class="c5"
     >
       <button
         class="btn btn-primary"

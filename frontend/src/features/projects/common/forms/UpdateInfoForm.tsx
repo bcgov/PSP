@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { mapLookupCode } from 'utils';
 import { useFormikContext, getIn } from 'formik';
 import { Form, Select } from 'components/common/form';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Button from 'react-bootstrap/Button';
 import _ from 'lodash';
 import {
@@ -84,7 +84,7 @@ const UpdateInfoForm = ({
   goToAddProperties,
   title,
 }: IStepProps & IUpdateInfoFormProps) => {
-  const codeLookups = useCodeLookups();
+  const codeLookups = useLookupCodeHelpers();
   const tierCodes = codeLookups.getByType('TierLevel').map(mapLookupCode);
   const riskCodes = codeLookups.getByType('ProjectRisk').map(mapLookupCode);
   const [selectedProperties, setSelectedProperties] = useState([]);

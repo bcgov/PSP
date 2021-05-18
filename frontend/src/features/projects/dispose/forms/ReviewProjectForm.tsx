@@ -1,15 +1,15 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import './ReviewProjectForm.scss';
 import { useFormikContext } from 'formik';
 import _ from 'lodash';
+import React, { Fragment, useEffect, useState } from 'react';
+
 import {
-  IProjectTask,
+  ApprovalConfirmationForm,
   DisposeWorkflowStatus,
+  DocumentationForm,
   IProject,
+  IProjectTask,
   ProjectDraftForm,
   UpdateInfoForm,
-  DocumentationForm,
-  ApprovalConfirmationForm,
 } from '../../common';
 
 /**

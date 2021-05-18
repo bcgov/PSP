@@ -1,7 +1,7 @@
 import CustomAxios from 'customAxios';
 import { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { request, success, error } from 'actions/genericActions';
+import { logRequest, logSuccess, logError } from 'store/slices/network/networkSlice';
 
 /**
  * Download configuration options interface.
@@ -22,7 +22,7 @@ export interface IDownloadConfig extends AxiosRequestConfig {
  */
 const download = (config: IDownloadConfig) => (dispatch: Function) => {
   const options = { ...config, headers: { ...config.headers } };
-  dispatch(request(options.actionType));
+  dispatch(logRequest(options.actionType));
   dispatch(showLoading());
   return CustomAxios()
     .request({
@@ -33,7 +33,7 @@ const download = (config: IDownloadConfig) => (dispatch: Function) => {
       data: options.data,
     })
     .then((response: AxiosResponse) => {
-      dispatch(success(options.actionType));
+      dispatch(logSuccess({ name: options.actionType }));
 
       const uri = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
@@ -43,7 +43,13 @@ const download = (config: IDownloadConfig) => (dispatch: Function) => {
       link.click();
     })
     .catch((axiosError: AxiosError) =>
-      dispatch(error(options.actionType, axiosError?.response?.status, axiosError)),
+      dispatch(
+        logError({
+          name: options.actionType,
+          status: axiosError?.response?.status,
+          error: axiosError,
+        }),
+      ),
     )
     .finally(() => dispatch(hideLoading()));
 };

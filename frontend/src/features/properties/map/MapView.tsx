@@ -5,14 +5,14 @@ import { Map as LeafletMap } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { LeafletMouseEvent } from 'leaflet';
 import useParamSideBar from '../../mapSideBar/hooks/useQueryParamSideBar';
-import { saveClickLatLng as saveLeafletMouseEvent } from 'reducers/LeafletMouseSlice';
+import { saveClickLatLng as saveLeafletMouseEvent } from 'store/slices/leafletMouse/LeafletMouseSlice';
 import * as API from 'constants/API';
 import MapSideBarContainer from 'features/mapSideBar/containers/MapSideBarContainer';
 import classNames from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useAppSelector } from 'store/hooks';
 import { IPropertyDetail } from 'store/slices/properties';
 
@@ -36,7 +36,7 @@ interface MapViewProps {
 }
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const properties = useAppSelector(state => [...state.properties.parcels]);
   const [loadedProperties, setLoadedProperties] = useState(false);
   const mapRef = useRef<LeafletMap>(null);

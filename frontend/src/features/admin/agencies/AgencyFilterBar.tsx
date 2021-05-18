@@ -1,7 +1,7 @@
 import * as React from 'react';
 import FilterBar from 'components/SearchBar/FilterBar';
 import { IAgencyFilter } from 'interfaces';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Label } from 'components/common/Label';
 import { mapLookupCodeWithParentString } from 'utils';
 import { ParentSelect } from 'components/common/form/ParentSelect';
@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const AgencyFilterBar: React.FC<IProps> = ({ value, onChange, handleAdd }) => {
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const agencyOptions = lookupCodes.getByType('Agency');
   const agencyWithParent = (agencyOptions ?? []).map(c =>
     mapLookupCodeWithParentString(c, agencyOptions),

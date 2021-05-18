@@ -2,17 +2,20 @@ import { FormikValues, getIn, setIn } from 'formik';
 import { isMouseEventRecent, squareMetersToHectares } from 'utils';
 import { AMINISTRATIVE_AREA_CODE_SET_NAME } from 'constants/API';
 import { useState } from 'react';
-import { IParcelLayerData, clearParcelLayerData } from 'reducers/parcelLayerDataSlice';
+import {
+  IParcelLayerData,
+  clearParcelLayerData,
+} from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { pidFormatter } from '../components/forms/subforms/PidPinForm';
 import _ from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
-import useCodeLookups from 'hooks/useLookupCodes';
+import { useDispatch } from 'react-redux';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { toast } from 'react-toastify';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { getInitialValues } from 'features/mapSideBar/SidebarContents/LandForm';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import { useAppSelector } from 'store/hooks';
 
 interface IUseParcelLayerDataProps {
   formikRef: React.MutableRefObject<FormikValues | undefined>;
@@ -153,10 +156,8 @@ const useParcelLayerData = ({
   nameSpace,
   agencyId,
 }: IUseParcelLayerDataProps) => {
-  const parcelLayerData = useSelector<RootState, IParcelLayerData | null>(
-    state => state.parcelLayerData?.parcelLayerData,
-  );
-  const { getByType } = useCodeLookups();
+  const parcelLayerData = useAppSelector(state => state.parcelLayerData?.parcelLayerData);
+  const { getByType } = useLookupCodeHelpers();
   const [showOverwriteDialog, setShowOverwriteDialog] = useState(false);
   const dispatch = useDispatch();
   const keycloak = useKeycloakWrapper();

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Table from 'components/Table/Table';
 import { IReport, ISnapshot, ISnapshotFilter } from '../interfaces';
 import { columns } from '../columns';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import * as API from 'constants/API';
 import { mapSelectOptionWithParent } from 'utils';
 import { useSplReportContext } from '../containers/SplReportContainer';
@@ -18,7 +18,7 @@ interface IReportFormProps {
  */
 const ReportForm: React.FunctionComponent<IReportFormProps> = ({ currentReport, snapshots }) => {
   const data: ISnapshot[] = snapshots ?? [];
-  const { getOptionsByType } = useCodeLookups();
+  const { getOptionsByType } = useLookupCodeHelpers();
   const agencyItems = getOptionsByType(API.AGENCY_CODE_SET_NAME);
   const agencyFilterOptions = React.useMemo(
     () => (agencyItems || []).map(c => mapSelectOptionWithParent(c, agencyItems || [])),

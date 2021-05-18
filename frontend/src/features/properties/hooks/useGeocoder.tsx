@@ -2,7 +2,7 @@ import * as API from 'constants/API';
 import { IGeocoderResponse, useApi } from 'hooks/useApi';
 import { FormikValues, getIn, setIn } from 'formik';
 import { useState } from 'react';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import {
   useLayerQuery,
   PARCELS_LAYER_URL,
@@ -40,7 +40,7 @@ export interface IPidSelection {
  * @param param0
  */
 const useGeocoder = ({ formikRef, fetchPimsOrLayerParcel }: IUseGeocoderProps) => {
-  const { lookupCodes } = useCodeLookups();
+  const { lookupCodes } = useLookupCodeHelpers();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
   const [pidSelection, setPidSelection] = useState<IPidSelection>({ showPopup: false, geoPID: '' });
   const api = useApi();

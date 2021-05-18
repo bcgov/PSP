@@ -2,7 +2,7 @@ import { ISteppedFormValues, SteppedForm, useFormStepper } from 'components/comm
 import { useFormikContext, yupToFormErrors, getIn, setIn } from 'formik';
 import { IGeocoderResponse, useApi } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { noop } from 'lodash';
 import * as React from 'react';
 import { Button, Form as BSForm } from 'react-bootstrap';
@@ -184,7 +184,7 @@ const Form: React.FC<IAssociatedLandForm> = ({
   const formikProps = useFormikContext<ISteppedFormValues<IAssociatedLand>>();
 
   // lookup codes that will be used by subforms
-  const { getOptionsByType, getPropertyClassificationOptions } = useCodeLookups();
+  const { getOptionsByType, getPropertyClassificationOptions } = useLookupCodeHelpers();
   const agencies = getOptionsByType(API.AGENCY_CODE_SET_NAME);
   const classifications = getPropertyClassificationOptions();
   const currentParcelNameSpace = `data.parcels.${stepper.currentTab}`;

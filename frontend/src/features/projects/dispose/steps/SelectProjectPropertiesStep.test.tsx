@@ -1,19 +1,21 @@
 import React from 'react';
 import { act } from 'react-test-renderer';
 import SelectProjectProperties from './SelectProjectPropertiesStep';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { ProjectActions } from 'constants/actionTypes';
 import { render, wait, fireEvent, cleanup } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { mockKeycloak, mockProject } from '../testUtils';
 import * as API from 'constants/API';
 import { mockFlatProperty } from 'mocks/filterDataMock';
+import { projectSlice } from 'features/projects/common';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 jest.mock('@react-keycloak/web');
 
 const mockStore = configureMockStore([thunk]);
@@ -21,11 +23,11 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
 const store = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: { project: mockProject },
-  [reducerTypes.LOOKUP_CODE]: {
+  [projectSlice.name]: { project: mockProject },
+  [lookupCodesSlice.name]: {
     lookupCodes: [{ name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME }],
   },
-  [reducerTypes.NETWORK]: {
+  [networkSlice.name]: {
     [ProjectActions.GET_PROJECT]: {},
   },
 });

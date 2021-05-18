@@ -1,6 +1,5 @@
 import React from 'react';
 import DocumentationStep from './DocumentationStep';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -10,8 +9,10 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { render, wait, fireEvent, cleanup } from '@testing-library/react';
 import { DisposeWorkflowStatus, IProjectTask } from '../../common/interfaces';
-import { ProjectActions } from 'constants/actionTypes';
 import { useKeycloak } from '@react-keycloak/web';
+import { projectSlice, projectTasksSlice } from 'features/projects/common';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});
@@ -59,9 +60,9 @@ const tasks: IProjectTask[] = [
 ];
 
 const store = mockStore({
-  [reducerTypes.ProjectReducers.PROJECT]: { project: { tasks: tasks } },
-  [reducerTypes.ProjectReducers.TASKS]: tasks,
-  [reducerTypes.NETWORK]: {
+  [projectSlice.name]: { project: { tasks: tasks } },
+  [projectTasksSlice.name]: tasks,
+  [networkSlice.name]: {
     [ProjectActions.GET_PROJECT]: {},
   },
 });

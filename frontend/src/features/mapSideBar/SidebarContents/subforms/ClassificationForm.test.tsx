@@ -13,8 +13,8 @@ import { ClassificationForm } from './ClassificationForm';
 import { Classifications } from 'constants/classifications';
 import { SelectOption, SelectOptions } from 'components/common/form';
 import * as API from 'constants/API';
-import * as reducerTypes from 'constants/reducerTypes';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import propertyNameSlice from 'features/properties/common/slices/propertyNameSlice';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
@@ -93,8 +93,8 @@ const lCodes = {
 
 const getStore = () =>
   mockStore({
-    [reducerTypes.PROPERTY_NAMES]: ['test'],
-    [reducerTypes.LOOKUP_CODE]: lCodes,
+    [propertyNameSlice.name]: ['test'],
+    [lookupCodesSlice.name]: lCodes,
   });
 
 it('renders correctly', () => {

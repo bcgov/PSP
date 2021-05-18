@@ -5,14 +5,15 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as actionTypes from 'constants/actionTypes';
-import * as reducerTypes from 'constants/reducerTypes';
 import * as API from 'constants/API';
 import ManageAgencies from './ManageAgencies';
 import { render, cleanup } from '@testing-library/react';
 import noop from 'lodash/noop';
 import { Formik } from 'formik';
 import { useKeycloak } from '@react-keycloak/web';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { agenciesSlice } from 'store/slices/agencies';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -41,7 +42,7 @@ jest.mock('react-router-dom', () => ({
 }));
 const getStore = () =>
   mockStore({
-    [reducerTypes.AGENCIES]: {
+    [agenciesSlice.name]: {
       pagedAgencies: {
         page: 1,
         pageIndex: 0,
@@ -70,8 +71,8 @@ const getStore = () =>
         ],
       },
     },
-    [reducerTypes.LOOKUP_CODE]: lCodes,
-    [reducerTypes.NETWORK]: {
+    [lookupCodesSlice.name]: lCodes,
+    [networkSlice.name]: {
       [actionTypes.GET_AGENCIES]: {
         isFetching: false,
       },

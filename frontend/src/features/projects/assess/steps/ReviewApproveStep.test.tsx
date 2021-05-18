@@ -1,13 +1,11 @@
 import React from 'react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { IProject, IProjectTask } from '../../common';
+import { IProject, IProjectTask, projectSlice, projectTasksSlice } from '../../common';
 import { ITask, ReviewWorkflowStatus } from '../../common/interfaces';
-import { ProjectActions } from 'constants/actionTypes';
 import { render, wait } from '@testing-library/react';
 import { useKeycloak } from '@react-keycloak/web';
 import { Claims } from 'constants/claims';
@@ -21,6 +19,9 @@ import { Button } from 'react-bootstrap';
 import GenericModal from 'components/common/GenericModal';
 import { IProperty } from 'features/properties/list/interfaces';
 import { act } from 'react-dom/test-utils';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -185,10 +186,10 @@ export const tasks: ITask[] = [
 
 const store = (project: IProject) => {
   return mockStore({
-    [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-    [reducerTypes.ProjectReducers.PROJECT]: { project },
-    [reducerTypes.ProjectReducers.TASKS]: tasks,
-    [reducerTypes.NETWORK]: {
+    [lookupCodesSlice.name]: { lookupCodes: [] },
+    [projectSlice.name]: { project },
+    [projectTasksSlice.name]: tasks,
+    [networkSlice.name]: {
       [ProjectActions.GET_PROJECT]: {},
     },
   });

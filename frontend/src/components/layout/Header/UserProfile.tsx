@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, NavDropdown } from 'react-bootstrap';
 import { useConfiguration } from 'hooks/useConfiguration';
 import profileUrl from 'assets/images/profile.svg';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import styled from 'styled-components';
 import { FaSignOutAlt } from 'react-icons/fa';
 import * as API from 'constants/API';
@@ -61,7 +61,7 @@ export const UserProfile: React.FC = () => {
       ? `${keycloak.firstName} ${keycloak.lastName}`
       : 'default');
   const configuration = useConfiguration();
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const agencyOptions = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
   const roles = keycloak.roles.join(', ');
 

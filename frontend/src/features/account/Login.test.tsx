@@ -7,19 +7,18 @@ import { useKeycloak } from '@react-keycloak/web';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import Login from './Login';
-import * as reducerTypes from 'constants/reducerTypes';
-import {} from 'reducers/networkReducer';
-import { IGenericNetworkAction } from 'actions/genericActions';
 import { Provider } from 'react-redux';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
 import { TenantProvider } from 'tenants';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({
-  [reducerTypes.NETWORK]: {
+  [networkSlice.name]: {
     [ADD_ACTIVATE_USER]: {},
   },
 });
@@ -93,7 +92,7 @@ describe('login', () => {
       status: 201,
     };
     const store = mockStore({
-      [reducerTypes.NETWORK]: {
+      [networkSlice.name]: {
         activateUser: activatedAction,
       },
     });

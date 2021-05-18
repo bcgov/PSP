@@ -4,20 +4,17 @@ import { Menu } from 'components/menu/Menu';
 import React from 'react';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { IAccessRequestModel } from '../interfaces';
-import { useStore } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
+import { useAppSelector } from 'store/hooks';
 
 export const RowActions = (props: CellProps<IAccessRequestModel>) => {
   const accessRequest = props.row.original;
-  const store = useStore();
   const { updateAccessRequest, removeAccessRequest } = useAccessRequests();
 
   const isStatusMatch = (value: AccessRequestStatus) => accessRequest.status === value;
 
-  const storedAccessRequest = (store.getState() as RootState).accessRequests.pagedAccessRequests.items.find(
-    ar => ar.id === accessRequest.id,
-  );
+  const accessRequests = useAppSelector(state => state.accessRequests.pagedAccessRequests.items);
+  const storedAccessRequest = accessRequests.find(ar => ar.id === accessRequest.id);
   const originalAccessRequest = storedAccessRequest ? { ...storedAccessRequest } : undefined;
 
   const approve = () => {

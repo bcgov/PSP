@@ -1,5 +1,4 @@
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { request, success, error } from 'actions/genericActions';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
@@ -11,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { storeBuildingDetail, storeParcelDetail, storeParcels } from './propertiesSlice';
 import { IParcel, IBuilding } from 'interfaces';
+import { logRequest, logSuccess, logError } from '../network/networkSlice';
 
 const parcelCreatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.parcel.PARCEL_CREATING,
@@ -49,18 +49,24 @@ export const useProperties = () => {
         (parcelBounds?.neLatitude !== parcelBounds?.swLatitude &&
           parcelBounds?.neLongitude !== parcelBounds?.swLongitude)
       ) {
-        dispatch(request(actionTypes.GET_PARCELS));
+        dispatch(logRequest(actionTypes.GET_PARCELS));
         dispatch(showLoading());
         return CustomAxios()
           .get(ENVIRONMENT.apiUrl + API.PROPERTIES(parcelBounds))
           .then((response: AxiosResponse) => {
-            dispatch(success(actionTypes.GET_PARCELS));
+            dispatch(logSuccess({ name: actionTypes.GET_PARCELS }));
             dispatch(storeParcels(response.data));
             dispatch(hideLoading());
             return Promise.resolve(response);
           })
           .catch((axiosError: AxiosError) => {
-            dispatch(error(actionTypes.GET_PARCELS, axiosError?.response?.status, axiosError));
+            dispatch(
+              logError({
+                name: actionTypes.GET_PARCELS,
+                status: axiosError?.response?.status,
+                error: axiosError,
+              }),
+            );
             return Promise.reject(axiosError);
           })
           .finally(() => dispatch(hideLoading()));
@@ -77,7 +83,7 @@ export const useProperties = () => {
    */
   const fetchParcelsDetail = useCallback(
     async (params: API.IPropertySearchParams) => {
-      dispatch(request(actionTypes.GET_PARCEL_DETAIL));
+      dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
       dispatch(showLoading());
       return CustomAxios()
         .get(ENVIRONMENT.apiUrl + API.PARCELS_DETAIL(params))
@@ -85,12 +91,18 @@ export const useProperties = () => {
           if (response?.data !== undefined && response.data.length > 0) {
             dispatch(storeParcelDetail(_.first(response.data) as any));
           }
-          dispatch(success(actionTypes.GET_PARCEL_DETAIL));
+          dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
           dispatch(hideLoading());
           return Promise.resolve(response);
         })
         .catch((axiosError: AxiosError) => {
-          dispatch(error(actionTypes.GET_PARCEL_DETAIL, axiosError?.response?.status, axiosError));
+          dispatch(
+            logError({
+              name: actionTypes.GET_PARCEL_DETAIL,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
           return Promise.reject(axiosError);
         })
         .finally(() => dispatch(hideLoading()));
@@ -105,18 +117,24 @@ export const useProperties = () => {
    */
   const fetchParcelDetail = useCallback(
     async (params: API.IParcelDetailParams, position?: [number, number]): Promise<IParcel> => {
-      dispatch(request(actionTypes.GET_PARCEL_DETAIL));
+      dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
       dispatch(showLoading());
       return CustomAxios()
         .get<IParcel>(ENVIRONMENT.apiUrl + API.PARCEL_DETAIL(params))
         .then((response: AxiosResponse<IParcel>) => {
-          dispatch(success(actionTypes.GET_PARCEL_DETAIL));
+          dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
           dispatch(storeParcelDetail({ property: response.data, position }));
           dispatch(hideLoading());
           return response.data;
         })
         .catch((axiosError: AxiosError) => {
-          dispatch(error(actionTypes.GET_PARCEL_DETAIL, axiosError?.response?.status, axiosError));
+          dispatch(
+            logError({
+              name: actionTypes.GET_PARCEL_DETAIL,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
           return Promise.reject(axiosError);
         })
         .finally(() => dispatch(hideLoading()));
@@ -131,18 +149,24 @@ export const useProperties = () => {
    */
   const fetchBuildingDetail = useCallback(
     async (params: API.IBuildingDetailParams, position?: [number, number]): Promise<IBuilding> => {
-      dispatch(request(actionTypes.GET_PARCEL_DETAIL));
+      dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
       dispatch(showLoading());
       return CustomAxios()
         .get<IBuilding>(ENVIRONMENT.apiUrl + API.BUILDING_DETAIL(params))
         .then((response: AxiosResponse) => {
-          dispatch(success(actionTypes.GET_PARCEL_DETAIL));
+          dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
           dispatch(storeBuildingDetail({ property: response.data, position }));
           dispatch(hideLoading());
           return response.data;
         })
         .catch((axiosError: AxiosError) => {
-          dispatch(error(actionTypes.GET_PARCEL_DETAIL, axiosError?.response?.status, axiosError));
+          dispatch(
+            logError({
+              name: actionTypes.GET_PARCEL_DETAIL,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
           return Promise.reject(axiosError);
         })
         .finally(() => dispatch(hideLoading()));
@@ -171,19 +195,25 @@ export const useProperties = () => {
    */
   const createParcel = useCallback(
     async (parcel: IParcel) => {
-      dispatch(request(actionTypes.ADD_PARCEL));
+      dispatch(logRequest(actionTypes.ADD_PARCEL));
       dispatch(showLoading());
       try {
         const { data, status } = await CustomAxios({ lifecycleToasts: parcelCreatingToasts }).post(
           ENVIRONMENT.apiUrl + API.PARCEL_ROOT,
           parcel,
         );
-        dispatch(success(actionTypes.ADD_PARCEL, status));
+        dispatch(logSuccess({ name: actionTypes.ADD_PARCEL, status }));
         dispatch(storeParcelDetail(data));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(error(actionTypes.ADD_PARCEL, axiosError?.response?.status, axiosError));
+        dispatch(
+          logError({
+            name: actionTypes.ADD_PARCEL,
+            status: axiosError?.response?.status,
+            error: axiosError,
+          }),
+        );
         dispatch(hideLoading());
         throw Error(axiosError.response?.data.details);
       }
@@ -197,19 +227,25 @@ export const useProperties = () => {
    */
   const updateParcel = useCallback(
     async (parcel: IParcel) => {
-      dispatch(request(actionTypes.UPDATE_PARCEL));
+      dispatch(logRequest(actionTypes.UPDATE_PARCEL));
       dispatch(showLoading());
       try {
         const { data, status } = await CustomAxios({ lifecycleToasts: parcelUpdatingToasts }).put(
           ENVIRONMENT.apiUrl + API.PARCEL_ROOT + `/${parcel.id}`,
           parcel,
         );
-        dispatch(success(actionTypes.UPDATE_PARCEL, status));
+        dispatch(logSuccess({ name: actionTypes.UPDATE_PARCEL, status }));
         dispatch(storeParcelDetail(data));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(error(actionTypes.UPDATE_PARCEL, axiosError?.response?.status, axiosError));
+        dispatch(
+          logError({
+            name: actionTypes.UPDATE_PARCEL,
+            status: axiosError?.response?.status,
+            error: axiosError,
+          }),
+        );
         dispatch(hideLoading());
         throw Error(axiosError.response?.data.details);
       }
@@ -223,18 +259,24 @@ export const useProperties = () => {
    */
   const deleteParcel = useCallback(
     async (parcel: IParcel) => {
-      dispatch(request(actionTypes.DELETE_PARCEL));
+      dispatch(logRequest(actionTypes.DELETE_PARCEL));
       dispatch(showLoading());
       try {
         const { data, status } = await CustomAxios({
           lifecycleToasts: parcelDeletingToasts,
         }).delete(ENVIRONMENT.apiUrl + API.PARCEL_ROOT + `/${parcel.id}`, { data: parcel });
-        dispatch(success(actionTypes.DELETE_PARCEL, status));
+        dispatch(logSuccess({ name: actionTypes.DELETE_PARCEL, status }));
         dispatch(storeParcelDetail(null));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(error(actionTypes.DELETE_PARCEL, axiosError.response?.status, axiosError));
+        dispatch(
+          logError({
+            name: actionTypes.DELETE_PARCEL,
+            status: axiosError.response?.status,
+            error: axiosError,
+          }),
+        );
         dispatch(hideLoading());
         throw Error(axiosError.response?.data.details);
       }
@@ -248,18 +290,24 @@ export const useProperties = () => {
    */
   const deleteBuilding = useCallback(
     async (building: IBuilding) => {
-      dispatch(request(actionTypes.DELETE_BUILDING));
+      dispatch(logRequest(actionTypes.DELETE_BUILDING));
       dispatch(showLoading());
       try {
         const { data, status } = await CustomAxios({
           lifecycleToasts: buildingDeletingToasts,
         }).delete(ENVIRONMENT.apiUrl + API.BUILDING_ROOT + `/${building.id}`, { data: building });
-        dispatch(success(actionTypes.DELETE_PARCEL, status));
+        dispatch(logSuccess({ name: actionTypes.DELETE_PARCEL, status }));
         dispatch(storeParcelDetail(null));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(error(actionTypes.DELETE_PARCEL, axiosError?.response?.status, axiosError));
+        dispatch(
+          logError({
+            name: actionTypes.DELETE_PARCEL,
+            status: axiosError?.response?.status,
+            error: axiosError,
+          }),
+        );
         dispatch(hideLoading());
         throw Error(axiosError.response?.data.details);
       }

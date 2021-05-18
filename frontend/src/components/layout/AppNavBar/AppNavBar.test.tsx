@@ -5,7 +5,6 @@ import { Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
-import * as reducerTypes from 'constants/reducerTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -14,6 +13,7 @@ import { mountToJson } from 'enzyme-to-json';
 import AppNavBar from './AppNavBar';
 import Claims from 'constants/claims';
 import Roles from 'constants/roles';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 Enzyme.configure({ adapter: new Adapter() });
@@ -29,7 +29,7 @@ const mockStore = configureMockStore([thunk]);
 
 const history = createMemoryHistory();
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
+  [lookupCodesSlice.name]: { lookupCodes: [] },
 });
 
 describe('AppNavBar', () => {

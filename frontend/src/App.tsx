@@ -1,4 +1,5 @@
 import './App.scss';
+import './Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import React, { useEffect } from 'react';
 import { Col } from 'react-bootstrap';

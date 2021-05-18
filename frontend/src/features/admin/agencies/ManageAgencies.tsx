@@ -5,21 +5,21 @@ import { Table } from 'components/Table';
 import { columnDefinitions } from '../constants';
 import { IAgency, IAgencyFilter, IAgencyRecord } from 'interfaces';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
-import { IGenericNetworkAction } from 'actions/genericActions';
 import * as actionTypes from 'constants/actionTypes';
 import { generateMultiSortCriteria } from 'utils';
 import { AgencyFilterBar } from './AgencyFilterBar';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import { useLookupCodes } from 'store/slices/lookupCodes';
 import { useAppSelector } from 'store/hooks';
 import { useAgencies } from 'store/slices/agencies';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 
 const ManageAgencies: React.FC = () => {
   const columns = useMemo(() => columnDefinitions, []);
   const [filter, setFilter] = useState<IAgencyFilter>({});
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const agencyLookupCodes = lookupCodes.getByType('Agency');
   const history = useHistory();
 
@@ -40,7 +40,7 @@ const ManageAgencies: React.FC = () => {
   });
 
   const agencies = useAppSelector(
-    state => (state.network as any)[actionTypes.GET_AGENCIES] as IGenericNetworkAction,
+    state => state.network[actionTypes.GET_AGENCIES] as IGenericNetworkAction,
   );
 
   const onRowClick = (row: IAgencyRecord) => {

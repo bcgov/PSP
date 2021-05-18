@@ -1,15 +1,13 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
 
-export const saveFilter = createAction<string>('saveFilter');
+export const saveFilter = createAction<{ [key: string]: any }>('saveFilter');
 export const clearFilter = createAction('clearFilter');
 /**
- * The following is a shorthand method for creating a reducer with paired actions and action creators.
- * All functionality related to this concept is contained within this file.
- * See https://redux-toolkit.js.org/api/createslice for more details.
+ * Save and clear a filter used with useRouterFilter on the mapview and list view.
  */
 const filterSlice = createSlice({
   name: 'filter',
-  initialState: {},
+  initialState: {} as { [key: string]: any },
   reducers: {},
   extraReducers: (builder: any) => {
     // note that redux-toolkit uses immer to prevent state from being mutated.

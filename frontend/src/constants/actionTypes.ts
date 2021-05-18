@@ -63,22 +63,13 @@ export const GET_ACCESS_REQUEST = 'getAccessRequest';
 export const STORE_USERS = 'STORE_USERS';
 export const ADD_ACTIVATE_USER = 'activateUser';
 export const GET_USERS = 'getUsers';
+export const GET_USER_DETAIL = 'getUserDetail';
 export const STORE_USER_DETAILS = 'STORE_USER_DETAILS';
 export const GET_USER = 'GET_USER';
+export const PUT_USER_DETAIL = 'PUT_USER_DETAIL';
 export const UPDATE_USER = 'UPDATE_USER';
 export const FILTER_USERS = 'FILTER_USERS';
 export const SORT_USERS = 'SORT_USERS';
 export const SET_USERS_PAGE_SIZE = 'SET_USERS_PAGE_SIZE';
 export const SET_USERS_PAGE_INDEX = 'SET_USERS_PAGE_INDEX';
 export const SET_USERS_SORT = 'SET_USERS_SORT';
-
-//projects
-export enum ProjectActions {
-  GET_PROJECT_WORKFLOW = 'GET_PROJECT_WORKFLOW',
-  UPDATE_PROJECT = 'UPDATE_PROJECT',
-  UPDATE_WORKFLOW_STATUS = 'UPDATE_WORKFLOW_STATUS',
-  ADD_PROJECT = 'ADD_PROJECT',
-  GET_PROJECT = 'GET_PROJECT',
-  GET_PROJECT_TASKS = 'GET_PROJECT_TASKS',
-  GET_PROJECT_STATUSES = 'GET_PROJECT_STATUSES',
-}

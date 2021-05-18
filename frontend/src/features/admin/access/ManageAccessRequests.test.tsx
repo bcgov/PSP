@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as actionTypes from 'constants/actionTypes';
-import * as reducerTypes from 'constants/reducerTypes';
 import * as API from 'constants/API';
 import ManageAccessRequests from './ManageAccessRequests';
 import { create, ReactTestInstance } from 'react-test-renderer';
@@ -16,7 +15,9 @@ import { Formik } from 'formik';
 import { noop } from 'lodash';
 import { useKeycloak } from '@react-keycloak/web';
 import { TenantProvider } from 'tenants';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { accessRequestsSlice } from 'store/slices/accessRequests';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -70,17 +71,17 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const successStore = mockStore({
-  [reducerTypes.ACCESS_REQUEST]: {
+  [accessRequestsSlice.name]: {
     pageSize: 10,
     filter: { searchText: '', role: '', agency: '' },
     pagedAccessRequests: accessRequests,
   },
-  [reducerTypes.NETWORK]: {
+  [networkSlice.name]: {
     [actionTypes.GET_REQUEST_ACCESS]: {
       isFetching: false,
     },
   },
-  [reducerTypes.LOOKUP_CODE]: lCodes,
+  [lookupCodesSlice.name]: lCodes,
 });
 
 const componentRender = (store: any) => {

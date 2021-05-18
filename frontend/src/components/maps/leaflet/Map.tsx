@@ -11,10 +11,9 @@ import {
 } from 'react-leaflet';
 import { Container, Row, Col } from 'react-bootstrap';
 import BasemapToggle, { BasemapToggleEvent, BaseLayer } from '../BasemapToggle';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMapViewZoom, DEFAULT_MAP_ZOOM } from 'reducers/mapViewZoomSlice';
-import { RootState } from 'reducers/rootReducer';
-import { Feature, GeoJsonObject } from 'geojson';
+import { useDispatch } from 'react-redux';
+import { setMapViewZoom, DEFAULT_MAP_ZOOM } from 'store/slices/mapViewZoom/mapViewZoomSlice';
+import { Feature } from 'geojson';
 import { LegendControl } from './Legend/LegendControl';
 import { useMediaQuery } from 'react-responsive';
 import ReactResizeDetector from 'react-resize-detector';
@@ -32,7 +31,7 @@ import {
 } from './LayerPopup/LayerPopupContent';
 import classNames from 'classnames';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { saveParcelLayerData } from 'reducers/parcelLayerDataSlice';
+import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import LayersControl from './LayersControl';
@@ -51,6 +50,7 @@ import FilterBackdrop from './FilterBackdrop';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { IProperty } from 'interfaces';
 import { IPropertyDetail, storeParcelDetail } from 'store/slices/properties';
+import { useAppSelector } from 'store/hooks';
 
 export type MapViewportChangeEvent = {
   bounds: LatLngBounds | null;
@@ -193,9 +193,7 @@ const Map: React.FC<MapProps> = ({
     lat = (mapRef.current.props.center as Array<number>)[0];
     lng = (mapRef.current.props.center as Array<number>)[1];
   }
-  const parcelLayerFeature = useSelector<RootState, GeoJsonObject | null>(
-    state => state.parcelLayerData?.parcelLayerFeature,
-  );
+  const parcelLayerFeature = useAppSelector(state => state.parcelLayerData?.parcelLayerFeature);
   useActiveFeatureLayer({
     selectedProperty,
     layerPopup,
@@ -205,7 +203,7 @@ const Map: React.FC<MapProps> = ({
   });
   const [showFilterBackdrop, setShowFilterBackdrop] = useState(true);
 
-  const lastZoom = useSelector<RootState, number>(state => state.mapViewZoom) ?? zoomProp;
+  const lastZoom = useAppSelector(state => state.mapViewZoom) ?? zoomProp;
   const [zoom, setZoom] = useState(lastZoom);
   useEffect(() => {
     if (lastZoom === DEFAULT_MAP_ZOOM) {

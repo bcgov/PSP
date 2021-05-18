@@ -1,13 +1,12 @@
 import './ProjectListView.scss';
 
 import React, { useState, useMemo, useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import * as API from 'constants/API';
-import { RootState } from 'reducers/rootReducer';
 import { IProjectFilter, IProject } from '.';
 import { columns as cols } from './columns';
-import { IProject as IProjectDetail } from 'features/projects/common';
+import { IProject as IProjectDetail, IStatus } from 'features/projects/common';
 import { Table } from 'components/Table';
 import service from '../apiService';
 import { FaFolder, FaFolderOpen, FaFileExcel, FaFileAlt } from 'react-icons/fa';
@@ -19,7 +18,6 @@ import GenericModal from 'components/common/GenericModal';
 import { useHistory } from 'react-router-dom';
 import {
   ReviewWorkflowStatus,
-  IStatus,
   fetchProjectStatuses,
   deleteProjectWarning,
   deletePotentialSubdivisionParcels,
@@ -34,10 +32,12 @@ import styled from 'styled-components';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { ParentSelect } from 'components/common/form/ParentSelect';
 import variables from '_variables.module.scss';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { toFlatProject } from '../common/projectConverter';
+import { useAppSelector } from 'store/hooks';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 interface IProjectFilterState {
   name?: string;
@@ -102,15 +102,19 @@ interface IProps {
 }
 
 const ProjectListView: React.FC<IProps> = ({ filterable, title, mode }) => {
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const agencies = useMemo(() => lookupCodes.getByType(API.AGENCY_CODE_SET_NAME), [lookupCodes]);
-  const projectStatuses = useSelector<RootState, IStatus[]>(state => state.statuses as any);
+  const projectStatuses = useAppSelector(state => state.projectStatuses as any);
   const keycloak = useKeycloakWrapper();
   const [deleteProjectNumber, setDeleteProjectNumber] = React.useState<string | undefined>();
   const [deletedProject, setDeletedProject] = React.useState<IProjectDetail | undefined>();
-  const agencyIds = useMemo(() => agencies.map(x => parseInt(x.id, 10)), [agencies]);
-  const agencyOptions = (agencies ?? []).map(c => mapLookupCodeWithParentString(c, agencies));
-  const statuses = (projectStatuses ?? []).map(c => mapStatuses(c));
+  const agencyIds = useMemo(() => agencies.map((x: { id: string }) => parseInt(x.id, 10)), [
+    agencies,
+  ]);
+  const agencyOptions = (agencies ?? []).map((c: ILookupCode) =>
+    mapLookupCodeWithParentString(c, agencies),
+  );
+  const statuses = (projectStatuses ?? []).map((c: IStatus) => mapStatuses(c));
   const columns = useMemo(() => cols, []);
 
   // We'll start our table without any data

@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import MapSideBarContainer from './MapSideBarContainer';
 import { noop } from 'lodash';
-import * as reducerTypes from 'constants/reducerTypes';
 import * as actionTypes from 'constants/actionTypes';
 import { mockDetails } from 'mocks/filterDataMock';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -24,6 +23,9 @@ import * as _ from 'lodash';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { TenantProvider, defaultTenant } from 'tenants';
 import { IParcel } from 'interfaces';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { propertiesSlice } from 'store/slices/properties';
 
 jest.mock(
   'react-visibility-sensor',
@@ -49,12 +51,12 @@ jest.spyOn(global, 'fetch').mockImplementation(
 const mockStore = configureMockStore([thunk]);
 const getStore = (parcelDetail?: IParcel) =>
   mockStore({
-    [reducerTypes.NETWORK]: {
+    [networkSlice.name]: {
       [actionTypes.GET_PARCEL_DETAIL]: {
         status: 200,
       },
     },
-    [reducerTypes.PROPERTIES]: {
+    [propertiesSlice.name]: {
       parcelDetail: {
         parcelDetail: parcelDetail,
         propertyTypeId: 0,
@@ -62,7 +64,7 @@ const getStore = (parcelDetail?: IParcel) =>
       parcels: [],
       draftParcels: [],
     },
-    [reducerTypes.LOOKUP_CODE]: {
+    [lookupCodesSlice.name]: {
       lookupCodes: [
         { name: 'BC', code: 'BC', id: '1', isDisabled: false, type: API.PROVINCE_CODE_SET_NAME },
         {
@@ -73,7 +75,7 @@ const getStore = (parcelDetail?: IParcel) =>
         },
       ],
     },
-    [reducerTypes.PROPERTIES]: { parcels: [], draftParcels: [] },
+    [propertiesSlice.name]: { parcels: [], draftParcels: [] },
   });
 
 const history = createMemoryHistory({

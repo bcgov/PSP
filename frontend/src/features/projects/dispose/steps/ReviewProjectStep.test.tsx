@@ -1,15 +1,23 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import ReviewProjectStep from './ReviewProjectStep';
-import { DisposeWorkflowStatus, ITask, IProject, IProjectTask } from '../../common';
-import { ProjectActions } from 'constants/actionTypes';
+import {
+  DisposeWorkflowStatus,
+  ITask,
+  IProject,
+  IProjectTask,
+  projectSlice,
+  projectTasksSlice,
+} from '../../common';
 import { useKeycloak } from '@react-keycloak/web';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -70,6 +78,7 @@ const mockProject: IProject = {
   projectAgencyResponses: [],
   publicNote: 'public',
   privateNote: 'private',
+  notes: [],
 };
 
 export const tasks: ITask[] = [
@@ -90,10 +99,10 @@ export const tasks: ITask[] = [
 ];
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: { lookupCodes: [] },
-  [reducerTypes.ProjectReducers.PROJECT]: mockProject,
-  [reducerTypes.ProjectReducers.TASKS]: tasks,
-  [reducerTypes.NETWORK]: {
+  [lookupCodesSlice.name]: { lookupCodes: [] },
+  [projectSlice.name]: mockProject,
+  [projectTasksSlice.name]: tasks,
+  [networkSlice.name]: {
     [ProjectActions.GET_PROJECT]: {},
   },
 });

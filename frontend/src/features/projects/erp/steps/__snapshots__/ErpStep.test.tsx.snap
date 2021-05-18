@@ -12,7 +12,25 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
   font-family: 'BCSans',Fallback,sans-serif;
 }
 
-.c3 {
+.c3 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c3 span {
+  padding: 0;
+}
+
+.c4 {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -697,7 +715,7 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
               class="col"
             >
               <div
-                class="ProjectNotes form-row"
+                class="c3 ProjectNotes form-row"
               >
                 <div
                   class="col form-group col"
@@ -718,7 +736,7 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ProjectNotes form-row"
+                class="c3 ProjectNotes form-row"
               >
                 <div
                   class="col form-group col"
@@ -739,7 +757,7 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ProjectNotes form-row"
+                class="c3 ProjectNotes form-row"
               >
                 <div
                   class="col form-group col"
@@ -768,7 +786,7 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
               class="col"
             >
               <div
-                class="ProjectNotes form-row"
+                class="c3 ProjectNotes form-row"
               >
                 <div
                   class="col-md-11 form-group col"
@@ -837,7 +855,7 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
                 </div>
               </div>
               <div
-                class="ProjectNotes form-row"
+                class="c3 ProjectNotes form-row"
               >
                 <div
                   class="col-md-11 form-group col"
@@ -1058,7 +1076,7 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="ProjectNotes form-row"
+            class="c3 ProjectNotes form-row"
           >
             <div
               class="col-md-12 form-group col"
@@ -1085,10 +1103,10 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
       style="text-align: right;"
     />
     <div
-      class="c3"
+      class="c4"
     />
     <div
-      class="c3"
+      class="c4"
     >
       <span>
         <button
@@ -1132,13 +1150,31 @@ exports[`ERP Approval Step renders correctly 1`] = `
   font-family: 'BCSans',Fallback,sans-serif;
 }
 
+.c3 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c3 span {
+  padding: 0;
+}
+
 .c2 {
   text-align: center;
   font-family: 'BCSans-Bold';
   margin-bottom: 1.5rem;
 }
 
-.c3 {
+.c4 {
   margin: 0.75rem 2rem 0.75rem 2rem;
 }
 
@@ -1388,7 +1424,7 @@ exports[`ERP Approval Step renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="ProjectNotes form-row"
+            class="c3 ProjectNotes form-row"
           >
             <div
               class="col-md-12 reviewRequired form-group col"
@@ -1565,7 +1601,7 @@ exports[`ERP Approval Step renders correctly 1`] = `
               class="col"
             >
               <div
-                class="ProjectNotes form-row"
+                class="c3 ProjectNotes form-row"
               >
                 <div
                   class="col form-group col"
@@ -1700,7 +1736,7 @@ exports[`ERP Approval Step renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="c3"
+            class="c4"
           >
             OR
           </div>
@@ -1850,7 +1886,7 @@ exports[`ERP Approval Step renders correctly 1`] = `
                 Proceed to SPL
               </button>
               <div
-                class="c3"
+                class="c4"
               >
                 OR
               </div>

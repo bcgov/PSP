@@ -4,14 +4,12 @@ import { LatLng, geoJSON } from 'leaflet';
 import { useCallback, Dispatch } from 'react';
 import parcelLayerDataSlice, {
   saveParcelLayerData,
-  IParcelLayerData,
-} from 'reducers/parcelLayerDataSlice';
-import { error } from 'actions/genericActions';
-import { useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
+} from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { toast } from 'react-toastify';
 import { layerData } from 'constants/toasts';
 import * as rax from 'retry-axios';
+import { logError } from 'store/slices/network/networkSlice';
+import { useAppSelector } from 'store/hooks';
 
 export interface IUserLayerQuery {
   /**
@@ -91,7 +89,13 @@ export const handleParcelDataLayerResponse = (
       saveParcelDataLayerResponse(resp, dispatch, latLng);
     })
     .catch((axiosError: AxiosError) => {
-      dispatch(error(parcelLayerDataSlice.reducer.name, axiosError?.response?.status, axiosError));
+      dispatch(
+        logError({
+          name: parcelLayerDataSlice.reducer.name,
+          status: axiosError?.response?.status,
+          error: axiosError,
+        }),
+      );
     });
 };
 const MAX_RETRIES = 2;
@@ -124,9 +128,7 @@ const wfsAxios = () => {
  * @param geometry the name of the geometry in the feature collection
  */
 export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUserLayerQuery => {
-  const parcelLayerData = useSelector<RootState, IParcelLayerData | null>(
-    state => state.parcelLayerData?.parcelLayerData,
-  );
+  const parcelLayerData = useAppSelector(state => state.parcelLayerData?.parcelLayerData);
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(

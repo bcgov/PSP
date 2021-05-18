@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Navbar, Container, Row, ButtonToolbar, Button } from 'react-bootstrap';
 import { Check, Form, Input, Select, SelectOption } from '../../../components/common/form';
 import { useDispatch } from 'react-redux';
-import { IAgencyDetail } from 'interfaces';
 import { Formik } from 'formik';
 import * as API from 'constants/API';
 import './EditAgencyPage.scss';
 import { useHistory } from 'react-router-dom';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
 import GenericModal from 'components/common/GenericModal';
 import { AgencyEditSchema } from 'utils/YupSchema';
@@ -16,6 +15,7 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { useAppSelector } from 'store/hooks';
 import { useAgencies } from 'store/slices/agencies/useAgencies';
+import { IAgencyDetail } from 'interfaces';
 
 interface IEditAgencyPageProps {
   /** id prop to identify which agency to edit */
@@ -38,7 +38,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
     }
   }, [fetchAgencyDetail, agencyId, newAgency]);
 
-  const { getByType } = useCodeLookups();
+  const { getByType } = useLookupCodeHelpers();
   const agencies = getByType(API.AGENCY_CODE_SET_NAME).filter(x => !x.parentId);
 
   const agency = useAppSelector(state => state.agencies.agencyDetail);

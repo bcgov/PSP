@@ -6,7 +6,6 @@ import { FormGroup, FormControlProps, Form } from 'react-bootstrap';
 import { formikFieldMemo } from 'utils';
 import classNames from 'classnames';
 import GenericModal from '../GenericModal';
-import { appraisalDateWarning } from 'features/projects/common';
 import * as Popper from 'popper.js';
 
 type RequiredAttributes = {
@@ -38,6 +37,8 @@ export type FastDatePickerProps = FormControlProps &
   OptionalAttributes &
   Partial<ReactDatePickerProps>;
 
+export const appraisalDateWarning =
+  'You have entered an appraisal date that is older then the current appraisal date stored in PIMS. Are you sure that you would like to update PIMS to use this older date?';
 /**
  * Formik connected react-datepicker. Uses memo and cleanup inspired by
  * https://jaredpalmer.com/formik/docs/api/fastfield

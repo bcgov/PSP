@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useKeycloakWrapper from './useKeycloakWrapper';
 import * as API from 'constants/API';
-import useCodeLookups from './useLookupCodes';
+import useLookupCodeHelpers from './useLookupCodeHelpers';
 import { Claims } from 'constants/claims';
 import { SelectOption } from 'components/common/form';
 
@@ -13,7 +13,7 @@ import { SelectOption } from 'components/common/form';
  * @returns array of agency select options
  */
 export const useMyAgencies = (): SelectOption[] => {
-  const { getOptionsByType } = useCodeLookups();
+  const { getOptionsByType } = useLookupCodeHelpers();
 
   const keycloak = useKeycloakWrapper();
   const agencies = getOptionsByType(API.AGENCY_CODE_SET_NAME);

@@ -8,11 +8,10 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from 'constants/API';
-import { ILookupCode } from 'actions/lookupActions';
-import * as reducerTypes from 'constants/reducerTypes';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import Claims from 'constants/claims';
 import { TenantProvider, config } from 'tenants';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 afterEach(() => {
@@ -30,7 +29,7 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
+  [lookupCodesSlice.name]: lCodes,
 });
 
 describe('Header tests', () => {

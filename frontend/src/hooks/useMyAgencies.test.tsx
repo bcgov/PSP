@@ -2,13 +2,13 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
-import * as reducerTypes from 'constants/reducerTypes';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { useKeycloak } from '@react-keycloak/web';
 import Claims from 'constants/claims';
 import { useMyAgencies } from './useMyAgencies';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 
 jest.mock('@react-keycloak/web');
 Enzyme.configure({ adapter: new Adapter() });
@@ -16,7 +16,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: {
+  [lookupCodesSlice.name]: {
     lookupCodes: [
       { type: 'Agency', code: 'BCA', parentId: 8, id: 41, name: 'BC Assessment' },
       { type: 'Agency', code: 'BAC', id: 8, name: 'B Assessment C' },

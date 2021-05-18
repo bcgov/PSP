@@ -10,7 +10,7 @@ import useTable from '../../dispose/hooks/useTable';
 import { getPropertyColumns, getColumnsWithRemove } from './columns';
 import queryString from 'query-string';
 import { PropertyTypes } from 'constants/propertyTypes';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 
 type RequiredAttributes = {
@@ -50,13 +50,13 @@ export const PropertyListViewSelect: React.FC<InputProps> = ({
   pageIndex,
   setPageIndex,
 }) => {
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const { values, setFieldValue } = useFormikContext<any>();
   const existingProperties: IProperty[] = getIn(values, field);
 
   const agencies = useMemo(() => lookupCodes.getByType(API.AGENCY_CODE_SET_NAME), [lookupCodes]);
   const { project } = useProject();
-  const filterByParent = useCodeLookups().filterByParent;
+  const filterByParent = useLookupCodeHelpers().filterByParent;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const filteredAgencies = useMemo(() => filterByParent(agencies, project.agencyId), [agencies]);
 

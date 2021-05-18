@@ -1,8 +1,7 @@
 import * as React from 'react';
 import MapSideBarLayout from '../components/MapSideBarLayout';
 import useParamSideBar, { SidebarContextType } from '../hooks/useQueryParamSideBar';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
+import { useDispatch } from 'react-redux';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { BuildingForm, SubmitPropertySelector, LandForm } from '../SidebarContents';
 import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
@@ -11,7 +10,7 @@ import { useState } from 'react';
 import useGeocoder from 'features/properties/hooks/useGeocoder';
 import { isMouseEventRecent } from 'utils';
 import { PARCELS_LAYER_URL, useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { LeafletMouseEvent, LatLng } from 'leaflet';
+import { LatLng } from 'leaflet';
 import AssociatedLandForm from '../SidebarContents/AssociatedLandForm';
 import { toast } from 'react-toastify';
 import _, { noop, cloneDeep } from 'lodash';
@@ -36,6 +35,7 @@ import { fireMapRefreshEvent } from 'components/maps/hooks/useMapRefreshEvent';
 import { useTenant } from 'tenants';
 import { storeParcelDetail, useProperties } from 'store/slices/properties';
 import { IBuilding, IParcel, IProperty } from 'interfaces';
+import { useAppSelector } from 'store/hooks';
 
 interface IMapSideBarContainerProps {
   refreshParcels: Function;
@@ -127,9 +127,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
   const [movingPinNameSpace, setMovingPinNameSpace] = useState<string | undefined>(
     movingPinNameSpaceProp,
   );
-  const leafletMouseEvent = useSelector<RootState, LeafletMouseEvent | null>(
-    state => state.leafletClickEvent?.mapClickEvent,
-  );
+  const leafletMouseEvent = useAppSelector(state => state.leafletMouseEvent?.mapClickEvent);
   const [buildingToAssociateLand, setBuildingToAssociateLand] = useState<IBuilding | undefined>();
   const [showAssociateLandModal, setShowAssociateLandModal] = useState(false);
   const [propertyType, setPropertyType] = useState('');

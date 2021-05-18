@@ -1,4 +1,4 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
 
 export const savePropertyNames = createAction<String[]>('savePropertyNames');
 export const clearPropertyNames = createAction('clearPropertyNames');
@@ -10,7 +10,7 @@ const propertyNameSlice = createSlice({
   initialState: [] as String[],
   reducers: {},
   extraReducers: (builder: any) => {
-    builder.addCase(savePropertyNames, (state: any, action: any) => {
+    builder.addCase(savePropertyNames, (state: any, action: PayloadAction<String[]>) => {
       return action.payload;
     });
     builder.addCase(clearPropertyNames, (state: any) => {

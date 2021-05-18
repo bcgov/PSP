@@ -1,11 +1,9 @@
 import React from 'react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
@@ -15,6 +13,9 @@ import { PropertyListViewSelect } from '../../common/components/PropertyListView
 import { useKeycloak } from '@react-keycloak/web';
 import { render, fireEvent, cleanup, wait, act } from '@testing-library/react';
 import { noop } from 'lodash';
+import { projectSlice } from 'features/projects/common';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -94,9 +95,9 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
-  [reducerTypes.NETWORK]: {},
-  [reducerTypes.ProjectReducers.PROJECT]: {
+  [lookupCodesSlice.name]: lCodes,
+  [networkSlice.name]: {},
+  [projectSlice.name]: {
     project: {
       name: '',
       note: '',

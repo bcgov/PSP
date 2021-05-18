@@ -2,6 +2,24 @@
 
 exports[`dispose project draft step display stepper renders correctly based off of workflow 1`] = `
 .c0 {
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.c0 div {
+  border: solid 2px accentColor;
+  border-radius: 2rem;
+  display: inline-block;
+  background-color: white;
+}
+
+.c0 svg {
+  color: sresIconColor;
+  margin: 0.5rem;
+}
+
+.c1 {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -16,7 +34,7 @@ exports[`dispose project draft step display stepper renders correctly based off 
   class="ProjectDisposeLayout container-fluid"
 >
   <div
-    class="SresManual"
+    class="c0 SresManual"
   >
     <div>
       <svg
@@ -208,7 +226,7 @@ exports[`dispose project draft step display stepper renders correctly based off 
     class="step-content container-fluid"
   >
     <div
-      class="c0"
+      class="c1"
     >
       <button
         class="btn btn-primary"

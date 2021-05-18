@@ -32,7 +32,7 @@ import { FiscalKeys } from 'constants/fiscalKeys';
 import variables from '_variables.module.scss';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { Roles } from 'constants/roles';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as Yup from 'yup';
 import {
@@ -244,7 +244,7 @@ const DirtyRowsTracker: React.FC<{ setDirtyRows: (changes: IChangedRow[]) => voi
 };
 
 const PropertyListView: React.FC = () => {
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const { updateBuilding, updateParcel } = useApi();
   const [editable, setEditable] = useState(false);
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();

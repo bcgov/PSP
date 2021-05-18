@@ -1,18 +1,81 @@
-import './SelectProjectPropertiesStep.scss';
-
-import React, { useCallback, useState, useEffect } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Classifications } from 'constants/classifications';
 import { Formik } from 'formik';
-import { useStepper, SelectProjectPropertiesStepYupSchema } from '..';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
+import styled from 'styled-components';
+import { SelectProjectPropertiesStepYupSchema, useStepper } from '../';
 import {
   FilterBar,
   IFilterBarState,
   IStepProps,
-  useStepForm,
   SelectProjectPropertiesForm,
+  useStepForm,
 } from '../../common';
-import styled from 'styled-components';
-import { Classifications } from 'constants/classifications';
+import variables from '_variables.module.scss';
+
+const SelectProjectPropertiesContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  .small-filter {
+    .btn-link:focus,
+    .btn-link:active {
+      background: none !important;
+    }
+  }
+  .PropertyListViewSelect {
+    margin-bottom: 3rem;
+    padding: 0;
+    .btn {
+      margin-bottom: 0.5rem;
+    }
+  }
+  .no-rows-message {
+    font-size: 14px;
+  }
+  .filter-container {
+    padding: 0;
+    .map-filter-bar {
+      align-items: center;
+      padding: 1rem 0;
+      .bar-item {
+        .form-group {
+          padding: 0;
+          margin: 0;
+        }
+      }
+      .btn-warning {
+        color: white;
+        font-weight: bold;
+      }
+      .form-control {
+        border-radius: 0;
+      }
+    }
+  }
+  .TableToolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0.5rem 0;
+  }
+  .ScrollContainer {
+    padding: 1rem 0;
+    overflow-x: auto;
+    overflow-y: inherit;
+    table {
+      background-color: #fff;
+    }
+    .selected {
+      background-color: ${variables.accentColor};
+    }
+  }
+  .DisposeForm {
+    padding: 1rem 3rem;
+  }
+  .invalid-feedback {
+    text-align: right;
+  }
+`;
 
 /** contains the link text for Show Surplus and Show All classification filter */
 const LinkButton = styled(Button)`
@@ -84,7 +147,7 @@ const SelectProjectPropertiesStep = ({ isReadOnly, formikRef }: IStepProps) => {
   };
 
   return isReadOnly ? null : (
-    <Container fluid className="SelectProjectProperties">
+    <SelectProjectPropertiesContainer fluid className="SelectProjectProperties">
       <h3 className="mr-auto">Search and select 1 or more properties for the project</h3>
       {!isReadOnly && (
         <>
@@ -133,7 +196,7 @@ const SelectProjectPropertiesStep = ({ isReadOnly, formikRef }: IStepProps) => {
           }}
         />
       </Formik>
-    </Container>
+    </SelectProjectPropertiesContainer>
   );
 };
 

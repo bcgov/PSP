@@ -3,20 +3,20 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { IENotSupportedPage } from './IENotSupportedPage';
 import { cleanup } from '@testing-library/react';
-import * as reducerTypes from 'constants/reducerTypes';
 import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { createMemoryHistory } from 'history';
 import renderer from 'react-test-renderer';
 import { TenantProvider } from 'tenants';
+import { networkSlice } from 'store/slices/network/networkSlice';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({
-  [reducerTypes.NETWORK]: {
+  [networkSlice.name]: {
     [ADD_ACTIVATE_USER]: {},
   },
 });

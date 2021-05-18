@@ -7,7 +7,8 @@ import { Button, Check, DisplayError, Input, Select } from 'components/common/fo
 import { getIn, useFormikContext } from 'formik';
 import { TypeaheadField } from 'components/common/form/Typeahead';
 import variables from '_variables.module.scss';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 const StyledRow = styled(Row)`
   .form-group {
@@ -76,7 +77,7 @@ const InvalidFeedback = styled.div`
 
 /** This form is triggered by the FindMorePropertiesButton and contains additional filter fields for the PropertiesFilter */
 const FindMorePropertiesForm = (props: any) => {
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const { setFieldValue, handleSubmit, errors } = useFormikContext<any>();
   const [clear, setClear] = useState(false);
   const [displayError, setDisplayError] = useState(false);
@@ -86,7 +87,7 @@ const FindMorePropertiesForm = (props: any) => {
     .map(mapLookupCode);
   const adminAreas = lookupCodes
     .getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME)
-    .map(c => mapLookupCode(c, null));
+    .map((c: ILookupCode) => mapLookupCode(c, null));
 
   /** attempt submission of search, display errors if present */
   const handleSearch = () => {

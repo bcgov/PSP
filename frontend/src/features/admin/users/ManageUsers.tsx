@@ -2,7 +2,6 @@ import { useEffect, useMemo, useCallback } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
-import { IGenericNetworkAction } from 'actions/genericActions';
 import * as actionTypes from 'constants/actionTypes';
 import { IUser, IUsersFilter } from 'interfaces';
 import { IUserRecord } from './interfaces/IUserRecord';
@@ -12,7 +11,7 @@ import { Table } from 'components/Table';
 import { columnDefinitions } from './constants';
 import { formatApiDateTime, generateMultiSortCriteria } from 'utils';
 import styled from 'styled-components';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { isEmpty } from 'lodash';
 import _ from 'lodash';
 import variables from '_variables.module.scss';
@@ -30,6 +29,7 @@ import {
   useUsers,
 } from 'store/slices/users';
 import { useAppSelector } from 'store/hooks';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 
 const TableContainer = styled(Container)`
   margin-top: 10px;
@@ -61,7 +61,7 @@ const downloadUsers = (filter: IPaginateParams) =>
  */
 export const ManageUsers = () => {
   const dispatch = useDispatch();
-  const { getByType } = useCodeLookups();
+  const { getByType } = useLookupCodeHelpers();
   const agencies = useMemo(() => getByType(API.AGENCY_CODE_SET_NAME), [getByType]);
   const roles = useMemo(() => getByType(API.ROLE_CODE_SET_NAME), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
@@ -87,7 +87,7 @@ export const ManageUsers = () => {
   });
 
   const users = useAppSelector(
-    state => (state.network as any)[actionTypes.GET_USERS] as IGenericNetworkAction,
+    state => state.network[actionTypes.GET_USERS] as IGenericNetworkAction,
   );
 
   const onRequestData = useCallback(

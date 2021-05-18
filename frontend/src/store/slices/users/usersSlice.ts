@@ -1,5 +1,4 @@
 import { IUsersState } from '.';
-import { USERS } from '../../../constants/reducerTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPagedItems, IUserDetails, IUser, IUsersFilter } from 'interfaces';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
@@ -30,7 +29,7 @@ export const initialState: IUsersState = {
  * The user reducer stores the complete list of lookup codes used within the application.
  */
 export const usersSlice = createSlice({
-  name: USERS,
+  name: 'users',
   initialState: initialState,
   reducers: {
     storeUsers(state: IUsersState, action: PayloadAction<IPagedItems<IUser>>) {

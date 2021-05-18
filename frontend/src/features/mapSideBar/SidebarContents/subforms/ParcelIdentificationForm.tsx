@@ -16,7 +16,7 @@ import { noop } from 'lodash';
 import { Container, Row, Col, Form, ListGroup } from 'react-bootstrap';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import GenericModal from 'components/common/GenericModal';
 import { mapSelectOptionWithParent } from 'utils';
 import AddParentParcelsForm from './AddParentParcelsForm';
@@ -79,7 +79,7 @@ export const ParcelIdentificationForm: React.FC<IIdentificationProps> = ({
 
   const agencies = (props.agencies ?? []).map(c => mapSelectOptionWithParent(c, props.agencies));
   const formikProps = useFormikContext<ISteppedFormValues<IParcel>>();
-  const { lookupCodes } = useCodeLookups();
+  const { lookupCodes } = useLookupCodeHelpers();
   const { propertyTypeId, latitude, longitude } = getIn(formikProps.values, nameSpace);
   const projectNumbers = getIn(formikProps.values, 'data.projectNumbers');
   const agencyId = getIn(formikProps.values, `data.agencyId`);

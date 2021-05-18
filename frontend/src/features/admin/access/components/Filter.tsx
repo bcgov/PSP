@@ -3,7 +3,7 @@ import './Filter.scss';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Menu, IMenuItemProps } from 'components/menu/Menu';
 import { FaCaretDown, FaSearch, FaUndo } from 'react-icons/fa';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { Button } from 'components/common/form/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { IAccessRequestsFilterData } from 'store/slices/accessRequests';
@@ -18,7 +18,7 @@ export const defaultFilter: IAccessRequestsFilterData = { searchText: '', role: 
 
 export const AccessRequestFilter = (props: IProps) => {
   const [filterState, setFilterState] = React.useState(props.initialValues || defaultFilter);
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
   const { fetchLookupCodes } = useLookupCodes();
   React.useEffect(() => {
     fetchLookupCodes();

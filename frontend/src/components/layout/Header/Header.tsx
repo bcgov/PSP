@@ -1,9 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { IGenericNetworkAction } from 'actions/genericActions';
-import { RootState } from 'reducers/rootReducer';
-import { useSelector } from 'react-redux';
 import { FaBomb } from 'react-icons/fa';
 import _ from 'lodash';
 import { UserProfile } from './UserProfile';
@@ -14,6 +11,8 @@ import { Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
 import { HeaderStyled } from './HeaderStyled';
 import { VerticalBar } from 'components/common/VerticalBar';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { useAppSelector } from 'store/hooks';
 
 /**
  * A header component that includes the navigation bar.
@@ -29,7 +28,7 @@ export const Header = () => {
   const handleShow = () => setShow(true);
   const tenant = useTenant();
 
-  const errors = useSelector<RootState, IGenericNetworkAction[]>(state => {
+  const errors = useAppSelector(state => {
     const errors: IGenericNetworkAction[] = [];
     _.values(state).forEach(reducer => {
       _.values(reducer)

@@ -7,13 +7,13 @@ import { BuildingReviewPage } from './BuildingReviewPage';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from 'constants/API';
-import * as reducerTypes from 'constants/reducerTypes';
 import { Provider } from 'react-redux';
 import moment from 'moment';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IParcel } from 'interfaces';
+import { propertiesSlice } from 'store/slices/properties';
 
 const mockStore = configureMockStore([thunk]);
 const lCodes = {
@@ -24,8 +24,8 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
-  [reducerTypes.PROPERTIES]: { parcels: [] },
+  [lookupCodesSlice.name]: lCodes,
+  [propertiesSlice.name]: { parcels: [] },
 });
 
 export const mockDetails = [

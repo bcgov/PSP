@@ -21,7 +21,7 @@ import { PropertyFilterAgencyOptions } from './PropertyFilterAgencyOptions';
 import styled from 'styled-components';
 import { ParentSelect } from 'components/common/form/ParentSelect';
 import { Claims } from 'constants/claims';
-import useLookupCodes from 'hooks/useLookupCodes';
+import useLookupCodes from 'hooks/useLookupCodeHelpers';
 import { mapSelectOptionWithParent } from 'utils';
 import { useMyAgencies } from 'hooks/useMyAgencies';
 import { ILookupCode } from 'store/slices/lookupCodes';

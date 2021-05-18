@@ -1,5 +1,5 @@
 import { toFlatProject } from '../projectConverter';
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
 import { IProject, IApiProject } from '..';
 
 export interface IProjectWrapper {
@@ -14,11 +14,11 @@ export const clearProject = createAction('clearProject');
  */
 const projectSlice = createSlice({
   name: 'project',
-  initialState: {},
+  initialState: {} as IProjectWrapper,
   reducers: {},
   extraReducers: (builder: any) => {
     // note that redux-toolkit uses immer to prevent state from being mutated.
-    builder.addCase(saveProject, (state: any, action: any) => {
+    builder.addCase(saveProject, (state: IProjectWrapper, action: PayloadAction<IApiProject>) => {
       const project = action.payload as IApiProject;
       return { project: toFlatProject(project) };
     });

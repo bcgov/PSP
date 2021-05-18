@@ -1,7 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ExemptionEnhancedReferralCompleteForm renders successfully 1`] = `
-.c0 {
+.c0 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 .form-label {
+  -webkit-flex: 0 0 16.7%;
+  -ms-flex: 0 0 16.7%;
+  flex: 0 0 16.7%;
+  max-width: 16.7%;
+}
+
+.c0 span {
+  padding: 0;
+}
+
+.c1 {
   margin: 0.75rem 2rem 0.75rem 2rem;
 }
 
@@ -14,7 +32,7 @@ exports[`ExemptionEnhancedReferralCompleteForm renders successfully 1`] = `
     className="EnhancedReferralCompleteForm container-fluid"
   >
     <div
-      className="ProjectNotes form-row"
+      className="c0 ProjectNotes form-row"
     >
       <div
         className="col-md-12 form-group col"
@@ -273,7 +291,7 @@ exports[`ExemptionEnhancedReferralCompleteForm renders successfully 1`] = `
         Proceed to SPL
       </button>
       <div
-        className="c0"
+        className="c1"
       >
         OR
       </div>

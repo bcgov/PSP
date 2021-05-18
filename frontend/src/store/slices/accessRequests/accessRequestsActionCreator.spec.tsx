@@ -1,6 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as genericActions from 'actions/genericActions';
 import * as API from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
 import { ENVIRONMENT } from 'constants/environment';
@@ -11,17 +10,12 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { mockAccessRequest } from 'mocks/filterDataMock';
+import { find } from 'lodash';
 
-const requestSpy = jest.spyOn(genericActions, 'request');
-const successSpy = jest.spyOn(genericActions, 'success');
-const errorSpy = jest.spyOn(genericActions, 'error');
 const mockAxios = new MockAdapter(axios);
 
 afterEach(() => {
   mockAxios.reset();
-  requestSpy.mockClear();
-  successSpy.mockClear();
-  errorSpy.mockClear();
 });
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
@@ -47,8 +41,12 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .fetchCurrentAccessRequest()
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
                 type: 'accessRequests/storeAccessRequest',
@@ -69,8 +67,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .fetchCurrentAccessRequest()
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: {
                   data: {
@@ -103,8 +103,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .addAccessRequest(newMockAccessRequest)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: {
                   data: mockAccessRequest,
@@ -127,8 +129,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .addAccessRequest(newMockAccessRequest)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 accessRequest: {
                   data: mockAccessRequest,
@@ -154,8 +158,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .updateAccessRequest(mockAccessRequest)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: {
                   data: mockAccessRequest,
@@ -177,8 +183,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .updateAccessRequest(mockAccessRequest)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 accessRequest: {
                   data: mockAccessRequest,
@@ -212,8 +220,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .fetchAccessRequests({} as any)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: {
                   data: {
@@ -241,8 +251,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .fetchAccessRequests({} as any)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 accessRequest: {
                   data: mockAccessRequest,
@@ -268,8 +280,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(successSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: 2,
                 type: 'accessRequests/deleteAccessRequest',
@@ -289,8 +303,10 @@ describe('useAccessRequests functionality', () => {
           useAccessRequests()
             .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
             .then(() => {
-              expect(requestSpy).toHaveBeenCalledTimes(1);
-              expect(errorSpy).toHaveBeenCalledTimes(1);
+              expect(
+                find(currentStore.getActions(), { type: 'network/logRequest' }),
+              ).not.toBeNull();
+              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: 2,
                 type: 'accessRequests/deleteAccessRequest',

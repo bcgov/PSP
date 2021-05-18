@@ -6,10 +6,8 @@ import { createMemoryHistory } from 'history';
 import { render, cleanup, act, wait, fireEvent } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as API from 'constants/API';
 import { Provider } from 'react-redux';
-import * as reducerTypes from 'constants/reducerTypes';
 import service from '../service';
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
@@ -19,6 +17,7 @@ import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.tes
 import { fillInput } from 'utils/testUtils';
 import { ToastContainer } from 'react-toastify';
 import { useApi } from 'hooks/useApi';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 
 // Set all module functions to jest.fn
 jest.mock('../service');
@@ -44,7 +43,7 @@ const lCodes = {
 };
 
 const store = mockStore({
-  [reducerTypes.LOOKUP_CODE]: lCodes,
+  [lookupCodesSlice.name]: lCodes,
 });
 
 const history = createMemoryHistory();

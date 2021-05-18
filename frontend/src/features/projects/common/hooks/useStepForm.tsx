@@ -1,31 +1,31 @@
-import { ProjectActions } from 'constants/actionTypes';
-import { useDispatch, useSelector } from 'react-redux';
-import { clear, IGenericNetworkAction } from 'actions/genericActions';
+import { useDispatch } from 'react-redux';
 import _ from 'lodash';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import Claims from 'constants/claims';
 import { MutableRefObject } from 'react';
 import { FormikValues } from 'formik';
 import { AxiosError } from 'axios';
-import { RootState } from 'reducers/rootReducer';
 import { updateWorkflowStatus, updateProject, createProject, IProject } from '..';
 import { Roles } from 'constants/roles';
+import { logClear } from 'store/slices/network/networkSlice';
+import { useAppSelector } from 'store/hooks';
+import { ProjectActions } from '../slices/projectActions';
 
 /** hook providing utilities for project dispose step forms. */
 const useStepForm = () => {
   const dispatch = useDispatch();
   const keycloak = useKeycloakWrapper();
-  const getProjectRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.GET_PROJECT] as any,
+  const getProjectRequest = useAppSelector(
+    state => state.network[ProjectActions.GET_PROJECT] as any,
   );
-  const addProjectRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.ADD_PROJECT] as any,
+  const addProjectRequest = useAppSelector(
+    state => state.network[ProjectActions.ADD_PROJECT] as any,
   );
-  const updateProjectRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.UPDATE_PROJECT] as any,
+  const updateProjectRequest = useAppSelector(
+    state => state.network[ProjectActions.UPDATE_PROJECT] as any,
   );
-  const updateWorflowStatusRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.UPDATE_WORKFLOW_STATUS] as any,
+  const updateWorflowStatusRequest = useAppSelector(
+    state => state.network[ProjectActions.UPDATE_WORKFLOW_STATUS] as any,
   );
   const noFetchingProjectRequests =
     getProjectRequest?.isFetching !== true &&
@@ -96,8 +96,8 @@ const useStepForm = () => {
         throw Error('axios request failed');
       })
       .finally(() => {
-        dispatch(clear(ProjectActions.UPDATE_PROJECT));
-        dispatch(clear(ProjectActions.ADD_PROJECT));
+        dispatch(logClear(ProjectActions.UPDATE_PROJECT));
+        dispatch(logClear(ProjectActions.ADD_PROJECT));
       });
   };
 

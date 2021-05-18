@@ -4,9 +4,7 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { ILookupCode } from 'actions/lookupActions';
 import * as actionTypes from 'constants/actionTypes';
-import * as reducerTypes from 'constants/reducerTypes';
 import * as API from 'constants/API';
 import { ManageUsers } from './ManageUsers';
 import { cleanup, fireEvent, render, wait } from '@testing-library/react';
@@ -18,6 +16,9 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { fillInput } from 'utils/testUtils';
 import { useKeycloak } from '@react-keycloak/web';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+import { usersSlice } from 'store/slices/users';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -50,7 +51,7 @@ jest.mock('react-router-dom', () => ({
 }));
 const getStore = (includeDate?: boolean) =>
   mockStore({
-    [reducerTypes.USERS]: {
+    [usersSlice.name]: {
       pagedUsers: {
         pageIndex: 0,
         total: 2,
@@ -83,8 +84,8 @@ const getStore = (includeDate?: boolean) =>
       filter: { firstName: '' },
       rowsPerPage: 10,
     },
-    [reducerTypes.LOOKUP_CODE]: lCodes,
-    [reducerTypes.NETWORK]: {
+    [lookupCodesSlice.name]: lCodes,
+    [networkSlice.name]: {
       [actionTypes.GET_USERS]: {
         isFetching: false,
       },

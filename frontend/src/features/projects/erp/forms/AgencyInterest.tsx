@@ -1,4 +1,4 @@
-import { AgencyResponses, FormikTable, IProject } from '../../common';
+import { AgencyResponses, IProject } from '../../common';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 import * as API from 'constants/API';
@@ -6,8 +6,9 @@ import { ParentSelect } from 'components/common/form/ParentSelect';
 import { mapLookupCodeWithParentString } from 'utils';
 import { Button, Col, Row } from 'react-bootstrap';
 import { AgencyInterestColumns } from './AgencyInterestColumns';
-import useCodeLookups from 'hooks/useLookupCodes';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import FormikTable from 'components/common/FormikTable';
 
 export interface IAgencyInterestProps {
   /** Whether the controls are disabled. */
@@ -21,15 +22,19 @@ export interface IAgencyInterestProps {
 export const AgencyInterest = ({ disabled = false }: IAgencyInterestProps) => {
   const { values, setValues, setFieldValue } = useFormikContext<IProject>();
   const [enableAdd, setEnableAdd] = React.useState(false);
-  const lookupCodes = useCodeLookups();
+  const lookupCodes = useLookupCodeHelpers();
 
   const agencies = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
-  const agencyOptions = (agencies ?? []).map(c => mapLookupCodeWithParentString(c, agencies));
+  const agencyOptions = (agencies ?? []).map((c: ILookupCode) =>
+    mapLookupCodeWithParentString(c, agencies),
+  );
 
   const onAddAgency = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
     event.preventDefault();
     const selectedAgency = getIn(values, 'addAgencyResponse');
-    const agency = agencies.find(a => ((a.id as unknown) as number) === parseInt(selectedAgency));
+    const agency = agencies.find(
+      (a: { id: unknown }) => ((a.id as unknown) as number) === parseInt(selectedAgency),
+    );
     if (agency !== undefined) {
       const project = addAgency({
         project: values,

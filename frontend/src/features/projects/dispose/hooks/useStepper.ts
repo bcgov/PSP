@@ -1,14 +1,12 @@
 import { useEffect, useContext, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'reducers/rootReducer';
 import { StepperContext } from '..';
-import { IProject, initialValues, IStatus, IProjectWrapper, IProjectTask } from '../../common';
+import { IProject, initialValues, IStatus, IProjectTask } from '../../common';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
-import { IGenericNetworkAction } from 'actions/genericActions';
-import { ProjectActions } from 'constants/actionTypes';
 import { ReviewWorkflowStatus } from '../../common/interfaces';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
+import { useAppSelector } from 'store/hooks';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 
 /**
  * Get the status after the current status in this workflow. Return undefined if there is no next step.
@@ -59,9 +57,12 @@ export const isStatusCompleted = (
  */
 export const isStatusNavigable = (
   workflowStatuses: IStatus[],
-  status: IStatus,
+  status?: IStatus,
   project?: IProject,
 ) => {
+  if (!status) {
+    return false;
+  }
   if (!project) {
     return status.sortOrder === 0;
   }
@@ -112,16 +113,16 @@ const useStepper = () => {
     }),
     [keycloak],
   );
-  const project: any =
-    useSelector<RootState, IProjectWrapper>(state => state.project).project || initialProject;
-  const workflowTasks: IProjectTask[] = useSelector<RootState, IProjectTask[]>(
-    state => state.tasks,
-  ) || { ...initialValues, agencyId: keycloak.agencyId! };
-  const getProjectRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.GET_PROJECT] as any,
+  const project: any = useAppSelector(state => state.project).project || initialProject;
+  const workflowTasks: IProjectTask[] = useAppSelector(state => state.projectWorkflowTasks) || {
+    ...initialValues,
+    agencyId: keycloak.agencyId!,
+  };
+  const getProjectRequest = useAppSelector(
+    state => state.network[ProjectActions.GET_PROJECT] as any,
   );
-  const updateWorkflowStatusRequest = useSelector<RootState, IGenericNetworkAction>(
-    state => (state.network as any)[ProjectActions.UPDATE_WORKFLOW_STATUS] as any,
+  const updateWorkflowStatusRequest = useAppSelector(
+    state => state.network[ProjectActions.UPDATE_WORKFLOW_STATUS] as any,
   );
 
   useEffect(() => {
@@ -178,7 +179,8 @@ const useStepper = () => {
     },
     projectStatusCompleted: (status?: IStatus) =>
       isStatusCompleted(disposeWorkflowStatuses, status, project),
-    canGoToStatus: (status: IStatus) => isStatusNavigable(disposeWorkflowStatuses, status, project),
+    canGoToStatus: (status?: IStatus) =>
+      isStatusNavigable(disposeWorkflowStatuses, status, project),
     getLastCompletedStatus: () =>
       getLastCompletedStatus(disposeWorkflowStatuses, currentStatus, project),
     goToStepById: (statusId: number) => {

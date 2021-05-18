@@ -1,6 +1,5 @@
 import { IPagedItems } from './../../../interfaces/pagedItems';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { request, success, error } from 'actions/genericActions';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
@@ -12,6 +11,7 @@ import * as pimsToasts from 'constants/toasts';
 import { useAppDispatch } from 'store/hooks';
 import { useCallback } from 'react';
 import { storeAgencies, storeAgencyDetails } from './agenciesSlice';
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
 
 const agencyToasts: LifecycleToasts = {
   loadingToast: pimsToasts.agency.AGENCY_UPDATING,
@@ -30,18 +30,24 @@ export const useAgencies = () => {
    */
   const fetch = useCallback(
     async (params: API.IPaginateParams): Promise<IPagedItems<IAgency>> => {
-      dispatch(request(actionTypes.GET_AGENCIES));
+      dispatch(logRequest(actionTypes.GET_AGENCIES));
       dispatch(showLoading());
       return CustomAxios()
         .post(ENVIRONMENT.apiUrl + API.POST_AGENCIES(), params)
         .then((response: AxiosResponse) => {
-          dispatch(success(actionTypes.GET_AGENCIES, response.status));
+          dispatch(logSuccess({ name: actionTypes.GET_AGENCIES, status: response.status }));
           dispatch(storeAgencies(response.data));
           dispatch(hideLoading());
           return response.data;
         })
         .catch((axiosError: AxiosError) =>
-          dispatch(error(actionTypes.GET_AGENCIES, axiosError?.response?.status, axiosError)),
+          dispatch(
+            logError({
+              name: actionTypes.GET_AGENCIES,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          ),
         )
         .finally(() => dispatch(hideLoading()));
     },
@@ -54,17 +60,17 @@ export const useAgencies = () => {
    */
   const fetchDetail = useCallback(
     async (id: API.IAgencyDetailParams): Promise<IAgencyDetail> => {
-      dispatch(request(actionTypes.GET_AGENCY_DETAILS));
+      dispatch(logRequest(actionTypes.GET_AGENCY_DETAILS));
       dispatch(showLoading());
       return CustomAxios()
         .get(ENVIRONMENT.apiUrl + API.AGENCY_DETAIL(id))
         .then((response: AxiosResponse) => {
-          dispatch(success(actionTypes.GET_AGENCY_DETAILS));
+          dispatch(logSuccess({ name: actionTypes.GET_AGENCY_DETAILS }));
           dispatch(storeAgencyDetails(response.data));
           dispatch(hideLoading());
           return response.data;
         })
-        .catch(() => dispatch(error(actionTypes.GET_AGENCY_DETAILS)))
+        .catch(() => dispatch(logError({ name: actionTypes.GET_AGENCY_DETAILS })))
         .finally(() => dispatch(hideLoading()));
     },
     [dispatch],
@@ -99,20 +105,26 @@ export const useAgencies = () => {
    */
   const add = useCallback(
     async (agency: IAddAgency): Promise<IAgencyDetail> => {
-      dispatch(request(actionTypes.ADD_AGENCY));
+      dispatch(logRequest(actionTypes.ADD_AGENCY));
       dispatch(showLoading());
       try {
         const { data, status } = await CustomAxios({ lifecycleToasts: agencyToasts }).post(
           ENVIRONMENT.apiUrl + API.AGENCY_ROOT(),
           agency,
         );
-        dispatch(success(actionTypes.ADD_PARCEL, status));
+        dispatch(logSuccess({ name: actionTypes.ADD_PARCEL, status }));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(error(actionTypes.ADD_AGENCY, axiosError?.response?.status, axiosError));
+        dispatch(
+          logError({
+            name: actionTypes.ADD_AGENCY,
+            status: axiosError?.response?.status,
+            error: axiosError,
+          }),
+        );
         dispatch(hideLoading());
-        throw Error(axiosError.response?.data.details);
+        throw logError(axiosError.response?.data.details);
       }
     },
     [dispatch],
@@ -124,17 +136,23 @@ export const useAgencies = () => {
    */
   const remove = useCallback(
     async (agency: IAgency): Promise<IAgencyDetail> => {
-      dispatch(request(actionTypes.DELETE_AGENCY));
+      dispatch(logRequest(actionTypes.DELETE_AGENCY));
       dispatch(showLoading());
       return await CustomAxios()
         .delete(ENVIRONMENT.apiUrl + API.AGENCY_ROOT() + `${agency.id}`, { data: agency })
         .then((response: AxiosResponse) => {
-          dispatch(success(actionTypes.DELETE_AGENCY, response.status));
+          dispatch(logSuccess({ name: actionTypes.DELETE_AGENCY, status: response.status }));
           dispatch(hideLoading());
           return response.data;
         })
         .catch((axiosError: AxiosError) => {
-          dispatch(error(actionTypes.DELETE_AGENCY, axiosError?.response?.status, axiosError));
+          dispatch(
+            logError({
+              name: actionTypes.DELETE_AGENCY,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
         })
         .finally(() => dispatch(hideLoading()));
     },
