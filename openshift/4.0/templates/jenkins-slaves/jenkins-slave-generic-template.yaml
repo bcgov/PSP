@@ -14,7 +14,6 @@ objects:
     metadata:
       labels:
         build: "${NAME}"
-        role: jenkins-slave
       name: "${NAME}"
   - apiVersion: v1
     kind: BuildConfig
