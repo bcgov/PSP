@@ -123,6 +123,118 @@ namespace Pims.Api.Test.Helpers
             // Assert
             Assert.False(result);
         }
+
+        [Fact]
+        public void Not_Equal_XPropertyNull()
+        {
+            // Arrange
+            var o1 = new { Id = (int?)null };
+            var o2 = new { Id = 1 };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Not_Equal_YPropertyNull()
+        {
+            // Arrange
+            var o1 = new { Id = 1 };
+            var o2 = new { Id = (int?)null };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Not_Equal_PropertyObject()
+        {
+            // Arrange
+            var o1 = new { Test = new { Id = 1 } };
+            var o2 = new { Test = new { Id = 2 } };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Not_Equal_Enumerable_XPropertyNull()
+        {
+            // Arrange
+            var o1 = new { Rows = new[] { new { Id = (int?)null } } };
+            var o2 = new { Rows = new[] { new { Id = 1 } } };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Not_Equal_Enumerable_YPropertyNull()
+        {
+            // Arrange
+            var o1 = new { Rows = new[] { new { Id = 1 } } };
+            var o2 = new { Rows = new[] { new { Id = (int?)null } } };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Equal_Enumerable_PropertyNull()
+        {
+            // Arrange
+            var o1 = new { Rows = new[] { new { Id = (int?)null } } };
+            var o2 = new { Rows = new[] { new { Id = (int?)null } } };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Not_Equal_Enumerable_Children()
+        {
+            // Arrange
+            var o1 = new { Rows = new[] { new { Item = new { Id = 1 } } } };
+            var o2 = new { Rows = new[] { new { Item = new { Id = 2 } } } };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result = comparer.Equals(o1, o2);
+
+            // Assert
+            Assert.False(result);
+        }
         #endregion
     }
 }

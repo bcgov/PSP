@@ -138,11 +138,26 @@ convert: ## Convert Excel files to JSON
 	@echo "$(P) Convert Excel files to JSON..."
 	@cd tools/converters/excel; dotnet build; dotnet run;
 
+backend-test: ## Run backend unit tests
+	@echo "$(P) Run backend unit tests"
+	@cd backend; dotnet test;
+
+frontend-test: ## Run frontend unit tests
+	@echo "$(P) Run frontend unit tests"
+	@cd frontend; npm run test:watch;
+
 backend-coverage: ## Generate coverage report for backend
 	@echo "$(P) Generate coverage report for backend"
+	@cd backend/tests/unit/api; dotnet build;
+	@cd backend/tests/unit/dal; dotnet build;
 	@cd backend; coverlet ./tests/unit/api/bin/Debug/netcoreapp3.1/Pims.Api.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.json" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" -f json
 	@cd backend; coverlet ./tests/unit/dal/bin/Debug/netcoreapp3.1/Pims.Dal.Test.dll --target "dotnet" --targetargs "test ./ --no-build" -o "./tests/TestResults/coverage.xml" --exclude "[*.Test]*" --exclude "[*]*Model" --exclude-by-attribute "CompilerGenerated" --merge-with "tests/TestResults/coverage.json" -f cobertura
 	@cd backend; reportgenerator "-reports:./tests/TestResults/coverage.xml" "-targetdir:./tests/TestResults/Coverage" -reporttypes:Html
 	@cd backend; start ./tests/TestResults/Coverage/index.htm
 
-.PHONY: local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh npm-clean npm-refresh keycloak-sync convert backend-coverage
+frontend-coverage: ## Generate coverage report for frontend
+	@echo "$(P) Generate coverage report for frontend"
+	@cd frontend; npm run coverage;
+
+.PHONY: local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
+
