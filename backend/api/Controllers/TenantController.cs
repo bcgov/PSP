@@ -6,6 +6,8 @@ using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Tenant;
 using Entity = Pims.Dal.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Pims.Api.Policies;
+using Pims.Dal.Security;
 
 namespace Pims.Api.Controllers
 {
@@ -47,10 +49,13 @@ namespace Pims.Api.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.TenantModel), 200)]
+        [ProducesResponseType(204)]
         [SwaggerOperation(Tags = new[] { "tenants" })]
         public IActionResult Settings()
         {
             var tenant = _pimsService.Tenant.GetTenant(_pimsOptions.Tenant);
+
+            if (tenant == null) return new NoContentResult();
             return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
         }
 
@@ -59,10 +64,11 @@ namespace Pims.Api.Controllers
         /// Updates the tenant for the specified 'code'.
         /// </summary>
         /// <returns></returns>
-        [Authorize]
         [HttpPut("{code}")]
+        [HasPermission(Permissions.SystemAdmin)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.TenantModel), 200)]
+        [ProducesResponseType(403)]
         [SwaggerOperation(Tags = new[] { "tenants" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/{code})")]
         public IActionResult UpdateTenant(string code, Model.TenantModel model)

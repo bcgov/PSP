@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -49,6 +50,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public Tenant UpdateTenant(Tenant tenant)
         {
+            if (tenant == null) throw new ArgumentNullException(nameof(tenant));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
             var originalTenant = this.Context.Tenants.FirstOrDefault(t => t.Code == tenant.Code);
 

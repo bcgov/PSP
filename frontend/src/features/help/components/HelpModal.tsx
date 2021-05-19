@@ -99,7 +99,6 @@ const DraggableModalDialog = (props: any) => {
  * Stylize the modal component.
  */
 const ModalStyled = styled(Modal)`
-  max-width: 700px;
   .close {
     color: white;
     text-shadow: 0 1px 0 #000;
