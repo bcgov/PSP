@@ -122,11 +122,6 @@ export const POST_AGENCIES = () => `/admin/agencies/filter`; // get paged list o
 export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties or all if not specified.
 
 // User Service
-export const REQUEST_ACCESS = (id?: number) => `/users/access/requests${id ? '/' + id : ''}`; //request access url.
-export const REQUEST_ACCESS_ADMIN = () => `/keycloak/users/access/request`; //request access admin url.
-export const REQUEST_ACCESS_LIST = (params: IPaginateAccessRequests) =>
-  `/admin/access/requests?${queryString.stringify(params)}`; // get paged access requests
-export const REQUEST_ACCESS_DELETE = (id: number) => `/admin/access/requests/${id}`; // delete an access request
 export const POST_USERS = () => `/admin/users/my/agency`; // get paged list of users
 
 // Projects
