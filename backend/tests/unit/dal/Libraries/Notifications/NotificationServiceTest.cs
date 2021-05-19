@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
-
 namespace Pims.Dal.Test.Libraries.Notifications
 {
     [Trait("category", "unit")]
@@ -305,6 +304,137 @@ namespace Pims.Dal.Test.Libraries.Notifications
             Assert.NotNull(result);
             Assert.IsAssignableFrom<StatusResponse>(result);
             ches.Verify(m => m.CancelEmailAsync(messageId), Times.Once());
+        }
+        #endregion
+
+        #region Generate
+        [Fact]
+        public void Generate_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<NotificationService>();
+
+            var template = EntityHelper.CreateNotificationTemplate(1, "template", "subject", "body");
+            template.RowVersion = EntityHelper.GenerateRowVersion("anonymous-test");
+            var notification = EntityHelper.CreateNotificationQueue(1, template);
+
+            var model = new { Id = 1, Name = "Name" };
+
+            // Act
+            service.Generate(notification, model);
+
+            // Assert
+            notification.Subject.Should().NotBeNull();
+            notification.Subject.Should().Be("subject");
+            notification.Body.Should().NotBeNull();
+            notification.Body.Should().Be("body");
+        }
+
+        [Fact]
+        public void Generate_Model_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<NotificationService>();
+
+            var template = EntityHelper.CreateNotificationTemplate(1, "template", "subject @Model.Id @Model.Name", "body @Model.Id @Model.Name");
+            template.RowVersion = EntityHelper.GenerateRowVersion("model-test");
+            var notification = EntityHelper.CreateNotificationQueue(1, template);
+
+            var model = new { Id = 1, Name = "Name" };
+
+            // Act
+            service.Generate(notification, model);
+
+            // Assert
+            notification.Subject.Should().NotBeNull();
+            notification.Subject.Should().Be("subject 1 Name");
+            notification.Body.Should().NotBeNull();
+            notification.Body.Should().Be("body 1 Name");
+        }
+        #endregion
+
+        #region Build
+        [Fact]
+        public void Build_Anonymous_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<NotificationService>();
+
+
+            var key = "anonymouse-template";
+            var template = new EmailTemplate()
+            {
+                Subject = "subject @Model.Id @Model.Name",
+                Body = "body @Model.Id @Model.Name"
+            };
+            var model = new { Id = 1, Name = "Name" };
+
+            // Act
+            service.Build(key, template, model);
+
+            // Assert
+            template.Subject.Should().NotBeNull();
+            template.Subject.Should().Be("subject 1 Name");
+            template.Body.Should().NotBeNull();
+            template.Body.Should().Be("body 1 Name");
+        }
+
+        [Fact]
+        public void Build_Object_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<NotificationService>();
+
+            var key = "object-template";
+            var template = new EmailTemplate()
+            {
+                Subject = "subject @Model.GetType().Name",
+                Body = "body @Model.GetType().Name"
+            };
+            var model = new Object();
+
+            // Act
+            service.Build(key, template, model);
+
+            // Assert
+            template.Subject.Should().NotBeNull();
+            template.Subject.Should().Be("subject Object");
+            template.Body.Should().NotBeNull();
+            template.Body.Should().Be("body Object");
+        }
+
+        [Fact]
+        public void Build_Type_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var service = helper.Create<NotificationService>();
+
+            var guid = Guid.NewGuid();
+            var key = "type-template";
+            var template = new EmailTemplate()
+            {
+                Subject = "subject @Model.Id @Model.Username",
+                Body = "body @Model.Id @Model.Username"
+            };
+            var model = new User()
+            {
+                Id = guid,
+                Username = "username"
+            };
+
+            // Act
+            service.Build(key, template, model);
+
+            // Assert
+            template.Subject.Should().NotBeNull();
+            template.Subject.Should().Be($"subject {guid} username");
+            template.Body.Should().NotBeNull();
+            template.Body.Should().Be($"body {guid} username");
         }
         #endregion
         #endregion
