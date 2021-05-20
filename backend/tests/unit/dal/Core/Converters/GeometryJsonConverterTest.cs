@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using Xunit;
+using NetTopologySuite.Geometries;
+using System;
 
 namespace Pims.Dal.Test.Core.Converters
 {
@@ -12,27 +14,19 @@ namespace Pims.Dal.Test.Core.Converters
     [Trait("category", "core")]
     [Trait("category", "function")]
     [ExcludeFromCodeCoverage]
-    public class Int32ToStringJsonConverterTest
+    public class GeometryJsonConverterTest
     {
         #region Data
         public static IEnumerable<object[]> WriteData = new List<object[]>()
         {
-            new object[] { 1, "{\"test\":\"1\"}" },
-            new object[] { null, "{\"test\":null}" }
+            new object[] { new Point(new Coordinate(1, 1)), "{\"test\":[1,1]}" },
+            new object[] { new Polygon(new LinearRing(new Coordinate[] { new Coordinate(1, 1), new Coordinate(1, 2), new Coordinate(1, 3), new Coordinate(1, 1)})), "{\"test\":[[1,1],[1,2],[1,3],[1,1]]}" }
         };
 
         public static IEnumerable<object[]> ReadData = new List<object[]>()
         {
-            new object[] { JsonTokenType.String, "1", "1" },
-            new object[] { JsonTokenType.String, "", "" },
-            new object[] { JsonTokenType.String, "test", "test" },
-            new object[] { JsonTokenType.String, null, null },
-            new object[] { JsonTokenType.Number, null, null },
-            new object[] { JsonTokenType.Number, 1, "1" },
-            new object[] { JsonTokenType.Number, 0.34, "" },
-            new object[] { JsonTokenType.Number, "invalid", "" },
-            new object[] { JsonTokenType.True, true, null },
-            new object[] { JsonTokenType.False, false, null },
+            new object[] { "1,1", new Point(new Coordinate(1, 1)), typeof(Point) },
+            new object[] { "[[1,1],[1,2],[1,3],[1,1]]", null, typeof(Polygon) }
         };
         #endregion
 
@@ -41,10 +35,10 @@ namespace Pims.Dal.Test.Core.Converters
         public void CanConvert()
         {
             // Arrange
-            var converter = new Int32ToStringJsonConverter();
+            var converter = new GeometryJsonConverter();
 
             // Act
-            var result = converter.CanConvert(typeof(string));
+            var result = converter.CanConvert(typeof(Geometry));
 
             // Assert
             Assert.True(result);
@@ -52,13 +46,13 @@ namespace Pims.Dal.Test.Core.Converters
 
         [Theory]
         [MemberData(nameof(WriteData))]
-        public void Write(string value, string expectedResult)
+        public void Write(Geometry value, string expectedResult)
         {
             // Arrange
             var options = new JsonSerializerOptions();
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
-            var converter = new Int32ToStringJsonConverter();
+            var converter = new GeometryJsonConverter();
 
             writer.WriteStartObject();
             writer.WritePropertyName("test");
@@ -75,23 +69,23 @@ namespace Pims.Dal.Test.Core.Converters
 
         [Theory]
         [MemberData(nameof(ReadData))]
-        public void Read(JsonTokenType type, object value, string expectedResult)
+        public void Read(string value, Geometry expectedResult, Type type)
         {
             // Arrange
             var options = new JsonSerializerOptions();
 
             var jsonUtf8Bytes = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(value, options);
             var reader = new Utf8JsonReader(jsonUtf8Bytes);
-            var converter = new Int32ToStringJsonConverter();
+            var converter = new GeometryJsonConverter();
 
             while (reader.Read())
             {
-                if (reader.TokenType == type)
+                if (reader.TokenType == JsonTokenType.String)
                     break;
             }
 
             // Act
-            var result = converter.Read(ref reader, value?.GetType(), options);
+            var result = converter.Read(ref reader, type, options);
 
             // Assert
             Assert.Equal(expectedResult, result);

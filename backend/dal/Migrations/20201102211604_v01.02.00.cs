@@ -2,9 +2,11 @@
 using Pims.Dal.Helpers.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class v010200 : SeedMigration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

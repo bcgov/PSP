@@ -14,7 +14,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static Polygon ToPolygon(this Envelope envelope)
         {
-            if (envelope != null && envelope.MinX <= envelope.MaxX && envelope.MinY <= envelope.MaxY)
+            if (envelope != null)
             {
                 var pfactory = new GeometryFactory();
                 var bounds = new[]

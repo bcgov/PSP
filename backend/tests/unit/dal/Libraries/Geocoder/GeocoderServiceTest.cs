@@ -89,7 +89,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var result = await service.GetSiteAddressesAsync("address");
 
             // Assert
-            var url = "https://geocoder.api.gov.bc.ca/addresses?Ver=1.2&AddressString=address&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            var url = "https://geocoder.api.gov.bc.ca/addresses?ver=1.2&addressString=address&locationDescriptor=any&maxResults=5&interpolation=adaptive&echo=false&brief=false&autoComplete=false&setBack=0&outputSRS=4326&minScore=0&maxDistance=0&extrapolate=false";
             result.Should().NotBeNull();
             mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
             result.Should().Be(features);
@@ -119,7 +119,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var result = await service.GetSiteAddressesAsync("address with encoding");
 
             // Assert
-            var url = "https://geocoder.api.gov.bc.ca/addresses.json?Ver=1.2&AddressString=address%2Bwith%2Bencoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            var url = "https://geocoder.api.gov.bc.ca/addresses.json?ver=1.2&addressString=address%2Bwith%2Bencoding&locationDescriptor=any&maxResults=5&interpolation=adaptive&echo=false&brief=false&autoComplete=false&setBack=0&outputSRS=4326&minScore=0&maxDistance=0&extrapolate=false";
             result.Should().NotBeNull();
             mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
             result.Should().Be(features);
@@ -149,7 +149,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var result = await service.GetSiteAddressesAsync("address with encoding", "xml");
 
             // Assert
-            var url = "https://geocoder.api.gov.bc.ca/addresses.xml?Ver=1.2&AddressString=address%2Bwith%2Bencoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            var url = "https://geocoder.api.gov.bc.ca/addresses.xml?ver=1.2&addressString=address%2Bwith%2Bencoding&locationDescriptor=any&maxResults=5&interpolation=adaptive&echo=false&brief=false&autoComplete=false&setBack=0&outputSRS=4326&minScore=0&maxDistance=0&extrapolate=false";
             result.Should().NotBeNull();
             mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
             result.Should().Be(features);
@@ -183,7 +183,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var result = await service.GetSiteAddressesAsync(parameters);
 
             // Assert
-            var url = "https://geocoder.api.gov.bc.ca/addresses.json?Ver=1.2&AddressString=address%20with%20encoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            var url = "https://geocoder.api.gov.bc.ca/addresses.json?ver=1.2&addressString=address%20with%20encoding&locationDescriptor=any&maxResults=5&interpolation=adaptive&echo=false&brief=false&autoComplete=false&setBack=0&outputSRS=4326&minScore=0&maxDistance=0&extrapolate=false";
             result.Should().NotBeNull();
             mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
             result.Should().Be(features);
@@ -217,7 +217,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             var result = await service.GetSiteAddressesAsync(parameters, "xml");
 
             // Assert
-            var url = "https://geocoder.api.gov.bc.ca/addresses.xml?Ver=1.2&AddressString=address%20with%20encoding&LocationDescriptor=any&MaxResults=5&Interpolation=adaptive&Echo=false&Brief=false&AutoComplete=false&SetBack=0&OutputSRS=4326&MinScore=0&MaxDistance=0&Extrapolate=false";
+            var url = "https://geocoder.api.gov.bc.ca/addresses.xml?ver=1.2&addressString=address%20with%20encoding&locationDescriptor=any&maxResults=5&interpolation=adaptive&echo=false&brief=false&autoComplete=false&setBack=0&outputSRS=4326&minScore=0&maxDistance=0&extrapolate=false";
             result.Should().NotBeNull();
             mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
             result.Should().Be(features);

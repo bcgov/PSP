@@ -93,7 +93,7 @@ namespace Pims.Core.Comparers
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public int GetHashCode([DisallowNull] object obj)
+        public virtual int GetHashCode([DisallowNull] object obj)
         {
             var hash = new HashCode();
 
@@ -106,7 +106,7 @@ namespace Pims.Core.Comparers
                 else if (p.PropertyType == typeof(byte[]))
                 {
                     var value = (byte[])p.GetValue(obj);
-                    value.ForEach(v => hash.Add(v));
+                    value?.ForEach(v => hash.Add(v));
                 }
             }
 

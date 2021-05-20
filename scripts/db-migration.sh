@@ -6,10 +6,15 @@ FILE1=./Migrations/$(basename ./Migrations/*_$MNAME.cs);
 echo "Updating migration '$FILE1'";
 
 sed -i "2iusing Pims.Dal.Helpers.Migrations;" $FILE1;
+sed -i "3iusing System.Diagnostics.CodeAnalysis;" $FILE1;
 
 search=":\ Migration";
 replace=":\ SeedMigration";
 sed -i "s/$search/$replace/" $FILE1;
+
+fl0=$(grep -n "public partial class $MNAME : SeedMigration" $FILE1 | head -n 1 | cut -d: -f1);
+l0=$(($fl0));
+sed -i "${l0}i\ \ \ \ [ExcludeFromCodeCoverage]" $FILE1;
 
 fl1=$(grep -n "protected override void Up(MigrationBuilder migrationBuilder)" $FILE1 | head -n 1 | cut -d: -f1);
 l1=$(($fl1 + 2));

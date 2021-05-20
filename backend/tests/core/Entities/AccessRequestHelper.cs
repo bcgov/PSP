@@ -7,7 +7,6 @@ namespace Pims.Core.Test
     /// <summary>
     /// EntityHelper static class, provides helper methods to create test entities.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public static partial class EntityHelper
     {
         /// <summary>
