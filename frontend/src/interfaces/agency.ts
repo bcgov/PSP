@@ -11,15 +11,15 @@ export interface IAgency {
 /** for use in editing and viewing agency details */
 export interface IAgencyDetail {
   parentId?: number;
-  email: string;
-  id: number;
+  email?: string;
+  id?: number;
   name: string;
   description?: string;
   isDisabled: boolean;
   sendEmail: boolean;
   addressTo: string;
   code: string;
-  rowVersion: string;
+  rowVersion?: string;
   parent?: string;
 }
 
