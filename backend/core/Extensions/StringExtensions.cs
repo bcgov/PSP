@@ -56,7 +56,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string LowercaseFirstCharacter(this string word)
         {
-            if (!String.IsNullOrWhiteSpace(word) && !char.IsUpper(word[0]))
+            if (!String.IsNullOrWhiteSpace(word) && char.IsUpper(word[0]))
             {
                 return char.ToLower(word[0]) + (word.Length > 1 ? word.Substring(1) : null);
             }
