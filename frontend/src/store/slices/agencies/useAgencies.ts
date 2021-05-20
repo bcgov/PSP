@@ -1,3 +1,4 @@
+import { useApiAgencies } from './../../../hooks/pims-api/useApiAgencies';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
@@ -9,7 +10,6 @@ import { useCallback } from 'react';
 import { storeAgencies, storeAgencyDetails } from './agenciesSlice';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useApiAgencies } from 'hooks/pims-api/useApiAgencies';
-
 /**
  * hook that wraps calls to the agencies api.
  */
