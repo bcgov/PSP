@@ -33,6 +33,10 @@ namespace Pims.Dal
         ITaskService Task { get; }
         IWorkflowService Workflow { get; }
         #endregion
+
+        #region Configuration
+        ITenantService Tenant { get; }
+        #endregion
         #endregion
 
         #region Methods

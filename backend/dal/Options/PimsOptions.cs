@@ -33,6 +33,11 @@ namespace Pims.Dal
         /// get/set - Notification configuration settings.
         /// </summary>
         public NotificationOptions Notifications { get; set; } = new NotificationOptions();
+
+        /// <summary>
+        /// get/set - The tenant code to identify the environmental configuration settings.
+        /// </summary>
+        public string Tenant { get; set; }
         #endregion
     }
 }
