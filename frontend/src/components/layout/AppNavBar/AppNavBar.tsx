@@ -8,6 +8,7 @@ import { FaHome } from 'react-icons/fa';
 import queryString from 'query-string';
 import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { HelpContainer } from 'features/help/containers/HelpContainer';
+import { FeatureToggle } from 'tenants/FeatureToggle';
 
 /**
  * Nav bar with role-based functionality.
@@ -23,7 +24,9 @@ function AppNavBar() {
             <FaHome size={20} />
           </Nav.Item>
           <AdminDropdown />
-          <SubmitProperty />
+          <FeatureToggle tenant="MOTI" hide>
+            <SubmitProperty />
+          </FeatureToggle>
           <ViewInventory />
           <DisposeProjectsDropdown />
           <ReportsDropdown />
