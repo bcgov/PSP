@@ -94,8 +94,8 @@ export interface IAgencyDetailParams {
 
 export const AGENCY_ROOT = () => `/admin/agencies/`;
 export const AGENCY_DETAIL = (params: IAgencyDetailParams) => `/admin/agencies/${params.id}`;
-export const USER_DETAIL = (params: IUserDetailParams) => `/admin/users/${params.id}`;
-export const KEYCLOAK_USER_UPDATE = (params: IUserDetailParams) => `/keycloak/users/${params.id}`;
+export const USER_DETAIL = (id?: string) => `/admin/users/${id}`;
+export const KEYCLOAK_USER_UPDATE = (id?: string) => `/keycloak/users/${id}`;
 
 export interface IBuildingDetailParams {
   id: number;
