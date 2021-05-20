@@ -25,8 +25,6 @@ namespace Pims.Core.Extensions
             if (destination == null) throw new ArgumentNullException(nameof(destination));
 
             var type = typeof(DT);
-            if (!type.IsClass || (type.IsValueType && !type.IsEnum)) throw new ArgumentException($"The destination type must be an object or struct.", nameof(source));
-
             var sProps = typeof(ST)
                 .GetCachedProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(p => p.PropertyType.IsPrimitive
@@ -44,7 +42,7 @@ namespace Pims.Core.Extensions
                 if (!sProps.ContainsKey(dProp.Name)) continue;
                 var sProp = sProps[dProp.Name];
 
-                if (sProp.PropertyType == dProp.PropertyType)
+                if (sProp.PropertyType == dProp.PropertyType && dProp.GetSetMethod() != null)
                 {
                     var value = sProp.GetValue(source);
                     if (dProp.PropertyType.IsEnumerable())

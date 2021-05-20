@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
 using System.Diagnostics.CodeAnalysis;
@@ -13,6 +14,7 @@ namespace Pims.Api.Test.Helpers
     public class DeepPropertyCompareTest
     {
         #region Tests
+        #region Equals
         [Fact]
         public void Equal_Identical()
         {
@@ -235,6 +237,26 @@ namespace Pims.Api.Test.Helpers
             // Assert
             Assert.False(result);
         }
+        #endregion
+
+        #region GetHashCode
+        [Fact]
+        public void GetHashCode_Success()
+        {
+            // Arrange
+            var o1 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 }, new { Id = 3 } } };
+            var o2 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 }, new { Id = 3 } } };
+
+            var comparer = new DeepPropertyCompare();
+
+            // Act
+            var result1 = comparer.GetHashCode(o1);
+            var result2 = comparer.GetHashCode(o2);
+
+            // Assert
+            result1.Should().Be(result2);
+        }
+        #endregion
         #endregion
     }
 }

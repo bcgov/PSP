@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -132,8 +133,15 @@ namespace Pims.Api.Test.Helpers
         public void GetHashCode_Success()
         {
             // Arrange
-            var o1 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 }, new { Id = 3 } } };
-            var o2 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 }, new { Id = 3 } } };
+            var date = DateTime.UtcNow;
+            var o1 = new Entity.Parcel(1, 1, 1)
+            {
+                CreatedOn = date
+            };
+            var o2 = new Entity.Parcel(1, 1, 1)
+            {
+                CreatedOn = date
+            };
 
             var comparer = new ShallowPropertyCompare<Entity.Parcel>();
 
