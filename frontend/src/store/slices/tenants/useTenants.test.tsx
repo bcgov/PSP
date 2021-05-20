@@ -46,6 +46,10 @@ describe('useTenant slice hook', () => {
     hideSpy.mockClear();
   });
 
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   it('getSettings reducer + api hook', () => {
     renderHook(
       async () => {
