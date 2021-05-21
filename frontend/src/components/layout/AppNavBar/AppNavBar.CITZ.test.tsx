@@ -14,9 +14,11 @@ import AppNavBar from './AppNavBar';
 import Claims from 'constants/claims';
 import Roles from 'constants/roles';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { TenantProvider } from 'tenants';
 
 jest.mock('@react-keycloak/web');
 Enzyme.configure({ adapter: new Adapter() });
+
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
@@ -25,31 +27,50 @@ Enzyme.configure({ adapter: new Adapter() });
     subject: 'test',
   },
 });
+
 const mockStore = configureMockStore([thunk]);
 
 const history = createMemoryHistory();
+
 const store = mockStore({
   [lookupCodesSlice.name]: { lookupCodes: [] },
 });
 
-describe('AppNavBar', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
-  it('AppNavBar snapshot test.', () => {
-    const tree = mount(
+const renderNavBar = () =>
+  render(
+    <TenantProvider>
       <Provider store={store}>
         <Router history={history}>
           <AppNavBar />
         </Router>
-      </Provider>,
+      </Provider>
+    </TenantProvider>,
+  );
+
+describe('[ CITZ ] AppNavBar', () => {
+  beforeEach(() => {
+    process.env.REACT_APP_TENANT = 'CITZ';
+  });
+  afterEach(() => {
+    delete process.env.REACT_APP_TENANT;
+    cleanup();
+  });
+
+  it('matches snapshot.', () => {
+    const tree = mount(
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <AppNavBar />
+          </Router>
+        </Provider>
+      </TenantProvider>,
     );
     expect(mountToJson(tree.find(AppNavBar))).toMatchSnapshot();
   });
 
   describe('AppNavBar Links Based on Security', () => {
-    describe('AppNavBar Administation Dropdown', () => {
+    describe('AppNavBar Administration Dropdown', () => {
       it('AppNavBar include Administration Dropdown', () => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
@@ -59,13 +80,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         const element = getByText('Administration');
 
         expect(element).toBeVisible();
@@ -80,14 +95,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
-
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Administration'));
         const element = getByText('Users');
 
@@ -102,13 +110,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Administration'));
         const element = getByText('Access Requests');
 
@@ -124,13 +126,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Administration'));
         const element = getByText('Agencies');
 
@@ -147,14 +143,9 @@ describe('AppNavBar', () => {
           },
         },
       });
-      const { getByText } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <AppNavBar />
-          </Router>
-        </Provider>,
-      );
+      const { getByText } = renderNavBar();
       const link = getByText('Submit Property');
+
       expect(link).toBeTruthy();
     });
 
@@ -167,14 +158,7 @@ describe('AppNavBar', () => {
           },
         },
       });
-      const { getByText } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <AppNavBar />
-          </Router>
-        </Provider>,
-      );
-
+      const { getByText } = renderNavBar();
       const link = getByText('View Property Inventory');
 
       expect(link).toBeTruthy();
@@ -190,13 +174,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         const element = getByText('Disposal Projects');
 
         expect(element).toBeVisible();
@@ -210,13 +188,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         const element = getByText('Disposal Projects');
 
         expect(element).toBeVisible();
@@ -230,13 +202,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Disposal Projects'));
         const link = getByText('Create Disposal Project');
 
@@ -252,13 +218,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Disposal Projects'));
         const link = getByText('View Projects');
 
@@ -274,13 +234,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Disposal Projects'));
         const link = getByText('Approval Requests');
 
@@ -298,13 +252,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         const link = getByText('Reports');
         expect(link).toBeVisible();
       });
@@ -318,13 +266,7 @@ describe('AppNavBar', () => {
             },
           },
         });
-        const { getByText } = render(
-          <Provider store={store}>
-            <Router history={history}>
-              <AppNavBar />
-            </Router>
-          </Provider>,
-        );
+        const { getByText } = renderNavBar();
         fireEvent.click(getByText('Reports'));
         const link = getByText('SPL Report');
 
