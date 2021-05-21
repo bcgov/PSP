@@ -1,8 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as API from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
-import { ENVIRONMENT } from 'constants/environment';
 import { useAccessRequests } from './useAccessRequests';
 import { renderHook } from '@testing-library/react-hooks';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
@@ -29,12 +27,25 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useAccessRequests functionality', () => {
   describe('fetchCurrentAccessRequest', () => {
+    const url = `/users/access/requests`;
+    const mockResponse = {
+      data: mockAccessRequest,
+    };
+    it('calls the api with the expected url', () => {
+      mockAxios.onGet(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useAccessRequests()
+            .fetchCurrentAccessRequest()
+            .then(() => {
+              expect(mockAxios.history.get[0]).toMatchObject({ url: url });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS();
-      const mockResponse = {
-        data: mockAccessRequest,
-      };
-
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -59,8 +70,6 @@ describe('useAccessRequests functionality', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS();
-
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -92,11 +101,25 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('addAccessRequest action creator', () => {
-    it('Request successful, dispatches success with correct response', () => {
-      const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS();
-      const mockResponse = { data: mockAccessRequest };
+    const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
+    const url = `/users/access/requests`;
+    const mockResponse = { data: mockAccessRequest };
 
+    it('calls the api with the expected url', () => {
+      mockAxios.onPost(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useAccessRequests()
+            .addAccessRequest(newMockAccessRequest)
+            .then(() => {
+              expect(mockAxios.history.post[0]).toMatchObject({ url: url });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
+    it('Request successful, dispatches success with correct response', () => {
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -121,8 +144,6 @@ describe('useAccessRequests functionality', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS();
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -148,10 +169,23 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('updateAccessRequest action creator', () => {
+    const url = `/keycloak/users/access/request`;
+    const mockResponse = { data: mockAccessRequest };
+    it('calls the api with the expected url', () => {
+      mockAxios.onPut(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useAccessRequests()
+            .updateAccessRequest(mockAccessRequest)
+            .then(() => {
+              expect(mockAxios.history.put[0]).toMatchObject({ url: url });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS_ADMIN();
-      const mockResponse = { data: mockAccessRequest };
-
       mockAxios.onPut(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -161,7 +195,9 @@ describe('useAccessRequests functionality', () => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
               ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+              expect(
+                find(currentStore.getActions(), { type: 'network/logSuccess' }),
+              ).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: {
                   data: mockAccessRequest,
@@ -176,7 +212,6 @@ describe('useAccessRequests functionality', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS_ADMIN();
       mockAxios.onPut(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -202,18 +237,31 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('fetchAccessRequests action creator', () => {
-    it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS_LIST({} as any);
-      const mockResponse = {
-        data: {
-          items: [mockAccessRequest],
-          page: 1,
-          pageIndex: 0,
-          quantity: 0,
-          total: 0,
+    const url = '/admin/access/requests?';
+    const mockResponse = {
+      data: {
+        items: [mockAccessRequest],
+        page: 1,
+        pageIndex: 0,
+        quantity: 0,
+        total: 0,
+      },
+    };
+    it('calls the api with the expected url', () => {
+      mockAxios.onGet(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useAccessRequests()
+            .fetchAccessRequests({} as any)
+            .then(() => {
+              expect(mockAxios.history.get[0]).toMatchObject({ url: url });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
         },
-      };
-
+      );
+    });
+    it('Request successful, dispatches success with correct response', () => {
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -244,7 +292,6 @@ describe('useAccessRequests functionality', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS_LIST({} as any);
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -270,10 +317,23 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('removeAccessRequest action creator', () => {
+    const url = `/admin/access/requests/${mockAccessRequest.id}`;
+    const mockResponse = { data: mockAccessRequest };
+    it('calls the api with the expected url', () => {
+      mockAxios.onDelete(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useAccessRequests()
+            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .then(() => {
+              expect(mockAxios.history.delete[0]).toMatchObject({ url: url });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS_DELETE(mockAccessRequest.id);
-      const mockResponse = { data: mockAccessRequest };
-
       mockAxios.onDelete(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -296,7 +356,6 @@ describe('useAccessRequests functionality', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.REQUEST_ACCESS_DELETE(mockAccessRequest.id);
       mockAxios.onDelete(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>

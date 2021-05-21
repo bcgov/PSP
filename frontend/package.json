@@ -168,8 +168,6 @@
       }
     },
     "coverageReporters": [
-      "text-summary",
-      "text",
       "json",
       "lcov"
     ]
