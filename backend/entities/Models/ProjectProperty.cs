@@ -40,6 +40,8 @@ namespace Pims.Dal.Entities.Models
             Postal = property.Postal;
             Location = property.Location;
 
+            ProjectNumbers = property.ProjectNumbers;
+
             Market = property.Market;
             MarketFiscalYear = property.MarketFiscalYear;
             NetBook = property.NetBook;

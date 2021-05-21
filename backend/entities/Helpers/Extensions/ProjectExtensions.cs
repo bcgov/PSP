@@ -19,11 +19,6 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         private static List<string> AddProjectNumber(IEnumerable<string> projectNumbers, string projectNumber)
         {
-            if (projectNumber == null)
-            {
-                return projectNumbers.ToList();
-            }
-
             var updatedProjectNumbers = projectNumbers.ToList();
             updatedProjectNumbers.Add(projectNumber);
             return updatedProjectNumbers.Distinct().ToList();

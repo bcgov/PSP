@@ -76,12 +76,11 @@ namespace Pims.Dal.Entities.Models
         /// <param name="page"></param>
         /// <param name="quantity"></param>
         /// <param name="name"></param>
-        /// <param name="description"></param>
         /// <param name="parentId"></param>
         /// <param name="isDisabled"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public AgencyFilter(int page, int quantity, int id, String name, string description, int parentId, bool? isDisabled, string[] sort) : this(page, quantity)
+        public AgencyFilter(int page, int quantity, int id, string name, int parentId, bool? isDisabled, string[] sort) : this(page, quantity)
         {
             this.Name = name;
             this.ParentId = parentId;
