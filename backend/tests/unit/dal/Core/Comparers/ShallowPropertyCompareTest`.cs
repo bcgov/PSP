@@ -1,5 +1,7 @@
+using FluentAssertions;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
@@ -13,6 +15,7 @@ namespace Pims.Api.Test.Helpers
     public class ShallowPropertyCompareTest_Generic
     {
         #region Tests
+        #region Equal
         [Fact]
         public void Equal_Identical()
         {
@@ -123,6 +126,33 @@ namespace Pims.Api.Test.Helpers
             // Assert
             Assert.True(result);
         }
+        #endregion
+
+        #region GetHashCode
+        [Fact]
+        public void GetHashCode_Success()
+        {
+            // Arrange
+            var date = DateTime.UtcNow;
+            var o1 = new Entity.Parcel(1, 1, 1)
+            {
+                CreatedOn = date
+            };
+            var o2 = new Entity.Parcel(1, 1, 1)
+            {
+                CreatedOn = date
+            };
+
+            var comparer = new ShallowPropertyCompare<Entity.Parcel>();
+
+            // Act
+            var result1 = comparer.GetHashCode(o1);
+            var result2 = comparer.GetHashCode(o2);
+
+            // Assert
+            result1.Should().Be(result2);
+        }
+        #endregion
         #endregion
     }
 }

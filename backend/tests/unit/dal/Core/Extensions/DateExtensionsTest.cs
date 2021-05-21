@@ -21,6 +21,12 @@ namespace Pims.Api.Test.Core.Extensions
             new object[] { new DateTime(2020, 3, 30), 2020 },
             new object[] { new DateTime(2020, 4, 1), 2021 }
         };
+
+        public static IEnumerable<object[]> YearData = new List<object[]>()
+        {
+            new object[] { 2020, "19/20" },
+            new object[] { 2021, "20/21" }
+        };
         #endregion
 
         #region Tests
@@ -32,6 +38,20 @@ namespace Pims.Api.Test.Core.Extensions
             // Arrange
             // Act
             var result = value.GetFiscalYear();
+
+            // Assert
+            result.Should().Be(expectedResult);
+        }
+        #endregion
+
+        #region FiscalYear
+        [Theory]
+        [MemberData(nameof(YearData))]
+        public void Date_FiscalYear(int value, string expectedResult)
+        {
+            // Arrange
+            // Act
+            var result = value.FiscalYear();
 
             // Assert
             result.Should().Be(expectedResult);

@@ -30,6 +30,7 @@ namespace Pims.Dal.Test.Core.Converters
             new object[] { JsonTokenType.Number, null, null },
             new object[] { JsonTokenType.Number, 1, "1" },
             new object[] { JsonTokenType.Number, 0.34, "" },
+            new object[] { JsonTokenType.Number, "invalid", "" },
             new object[] { JsonTokenType.True, true, null },
             new object[] { JsonTokenType.False, false, null },
         };
@@ -90,7 +91,7 @@ namespace Pims.Dal.Test.Core.Converters
             }
 
             // Act
-            var result = converter.Read(ref reader, typeof(bool), options);
+            var result = converter.Read(ref reader, value?.GetType(), options);
 
             // Assert
             Assert.Equal(expectedResult, result);

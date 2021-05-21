@@ -19,10 +19,6 @@ interface IHelpSubmitBoxProps {
   setMailto: Function;
 }
 
-const FormPicker = styled.div`
-  display: flex;
-`;
-
 /**
  * A component that displays a list of Help Ticket types as well as a form corresponding to the active Help Ticket type
  */
@@ -57,5 +53,9 @@ const HelpSubmitBox: React.FunctionComponent<IHelpSubmitBoxProps> = ({
     </FormPicker>
   );
 };
+
+const FormPicker = styled.div`
+  display: flex;
+`;
 
 export default HelpSubmitBox;

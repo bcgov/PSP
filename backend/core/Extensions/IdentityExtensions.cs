@@ -37,7 +37,7 @@ namespace Pims.Core.Extensions
             agencies?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
-                results.AddRange(split.Select(v => Int32.Parse(v)));
+                results.AddRange(split.Select(v => Int32.TryParse(v, out int value) ? value : (int?)null).NotNull().Select(v => (int)v));
             });
 
             return results.ToArray();
@@ -58,7 +58,7 @@ namespace Pims.Core.Extensions
             agencies?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
-                results.AddRange(split.Select(v => (int?)Int32.Parse(v)));
+                results.AddRange(split.Select(v => Int32.TryParse(v, out int value) ? value : (int?)null));
             });
 
             return results.ToArray();
@@ -134,7 +134,7 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Determine if the user all of the specified roles.
+        /// Determine if the user has all of the specified roles.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="role"></param>

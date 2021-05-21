@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Pims.Dal.Helpers.Migrations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class v010700 : SeedMigration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

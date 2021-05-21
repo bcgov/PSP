@@ -74,6 +74,10 @@ namespace Pims.Dal
         #region Views
         public DbSet<Entities.Views.Property> Properties { get; set; }
         #endregion
+
+        #region Configuration
+        public DbSet<Tenant> Tenants { get; set; }
+        #endregion
         #endregion
 
         #region Constructors
@@ -122,33 +126,6 @@ namespace Pims.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyAllConfigurations(typeof(AddressConfiguration), this);
-
-            // TODO: Find a way to move this somewhere else.
-            // modelBuilder.Properties<DateTime> ()
-            //     .Configure (m =>
-            //     {
-            //         m.HasColumnType ("DATETIME2");
-            //         if (m.Name == nameof (BaseEntity.CreatedOn))
-            //         {
-            //             m.DefaultValueSql = "GETUTCDATE()";
-            //         }
-            //     });
-
-            // foreach (var property in modelBuilder.Model.GetEntityTypes ()
-            //         .SelectMany (m => m.GetProperties ())
-            //         .Where (p => p.ClrType == typeof (DateTime)))
-            // {
-            //     if (property.ClrType == typeof (DateTime))
-            //     {
-            //         property.Relational ().ColumnType = "DATETIME2";
-
-            //         if (property.Name == nameof (BaseEntity.CreatedOn))
-            //         {
-            //             property.Relational ().DefaultValueSql = "GETUTCDATE()";
-            //         }
-            //     }
-            // }
-
             base.OnModelCreating(modelBuilder);
         }
 

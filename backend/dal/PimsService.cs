@@ -85,6 +85,12 @@ namespace Pims.Dal
         /// </summary>
         public INotificationQueueService NotificationQueue { get { return _serviceProvider.GetService<INotificationQueueService>(); } }
 
+        /// <summary>
+        /// get - The tenant service.
+        /// </summary>
+        /// <typeparam name="ITenantService"></typeparam>
+        public ITenantService Tenant { get { return _serviceProvider.GetService<ITenantService>(); } }
+
         #endregion
 
         #region Constructors

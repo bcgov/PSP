@@ -1,7 +1,7 @@
+import React from 'react';
 import { ReactNode } from 'react';
 import LandingMapHelpText from '../components/text/LandingMapHelpText';
 import LandingNavigationHelpText from '../components/text/LandingNavigationHelpText';
-import React from 'react';
 import LandingFilterHelpText from '../components/text/LandingFilterHelpText';
 import QuestionForm from '../forms/QuestionForm';
 import BugForm from '../forms/BugForm';
@@ -103,8 +103,3 @@ export const helpTickets = new Map<string, (props: any) => ReactNode>([
 export const getTopics = (currentPage: IHelpPage | undefined) => {
   return currentPage?.topics?.keys() === undefined ? [] : Array.from(currentPage.topics.keys());
 };
-
-/**
- * This is the email that all support tickets should be directed to when using the issue reporting system.
- */
-export const pimsSupportEmail = 'rpdimithelp@gov.bc.ca';
