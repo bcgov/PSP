@@ -132,7 +132,7 @@ objects:
   - kind: NetworkPolicy
     apiVersion: networking.k8s.io/v1
     metadata:
-      name: pod-from-pod-permit-${NAME}-${SOURCE_ROLE}-${DESTINATION_ROLE}
+      name: pod-from-pod-permit-${APP_NAME}-${API_ROLE_NAME}-${ROLE_NAME}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
     spec:
       #description: Allow api pod(s) to receive communication from app pod(s).
@@ -148,6 +148,7 @@ objects:
                   app: ${APP_NAME}
                   role: ${ROLE_NAME}
                   env: ${ENV_NAME}
+
   # Open up ports to communicate with the app.
   - kind: Service
     apiVersion: v1

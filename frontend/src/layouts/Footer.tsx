@@ -18,10 +18,8 @@ interface IFooterProps {
 }
 
 const FooterStyled = styled.footer<IFooterProps>`
-  background-color: ${props => props.backgroundColor};
-
   // colors
-  background-color: ${props => props.theme.css.primaryColor};
+  background-color: ${props => props.backgroundColor ?? props.theme.css.primaryColor};
   border: none;
   border-top: 2px solid ${props => props.theme.css.accentColor};
 
