@@ -37,19 +37,35 @@ const getWrapper = (store: any) => ({ children }: any) => (
 );
 
 describe('getFetchLookupCodeAction action creator', () => {
+  const url = `/lookup/all`;
+  const mockResponse = {
+    data: [
+      {
+        code: 'AEST',
+        id: '1',
+        isDisabled: false,
+        name: 'Ministry of Advanced Education',
+        type: AGENCY_CODE_SET_NAME,
+      },
+    ],
+  };
+  it('calls the api with the expected url', () => {
+    mockAxios.onGet(url).reply(200, mockResponse);
+    renderHook(
+      () =>
+        useLookupCodes()
+          .fetchLookupCodes()
+          .then(() => {
+            expect(mockAxios.history.get[0]).toMatchObject({
+              url: '/lookup/all',
+            });
+          }),
+      {
+        wrapper: getWrapper(getStore()),
+      },
+    );
+  });
   it('gets all codes when paramaters contains all', () => {
-    const url = ENVIRONMENT.apiUrl + API.LOOKUP_CODE_SET('all');
-    const mockResponse = {
-      data: [
-        {
-          code: 'AEST',
-          id: '1',
-          isDisabled: false,
-          name: 'Ministry of Advanced Education',
-          type: AGENCY_CODE_SET_NAME,
-        },
-      ],
-    };
     mockAxios.onGet(url).reply(200, mockResponse);
     renderHook(
       () =>
@@ -70,7 +86,6 @@ describe('getFetchLookupCodeAction action creator', () => {
   });
 
   it('Request failure, dispatches error with correct response', () => {
-    const url = ENVIRONMENT.apiUrl + API.LOOKUP_CODE_SET('all');
     mockAxios.onGet(url).reply(400, MOCK.ERROR);
     const mockResponse = {
       data: [
