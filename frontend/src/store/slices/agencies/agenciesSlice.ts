@@ -23,7 +23,7 @@ export const initialState: IAgenciesState = {
   },
 };
 /**
- * The lookup code reducer stores the complete list of lookup codes used within the application.
+ * The agency code reducer stores the complete list of agency codes used within the application.
  */
 export const agenciesSlice = createSlice({
   name: 'agencies',
