@@ -69,7 +69,7 @@ describe('rowAction functions', () => {
     fireEvent.click(enableButton);
     await wait(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe('/api/keycloak/users/1');
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/1');
     });
   });
   it('disable button', async () => {
@@ -82,7 +82,7 @@ describe('rowAction functions', () => {
     fireEvent.click(disableButton);
     await wait(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe('/api/keycloak/users/1');
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/1');
     });
   });
   it('open button', async () => {

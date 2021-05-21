@@ -26,7 +26,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   const { updateUser, fetchUserDetail } = useUsers();
 
   useEffect(() => {
-    fetchUserDetail({ id: userId });
+    fetchUserDetail(userId);
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
@@ -129,24 +129,21 @@ const EditUserPage = (props: IEditUserPageProps) => {
               } else {
                 rolesToUpdate = user.roles ?? [];
               }
-              updateUser(
-                { id: userId },
-                {
-                  id: user.id,
-                  username: user.username,
-                  displayName: values.displayName,
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  email: values.email,
-                  isDisabled: values.isDisabled,
-                  rowVersion: values.rowVersion,
-                  emailVerified: values.emailVerified,
-                  agencies: agenciesToUpdate,
-                  roles: rolesToUpdate,
-                  position: values.position ?? undefined,
-                  note: values.note,
-                },
-              );
+              updateUser({
+                id: user.id,
+                username: user.username,
+                displayName: values.displayName,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                isDisabled: values.isDisabled,
+                rowVersion: values.rowVersion,
+                emailVerified: values.emailVerified,
+                agencies: agenciesToUpdate,
+                roles: rolesToUpdate,
+                position: values.position ?? undefined,
+                note: values.note,
+              });
               setSubmitting(false);
             }}
           >

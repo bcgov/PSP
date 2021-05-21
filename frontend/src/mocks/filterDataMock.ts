@@ -1,5 +1,5 @@
 import { IPropertyDetail } from 'store/slices/properties';
-import { IAccessRequest, IParcel, IProperty, IBuilding } from 'interfaces';
+import { IAccessRequest, IParcel, IProperty, IBuilding, IUserDetails } from 'interfaces';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { Workflows } from 'constants/index';
 import { AccessRequestStatus } from 'constants/accessStatus';
@@ -124,6 +124,19 @@ export const AGENCIES = [
     type: 'Agency',
   },
 ];
+
+export const mockUser: IUserDetails = {
+  id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  displayName: 'User, Admin',
+  firstName: 'Admin',
+  lastName: 'User',
+  email: 'admin@pims.gov.bc.ca',
+  username: 'admin',
+  position: '',
+  createdOn: '2021-05-04T19:07:09.6920606',
+  agencies: [],
+  roles: [],
+};
 
 export const PARCELS = [
   { id: 1, latitude: 48, longitude: 123 },
