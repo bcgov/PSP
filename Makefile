@@ -41,13 +41,13 @@ restart: | stop build up ## Restart local docker environment
 
 refresh: | down build up ## Recreates local docker environment
 
-up: ## Runs the local containers (n=service name)
+start up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
 	@docker-compose up -d $(n)
 
-down: ## Stops the local containers and removes them
+destroy down: ## Stops the local containers and removes them (n=service name)
 	@echo "$(P) Stopping client and server..."
-	@docker-compose down
+	@docker-compose down $(n)
 
 stop: ## Stops the local containers (n=service name)
 	@echo "$(P) Stopping client and server..."
@@ -66,6 +66,9 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker-compose rm -f -v -s
 	@docker volume rm -f pims-frontend-node-cache
 	@docker volume rm -f pims-api-db-data
+
+logs: ## Shows logs for running containers (n=service name)
+	@docker-compose logs -f $(n)
 
 setup: ## Setup local container environment, initialize keycloak and database
 	@make build; make up; make pause-30; make db-update; make db-seed; make keycloak-sync;
@@ -159,5 +162,5 @@ frontend-coverage: ## Generate coverage report for frontend
 	@echo "$(P) Generate coverage report for frontend"
 	@cd frontend; npm run coverage;
 
-.PHONY: local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
+.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
 
