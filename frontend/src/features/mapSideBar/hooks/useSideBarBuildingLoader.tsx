@@ -36,7 +36,7 @@ const useSideBarBuildingLoader = ({
     const loadBuilding = async () => {
       setSideBarContext(SidebarContextType.LOADING);
       try {
-        const response: IBuilding = await fetchBuildingDetail({ id: buildingId as number });
+        const response: IBuilding = await fetchBuildingDetail(buildingId as number);
         setCachedBuildingDetail({
           ...response,
         });

@@ -83,7 +83,7 @@ export const mockParcel = {
   assessedBuilding: 11000,
   evaluations: [
     {
-      date: new Date(),
+      date: '2021-05-12T18:57:19.992Z',
       key: 'Assessed',
       value: 10000,
     },
