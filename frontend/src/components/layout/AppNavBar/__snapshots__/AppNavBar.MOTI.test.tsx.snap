@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AppNavBar AppNavBar snapshot test. 1`] = `
+exports[`[ MOTI ] AppNavBar matches snapshot. 1`] = `
 <AppNavBar>
   <Navbar
     className="map-nav"
@@ -117,7 +117,10 @@ exports[`AppNavBar AppNavBar snapshot test. 1`] = `
                       </div>
                     </NavItem>
                     <AdminDropdown />
-                    <SubmitProperty />
+                    <FeatureToggle
+                      hide={true}
+                      tenant="MOTI"
+                    />
                     <ViewInventory />
                     <DisposeProjectsDropdown />
                     <ReportsDropdown />
