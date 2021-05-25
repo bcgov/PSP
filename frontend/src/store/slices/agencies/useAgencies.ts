@@ -1,15 +1,14 @@
-import { useApiAgencies } from './../../../hooks/pims-api/useApiAgencies';
-import { IPagedItems } from './../../../interfaces/pagedItems';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { AxiosResponse, AxiosError } from 'axios';
-import { IAgency, IAgencyDetail } from 'interfaces';
+import { IAgency, IAgencyDetail, IPagedItems } from 'interfaces';
 import { handleAxiosResponse } from 'utils';
 import { useAppDispatch } from 'store/hooks';
 import { useCallback } from 'react';
 import { storeAgencies, storeAgencyDetails } from './agenciesSlice';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
+import { useApiAgencies } from 'hooks/pims-api/useApiAgencies';
 
 /**
  * hook that wraps calls to the agencies api.
