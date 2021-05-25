@@ -1,9 +1,6 @@
-import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as API from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
-import { ENVIRONMENT } from 'constants/environment';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { useLookupCodes } from 'store/slices/lookupCodes/useLookupCodes';
