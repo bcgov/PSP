@@ -1,6 +1,5 @@
 import { IPaginateParams } from 'constants/API';
 import { IAgency, IAgencyDetail, IPagedItems } from 'interfaces';
-import queryString from 'query-string';
 import React from 'react';
 import * as pimsToasts from 'constants/toasts';
 
