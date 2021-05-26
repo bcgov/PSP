@@ -184,12 +184,13 @@ describe('agencies async actions', () => {
     const mockResponse = {
       data: [AGENCIES[0]],
     };
+    const mockAgency = { ...AGENCIES[0], email: '', sendEmail: true, addressTo: '' };
     it('calls the api with the expected url', () => {
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>
           useAgencies()
-            .addAgency(AGENCIES[0])
+            .addAgency(mockAgency)
             .then(() => {
               expect(mockAxios.history.post[0]).toMatchObject({ url: '/admin/agencies' });
             }),
@@ -203,7 +204,7 @@ describe('agencies async actions', () => {
       renderHook(
         () =>
           useAgencies()
-            .addAgency(AGENCIES[0])
+            .addAgency(mockAgency)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -221,7 +222,7 @@ describe('agencies async actions', () => {
       renderHook(
         () =>
           useAgencies()
-            .addAgency(AGENCIES[0])
+            .addAgency(mockAgency)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

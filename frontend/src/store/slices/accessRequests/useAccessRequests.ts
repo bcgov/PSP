@@ -5,7 +5,6 @@ import { IAccessRequest } from 'interfaces';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import React from 'react';
-import { useApiAccessRequests } from './../../../hooks/pims-api/useApiAccessRequests';
 import {
   deleteAccessRequest as removeAccessRequest,
   storeAccessRequests,
@@ -13,6 +12,7 @@ import {
   updateAccessRequestsAdmin,
 } from './accessRequestsSlice';
 import { logRequest, logSuccess, logError } from '../network/networkSlice';
+import { useApiAccessRequests } from 'hooks/pims-api';
 
 export const useAccessRequests = () => {
   const dispatch = useAppDispatch();

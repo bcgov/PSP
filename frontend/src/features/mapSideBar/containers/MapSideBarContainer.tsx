@@ -122,7 +122,7 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
     showSideBar,
     disabled,
   });
-  const { fetchParcelsDetail, deleteParcel, deleteBuilding } = useProperties();
+  const { fetchParcelsDetail, removeParcel, removeBuilding } = useProperties();
   const dispatch = useDispatch();
   const [movingPinNameSpace, setMovingPinNameSpace] = useState<string | undefined>(
     movingPinNameSpaceProp,
@@ -568,10 +568,10 @@ const MapSideBarContainer: React.FunctionComponent<IMapSideBarContainerProps> = 
             switch (context) {
               case SidebarContextType.UPDATE_BUILDING:
               case SidebarContextType.VIEW_BUILDING:
-                await deleteBuilding(buildingDetail as IBuilding);
+                await removeBuilding(buildingDetail as IBuilding);
                 break;
               default:
-                await deleteParcel(parcelDetail as IParcel);
+                await removeParcel(parcelDetail as IParcel);
                 break;
             }
             fireMapRefreshEvent();

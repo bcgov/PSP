@@ -1,10 +1,7 @@
 import { useProperties } from './useProperties';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as API from 'constants/API';
-import { IParcelDetailParams } from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
-import { ENVIRONMENT } from 'constants/environment';
 import { renderHook } from '@testing-library/react-hooks';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -47,8 +44,8 @@ describe('useProperties functions', () => {
     jest.restoreAllMocks();
   });
   describe('fetchParcels action creator', () => {
+    const url = `/properties/search?`;
     it('Null Params - Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.PROPERTIES(null);
       const mockResponse = { data: [mockProperty] };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
@@ -72,7 +69,6 @@ describe('useProperties functions', () => {
     });
 
     it('Request successful, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.PROPERTIES(null);
       const mockResponse = { data: [mockProperty] };
       mockAxios.onGet(url).reply(400, mockResponse);
       renderHook(
@@ -96,15 +92,14 @@ describe('useProperties functions', () => {
     });
   });
   describe('fetchParcelDetail action creator', () => {
+    const url = `/properties/parcels/${mockParcel.id}`;
     it('Request successful, dispatches success with correct response', () => {
-      const params: IParcelDetailParams = { id: 1 };
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_DETAIL(params);
       const mockResponse = { data: mockParcelDetail };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchParcelDetail(params)
+            .fetchParcelDetail(1)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -122,14 +117,12 @@ describe('useProperties functions', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const params: IParcelDetailParams = { id: 1 };
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_DETAIL(params);
       const mockResponse = { data: mockBuildingDetail };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
           useProperties()
-            .fetchParcelDetail(params)
+            .fetchParcelDetail(1)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -148,23 +141,22 @@ describe('useProperties functions', () => {
   });
 
   describe('fetchBuildingDetail action creator', () => {
+    const url = `/properties/buildings/${mockBuilding.id}`;
     it('Request successful, dispatches success with correct response', () => {
-      const params: API.IBuildingDetailParams = { id: 1 };
-      const url = ENVIRONMENT.apiUrl + API.BUILDING_DETAIL(params);
       const mockResponse = { data: { mockBuildingDetail } };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchBuildingDetail(params)
-            .catch(() => {
+            .fetchBuildingDetail(mockBuilding.id as number)
+            .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
               ).not.toBeNull();
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: { position: undefined, property: mockResponse },
-                type: 'STORE_BUILDING_DETAILS',
+                type: 'properties/storeBuildingDetail',
               });
             }),
         {
@@ -174,14 +166,12 @@ describe('useProperties functions', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const params: IParcelDetailParams = { id: 1 };
-      const url = ENVIRONMENT.apiUrl + API.BUILDING_DETAIL(params);
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       const mockResponse = { data: { mockBuildingDetail } };
       renderHook(
         () =>
           useProperties()
-            .fetchBuildingDetail(params)
+            .fetchBuildingDetail(mockBuilding.id as number)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -189,7 +179,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: { position: undefined, property: mockResponse },
-                type: 'STORE_BUILDING_DETAILS',
+                type: 'properties/storeBuildingDetail',
               });
             }),
         {
@@ -201,14 +191,13 @@ describe('useProperties functions', () => {
 
   describe('fetchPropertyDetail action creator', () => {
     it('parcel Request successful, dispatches success with correct response', () => {
-      const params: IParcelDetailParams = { id: 1 };
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_DETAIL(params);
-      const mockResponse = { data: mockParcelDetail };
+      const url = `/properties/parcels/${mockParcel.id}`;
+      const mockResponse = { data: mockParcel };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchParcelDetail(params)
+            .fetchPropertyDetail(1, 0, undefined)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -226,14 +215,13 @@ describe('useProperties functions', () => {
     });
 
     it('building Request successful, dispatches success with correct response', () => {
-      const params: any = { id: 1, propertyTypeId: 1, position: [0, 0] };
-      const url = ENVIRONMENT.apiUrl + API.BUILDING_DETAIL(params);
-      const mockResponse = { data: mockBuildingDetail };
+      const url = `/properties/buildings/${mockBuilding.id}`;
+      const mockResponse = { data: mockBuilding };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchPropertyDetail(1, 1, undefined)
+            .fetchPropertyDetail(mockBuilding.id as number, 1, undefined)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -252,8 +240,8 @@ describe('useProperties functions', () => {
   });
 
   describe('createParcel action creator', () => {
+    const url = `/properties/parcels`;
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_ROOT;
       const mockResponse = { data: mockParcelDetail };
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
@@ -277,7 +265,6 @@ describe('useProperties functions', () => {
     });
 
     it('Request successful, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_ROOT;
       const mockResponse = { data: mockParcelDetail };
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       renderHook(
@@ -302,10 +289,9 @@ describe('useProperties functions', () => {
   });
 
   describe('updateParcel action creator', () => {
+    const url = `/properties/parcels/${mockParcel.id}`;
     it('Request successful, dispatches success with correct response', () => {
-      const parcel = { id: 1 } as any;
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_ROOT + `/${parcel.id}`;
-      const mockResponse = { data: mockParcelDetail };
+      const mockResponse = { data: mockParcel };
       mockAxios.onPut(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -328,9 +314,7 @@ describe('useProperties functions', () => {
     });
 
     it('Request successful, dispatches error with correct response', () => {
-      const parcel = { id: 1 } as any;
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_ROOT + `/${parcel.id}`;
-      const mockResponse = { data: mockParcelDetail };
+      const mockResponse = { data: mockParcel };
       mockAxios.onPut(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -354,15 +338,14 @@ describe('useProperties functions', () => {
   });
 
   describe('deleteParcel action creator', () => {
+    const url = `/properties/parcels/${mockParcel.id}`;
     it('Request successful, dispatches success with correct response', () => {
-      const parcel = { id: 1 } as any;
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_ROOT + `/${parcel.id}`;
       const mockResponse = { data: { success: true } };
       mockAxios.onDelete(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .deleteParcel(mockParcel)
+            .removeParcel(mockParcel)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -380,13 +363,11 @@ describe('useProperties functions', () => {
     });
 
     it('Request successful, dispatches error with correct response', () => {
-      const parcel = { id: 1 } as any;
-      const url = ENVIRONMENT.apiUrl + API.PARCEL_ROOT + `/${parcel.id}`;
       mockAxios.onDelete(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
           useProperties()
-            .deleteParcel(mockParcel)
+            .removeParcel(mockParcel)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -404,14 +385,14 @@ describe('useProperties functions', () => {
     });
   });
   describe('deleteBuilding action creator', () => {
+    const url = `/properties/buildings/${mockBuilding.id}`;
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.BUILDING_ROOT + `/${mockBuilding.id}`;
       const mockResponse = { data: { success: true } };
       mockAxios.onDelete(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .deleteBuilding(mockBuilding)
+            .removeBuilding(mockBuilding)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -429,12 +410,11 @@ describe('useProperties functions', () => {
     });
 
     it('Request successful, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.BUILDING_ROOT + `/${mockBuilding.id}`;
       mockAxios.onDelete(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
           useProperties()
-            .deleteBuilding(mockBuilding)
+            .removeBuilding(mockBuilding)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
