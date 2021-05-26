@@ -112,10 +112,7 @@ pipeline {
 
     stage('Version Prompt') {
       when {
-        anyOf {
-          expression { env.GIT_BRANCH == 'origin/dev' }
-          expression { new Boolean(env.ENABLE_VERSION_PROMPT) }
-        }
+        expression { new Boolean(env.ENABLE_VERSION_PROMPT) }
       }
       steps {
         script {
