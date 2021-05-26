@@ -199,7 +199,7 @@ pipeline {
               commonPipeline.runFrontendTests()
 
               dir(DEVOPS_DIRECTORY) {
-                sh "ZAP_REPORT=${WORKSPACE}/zap-output/zap-report.xml ./player.sh scan ${OC_JOB_NAME} -apply"
+                sh "ZAP_REPORT=${WORKSPACE}/zap-output/zap-report.xml HTML_ZAP_REPORT=${WORKSPACE}/zap-output/zap-report.html ./player.sh scan ${OC_JOB_NAME} -apply"
               }
               echo 'Frontend lint checks and tests passed'
             }
