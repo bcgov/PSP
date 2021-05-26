@@ -20,7 +20,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var accessRequest = EntityHelper.CreateAccessRequest(5);
-            var agency = EntityHelper.CreateAgency(5);
+            var agency = EntityHelper.CreateAgency(2);
 
             // Act
             var accessRequestAgency = new AccessRequestAgency(accessRequest.Id, agency.Id);
@@ -35,7 +35,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var accessRequest = EntityHelper.CreateAccessRequest(5);
-            var agency = EntityHelper.CreateAgency(5);
+            var agency = EntityHelper.CreateAgency(2);
 
             // Act
             var accessRequestAgency = new AccessRequestAgency(accessRequest, agency);

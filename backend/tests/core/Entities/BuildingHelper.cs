@@ -206,11 +206,12 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static List<Entity.Building> CreateBuildings(this PimsContext context, Entity.Parcel parcel, int startId, int count)
         {
+            var buildings = new List<Entity.Building>();
             for (var i = startId; i < (startId + count); i++)
             {
-                context.CreateBuilding(parcel, i);
+                buildings.Add(context.CreateBuilding(parcel, i));
             }
-            return parcel.Buildings.Select(pb => pb.Building).ToList();
+            return buildings;
         }
     }
 }

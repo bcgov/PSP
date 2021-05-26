@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -56,6 +57,25 @@ namespace Pims.Core.Test
                 new Entity.Agency("VCHA", "Vancouver Coastal Health Authority") { Id = 17, ParentId = 7, RowVersion = new byte[] { 12, 13, 14 } },
                 new Entity.Agency("VIHA", "Vancouver Island Health Authority") { Id = 18, ParentId = 7, RowVersion = new byte[] { 12, 13, 14 } }
             };
+        }
+
+        /// <summary>
+        /// Create a new instance of a Parcel and add it to the database context.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="id"></param>
+        /// <param name="code"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static Entity.Agency CreateAgency(this PimsContext context, int id = 1, string code = "AG", string name = "Agency")
+        {
+            var agency = new Entity.Agency(code, name)
+            {
+                Id = id,
+                RowVersion = new byte[] { 12, 13, 14 }
+            };
+            context.Agencies.Add(agency);
+            return agency;
         }
     }
 }

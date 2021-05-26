@@ -22,13 +22,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(1, 0, 0)), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(2, 0, 0)), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetMostRecentEvaluation(EvaluationKeys.Assessed);
+            var result = parcel.GetMostRecentEvaluation(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().Be(111.11m);
@@ -38,10 +38,10 @@ namespace Pims.Dal.Test.Entities
         public void GetMostRecentEvaluation_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetMostRecentEvaluation(EvaluationKeys.Assessed);
+            var result = parcel.GetMostRecentEvaluation(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().BeNull();
@@ -52,13 +52,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(1, 0, 0)), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(2, 0, 0)), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetMostRecentEvaluation(EvaluationKeys.Appraised);
+            var result = parcel.GetMostRecentEvaluation(EvaluationKeys.Appraised);
 
             // Assert
             result.Should().BeNull();
@@ -71,13 +71,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(1, 0, 0)), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(2, 0, 0)), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetMostRecentEvaluationDate(EvaluationKeys.Assessed);
+            var result = parcel.GetMostRecentEvaluationDate(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().Be(date);
@@ -87,10 +87,10 @@ namespace Pims.Dal.Test.Entities
         public void GetMostRecentEvaluationDate_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetMostRecentEvaluationDate(EvaluationKeys.Assessed);
+            var result = parcel.GetMostRecentEvaluationDate(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().BeNull();
@@ -101,13 +101,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(1, 0, 0)), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.Subtract(new TimeSpan(2, 0, 0)), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddHours(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetMostRecentEvaluationDate(EvaluationKeys.Appraised);
+            var result = parcel.GetMostRecentEvaluationDate(EvaluationKeys.Appraised);
 
             // Assert
             result.Should().BeNull();
@@ -120,13 +120,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetCurrentEvaluation(EvaluationKeys.Assessed);
+            var result = parcel.GetCurrentEvaluation(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().Be(111.11m);
@@ -136,10 +136,10 @@ namespace Pims.Dal.Test.Entities
         public void GetCurrentEvaluation_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetCurrentEvaluation(EvaluationKeys.Assessed);
+            var result = parcel.GetCurrentEvaluation(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().BeNull();
@@ -150,13 +150,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetCurrentEvaluation(EvaluationKeys.Appraised);
+            var result = parcel.GetCurrentEvaluation(EvaluationKeys.Appraised);
 
             // Assert
             result.Should().BeNull();
@@ -169,13 +169,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetCurrentEvaluationDate(EvaluationKeys.Assessed);
+            var result = parcel.GetCurrentEvaluationDate(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().Be(date);
@@ -185,10 +185,10 @@ namespace Pims.Dal.Test.Entities
         public void GetCurrentEvaluationDate_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetCurrentEvaluationDate(EvaluationKeys.Assessed);
+            var result = parcel.GetCurrentEvaluationDate(EvaluationKeys.Assessed);
 
             // Assert
             result.Should().BeNull();
@@ -199,13 +199,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var date = DateTime.UtcNow;
-            var building = new Parcel();
-            building.Evaluations.Add(new ParcelEvaluation(building, date, EvaluationKeys.Assessed, 111.11m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
-            building.Evaluations.Add(new ParcelEvaluation(building, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
+            var parcel = new Parcel();
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date, EvaluationKeys.Assessed, 111.11m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-1), EvaluationKeys.Assessed, 222.22m));
+            parcel.Evaluations.Add(new ParcelEvaluation(parcel, date.AddYears(-2), EvaluationKeys.Assessed, 333.33m));
 
             // Act
-            var result = building.GetCurrentEvaluationDate(EvaluationKeys.Appraised);
+            var result = parcel.GetCurrentEvaluationDate(EvaluationKeys.Appraised);
 
             // Assert
             result.Should().BeNull();
@@ -218,13 +218,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.Market, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.Market, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.Market, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.Market, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.Market, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.Market, 333.33m));
 
             // Act
-            var result = building.GetMostRecentFiscal(FiscalKeys.Market);
+            var result = parcel.GetMostRecentFiscal(FiscalKeys.Market);
 
             // Assert
             result.Should().Be(111.11m);
@@ -234,10 +234,10 @@ namespace Pims.Dal.Test.Entities
         public void GetMostRecentFiscal_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetMostRecentFiscal(FiscalKeys.Market);
+            var result = parcel.GetMostRecentFiscal(FiscalKeys.Market);
 
             // Assert
             result.Should().BeNull();
@@ -248,13 +248,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.Market, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.Market, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.Market, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.Market, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.Market, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.Market, 333.33m));
 
             // Act
-            var result = building.GetMostRecentFiscal(FiscalKeys.NetBook);
+            var result = parcel.GetMostRecentFiscal(FiscalKeys.NetBook);
 
             // Assert
             result.Should().BeNull();
@@ -267,13 +267,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.Market, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.Market, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.Market, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.Market, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.Market, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.Market, 333.33m));
 
             // Act
-            var result = building.GetMostRecentFiscalYear(FiscalKeys.Market);
+            var result = parcel.GetMostRecentFiscalYear(FiscalKeys.Market);
 
             // Assert
             result.Should().Be(year);
@@ -283,10 +283,10 @@ namespace Pims.Dal.Test.Entities
         public void GetMostRecentFiscalYear_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetMostRecentFiscalYear(FiscalKeys.Market);
+            var result = parcel.GetMostRecentFiscalYear(FiscalKeys.Market);
 
             // Assert
             result.Should().BeNull();
@@ -297,13 +297,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.NetBook, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.NetBook, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.NetBook, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.NetBook, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.NetBook, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.NetBook, 333.33m));
 
             // Act
-            var result = building.GetMostRecentFiscalYear(FiscalKeys.Market);
+            var result = parcel.GetMostRecentFiscalYear(FiscalKeys.Market);
 
             // Assert
             result.Should().BeNull();
@@ -316,13 +316,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.Market, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.Market, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.Market, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.Market, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.Market, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.Market, 333.33m));
 
             // Act
-            var result = building.GetCurrentFiscal(FiscalKeys.Market);
+            var result = parcel.GetCurrentFiscal(FiscalKeys.Market);
 
             // Assert
             result.Should().Be(111.11m);
@@ -332,10 +332,10 @@ namespace Pims.Dal.Test.Entities
         public void GetCurrentFiscal_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetCurrentFiscal(FiscalKeys.Market);
+            var result = parcel.GetCurrentFiscal(FiscalKeys.Market);
 
             // Assert
             result.Should().BeNull();
@@ -346,13 +346,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.Market, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.Market, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.Market, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.Market, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.Market, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.Market, 333.33m));
 
             // Act
-            var result = building.GetCurrentFiscal(FiscalKeys.NetBook);
+            var result = parcel.GetCurrentFiscal(FiscalKeys.NetBook);
 
             // Assert
             result.Should().BeNull();
@@ -365,13 +365,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.Market, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.Market, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.Market, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.Market, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.Market, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.Market, 333.33m));
 
             // Act
-            var result = building.GetCurrentFiscalYear(FiscalKeys.Market);
+            var result = parcel.GetCurrentFiscalYear(FiscalKeys.Market);
 
             // Assert
             result.Should().Be(year);
@@ -381,10 +381,10 @@ namespace Pims.Dal.Test.Entities
         public void GetCurrentFiscalYear_Null()
         {
             // Arrange
-            var building = new Parcel();
+            var parcel = new Parcel();
 
             // Act
-            var result = building.GetCurrentFiscalYear(FiscalKeys.Market);
+            var result = parcel.GetCurrentFiscalYear(FiscalKeys.Market);
 
             // Assert
             result.Should().BeNull();
@@ -395,13 +395,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var year = DateTime.Now.GetFiscalYear();
-            var building = new Parcel();
-            building.Fiscals.Add(new ParcelFiscal(building, year, FiscalKeys.NetBook, 111.11m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 1, FiscalKeys.NetBook, 222.22m));
-            building.Fiscals.Add(new ParcelFiscal(building, year - 2, FiscalKeys.NetBook, 333.33m));
+            var parcel = new Parcel();
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year, FiscalKeys.NetBook, 111.11m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 1, FiscalKeys.NetBook, 222.22m));
+            parcel.Fiscals.Add(new ParcelFiscal(parcel, year - 2, FiscalKeys.NetBook, 333.33m));
 
             // Act
-            var result = building.GetCurrentFiscalYear(FiscalKeys.Market);
+            var result = parcel.GetCurrentFiscalYear(FiscalKeys.Market);
 
             // Assert
             result.Should().BeNull();

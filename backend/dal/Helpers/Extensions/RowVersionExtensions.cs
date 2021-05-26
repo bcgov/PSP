@@ -1,6 +1,7 @@
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using System;
+using System.Text;
 
 namespace Pims.Dal.Helpers.Extensions
 {
@@ -46,8 +47,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="rowversion"></param>
         public static void SetRowVersion(this BaseEntity dest, string rowversion)
         {
-            var rv = Convert.FromBase64String(rowversion);
-            Buffer.BlockCopy(rv, 0, dest.RowVersion, 0, rv.Length);
+            dest.RowVersion = Encoding.UTF8.GetBytes(rowversion);
         }
 
         /// <summary>
