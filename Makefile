@@ -45,7 +45,11 @@ start up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
 	@docker-compose up -d $(n)
 
-destroy down: ## Stops the local containers and removes them (n=service name)
+destroy: ## Stops the local containers and removes them (n=service name)
+	@echo "$(P) Removing docker containers..."
+	@docker-compose rm -s -f $(n)
+
+down: ## Stops the local containers and removes them
 	@echo "$(P) Stopping client and server..."
 	@docker-compose down $(n)
 
