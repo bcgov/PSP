@@ -5,4 +5,4 @@ export const createMockHeader = () => ({
   },
 });
 
-export const ERROR = { message: 'Errors', status: 400 };
+export const ERROR = { message: 'Errors', status: 400, data: { details: 'error' } };

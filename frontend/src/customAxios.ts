@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import { toast } from 'react-toastify';
 import { store } from 'store/store';
 
-const defaultEnvelope = (x: any) => ({ data: { records: x } });
+export const defaultEnvelope = (x: any) => ({ data: { records: x } });
 
 /**
  * used by the CustomAxios method.

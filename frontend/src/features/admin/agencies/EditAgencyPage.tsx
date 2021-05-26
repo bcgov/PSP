@@ -34,7 +34,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
   const { fetchAgencyDetail, addAgency, updateAgency } = useAgencies();
   useEffect(() => {
     if (!newAgency) {
-      fetchAgencyDetail({ id: agencyId });
+      fetchAgencyDetail(agencyId);
     }
   }, [fetchAgencyDetail, agencyId, newAgency]);
 
@@ -101,21 +101,18 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
             onSubmit={async (values, { setSubmitting, setStatus }) => {
               try {
                 if (!newAgency) {
-                  updateAgency(
-                    { id: agencyId },
-                    {
-                      id: agency.id,
-                      name: values.name,
-                      code: values.code,
-                      email: values.email,
-                      isDisabled: values.isDisabled,
-                      sendEmail: values.sendEmail,
-                      addressTo: values.addressTo,
-                      parentId: values.parentId ? Number(values.parentId) : undefined,
-                      description: values.description,
-                      rowVersion: values.rowVersion,
-                    },
-                  );
+                  updateAgency({
+                    id: agency.id,
+                    name: values.name,
+                    code: values.code,
+                    email: values.email,
+                    isDisabled: values.isDisabled,
+                    sendEmail: values.sendEmail,
+                    addressTo: values.addressTo,
+                    parentId: values.parentId ? Number(values.parentId) : undefined,
+                    description: values.description,
+                    rowVersion: values.rowVersion,
+                  });
                 } else {
                   const data = await addAgency({
                     name: values.name,
