@@ -6,7 +6,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { mockBuilding, mockParcel, mockParcelDetail, mockProperty } from 'mocks/filterDataMock';
+import { mockBuilding, mockParcel, mockParcelDetail } from 'mocks/filterDataMock';
 import { networkSlice } from '../network/networkSlice';
 import { find } from 'lodash';
 
@@ -38,6 +38,8 @@ describe('useProperties functions', () => {
     jest.restoreAllMocks();
   });
   describe('fetchParcels action creator', () => {
+    const url = '/properties/search?';
+    const mockResponse = { data: [mockParcel] };
     it('calls the api with the expected url', () => {
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
