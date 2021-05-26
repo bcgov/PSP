@@ -9,7 +9,6 @@ import { useCallback } from 'react';
 import { storeAgencies, storeAgencyDetails } from './agenciesSlice';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useApiAgencies } from 'hooks/pims-api/useApiAgencies';
-
 /**
  * hook that wraps calls to the agencies api.
  */
