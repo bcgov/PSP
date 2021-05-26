@@ -23,6 +23,7 @@ import { IParcel, IProperty } from 'interfaces';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { TenantProvider } from 'tenants';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -105,6 +106,7 @@ const emptyDetails = null;
 const noParcels = [] as IProperty[];
 
 let history = createMemoryHistory();
+
 describe('MapProperties View', () => {
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
@@ -114,6 +116,7 @@ describe('MapProperties View', () => {
     },
   });
   beforeEach(() => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     mockAxios.reset();
     jest.clearAllMocks();
     mockAxios.onAny().reply(200);
@@ -128,6 +131,7 @@ describe('MapProperties View', () => {
   });
 
   afterEach(() => {
+    delete process.env.REACT_APP_TENANT;
     window.ResizeObserver = ResizeObserver;
     jest.restoreAllMocks();
   });
@@ -138,22 +142,24 @@ describe('MapProperties View', () => {
     selectedProperty: any,
   ) => {
     return (
-      <Provider store={store}>
-        <Router history={history}>
-          <Map
-            lat={48.43}
-            lng={-123.37}
-            zoom={14}
-            properties={properties}
-            selectedProperty={selectedProperty}
-            agencies={[]}
-            lotSizes={[]}
-            onMarkerClick={jest.fn()}
-            mapRef={mapRef}
-            administrativeAreas={[]}
-          />
-        </Router>
-      </Provider>
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Map
+              lat={48.43}
+              lng={-123.37}
+              zoom={14}
+              properties={properties}
+              selectedProperty={selectedProperty}
+              agencies={[]}
+              lotSizes={[]}
+              onMarkerClick={jest.fn()}
+              mapRef={mapRef}
+              administrativeAreas={[]}
+            />
+          </Router>
+        </Provider>
+      </TenantProvider>
     );
   };
 

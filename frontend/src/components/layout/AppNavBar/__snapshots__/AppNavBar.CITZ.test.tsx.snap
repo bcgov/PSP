@@ -124,7 +124,12 @@ exports[`[ CITZ ] AppNavBar matches snapshot. 1`] = `
                       <SubmitProperty />
                     </FeatureToggle>
                     <ViewInventory />
-                    <DisposeProjectsDropdown />
+                    <FeatureToggle
+                      hide={true}
+                      tenant="MOTI"
+                    >
+                      <DisposeProjectsDropdown />
+                    </FeatureToggle>
                     <ReportsDropdown />
                   </div>
                 </ForwardRef>

@@ -149,8 +149,8 @@ describe('[ MOTI ] AppNavBar', () => {
       expect(link).toBeTruthy();
     });
 
-    describe('AppNavBar Disposal Projects dropdown', () => {
-      it('AppNavBar include Disposal Projects dropdown for admin', () => {
+    describe('Disposal Projects dropdown', () => {
+      it('should not render', () => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             subject: 'test',
@@ -159,76 +159,15 @@ describe('[ MOTI ] AppNavBar', () => {
             },
           },
         });
-        const { getByText } = renderNavBar();
-        const element = getByText('Disposal Projects');
+        const { queryByText } = renderNavBar();
+        const element = queryByText('Disposal Projects');
 
-        expect(element).toBeVisible();
-      });
-      it('AppNavBar include Disposal Projects dropdown for Approval requests only', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.DISPOSE_APPROVE],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        const element = getByText('Disposal Projects');
-
-        expect(element).toBeVisible();
-      });
-      it('AppNavBar include Create Disposal Project Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.ADMIN_PROPERTIES, Claims.ADMIN_PROJECTS],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Disposal Projects'));
-        const link = getByText('Create Disposal Project');
-
-        expect(link).toBeVisible();
-      });
-
-      it('AppNavBar include View Projects Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.ADMIN_PROPERTIES, Claims.ADMIN_PROJECTS],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Disposal Projects'));
-        const link = getByText('View Projects');
-
-        expect(link).toBeVisible();
-      });
-
-      it('AppNavBar include Approval Requests Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.DISPOSE_APPROVE],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Disposal Projects'));
-        const link = getByText('Approval Requests');
-
-        expect(link).toBeVisible();
+        expect(element).not.toBeInTheDocument();
       });
     });
 
-    describe('AppNavBar Reports Dropdown', () => {
-      it('AppNavBar include Reports Dropdown', () => {
+    describe('Reports Dropdown', () => {
+      it('should render Reports Dropdown', () => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             subject: 'test',
@@ -242,7 +181,7 @@ describe('[ MOTI ] AppNavBar', () => {
         expect(link).toBeVisible();
       });
 
-      it('AppNavBar include SPL Reports link', () => {
+      it('should NOT render SPL Reports link', () => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             subject: 'test',
@@ -251,11 +190,11 @@ describe('[ MOTI ] AppNavBar', () => {
             },
           },
         });
-        const { getByText } = renderNavBar();
+        const { queryByText, getByText } = renderNavBar();
         fireEvent.click(getByText('Reports'));
-        const link = getByText('SPL Report');
+        const link = queryByText('SPL Report');
 
-        expect(link).toBeVisible();
+        expect(link).not.toBeInTheDocument();
       });
     });
   });
