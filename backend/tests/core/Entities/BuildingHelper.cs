@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entity = Pims.Dal.Entities;
+using NetTopologySuite.Geometries;
 
 namespace Pims.Core.Test
 {
@@ -22,7 +23,40 @@ namespace Pims.Core.Test
         /// <param name="agency"></param>
         public static Entity.Building CreateBuilding(int id, string projectNumber = null, string name = null, int lat = 0, int lng = 0, Entity.Agency agency = null)
         {
-            return CreateBuilding(id, projectNumber, name, lat, lng, agency);
+            projectNumber ??= $"p{id}";
+            agency ??= agency ?? EntityHelper.CreateAgency(id);
+            var address = EntityHelper.CreateAddress(id, "1234 Street", null, "V9C9C9");
+            var predominateUse = EntityHelper.CreateBuildingPredominateUse("use");
+            var constructionType = EntityHelper.CreateBuildingConstructionType("type");
+            var occupantType = EntityHelper.CreateBuildingOccupantType("occupant");
+            var classification = EntityHelper.CreatePropertyClassification("classification");
+
+            return new Entity.Building()
+            {
+                Id = id,
+                ProjectNumbers = $"[\"{projectNumber}\"]",
+                AgencyId = agency.Id,
+                Agency = agency,
+                Name = name,
+                AddressId = address.Id,
+                Address = address,
+                Location = new Point(lng, lat) { SRID = 4326 },
+                Classification = classification,
+                ClassificationId = classification.Id,
+                Description = $"description-{id}",
+                BuildingPredominateUse = predominateUse,
+                BuildingPredominateUseId = predominateUse.Id,
+                BuildingConstructionType = constructionType,
+                BuildingConstructionTypeId = constructionType.Id,
+                BuildingOccupantType = occupantType,
+                BuildingOccupantTypeId = occupantType.Id,
+                CreatedById = Guid.NewGuid(),
+                CreatedOn = DateTime.UtcNow,
+                UpdatedById = Guid.NewGuid(),
+                UpdatedOn = DateTime.UtcNow,
+                RowVersion = new byte[] { 12, 13, 14 },
+                PropertyTypeId = 1,
+            };
         }
 
         /// <summary>
@@ -172,11 +206,12 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static List<Entity.Building> CreateBuildings(this PimsContext context, Entity.Parcel parcel, int startId, int count)
         {
+            var buildings = new List<Entity.Building>();
             for (var i = startId; i < (startId + count); i++)
             {
-                context.CreateBuilding(parcel, i);
+                buildings.Add(context.CreateBuilding(parcel, i));
             }
-            return parcel.Buildings.Select(pb => pb.Building).ToList();
+            return buildings;
         }
     }
 }

@@ -122,6 +122,16 @@ namespace Pims.Core.Test
         public static PimsContext InitializeDatabase(this TestHelper helper, string dbName, ClaimsPrincipal user)
         {
             var context = helper.CreatePimsContext(dbName, user, true);
+            return context.SeedDatabase();
+        }
+
+        /// <summary>
+        /// Initializes the database with default data to support other tables.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static PimsContext SeedDatabase(this PimsContext context)
+        {
             context.AddRange(EntityHelper.CreateDefaultPropertyClassifications());
             context.AddRange(EntityHelper.CreateDefaultProvinces());
             context.AddRange(EntityHelper.CreateDefaultAdministrativeAreas());

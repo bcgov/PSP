@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -236,8 +235,8 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 var originalBuildingFiscal = building.Fiscals
                     .FirstOrDefault(e => e.FiscalYear == buildingFiscal.FiscalYear && e.Key == buildingFiscal.Key);
-
                 var updateFiscal = originalBuildingFiscal?.Value != buildingFiscal.Value || originalBuildingFiscal?.EffectiveDate != buildingFiscal.EffectiveDate;
+
                 if (originalBuildingFiscal == null)
                 {
                     building.Fiscals.Add(buildingFiscal);

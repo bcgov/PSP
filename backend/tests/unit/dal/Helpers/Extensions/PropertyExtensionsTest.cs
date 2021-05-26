@@ -1,12 +1,10 @@
 using FluentAssertions;
-using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 
 namespace Pims.Dal.Test.Helpers.Extensions
@@ -30,19 +28,19 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var context = helper.InitializeDatabase(user);
             var parcel = context.CreateParcel(1);
             var updatedParcel = context.CreateParcel(2);
-            var olderThenOneYear = new Entities.ParcelEvaluation()
+            var olderThenOneYear = new ParcelEvaluation()
             {
                 Date = DateTime.Now.AddYears(1).AddDays(1),
                 Value = 1,
                 Key = EvaluationKeys.Appraised,
             };
-            var toRemove = new Entities.ParcelEvaluation()
+            var toRemove = new ParcelEvaluation()
             {
                 Date = DateTime.Now.AddDays(1),
                 Value = 2,
                 Key = EvaluationKeys.Appraised,
             };
-            var toNotRemove = new Entities.ParcelEvaluation()
+            var toNotRemove = new ParcelEvaluation()
             {
                 Date = DateTime.Now.AddDays(-1),
                 Value = 3,
@@ -52,7 +50,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             parcel.Evaluations.Add(toRemove);
             parcel.Evaluations.Add(toNotRemove);
 
-            var eval = new Entities.ParcelEvaluation()
+            var eval = new ParcelEvaluation()
             {
                 Date = DateTime.Now,
                 Value = 1,
@@ -81,19 +79,19 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var building = context.CreateBuilding(parcel, 2);
             var updatedParcel = context.CreateParcel(3);
             var updatedBuilding = context.CreateBuilding(updatedParcel, 4);
-            var olderThenOneYear = new Entities.BuildingEvaluation()
+            var olderThenOneYear = new BuildingEvaluation()
             {
                 Date = DateTime.Now.AddYears(1).AddDays(1),
                 Value = 1,
                 Key = EvaluationKeys.Appraised,
             };
-            var toRemove = new Entities.BuildingEvaluation()
+            var toRemove = new BuildingEvaluation()
             {
                 Date = DateTime.Now.AddDays(1),
                 Value = 2,
                 Key = EvaluationKeys.Appraised,
             };
-            var toNotRemove = new Entities.BuildingEvaluation()
+            var toNotRemove = new BuildingEvaluation()
             {
                 Date = DateTime.Now.AddDays(-1),
                 Value = 3,
@@ -103,7 +101,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             building.Evaluations.Add(toRemove);
             building.Evaluations.Add(toNotRemove);
 
-            var eval = new Entities.BuildingEvaluation()
+            var eval = new BuildingEvaluation()
             {
                 Date = DateTime.Now,
                 Value = 1,

@@ -41,7 +41,8 @@ namespace Pims.Dal.Helpers.Extensions
             if (permission.Length == 0) throw new ArgumentOutOfRangeException(nameof(permission));
 
             var roles = permission.Select(r => r.GetName()).ToArray();
-            return user.Claims.Where(c => c.Type == ClaimTypes.Role).All(c => roles.Contains(c.Value));
+            var claims = user.Claims.Where(c => c.Type == ClaimTypes.Role);
+            return roles.All(r => claims.Any(c => c.Value == r));
         }
 
         /// <summary>
