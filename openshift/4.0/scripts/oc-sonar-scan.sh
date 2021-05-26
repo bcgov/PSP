@@ -30,6 +30,7 @@ SONAR_PROJECT_KEY=${SONAR_PROJECT_KEY:-pims-frontend-${TARGET}}
 SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME:-PIMS Frontend [${TARGET}]}
 SONAR_URL=${SONAR_URL:-https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca}
 ZAP_REPORT=${ZAP_REPORT:-}
+HTML_ZAP_REPORT=${HTML_ZAP_REPORT:-}
 SONAR_TOKEN=${SONAR_TOKEN:-0320aceb277c6767538f1873240e753b25019edb}
 
 FRONTEND_DIR="${FRONTEND_DIR:-../../../frontend}"
@@ -55,7 +56,8 @@ CMD_SONAR_SCAN="sonar-scanner \
   -D'sonar.sources=.' \
   -D'sonar.host.url=${SONAR_URL}' \
   ${SONAR_TOKEN:+ -D'sonar.login=${SONAR_TOKEN}'} \
-  ${ZAP_REPORT:+ -D'sonar.zaproxy.reportPath=${ZAP_REPORT}'}"
+  ${ZAP_REPORT:+ -D'sonar.zaproxy.reportPath=${ZAP_REPORT}'} \
+  ${HTML_ZAP_REPORT:+ -D'sonar.zaproxy.htmlReportPath=${HTML_ZAP_REPORT}'}"
 
 # Execute commands
 #
