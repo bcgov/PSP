@@ -84,19 +84,6 @@ export const PARCEL_ROOT = `/properties/parcels`;
 
 export const BUILDING_ROOT = `/properties/buildings`;
 
-export interface IUserDetailParams {
-  id: string;
-}
-
-export interface IAgencyDetailParams {
-  id: string;
-}
-
-export const AGENCY_ROOT = () => `/admin/agencies/`;
-export const AGENCY_DETAIL = (params: IAgencyDetailParams) => `/admin/agencies/${params.id}`;
-export const USER_DETAIL = (params: IUserDetailParams) => `/admin/users/${params.id}`;
-export const KEYCLOAK_USER_UPDATE = (params: IUserDetailParams) => `/keycloak/users/${params.id}`;
-
 export interface IBuildingDetailParams {
   id: number;
 }

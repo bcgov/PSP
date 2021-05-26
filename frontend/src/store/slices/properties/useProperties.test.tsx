@@ -43,6 +43,9 @@ const getWrapper = (store: any) => ({ children }: any) => (
 );
 
 describe('useProperties functions', () => {
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   describe('fetchParcels action creator', () => {
     it('Null Params - Request successful, dispatches success with correct response', () => {
       const url = ENVIRONMENT.apiUrl + API.PROPERTIES(null);

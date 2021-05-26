@@ -1,16 +1,13 @@
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
-import * as API from 'constants/API';
 import * as MOCK from 'mocks/dataMocks';
-import { ENVIRONMENT } from 'constants/environment';
 import { Provider } from 'react-redux';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { renderHook } from '@testing-library/react-hooks';
 import { useUsers } from './useUsers';
-import { AGENCIES } from 'mocks/filterDataMock';
-import { IUserDetails } from 'interfaces';
+import { mockUser } from 'mocks/filterDataMock';
 import { networkSlice } from '../network/networkSlice';
 import { find } from 'lodash';
 
@@ -36,33 +33,40 @@ const getStore = (values?: any) => {
 const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>{children}</Provider>
 );
-const mockUser: IUserDetails = {
-  id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-  displayName: 'User, Admin',
-  firstName: 'Admin',
-  lastName: 'User',
-  email: 'admin@pims.gov.bc.ca',
-  username: 'admin',
-  position: '',
-  createdOn: '2021-05-04T19:07:09.6920606',
-  agencies: [],
-  roles: [],
-};
 
 describe('users action creator', () => {
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   describe('fetchUsers action creator', () => {
-    it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.POST_USERS();
-      const mockResponse = {
-        data: {
-          items: [mockUser],
-          page: 1,
-          pageIndex: 0,
-          quantity: 0,
-          total: 0,
+    const url = '/admin/users/my/agency';
+    const mockResponse = {
+      data: {
+        items: [mockUser],
+        page: 1,
+        pageIndex: 0,
+        quantity: 0,
+        total: 0,
+      },
+      pageIndex: null,
+    };
+    it('calls the api with the expected url', () => {
+      mockAxios.onPost(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useUsers()
+            .fetchUsers({} as any)
+            .then(() => {
+              expect(mockAxios.history.post[0]).toMatchObject({
+                url: '/admin/users/my/agency',
+              });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
         },
-        pageIndex: null,
-      };
+      );
+    });
+    it('Request successful, dispatches success with correct response', () => {
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -85,7 +89,6 @@ describe('users action creator', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.POST_USERS();
       const mockResponse = { data: [mockUser] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
@@ -110,16 +113,32 @@ describe('users action creator', () => {
   });
 
   describe('fetchUserDetail action creator', () => {
+    const url = '/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f';
+    const mockResponse = {
+      data: [mockUser],
+    };
+    it('calls the api with the expected url', () => {
+      mockAxios.onPost(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useUsers()
+            .fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f')
+            .then(() => {
+              expect(mockAxios.history.get[0]).toMatchObject({
+                url: '/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f',
+              });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.USER_DETAIL({ id: mockUser.id } as any);
-      const mockResponse = {
-        data: [mockUser],
-      };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useUsers()
-            .fetchUserDetail({ id: mockUser.id } as any)
+            .fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f')
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -137,8 +156,7 @@ describe('users action creator', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.USER_DETAIL({ id: mockUser.id } as any);
-      const mockResponse = { data: [AGENCIES] };
+      const mockResponse = { data: [mockUser] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -162,16 +180,32 @@ describe('users action creator', () => {
   });
 
   describe('updateUser action creator', () => {
+    const url = '/keycloak/users/14c9a273-6f4a-4859-8d59-9264d3cee53f';
+    const mockResponse = {
+      data: [mockUser],
+    };
+    it('calls the api with the expected url', () => {
+      mockAxios.onPost(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useUsers()
+            .updateUser(mockUser)
+            .then(() => {
+              expect(mockAxios.history.put[0]).toMatchObject({
+                url: '/keycloak/users/14c9a273-6f4a-4859-8d59-9264d3cee53f',
+              });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.KEYCLOAK_USER_UPDATE({ id: mockUser.id } as any);
-      const mockResponse = {
-        data: [mockUser],
-      };
       mockAxios.onPut(url).reply(200, mockResponse);
       renderHook(
         () =>
           useUsers()
-            .updateUser({ id: mockUser.id } as any, mockUser)
+            .updateUser(mockUser)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -189,13 +223,12 @@ describe('users action creator', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.KEYCLOAK_USER_UPDATE({ id: mockUser.id } as any);
       const mockResponse = { data: [mockUser] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
           useUsers()
-            .updateUser({ id: mockUser.id } as any, mockUser)
+            .updateUser(mockUser)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -214,11 +247,27 @@ describe('users action creator', () => {
   });
 
   describe('activate action creator', () => {
+    const url = '/auth/activate';
+    const mockResponse = {
+      data: mockUser,
+    };
+    it('calls the api with the expected url', () => {
+      mockAxios.onPost(url).reply(200, mockResponse);
+      renderHook(
+        () =>
+          useUsers()
+            .activateUser()
+            .then(() => {
+              expect(mockAxios.history.post[0]).toMatchObject({
+                url: '/auth/activate',
+              });
+            }),
+        {
+          wrapper: getWrapper(getStore()),
+        },
+      );
+    });
     it('Request successful, dispatches success with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.ACTIVATE_USER();
-      const mockResponse = {
-        data: mockUser,
-      };
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>
@@ -237,7 +286,6 @@ describe('users action creator', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const url = ENVIRONMENT.apiUrl + API.ACTIVATE_USER();
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>

@@ -19,7 +19,7 @@ export const RowActions = (props: CellProps<IUserRecord>) => {
     const user = { ...getUser() };
     if (user) {
       user.isDisabled = disabled;
-      await updateUser({ id: props.row.original.id }, user);
+      await updateUser(user);
     }
   };
   const enableUser = async () => {
