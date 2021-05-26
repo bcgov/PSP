@@ -3,7 +3,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { useAppDispatch } from 'store/hooks';
 import { useApiTenants } from 'hooks/pims-api';
 import { tenantsSlice, storeSettings } from '.';
-import { logRequest, logSuccess } from '../network/networkSlice';
+import { logRequest, logSuccess, logError } from '../network/networkSlice';
 
 /**
  * hook that wraps calls to the agencies api.
@@ -26,7 +26,7 @@ export const useTenants = () => {
       dispatch(storeSettings(response.data));
       return response;
     } catch (error) {
-      dispatch(error(tenantsSlice.name, error?.response?.status, error));
+      dispatch(logError({ name: tenantsSlice.name, status: error?.response?.status, error }));
     } finally {
       dispatch(hideLoading());
     }
