@@ -28,7 +28,9 @@ function AppNavBar() {
             <SubmitProperty />
           </FeatureToggle>
           <ViewInventory />
-          <DisposeProjectsDropdown />
+          <FeatureToggle tenant="MOTI" hide>
+            <DisposeProjectsDropdown />
+          </FeatureToggle>
           <ReportsDropdown />
         </Nav>
       </Navbar.Collapse>
