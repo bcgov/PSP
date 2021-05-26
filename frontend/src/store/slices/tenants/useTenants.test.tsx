@@ -47,7 +47,7 @@ describe('useTenant slice hook', () => {
   });
 
   afterAll(() => {
-    jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('getSettings reducer + api hook', () => {

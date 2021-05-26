@@ -35,6 +35,9 @@ const getWrapper = (store: any) => ({ children }: any) => (
 );
 
 describe('users action creator', () => {
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   describe('fetchUsers action creator', () => {
     const url = '/admin/users/my/agency';
     const mockResponse = {

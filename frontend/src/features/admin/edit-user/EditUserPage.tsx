@@ -14,9 +14,9 @@ import { AUTHORIZATION_URL } from 'constants/strings';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { useUsers } from 'store/slices/users';
 import { useAppSelector } from 'store/hooks';
-import { IUserDetailParams } from 'constants/API';
 
-interface IEditUserPageProps extends IUserDetailParams {
+interface IEditUserPageProps {
+  id: string;
   match?: any;
 }
 

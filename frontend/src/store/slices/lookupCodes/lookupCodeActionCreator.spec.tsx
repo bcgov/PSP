@@ -34,6 +34,9 @@ const getWrapper = (store: any) => ({ children }: any) => (
 );
 
 describe('getFetchLookupCodeAction action creator', () => {
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   const url = `/lookup/all`;
   const mockResponse = {
     data: [
