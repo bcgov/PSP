@@ -36,7 +36,7 @@ const useSideBarParcelLoader = ({
       if (parcelId) {
         setSideBarContext(SidebarContextType.LOADING);
         try {
-          const response = await fetchParcelDetail({ id: parcelId as number });
+          const response = await fetchParcelDetail(parcelId as number);
           setCachedParcelDetail({
             ...response,
           } as IParcel);
