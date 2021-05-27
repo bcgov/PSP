@@ -51,7 +51,7 @@ destroy: ## Stops the local containers and removes them (n=service name)
 
 down: ## Stops the local containers and removes them
 	@echo "$(P) Stopping client and server..."
-	@docker-compose down $(n)
+	@docker-compose down
 
 stop: ## Stops the local containers (n=service name)
 	@echo "$(P) Stopping client and server..."
