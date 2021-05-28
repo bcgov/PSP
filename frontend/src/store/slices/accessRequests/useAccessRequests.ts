@@ -1,18 +1,19 @@
-import { useAppDispatch } from './../../hooks';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { AxiosResponse, AxiosError } from 'axios';
-import { IAccessRequest } from 'interfaces';
+import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
+import { useApiAccessRequests } from 'hooks/pims-api';
+import { IAccessRequest } from 'interfaces';
 import React from 'react';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
+import { useAppDispatch } from './../../hooks';
 import {
   deleteAccessRequest as removeAccessRequest,
-  storeAccessRequests,
   storeAccessRequest,
+  storeAccessRequests,
   updateAccessRequestsAdmin,
 } from './accessRequestsSlice';
-import { logRequest, logSuccess, logError } from '../network/networkSlice';
-import { useApiAccessRequests } from 'hooks/pims-api';
 
 export const useAccessRequests = () => {
   const dispatch = useAppDispatch();

@@ -8,8 +8,8 @@ import { Formik, getIn, useFormikContext } from 'formik';
 import { useLookupCodeHelpers } from 'hooks/useLookupCodeHelpers';
 import React, { useState } from 'react';
 import { Col } from 'react-bootstrap';
-import { mapLookupCode } from 'utils';
 import styled from 'styled-components';
+import { mapLookupCode } from 'utils';
 
 const FilterRow = styled(Form.Row)`
   .filter-bar {

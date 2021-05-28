@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+
 import { ITenantConfig } from '.';
 
 export interface IApiTenants {

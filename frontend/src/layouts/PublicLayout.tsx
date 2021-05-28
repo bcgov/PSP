@@ -1,13 +1,14 @@
 import './PublicLayout.scss';
 
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import LoadingBar from 'react-redux-loading-bar';
-import { ErrorBoundary } from 'react-error-boundary';
 import ErrorModal from 'components/common/ErrorModal';
 import { Footer, Header } from 'components/layout';
-import HeaderStyled from './Header';
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { ErrorBoundary } from 'react-error-boundary';
+import LoadingBar from 'react-redux-loading-bar';
+
 import FooterStyled from './Footer';
+import HeaderStyled from './Header';
 
 const PublicLayout: React.FC = ({ children }) => {
   return (

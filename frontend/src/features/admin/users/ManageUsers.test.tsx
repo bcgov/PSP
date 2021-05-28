@@ -1,24 +1,25 @@
-import React from 'react';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import { ManageUsers } from './ManageUsers';
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
-import moment from 'moment-timezone';
 import { Formik } from 'formik';
+import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
+import moment from 'moment-timezone';
+import React from 'react';
 import { act } from 'react-dom/test-utils';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { fillInput } from 'utils/testUtils';
-import { useKeycloak } from '@react-keycloak/web';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { usersSlice } from 'store/slices/users';
+import { fillInput } from 'utils/testUtils';
+
+import { ManageUsers } from './ManageUsers';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

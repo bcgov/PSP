@@ -1,4 +1,5 @@
-import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { IProjectTask } from '..';
 
 export const saveProjectTasks = createAction<IProjectTask[]>('saveProjectTasks');

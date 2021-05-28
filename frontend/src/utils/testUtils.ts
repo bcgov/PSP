@@ -1,4 +1,4 @@
-import { wait, fireEvent } from '@testing-library/react';
+import { fireEvent, wait } from '@testing-library/react';
 
 export const fillInput = async (
   container: HTMLElement,

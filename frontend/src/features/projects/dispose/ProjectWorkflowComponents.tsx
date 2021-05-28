@@ -1,13 +1,17 @@
 import {
+  DisposeWorkflowStatus,
+  ProjectWorkflowComponent,
+} from 'features/projects/common/interfaces';
+import React from 'react';
+
+import {
+  ApprovalConfirmationStep,
+  DocumentationStep,
   ProjectDraftStep,
+  ReviewProjectStep,
   SelectProjectPropertiesStep,
   UpdateInfoStep,
-  DocumentationStep,
-  ApprovalConfirmationStep,
-  ReviewProjectStep,
 } from '.';
-import React from 'react';
-import { ProjectWorkflowComponent, DisposeWorkflowStatus } from '../common';
 
 /**
  * TODO: re-evaluate this approach. It may be cleaner/simpler to just hardcode these components to their respective routes.

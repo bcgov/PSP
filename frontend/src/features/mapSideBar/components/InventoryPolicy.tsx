@@ -1,6 +1,6 @@
 import { INVENTORY_POLICY_URL } from 'constants/strings';
-import styled from 'styled-components';
 import { SresManual } from 'features/projects/common/components/SresManual';
+import styled from 'styled-components';
 
 const InventoryPolicyContainer = styled.div`
   display: flex;

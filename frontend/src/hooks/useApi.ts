@@ -1,14 +1,14 @@
-import CustomAxios from 'customAxios';
-import { useDispatch } from 'react-redux';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { AxiosInstance } from 'axios';
-import { ENVIRONMENT } from 'constants/environment';
-import * as _ from 'lodash';
-import { useCallback } from 'react';
 import { IGeoSearchParams } from 'constants/API';
-import queryString from 'query-string';
-import { IBuilding, IParcel } from 'interfaces';
+import { ENVIRONMENT } from 'constants/environment';
+import CustomAxios from 'customAxios';
 import { IApiProperty } from 'features/projects/common';
+import { IBuilding, IParcel } from 'interfaces';
+import * as _ from 'lodash';
+import queryString from 'query-string';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { store } from 'store/store';
 
 export interface IGeocoderResponse {

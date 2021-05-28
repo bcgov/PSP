@@ -1,11 +1,11 @@
 import { IPropertySearchParams } from 'constants/API';
-import { IBuilding, IPagedItems, IParcel } from 'interfaces';
-import React from 'react';
 import * as pimsToasts from 'constants/toasts';
+import { LifecycleToasts } from 'customAxios';
+import { IBuilding, IPagedItems, IParcel } from 'interfaces';
 import queryString from 'query-string';
+import React from 'react';
 
 import { useApi } from '.';
-import { LifecycleToasts } from 'customAxios';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the property endpoints.

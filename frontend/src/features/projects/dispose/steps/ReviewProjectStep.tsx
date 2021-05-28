@@ -1,13 +1,14 @@
+import { Formik } from 'formik';
 import React from 'react';
 import { Container, Form } from 'react-bootstrap';
-import { useStepForm, IStepProps, ProjectNotes, PublicNotes } from '../../common';
-import { useStepper, ReviewProjectForm } from '..';
-import { Formik } from 'formik';
+
+import { IStepProps, ProjectNotes, PublicNotes, useStepForm } from '../../common';
+import { ReviewProjectForm, useStepper } from '..';
 import {
-  UpdateInfoStepYupSchema,
+  EnhancedReferralExemptionSchema,
   ProjectDraftStepYupSchema,
   SelectProjectPropertiesStepYupSchema,
-  EnhancedReferralExemptionSchema,
+  UpdateInfoStepYupSchema,
 } from '../forms/disposalYupSchema';
 /**
  * Read only version of all step components. TODO: provide ability to update fields on this form.

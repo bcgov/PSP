@@ -1,4 +1,4 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import { GeoJsonObject } from 'geojson';
 
 export interface IParcelLayerData {

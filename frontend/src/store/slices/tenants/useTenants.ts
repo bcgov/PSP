@@ -1,9 +1,10 @@
-import React from 'react';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { useAppDispatch } from 'store/hooks';
 import { useApiTenants } from 'hooks/pims-api';
-import { tenantsSlice, storeSettings } from '.';
-import { logRequest, logSuccess, logError } from '../network/networkSlice';
+import React from 'react';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { useAppDispatch } from 'store/hooks';
+
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
+import { storeSettings, tenantsSlice } from '.';
 
 /**
  * hook that wraps calls to the agencies api.

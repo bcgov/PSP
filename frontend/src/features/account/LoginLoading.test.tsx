@@ -1,8 +1,9 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { TenantConsumer, TenantProvider } from 'tenants';
-import LoginLoading from './LoginLoading';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { TenantConsumer, TenantProvider } from 'tenants';
+
+import LoginLoading from './LoginLoading';
 
 const TestLoginLoading = () => {
   return (

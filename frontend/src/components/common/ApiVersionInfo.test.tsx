@@ -1,7 +1,8 @@
-import React from 'react';
 import { cleanup, render } from '@testing-library/react';
-import { ApiVersionInfo } from './ApiVersionInfo';
+import React from 'react';
 import { act } from 'react-test-renderer';
+
+import { ApiVersionInfo } from './ApiVersionInfo';
 
 const defaultVersion = {
   environment: 'test',

@@ -1,43 +1,44 @@
 import './ProjectListView.scss';
 
-import React, { useState, useMemo, useRef, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { Container } from 'react-bootstrap';
-import * as API from 'constants/API';
-import { IProjectFilter, IProject } from '.';
-import { columns as cols } from './columns';
-import { IProject as IProjectDetail, IStatus } from 'features/projects/common';
-import { Table } from 'components/Table';
-import service from '../apiService';
-import { FaFolder, FaFolderOpen, FaFileExcel, FaFileAlt } from 'react-icons/fa';
-import { Properties } from './properties';
-import FilterBar from 'components/SearchBar/FilterBar';
-import { Col } from 'react-bootstrap';
-import { Input, Button, Select } from 'components/common/form';
+import variables from '_variables.module.scss';
+import { Button, Input, Select } from 'components/common/form';
+import { ParentSelect } from 'components/common/form/ParentSelect';
 import GenericModal from 'components/common/GenericModal';
-import { useHistory } from 'react-router-dom';
-import {
-  ReviewWorkflowStatus,
-  fetchProjectStatuses,
-  deleteProjectWarning,
-  deletePotentialSubdivisionParcels,
-} from '../common';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import TooltipWrapper from 'components/common/TooltipWrapper';
+import FilterBar from 'components/SearchBar/FilterBar';
+import { Table } from 'components/Table';
+import * as API from 'constants/API';
 import Claims from 'constants/claims';
 import { ENVIRONMENT } from 'constants/environment';
-import queryString from 'query-string';
-import download from 'utils/download';
-import { mapLookupCodeWithParentString, mapStatuses } from 'utils';
-import styled from 'styled-components';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import { ParentSelect } from 'components/common/form/ParentSelect';
-import variables from '_variables.module.scss';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { toFlatProject } from '../common/projectConverter';
+import { IProject as IProjectDetail, IStatus } from 'features/projects/common';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import queryString from 'query-string';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Container } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { FaFileAlt, FaFileExcel, FaFolder, FaFolderOpen } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import styled from 'styled-components';
+import { mapLookupCodeWithParentString, mapStatuses } from 'utils';
+import download from 'utils/download';
+
+import service from '../apiService';
+import {
+  deletePotentialSubdivisionParcels,
+  deleteProjectWarning,
+  fetchProjectStatuses,
+  ReviewWorkflowStatus,
+} from '../common';
+import { toFlatProject } from '../common/projectConverter';
+import { IProject, IProjectFilter } from '.';
+import { columns as cols } from './columns';
+import { Properties } from './properties';
 
 interface IProjectFilterState {
   name?: string;

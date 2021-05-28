@@ -1,14 +1,15 @@
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import * as MOCK from 'mocks/dataMocks';
-import { useAccessRequests } from './useAccessRequests';
 import { renderHook } from '@testing-library/react-hooks';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { find } from 'lodash';
+import * as MOCK from 'mocks/dataMocks';
+import { mockAccessRequest } from 'mocks/filterDataMock';
+import React from 'react';
+import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import React from 'react';
-import { mockAccessRequest } from 'mocks/filterDataMock';
-import { find } from 'lodash';
+
+import { useAccessRequests } from './useAccessRequests';
 
 const mockAxios = new MockAdapter(axios);
 

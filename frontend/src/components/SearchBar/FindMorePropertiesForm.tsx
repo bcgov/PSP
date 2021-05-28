@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { mapLookupCode } from 'utils';
-import * as API from 'constants/API';
-import styled from 'styled-components';
-import { Container, Form, Row } from 'react-bootstrap';
-import { Button, Check, DisplayError, Input, Select } from 'components/common/form';
-import { getIn, useFormikContext } from 'formik';
-import { TypeaheadField } from 'components/common/form/Typeahead';
 import variables from '_variables.module.scss';
+import { Button, Check, DisplayError, Input, Select } from 'components/common/form';
+import { TypeaheadField } from 'components/common/form/Typeahead';
+import * as API from 'constants/API';
+import { getIn, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import React, { useState } from 'react';
+import { Container, Form, Row } from 'react-bootstrap';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import styled from 'styled-components';
+import { mapLookupCode } from 'utils';
 
 const StyledRow = styled(Row)`
   .form-group {

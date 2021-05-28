@@ -1,27 +1,28 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { render, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import GenericModal from 'components/common/GenericModal';
+import { Claims } from 'constants/claims';
+import { mount } from 'enzyme';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
+import { IProperty } from 'features/properties/list/interfaces';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import React from 'react';
+import { Button } from 'react-bootstrap';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { IProject, IProjectTask, projectSlice, projectTasksSlice } from '../../common';
-import { ITask, ReviewWorkflowStatus } from '../../common/interfaces';
-import { render, wait } from '@testing-library/react';
-import { useKeycloak } from '@react-keycloak/web';
-import { Claims } from 'constants/claims';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { ReviewApproveStep } from '..';
-import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme from 'enzyme';
-import { Button } from 'react-bootstrap';
-import GenericModal from 'components/common/GenericModal';
-import { IProperty } from 'features/properties/list/interfaces';
-import { act } from 'react-dom/test-utils';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { ProjectActions } from 'features/projects/common/slices/projectActions';
+
+import { IProject, IProjectTask, projectSlice, projectTasksSlice } from '../../common';
+import { ITask, ReviewWorkflowStatus } from '../../common/interfaces';
+import { ReviewApproveStep } from '..';
 
 Enzyme.configure({ adapter: new Adapter() });
 

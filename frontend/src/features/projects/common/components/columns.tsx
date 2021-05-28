@@ -1,23 +1,24 @@
-import React from 'react';
-import { formatMoney, formatNumber, formatDate } from 'utils';
-import { IProperty, IProject, DisposeWorkflowStatus, AgencyResponses } from '../interfaces';
-import { useFormikContext, getIn } from 'formik';
 import {
+  FastDatePicker,
+  FastInput,
   FastSelect,
   SelectOption,
-  FastInput,
   TextArea,
-  FastDatePicker,
 } from 'components/common/form';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { FaRegTimesCircle } from 'react-icons/fa';
-import _ from 'lodash';
+import { EditableMoneyCell, MoneyCell } from 'components/Table/MoneyCell';
+import { PropertyTypeCell } from 'components/Table/PropertyTypeCell';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { IAgencyResponseColumns } from 'features/projects/erp/forms/AgencyResponseForm';
+import { getIn, useFormikContext } from 'formik';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import _ from 'lodash';
+import React from 'react';
+import { FaRegTimesCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { EditableMoneyCell, MoneyCell } from 'components/Table/MoneyCell';
-import { PropertyTypes } from 'constants/propertyTypes';
-import { PropertyTypeCell } from 'components/Table/PropertyTypeCell';
+import { formatDate, formatMoney, formatNumber } from 'utils';
+
+import { AgencyResponses, DisposeWorkflowStatus, IProject, IProperty } from '../interfaces';
 
 const ColumnDiv = styled.div`
   display: flex;

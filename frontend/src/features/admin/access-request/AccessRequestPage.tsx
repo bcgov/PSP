@@ -1,22 +1,24 @@
-import React, { useEffect } from 'react';
 import './AccessRequestPage.scss';
-import { Container, Row, Col, ButtonToolbar, Button, Alert } from 'react-bootstrap';
-import { IUserInfo, IAccessRequest } from 'interfaces';
-import { Formik } from 'formik';
-import { Form, Input, TextArea, Select } from '../../../components/common/form';
+
+import { ISnackbarState, Snackbar } from 'components/common/Snackbar';
+import TooltipWrapper from 'components/common/TooltipWrapper';
+import { AccessRequestStatus } from 'constants/accessStatus';
 import * as API from 'constants/API';
 import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from 'constants/strings';
-import { AccessRequestSchema } from 'utils/YupSchema';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { mapLookupCode } from 'utils';
-import { AccessRequestStatus } from 'constants/accessStatus';
-import { Snackbar, ISnackbarState } from 'components/common/Snackbar';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import { AUTHORIZATION_URL } from 'constants/strings';
-import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
-import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
+import { Formik } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { IAccessRequest, IUserInfo } from 'interfaces';
+import React, { useEffect } from 'react';
+import { Alert, Button, ButtonToolbar, Col, Container, Row } from 'react-bootstrap';
 import { useAppSelector } from 'store/hooks';
+import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
+import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
+import { mapLookupCode } from 'utils';
+import { AccessRequestSchema } from 'utils/YupSchema';
+
+import { Form, Input, Select, TextArea } from '../../../components/common/form';
 
 interface IAccessRequestForm extends IAccessRequest {
   agency: number;

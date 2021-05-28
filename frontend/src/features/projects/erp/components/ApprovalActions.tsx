@@ -1,17 +1,18 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { useFormikContext } from 'formik';
-import { ReviewWorkflowStatus } from '../../common/interfaces';
+import { Button, DisplayError } from 'components/common/form';
 import GenericModal from 'components/common/GenericModal';
-import { useState, useEffect } from 'react';
-import { DisplayError, Button } from 'components/common/form';
-import {
-  useStepForm,
-  cancellationWarning,
-  IProperty,
-  deletePotentialSubdivisionParcels,
-} from '../../common';
 import { PropertyTypes } from 'constants/index';
+import { useFormikContext } from 'formik';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+import {
+  cancellationWarning,
+  deletePotentialSubdivisionParcels,
+  IProperty,
+  useStepForm,
+} from '../../common';
+import { ReviewWorkflowStatus } from '../../common/interfaces';
 
 const FlexRight = styled.div`
   width: 100%;

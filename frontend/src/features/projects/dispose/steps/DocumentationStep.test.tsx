@@ -1,18 +1,19 @@
-import React from 'react';
-import DocumentationStep from './DocumentationStep';
-import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { render, wait, fireEvent, cleanup } from '@testing-library/react';
-import { DisposeWorkflowStatus, IProjectTask } from '../../common/interfaces';
 import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { projectSlice, projectTasksSlice } from 'features/projects/common';
 import { ProjectActions } from 'features/projects/common/slices/projectActions';
+import { createMemoryHistory } from 'history';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { DisposeWorkflowStatus, IProjectTask } from '../../common/interfaces';
+import DocumentationStep from './DocumentationStep';
 
 const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});

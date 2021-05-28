@@ -1,4 +1,5 @@
-import { IPagedItems, IAccessRequest } from 'interfaces';
+import { IAccessRequest, IPagedItems } from 'interfaces';
+
 import { IAccessRequestsFilterData, IAccessRequestsSort } from '.';
 
 export interface IAccessRequestsState {

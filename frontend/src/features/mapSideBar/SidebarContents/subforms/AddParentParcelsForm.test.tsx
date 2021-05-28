@@ -1,21 +1,22 @@
-import React from 'react';
-import { render, act, fireEvent, screen, wait } from '@testing-library/react';
-import { noop } from 'lodash';
+import { useKeycloak } from '@react-keycloak/web';
+import { act, fireEvent, render, screen, wait } from '@testing-library/react';
+import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
+import * as API from 'constants/API';
 import { Formik } from 'formik';
+import { createMemoryHistory } from 'history';
+import { IParcel } from 'interfaces';
+import { noop } from 'lodash';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from 'constants/API';
-import { Provider } from 'react-redux';
-import AddParentParcelsForm from './AddParentParcelsForm';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
-import { fillInput } from 'utils/testUtils';
-import { ToastContainer } from 'react-toastify';
-import { useKeycloak } from '@react-keycloak/web';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { IParcel } from 'interfaces';
 import { propertiesSlice } from 'store/slices/properties';
+import { fillInput } from 'utils/testUtils';
+
+import AddParentParcelsForm from './AddParentParcelsForm';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

@@ -1,23 +1,24 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import { useKeycloak } from '@react-keycloak/web';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import ReviewProjectStep from './ReviewProjectStep';
+import renderer from 'react-test-renderer';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { networkSlice } from 'store/slices/network/networkSlice';
+
 import {
   DisposeWorkflowStatus,
-  ITask,
   IProject,
   IProjectTask,
+  ITask,
   projectSlice,
   projectTasksSlice,
 } from '../../common';
-import { useKeycloak } from '@react-keycloak/web';
-import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { networkSlice } from 'store/slices/network/networkSlice';
-import { ProjectActions } from 'features/projects/common/slices/projectActions';
+import ReviewProjectStep from './ReviewProjectStep';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

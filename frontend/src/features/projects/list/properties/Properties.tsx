@@ -1,7 +1,8 @@
-import * as React from 'react';
-import { columns } from './columns';
 import { Table } from 'components/Table';
+import * as React from 'react';
+
 import { IProperty } from '../../common';
+import { columns } from './columns';
 
 export interface IProps {
   data: IProperty[];

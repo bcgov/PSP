@@ -1,56 +1,57 @@
 import './Map.scss';
 
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { LatLngBounds, LeafletMouseEvent, LatLng, Map as LeafletMap, geoJSON } from 'leaflet';
-import {
-  MapProps as LeafletMapProps,
-  TileLayer,
-  Popup,
-  Map as ReactLeafletMap,
-} from 'react-leaflet';
-import { Container, Row, Col } from 'react-bootstrap';
-import BasemapToggle, { BasemapToggleEvent, BaseLayer } from '../BasemapToggle';
-import { useDispatch } from 'react-redux';
-import { setMapViewZoom, DEFAULT_MAP_ZOOM } from 'store/slices/mapViewZoom/mapViewZoomSlice';
+import classNames from 'classnames';
+import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { IGeoSearchParams } from 'constants/API';
+import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
+import { PropertyFilter } from 'features/properties/filter';
+import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { Feature } from 'geojson';
-import { LegendControl } from './Legend/LegendControl';
-import { useMediaQuery } from 'react-responsive';
-import ReactResizeDetector from 'react-resize-detector';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import { IProperty } from 'interfaces';
+import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
+import { isEmpty, isEqual, isEqualWith } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import {
-  municipalityLayerPopupConfig,
+  Map as ReactLeafletMap,
+  MapProps as LeafletMapProps,
+  Popup,
+  TileLayer,
+} from 'react-leaflet';
+import { useDispatch } from 'react-redux';
+import ReactResizeDetector from 'react-resize-detector';
+import { useMediaQuery } from 'react-responsive';
+import { useAppSelector } from 'store/hooks';
+import { ILookupCode } from 'store/slices/lookupCodes';
+import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
+import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
+import { IPropertyDetail, storeParcelDetail } from 'store/slices/properties';
+import { decimalOrUndefined, floatOrUndefined } from 'utils';
+
+import { Claims } from '../../../constants';
+import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
+import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
+import { useFilterContext } from '../providers/FIlterProvider';
+import { PropertyPopUpContextProvider } from '../providers/PropertyPopUpProvider';
+import FilterBackdrop from './FilterBackdrop';
+import InfoSlideOut from './InfoSlideOut/InfoSlideOut';
+import { InventoryLayer } from './InventoryLayer';
+import {
   MUNICIPALITY_LAYER_URL,
+  municipalityLayerPopupConfig,
   parcelLayerPopupConfig,
   PARCELS_LAYER_URL,
 } from './LayerPopup/constants';
-import { isEmpty, isEqual, isEqualWith } from 'lodash';
 import {
   LayerPopupContent,
   LayerPopupTitle,
   PopupContentConfig,
 } from './LayerPopup/LayerPopupContent';
-import classNames from 'classnames';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
-import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
-import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import LayersControl from './LayersControl';
-import { InventoryLayer } from './InventoryLayer';
-import { IGeoSearchParams } from 'constants/API';
-import { decimalOrUndefined, floatOrUndefined } from 'utils';
-import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
-import { PropertyFilter } from 'features/properties/filter';
-import { useFilterContext } from '../providers/FIlterProvider';
+import { LegendControl } from './Legend/LegendControl';
 import { ZoomOutButton } from './ZoomOut/ZoomOutButton';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { Claims } from '../../../constants';
-import InfoSlideOut from './InfoSlideOut/InfoSlideOut';
-import { PropertyPopUpContextProvider } from '../providers/PropertyPopUpProvider';
-import FilterBackdrop from './FilterBackdrop';
-import { ILookupCode } from 'store/slices/lookupCodes';
-import { IProperty } from 'interfaces';
-import { IPropertyDetail, storeParcelDetail } from 'store/slices/properties';
-import { useAppSelector } from 'store/hooks';
 
 export type MapViewportChangeEvent = {
   bounds: LatLngBounds | null;

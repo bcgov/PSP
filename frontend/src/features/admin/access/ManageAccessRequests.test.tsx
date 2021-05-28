@@ -1,23 +1,24 @@
-import React from 'react';
-import { createMemoryHistory } from 'history';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme from 'enzyme';
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { useKeycloak } from '@react-keycloak/web';
+import { AccessRequestStatus } from 'constants/accessStatus';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import ManageAccessRequests from './ManageAccessRequests';
-import { create, ReactTestInstance } from 'react-test-renderer';
-import { AccessRequestStatus } from 'constants/accessStatus';
-import { Router } from 'react-router-dom';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import { Formik } from 'formik';
+import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
-import { useKeycloak } from '@react-keycloak/web';
-import { TenantProvider } from 'tenants';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import { create, ReactTestInstance } from 'react-test-renderer';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+import { TenantProvider } from 'tenants';
+
+import ManageAccessRequests from './ManageAccessRequests';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

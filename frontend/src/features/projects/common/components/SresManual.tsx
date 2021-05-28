@@ -1,7 +1,7 @@
+import variables from '_variables.module.scss';
 import * as React from 'react';
 import { FiBookOpen } from 'react-icons/fi';
 import styled from 'styled-components';
-import variables from '_variables.module.scss';
 
 const SresManualDiv = styled.div`
   text-align: center;

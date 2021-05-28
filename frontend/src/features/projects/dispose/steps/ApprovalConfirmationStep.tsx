@@ -1,14 +1,15 @@
-import React from 'react';
 import { Formik } from 'formik';
-import { Form, Container } from 'react-bootstrap';
-import { useStepper, ApprovalConfirmationStepSchema } from '..';
+import React from 'react';
+import { Container, Form } from 'react-bootstrap';
+
 import {
-  useStepForm,
+  ApprovalConfirmationForm,
   DisposeWorkflowStatus,
   IStepProps,
-  ApprovalConfirmationForm,
   StepErrorSummary,
+  useStepForm,
 } from '../../common';
+import { ApprovalConfirmationStepSchema, useStepper } from '..';
 
 /**
  * Single checkbox allowing user to confirm that they have permission to submit.

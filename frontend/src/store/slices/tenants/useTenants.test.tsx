@@ -1,14 +1,15 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useTenants } from '.';
-import { useApiTenants, ITenantConfig } from 'hooks/pims-api';
 import { AxiosResponse } from 'axios';
-import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { ITenantConfig, useApiTenants } from 'hooks/pims-api';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { networkSlice } from '../network/networkSlice';
-import { Action } from 'redux';
 import * as loadingBar from 'react-redux-loading-bar';
+import { Action } from 'redux';
+import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+import { networkSlice } from '../network/networkSlice';
+import { useTenants } from '.';
 
 jest.mock('react-redux-loading-bar', () => {
   const original = jest.requireActual('react-redux-loading-bar');

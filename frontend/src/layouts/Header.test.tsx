@@ -1,9 +1,10 @@
-import React from 'react';
 import { act, render } from '@testing-library/react';
-import { TenantProvider, ITenantConfig, defaultTenant, config, TenantConsumer } from 'tenants';
-import { useTenant } from 'tenants/useTenant';
-import { Header } from './Header';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { config, defaultTenant, ITenantConfig, TenantConsumer, TenantProvider } from 'tenants';
+import { useTenant } from 'tenants/useTenant';
+
+import { Header } from './Header';
 
 jest.mock('tenants/useTenant');
 const mockUseTenant = useTenant as jest.Mock<ITenantConfig>;

@@ -1,8 +1,8 @@
+import { FastInput, Form } from 'components/common/form';
+import { useFormikContext } from 'formik';
 import { Fragment } from 'react';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useFormikContext } from 'formik';
-import { Form, FastInput } from 'components/common/form';
 
 interface CloseOutSummaryFormProps {
   isReadOnly?: boolean;

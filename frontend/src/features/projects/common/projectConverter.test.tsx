@@ -1,24 +1,25 @@
-import {
-  getMostRecentAppraisal,
-  getCurrentFiscal,
-  getMostRecentEvaluation,
-  getFlatProjectNotes,
-  toFlatProject,
-  toApiProject,
-  toFlatProperty,
-} from './projectConverter';
-import moment, { Moment } from 'moment';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
+import { IEvaluation, IFiscal } from 'interfaces';
+import moment, { Moment } from 'moment';
+import { getCurrentFiscalYear } from 'utils';
+
+import { NoteTypes, PropertyTypes } from '../../../constants';
 import {
   mockApiProject,
-  mockFlatProject,
-  mockApiProjectParcel,
   mockApiProjectBuilding,
+  mockApiProjectParcel,
+  mockFlatProject,
 } from '../dispose/testUtils';
-import { NoteTypes, PropertyTypes } from '../../../constants';
-import { getCurrentFiscalYear } from 'utils';
-import { IEvaluation, IFiscal } from 'interfaces';
+import {
+  getCurrentFiscal,
+  getFlatProjectNotes,
+  getMostRecentAppraisal,
+  getMostRecentEvaluation,
+  toApiProject,
+  toFlatProject,
+  toFlatProperty,
+} from './projectConverter';
 
 const createAppraisal = (date: Moment): IEvaluation => {
   return {

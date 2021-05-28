@@ -1,22 +1,23 @@
-import React from 'react';
-import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import { renderHook } from '@testing-library/react-hooks';
-import useStepper, {
-  isStatusCompleted,
-  isStatusNavigable,
-  getLastCompletedStatus,
-  getNextWorkflowStatus,
-} from './useStepper';
 import { IProject, projectSlice } from 'features/projects/common';
-import { mockWorkflow } from '../testUtils';
 import { ProjectActions } from 'features/projects/common/slices/projectActions';
 import projectWorkflowSlice from 'features/projects/common/slices/projectWorkflowSlice';
+import { createMemoryHistory } from 'history';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { mockWorkflow } from '../testUtils';
+import useStepper, {
+  getLastCompletedStatus,
+  getNextWorkflowStatus,
+  isStatusCompleted,
+  isStatusNavigable,
+} from './useStepper';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();

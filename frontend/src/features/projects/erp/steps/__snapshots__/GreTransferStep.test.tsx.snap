@@ -1,17 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GRE Transfer Step renders correctly 1`] = `
-.c0 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.c1 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-family: 'BCSans',Fallback,sans-serif;
-}
-
 .c4 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -28,6 +17,17 @@ exports[`GRE Transfer Step renders correctly 1`] = `
 
 .c4 span {
   padding: 0;
+}
+
+.c0 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.c1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: 'BCSans',Fallback,sans-serif;
 }
 
 .c3 {

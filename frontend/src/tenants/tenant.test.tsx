@@ -1,5 +1,6 @@
-import { TenantProvider, TenantConsumer, defaultTenant } from '.';
 import renderer, { act } from 'react-test-renderer';
+
+import { defaultTenant, TenantConsumer, TenantProvider } from '.';
 
 const unmockedFetch = global.fetch;
 const renderTenant = () => {

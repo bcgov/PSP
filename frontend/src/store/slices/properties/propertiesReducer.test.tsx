@@ -1,5 +1,6 @@
-import { mockProperty, mockParcelDetail, mockBuildingDetail } from 'mocks/filterDataMock';
 import { PointFeature } from 'components/maps/types';
+import { mockBuildingDetail, mockParcelDetail, mockProperty } from 'mocks/filterDataMock';
+
 import { initialState, propertiesSlice } from './propertiesSlice';
 
 const pointFeature: PointFeature = {

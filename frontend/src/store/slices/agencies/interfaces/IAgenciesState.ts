@@ -1,5 +1,5 @@
 import { TableSort } from 'components/Table/TableSort';
-import { IPagedItems, IAgency, IAgencyFilter, IAgencyRecord, IAgencyDetail } from 'interfaces';
+import { IAgency, IAgencyDetail, IAgencyFilter, IAgencyRecord, IPagedItems } from 'interfaces';
 
 export interface IAgenciesState {
   pagedAgencies: IPagedItems<IAgency>;

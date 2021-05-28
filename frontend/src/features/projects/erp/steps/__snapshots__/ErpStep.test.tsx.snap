@@ -1,17 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
-.c0 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.c1 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-family: 'BCSans',Fallback,sans-serif;
-}
-
 .c3 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -41,6 +30,17 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
   flex-direction: row-reverse;
   margin: 0.5rem 0;
   text-align: right;
+}
+
+.c0 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.c1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: 'BCSans',Fallback,sans-serif;
 }
 
 .c2 {
@@ -1139,17 +1139,6 @@ exports[`ERP Approval Step ERP close out form tab renders correctly 1`] = `
 `;
 
 exports[`ERP Approval Step renders correctly 1`] = `
-.c0 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.c1 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-family: 'BCSans',Fallback,sans-serif;
-}
-
 .c3 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1168,14 +1157,25 @@ exports[`ERP Approval Step renders correctly 1`] = `
   padding: 0;
 }
 
-.c2 {
+.c0 {
   text-align: center;
-  font-family: 'BCSans-Bold';
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.c1 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: 'BCSans',Fallback,sans-serif;
 }
 
 .c4 {
   margin: 0.75rem 2rem 0.75rem 2rem;
+}
+
+.c2 {
+  text-align: center;
+  font-family: 'BCSans-Bold';
+  margin-bottom: 1.5rem;
 }
 
 <div

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import * as React from 'react';
 import { useAppSelector } from 'store/hooks';
 
 export interface IAuthState {

@@ -1,19 +1,20 @@
-import EditUserPage from './EditUserPage';
+import { useKeycloak } from '@react-keycloak/web';
+import { act, cleanup, render } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import * as API from 'constants/API';
+import { createMemoryHistory } from 'history';
+import moment from 'moment-timezone';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from 'constants/API';
-import { Provider } from 'react-redux';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import { render, cleanup, act } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
-import moment from 'moment-timezone';
-import { useKeycloak } from '@react-keycloak/web';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { usersSlice } from 'store/slices/users';
+
+import EditUserPage from './EditUserPage';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

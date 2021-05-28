@@ -1,18 +1,19 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { act, fireEvent, render, wait } from '@testing-library/react';
+import * as API from 'constants/API';
+import { createMemoryHistory } from 'history';
+import { IGeocoderResponse, PimsAPI, useApi } from 'hooks/useApi';
 import noop from 'lodash/noop';
-import { BuildingForm } from '.';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { useKeycloak } from '@react-keycloak/web';
-import * as API from 'constants/API';
-import { fireEvent, render, wait, act } from '@testing-library/react';
-import { fillInput } from 'utils/testUtils';
-import { useApi, PimsAPI, IGeocoderResponse } from 'hooks/useApi';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { propertiesSlice } from 'store/slices/properties';
+import { fillInput } from 'utils/testUtils';
+
+import { BuildingForm } from '.';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();

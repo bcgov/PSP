@@ -1,6 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { TenantProvider } from 'tenants';
+
 import EmptyHeader from './EmptyHeader';
 
 describe('Empty Header', () => {

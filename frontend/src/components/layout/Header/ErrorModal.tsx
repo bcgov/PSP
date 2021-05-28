@@ -1,6 +1,6 @@
 import React from 'react';
+import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Row, Col, Modal, Button } from 'react-bootstrap';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { logClear } from 'store/slices/network/networkSlice';
 

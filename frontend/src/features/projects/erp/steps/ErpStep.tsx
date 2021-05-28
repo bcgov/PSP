@@ -1,35 +1,37 @@
-import { Formik, Form } from 'formik';
-import { useState } from 'react';
-import { formatDate } from 'utils';
-import { Container } from 'react-bootstrap';
-import styled from 'styled-components';
-import StepErrorSummary from '../../common/components/StepErrorSummary';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import './ErpStep.scss';
+
+import { ValidationGroup } from 'components/common/tabValidation';
 import {
-  useStepForm,
-  StepStatusIcon,
-  SPPApprovalTabs,
-  ReviewWorkflowStatus,
-  IProject,
-  IStepProps,
-  useProject,
-  handleValidate,
-  DisposeWorkflowStatus,
-} from '../../common';
-import { saveErpTab, ErpTabs, ApprovalActions } from '..';
-import {
+  DocumentationStepSchema,
   ProjectDraftStepYupSchema,
   UpdateInfoStepYupSchema,
-  DocumentationStepSchema,
 } from 'features/projects/dispose';
-import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
 import _ from 'lodash';
-import './ErpStep.scss';
-import { ValidationGroup } from 'components/common/tabValidation';
-import { EnhancedReferralExemptionApprovedForSplSchema } from '../forms/erpYupSchema';
 import queryString from 'query-string';
+import { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
+import styled from 'styled-components';
+import { formatDate } from 'utils';
+import * as Yup from 'yup';
+
+import {
+  DisposeWorkflowStatus,
+  handleValidate,
+  IProject,
+  IStepProps,
+  ReviewWorkflowStatus,
+  SPPApprovalTabs,
+  StepStatusIcon,
+  useProject,
+  useStepForm,
+} from '../../common';
+import StepErrorSummary from '../../common/components/StepErrorSummary';
+import { ApprovalActions, ErpTabs, saveErpTab } from '..';
+import { EnhancedReferralExemptionApprovedForSplSchema } from '../forms/erpYupSchema';
 
 const CenterBoldText = styled.div`
   text-align: center;

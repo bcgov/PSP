@@ -1,12 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MapProperties View Renders the map 1`] = `
-.c5 {
-  background-color: #ffffff !important;
-  color: darkVariantColor !important;
-  width: 40px;
-  height: 40px;
-  font-size: 25px;
+.c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -15,6 +10,99 @@ exports[`MapProperties View Renders the map 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  height: 4rem;
+}
+
+.c2 {
+  color: textColor;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.c1 {
+  font-size: 24px;
+  font-weight: 700;
+  width: 100%;
+  text-align: left;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 .form-control {
+  width: 165px;
+  height: 35px;
+}
+
+.c4 .form-group .rbt .rbt-menu {
+  width: 370px !important;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c14 {
+  margin-right: -10px;
+  width: 341px;
+  min-height: 52px;
+  height: auto;
+  background-color: #fff;
+  position: relative;
+  border-radius: 4px;
+  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.c14.closed {
+  width: 0px;
+  height: 0px;
+}
+
+.c16 {
+  font-size: 30px;
+}
+
+.c15 {
+  width: 52px;
+  height: 52px;
+  position: absolute;
+  left: -51px;
+  background-color: #fff;
+  color: slideOutBlue;
+  border-color: slideOutBlue;
+  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+}
+
+.c15.open {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  top: 0px;
 }
 
 .c11 {
@@ -123,20 +211,20 @@ exports[`MapProperties View Renders the map 1`] = `
   top: 26px;
 }
 
-.c4 {
+.c5 {
+  background-color: #ffffff !important;
+  color: darkVariantColor !important;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 .form-control {
-  width: 165px;
-  height: 35px;
-}
-
-.c4 .form-group .rbt .rbt-menu {
-  width: 370px !important;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c6 {
@@ -144,94 +232,6 @@ exports[`MapProperties View Renders the map 1`] = `
   color: darkVariantColor !important;
   width: 40px;
   height: 40px;
-}
-
-.c3 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c14 {
-  margin-right: -10px;
-  width: 341px;
-  min-height: 52px;
-  height: auto;
-  background-color: #fff;
-  position: relative;
-  border-radius: 4px;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-
-.c14.closed {
-  width: 0px;
-  height: 0px;
-}
-
-.c16 {
-  font-size: 30px;
-}
-
-.c15 {
-  width: 52px;
-  height: 52px;
-  position: absolute;
-  left: -51px;
-  background-color: #fff;
-  color: slideOutBlue;
-  border-color: slideOutBlue;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
-}
-
-.c15.open {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  top: 0px;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  height: 4rem;
-}
-
-.c2 {
-  color: textColor;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.c1 {
-  font-size: 24px;
-  font-weight: 700;
-  width: 100%;
-  text-align: left;
 }
 
 <div

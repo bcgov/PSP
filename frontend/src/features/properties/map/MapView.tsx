@@ -1,20 +1,22 @@
-import React, { useState, useRef } from 'react';
-import Map, { MapViewportChangeEvent } from '../../../components/maps/leaflet/Map';
 import './MapView.scss';
-import { Map as LeafletMap } from 'react-leaflet';
-import { useDispatch } from 'react-redux';
-import { LeafletMouseEvent } from 'leaflet';
-import useParamSideBar from '../../mapSideBar/hooks/useQueryParamSideBar';
-import { saveClickLatLng as saveLeafletMouseEvent } from 'store/slices/leafletMouse/LeafletMouseSlice';
-import * as API from 'constants/API';
-import MapSideBarContainer from 'features/mapSideBar/containers/MapSideBarContainer';
+
 import classNames from 'classnames';
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
+import * as API from 'constants/API';
+import MapSideBarContainer from 'features/mapSideBar/containers/MapSideBarContainer';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { LeafletMouseEvent } from 'leaflet';
+import queryString from 'query-string';
+import React, { useRef, useState } from 'react';
+import { Map as LeafletMap } from 'react-leaflet';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
+import { saveClickLatLng as saveLeafletMouseEvent } from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { IPropertyDetail } from 'store/slices/properties';
+
+import Map, { MapViewportChangeEvent } from '../../../components/maps/leaflet/Map';
+import useParamSideBar from '../../mapSideBar/hooks/useQueryParamSideBar';
 
 /** rough center of bc Itcha Ilgachuz Provincial Park */
 const defaultLatLng = {

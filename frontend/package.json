@@ -101,6 +101,7 @@
     "enzyme-to-json": "3.6.2",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
     "husky": "6.0.0",
     "jest-sonar-reporter": "2.0.0",
     "jest-styled-components": "7.0.4",
@@ -180,7 +181,13 @@
       "react-app",
       "plugin:prettier/recommended"
     ],
-    "rules": {}
+    "plugins": [
+      "simple-import-sort"
+    ],
+    "rules": {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error"
+    }
   },
   "browserslist": {
     "production": [

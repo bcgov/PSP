@@ -1,19 +1,21 @@
 import './EnhancedReferralCompleteForm.scss';
-import React, { useState, useEffect } from 'react';
-import { Container, Button } from 'react-bootstrap';
-import { Form, FastDatePicker, FastInput, FastCurrencyInput } from 'components/common/form';
-import styled from 'styled-components';
-import { useFormikContext } from 'formik';
+
+import { FastCurrencyInput, FastDatePicker, FastInput, Form } from 'components/common/form';
+import GenericModal from 'components/common/GenericModal';
 import TooltipIcon from 'components/common/TooltipIcon';
+import { useFormikContext } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
+import styled from 'styled-components';
+import { validateFormikWithCallback } from 'utils';
+
 import {
+  disposeWarning,
   IProject,
   onTransferredWithinTheGreTooltip,
   proceedToSplWarning,
   ReviewWorkflowStatus,
-  disposeWarning,
 } from '../../common';
-import GenericModal from 'components/common/GenericModal';
-import { validateFormikWithCallback } from 'utils';
 import { ExemptionDetails } from '../components/ExemptionDetails';
 
 const OrText = styled.div`

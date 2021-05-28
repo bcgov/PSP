@@ -1,14 +1,15 @@
-import React, { Fragment, useMemo, useState } from 'react';
-import { ProjectDraftForm, ProjectNotes, IProject, PublicNotes, PrivateNotes } from '../../common';
-import { PropertyListViewUpdate } from '../../common/components/PropertyListViewUpdate';
-import { useFormikContext } from 'formik';
-import _ from 'lodash';
-import Form from 'react-bootstrap/Form';
-import * as API from 'constants/API';
 import { TypeaheadField } from 'components/common/form/Typeahead';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import * as API from 'constants/API';
+import { useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import _ from 'lodash';
+import React, { Fragment, useMemo, useState } from 'react';
+import Form from 'react-bootstrap/Form';
 import { ILookupCode } from 'store/slices/lookupCodes';
+
+import { IProject, PrivateNotes, ProjectDraftForm, ProjectNotes, PublicNotes } from '../../common';
+import { PropertyListViewUpdate } from '../../common/components/PropertyListViewUpdate';
 
 /**
  * Form component of GreTransferStep.

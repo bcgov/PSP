@@ -1,18 +1,19 @@
-import { IProjectNote } from 'features/projects/common';
-import {
-  IApiProject,
-  IProjectProperty,
-  IApiProperty,
-  initialValues,
-  AgencyResponses,
-} from './interfaces';
-import { IProject, IProperty } from '.';
 import { FiscalKeys } from 'constants/fiscalKeys';
-import { getCurrentFiscalYear, formatDate, stringToNull } from 'utils';
+import { EvaluationKeys, NoteTypes, PropertyTypeNames, PropertyTypes } from 'constants/index';
+import { IProjectNote } from 'features/projects/common';
+import { IEvaluation, IFiscal } from 'interfaces';
 import _ from 'lodash';
 import moment from 'moment';
-import { NoteTypes, PropertyTypes, EvaluationKeys, PropertyTypeNames } from 'constants/index';
-import { IFiscal, IEvaluation } from 'interfaces';
+import { formatDate, getCurrentFiscalYear, stringToNull } from 'utils';
+
+import { IProject, IProperty } from '.';
+import {
+  AgencyResponses,
+  IApiProject,
+  IApiProperty,
+  initialValues,
+  IProjectProperty,
+} from './interfaces';
 
 export const getCurrentFiscal = (fiscals: IFiscal[], key: FiscalKeys) => {
   const currentFiscal = getCurrentFiscalYear();

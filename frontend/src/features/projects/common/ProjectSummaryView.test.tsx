@@ -1,24 +1,25 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { render } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { render } from '@testing-library/react';
-import { useKeycloak } from '@react-keycloak/web';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import {
-  IProjectTask,
-  ReviewWorkflowStatus,
-  ITask,
-  IProject,
-  projectSlice,
-  projectTasksSlice,
-} from '.';
-import { ProjectSummaryView } from '../dispose';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { ProjectSummaryView } from '../dispose';
+import {
+  IProject,
+  IProjectTask,
+  ITask,
+  projectSlice,
+  projectTasksSlice,
+  ReviewWorkflowStatus,
+} from '.';
 import { ProjectActions } from './slices/projectActions';
 
 jest.mock('@react-keycloak/web');

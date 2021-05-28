@@ -1,4 +1,4 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 
 export const saveJwt = createAction<string>('saveJwt');
 export const clearJwt = createAction('clearJwt');

@@ -1,8 +1,9 @@
-import L, { DivIcon, LatLngExpression, Layer, Marker, Map, GeoJSON } from 'leaflet';
-import { ICluster, PointFeature } from '../types';
-import Supercluster from 'supercluster';
-import { Classifications, Workflows, PropertyTypes } from 'constants/index';
+import { Classifications, PropertyTypes, Workflows } from 'constants/index';
 import { IProperty } from 'interfaces';
+import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
+import Supercluster from 'supercluster';
+
+import { ICluster, PointFeature } from '../types';
 
 // parcel icon (green)
 export const parcelIcon = L.icon({

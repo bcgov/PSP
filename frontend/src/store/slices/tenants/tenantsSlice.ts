@@ -1,6 +1,7 @@
-import { ITenantsState } from '.';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITenantConfig } from 'hooks/pims-api';
+
+import { ITenantsState } from '.';
 
 export const initialState: ITenantsState = {
   config: undefined,

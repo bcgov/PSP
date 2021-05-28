@@ -1,29 +1,28 @@
+import { Button } from 'components/common/form';
+import GenericModal from 'components/common/GenericModal';
+import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { Container, Form } from 'react-bootstrap';
+import styled from 'styled-components';
+import { formatDate } from 'utils';
 
 import {
-  IStepProps,
-  useStepForm,
   IProject,
-  StepStatusIcon,
+  IStepProps,
   ReviewWorkflowStatus,
+  StepStatusIcon,
   updatePimsWarning,
   useProject,
+  useStepForm,
 } from '../../common';
-
-import { Formik } from 'formik';
+import { GreTransferForm } from '../../common';
+import StepErrorSummary from '../../common/components/StepErrorSummary';
 import {
-  UpdateInfoStepYupSchema,
+  GreTransferStepYupSchema,
   ProjectDraftStepYupSchema,
   SelectProjectPropertiesStepYupSchema,
-  GreTransferStepYupSchema,
+  UpdateInfoStepYupSchema,
 } from '../../dispose/forms/disposalYupSchema';
-import { Button } from 'components/common/form';
-import { formatDate } from 'utils';
-import styled from 'styled-components';
-import StepErrorSummary from '../../common/components/StepErrorSummary';
-import GenericModal from 'components/common/GenericModal';
-import { GreTransferForm } from '../../common';
 
 export const GreTransferStepSchema = UpdateInfoStepYupSchema.concat(
   ProjectDraftStepYupSchema,

@@ -1,21 +1,22 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { act, cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import * as API from 'constants/API';
+import { projectSlice } from 'features/projects/common';
+import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { noop } from 'lodash';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import * as API from 'constants/API';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { IFilterBarState } from '../../common/components/FilterBar';
-import { Formik } from 'formik';
-import { PropertyListViewSelect } from '../../common/components/PropertyListViewSelect';
-import { useKeycloak } from '@react-keycloak/web';
-import { render, fireEvent, cleanup, wait, act } from '@testing-library/react';
-import { noop } from 'lodash';
-import { projectSlice } from 'features/projects/common';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { IFilterBarState } from '../../common/components/FilterBar';
+import { PropertyListViewSelect } from '../../common/components/PropertyListViewSelect';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

@@ -1,10 +1,11 @@
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { SidebarContextType } from './useQueryParamSideBar';
-import { useDispatch } from 'react-redux';
-import React from 'react';
-import { IBuilding } from 'interfaces';
 import { useAsyncError } from 'hooks/useAsyncError';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import { IBuilding } from 'interfaces';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useProperties } from 'store/slices/properties/useProperties';
+
+import { SidebarContextType } from './useQueryParamSideBar';
 
 interface IUseSideBarBuildingLoader {
   /** whether or not the sidebar should be displayed */

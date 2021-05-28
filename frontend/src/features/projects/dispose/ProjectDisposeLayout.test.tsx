@@ -1,23 +1,24 @@
-import React from 'react';
-import ProjectDisposeLayout from './ProjectDisposeLayout';
+import { useKeycloak } from '@react-keycloak/web';
+import { fireEvent, render, wait } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
+import { match as Match, Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import { Router, match as Match } from 'react-router-dom';
-import useStepper from './hooks/useStepper';
-import useStepForm from '../common/hooks/useStepForm';
-import { noop } from 'lodash';
-import { render, fireEvent, wait } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import useProject from '../common/hooks/useProject';
-import { mockWorkflow } from './testUtils';
-import { useKeycloak } from '@react-keycloak/web';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
 import { projectSlice } from '../common';
-import projectWorkflowSlice from '../common/slices/projectWorkflowSlice';
+import useProject from '../common/hooks/useProject';
+import useStepForm from '../common/hooks/useStepForm';
 import { ProjectActions } from '../common/slices/projectActions';
+import projectWorkflowSlice from '../common/slices/projectWorkflowSlice';
+import useStepper from './hooks/useStepper';
+import ProjectDisposeLayout from './ProjectDisposeLayout';
+import { mockWorkflow } from './testUtils';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

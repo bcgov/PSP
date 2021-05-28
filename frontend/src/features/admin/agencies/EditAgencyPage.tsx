@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Navbar, Container, Row, ButtonToolbar, Button } from 'react-bootstrap';
-import { Check, Form, Input, Select, SelectOption } from '../../../components/common/form';
-import { useDispatch } from 'react-redux';
-import { Formik } from 'formik';
-import * as API from 'constants/API';
 import './EditAgencyPage.scss';
-import { useHistory } from 'react-router-dom';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { FaArrowAltCircleLeft } from 'react-icons/fa';
+
 import GenericModal from 'components/common/GenericModal';
-import { AgencyEditSchema } from 'utils/YupSchema';
-import service from 'features/properties/service';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { ILookupCode } from 'store/slices/lookupCodes';
+import * as API from 'constants/API';
+import service from 'features/properties/service';
+import { Formik } from 'formik';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { IAgencyDetail } from 'interfaces';
+import React, { useEffect, useState } from 'react';
+import { Button, ButtonToolbar, Container, Navbar, Row } from 'react-bootstrap';
+import { FaArrowAltCircleLeft } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { useAgencies } from 'store/slices/agencies/useAgencies';
-import { IAgencyDetail } from 'interfaces';
+import { ILookupCode } from 'store/slices/lookupCodes';
+import { AgencyEditSchema } from 'utils/YupSchema';
+
+import { Check, Form, Input, Select, SelectOption } from '../../../components/common/form';
 
 interface IEditAgencyPageProps {
   /** id prop to identify which agency to edit */

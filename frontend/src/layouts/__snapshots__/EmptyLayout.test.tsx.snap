@@ -1,6 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty Layout renders 1`] = `
+.c4 {
+  bottom: 0;
+  padding: 10px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+}
+
+.c4 a {
+  display: inline;
+}
+
+.c4 a:link,
+.c4 a:visited {
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 10px;
+  border-right: 1px solid #666;
+}
+
+.c4 a:hover,
+.c4 a:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c4 div.version {
+  color: #ffffff;
+  font-size: 12px;
+  font-family: 'BCSans',Fallback,sans-serif;
+  padding: 0 0 0 10px;
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
+  text-align: right;
+}
+
+.c2 {
+  border-left: 2px solid white;
+  font-size: 34px;
+  margin: 0 15px 0 25px;
+  vertical-align: top;
+}
+
 .c1 {
   padding: 0 10px;
   min-height: 70px;
@@ -59,79 +123,6 @@ exports[`Empty Layout renders 1`] = `
   font-weight: 700;
 }
 
-.c2 {
-  border-left: 2px solid white;
-  font-size: 34px;
-  margin: 0 15px 0 25px;
-  vertical-align: top;
-}
-
-.c4 {
-  bottom: 0;
-  padding: 10px 0;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  -webkit-align-content: flex-start;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
-}
-
-.c4 a {
-  display: inline;
-}
-
-.c4 a:link,
-.c4 a:visited {
-  color: #ffffff;
-  font-size: 16px;
-  font-family: 'BCSans',Fallback,sans-serif;
-  padding: 0 10px;
-  border-right: 1px solid #666;
-}
-
-.c4 a:hover,
-.c4 a:focus {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c4 div.version {
-  color: #ffffff;
-  font-size: 12px;
-  font-family: 'BCSans',Fallback,sans-serif;
-  padding: 0 0 0 10px;
-  -webkit-box-flex: 2;
-  -webkit-flex-grow: 2;
-  -ms-flex-positive: 2;
-  flex-grow: 2;
-  text-align: right;
-}
-
-.c0 {
-  background-color: #003366;
-  border: none;
-  border-bottom: 2px solid;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
 .c3 {
   background-color: #003366;
   border: none;
@@ -144,6 +135,15 @@ exports[`Empty Layout renders 1`] = `
 .c3 a,
 .c3 h2 {
   color: #fff;
+}
+
+.c0 {
+  background-color: #003366;
+  border: none;
+  border-bottom: 2px solid;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 @media (min-width:992px) {

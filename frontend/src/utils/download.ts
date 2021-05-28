@@ -1,7 +1,7 @@
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import CustomAxios from 'customAxios';
-import { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { logRequest, logSuccess, logError } from 'store/slices/network/networkSlice';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
 
 /**
  * Download configuration options interface.

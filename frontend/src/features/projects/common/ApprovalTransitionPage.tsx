@@ -1,14 +1,15 @@
-import * as React from 'react';
-import { Container, Spinner } from 'react-bootstrap';
-import { useProject, updateWorkflowStatus, IProject, ReviewWorkflowStatus } from '.';
-import { useDispatch } from 'react-redux';
-import _ from 'lodash';
-import { useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { fetchProjectWorkflow } from './projectsActionCreator';
-import queryString from 'query-string';
 import GenericModal from 'components/common/GenericModal';
+import _ from 'lodash';
+import queryString from 'query-string';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
+
+import { IProject, ReviewWorkflowStatus, updateWorkflowStatus, useProject } from '.';
+import { fetchProjectWorkflow } from './projectsActionCreator';
 
 interface IApprovalTransitionPageProps {}
 

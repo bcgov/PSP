@@ -1,19 +1,21 @@
-import { useEffect } from 'react';
-import { Navbar, Container, Row, Col, ButtonToolbar, Button } from 'react-bootstrap';
-import { Form, Input, Select, SelectOption } from '../../../components/common/form';
-import { Formik, Field } from 'formik';
-import { UserUpdateSchema } from 'utils/YupSchema';
-import * as API from 'constants/API';
 import './EditUserPage.scss';
+
 import { Label } from 'components/common/Label';
-import { useHistory } from 'react-router-dom';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { formatApiDateTime } from 'utils';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import * as API from 'constants/API';
 import { AUTHORIZATION_URL } from 'constants/strings';
+import { Field, Formik } from 'formik';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { useEffect } from 'react';
+import { Button, ButtonToolbar, Col, Container, Navbar, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { useUsers } from 'store/slices/users';
-import { useAppSelector } from 'store/hooks';
+import { formatApiDateTime } from 'utils';
+import { UserUpdateSchema } from 'utils/YupSchema';
+
+import { Form, Input, Select, SelectOption } from '../../../components/common/form';
 
 interface IEditUserPageProps {
   id: string;

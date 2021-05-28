@@ -1,7 +1,8 @@
-import { IProject, IProjectTask } from '..';
-import { setIn, validateYupSchema, yupToFormErrors } from 'formik';
 import { ValidationGroup } from 'components/common/tabValidation';
+import { setIn, validateYupSchema, yupToFormErrors } from 'formik';
 import _ from 'lodash';
+
+import { IProject, IProjectTask } from '..';
 
 /**
  * Validate tasks for this project and status code

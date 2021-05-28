@@ -1,11 +1,12 @@
+import { Form } from 'components/common/form';
+import { Formik, setIn, yupToFormErrors } from 'formik';
+import _ from 'lodash';
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { Formik, setIn, yupToFormErrors } from 'formik';
-import { Form } from 'components/common/form';
-import { IStepProps, IProjectTask, IProject, DisposeWorkflowStatus } from '../../common/interfaces';
-import { useStepper, EnhancedReferralExemptionSchema } from '..';
-import _ from 'lodash';
-import { useStepForm, DocumentationForm, ProjectNotes, StepErrorSummary } from '../../common';
+
+import { DocumentationForm, ProjectNotes, StepErrorSummary, useStepForm } from '../../common';
+import { DisposeWorkflowStatus, IProject, IProjectTask, IStepProps } from '../../common/interfaces';
+import { EnhancedReferralExemptionSchema, useStepper } from '..';
 
 const handleValidate = (project: IProject) => {
   return project.tasks.reduce((errors: any, task: IProjectTask, index: number) => {

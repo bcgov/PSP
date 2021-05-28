@@ -1,8 +1,9 @@
-import * as React from 'react';
-import { OuterRow } from './InfoContent';
-import { ThreeColumnItem } from './ThreeColumnItem';
 import { pidFormatter } from 'features/properties/components/forms/subforms/PidPinForm';
 import { IParcel } from 'interfaces';
+import * as React from 'react';
+
+import { OuterRow } from './InfoContent';
+import { ThreeColumnItem } from './ThreeColumnItem';
 
 interface IParcelPIDPIN {
   /** the selected parcel information */

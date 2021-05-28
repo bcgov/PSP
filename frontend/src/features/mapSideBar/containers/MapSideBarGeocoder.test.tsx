@@ -1,31 +1,31 @@
-import React from 'react';
-import { Router, Route } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { render, cleanup, wait, screen, act } from '@testing-library/react';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-
-import { ToastContainer } from 'react-toastify';
-import MapSideBarContainer from './MapSideBarContainer';
-import { noop } from 'lodash';
-import * as actionTypes from 'constants/actionTypes';
-import { mockDetails } from 'mocks/filterDataMock';
-import VisibilitySensor from 'react-visibility-sensor';
 import { useKeycloak } from '@react-keycloak/web';
+import { fireEvent } from '@testing-library/dom';
+import { act, cleanup, render, screen, wait } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims } from 'constants/claims';
-import { fireEvent } from '@testing-library/dom';
-import { useApi, PimsAPI, IGeocoderResponse, IGeocoderPidsResponse } from 'hooks/useApi';
-import * as API from 'constants/API';
-import * as _ from 'lodash';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { TenantProvider, defaultTenant } from 'tenants';
+import * as actionTypes from 'constants/actionTypes';
+import * as API from 'constants/API';
+import { Claims } from 'constants/claims';
+import { createMemoryHistory } from 'history';
+import { IGeocoderPidsResponse, IGeocoderResponse, PimsAPI, useApi } from 'hooks/useApi';
 import { IParcel } from 'interfaces';
+import { noop } from 'lodash';
+import * as _ from 'lodash';
+import { mockDetails } from 'mocks/filterDataMock';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Route, Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import VisibilitySensor from 'react-visibility-sensor';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { propertiesSlice } from 'store/slices/properties';
+import { defaultTenant, TenantProvider } from 'tenants';
+
+import MapSideBarContainer from './MapSideBarContainer';
 
 jest.mock(
   'react-visibility-sensor',

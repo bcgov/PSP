@@ -1,14 +1,14 @@
-import * as API from 'constants/API';
-import { IGeocoderResponse, useApi } from 'hooks/useApi';
-import { FormikValues, getIn, setIn } from 'formik';
-import { useState } from 'react';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import {
-  useLayerQuery,
   PARCELS_LAYER_URL,
   saveParcelDataLayerResponse,
+  useLayerQuery,
 } from 'components/maps/leaflet/LayerPopup';
+import * as API from 'constants/API';
+import { FormikValues, getIn, setIn } from 'formik';
+import { IGeocoderResponse, useApi } from 'hooks/useApi';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { LatLng } from 'leaflet';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 interface IUseGeocoderProps {

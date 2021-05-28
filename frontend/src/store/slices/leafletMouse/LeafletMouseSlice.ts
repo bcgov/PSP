@@ -1,5 +1,5 @@
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import { LeafletMouseEvent } from 'leaflet';
-import { createSlice, createAction } from '@reduxjs/toolkit';
 
 export const saveClickLatLng = createAction<LeafletMouseEvent>('saveClickLatLng');
 export const clearClickLatLng = createAction('clearLatLng');

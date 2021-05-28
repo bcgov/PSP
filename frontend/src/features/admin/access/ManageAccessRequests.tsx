@@ -1,26 +1,28 @@
-import * as React from 'react';
-import { Container } from 'react-bootstrap';
-import { AccessRequestStatus } from 'constants/accessStatus';
+import './ManageAccessRequests.scss';
+
 import { Table } from 'components/Table';
-import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+import { AccessRequestStatus } from 'constants/accessStatus';
+import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { IAccessRequest } from 'interfaces';
-import './ManageAccessRequests.scss';
+import * as React from 'react';
+import { Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import * as actionTypes from 'constants/actionTypes';
-import { IAccessRequestModel } from './interfaces';
-import { AccessRequestFilter } from './components/Filter';
-import { columnDefinitions } from './constants/constants';
-import { AccessRequestDetails } from './components/Details';
 import { useAppSelector } from 'store/hooks';
 import {
-  updateAccessRequestPageIndex,
   filterAccessRequestsAdmin,
-  useAccessRequests,
   IAccessRequestsFilterData,
+  updateAccessRequestPageIndex,
+  useAccessRequests,
 } from 'store/slices/accessRequests';
-import { useTenant } from 'tenants';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { useTenant } from 'tenants';
+import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
+
+import { AccessRequestDetails } from './components/Details';
+import { AccessRequestFilter } from './components/Filter';
+import { columnDefinitions } from './constants/constants';
+import { IAccessRequestModel } from './interfaces';
 
 const ManageAccessRequests = () => {
   const dispatch = useDispatch();

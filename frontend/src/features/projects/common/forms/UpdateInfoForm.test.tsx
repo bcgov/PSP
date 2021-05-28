@@ -1,21 +1,22 @@
+import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { Classifications } from 'constants/classifications';
+import { Formik } from 'formik';
+import { createMemoryHistory } from 'history';
 import React from 'react';
+import { Form } from 'react-bootstrap';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import UpdateInfoForm from './UpdateInfoForm';
-import { Formik } from 'formik';
-import { Form } from 'react-bootstrap';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { render, wait, fireEvent, cleanup } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { Classifications } from 'constants/classifications';
-import { UpdateInfoStepYupSchema } from '../../dispose';
-import { useKeycloak } from '@react-keycloak/web';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
+import { UpdateInfoStepYupSchema } from '../../dispose';
 import { ProjectActions } from '../slices/projectActions';
+import UpdateInfoForm from './UpdateInfoForm';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

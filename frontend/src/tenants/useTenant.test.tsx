@@ -1,5 +1,6 @@
-import { TenantProvider, defaultTenant, useTenant, config } from '.';
-import { render, getByTestId, act } from '@testing-library/react';
+import { act, getByTestId, render } from '@testing-library/react';
+
+import { config, defaultTenant, TenantProvider, useTenant } from '.';
 
 const unmockedFetch = global.fetch;
 const TestTenant = () => {

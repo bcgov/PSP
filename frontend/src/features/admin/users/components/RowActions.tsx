@@ -1,11 +1,12 @@
-import { IUserRecord } from '../interfaces/IUserRecord';
-import { IUser } from 'interfaces';
 import { Menu } from 'components/menu/Menu';
+import { IUser } from 'interfaces';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import { CellProps } from 'react-table';
 import { useHistory } from 'react-router-dom';
-import { useUsers } from 'store/slices/users';
+import { CellProps } from 'react-table';
 import { useAppSelector } from 'store/hooks';
+import { useUsers } from 'store/slices/users';
+
+import { IUserRecord } from '../interfaces/IUserRecord';
 
 export const RowActions = (props: CellProps<IUserRecord>) => {
   const history = useHistory();
