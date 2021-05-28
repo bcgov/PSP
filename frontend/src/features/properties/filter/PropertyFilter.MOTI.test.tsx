@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, wait, fireEvent, cleanup, act, screen } from '@testing-library/react';
-import { PropertyFilter } from './';
+import { render, wait, fireEvent, cleanup } from '@testing-library/react';
+import { PropertyFilter } from '.';
 import * as MOCK from 'mocks/filterDataMock';
 import axios from 'axios';
 import { useKeycloak } from '@react-keycloak/web';
@@ -16,6 +16,7 @@ import { fillInput } from 'utils/testUtils';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import filterSlice from 'store/slices/filter/filterSlice';
 import propertyNameSlice from '../common/slices/propertyNameSlice';
+import { TenantProvider } from 'tenants';
 
 const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.
@@ -117,30 +118,35 @@ const defaultFilter: IPropertyFilter = {
 };
 
 const getUiElement = (filter: IPropertyFilter, showAllAgencySelect = true) => (
-  <Provider store={getStore(filter)}>
-    <Router history={history}>
-      <PropertyFilter
-        defaultFilter={filter}
-        agencyLookupCodes={MOCK.AGENCIES}
-        adminAreaLookupCodes={MOCK.ADMINISTRATIVEAREAS}
-        onChange={onFilterChange}
-        showAllAgencySelect={showAllAgencySelect}
-      />
-    </Router>
-  </Provider>
+  <TenantProvider>
+    <Provider store={getStore(filter)}>
+      <Router history={history}>
+        <PropertyFilter
+          defaultFilter={filter}
+          agencyLookupCodes={MOCK.AGENCIES}
+          adminAreaLookupCodes={MOCK.ADMINISTRATIVEAREAS}
+          onChange={onFilterChange}
+          showAllAgencySelect={showAllAgencySelect}
+        />
+      </Router>
+    </Provider>
+  </TenantProvider>
 );
 
-describe('MapFilterBar', () => {
-  afterEach(() => {
-    cleanup();
-  });
-
+describe('[ MOTI ] MapFilterBar', () => {
   mockedAxios.get.mockImplementationOnce(() => Promise.resolve({}));
 
   beforeEach(() => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     history = createMemoryHistory();
     mockKeycloak([]);
   });
+
+  afterEach(() => {
+    delete process.env.REACT_APP_TENANT;
+    cleanup();
+  });
+
   it('renders correctly', () => {
     mockKeycloak(['property-view']);
     // Capture any changes
@@ -284,31 +290,10 @@ describe('MapFilterBar', () => {
     });
   });
 
-  it('displays the surplus properties window if clicked', async () => {
-    const { getByText } = render(getUiElement(defaultFilter));
-    const findMorePropertiesButton = getByText('Surplus Properties');
-    act(() => {
-      fireEvent.click(findMorePropertiesButton);
-    });
-    expect(await screen.findByText('Find available surplus properties')).toBeVisible();
-  });
-
-  it('hides the surplus properties window if closed', async () => {
-    const { getByText } = render(getUiElement(defaultFilter));
-    const findMorePropertiesButton = getByText('Surplus Properties');
-    act(() => {
-      fireEvent.click(findMorePropertiesButton);
-    });
-    await wait(() => {
-      expect(screen.getByText('Find available surplus properties')).toBeVisible();
-    });
-    const closeFindMoreProperties = screen.getAllByTestId('close-button')[1];
-    act(() => {
-      fireEvent.click(closeFindMoreProperties);
-    });
-    await wait(() => {
-      expect(screen.queryByText('Find available surplus properties')).toBeNull();
-    });
+  it('should not render the Surplus Properties button', () => {
+    const { queryByText } = render(getUiElement(defaultFilter));
+    const findMorePropertiesButton = queryByText('Surplus Properties');
+    expect(findMorePropertiesButton).not.toBeInTheDocument();
   });
 
   it('searches for property names', async () => {

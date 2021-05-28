@@ -122,7 +122,10 @@ exports[`[ MOTI ] AppNavBar matches snapshot. 1`] = `
                       tenant="MOTI"
                     />
                     <ViewInventory />
-                    <DisposeProjectsDropdown />
+                    <FeatureToggle
+                      hide={true}
+                      tenant="MOTI"
+                    />
                     <ReportsDropdown />
                   </div>
                 </ForwardRef>

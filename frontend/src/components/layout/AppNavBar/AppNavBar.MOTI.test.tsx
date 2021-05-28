@@ -69,9 +69,18 @@ describe('[ MOTI ] AppNavBar', () => {
     expect(mountToJson(tree.find(AppNavBar))).toMatchSnapshot();
   });
 
-  describe('AppNavBar Links Based on Security', () => {
-    describe('AppNavBar Administration Dropdown', () => {
-      it('AppNavBar include Administration Dropdown', () => {
+  describe('Renders navigation links based on security', () => {
+    it('Home link should render for all users', () => {
+      const { container } = renderNavBar();
+      const link = container.querySelector('.home-button');
+
+      expect(link).toBeVisible();
+      fireEvent.click(link!);
+      expect(history.location.pathname).toBe('/mapview');
+    });
+
+    describe('Administration Dropdown', () => {
+      beforeEach(() => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             subject: 'test',
@@ -80,61 +89,60 @@ describe('[ MOTI ] AppNavBar', () => {
             },
           },
         });
-        const { getByText } = renderNavBar();
-        const element = getByText('Administration');
-
-        expect(element).toBeVisible();
       });
 
-      it('AppNavBar include Admin Users Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              groups: [Roles.SYSTEM_ADMINISTRATOR],
-            },
-          },
-        });
+      it('should render', () => {
         const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Administration'));
-        const element = getByText('Users');
-
-        expect(element).toBeVisible();
-      });
-      it('AppNavBar include Admin Access Requests Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              groups: [Roles.SYSTEM_ADMINISTRATOR],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Administration'));
-        const element = getByText('Access Requests');
-
-        expect(element).toBeVisible();
+        const dropdown = getByText('Administration');
+        expect(dropdown).toBeVisible();
       });
 
-      it('AppNavBar include Admin Agencies link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              groups: [Roles.SYSTEM_ADMINISTRATOR],
-            },
-          },
-        });
+      it('should include Admin Users Link', () => {
         const { getByText } = renderNavBar();
         fireEvent.click(getByText('Administration'));
-        const element = getByText('Agencies');
+        const link = getByText('Users');
 
-        expect(element).toBeVisible();
+        expect(link).toBeVisible();
+        fireEvent.click(link);
+        expect(history.location.pathname).toBe('/admin/users');
+      });
+
+      it('should include Admin Access Requests Link', () => {
+        const { getByText } = renderNavBar();
+        fireEvent.click(getByText('Administration'));
+        const link = getByText('Access Requests');
+
+        expect(link).toBeVisible();
+        fireEvent.click(link);
+        expect(history.location.pathname).toBe('/admin/access/requests');
+      });
+
+      it('should include Admin Agencies link', () => {
+        const { getByText } = renderNavBar();
+        fireEvent.click(getByText('Administration'));
+        const link = getByText('Agencies');
+
+        expect(link).toBeVisible();
+        fireEvent.click(link);
+        expect(history.location.pathname).toBe('/admin/agencies');
       });
     });
 
-    it('AppNavBar include View Inventory Link', () => {
+    it('Submit Property Link should NOT render', () => {
+      (useKeycloak as jest.Mock).mockReturnValue({
+        keycloak: {
+          subject: 'test',
+          userInfo: {
+            roles: [Claims.PROPERTY_ADD, Claims.PROPERTY_VIEW],
+          },
+        },
+      });
+      const { queryByText } = renderNavBar();
+      const link = queryByText('Submit Property');
+      expect(link).not.toBeInTheDocument();
+    });
+
+    it('View Inventory Link should render', () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
@@ -146,25 +154,13 @@ describe('[ MOTI ] AppNavBar', () => {
       const { getByText } = renderNavBar();
       const link = getByText('View Property Inventory');
 
-      expect(link).toBeTruthy();
+      expect(link).toBeVisible();
+      fireEvent.click(link);
+      expect(history.location.pathname).toBe('/properties/list');
     });
 
-    describe('AppNavBar Disposal Projects dropdown', () => {
-      it('AppNavBar include Disposal Projects dropdown for admin', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.ADMIN_PROPERTIES, Claims.ADMIN_PROJECTS],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        const element = getByText('Disposal Projects');
-
-        expect(element).toBeVisible();
-      });
-      it('AppNavBar include Disposal Projects dropdown for Approval requests only', () => {
+    describe('Disposal Projects dropdown', () => {
+      beforeEach(() => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             subject: 'test',
@@ -173,62 +169,16 @@ describe('[ MOTI ] AppNavBar', () => {
             },
           },
         });
-        const { getByText } = renderNavBar();
-        const element = getByText('Disposal Projects');
-
-        expect(element).toBeVisible();
       });
-      it('AppNavBar include Create Disposal Project Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.ADMIN_PROPERTIES, Claims.ADMIN_PROJECTS],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Disposal Projects'));
-        const link = getByText('Create Disposal Project');
-
-        expect(link).toBeVisible();
-      });
-
-      it('AppNavBar include View Projects Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.ADMIN_PROPERTIES, Claims.ADMIN_PROJECTS],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Disposal Projects'));
-        const link = getByText('View Projects');
-
-        expect(link).toBeVisible();
-      });
-
-      it('AppNavBar include Approval Requests Link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.DISPOSE_APPROVE],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Disposal Projects'));
-        const link = getByText('Approval Requests');
-
-        expect(link).toBeVisible();
+      it('should NOT render', () => {
+        const { queryByText } = renderNavBar();
+        const element = queryByText('Disposal Projects');
+        expect(element).not.toBeInTheDocument();
       });
     });
 
-    describe('AppNavBar Reports Dropdown', () => {
-      it('AppNavBar include Reports Dropdown', () => {
+    describe('Reports Dropdown', () => {
+      beforeEach(() => {
         (useKeycloak as jest.Mock).mockReturnValue({
           keycloak: {
             subject: 'test',
@@ -237,25 +187,19 @@ describe('[ MOTI ] AppNavBar', () => {
             },
           },
         });
+      });
+
+      it('should render', () => {
         const { getByText } = renderNavBar();
         const link = getByText('Reports');
         expect(link).toBeVisible();
       });
 
-      it('AppNavBar include SPL Reports link', () => {
-        (useKeycloak as jest.Mock).mockReturnValue({
-          keycloak: {
-            subject: 'test',
-            userInfo: {
-              roles: [Claims.REPORTS_VIEW, Claims.REPORTS_SPL],
-            },
-          },
-        });
-        const { getByText } = renderNavBar();
+      it('SPL Reports link should NOT render', () => {
+        const { queryByText, getByText } = renderNavBar();
         fireEvent.click(getByText('Reports'));
-        const link = getByText('SPL Report');
-
-        expect(link).toBeVisible();
+        const link = queryByText('SPL Report');
+        expect(link).not.toBeInTheDocument();
       });
     });
   });

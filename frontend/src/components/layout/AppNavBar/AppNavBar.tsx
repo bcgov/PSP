@@ -28,7 +28,9 @@ function AppNavBar() {
             <SubmitProperty />
           </FeatureToggle>
           <ViewInventory />
-          <DisposeProjectsDropdown />
+          <FeatureToggle tenant="MOTI" hide>
+            <DisposeProjectsDropdown />
+          </FeatureToggle>
           <ReportsDropdown />
         </Nav>
       </Navbar.Collapse>
@@ -161,7 +163,11 @@ function ReportsDropdown() {
       id="reports"
     >
       {keycloak.hasClaim(Claims.REPORTS_SPL) && (
-        <NavDropdown.Item onClick={() => history.push('/reports/spl')}>SPL Report</NavDropdown.Item>
+        <FeatureToggle tenant="MOTI" hide>
+          <NavDropdown.Item onClick={() => history.push('/reports/spl')}>
+            SPL Report
+          </NavDropdown.Item>
+        </FeatureToggle>
       )}
     </NavDropdown>
   ) : null;

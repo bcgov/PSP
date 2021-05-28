@@ -25,6 +25,7 @@ import useLookupCodes from 'hooks/useLookupCodeHelpers';
 import { mapSelectOptionWithParent } from 'utils';
 import { useMyAgencies } from 'hooks/useMyAgencies';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import { FeatureToggle } from 'tenants/FeatureToggle';
 
 /**
  * PropertyFilter component properties.
@@ -150,20 +151,23 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
       {({ isSubmitting, setFieldValue, values }) => (
         <Form>
           <Form.Row className="map-filter-bar">
-            <FindMorePropertiesButton
-              buttonText="Find available surplus properties"
-              onEnter={() => {
-                setFindMoreOpen(true);
-                setFieldValue('surplusFilter', true);
-                setFieldValue('includeAllProperties', true);
-                !keycloak.hasClaim(Claims.ADMIN_PROPERTIES) && setFieldValue('agencies', undefined);
-              }}
-              onExit={() => {
-                setFindMoreOpen(false);
-                setFieldValue('surplusFilter', false);
-              }}
-            />
-            <div className="vl"></div>
+            <FeatureToggle tenant="MOTI" hide>
+              <FindMorePropertiesButton
+                buttonText="Find available surplus properties"
+                onEnter={() => {
+                  setFindMoreOpen(true);
+                  setFieldValue('surplusFilter', true);
+                  setFieldValue('includeAllProperties', true);
+                  !keycloak.hasClaim(Claims.ADMIN_PROPERTIES) &&
+                    setFieldValue('agencies', undefined);
+                }}
+                onExit={() => {
+                  setFindMoreOpen(false);
+                  setFieldValue('surplusFilter', false);
+                }}
+              />
+              <div className="vl"></div>
+            </FeatureToggle>
             <AgencyCol>
               {showAllAgencySelect ? (
                 <PropertyFilterAgencyOptions disabled={findMoreOpen} agencies={agencies} />

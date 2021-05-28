@@ -18,6 +18,7 @@ import { fillInput } from 'utils/testUtils';
 import { ToastContainer } from 'react-toastify';
 import { useApi } from 'hooks/useApi';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { TenantProvider } from 'tenants';
 
 // Set all module functions to jest.fn
 jest.mock('../service');
@@ -49,6 +50,26 @@ const store = mockStore({
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 mockAxios.onAny().reply(200, {});
+
+const renderPage = () =>
+  render(
+    <TenantProvider>
+      <Provider store={store}>
+        <Router history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          <PropertyListView />
+          <ToastContainer />
+        </Router>
+      </Provider>
+    </TenantProvider>,
+  );
 
 const setupTests = (items?: IProperty[], buildingItems?: IProperty[]) => {
   // API "returns" no results
@@ -86,10 +107,12 @@ const setupTests = (items?: IProperty[], buildingItems?: IProperty[]) => {
 describe('Property list view', () => {
   // clear mocks before each test
   beforeEach(() => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     mockedService.getPropertyList.mockClear();
     mockedService.getPropertyReport.mockClear();
   });
   afterEach(() => {
+    delete process.env.REACT_APP_TENANT;
     history.push({ search: '' });
     cleanup();
   });
@@ -98,13 +121,7 @@ describe('Property list view', () => {
     setupTests();
 
     await act(async () => {
-      const { container } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />,
-          </Router>
-        </Provider>,
-      );
+      const { container } = renderPage();
       expect(container.firstChild).toMatchSnapshot();
       await wait(async () => {
         expect(container.querySelector('span[class="spinner-border"]')).not.toBeInTheDocument();
@@ -121,13 +138,7 @@ describe('Property list view', () => {
       items: [],
     });
 
-    const { findByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <PropertyListView />
-        </Router>
-      </Provider>,
-    );
+    const { findByText } = renderPage();
 
     // default table message when there is no data to display
     const noResults = await findByText(/No rows to display/i);
@@ -138,13 +149,7 @@ describe('Property list view', () => {
     setupTests();
 
     await act(async () => {
-      const { getByTestId, container } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { getByTestId, container } = renderPage();
       expect(getByTestId('excel-icon')).toBeInTheDocument();
       expect(getByTestId('csv-icon')).toBeInTheDocument();
       expect(container.querySelector('span[class="spinner-border"]')).not.toBeInTheDocument();
@@ -155,13 +160,7 @@ describe('Property list view', () => {
     setupTests();
 
     await act(async () => {
-      const { getByTestId } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { getByTestId } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
     });
   });
@@ -170,13 +169,7 @@ describe('Property list view', () => {
     setupTests();
 
     await act(async () => {
-      const { getByTestId } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { getByTestId } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
       fireEvent(
         getByTestId('edit-icon'),
@@ -190,13 +183,7 @@ describe('Property list view', () => {
     setupTests();
 
     await act(async () => {
-      const { getByTestId } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { getByTestId } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
       fireEvent(
         getByTestId('edit-icon'),
@@ -210,13 +197,7 @@ describe('Property list view', () => {
     setupTests([{ ...mockFlatProperty }]);
 
     await act(async () => {
-      const { getByTestId, container } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { getByTestId, container } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
       fireEvent(
         getByTestId('edit-icon'),
@@ -237,13 +218,7 @@ describe('Property list view', () => {
     setupTests([{ ...mockFlatProperty, agencyId: 2 }]);
 
     await act(async () => {
-      const { getByTestId, container } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { getByTestId, container } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
       fireEvent(
         getByTestId('edit-icon'),
@@ -263,13 +238,7 @@ describe('Property list view', () => {
     setupTests([{ ...mockFlatProperty, projectNumbers: ['SPP-10000'] }]);
 
     await act(async () => {
-      const { container, getByTestId } = render(
-        <Provider store={store}>
-          <Router history={history}>
-            <PropertyListView />
-          </Router>
-        </Provider>,
-      );
+      const { container, getByTestId } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
       fireEvent(
         getByTestId('edit-icon'),
@@ -288,13 +257,7 @@ describe('Property list view', () => {
   it('rows act as clickable links to the property details page.', async () => {
     setupTests([mockFlatProperty]);
 
-    const { container } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <PropertyListView />
-        </Router>
-      </Provider>,
-    );
+    const { container } = renderPage();
 
     await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const cells = container.querySelectorAll('.td.clickable');
@@ -305,13 +268,7 @@ describe('Property list view', () => {
   it('rows can be edited by clicking the edit button', async () => {
     setupTests([{ ...mockFlatProperty, id: 1 }]);
 
-    const { container, getByTestId } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <PropertyListView />
-        </Router>
-      </Provider>,
-    );
+    const { container, getByTestId } = renderPage();
 
     await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
@@ -324,13 +281,7 @@ describe('Property list view', () => {
   it('edit mode can be toggled on and off', async () => {
     setupTests([{ ...mockFlatProperty, id: 1 }]);
 
-    const { container, getByTestId, getByText, queryByTestId, queryByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <PropertyListView />
-        </Router>
-      </Provider>,
-    );
+    const { container, getByTestId, getByText, queryByTestId, queryByText } = renderPage();
 
     await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
@@ -349,22 +300,7 @@ describe('Property list view', () => {
   it('updates to financials made in edit mode can be saved', async () => {
     setupTests([{ ...mockFlatProperty, id: 1 }]);
 
-    const { container, getByTestId, getByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <ToastContainer
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-          />
-          <PropertyListView />
-          <ToastContainer />
-        </Router>
-      </Provider>,
-    );
+    const { container, getByTestId, getByText } = renderPage();
 
     await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
@@ -380,22 +316,7 @@ describe('Property list view', () => {
   it('updates to financials made in edit mode that throw errors are handled', async () => {
     setupTests([{ ...mockFlatProperty, id: 1 }]);
 
-    const { container, getByTestId, getByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <ToastContainer
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-          />
-          <PropertyListView />
-          <ToastContainer />
-        </Router>
-      </Provider>,
-    );
+    const { container, getByTestId, getByText } = renderPage();
 
     await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
@@ -416,13 +337,7 @@ describe('Property list view', () => {
   it('rows can be expanded by clicking the folder icon', async () => {
     setupTests([mockFlatProperty], [mockFlatBuildingProperty]);
 
-    const { container, getByText } = render(
-      <Provider store={store}>
-        <Router history={history}>
-          <PropertyListView />
-        </Router>
-      </Provider>,
-    );
+    const { container, getByText } = renderPage();
 
     await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const cells = container.querySelectorAll('.td.expander');
