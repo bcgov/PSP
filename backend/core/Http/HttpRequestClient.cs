@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -76,7 +75,7 @@ namespace Pims.Core.Http
             {
                 var body = Encoding.Default.GetString(data);
                 _logger.LogError(ex, $"Failed to deserialize response: {body}");
-                throw ex;
+                throw;
             }
 
             throw new HttpClientRequestException(response, $"Response must contain JSON but was '{contentType.MediaType}'.");

@@ -282,6 +282,7 @@ namespace Pims.Api
                 options.ForwardedHeaders = ForwardedHeaders.All;
                 options.AllowedHosts = this.Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
             });
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         /// <summary>
@@ -297,7 +298,8 @@ namespace Pims.Api
 
             if (!env.IsProduction())
             {
-                app.UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
 
             app.UpdateDatabase<Startup>();
