@@ -1,16 +1,18 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
 import 'jest-styled-components';
-import { noop } from 'lodash';
-import EnhancedReferralTab from './EnhancedReferralTab';
+
+import { useKeycloak } from '@react-keycloak/web';
 import { ReviewWorkflowStatus } from 'features/projects/common';
-import { Formik, Form } from 'formik';
-import { getStore, mockProject as defaultProject } from '../../dispose/testUtils';
+import { Form, Formik } from 'formik';
+import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
 import _ from 'lodash';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { useKeycloak } from '@react-keycloak/web';
+import renderer from 'react-test-renderer';
+
+import { getStore, mockProject as defaultProject } from '../../dispose/testUtils';
+import EnhancedReferralTab from './EnhancedReferralTab';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

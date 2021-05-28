@@ -1,21 +1,22 @@
-import React from 'react';
-import { act } from 'react-test-renderer';
-import SelectProjectProperties from './SelectProjectPropertiesStep';
+import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import * as API from 'constants/API';
+import { projectSlice } from 'features/projects/common';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { mockFlatProperty } from 'mocks/filterDataMock';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { render, wait, fireEvent, cleanup } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { mockKeycloak, mockProject } from '../testUtils';
-import * as API from 'constants/API';
-import { mockFlatProperty } from 'mocks/filterDataMock';
-import { projectSlice } from 'features/projects/common';
+import { act } from 'react-test-renderer';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { ProjectActions } from 'features/projects/common/slices/projectActions';
+
+import { mockKeycloak, mockProject } from '../testUtils';
+import SelectProjectProperties from './SelectProjectPropertiesStep';
 jest.mock('@react-keycloak/web');
 
 const mockStore = configureMockStore([thunk]);

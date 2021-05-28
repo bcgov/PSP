@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPagedItems, IAgency, IAgencyDetail } from 'interfaces';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
+import { IAgency, IAgencyDetail, IPagedItems } from 'interfaces';
+
 import { IAgenciesState } from '.';
 
 export const initialState: IAgenciesState = {

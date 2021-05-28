@@ -1,9 +1,10 @@
-import { IUsersState } from '.';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPagedItems, IUserDetails, IUser, IUsersFilter } from 'interfaces';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
 import { TableSort } from 'components/Table/TableSort';
 import { IUserRecord } from 'features/admin/users/interfaces/IUserRecord';
+import { IPagedItems, IUser, IUserDetails, IUsersFilter } from 'interfaces';
+
+import { IUsersState } from '.';
 
 export const initialState: IUsersState = {
   pagedUsers: { page: 1, pageIndex: 0, total: 0, quantity: 0, items: [] },

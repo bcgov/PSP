@@ -1,6 +1,7 @@
-import { IAccessRequestsFilterData, IAccessRequestsState } from './interfaces';
-import { IAccessRequest, IPagedItems } from 'interfaces';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IAccessRequest, IPagedItems } from 'interfaces';
+
+import { IAccessRequestsFilterData, IAccessRequestsState } from './interfaces';
 
 export const MAX_ACCESS_RESULTS_PER_PAGE = 100;
 // First, define the reducer and action creators via `createSlice`

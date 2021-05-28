@@ -1,33 +1,35 @@
-import React, { useState, useMemo } from 'react';
-import { Container, Button } from 'react-bootstrap';
-import { Form, FastDatePicker, FastInput, FastCurrencyInput } from 'components/common/form';
+import './SurplusPropertyListForm.scss';
+
+import variables from '_variables.module.scss';
+import { FastCurrencyInput, FastDatePicker, FastInput, Form } from 'components/common/form';
+import GenericModal, { ModalSize } from 'components/common/GenericModal';
+import { ILinkListItem, LinkList } from 'components/common/LinkList';
+import TooltipIcon from 'components/common/TooltipIcon';
+import { pidFormatter } from 'features/properties/components/forms/subforms/PidPinForm';
 import { useFormikContext } from 'formik';
+import _ from 'lodash';
+import queryString from 'query-string';
+import React, { useMemo, useState } from 'react';
+import { Button, Container } from 'react-bootstrap';
+import { FaExclamationTriangle } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+
 import {
-  ProjectNotes,
-  ReviewWorkflowStatus,
-  IProject,
-  TasksForm,
-  disposeWarning,
   dateEnteredMarket,
   DisposalWorkflows,
-  onTransferredWithinTheGreTooltip,
-  IProperty,
   disposeSubdivisionWarning,
-  IParentParcel,
+  disposeWarning,
   disposeWarningShort,
+  IParentParcel,
+  IProject,
+  IProperty,
+  onTransferredWithinTheGreTooltip,
+  ProjectNotes,
+  ReviewWorkflowStatus,
+  TasksForm,
 } from '../../common';
-import './SurplusPropertyListForm.scss';
-import _ from 'lodash';
-import GenericModal, { ModalSize } from 'components/common/GenericModal';
-import TooltipIcon from 'components/common/TooltipIcon';
 import { SurplusPropertyListApprovalForm } from '..';
-import styled from 'styled-components';
-import { FaExclamationTriangle } from 'react-icons/fa';
-import variables from '_variables.module.scss';
-import { LinkList, ILinkListItem } from 'components/common/LinkList';
-import { useLocation } from 'react-router-dom';
-import { pidFormatter } from 'features/properties/components/forms/subforms/PidPinForm';
-import queryString from 'query-string';
 
 interface ISurplusPropertyListFormProps {
   isReadOnly?: boolean;

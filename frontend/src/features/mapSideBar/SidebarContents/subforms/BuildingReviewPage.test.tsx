@@ -1,19 +1,20 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { noop } from 'lodash';
-import { Formik } from 'formik';
-import pretty from 'pretty';
-import { BuildingReviewPage } from './BuildingReviewPage';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import * as API from 'constants/API';
-import { Provider } from 'react-redux';
-import moment from 'moment';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { Formik } from 'formik';
 import { IParcel } from 'interfaces';
+import { noop } from 'lodash';
+import moment from 'moment';
+import pretty from 'pretty';
+import React from 'react';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { propertiesSlice } from 'store/slices/properties';
+
+import { BuildingReviewPage } from './BuildingReviewPage';
 
 const mockStore = configureMockStore([thunk]);
 const lCodes = {

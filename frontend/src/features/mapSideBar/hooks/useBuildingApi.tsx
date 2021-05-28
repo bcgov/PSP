@@ -1,12 +1,12 @@
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import CustomAxios, { LifecycleToasts } from 'customAxios';
-import { ENVIRONMENT } from 'constants/environment';
 import * as actionTypes from 'constants/actionTypes';
-import * as pimsToasts from 'constants/toasts';
 import * as API from 'constants/API';
-import { storeBuildingDetail } from 'store/slices/properties';
+import { ENVIRONMENT } from 'constants/environment';
+import * as pimsToasts from 'constants/toasts';
+import CustomAxios, { LifecycleToasts } from 'customAxios';
 import { IBuilding } from 'interfaces';
-import { logRequest, logSuccess, logError } from 'store/slices/network/networkSlice';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
+import { storeBuildingDetail } from 'store/slices/properties';
 
 const buildingCreatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.building.BUILDING_CREATING,

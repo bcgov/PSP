@@ -1,17 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Review Summary View renders approved correctly 1`] = `
-.c1 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.c2 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-family: 'BCSans',Fallback,sans-serif;
-}
-
 .c4 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -30,6 +19,26 @@ exports[`Review Summary View renders approved correctly 1`] = `
   padding: 0;
 }
 
+.c1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.c2 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: 'BCSans',Fallback,sans-serif;
+}
+
+.c3 {
+  padding-left: 10px;
+}
+
+.c3 small {
+  padding-top: 20px;
+  vertical-align: middle;
+}
+
 .c5 {
   width: 100%;
   display: -webkit-box;
@@ -43,15 +52,6 @@ exports[`Review Summary View renders approved correctly 1`] = `
 
 .c0 button.btn-warning:disabled {
   display: none;
-}
-
-.c3 {
-  padding-left: 10px;
-}
-
-.c3 small {
-  padding-top: 20px;
-  vertical-align: middle;
 }
 
 <div
@@ -773,17 +773,6 @@ exports[`Review Summary View renders approved correctly 1`] = `
 `;
 
 exports[`Review Summary View renders denied correctly 1`] = `
-.c1 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.c2 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-family: 'BCSans',Fallback,sans-serif;
-}
-
 .c4 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -802,6 +791,26 @@ exports[`Review Summary View renders denied correctly 1`] = `
   padding: 0;
 }
 
+.c1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.c2 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: 'BCSans',Fallback,sans-serif;
+}
+
+.c3 {
+  padding-left: 10px;
+}
+
+.c3 small {
+  padding-top: 20px;
+  vertical-align: middle;
+}
+
 .c5 {
   width: 100%;
   display: -webkit-box;
@@ -815,15 +824,6 @@ exports[`Review Summary View renders denied correctly 1`] = `
 
 .c0 button.btn-warning:disabled {
   display: none;
-}
-
-.c3 {
-  padding-left: 10px;
-}
-
-.c3 small {
-  padding-top: 20px;
-  vertical-align: middle;
 }
 
 <div
@@ -1545,17 +1545,6 @@ exports[`Review Summary View renders denied correctly 1`] = `
 `;
 
 exports[`Review Summary View renders submitted correctly 1`] = `
-.c1 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.c2 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-family: 'BCSans',Fallback,sans-serif;
-}
-
 .c4 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1574,6 +1563,26 @@ exports[`Review Summary View renders submitted correctly 1`] = `
   padding: 0;
 }
 
+.c1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.c2 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: 'BCSans',Fallback,sans-serif;
+}
+
+.c3 {
+  padding-left: 10px;
+}
+
+.c3 small {
+  padding-top: 20px;
+  vertical-align: middle;
+}
+
 .c5 {
   width: 100%;
   display: -webkit-box;
@@ -1587,15 +1596,6 @@ exports[`Review Summary View renders submitted correctly 1`] = `
 
 .c0 button.btn-warning:disabled {
   display: none;
-}
-
-.c3 {
-  padding-left: 10px;
-}
-
-.c3 small {
-  padding-top: 20px;
-  vertical-align: middle;
 }
 
 <div

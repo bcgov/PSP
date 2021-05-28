@@ -1,10 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { IPagedItems } from 'interfaces';
 import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
-import { useApiProperties } from './useApiProperties';
+import { IPagedItems } from 'interfaces';
 import { mockBuilding } from 'mocks/filterDataMock';
+
+import { useApiProperties } from './useApiProperties';
 
 const mockAxios = new MockAdapter(axios);
 describe('useApiProperties api hook', () => {

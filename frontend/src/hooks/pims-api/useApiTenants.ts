@@ -1,5 +1,6 @@
 import React from 'react';
-import { useApi, IApiTenants, ITenantConfig } from '.';
+
+import { IApiTenants, ITenantConfig, useApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the tenants endpoints.

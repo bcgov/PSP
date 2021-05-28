@@ -1,9 +1,10 @@
-import { useApiAgencies } from './useApiAgencies';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from 'interfaces';
 import { AGENCIES, mockAccessRequest } from 'mocks/filterDataMock';
+
+import { useApiAgencies } from './useApiAgencies';
 
 const mockAxios = new MockAdapter(axios);
 const mockAgency = AGENCIES[0];

@@ -1,4 +1,4 @@
-import { IBuilding, IParcel, ILeasedLand } from 'interfaces';
+import { IBuilding, ILeasedLand, IParcel } from 'interfaces';
 
 export interface IAssociatedLand extends IBuilding {
   parcels: IParcel[];

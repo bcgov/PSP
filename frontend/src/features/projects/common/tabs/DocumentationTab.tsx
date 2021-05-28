@@ -1,15 +1,16 @@
+import { FastCurrencyInput } from 'components/common/form';
+import { useFormikContext } from 'formik';
+import _ from 'lodash';
 import * as React from 'react';
 import { Container, Form } from 'react-bootstrap';
-import _ from 'lodash';
+
 import {
-  DocumentationForm,
   AppraisalCheckListForm,
   DisposeWorkflowStatus,
+  DocumentationForm,
   FirstNationsCheckListForm,
   useProject,
 } from '../../common';
-import { FastCurrencyInput } from 'components/common/form';
-import { useFormikContext } from 'formik';
 
 interface IDocumentationTabProps {
   canOverride?: boolean;

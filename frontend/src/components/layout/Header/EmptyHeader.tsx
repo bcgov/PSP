@@ -1,9 +1,10 @@
-import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import { useTenant, Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
-import { HeaderStyled } from './HeaderStyled';
 import { VerticalBar } from 'components/common/VerticalBar';
+import React from 'react';
+import { Nav, Navbar } from 'react-bootstrap';
+import { Logo, useTenant } from 'tenants';
+
+import { HeaderStyled } from './HeaderStyled';
 
 /**
  * Display an "empty" header bar with limited functionality as a placeholder

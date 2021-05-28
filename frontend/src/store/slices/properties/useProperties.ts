@@ -1,14 +1,15 @@
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import { AxiosResponse, AxiosError } from 'axios';
-import _ from 'lodash';
-import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
-import { storeBuildingDetail, storeParcelDetail, storeParcels } from './propertiesSlice';
-import { IParcel, IBuilding } from 'interfaces';
-import { logRequest, logSuccess, logError } from '../network/networkSlice';
 import { useApiProperties } from 'hooks/pims-api/useApiProperties';
+import { IBuilding, IParcel } from 'interfaces';
+import _ from 'lodash';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
+import { storeBuildingDetail, storeParcelDetail, storeParcels } from './propertiesSlice';
 
 export const useProperties = () => {
   const dispatch = useDispatch();

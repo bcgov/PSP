@@ -1,28 +1,30 @@
-import * as React from 'react';
 import 'leaflet';
-import { Map as LeafletMap } from 'leaflet';
-import { Map as ReactLeafletMap, MapProps } from 'react-leaflet';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
-import InfoSlideOut from './InfoSlideOut';
 import 'leaflet/dist/leaflet.css';
-import { fireEvent, waitFor } from '@testing-library/dom';
-import { Button } from 'react-bootstrap';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import {
-  PropertyPopUpContextProvider,
-  IPopUpContext,
-} from 'components/maps/providers/PropertyPopUpProvider';
-import { PimsAPI, useApi } from 'hooks/useApi';
-import { render, wait, screen, cleanup } from '@testing-library/react';
-import { mockKeycloak } from 'features/projects/dispose/testUtils';
-import { Claims } from 'constants/index';
-import { mockParcel, mockBuildingWithAssociatedLand } from 'mocks/filterDataMock';
+
 import { useKeycloak } from '@react-keycloak/web';
+import { fireEvent, waitFor } from '@testing-library/dom';
+import { cleanup, render, screen, wait } from '@testing-library/react';
+import {
+  IPopUpContext,
+  PropertyPopUpContextProvider,
+} from 'components/maps/providers/PropertyPopUpProvider';
+import { Claims } from 'constants/index';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { mockKeycloak } from 'features/projects/dispose/testUtils';
+import { createMemoryHistory } from 'history';
+import { PimsAPI, useApi } from 'hooks/useApi';
+import { Map as LeafletMap } from 'leaflet';
+import { mockBuildingWithAssociatedLand, mockParcel } from 'mocks/filterDataMock';
+import * as React from 'react';
+import { Button } from 'react-bootstrap';
+import { Map as ReactLeafletMap, MapProps } from 'react-leaflet';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+import InfoSlideOut from './InfoSlideOut';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

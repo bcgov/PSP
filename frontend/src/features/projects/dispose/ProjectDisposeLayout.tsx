@@ -1,21 +1,22 @@
+import { FormikValues } from 'formik';
+import _ from 'lodash';
+import queryString from 'query-string';
 import React, { useEffect, useRef } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
-import { Route, match as Match, useHistory, Redirect, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import _ from 'lodash';
-import { FormikValues } from 'formik';
-import queryString from 'query-string';
+import { match as Match, Redirect, Route, Switch, useHistory } from 'react-router-dom';
+
 import {
-  SresManual,
-  ReviewWorkflowStatus,
-  updateWorkflowStatus,
-  IProject,
-  useStepForm,
-  DisposeWorkflowStatus,
   clearProject,
+  DisposeWorkflowStatus,
+  IProject,
   ProjectWorkflowComponent,
+  ReviewWorkflowStatus,
+  SresManual,
+  updateWorkflowStatus,
+  useStepForm,
 } from '../common';
-import { GeneratedDisposeStepper, useStepper, projectWorkflowComponents, StepActions } from '.';
+import { GeneratedDisposeStepper, projectWorkflowComponents, StepActions, useStepper } from '.';
 
 /**
  * Top level component facilitates 'wizard' style multi-step form for disposing of projects.

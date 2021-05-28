@@ -1,5 +1,5 @@
-import React from 'react';
 import { ApiVersionInfo } from 'components/common/ApiVersionInfo';
+import React from 'react';
 import styled from 'styled-components';
 
 /**

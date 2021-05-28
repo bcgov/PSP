@@ -1,5 +1,6 @@
-import * as React from 'react';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import * as React from 'react';
+
 import StepStatusIcon from '../common/components/StepStatusIcon';
 import { ProjectDisposalSubmittedContainer } from './ProjectDisposalSubmitted';
 

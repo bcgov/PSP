@@ -1,4 +1,4 @@
-import { IProperty, IBuilding } from 'interfaces';
+import { IBuilding, IProperty } from 'interfaces';
 
 export interface IFlatParcel extends IProperty {
   pid?: string;

@@ -1,7 +1,7 @@
+import { AuthClientError, AuthClientEvent } from '@react-keycloak/core/lib/index';
 import { KeycloakInstance } from 'keycloak-js';
-import { saveJwt, clearJwt } from 'store/slices/jwt/JwtSlice';
+import { clearJwt, saveJwt } from 'store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from 'store/slices/keycloakReady/keycloakReadySlice';
-import { AuthClientEvent, AuthClientError } from '@react-keycloak/core/lib/index';
 import { store } from 'store/store';
 
 const getKeycloakEventHandler = (keycloak: KeycloakInstance) => {

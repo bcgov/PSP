@@ -1,8 +1,9 @@
-import { reducer } from './rootReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import logger from 'redux-logger';
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
+
+import { reducer } from './rootReducer';
 
 export const store = configureStore({
   reducer: reducer,

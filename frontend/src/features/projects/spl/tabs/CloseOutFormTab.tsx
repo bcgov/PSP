@@ -1,17 +1,19 @@
+import './CloseOutFormTab.scss';
+
+import { FastCurrencyInput } from 'components/common/form';
+import { IProject, ocgVarianceNote, ProjectNotes } from 'features/projects/common';
+import { useFormikContext } from 'formik';
 import * as React from 'react';
+import { Col, Container, Form } from 'react-bootstrap';
+
 import {
-  CloseOutSummaryForm,
+  CloseOutAdjustmentForm,
+  CloseOutFinancialSummaryForm,
   CloseOutPurchaseInformationForm,
   CloseOutSaleInformationForm,
-  CloseOutFinancialSummaryForm,
   CloseOutSignaturesForm,
-  CloseOutAdjustmentForm,
+  CloseOutSummaryForm,
 } from '..';
-import { ProjectNotes, IProject, ocgVarianceNote } from 'features/projects/common';
-import { Col, Container, Form } from 'react-bootstrap';
-import './CloseOutFormTab.scss';
-import { FastCurrencyInput } from 'components/common/form';
-import { useFormikContext } from 'formik';
 
 interface ICloseOutFormTabProps {
   isReadOnly?: boolean;

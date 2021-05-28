@@ -1,20 +1,21 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { screen } from '@testing-library/dom';
+import { act, render, wait } from '@testing-library/react';
+import { cleanup } from '@testing-library/react-hooks';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { Claims } from 'constants/claims';
+import { Classifications } from 'constants/classifications';
 import { createMemoryHistory } from 'history';
+import _ from 'lodash';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { render, wait, act } from '@testing-library/react';
-import { useKeycloak } from '@react-keycloak/web';
-import { Claims } from 'constants/claims';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import _ from 'lodash';
-import { cleanup } from '@testing-library/react-hooks';
-import { getStore, mockProject as project } from '../../dispose/testUtils';
-import { Classifications } from 'constants/classifications';
-import { IProject, ReviewWorkflowStatus } from '../../common';
-import { GreTransferStep } from '..';
 import { fillInput } from 'utils/testUtils';
-import { screen } from '@testing-library/dom';
+
+import { IProject, ReviewWorkflowStatus } from '../../common';
+import { getStore, mockProject as project } from '../../dispose/testUtils';
+import { GreTransferStep } from '..';
 
 jest.mock('@react-keycloak/web');
 const mockProject: IProject = {

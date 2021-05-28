@@ -1,4 +1,5 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
+
 import { IStatus } from '../interfaces';
 
 export const saveProjectStatus = createAction<IStatus>('saveProjectStatus');

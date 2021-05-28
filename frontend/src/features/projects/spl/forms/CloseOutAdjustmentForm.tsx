@@ -1,9 +1,9 @@
+import { FastCurrencyInput, FastDatePicker, Form } from 'components/common/form';
+import { ProjectNotes } from 'features/projects/common';
+import { useFormikContext } from 'formik';
 import { Fragment } from 'react';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useFormikContext } from 'formik';
-import { Form, FastDatePicker, FastCurrencyInput } from 'components/common/form';
-import { ProjectNotes } from 'features/projects/common';
 
 interface CloseOutAdjustmentProps {
   isReadOnly?: boolean;

@@ -1,9 +1,10 @@
+import variables from '_variables.module.scss';
 import { Classifications } from 'constants/classifications';
 import { Formik } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import styled from 'styled-components';
-import { SelectProjectPropertiesStepYupSchema, useStepper } from '../';
+
 import {
   FilterBar,
   IFilterBarState,
@@ -11,7 +12,7 @@ import {
   SelectProjectPropertiesForm,
   useStepForm,
 } from '../../common';
-import variables from '_variables.module.scss';
+import { SelectProjectPropertiesStepYupSchema, useStepper } from '../';
 
 const SelectProjectPropertiesContainer = styled(Container)`
   display: flex;

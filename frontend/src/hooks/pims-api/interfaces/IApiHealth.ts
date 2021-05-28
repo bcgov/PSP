@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+
 import { IApiVersion, IHealthLive, IHealthReady } from '.';
 
 export interface IApiHealth {

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PointFeature } from 'components/maps/types';
-import { IProperty, IParcel, IBuilding } from 'interfaces';
+import { IBuilding, IParcel, IProperty } from 'interfaces';
+
 import { IParcelState, IPropertyDetail, IStorePropertyDetail } from './interfaces';
 
 export const initialState: IParcelState = {

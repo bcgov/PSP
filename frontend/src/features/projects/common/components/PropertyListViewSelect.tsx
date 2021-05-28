@@ -1,17 +1,18 @@
-import React, { useMemo, useState, useRef, useCallback, useEffect } from 'react';
-import { FormControlProps, Container, Button } from 'react-bootstrap';
-import { useFormikContext, getIn } from 'formik';
-import _ from 'lodash';
-import { IFilterBarState, IProperty, clickableTooltip, useProject } from '../../common';
-import * as API from 'constants/API';
 import { DisplayError } from 'components/common/form';
 import { Table } from 'components/Table';
-import useTable from '../../dispose/hooks/useTable';
-import { getPropertyColumns, getColumnsWithRemove } from './columns';
-import queryString from 'query-string';
+import * as API from 'constants/API';
 import { PropertyTypes } from 'constants/propertyTypes';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { getIn, useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import _ from 'lodash';
+import queryString from 'query-string';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Button, Container, FormControlProps } from 'react-bootstrap';
+
+import { clickableTooltip, IFilterBarState, IProperty, useProject } from '../../common';
+import useTable from '../../dispose/hooks/useTable';
+import { getColumnsWithRemove, getPropertyColumns } from './columns';
 
 type RequiredAttributes = {
   /** The field name */

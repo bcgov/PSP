@@ -1,8 +1,9 @@
-import React from 'react';
-import EmptyLayout from './EmptyLayout';
 import { act, render } from '@testing-library/react';
-import { TenantConsumer, TenantProvider } from 'tenants';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { TenantConsumer, TenantProvider } from 'tenants';
+
+import EmptyLayout from './EmptyLayout';
 
 const mockGetVersion = jest.fn(async () => {
   return Promise.resolve({

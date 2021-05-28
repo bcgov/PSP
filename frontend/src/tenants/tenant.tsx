@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { config, defaultTenant, ITenantConfig } from '.';
 
 export interface ITenantContext {

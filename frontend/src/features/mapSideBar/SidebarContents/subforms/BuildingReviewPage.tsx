@@ -1,34 +1,34 @@
 import './LandReviewPage.scss';
 
 import {
-  FastSelect,
-  FastInput,
-  Input,
-  TextArea,
-  InputGroup,
-  SelectOptions,
   Check,
   FastCurrencyInput,
   FastDatePicker,
+  FastInput,
+  FastSelect,
+  Input,
+  InputGroup,
+  SelectOptions,
+  TextArea,
 } from 'components/common/form';
-import React, { useCallback, useState, useMemo } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { getIn, useFormikContext } from 'formik';
-import { Label } from 'components/common/Label';
-import { FaEdit } from 'react-icons/fa';
-import { BuildingSvg, LandSvg } from 'components/common/Icons';
-import AddressForm from 'features/properties/components/forms/subforms/AddressForm';
-import { noop } from 'lodash';
 import { ParentSelect } from 'components/common/form/ParentSelect';
-import { formatFiscalYear } from 'utils';
-import { indexOfFinancial } from 'features/properties/components/forms/subforms/EvaluationForm';
+import FormikTable from 'components/common/FormikTable';
+import { BuildingSvg, LandSvg } from 'components/common/Icons';
+import { Label } from 'components/common/Label';
+import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
-import moment from 'moment';
+import AddressForm from 'features/properties/components/forms/subforms/AddressForm';
 import { getAssociatedLandCols } from 'features/properties/components/forms/subforms/columns';
-import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
+import { indexOfFinancial } from 'features/properties/components/forms/subforms/EvaluationForm';
+import { getIn, useFormikContext } from 'formik';
+import { noop } from 'lodash';
+import moment from 'moment';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
-import FormikTable from 'components/common/FormikTable';
+import { formatFiscalYear } from 'utils';
 
 interface IReviewProps {
   nameSpace?: string;

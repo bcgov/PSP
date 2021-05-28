@@ -1,17 +1,18 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
 import { useKeycloak } from '@react-keycloak/web';
-import Header from './Header';
+import { cleanup, fireEvent, render } from '@testing-library/react';
+import * as API from 'constants/API';
+import Claims from 'constants/claims';
+import { createMemoryHistory } from 'history';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from 'constants/API';
-import { cleanup, fireEvent, render } from '@testing-library/react';
-import Claims from 'constants/claims';
-import { TenantProvider, config } from 'tenants';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { config, TenantProvider } from 'tenants';
+
+import Header from './Header';
 
 jest.mock('@react-keycloak/web');
 afterEach(() => {

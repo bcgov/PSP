@@ -1,11 +1,12 @@
-import { useApiLookupCodes } from './../../../hooks/pims-api/useApiLookupCodes';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
-import { AxiosResponse, AxiosError } from 'axios';
-import { useAppDispatch } from 'store/hooks';
 import React from 'react';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { useAppDispatch } from 'store/hooks';
+
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
+import { useApiLookupCodes } from './../../../hooks/pims-api/useApiLookupCodes';
 import { ILookupCode, storeLookupCodes } from '.';
-import { logRequest, logSuccess, logError } from '../network/networkSlice';
 
 export const useLookupCodes = () => {
   const dispatch = useAppDispatch();

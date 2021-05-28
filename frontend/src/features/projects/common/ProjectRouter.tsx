@@ -1,32 +1,33 @@
-import { useEffect, useRef } from 'react';
-import { Container, Spinner } from 'react-bootstrap';
-import { Switch, Redirect, useHistory } from 'react-router-dom';
-import { match as Match } from 'react-router-dom';
-import {
-  clearProject,
-  fetchProject,
-  SelectProjectPropertiesPage,
-  ProjectSummaryView,
-  fetchProjectWorkflow,
-  ApprovalTransitionPage,
-  IProject,
-  useProject,
-} from '../common';
-import { useDispatch } from 'react-redux';
-import { ReviewApproveStep } from '../assess';
-import queryString from 'query-string';
-import PrivateRoute from 'utils/PrivateRoute';
 import Claims from 'constants/claims';
 import { FormikValues } from 'formik';
-import ProjectLayout from './ProjectLayout';
-import { GreTransferStep as ErpToGre, ErpStep } from '../erp';
-import AppRoute from 'utils/AppRoute';
-import { GreTransferStep as SplToGre, SplStep } from '../spl';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { ReviewWorkflowStatus } from '../common';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import queryString from 'query-string';
+import { useEffect, useRef } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { Redirect, Switch, useHistory } from 'react-router-dom';
+import { match as Match } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAppSelector } from 'store/hooks';
+import AppRoute from 'utils/AppRoute';
+import PrivateRoute from 'utils/PrivateRoute';
+
+import { ReviewApproveStep } from '../assess';
+import {
+  ApprovalTransitionPage,
+  clearProject,
+  fetchProject,
+  fetchProjectWorkflow,
+  IProject,
+  ProjectSummaryView,
+  SelectProjectPropertiesPage,
+  useProject,
+} from '../common';
+import { ReviewWorkflowStatus } from '../common';
+import { ErpStep, GreTransferStep as ErpToGre } from '../erp';
+import { GreTransferStep as SplToGre, SplStep } from '../spl';
+import ProjectLayout from './ProjectLayout';
 import { ProjectActions } from './slices/projectActions';
 
 /**

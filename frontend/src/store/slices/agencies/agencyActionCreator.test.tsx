@@ -1,19 +1,20 @@
-import MockAdapter from 'axios-mock-adapter';
+import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { GET_AGENCIES } from 'constants/actionTypes';
 import * as API from 'constants/API';
-import * as MOCK from 'mocks/dataMocks';
 import { ENVIRONMENT } from 'constants/environment';
+import { IAgencyDetail } from 'interfaces';
+import { find } from 'lodash';
+import * as MOCK from 'mocks/dataMocks';
+import { AGENCIES } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import { MockStoreEnhanced } from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import { renderHook } from '@testing-library/react-hooks';
-import { useAgencies } from './useAgencies';
-import { GET_AGENCIES } from 'constants/actionTypes';
-import { AGENCIES } from 'mocks/filterDataMock';
+import thunk from 'redux-thunk';
+
 import { networkSlice } from '../network/networkSlice';
-import { find } from 'lodash';
-import { IAgencyDetail } from 'interfaces';
+import { useAgencies } from './useAgencies';
 
 const dispatch = jest.fn();
 const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');

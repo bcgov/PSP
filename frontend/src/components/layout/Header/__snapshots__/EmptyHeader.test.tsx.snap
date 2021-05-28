@@ -1,6 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty Header renders 1`] = `
+.c1 {
+  border-left: 2px solid white;
+  font-size: 34px;
+  margin: 0 15px 0 25px;
+  vertical-align: top;
+}
+
 .c0 {
   padding: 0 10px;
   min-height: 70px;
@@ -57,13 +64,6 @@ exports[`Empty Header renders 1`] = `
 
 .c0 .modal-content .label {
   font-weight: 700;
-}
-
-.c1 {
-  border-left: 2px solid white;
-  font-size: 34px;
-  margin: 0 15px 0 25px;
-  vertical-align: top;
 }
 
 @media (min-width:992px) {

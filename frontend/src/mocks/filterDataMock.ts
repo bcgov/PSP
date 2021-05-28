@@ -1,9 +1,9 @@
-import { IPropertyDetail } from 'store/slices/properties';
-import { IAccessRequest, IParcel, IProperty, IBuilding, IUserDetails } from 'interfaces';
-import { IProperty as IFlatProperty } from 'features/properties/list';
-import { Workflows } from 'constants/index';
 import { AccessRequestStatus } from 'constants/accessStatus';
+import { Workflows } from 'constants/index';
+import { IProperty as IFlatProperty } from 'features/properties/list';
+import { IAccessRequest, IBuilding, IParcel, IProperty, IUserDetails } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
+import { IPropertyDetail } from 'store/slices/properties';
 
 export const SELECTEDCLASSIFICATION = {
   name: 'Core Operational',

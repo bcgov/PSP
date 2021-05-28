@@ -1,19 +1,20 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { fireEvent, render, screen, wait } from '@testing-library/react';
+import * as API from 'constants/API';
+import { Classifications } from 'constants/classifications';
+import { createMemoryHistory } from 'history';
+import { IParcel } from 'interfaces';
 import noop from 'lodash/noop';
-import { LandForm } from '.';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
-import { useKeycloak } from '@react-keycloak/web';
-import * as API from 'constants/API';
-import { fireEvent, render, wait, screen } from '@testing-library/react';
-import { Classifications } from 'constants/classifications';
-import { fillInput } from 'utils/testUtils';
-import { IParcel } from 'interfaces';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { propertiesSlice } from 'store/slices/properties';
+import { fillInput } from 'utils/testUtils';
+
+import { LandForm } from '.';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();

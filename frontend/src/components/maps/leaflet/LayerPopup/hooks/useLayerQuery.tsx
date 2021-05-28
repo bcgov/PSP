@@ -1,15 +1,15 @@
-import { FeatureCollection, Geometry, GeoJsonProperties, Feature } from 'geojson';
 import axios, { AxiosError } from 'axios';
-import { LatLng, geoJSON } from 'leaflet';
-import { useCallback, Dispatch } from 'react';
+import { layerData } from 'constants/toasts';
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import { geoJSON, LatLng } from 'leaflet';
+import { Dispatch, useCallback } from 'react';
+import { toast } from 'react-toastify';
+import * as rax from 'retry-axios';
+import { useAppSelector } from 'store/hooks';
+import { logError } from 'store/slices/network/networkSlice';
 import parcelLayerDataSlice, {
   saveParcelLayerData,
 } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
-import { toast } from 'react-toastify';
-import { layerData } from 'constants/toasts';
-import * as rax from 'retry-axios';
-import { logError } from 'store/slices/network/networkSlice';
-import { useAppSelector } from 'store/hooks';
 
 export interface IUserLayerQuery {
   /**

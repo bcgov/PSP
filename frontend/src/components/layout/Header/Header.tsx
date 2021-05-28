@@ -1,18 +1,19 @@
-import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import { FaBomb } from 'react-icons/fa';
-import _ from 'lodash';
-import { UserProfile } from './UserProfile';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { useTenant } from 'tenants';
-import { ErrorModal } from './ErrorModal';
-import { Logo } from 'tenants';
 import { BCGovLogo } from 'components/common/BCGovLogo';
-import { HeaderStyled } from './HeaderStyled';
 import { VerticalBar } from 'components/common/VerticalBar';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import _ from 'lodash';
+import React from 'react';
+import { Nav, Navbar } from 'react-bootstrap';
+import { FaBomb } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { useTenant } from 'tenants';
+import { Logo } from 'tenants';
+
+import { ErrorModal } from './ErrorModal';
+import { HeaderStyled } from './HeaderStyled';
+import { UserProfile } from './UserProfile';
 
 /**
  * A header component that includes the navigation bar.

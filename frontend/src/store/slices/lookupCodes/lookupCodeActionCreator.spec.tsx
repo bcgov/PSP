@@ -1,15 +1,16 @@
-import MockAdapter from 'axios-mock-adapter';
+import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { STORE_LOOKUP_CODE_RESULTS } from 'constants/actionTypes';
+import { AGENCY_CODE_SET_NAME } from 'constants/API';
+import { find } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
+import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { useLookupCodes } from 'store/slices/lookupCodes/useLookupCodes';
-import { renderHook } from '@testing-library/react-hooks';
-import { AGENCY_CODE_SET_NAME } from 'constants/API';
-import { STORE_LOOKUP_CODE_RESULTS } from 'constants/actionTypes';
-import { Provider } from 'react-redux';
+
 import { networkSlice } from '../network/networkSlice';
-import { find } from 'lodash';
 
 const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
 const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');

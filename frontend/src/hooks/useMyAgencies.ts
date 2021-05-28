@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
-import useKeycloakWrapper from './useKeycloakWrapper';
-import * as API from 'constants/API';
-import useLookupCodeHelpers from './useLookupCodeHelpers';
-import { Claims } from 'constants/claims';
 import { SelectOption } from 'components/common/form';
+import * as API from 'constants/API';
+import { Claims } from 'constants/claims';
+import { useMemo } from 'react';
+
+import useKeycloakWrapper from './useKeycloakWrapper';
+import useLookupCodeHelpers from './useLookupCodeHelpers';
 
 /**
  * Hook to get only the agencies that the user belongs to

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { Container, Row, Col, Button, Spinner, Jumbotron } from 'react-bootstrap';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import * as actionTypes from 'constants/actionTypes';
 import { useQuery } from 'hooks/use-query';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import React, { useState } from 'react';
+import { Button, Col, Container, Jumbotron, Row, Spinner } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import { useTenant, Logo } from 'tenants';
-import { NEW_PIMS_USER } from 'store/slices/users';
+import { Redirect } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { NEW_PIMS_USER } from 'store/slices/users';
+import { Logo, useTenant } from 'tenants';
+
 import { LoginStyled } from './LoginStyled';
 
 /**

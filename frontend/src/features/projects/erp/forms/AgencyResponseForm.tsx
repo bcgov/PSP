@@ -1,11 +1,13 @@
 import './AgencyResponseForm.scss';
+
+import { FastDatePicker, Form } from 'components/common/form';
+import { ErpNotificationNotes } from 'features/projects/common/components/ProjectNotes';
+import { useFormikContext } from 'formik';
 import React from 'react';
 import { Col, Container } from 'react-bootstrap';
-import { Form, FastDatePicker } from 'components/common/form';
-import { useFormikContext } from 'formik';
+
 import { IProject } from '../../common';
 import { AgencyInterest } from './AgencyInterest';
-import { ErpNotificationNotes } from 'features/projects/common/components/ProjectNotes';
 
 interface IAgencyResponseFormProps {
   isReadOnly?: boolean;

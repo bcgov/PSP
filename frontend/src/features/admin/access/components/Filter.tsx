@@ -1,11 +1,12 @@
-import * as React from 'react';
 import './Filter.scss';
-import { Container, Row, Col, Form } from 'react-bootstrap';
-import { Menu, IMenuItemProps } from 'components/menu/Menu';
-import { FaCaretDown, FaSearch, FaUndo } from 'react-icons/fa';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+
 import { Button } from 'components/common/form/Button';
 import TooltipWrapper from 'components/common/TooltipWrapper';
+import { IMenuItemProps, Menu } from 'components/menu/Menu';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import * as React from 'react';
+import { Col, Container, Form, Row } from 'react-bootstrap';
+import { FaCaretDown, FaSearch, FaUndo } from 'react-icons/fa';
 import { IAccessRequestsFilterData } from 'store/slices/accessRequests';
 import { useLookupCodes } from 'store/slices/lookupCodes';
 

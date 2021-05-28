@@ -1,17 +1,18 @@
-import * as React from 'react';
-import { IProject } from 'features/projects/common/interfaces';
-import { Formik, Form, FormikProps } from 'formik';
-import ExemptionEnhancedReferralCompleteForm from './ExemptionEnhancedReferralCompleteForm';
-import renderer from 'react-test-renderer';
-import { noop } from 'lodash';
-import { render, fireEvent, act, screen } from '@testing-library/react';
-import Adapter from 'enzyme-adapter-react-16';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { IProject } from 'features/projects/common/interfaces';
+import { Form, Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { getStore, mockProject as defaultProject } from '../../dispose/testUtils';
+import { noop } from 'lodash';
 import _ from 'lodash';
+import * as React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import renderer from 'react-test-renderer';
+
+import { getStore, mockProject as defaultProject } from '../../dispose/testUtils';
+import ExemptionEnhancedReferralCompleteForm from './ExemptionEnhancedReferralCompleteForm';
 
 Enzyme.configure({ adapter: new Adapter() });
 const history = createMemoryHistory();

@@ -1,13 +1,14 @@
-import React, { FunctionComponent } from 'react';
-import { Modal, Button, Container, ModalDialog } from 'react-bootstrap';
-import Draggable from 'react-draggable';
-import styled from 'styled-components';
-import TooltipIcon from 'components/common/TooltipIcon';
-import HelpModalContentContainer from '../containers/HelpModalContentContainer';
 import variables from '_variables.module.scss';
-import IMailMessage from './IMailMessage';
+import TooltipIcon from 'components/common/TooltipIcon';
+import React, { FunctionComponent } from 'react';
+import { Button, Container, Modal, ModalDialog } from 'react-bootstrap';
+import Draggable from 'react-draggable';
 import { useAppSelector } from 'store/hooks';
 import { useTenants } from 'store/slices/tenants';
+import styled from 'styled-components';
+
+import HelpModalContentContainer from '../containers/HelpModalContentContainer';
+import IMailMessage from './IMailMessage';
 
 interface IModalProps {
   /** Function to be executed when the cancel button is clicked  */

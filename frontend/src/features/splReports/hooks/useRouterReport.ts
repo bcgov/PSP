@@ -1,10 +1,11 @@
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import _ from 'lodash';
 import queryString from 'query-string';
-import { IReport } from './../interfaces';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import React, { useState } from 'react';
-import _ from 'lodash';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+
+import { IReport } from './../interfaces';
 
 interface RouterFilterProps {
   currentReport?: IReport;

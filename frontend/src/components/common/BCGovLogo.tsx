@@ -1,5 +1,5 @@
-import React from 'react';
 import BClogoUrl from 'assets/images/logo-banner.svg';
+import React from 'react';
 
 /**
  * BC Gov Logo image.

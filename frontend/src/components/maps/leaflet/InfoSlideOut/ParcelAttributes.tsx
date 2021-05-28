@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { ListGroup } from 'react-bootstrap';
-import { Label } from 'components/common/Label';
 import './InfoSlideOut.scss';
-import { formatMoney } from 'utils/numberFormatUtils';
-import { OuterRow } from './InfoContent';
-import { ThreeColumnItem } from './ThreeColumnItem';
+
+import { Label } from 'components/common/Label';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { getCurrentYearEvaluation } from 'features/projects/common/projectConverter';
 import { IParcel } from 'interfaces';
+import * as React from 'react';
+import { ListGroup } from 'react-bootstrap';
+import { formatMoney } from 'utils/numberFormatUtils';
+
+import { OuterRow } from './InfoContent';
+import { ThreeColumnItem } from './ThreeColumnItem';
 
 interface IParcelAttributes {
   /** the selected parcel information */

@@ -1,5 +1,5 @@
-import { ILookupCode } from 'store/slices/lookupCodes';
 import React from 'react';
+import { ILookupCode } from 'store/slices/lookupCodes';
 
 import { useApi } from '.';
 

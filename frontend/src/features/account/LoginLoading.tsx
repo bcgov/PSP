@@ -1,8 +1,9 @@
-import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import React from 'react';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Logo, useTenant } from 'tenants';
+
 import { LoginStyled } from './LoginStyled';
-import { useTenant, Logo } from 'tenants';
 
 /**
  * Display a placeholder of the PIMS login screen when keycloak is being initialized.

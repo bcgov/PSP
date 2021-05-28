@@ -1,4 +1,4 @@
-import { usersSlice, initialState } from './usersSlice';
+import { initialState, usersSlice } from './usersSlice';
 describe('users slice reducer functionality', () => {
   const userReducer = usersSlice.reducer;
   const mockUser = {

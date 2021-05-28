@@ -1,22 +1,23 @@
-import React from 'react';
-import { render, wait, fireEvent, cleanup } from '@testing-library/react';
-import { PropertyFilter } from '.';
-import * as MOCK from 'mocks/filterDataMock';
-import axios from 'axios';
 import { useKeycloak } from '@react-keycloak/web';
-import { createMemoryHistory } from 'history';
-import { IPropertyFilter } from './IPropertyFilter';
-import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
+import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
 import * as API from 'constants/API';
-import { fillInput } from 'utils/testUtils';
-import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
+import { createMemoryHistory } from 'history';
+import * as MOCK from 'mocks/filterDataMock';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import filterSlice from 'store/slices/filter/filterSlice';
-import propertyNameSlice from '../common/slices/propertyNameSlice';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { TenantProvider } from 'tenants';
+import { fillInput } from 'utils/testUtils';
+
+import propertyNameSlice from '../common/slices/propertyNameSlice';
+import { PropertyFilter } from '.';
+import { IPropertyFilter } from './IPropertyFilter';
 
 const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.

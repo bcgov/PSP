@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+
 import { useFavicon } from './useFavicon';
 
 jest.mock('tenants', () => ({

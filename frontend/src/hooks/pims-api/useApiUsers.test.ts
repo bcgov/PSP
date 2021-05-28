@@ -1,9 +1,10 @@
-import { mockUser } from './../../mocks/filterDataMock';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from 'interfaces';
 import { mockAccessRequest } from 'mocks/filterDataMock';
+
+import { mockUser } from './../../mocks/filterDataMock';
 import { useApiUsers } from './useApiUsers';
 
 const mockAxios = new MockAdapter(axios);

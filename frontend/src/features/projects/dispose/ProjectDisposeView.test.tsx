@@ -1,21 +1,22 @@
-import React from 'react';
-import ProjectDisposeView from './ProjectDisposeView';
+import { useKeycloak } from '@react-keycloak/web';
+import { act, cleanup, render } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
+import React from 'react';
+import { Provider } from 'react-redux';
+import * as redux from 'react-redux';
+import { match as Match, Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import { Router, match as Match } from 'react-router-dom';
-import { render, cleanup, act } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import useStepper from './hooks/useStepper';
-import { noop } from 'lodash';
-import { useKeycloak } from '@react-keycloak/web';
-import * as redux from 'react-redux';
 import { networkSlice } from 'store/slices/network/networkSlice';
+
 import { projectSlice } from '../common';
 import { ProjectActions } from '../common/slices/projectActions';
 import projectWorkflowSlice from '../common/slices/projectWorkflowSlice';
+import useStepper from './hooks/useStepper';
+import ProjectDisposeView from './ProjectDisposeView';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

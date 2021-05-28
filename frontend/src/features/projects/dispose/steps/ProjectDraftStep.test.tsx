@@ -1,21 +1,22 @@
-import React from 'react';
-import ProjectDraftStep from './ProjectDraftStep';
+import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, render, screen, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { projectSlice } from 'features/projects/common';
+import { ProjectActions } from 'features/projects/common/slices/projectActions';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { noop } from 'lodash';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
-import { fillInput } from 'utils/testUtils';
-import useStepper from '../hooks/useStepper';
-import { noop } from 'lodash';
-import { render, screen, cleanup, wait } from '@testing-library/react';
-import { useKeycloak } from '@react-keycloak/web';
-import { projectSlice } from 'features/projects/common';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { ProjectActions } from 'features/projects/common/slices/projectActions';
+import { fillInput } from 'utils/testUtils';
+
+import useStepper from '../hooks/useStepper';
+import ProjectDraftStep from './ProjectDraftStep';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

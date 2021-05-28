@@ -1,11 +1,12 @@
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { SidebarContextType } from './useQueryParamSideBar';
-import { useDispatch } from 'react-redux';
-import React from 'react';
-import { IParcel, IBuilding } from 'interfaces';
 import { useApi } from 'hooks/useApi';
-import { defaultBuildingValues } from '../SidebarContents/BuildingForm';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import { IBuilding, IParcel } from 'interfaces';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+
+import { defaultBuildingValues } from '../SidebarContents/BuildingForm';
+import { SidebarContextType } from './useQueryParamSideBar';
 
 interface IUseSideBarBuildingWithParcelLoader {
   /** whether or not the sidebar should be displayed */

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ILookupCodeState, ILookupCode } from '.';
+
+import { ILookupCode, ILookupCodeState } from '.';
 
 export const initialState: ILookupCodeState = {
   lookupCodes: [],

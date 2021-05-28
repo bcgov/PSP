@@ -1,14 +1,15 @@
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import { AxiosResponse, AxiosError } from 'axios';
-import { IPagedItems, IUser, IUserDetails } from 'interfaces';
-import { handleAxiosResponse } from 'utils';
-import { useAppDispatch } from 'store/hooks';
-import { useCallback } from 'react';
-import { storeUserDetails, storeUsers, updateUser } from './usersSlice';
-import { logRequest, logSuccess, logError } from '../network/networkSlice';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
+import { IPagedItems, IUser, IUserDetails } from 'interfaces';
+import { useCallback } from 'react';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { useAppDispatch } from 'store/hooks';
+import { handleAxiosResponse } from 'utils';
+
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
+import { storeUserDetails, storeUsers, updateUser } from './usersSlice';
 
 /**
  * hook that wraps calls to the users api.

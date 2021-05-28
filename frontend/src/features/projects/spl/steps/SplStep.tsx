@@ -1,43 +1,44 @@
 import './SplStep.scss';
 
-import * as React from 'react';
-import { Formik, Form, getIn } from 'formik';
+import { ValidationGroup } from 'components/common/tabValidation';
+import { toFlatProject } from 'features/projects/common/projectConverter';
+import { DocumentationStepSchema } from 'features/projects/dispose';
+import { ApprovalActions } from 'features/projects/erp';
+import { Form, Formik, getIn } from 'formik';
 import _ from 'lodash';
+import * as React from 'react';
 import { useState } from 'react';
-import { formatDate } from 'utils';
 import { Container } from 'react-bootstrap';
-import styled from 'styled-components';
-import StepErrorSummary from '../../common/components/StepErrorSummary';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useAppSelector } from 'store/hooks';
+import styled from 'styled-components';
+import { formatDate } from 'utils';
+
 import {
-  useStepForm,
-  StepStatusIcon,
-  SPPApprovalTabs,
-  ReviewWorkflowStatus,
-  IProject,
-  IProjectTask,
-  IStepProps,
-  useProject,
   DisposeWorkflowStatus,
   handleValidate,
   IApiProject,
+  IProject,
+  IProjectTask,
+  IStepProps,
+  ReviewWorkflowStatus,
+  SPPApprovalTabs,
+  StepStatusIcon,
+  useProject,
+  useStepForm,
 } from '../../common';
-import { ValidationGroup } from 'components/common/tabValidation';
+import StepErrorSummary from '../../common/components/StepErrorSummary';
 import {
+  CloseOutFormValidationSchema,
+  RemoveFromSplYupSchema,
   saveSplTab,
   SplTabs,
   SurplusPropertyInformationYupSchema,
-  SurplusPropertyListOnMarketYupSchema,
   SurplusPropertyListContractInPlaceYupSchema,
   SurplusPropertyListDisposeYupSchema,
-  CloseOutFormValidationSchema,
-  RemoveFromSplYupSchema,
+  SurplusPropertyListOnMarketYupSchema,
 } from '..';
-import { ApprovalActions } from 'features/projects/erp';
-import { DocumentationStepSchema } from 'features/projects/dispose';
-import { useHistory } from 'react-router-dom';
-import { toFlatProject } from 'features/projects/common/projectConverter';
-import { useAppSelector } from 'store/hooks';
 
 const CenterBoldText = styled.div`
   text-align: center;

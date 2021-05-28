@@ -1,17 +1,18 @@
-import { ProjectApprovalRequestListView } from './ProjectListView';
-import React from 'react';
-import { Router } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, render, wait } from '@testing-library/react';
+import * as API from 'constants/API';
+import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { render, cleanup, wait } from '@testing-library/react';
+import { noop } from 'lodash';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from 'constants/API';
-import { Provider } from 'react-redux';
-import service from '../apiService';
-import { noop } from 'lodash';
-import { Formik } from 'formik';
-import { useKeycloak } from '@react-keycloak/web';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import service from '../apiService';
+import { ProjectApprovalRequestListView } from './ProjectListView';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

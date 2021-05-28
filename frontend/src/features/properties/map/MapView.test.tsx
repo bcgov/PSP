@@ -1,27 +1,27 @@
-import React from 'react';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import Adapter from 'enzyme-adapter-react-16';
+import { useKeycloak } from '@react-keycloak/web';
+import { act, cleanup, fireEvent, render, screen, wait } from '@testing-library/react';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { createPoints } from 'components/maps/leaflet/mapUtils';
 import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
+import { createMemoryHistory } from 'history';
+import { PimsAPI, useApi } from 'hooks/useApi';
+import { IParcel, IProperty } from 'interfaces';
+import { noop } from 'lodash';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { wait, fireEvent, render, cleanup, screen, act } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { useKeycloak } from '@react-keycloak/web';
-import { useApi, PimsAPI } from 'hooks/useApi';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
-import axios from 'axios';
-
-import MockAdapter from 'axios-mock-adapter';
-import MapView from './MapView';
-import { noop } from 'lodash';
-import { createPoints } from 'components/maps/leaflet/mapUtils';
-import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
-import { TenantProvider } from 'tenants';
-import { IProperty, IParcel } from 'interfaces';
-import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
+import { TenantProvider } from 'tenants';
+
+import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');

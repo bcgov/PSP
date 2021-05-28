@@ -1,18 +1,19 @@
-import React from 'react';
-import { createMemoryHistory } from 'history';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
-import { ReviewWorkflowStatus, AgencyResponses } from '../../common/interfaces';
-import { render, act, screen, cleanup, wait } from '@testing-library/react';
 import { useKeycloak } from '@react-keycloak/web';
-import MockAdapter from 'axios-mock-adapter';
+import { act, cleanup, render, screen, wait } from '@testing-library/react';
 import axios from 'axios';
-import _ from 'lodash';
-import { getStore, mockProject as defaultProject, mockFlatProject } from '../../dispose/testUtils';
-import { IProject, SPPApprovalTabs } from '../../common';
-import { SplStep } from '..';
+import MockAdapter from 'axios-mock-adapter';
 import Claims from 'constants/claims';
 import { PropertyTypes } from 'constants/propertyTypes';
+import { createMemoryHistory } from 'history';
+import _ from 'lodash';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+
+import { IProject, SPPApprovalTabs } from '../../common';
+import { AgencyResponses, ReviewWorkflowStatus } from '../../common/interfaces';
+import { getStore, mockFlatProject, mockProject as defaultProject } from '../../dispose/testUtils';
+import { SplStep } from '..';
 
 jest.mock('@react-keycloak/web');
 const mockKeycloak = (claims: string[]) => {

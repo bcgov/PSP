@@ -3,6 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { ENVIRONMENT } from 'constants/environment';
+
 import { useApi } from '.';
 
 const mockAxios = new MockAdapter(axios);

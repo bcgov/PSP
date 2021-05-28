@@ -1,6 +1,7 @@
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { IApiProject, IProject } from '..';
 import { toFlatProject } from '../projectConverter';
-import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
-import { IProject, IApiProject } from '..';
 
 export interface IProjectWrapper {
   project?: IProject;

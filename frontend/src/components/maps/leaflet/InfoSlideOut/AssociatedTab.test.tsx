@@ -1,18 +1,20 @@
-import * as React from 'react';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+
 import { render } from '@testing-library/react';
-import AssociatedParcelsList from './AssociatedParcelsList';
 import { Label } from 'components/common/Label';
-import { FaPlusSquare } from 'react-icons/fa';
-import AssociatedBuildingsList from './AssociatedBuildingsList';
+import { createMemoryHistory } from 'history';
 import { IParcel } from 'interfaces';
 import { mockBuilding, mockParcel } from 'mocks/filterDataMock';
+import * as React from 'react';
+import { FaPlusSquare } from 'react-icons/fa';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+import AssociatedBuildingsList from './AssociatedBuildingsList';
+import AssociatedParcelsList from './AssociatedParcelsList';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);

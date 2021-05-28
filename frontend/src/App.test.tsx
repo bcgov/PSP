@@ -1,6 +1,6 @@
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 
 const mockAxios = new MockAdapter(axios);
 

@@ -1,6 +1,7 @@
-import { getCurrentFiscalYear } from '../../../utils/utils';
-import { NoteTypes } from '../../../constants';
 import { IAddress, IBuilding, IEvaluation, IFiscal } from 'interfaces';
+
+import { NoteTypes } from '../../../constants';
+import { getCurrentFiscalYear } from '../../../utils/utils';
 
 /**
  * IProperty interface represents the model used for searching properties.

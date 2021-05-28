@@ -1,13 +1,13 @@
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import React, { useCallback, useEffect, useState } from 'react';
-import { saveFilter } from 'store/slices/filter/filterSlice';
+import { TableSort } from 'components/Table/TableSort';
+import { PropertyTypeNames } from 'constants/propertyTypeNames';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { TableSort } from 'components/Table/TableSort';
-import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from 'utils';
-import { PropertyTypeNames } from 'constants/propertyTypeNames';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
+import { saveFilter } from 'store/slices/filter/filterSlice';
+import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from 'utils';
 
 /**
  * Extract the specified properties from the source object.

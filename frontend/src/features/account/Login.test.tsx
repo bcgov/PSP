@@ -1,18 +1,19 @@
-import React from 'react';
+import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, fireEvent, render } from '@testing-library/react';
+import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import { useKeycloak } from '@react-keycloak/web';
-import thunk from 'redux-thunk';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
-import Login from './Login';
-import { Provider } from 'react-redux';
-import { ADD_ACTIVATE_USER } from 'constants/actionTypes';
-import { networkSlice } from 'store/slices/network/networkSlice';
+import thunk from 'redux-thunk';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
-import { TenantConsumer, TenantProvider } from 'tenants';
+import { networkSlice } from 'store/slices/network/networkSlice';
 import { ThemeProvider } from 'styled-components';
+import { TenantConsumer, TenantProvider } from 'tenants';
+
+import Login from './Login';
 
 jest.mock('axios');
 jest.mock('@react-keycloak/web');

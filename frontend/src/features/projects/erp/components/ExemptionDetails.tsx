@@ -1,7 +1,7 @@
+import { FastDatePicker, Form } from 'components/common/form';
 import { IProject, ProjectNotes } from 'features/projects/common';
-import { Form, FastDatePicker } from 'components/common/form';
-import React from 'react';
 import { useFormikContext } from 'formik';
+import React from 'react';
 
 /** ExemptionDetails component properties */
 interface IExemptionDetailsProps {

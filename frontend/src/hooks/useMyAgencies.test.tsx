@@ -1,14 +1,15 @@
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import Adapter from 'enzyme-adapter-react-16';
+import { useKeycloak } from '@react-keycloak/web';
+import { cleanup, render } from '@testing-library/react';
+import Claims from 'constants/claims';
 import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import React from 'react';
+import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
-import { useKeycloak } from '@react-keycloak/web';
-import Claims from 'constants/claims';
-import { useMyAgencies } from './useMyAgencies';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+
+import { useMyAgencies } from './useMyAgencies';
 
 jest.mock('@react-keycloak/web');
 Enzyme.configure({ adapter: new Adapter() });

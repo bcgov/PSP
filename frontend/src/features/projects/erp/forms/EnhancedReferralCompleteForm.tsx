@@ -1,25 +1,27 @@
 import './EnhancedReferralCompleteForm.scss';
-import React, { useState } from 'react';
-import { Container, Button, Col } from 'react-bootstrap';
-import { Form, FastDatePicker, FastCurrencyInput, FastInput } from 'components/common/form';
-import styled from 'styled-components';
-import { useFormikContext } from 'formik';
-import TooltipIcon from 'components/common/TooltipIcon';
-import {
-  ReviewWorkflowStatus,
-  IProject,
-  onTransferredWithinTheGreTooltip,
-  onHoldNotificationTooltip,
-  clearanceNotifictionSent,
-  proceedToSplWarning,
-  notInSplWarning,
-  requestForSplReceivedOn,
-  approvedForSplOn,
-  ProjectNotes,
-  disposeWarning,
-} from '../../common';
+
+import { FastCurrencyInput, FastDatePicker, FastInput, Form } from 'components/common/form';
 import GenericModal from 'components/common/GenericModal';
+import TooltipIcon from 'components/common/TooltipIcon';
+import { useFormikContext } from 'formik';
+import React, { useState } from 'react';
+import { Button, Col, Container } from 'react-bootstrap';
+import styled from 'styled-components';
 import { clearanceNotificationSentOnRequired, validateFormikWithCallback } from 'utils';
+
+import {
+  approvedForSplOn,
+  clearanceNotifictionSent,
+  disposeWarning,
+  IProject,
+  notInSplWarning,
+  onHoldNotificationTooltip,
+  onTransferredWithinTheGreTooltip,
+  proceedToSplWarning,
+  ProjectNotes,
+  requestForSplReceivedOn,
+  ReviewWorkflowStatus,
+} from '../../common';
 
 const OrText = styled.div`
   margin: 0.75rem 2rem 0.75rem 2rem;

@@ -1,9 +1,9 @@
+import { FastCurrencyInput, FastInput, Form } from 'components/common/form';
+import { IProject } from 'features/projects/common';
+import { useFormikContext } from 'formik';
 import { Fragment } from 'react';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useFormikContext } from 'formik';
-import { Form, FastInput, FastCurrencyInput } from 'components/common/form';
-import { IProject } from 'features/projects/common';
 
 interface CloseOutPurchaseInformationFormProps {
   isReadOnly?: boolean;

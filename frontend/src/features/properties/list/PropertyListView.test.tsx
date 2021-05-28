@@ -1,24 +1,25 @@
+import { useKeycloak } from '@react-keycloak/web';
+import { act, cleanup, fireEvent, render, wait } from '@testing-library/react';
+import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import PropertyListView from './PropertyListView';
-import React from 'react';
-import { Router } from 'react-router-dom';
+import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
+import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { render, cleanup, act, wait, fireEvent } from '@testing-library/react';
+import { useApi } from 'hooks/useApi';
+import { mockFlatBuildingProperty, mockFlatProperty } from 'mocks/filterDataMock';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from 'constants/API';
-import { Provider } from 'react-redux';
-import service from '../service';
-import { useKeycloak } from '@react-keycloak/web';
-import axios from 'axios';
-import { mockFlatProperty, mockFlatBuildingProperty } from 'mocks/filterDataMock';
-import { IProperty } from '.';
-import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
-import { fillInput } from 'utils/testUtils';
-import { ToastContainer } from 'react-toastify';
-import { useApi } from 'hooks/useApi';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { TenantProvider } from 'tenants';
+import { fillInput } from 'utils/testUtils';
+
+import service from '../service';
+import { IProperty } from '.';
+import PropertyListView from './PropertyListView';
 
 // Set all module functions to jest.fn
 jest.mock('../service');

@@ -1,10 +1,11 @@
 import './PublicLayout.scss';
 
+import { EmptyHeader, Footer } from 'components/layout';
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { Footer, EmptyHeader } from 'components/layout';
-import HeaderStyled from './Header';
+
 import FooterStyled from './Footer';
+import HeaderStyled from './Header';
 
 const EmptyLayout: React.FC = ({ children }) => {
   return (

@@ -1,10 +1,10 @@
 import { IPaginateParams } from 'constants/API';
+import * as pimsToasts from 'constants/toasts';
+import { LifecycleToasts } from 'customAxios';
 import { IAgency, IAgencyDetail, IPagedItems } from 'interfaces';
 import React from 'react';
-import * as pimsToasts from 'constants/toasts';
 
 import { useApi } from '.';
-import { LifecycleToasts } from 'customAxios';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the agency endpoints.

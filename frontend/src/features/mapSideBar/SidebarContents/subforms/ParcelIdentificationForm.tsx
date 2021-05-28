@@ -1,34 +1,35 @@
 import './ParcelIdentificationForm.scss';
 
-import { FastInput, SelectOptions, Check, TextArea, InputGroup } from 'components/common/form';
-import { Label } from 'components/common/Label';
-import AddressForm from 'features/properties/components/forms/subforms/AddressForm';
-import React, { useMemo, useState } from 'react';
-import { useFormikContext, getIn } from 'formik';
-import PidPinForm from 'features/properties/components/forms/subforms/PidPinForm';
-import { sensitiveTooltip } from '../../../../../src/features/properties/components/forms/strings';
-import { HARMFUL_DISCLOSURE_URL } from 'constants/strings';
-import { IGeocoderResponse } from 'hooks/useApi';
 import classNames from 'classnames';
-import { ISteppedFormValues } from 'components/common/form/StepForm';
+import { Check, FastInput, InputGroup, SelectOptions, TextArea } from 'components/common/form';
 import { ParentSelect } from 'components/common/form/ParentSelect';
-import { noop } from 'lodash';
-import { Container, Row, Col, Form, ListGroup } from 'react-bootstrap';
-import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as API from 'constants/API';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { ISteppedFormValues } from 'components/common/form/StepForm';
 import GenericModal from 'components/common/GenericModal';
-import { mapSelectOptionWithParent } from 'utils';
-import AddParentParcelsForm from './AddParentParcelsForm';
-import { PropertyTypes } from 'constants/propertyTypes';
-import { withNameSpace } from 'utils/formUtils';
-import MovePinForm from './MovePinForm';
-import LandSearchForm from './LandSearchForm';
+import { Label } from 'components/common/Label';
+import TooltipWrapper from 'components/common/TooltipWrapper';
 import { ProjectNumberLink } from 'components/maps/leaflet/InfoSlideOut/ProjectNumberLink';
-import styled from 'styled-components';
+import * as API from 'constants/API';
+import { PropertyTypes } from 'constants/propertyTypes';
+import { HARMFUL_DISCLOSURE_URL } from 'constants/strings';
+import AddressForm from 'features/properties/components/forms/subforms/AddressForm';
+import PidPinForm from 'features/properties/components/forms/subforms/PidPinForm';
+import { getIn, useFormikContext } from 'formik';
+import { IGeocoderResponse } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useMyAgencies } from 'hooks/useMyAgencies';
 import { IParcel } from 'interfaces';
+import { noop } from 'lodash';
+import React, { useMemo, useState } from 'react';
+import { Col, Container, Form, ListGroup, Row } from 'react-bootstrap';
+import styled from 'styled-components';
+import { mapSelectOptionWithParent } from 'utils';
+import { withNameSpace } from 'utils/formUtils';
+
+import { sensitiveTooltip } from '../../../../../src/features/properties/components/forms/strings';
+import AddParentParcelsForm from './AddParentParcelsForm';
+import LandSearchForm from './LandSearchForm';
+import MovePinForm from './MovePinForm';
 
 interface IIdentificationProps {
   /** used for changign the agency - note that only select users will be able to edit this field */

@@ -1,5 +1,5 @@
 import { PropertyTypes } from 'constants/propertyTypes';
-import { IParcel, IBuilding } from 'interfaces';
+import { IBuilding, IParcel } from 'interfaces';
 
 export interface IPropertyDetail {
   propertyTypeId?: PropertyTypes;

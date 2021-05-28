@@ -1,35 +1,36 @@
-import { LatLngExpression, Marker, DivIcon } from 'leaflet';
+import { Classifications, PropertyTypes } from 'constants/index';
+import { IProperty } from 'interfaces';
+import { DivIcon, LatLngExpression, Marker } from 'leaflet';
+
 import { ICluster, PointFeature } from '../types';
 import {
-  pointToLayer,
-  buildingIcon,
-  createClusterMarker,
-  getMarkerIcon,
-  draftParcelIcon,
-  draftBuildingIcon,
-  subdivisionErpIconSelect,
-  buildingErpIconSelect,
-  landErpIconSelect,
-  subdivisionSppIconSelect,
-  buildingSppIconSelect,
-  landSppIconSelect,
-  subdivisionIconSelect,
-  buildingIconSelect,
-  parcelIconSelect,
-  subdivisionErpIcon,
-  buildingErpIcon,
-  landErpIcon,
-  subdivisionSppIcon,
-  buildingSppIcon,
-  landSppIcon,
-  subdivisionIcon,
-  parcelIcon,
-  generateKey,
   asProperty,
+  buildingErpIcon,
+  buildingErpIconSelect,
+  buildingIcon,
+  buildingIconSelect,
+  buildingSppIcon,
+  buildingSppIconSelect,
+  createClusterMarker,
   createPoints,
+  draftBuildingIcon,
+  draftParcelIcon,
+  generateKey,
+  getMarkerIcon,
+  landErpIcon,
+  landErpIconSelect,
+  landSppIcon,
+  landSppIconSelect,
+  parcelIcon,
+  parcelIconSelect,
+  pointToLayer,
+  subdivisionErpIcon,
+  subdivisionErpIconSelect,
+  subdivisionIcon,
+  subdivisionIconSelect,
+  subdivisionSppIcon,
+  subdivisionSppIconSelect,
 } from './mapUtils';
-import { PropertyTypes, Classifications } from 'constants/index';
-import { IProperty } from 'interfaces';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
     it('converts a feature and latlng expression into a layer', () => {

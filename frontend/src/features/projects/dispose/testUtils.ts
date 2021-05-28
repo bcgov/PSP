@@ -1,24 +1,25 @@
-import { getCurrentFiscalYear } from 'utils';
-import {
-  IProjectTask,
-  DisposeWorkflowStatus,
-  IProject,
-  ReviewWorkflowStatus,
-  ITask,
-  SPPApprovalTabs,
-  projectSlice,
-  projectTasksSlice,
-} from '../common';
+import { useKeycloak } from '@react-keycloak/web';
+import * as API from 'constants/API';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from 'constants/API';
-import { NoteTypes, PropertyTypes } from '../../../constants';
-import { useKeycloak } from '@react-keycloak/web';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
+import { getCurrentFiscalYear } from 'utils';
+
+import { NoteTypes, PropertyTypes } from '../../../constants';
+import {
+  DisposeWorkflowStatus,
+  IProject,
+  IProjectTask,
+  ITask,
+  projectSlice,
+  projectTasksSlice,
+  ReviewWorkflowStatus,
+  SPPApprovalTabs,
+} from '../common';
+import { ProjectActions } from '../common/slices/projectActions';
 import erpTabSlice from '../erp/slices/erpTabSlice';
 import splTabSlice from '../spl/slices/splTabSlice';
-import { ProjectActions } from '../common/slices/projectActions';
 
 export const mockKeycloak = (claims: string[], agencies: number[]) => {
   (useKeycloak as jest.Mock).mockReturnValue({

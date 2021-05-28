@@ -1,4 +1,4 @@
-import { tenantsSlice, initialState } from '.';
+import { initialState, tenantsSlice } from '.';
 
 describe('tenants slice reducer functionality', () => {
   const tenantReducer = tenantsSlice.reducer;

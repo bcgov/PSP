@@ -1,28 +1,29 @@
 import './PointClusterer.scss';
 
-import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import { DivIcon, FeatureGroup as LeafletFeatureGroup } from 'leaflet';
-import { useLeaflet, Marker, Polyline, FeatureGroup } from 'react-leaflet';
-import { BBox } from 'geojson';
-import { Spiderfier } from './Spiderfier';
-import { ICluster, PointFeature } from '../types';
-import { getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
-import useSupercluster from '../hooks/useSupercluster';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import { useFilterContext } from '../providers/FIlterProvider';
-import Supercluster from 'supercluster';
-import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
-import { MAX_ZOOM } from 'constants/strings';
-import { useApi } from 'hooks/useApi';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { PropertyTypes } from 'constants/propertyTypes';
-import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
+import { MAX_ZOOM } from 'constants/strings';
+import { BBox } from 'geojson';
+import { useApi } from 'hooks/useApi';
+import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
+import { IAddress, IBuilding, IParcel, IProperty } from 'interfaces';
+import { DivIcon, FeatureGroup as LeafletFeatureGroup } from 'leaflet';
+import queryString from 'query-string';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FeatureGroup, Marker, Polyline, useLeaflet } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import queryString from 'query-string';
 import { toast } from 'react-toastify';
 import { IPropertyDetail, storeBuildingDetail, storeParcelDetail } from 'store/slices/properties';
-import { IParcel, IBuilding, IAddress, IProperty } from 'interfaces';
+import Supercluster from 'supercluster';
+
+import useSupercluster from '../hooks/useSupercluster';
+import { useFilterContext } from '../providers/FIlterProvider';
+import { PropertyPopUpContext } from '../providers/PropertyPopUpProvider';
+import { ICluster, PointFeature } from '../types';
+import { getMarkerIcon, pointToLayer, zoomToCluster } from './mapUtils';
+import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMarker';
+import { Spiderfier } from './Spiderfier';
 
 export type PointClustererProps = {
   points: Array<PointFeature>;

@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import { ProjectNotes } from '..';
-import { IStepProps, IProjectTask } from '../interfaces';
-import TasksForm from './TasksForm';
 import variables from '_variables.module.scss';
 import { ExemptionRequest } from 'features/projects/dispose';
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
+
+import { ProjectNotes } from '..';
+import { IProjectTask, IStepProps } from '../interfaces';
+import TasksForm from './TasksForm';
 
 interface IDocumentationFormProps extends IStepProps {
   tasks: IProjectTask[];

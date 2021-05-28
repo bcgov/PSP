@@ -1,4 +1,4 @@
-import { IProperty, IAddress, IEvaluation, IFiscal, IParcel, ILeasedLand } from 'interfaces';
+import { IAddress, IEvaluation, IFiscal, ILeasedLand, IParcel, IProperty } from 'interfaces';
 
 export interface IBuilding extends IProperty {
   parcelId: number | '';

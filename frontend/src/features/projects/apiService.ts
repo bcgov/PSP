@@ -1,10 +1,11 @@
-import queryString from 'query-string';
+import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
 import { IPagedItems } from 'interfaces';
-import { ENVIRONMENT } from 'constants/environment';
-import { IProjectFilter, IProject } from './list/interfaces';
+import queryString from 'query-string';
+
+import { IApiProject, IProperty } from './common';
 import { toFlatProject } from './common/projectConverter';
-import { IProperty, IApiProject } from './common';
+import { IProject, IProjectFilter } from './list/interfaces';
 
 const { apiUrl: basePath } = ENVIRONMENT;
 

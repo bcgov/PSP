@@ -1,6 +1,7 @@
-import React from 'react';
 import { cleanup, render } from '@testing-library/react';
+import React from 'react';
 import { TenantProvider } from 'tenants';
+
 import { FeatureToggle } from './';
 
 const renderFeatureToggle = (tenant: string, hide: boolean = false) =>

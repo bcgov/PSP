@@ -1,13 +1,14 @@
+import { renderHook } from '@testing-library/react-hooks';
+import { createMemoryHistory } from 'history';
+import queryString from 'query-string';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { useRouterFilter } from './useRouterFilter';
-import { renderHook } from '@testing-library/react-hooks';
-import queryString from 'query-string';
 import filterSlice from 'store/slices/filter/filterSlice';
+
+import { useRouterFilter } from './useRouterFilter';
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();

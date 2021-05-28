@@ -1,4 +1,4 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 
 export const saveFilter = createAction<{ [key: string]: any }>('saveFilter');
 export const clearFilter = createAction('clearFilter');

@@ -1,7 +1,8 @@
-import { useApiLookupCodes } from './useApiLookupCodes';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+
+import { useApiLookupCodes } from './useApiLookupCodes';
 
 const mockAxios = new MockAdapter(axios);
 
