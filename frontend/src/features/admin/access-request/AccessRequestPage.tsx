@@ -15,13 +15,16 @@ import { Alert, Button, ButtonToolbar, Col, Container, Row } from 'react-bootstr
 import { useAppSelector } from 'store/hooks';
 import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
+import { useTenant } from 'tenants';
+import { FeatureToggle } from 'tenants/FeatureToggle';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
 import { Form, Input, Select, TextArea } from '../../../components/common/form';
 
 interface IAccessRequestForm extends IAccessRequest {
-  agency: number;
+  showAgency: boolean;
+  agency?: number;
   role: string;
 }
 
@@ -65,22 +68,31 @@ const AccessRequestPage = () => {
     status: accessRequest?.status || AccessRequestStatus.OnHold,
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
+    showAgency: true,
     agency: accessRequest?.agencies?.find((agency: any) => agency).id,
     role: accessRequest?.roles?.find(role => role).id,
     rowVersion: accessRequest?.rowVersion,
   };
 
+  // PSP-722 Disable agency dropdown from Access Request Form (only for MOTI)
+  const tenant = useTenant();
+  if (tenant?.id === 'MOTI') {
+    initialValues.showAgency = false;
+  }
+
   const selectAgencies = agencies.map(c => mapLookupCode(c, initialValues.agency));
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues.role));
 
   const checkAgencies = (
-    <Select
-      label="Agency"
-      field="agency"
-      required={true}
-      options={selectAgencies}
-      placeholder={initialValues?.agencies?.length > 0 ? undefined : 'Please Select'}
-    />
+    <FeatureToggle tenant="MOTI" hide>
+      <Select
+        label="Agency"
+        field="agency"
+        required={true}
+        options={selectAgencies}
+        placeholder={initialValues?.agencies?.length > 0 ? undefined : 'Please Select'}
+      />
+    </FeatureToggle>
   );
 
   const checkRoles = (
