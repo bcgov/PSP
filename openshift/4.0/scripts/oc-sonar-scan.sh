@@ -52,6 +52,7 @@ CMD_TEST="npm run coverage"
 # Begin analysis
 #
 CMD_SONAR_SCAN="sonar-scanner \
+  -D'sonar.projectName=pims-frontend[${TARGET}]' \
   -D'sonar.projectKey=pims-frontend-${TARGET}' \
   -D'sonar.sources=.' \
   -D'sonar.host.url=${SONAR_URL}' \

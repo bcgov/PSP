@@ -1,5 +1,5 @@
 # Use the offical nginx (based on debian)
-FROM nginx:stable
+FROM docker.io/nginx:stable
 
 ENV STI_SCRIPTS_PATH=/usr/libexec/s2i
 
@@ -27,10 +27,10 @@ COPY nginx.conf.template /tmp/
 # ---------------------------------------------------------------------------------
 RUN chmod -R g+rwx $STI_SCRIPTS_PATH
 RUN chmod g+rw /var/cache/nginx \
-               /var/run \
-               /var/log/nginx \
-               /etc/nginx/nginx.conf \
-               /tmp
+    /var/run \
+    /var/log/nginx \
+    /etc/nginx/nginx.conf \
+    /tmp
 # =================================================================================
 
 # Work-around for issues with S2I builds on Windows
