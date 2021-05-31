@@ -12,7 +12,7 @@ import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 
 import service from '../apiService';
-import { ProjectApprovalRequestListView } from './ProjectListView';
+import { ProjectApprovalRequestListView } from '.';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({

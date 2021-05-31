@@ -376,7 +376,7 @@ export const mockApiProjectParcel = {
     fiscals: [
       {
         parcelId: 87,
-        fiscalYear: 2018,
+        fiscalYear: getCurrentFiscalYear() - 1,
         key: 'NetBook',
         value: 0,
         createdOn: '2020-07-19T03:52:56.3079867',
@@ -459,7 +459,7 @@ export const mockApiProjectBuilding = {
     fiscals: [
       {
         parcelId: 87,
-        fiscalYear: 2018,
+        fiscalYear: getCurrentFiscalYear() - 1,
         key: 'NetBook',
         value: 0,
         createdOn: '2020-07-19T03:52:56.3079867',
