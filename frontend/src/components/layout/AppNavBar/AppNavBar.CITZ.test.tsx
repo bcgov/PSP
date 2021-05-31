@@ -71,13 +71,39 @@ describe('[ CITZ ] AppNavBar', () => {
   });
 
   describe('Renders navigation links based on security', () => {
-    it('Home link should render for all users', () => {
-      const { container } = renderNavBar();
-      const link = container.querySelector('.home-button');
+    describe('Home Button', () => {
+      it('should render for existing users', () => {
+        (useKeycloak as jest.Mock).mockReturnValue({
+          keycloak: {
+            subject: 'test',
+            userInfo: {
+              roles: [Claims.PROPERTY_VIEW],
+              groups: [Roles.REAL_ESTATE_MANAGER],
+            },
+          },
+        });
+        const { getByLabelText } = renderNavBar();
+        const link = getByLabelText(/Home/i);
 
-      expect(link).toBeVisible();
-      fireEvent.click(link!);
-      expect(history.location.pathname).toBe('/mapview');
+        expect(link).toBeVisible();
+        fireEvent.click(link!);
+        expect(history.location.pathname).toBe('/mapview');
+      });
+
+      it('should NOT render for new users requesting access', () => {
+        (useKeycloak as jest.Mock).mockReturnValue({
+          keycloak: {
+            subject: 'test',
+            userInfo: {
+              roles: [],
+              groups: [],
+            },
+          },
+        });
+        const { queryByLabelText } = renderNavBar();
+        const link = queryByLabelText(/Home/i);
+        expect(link).not.toBeInTheDocument();
+      });
     });
 
     describe('Administration Dropdown', () => {

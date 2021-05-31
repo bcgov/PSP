@@ -15,15 +15,12 @@ import { FeatureToggle } from 'tenants/FeatureToggle';
  * Nav bar with role-based functionality.
  */
 function AppNavBar() {
-  const history = useHistory();
   return (
     <Navbar variant="dark" className="map-nav" expand="lg">
       <Navbar.Toggle aria-controls="collapse" className="navbar-dark mr-auto" />
       <Navbar.Collapse className="links mr-auto">
         <Nav>
-          <Nav.Item className="home-button" onClick={() => history.push('/mapview')}>
-            <FaHome size={20} />
-          </Nav.Item>
+          <HomeButton />
           <AdminDropdown />
           <FeatureToggle tenant="MOTI" hide>
             <SubmitProperty />
@@ -37,6 +34,19 @@ function AppNavBar() {
       </Navbar.Collapse>
       <HelpContainer />
     </Navbar>
+  );
+}
+
+function HomeButton() {
+  const history = useHistory();
+  const keycloak = useKeycloakWrapper();
+  // We don't want to show the Home button to new users (who get redirected to Access Request page)
+  if (!keycloak?.roles?.length) return null;
+
+  return (
+    <Nav.Item aria-label="Home" className="home-button" onClick={() => history.push('/mapview')}>
+      <FaHome size={20} />
+    </Nav.Item>
   );
 }
 
