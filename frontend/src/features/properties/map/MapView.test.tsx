@@ -277,6 +277,34 @@ describe('MapProperties View', () => {
     });
   });
 
+  it('When the map is clicked, the resulting popup can be closed', async () => {
+    findOneWhereContains.mockResolvedValue({
+      features: [
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
+          properties: {
+            propertyTypeId: 0,
+          },
+        },
+      ],
+    });
+    const { container } = render(getMap());
+    await wait(() => {
+      const map = container.querySelector('.leaflet-container');
+      expect(map).toBeVisible();
+      fireEvent.click(map!);
+    });
+    expect(findOneWhereContains).toHaveBeenLastCalledWith({
+      lat: 54.97761367069628,
+      lng: -129.37500000000003,
+    });
+    const closeButton = container.querySelector('.leaflet-popup-close-button');
+    fireEvent.click(closeButton!);
+    const layerPopup = container.querySelector('.leaflet-popup');
+    expect(layerPopup).not.toBeInTheDocument();
+  });
+
   it('the map cannot be clicked if not interactive', async () => {
     await wait(() => {
       findOneWhereContains.mockResolvedValue({

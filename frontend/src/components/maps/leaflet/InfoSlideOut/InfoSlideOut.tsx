@@ -233,7 +233,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
         }
       }
     } else {
-      return <p>Click a pin to view the property details</p>;
+      return <p id="emptySlideOut">Click a pin to view the property details</p>;
     }
   };
 
