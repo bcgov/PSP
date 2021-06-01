@@ -159,7 +159,7 @@ pipeline {
       steps {
         script {
           sh 'mkdir -p zap-output'
-          def return_code = sh returnStatus: true, script: "/zap/zap-baseline.py -x zap-report.xml -r zap-report.html -t $VANITY_URL"
+          def return_code = sh returnStatus: true, script: "/zap/zap-baseline.py -x zap-report.xml -r zap-report.html -t $VANITY_URL -j"
           sh 'cp /zap/wrk/zap-report.* ./zap-output/'
           echo "Exit value was - $return_code"
         }
