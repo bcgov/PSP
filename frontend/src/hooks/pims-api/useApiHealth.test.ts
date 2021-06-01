@@ -14,7 +14,7 @@ describe('useApiHealth testing suite', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('Get Health Version endpoint', () => {

@@ -12,7 +12,7 @@ const spy = jest
 
 describe('useFavicon suite', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('useFavicon returns undefined link', () => {

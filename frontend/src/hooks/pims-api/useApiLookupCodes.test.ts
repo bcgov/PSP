@@ -12,7 +12,7 @@ describe('useApiLookupCodes.test.ts api hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('Gets paged agencies', () => {
