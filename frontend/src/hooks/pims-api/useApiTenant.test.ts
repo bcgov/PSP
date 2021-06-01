@@ -12,7 +12,7 @@ describe('useApiTenants testing suite', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('Get Tenant Configuration Settings', () => {

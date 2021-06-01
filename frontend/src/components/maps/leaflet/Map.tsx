@@ -215,9 +215,7 @@ const Map: React.FC<MapProps> = ({
 
   const { width, ref: resizeRef } = useResizeDetector();
   useEffect(() => {
-    if (!!width) {
-      mapRef.current?.leafletElement.invalidateSize();
-    }
+    mapRef.current?.leafletElement.invalidateSize();
   }, [mapRef, width]);
 
   // TODO: refactor various zoom settings
