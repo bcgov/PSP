@@ -30,6 +30,7 @@ describe('Tenant configuration', () => {
   afterAll(() => {
     process.env = OLD_ENV;
     global.fetch = unmockedFetch;
+    jest.restoreAllMocks();
   });
 
   it('Tenant returns correct default configuration', () => {

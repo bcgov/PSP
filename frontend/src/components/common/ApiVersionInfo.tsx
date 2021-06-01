@@ -11,11 +11,17 @@ export const ApiVersionInfo = () => {
   const [version, setVersion] = React.useState<IApiVersion>();
 
   React.useEffect(() => {
+    let isActive = true;
     const get = async () => {
       const response = await getVersion();
-      setVersion(response.data);
+      if (isActive) {
+        setVersion(response.data);
+      }
     };
     get();
+    return () => {
+      isActive = false;
+    };
   }, [getVersion, setVersion]);
 
   return (

@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Property.Mapping.Building
         {
             config.NewConfig<Entity.Building, Model.BuildingModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeId)
                 .Map(dest => dest.ParcelId, src => src.GetParcelId())
                 .Map(dest => dest.ProjectWorkflow, src => src.GetLatestWorkflowCode())
                 .Map(dest => dest.ProjectStatus, src => src.GetLatestProjectStatus())

@@ -6,6 +6,7 @@ import { mount } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
+import { PropertyFilter } from 'features/properties/filter';
 import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { IParcel, IProperty } from 'interfaces';
@@ -106,6 +107,24 @@ const emptyDetails = null;
 const noParcels = [] as IProperty[];
 
 let history = createMemoryHistory();
+const baseMapLayers = {
+  basemaps: [
+    {
+      name: 'Map',
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      thumbnail: '/streets.jpg',
+    },
+    {
+      name: 'Satellite',
+      url:
+        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      attribution:
+        'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
+      thumbnail: '/satellite.jpg',
+    },
+  ],
+};
 
 describe('MapProperties View', () => {
   (useKeycloak as jest.Mock).mockReturnValue({
@@ -119,6 +138,7 @@ describe('MapProperties View', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     mockAxios.reset();
     jest.clearAllMocks();
+    mockAxios.onGet('/basemaps.json').reply(200, baseMapLayers);
     mockAxios.onAny().reply(200);
     cleanup();
     history = createMemoryHistory();
@@ -140,6 +160,7 @@ describe('MapProperties View', () => {
     mapRef: React.RefObject<ReactLeafletMap<LeafletMapProps, LeafletMap>>,
     properties: IProperty[],
     selectedProperty: any,
+    disableMapFilterBar: boolean = false,
   ) => {
     return (
       <TenantProvider>
@@ -156,12 +177,41 @@ describe('MapProperties View', () => {
               onMarkerClick={jest.fn()}
               mapRef={mapRef}
               administrativeAreas={[]}
+              disableMapFilterBar={disableMapFilterBar}
             />
           </Router>
         </Provider>
       </TenantProvider>
     );
   };
+
+  it('Opens the slide out when clicked', async () => {
+    const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
+    const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
+    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    const infoButton = component.find('#slideOutInfoButton').first();
+    infoButton.simulate('click');
+    const emptySlideOut = component.find('p#emptySlideOut');
+    expect(emptySlideOut.text()).toEqual('Click a pin to view the property details');
+  });
+
+  it('opens the layers control when clicked', async () => {
+    const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
+    const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
+    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    let layersControlButton = component.find('#layersControlButton').first();
+    layersControlButton.simulate('click');
+    layersControlButton = component.find('#layersControlButton').first();
+    expect(layersControlButton.hasClass('open')).toBeTruthy();
+  });
+
+  it('Renders the map with the filter bar disabled', async () => {
+    const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
+    const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
+    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    const propertyFilter = component.find(PropertyFilter);
+    expect(propertyFilter).toEqual({});
+  });
 
   it('Renders the marker in correct position', async () => {
     const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
