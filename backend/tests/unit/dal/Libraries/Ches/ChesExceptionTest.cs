@@ -26,7 +26,7 @@ namespace Pims.Dal.Test.Libraries.Ches
         #region Tests
         #region ChesException Constructors
         [Fact]
-        public void ChesExceptionClientModel_Success()
+        public void Constructor_ExceptionAndClientAndModel()
         {
             // Arrange
             var message = "test2";
@@ -65,7 +65,49 @@ namespace Pims.Dal.Test.Libraries.Ches
         }
 
         [Fact]
-        public void ChesException_Success()
+        public void Constructor_NoStatus_ExceptionAndClientAndModel()
+        {
+            // Arrange
+            var helper = new TestHelper();
+
+            var user = PrincipalHelper.CreateForPermission();
+
+            var options = Options.Create(new ChesOptions()
+            {
+                AuthUrl = "https:/test.com",
+                EmailEnabled = true,
+                EmailAuthorized = true,
+                BccUser = true
+            });
+            var service = helper.Create<ChesService>(options, user);
+
+            var token = new TokenModel()
+            {
+                AccessToken = "test"
+            };
+
+            var response = new HttpResponseMessage()
+            {
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test")
+            };
+
+            var exception = new HttpClientRequestException(response);
+            var client = helper.GetService<Mock<IHttpRequestClient>>().Object;
+            var model = new ErrorResponseModel();
+
+            // Act
+            var chesException = new ChesException(exception, client, model);
+
+            // Assert
+            Assert.NotNull(chesException.Message);
+            chesException.Message.Should().Be("HTTP Request 'https://test/' failed" + System.Environment.NewLine);
+            chesException.Client.Should().Be(client);
+            chesException.StatusCode.Should().Be(HttpStatusCode.OK);
+            chesException.Detail.Should().Be(model.Title + System.Environment.NewLine + model.Detail + System.Environment.NewLine + model.Type + System.Environment.NewLine + System.String.Join(System.Environment.NewLine, model.Errors.Select(e => $"\t{e.Message}")));
+        }
+
+        [Fact]
+        public void Constructor_MessageAndStatus()
         {
             // Arrange
             var message = "test";
@@ -81,17 +123,13 @@ namespace Pims.Dal.Test.Libraries.Ches
         }
 
         [Fact]
-        public void ChesExceptionMessageInnerExceptionStatus_Success()
+        public void Constructor_MessageAndInnerExceptionAndStatus()
         {
             // Arrange
             var message = "test for inner exception 2";
             var status = HttpStatusCode.OK;
 
             var innerException = new HttpClientRequestException(message, status);
-            new HttpResponseMessage(status)
-            {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test")
-            };
             var chesException = new ChesException(message, innerException, status);
 
             // Assert
@@ -103,7 +141,7 @@ namespace Pims.Dal.Test.Libraries.Ches
 
 
         [Fact]
-        public void ChesExceptionResponse_Success()
+        public void Constructor_Response()
         {
             // Arrange
             var status = HttpStatusCode.OK;
@@ -120,7 +158,7 @@ namespace Pims.Dal.Test.Libraries.Ches
         }
 
         [Fact]
-        public void ChesExceptionResponseInnerException_Success()
+        public void Constructor_ResponseAndInnerException()
         {
             // Arrange
             var message = "test for inner exception";

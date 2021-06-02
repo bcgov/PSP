@@ -33,8 +33,7 @@ parameters:
   - name: INSTANCE
     displayName: "Unique Identifier"
     description: "A unique identifier to allow for multiple instances (i.e. '-01')."
-    required: true
-    value: "uat"   
+    required: false
 
   - name: GIT_URL
     displayName: Git Repository URL
@@ -108,12 +107,12 @@ objects:
   - kind: ImageStream
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}-${INSTANCE}
+      name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       annotations:
         description: Keeps track of changes in the application image
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}-${INSTANCE}
+        name: ${APP_NAME}-${ROLE_NAME}${INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
