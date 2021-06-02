@@ -42,13 +42,6 @@ namespace Pims.Api.Helpers.Authorization
                     identity.AddClaim(new Claim(ClaimTypes.Role, role));
                 }
             }
-
-            // var transformed = new ClaimsPrincipal ();
-            // transformed.AddIdentities (principal.Identities);
-            // transformed.AddIdentity (new ClaimsIdentity (new Claim[] {
-            //     new Claim ("Role", "Administrator")
-            // }));
-            // return Task.FromResult (transformed);
             return Task.FromResult(principal);
         }
         #endregion

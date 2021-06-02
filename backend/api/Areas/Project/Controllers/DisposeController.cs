@@ -37,20 +37,17 @@ namespace Pims.Api.Areas.Project.Controllers
         private readonly IPimsService _pimsService;
         private readonly INotificationService _notifyService;
         private readonly IMapper _mapper;
-        private readonly PimsOptions _options;
         #endregion
 
         #region Constructors
         /// <summary>
         /// Creates a new instance of a DisposeController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="options"></param>
         /// <param name="pimsService"></param>
         /// <param name="notifyService"></param>
         /// <param name="mapper"></param>
-        public DisposeController(IOptionsMonitor<PimsOptions> options, IPimsService pimsService, INotificationService notifyService, IMapper mapper)
+        public DisposeController(IPimsService pimsService, INotificationService notifyService, IMapper mapper)
         {
-            _options = options.CurrentValue;
             _pimsService = pimsService;
             _notifyService = notifyService;
             _mapper = mapper;
@@ -161,8 +158,8 @@ namespace Pims.Api.Areas.Project.Controllers
         [SwaggerOperation(Tags = new[] { "project" })]
         public async Task<IActionResult> SetStatusAsync(ProjectModel model)
         {
-            if (String.IsNullOrWhiteSpace(model.WorkflowCode)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(model.WorkflowCode));
-            if (String.IsNullOrWhiteSpace(model.StatusCode)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(model.StatusCode));
+            if (String.IsNullOrWhiteSpace(model.WorkflowCode)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", $"{nameof(model)}.{nameof(model.WorkflowCode)}");
+            if (String.IsNullOrWhiteSpace(model.StatusCode)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", $"{nameof(model)}.{nameof(model.StatusCode)}");
 
             var project = _mapper.Map<Entity.Project>(model);
             var workflow = _pimsService.Workflow.Get(model.WorkflowCode);

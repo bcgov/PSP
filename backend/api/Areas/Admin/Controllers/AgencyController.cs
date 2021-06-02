@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Pims.Api.Areas.Admin.Controllers
 {
     /// <summary>
-    /// AgencyController class, provides endpoints for managing agencys.
+    /// AgencyController class, provides endpoints for managing agencies.
     /// </summary>
     [HasPermission(Permissions.AgencyAdmin)]
     [ApiController]
@@ -62,22 +62,6 @@ namespace Pims.Api.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// GET - Returns a agency for the specified 'id' from the datasource.
-        /// </summary>
-        /// <param name="id">The unique 'id' for the agency to return.</param>
-        /// <returns>The agency requested.</returns>
-        [HttpGet("{id}")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AgencyModel), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "admin-agency" })]
-        public IActionResult GetAgency(int id)
-        {
-            var agency = _pimsAdminService.Agency.Get(id);
-            return new JsonResult(_mapper.Map<Model.AgencyModel>(agency));
-        }
-
-        /// <summary>
         /// GET - Returns a paged array of agencies from the datasource.
         /// </summary>
         /// <param name="filter"></param>
@@ -92,6 +76,22 @@ namespace Pims.Api.Areas.Admin.Controllers
             var page = _pimsAdminService.Agency.Get(filter);
             var result = _mapper.Map<Api.Models.PageModel<Model.AgencyModel>>(page);
             return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// GET - Returns a agency for the specified 'id' from the datasource.
+        /// </summary>
+        /// <param name="id">The unique 'id' for the agency to return.</param>
+        /// <returns>The agency requested.</returns>
+        [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Model.AgencyModel), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "admin-agency" })]
+        public IActionResult GetAgency(int id)
+        {
+            var agency = _pimsAdminService.Agency.Get(id);
+            return new JsonResult(_mapper.Map<Model.AgencyModel>(agency));
         }
 
         /// <summary>

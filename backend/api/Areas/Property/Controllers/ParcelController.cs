@@ -30,7 +30,6 @@ namespace Pims.Api.Areas.Property.Controllers
     public class ParcelController : ControllerBase
     {
         #region Variables
-        private readonly ILogger<ParcelController> _logger;
         private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
         #endregion
@@ -39,12 +38,10 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Creates a new instance of a ParcelController class.
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public ParcelController(ILogger<ParcelController> logger, IPimsService pimsService, IMapper mapper)
+        public ParcelController(IPimsService pimsService, IMapper mapper)
         {
-            _logger = logger;
             _pimsService = pimsService;
             _mapper = mapper;
         }
@@ -100,7 +97,7 @@ namespace Pims.Api.Areas.Property.Controllers
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid()) throw new BadRequestException("Parcel filter must contain valid values.");
 
-            var parcels = _pimsService.Parcel.Get((EModel.ParcelFilter)filter).ToArray();
+            var parcels = _pimsService.Parcel.Get(filter).ToArray();
             return new JsonResult(_mapper.Map<Model.ParcelModel[]>(parcels).ToArray());
         }
 

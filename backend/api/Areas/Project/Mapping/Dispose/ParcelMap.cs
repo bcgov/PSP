@@ -1,5 +1,6 @@
 using Mapster;
 using Microsoft.Extensions.Options;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Mapping.Converters;
 using Pims.Api.Models;
 using System.Collections.Generic;
@@ -40,8 +41,8 @@ namespace Pims.Api.Areas.Project.Mapping.Dispose
                 .Map(dest => dest.ClassificationId, src => src.ClassificationId)
                 .Map(dest => dest.Classification, src => src.Classification.Name)
                 .Map(dest => dest.AgencyId, src => src.AgencyId)
-                .Map(dest => dest.Agency, src => src.Agency == null ? null : src.Agency.ParentId.HasValue ? src.Agency.Parent.Code : src.Agency.Code)
-                .Map(dest => dest.SubAgency, src => src.Agency == null ? null : src.Agency.ParentId.HasValue ? src.Agency.Name : null)
+                .Map(dest => dest.Agency, src => src.Agency.GetAgencyCode())
+                .Map(dest => dest.SubAgency, src => src.Agency.GetSubAgencyName())
                 .Map(dest => dest.Latitude, src => src.Location.Y)
                 .Map(dest => dest.Longitude, src => src.Location.X)
                 .Map(dest => dest.Address, src => src.Address)
