@@ -18,7 +18,7 @@ import { Col } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
-import { FeatureToggle } from 'tenants/FeatureToggle';
+import { FeatureHidden } from 'tenants';
 import { mapLookupCode, mapLookupCodeWithParentString } from 'utils';
 import { mapSelectOptionWithParent } from 'utils';
 import { FilterBarSchema } from 'utils/YupSchema';
@@ -152,7 +152,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
       {({ isSubmitting, setFieldValue, values }) => (
         <Form>
           <Form.Row className="map-filter-bar">
-            <FeatureToggle tenant="MOTI" hide>
+            <FeatureHidden tenant="MOTI">
               <FindMorePropertiesButton
                 buttonText="Find available surplus properties"
                 onEnter={() => {
@@ -168,7 +168,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
                 }}
               />
               <div className="vl"></div>
-            </FeatureToggle>
+            </FeatureHidden>
             <AgencyCol>
               {showAllAgencySelect ? (
                 <PropertyFilterAgencyOptions disabled={findMoreOpen} agencies={agencies} />
