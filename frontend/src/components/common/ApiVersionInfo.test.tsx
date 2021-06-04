@@ -1,6 +1,5 @@
-import { cleanup, render } from '@testing-library/react';
+import { act, cleanup, render } from '@testing-library/react';
 import React from 'react';
-import { act } from 'react-test-renderer';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
 
@@ -34,9 +33,9 @@ describe('ApiVersionInfo suite', () => {
 
   it('Displays version information', async () => {
     await act(async () => {
-      const { findByTestId } = render(<ApiVersionInfo />);
-      const element = await findByTestId('version');
-      expect(element).toContainHTML(`v${defaultVersion.version}`);
+      const { findByText } = render(<ApiVersionInfo />);
+      const element = await findByText(`v${defaultVersion.version}`);
+      expect(element).toBeInTheDocument();
       expect(mockGetVersion).toHaveBeenCalledTimes(1);
     });
   });
