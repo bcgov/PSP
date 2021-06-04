@@ -166,6 +166,12 @@ describe('[ MOTI ] AccessRequestPage', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  it(`should not show agencies for MOTI`, () => {
+    const { container } = testRender();
+    const dropdown = container.querySelector(`select[name="agency"]`);
+    expect(dropdown).toBeNull();
+  });
+
   it('renders dropdown for roles', () => {
     const { container } = testRender();
     const dropdown = container.querySelector(`select[name="role"]`);
