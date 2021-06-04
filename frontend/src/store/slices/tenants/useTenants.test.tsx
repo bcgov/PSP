@@ -49,6 +49,7 @@ describe('useTenant slice hook', () => {
 
   afterAll(() => {
     jest.restoreAllMocks();
+    jest.unmock('react-redux-loading-bar');
   });
 
   it('getSettings reducer + api hook', () => {
