@@ -9,7 +9,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { FaHome } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { FeatureToggle } from 'tenants/FeatureToggle';
+import { FeatureHidden } from 'tenants';
 
 /**
  * Nav bar with role-based functionality.
@@ -22,13 +22,13 @@ function AppNavBar() {
         <Nav>
           <HomeButton />
           <AdminDropdown />
-          <FeatureToggle tenant="MOTI" hide>
+          <FeatureHidden tenant="MOTI">
             <SubmitProperty />
-          </FeatureToggle>
+          </FeatureHidden>
           <ViewInventory />
-          <FeatureToggle tenant="MOTI" hide>
+          <FeatureHidden tenant="MOTI">
             <DisposeProjectsDropdown />
-          </FeatureToggle>
+          </FeatureHidden>
           <ReportsDropdown />
         </Nav>
       </Navbar.Collapse>
@@ -174,11 +174,11 @@ function ReportsDropdown() {
       id="reports"
     >
       {keycloak.hasClaim(Claims.REPORTS_SPL) && (
-        <FeatureToggle tenant="MOTI" hide>
+        <FeatureHidden tenant="MOTI">
           <NavDropdown.Item onClick={() => history.push('/reports/spl')}>
             SPL Report
           </NavDropdown.Item>
-        </FeatureToggle>
+        </FeatureHidden>
       )}
     </NavDropdown>
   ) : null;

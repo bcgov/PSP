@@ -76,13 +76,11 @@ exports[`[ MOTI ] AppNavBar matches snapshot. 1`] = `
                   >
                     <HomeButton />
                     <AdminDropdown />
-                    <FeatureToggle
-                      hide={true}
+                    <FeatureHidden
                       tenant="MOTI"
                     />
                     <ViewInventory />
-                    <FeatureToggle
-                      hide={true}
+                    <FeatureHidden
                       tenant="MOTI"
                     />
                     <ReportsDropdown />

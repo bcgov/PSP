@@ -15,8 +15,7 @@ import { Alert, Button, ButtonToolbar, Col, Container, Row } from 'react-bootstr
 import { useAppSelector } from 'store/hooks';
 import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
-import { useTenant } from 'tenants';
-import { FeatureToggle } from 'tenants/FeatureToggle';
+import { FeatureHidden, useTenant } from 'tenants';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
@@ -84,7 +83,7 @@ const AccessRequestPage = () => {
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues.role));
 
   const checkAgencies = (
-    <FeatureToggle tenant="MOTI" hide>
+    <FeatureHidden tenant="MOTI">
       <Select
         label="Agency"
         field="agency"
@@ -92,7 +91,7 @@ const AccessRequestPage = () => {
         options={selectAgencies}
         placeholder={initialValues?.agencies?.length > 0 ? undefined : 'Please Select'}
       />
-    </FeatureToggle>
+    </FeatureHidden>
   );
 
   const checkRoles = (
