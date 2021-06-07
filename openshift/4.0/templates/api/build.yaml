@@ -55,12 +55,12 @@ parameters:
     displayName: .NET builder
     description: The s2i image which is used to build the code.
     required: true
-    value: dotnet-31-rhel7
+    value: dotnet-50
   - name: DOTNET_BUILDER_TAG
     displayName: .NET builder tag
     description: The s2i image tag which is used to build the code.
     required: true
-    value: "3.1"
+    value: "latest"
 
   - name: DOTNET_STARTUP_PROJECT
     displayName: Startup Project
