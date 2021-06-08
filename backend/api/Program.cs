@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using Serilog;
 using System.Diagnostics.CodeAnalysis;
+using CommandLine;
+using Pims.Api.Configuration;
+using CommandLine.Text;
 
 namespace Pims.Api
 {
@@ -19,18 +22,31 @@ namespace Pims.Api
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            // ConfigureLogging();
-            var builder = CreateWebHostBuilder(args);
-            builder.Build().Run();
+            var results = Parser.Default.ParseArguments<ProgramOptions>(args);
+
+            results.WithParsed((options) =>
+                {
+                    var builder = CreateWebHostBuilder(options);
+                    builder.Build().Run();
+                })
+                .WithNotParsed((errors) =>
+                {
+                    var helpText = HelpText.AutoBuild(results, h =>
+                    {
+                        return HelpText.DefaultParsingErrorsHandler(results, h);
+                    }, e => e);
+                    Console.WriteLine(helpText);
+                });
         }
 
         /// <summary>
         /// Create a default configuration and setup for a web application.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="options"></param>
         /// <returns></returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
         {
+            var args = options.ToArgs();
             DotNetEnv.Env.Load();
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var config = new ConfigurationBuilder()

@@ -28,19 +28,16 @@ namespace Pims.Api.Areas.Project.Controllers
         #region Variables
         private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
-        private readonly PimsOptions _options;
         #endregion
 
         #region Constructors
         /// <summary>
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="options"></param>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public ReportController(IOptionsMonitor<PimsOptions> options, IPimsService pimsService, IMapper mapper)
+        public ReportController(IPimsService pimsService, IMapper mapper)
         {
-            _options = options.CurrentValue;
             _pimsService = pimsService;
             _mapper = mapper;
         }

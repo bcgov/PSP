@@ -1,5 +1,6 @@
 using Mapster;
 using Microsoft.Extensions.Options;
+using Pims.Api.Helpers.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Helpers.Extensions;
 using Pims.Dal.Helpers.Extensions;
@@ -42,10 +43,10 @@ namespace Pims.Api.Areas.Property.Mapping.Search
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
 
                 .Map(dest => dest.AgencyId, src => src.AgencyId)
-                .Map(dest => dest.Agency, src => src.Agency == null ? null : src.Agency.ParentId.HasValue ? src.Agency.Parent.Name : src.Agency.Name)
-                .Map(dest => dest.AgencyCode, src => src.Agency == null ? null : src.Agency.ParentId.HasValue ? src.Agency.Parent.Code : src.Agency.Code)
-                .Map(dest => dest.SubAgency, src => src.Agency == null ? null : src.Agency.ParentId.HasValue ? null : src.Agency.Name)
-                .Map(dest => dest.SubAgencyCode, src => src.Agency == null ? null : src.Agency.ParentId.HasValue ? null : src.Agency.Code)
+                .Map(dest => dest.Agency, src => src.Agency.GetAgencyName())
+                .Map(dest => dest.AgencyCode, src => src.Agency.GetAgencyCode())
+                .Map(dest => dest.SubAgency, src => src.Agency.GetSubAgencyName())
+                .Map(dest => dest.SubAgencyCode, src => src.Agency.GetSubAgencyCode())
 
                 .Map(dest => dest.Latitude, src => src.Location.Y)
                 .Map(dest => dest.Longitude, src => src.Location.X)

@@ -30,12 +30,12 @@ namespace Pims.Api.Helpers.Routes.Constraints
         /// Determines if the constraint matches the PID format (i.e. 123-123-123).
         /// </summary>
         /// <param name="httpContext"></param>
-        /// <param name="router"></param>
+        /// <param name="route"></param>
         /// <param name="routeKey"></param>
         /// <param name="values"></param>
         /// <param name="routeDirection"></param>
         /// <returns></returns>
-        public bool Match(HttpContext httpContext, IRouter router, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
+        public bool Match(HttpContext httpContext, IRouter route, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
         {
             if (values.TryGetValue(routeKey, out object value))
             {

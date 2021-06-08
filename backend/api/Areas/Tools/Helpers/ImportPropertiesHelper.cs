@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
@@ -105,7 +104,7 @@ namespace Pims.Api.Areas.Tools.Helpers
                             // If it hasn't been updated after the 'updatedBefore' date
                             // If the building exists on the specified 'pid' or the building address matches
                             if ((updatedBefore == null || building.UpdatedOn == null || building.UpdatedOn < updatedBefore)
-                                && ((building.Parcels.Count() == 0
+                                && ((!building.Parcels.Any()
                                     && building.Address.Address1 == property.CivicAddress
                                     && building.Address.AdministrativeArea == property.City)
                                 || building.Parcels.Any(p => p.Parcel.PID == pid)))
@@ -192,15 +191,14 @@ namespace Pims.Api.Areas.Tools.Helpers
         /// </summary>
         /// <param name="property"></param>
         /// <param name="pid"></param>
-        /// <returns></returns>
-        private Entity.Building UpdateBuildingFinancials(Model.ImportPropertyModel property, int pid)
+        private void UpdateBuildingFinancials(Model.ImportPropertyModel property, int pid)
         {
             var lid = property.LocalId;
             var b_e = ExceptionHelper.HandleKeyNotFoundWithDefault(() => _pimsAdminService.Building.GetByPid(pid, lid).FirstOrDefault());
             var evaluationDate = new DateTime(property.FiscalYear, 1, 1); // Defaulting to Jan 1st because SIS data doesn't have the actual date.
 
             // Ignore properties that are not part of inventory.
-            if (b_e.Id == 0) return null;
+            if (b_e.Id == 0) return;
 
             // Add a new fiscal values for each year.
             if (!b_e.Fiscals.Any(e => e.FiscalYear == property.FiscalYear))
@@ -216,8 +214,6 @@ namespace Pims.Api.Areas.Tools.Helpers
 
             _pimsAdminService.Building.UpdateFinancials(b_e);
             _logger.LogDebug($"Updating building '{property.PID}:{property.LocalId}'");
-
-            return b_e;
         }
 
         /// <summary>

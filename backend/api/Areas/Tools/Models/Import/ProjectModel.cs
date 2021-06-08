@@ -265,11 +265,6 @@ namespace Pims.Api.Areas.Tools.Models.Import
         public decimal? InterestComponent { get; set; }
         #endregion
 
-        ///// <summary>
-        ///// get - A collection of properties associated to this project.
-        ///// </summary>
-        //public IEnumerable<ProjectProperty> Properties { get; set; }
-
         /// <summary>
         /// get - A collection of notes for this project.
         /// </summary>

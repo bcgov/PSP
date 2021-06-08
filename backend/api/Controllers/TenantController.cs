@@ -5,7 +5,6 @@ using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Tenant;
 using Entity = Pims.Dal.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Pims.Api.Policies;
 using Pims.Dal.Security;
 

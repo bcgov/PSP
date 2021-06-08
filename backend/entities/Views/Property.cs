@@ -295,10 +295,10 @@ namespace Pims.Dal.Entities.Views
             this.Classification = property.Classification?.Name;
 
             this.AgencyId = property.AgencyId;
-            this.Agency = property.Agency?.ParentId != null ? property.Agency.Parent?.Name : property.Agency?.Name;
-            this.AgencyCode = property.Agency?.ParentId != null ? property.Agency.Parent?.Code : property.Agency?.Code;
-            this.SubAgency = property.Agency?.ParentId != null ? null : property.Agency?.Name;
-            this.SubAgencyCode = property.Agency?.ParentId != null ? null : property.Agency?.Code;
+            this.Agency = property.Agency?.ParentId.HasValue ?? false ? property.Agency.Parent?.Name : property.Agency?.Name;
+            this.AgencyCode = property.Agency?.ParentId.HasValue ?? false ? property.Agency.Parent?.Code : property.Agency?.Code;
+            this.SubAgency = property.Agency?.ParentId.HasValue ?? false ? property.Agency?.Name : null;
+            this.SubAgencyCode = property.Agency?.ParentId.HasValue ?? false ? property.Agency?.Code : null;
 
             this.Name = property.Name;
             this.Description = property.Description;

@@ -62,8 +62,8 @@ namespace Pims.Dal.Configuration.Views
                             AgencyId = b.AgencyId,
                             Agency = b.Agency.ParentId.HasValue ? b.Agency.Parent.Name : b.Agency.Name,
                             AgencyCode = b.Agency.ParentId.HasValue ? b.Agency.Parent.Code : b.Agency.Code,
-                            SubAgency = b.Agency.ParentId.HasValue ? null : b.Agency.Name,
-                            SubAgencyCode = b.Agency.ParentId.HasValue ? null : b.Agency.Code,
+                            SubAgency = b.Agency.ParentId.HasValue ? b.Agency.Name : null,
+                            SubAgencyCode = b.Agency.ParentId.HasValue ? b.Agency.Code : null,
 
                             Market = b.Fiscals.Any(f => f.Key == FiscalKeys.Market) ? b.Fiscals.OrderByDescending(f => f.FiscalYear).FirstOrDefault(f => f.Key == FiscalKeys.Market).Value : (decimal?)null,
                             MarketFiscalYear = b.Fiscals.Any(f => f.Key == FiscalKeys.Market) ? b.Fiscals.OrderByDescending(f => f.FiscalYear).FirstOrDefault(f => f.Key == FiscalKeys.Market).FiscalYear : (int?)null,
@@ -114,8 +114,8 @@ namespace Pims.Dal.Configuration.Views
                                 AgencyId = p.AgencyId,
                                 Agency = p.Agency.ParentId.HasValue ? p.Agency.Parent.Name : p.Agency.Name,
                                 AgencyCode = p.Agency.ParentId.HasValue ? p.Agency.Parent.Code : p.Agency.Code,
-                                SubAgency = p.Agency.ParentId.HasValue ? null : p.Agency.Name,
-                                SubAgencyCode = p.Agency.ParentId.HasValue ? null : p.Agency.Code,
+                                SubAgency = p.Agency.ParentId.HasValue ? p.Agency.Name : null,
+                                SubAgencyCode = p.Agency.ParentId.HasValue ? p.Agency.Code : null,
 
                                 Market = p.Fiscals.Any(f => f.Key == FiscalKeys.Market) ? p.Fiscals.OrderByDescending(f => f.FiscalYear).FirstOrDefault(f => f.Key == FiscalKeys.Market).Value : (decimal?)null,
                                 MarketFiscalYear = p.Fiscals.Any(f => f.Key == FiscalKeys.Market) ? p.Fiscals.OrderByDescending(f => f.FiscalYear).FirstOrDefault(f => f.Key == FiscalKeys.Market).FiscalYear : (int?)null,

@@ -1,7 +1,6 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Pims.Api.Policies;
 using Pims.Dal.Security;
 using Pims.Dal.Services.Admin;
@@ -25,7 +24,6 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class UserController : ControllerBase
     {
         #region Variables
-        private readonly ILogger<UserController> _logger;
         private readonly IPimsAdminService _pimsAdminService;
         private readonly IMapper _mapper;
         #endregion
@@ -34,12 +32,10 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="pimsAdminService"></param>
         /// <param name="mapper"></param>
-        public UserController(ILogger<UserController> logger, IPimsAdminService pimsAdminService, IMapper mapper)
+        public UserController(IPimsAdminService pimsAdminService, IMapper mapper)
         {
-            _logger = logger;
             _pimsAdminService = pimsAdminService;
             _mapper = mapper;
         }
