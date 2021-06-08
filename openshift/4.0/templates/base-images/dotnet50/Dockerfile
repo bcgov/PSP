@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM registry.redhat.io/ubi8/dotnet-50
 
 LABEL \
     io.k8s.display-name="DotNet 5.0" \
@@ -7,44 +7,13 @@ LABEL \
 
 USER 0
 
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /app
-EXPOSE 443 8080
+# Copy entitlements
+COPY ./etc-pki-entitlement /etc/pki/entitlement
 
-# Copy csproj and restore as distinct layers
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
-COPY *.sln .
-COPY api/*.csproj api/
-COPY entities/*.csproj entities/
-COPY tests/core/*.csproj tests/core/
-COPY tests/unit/api/*.csproj tests/unit/api/
-COPY tests/unit/dal/*.csproj tests/unit/dal/
-COPY dal/*.csproj dal/
-COPY dal.keycloak/*.csproj dal.keycloak/
-COPY keycloak/*.csproj keycloak/
-COPY geocoder/*.csproj geocoder/
-COPY ches/*.csproj ches/
-COPY notifications/*.csproj notifications/
-COPY core/*.csproj core/
+# Copy subscription manager configurations
+COPY ./rhsm-conf /etc/rhsm
+COPY ./rhsm-ca /etc/rhsm/ca
 
-RUN dotnet restore
-ENV PATH="$PATH:/root/.dotnet/tools"
-RUN dotnet tool install --global dotnet-ef --version 5.0.0
-# Copy everything else and build
-COPY . .
-WORKDIR /src/api
-RUN dotnet build "Pims.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
-
-FROM build AS publish
-RUN dotnet publish "Pims.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish
-
-# Runtime image
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-COPY entrypoint.sh .
-RUN chmod +x /app/entrypoint.sh
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENV PATH=$PATH:$HOME/.dotnet/tools
 
 USER 1001

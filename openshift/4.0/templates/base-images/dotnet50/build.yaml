@@ -113,6 +113,7 @@ objects:
               name: platform-services-controlled-rhsm-ca
             destinationDir: rhsm-ca
       strategy:
+        type: Docker
         dockerStrategy:
           imageOptimizationPolicy: SkipLayers
           dockerfilePath: "${DOCKERFILE_PATH}"
@@ -120,7 +121,6 @@ objects:
             kind: DockerImage
             name: "${BUILDER_IMAGE_NAME}"
             imagePullPolicy: Always
-        type: Docker
       triggers:
         - type: ConfigChange
         - type: ImageChange

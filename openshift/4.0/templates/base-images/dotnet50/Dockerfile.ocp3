@@ -7,8 +7,6 @@ LABEL \
 
 USER 0
 
-RUN yum install libunwind-devel
-
 ENV PATH=$PATH:$HOME/.dotnet/tools
 
 USER 1001
