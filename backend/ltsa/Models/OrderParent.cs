@@ -118,15 +118,7 @@ namespace Pims.Ltsa.Models
         /// <param name="billingInfo">billingInfo.</param>
         public OrderParent(ProductTypeEnum productType = default(ProductTypeEnum), string fileReference = default(string), string orderId = default(string), StatusEnum? status = default(StatusEnum?), BillingInfo billingInfo = default(BillingInfo))
         {
-            // to ensure "productType" is required (not null)
-            if (productType == null)
-            {
-                throw new InvalidDataException("productType is a required property for OrderParent and cannot be null");
-            }
-            else
-            {
-                this.ProductType = productType;
-            }
+            this.ProductType = productType;
             this.FileReference = fileReference;
             this.OrderId = orderId;
             this.Status = status;

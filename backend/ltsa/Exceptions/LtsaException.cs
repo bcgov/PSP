@@ -33,7 +33,7 @@ namespace Pims.Core.Exceptions
         /// <param name="client"></param>
         /// <param name="error"></param>
         public LtsaException(HttpClientRequestException exception, IHttpRequestClient client, Error error)
-            : this($"{exception.Message}{Environment.NewLine}", exception, exception.StatusCode)
+            : base($"{exception.Message}{Environment.NewLine}", exception, exception.StatusCode.Value)
         {
             if (exception?.Response?.Content != null)
             {

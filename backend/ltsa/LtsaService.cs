@@ -158,7 +158,7 @@ namespace Pims.Ltsa
                     else
                     {
                         _logger.LogError(ex, $"Failed to send/receive auth refresh request: ${this.Options.AuthUrl}");
-                        throw new LtsaException(ex.Message, ex, ex.StatusCode);
+                        throw new LtsaException(ex.Message, ex, ex.StatusCode.Value);
                     }
                 }
             }

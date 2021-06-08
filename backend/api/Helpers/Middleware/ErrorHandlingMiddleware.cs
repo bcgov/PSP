@@ -178,7 +178,7 @@ namespace Pims.Api.Helpers.Middleware
             else if (ex is LtsaException)
             {
                 var exception = ex as LtsaException;
-                code = exception.StatusCode;
+                code = exception.StatusCode.Value;
                 message = exception.Message;
                 details = exception.Detail;
 
