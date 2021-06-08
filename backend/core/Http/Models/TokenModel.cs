@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Pims.Core.Http.Models
 {
@@ -8,6 +9,23 @@ namespace Pims.Core.Http.Models
     /// </summary>
     public class TokenModel
     {
+
+        public TokenModel()
+        {
+        }
+        public TokenModel(string jwtToken, string refreshToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var decodedJwtToken = handler.ReadJwtToken(jwtToken);
+            var decodedRefreshToken = handler.ReadJwtToken(jwtToken);
+
+            AccessToken = jwtToken;
+            ExpiresIn = decodedJwtToken.ValidTo.Subtract(DateTime.UtcNow).Seconds;
+            RefreshExpiresIn = decodedRefreshToken.ValidTo.Subtract(DateTime.UtcNow).Seconds;
+            RefreshToken = refreshToken;
+            TokenType = decodedJwtToken.Header.Typ;
+        }
+
         #region Properties
         /// <summary>
         /// get/set - The access token.

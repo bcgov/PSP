@@ -1,0 +1,6 @@
+{
+  "Geocoder": {
+    "HostUri": "https://td-x42b.ltsa.ca",
+    "AuthUrl": "https://apps.ltsa.ca/iam/api/auth"
+  }
+}
