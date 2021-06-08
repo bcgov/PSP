@@ -297,8 +297,8 @@ namespace Pims.Dal.Entities.Views
             this.AgencyId = property.AgencyId;
             this.Agency = property.Agency?.ParentId.HasValue ?? false ? property.Agency.Parent?.Name : property.Agency?.Name;
             this.AgencyCode = property.Agency?.ParentId.HasValue ?? false ? property.Agency.Parent?.Code : property.Agency?.Code;
-            this.SubAgency = property.Agency?.ParentId.HasValue ?? false ? null : property.Agency?.Name;
-            this.SubAgencyCode = property.Agency?.ParentId.HasValue ?? false ? null : property.Agency?.Code;
+            this.SubAgency = property.Agency?.ParentId.HasValue ?? false ? property.Agency?.Name : null;
+            this.SubAgencyCode = property.Agency?.ParentId.HasValue ?? false ? property.Agency?.Code : null;
 
             this.Name = property.Name;
             this.Description = property.Description;

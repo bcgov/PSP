@@ -36,7 +36,7 @@ namespace Pims.Api.Helpers.Extensions
         /// <returns></returns>
         public static string GetSubAgencyCode(this Agency agency)
         {
-            return agency?.ParentId.HasValue ?? false ? null : agency?.Code;
+            return agency?.ParentId.HasValue ?? false ? agency?.Code : null;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Pims.Api.Helpers.Extensions
         /// <returns></returns>
         public static string GetSubAgencyName(this Agency agency)
         {
-            return agency?.ParentId.HasValue ?? false ? null : agency?.Name;
+            return agency?.ParentId.HasValue ?? false ? agency?.Name : null;
         }
 
         /// <summary>
