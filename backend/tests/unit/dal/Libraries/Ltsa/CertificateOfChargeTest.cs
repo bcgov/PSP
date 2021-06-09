@@ -24,7 +24,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_Type()
         {
-            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge(null, "", DateTime.Now));
+            Assert.Throws<InvalidDataException>(() => new CertificateOfCharge("", null, DateTime.Now));
         }
 
         [Fact]

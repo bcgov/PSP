@@ -18,22 +18,22 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_ParcelIdentifier()
         {
-            Assert.Throws<InvalidDataException>(() => new ParcelInfo(parcelIdentifier: null));
+            Assert.Throws<InvalidDataException>(() => new ParcelInfo(legalDescription: new LegalDescription(fullLegalDescription: "fullLegalDescription"), pendingApplicationCount: 2, registeredTitlesCount: 1, parcelIdentifier: null));
         }
         [Fact]
         public void TestConstructor_Null_RegisteredTitlesCount()
         {
-            Assert.Throws<InvalidDataException>(() => new ParcelInfo(registeredTitlesCount: null));
+            Assert.Throws<InvalidDataException>(() => new ParcelInfo(legalDescription: new LegalDescription(fullLegalDescription: "fullLegalDescription"), pendingApplicationCount: 2, parcelIdentifier: "parcelIdentifier", registeredTitlesCount: null));
         }
         [Fact]
         public void TestConstructor_Null_PendingApplicationCount()
         {
-            Assert.Throws<InvalidDataException>(() => new ParcelInfo(pendingApplicationCount: null));
+            Assert.Throws<InvalidDataException>(() => new ParcelInfo(legalDescription: new LegalDescription(fullLegalDescription: "fullLegalDescription"), registeredTitlesCount: 1, parcelIdentifier: "parcelIdentifier", pendingApplicationCount: null));
         }
         [Fact]
         public void TestConstructor_Null_LegalDescription()
         {
-            Assert.Throws<InvalidDataException>(() => new ParcelInfo(legalDescription: null));
+            Assert.Throws<InvalidDataException>(() => new ParcelInfo(pendingApplicationCount: 2, registeredTitlesCount: 1, parcelIdentifier: "parcelIdentifier", legalDescription: null));
         }
 
         [Fact]

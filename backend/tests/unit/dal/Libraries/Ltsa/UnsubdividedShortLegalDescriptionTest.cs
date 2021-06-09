@@ -24,7 +24,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_ConcatShortLegal()
         {
-            Assert.Throws<InvalidDataException>(() => new UnsubdividedShortLegalDescription(concatShortLegal: null));
+            Assert.Throws<InvalidDataException>(() => new UnsubdividedShortLegalDescription(landDistrict1: "landDistrict1", concatShortLegal: null));
         }
 
         [Fact]

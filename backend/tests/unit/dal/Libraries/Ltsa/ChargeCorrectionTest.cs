@@ -18,19 +18,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_Reason()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeCorrection(reason: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeCorrection(enteredDate: DateTime.Now, originatingCorrectionApplication: "originatingCorrectionApplication", reason: null));
         }
 
         [Fact]
         public void TestConstructor_Null_OriginatingCorrectionApplication()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeCorrection(originatingCorrectionApplication: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeCorrection(enteredDate: DateTime.Now, reason: "reason", originatingCorrectionApplication: null));
         }
 
         [Fact]
         public void TestConstructor_Null_EnteredDate()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeCorrection(enteredDate: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeCorrection(originatingCorrectionApplication: "originatingCorrectionApplication", reason: "reason", enteredDate: null));
         }
 
         [Fact]

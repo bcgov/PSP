@@ -18,17 +18,17 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_LegalNotationNumber()
         {
-            Assert.Throws<InvalidDataException>(() => new LegalNotationOnTitle(legalNotationNumber: null));
+            Assert.Throws<InvalidDataException>(() => new LegalNotationOnTitle(status: "status", legalNotation: new LegalNotation(legalNotationText: "legalNotationText"), legalNotationNumber: null));
         }
         [Fact]
         public void TestConstructor_Null_Status()
         {
-            Assert.Throws<InvalidDataException>(() => new LegalNotationOnTitle(status: null));
+            Assert.Throws<InvalidDataException>(() => new LegalNotationOnTitle(legalNotation: new LegalNotation(legalNotationText: "legalNotationText"), legalNotationNumber: "legalNotationNumber", status: null));
         }
         [Fact]
         public void TestConstructor_Null_LegalNotation()
         {
-            Assert.Throws<InvalidDataException>(() => new LegalNotationOnTitle(legalNotation: null));
+            Assert.Throws<InvalidDataException>(() => new LegalNotationOnTitle(status: "status", legalNotationNumber: "legalNotationNumber", legalNotation: null));
         }
 
         [Fact]

@@ -18,19 +18,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_ChargeNumber()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeOnTitle(chargeNumber: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeOnTitle(charge: new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>()), chargeRemarks: "chargeRemarks", chargeNumber: null));
         }
 
         [Fact]
         public void TestConstructor_Null_TransactionType()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeOnTitle(chargeRemarks: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeOnTitle(charge: new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>()), chargeNumber: "chargeNumber", chargeRemarks: null));
         }
 
         [Fact]
         public void TestConstructor_Null_ChargeOwnershipGroups()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeOnTitle(charge: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeOnTitle(chargeRemarks: "chargeRemarks", chargeNumber: "chargeNumber", charge: null));
         }
 
         [Fact]

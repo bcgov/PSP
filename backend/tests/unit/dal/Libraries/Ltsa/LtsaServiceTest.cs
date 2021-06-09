@@ -90,6 +90,37 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Once);
         }
+
+        [Fact]
+        public async void GetTokenAsync_ErrorResponse()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var options = Options.Create(new LtsaOptions());
+            var service = helper.Create<LtsaService>(options, user);
+
+            var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
+                Content = new StringContent("{\"ErrorMessages\":[]}"),
+            };
+            var client = helper.GetService<Mock<IHttpRequestClient>>();
+            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync(response);
+
+            var username = "test";
+            var password = "password";
+
+            // Act
+            // Assert
+            var result = await Assert.ThrowsAsync<LtsaException>(async () => await service.GetTokenAsync(username, password));
+
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<LtsaException>(result);
+            client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
+                It.IsAny<IntegratorCredentials>()), Times.Once);
+        }
         #endregion
 
         #region GetTitleSummariesAsync
@@ -121,7 +152,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.GetTitleSummariesAsync(123456789);
@@ -129,10 +160,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             // Assert
             Assert.NotNull(result);
             Assert.IsAssignableFrom<TitleSummariesResponse>(result);
-            client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
-                It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.SendAsync<TitleSummariesResponse>(options.Value.HostUri.AppendToURL(new string[] { options.Value.TitleSummariesEndpoint, $"?filter=parcelIdentifier:123456789" }), HttpMethod.Get,
-                It.IsAny<HttpRequestHeaders>(),
                 null, null), Times.Once());
             result.TitleSummaries.Should().HaveCount(1);
             var titleSummary = result.TitleSummaries.First();
@@ -168,10 +196,12 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
-            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.SetupSequence(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>()))
+                .ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) })
+                .ThrowsAsync(new HttpClientRequestException(response));
             client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse)
-                .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse);
+            client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()))
+                .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse).ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse);
 
             // Act
             // Assert
@@ -212,10 +242,12 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
-            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>())).ThrowsAsync(new HttpClientRequestException(response));
-            client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse)
-                .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse);
+            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>()))
+                .ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.SetupSequence(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>()))
+                .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()))
+                .ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse).ThrowsAsync(new HttpClientRequestException(response)).ReturnsAsync(titleSummariesResponse);
 
             // Act
             // Assert
@@ -225,7 +257,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
                 It.IsAny<IntegratorCredentials>()), Times.Exactly(2));
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/token",
-                It.IsAny<Object>()), Times.Once);
+                It.IsAny<Object>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -261,14 +293,16 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             };
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
-            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>())).ThrowsAsync(new HttpClientRequestException(refreshTokenRequestResponse));
-            client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse)
-                .ThrowsAsync(new HttpClientRequestException(tokenRequestResponse)).ReturnsAsync(titleSummariesResponse);
+            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>()))
+                .ReturnsAsync(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.Setup(m => m.PostJsonAsync(It.Is<string>((url) => url == options.Value.AuthUrl + "/token"), It.IsAny<Object>()))
+                .ThrowsAsync(new HttpClientRequestException(refreshTokenRequestResponse));
+            client.SetupSequence(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()))
+                .ThrowsAsync(new HttpClientRequestException(tokenRequestResponse)).ReturnsAsync(titleSummariesResponse).ThrowsAsync(new HttpClientRequestException(tokenRequestResponse)).ReturnsAsync(titleSummariesResponse);
 
             // Act
             // Assert
-            await service.GetTitleSummariesAsync(123456789); //the first call will use the regular token
+            var response = await service.GetTitleSummariesAsync(123456789); //the first call will use the regular token
             await Assert.ThrowsAsync<LtsaException>(async () => await service.GetTitleSummariesAsync(123456789)); //the second call will use the refresh token
 
             client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
@@ -299,7 +333,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.GetTitleSummariesAsync(123456789));
@@ -325,7 +359,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.PostTitleOrder("titleNumber", "VA");
@@ -333,12 +367,72 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             // Assert
             Assert.NotNull(result);
             Assert.IsAssignableFrom<OrderWrapper<TitleOrder>>(result);
-            client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
-                It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
-                It.IsAny<HttpRequestHeaders>(),
                 It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
             result.Order.Should().Be(response.Order);
+        }
+
+        [Fact]
+        public async void PostTitleOrderAsync_Processing()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var options = Options.Create(new LtsaOptions());
+            var service = helper.Create<LtsaService>(options, user);
+
+            var token = new TokenModel()
+            {
+                AccessToken = "test"
+            };
+            var orderResponse = new OrderWrapper<TitleOrder>(new TitleOrder() { Status = OrderParent.StatusEnum.Processing, OrderId = "1" });
+            var orderIdResponse = new OrderWrapper<TitleOrder>(new TitleOrder() { Status = OrderParent.StatusEnum.Completed, OrderId = "1" });
+
+            var client = helper.GetService<Mock<IHttpRequestClient>>();
+            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(orderResponse);
+            client.Setup(m => m.SendAsync<OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(orderIdResponse);
+
+            // Act
+            var result = await service.PostTitleOrder("titleNumber", "VA");
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<OrderWrapper<TitleOrder>>(result);
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+                It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
+            result.Order.Should().Be(orderIdResponse.Order);
+        }
+
+        [Fact]
+        public async void PostTitleOrderAsync_Processing_Timeout()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var options = Options.Create(new LtsaOptions());
+            var service = helper.Create<LtsaService>(options, user);
+
+            var token = new TokenModel()
+            {
+                AccessToken = "test"
+            };
+            var response = new OrderWrapper<TitleOrder>(new TitleOrder() { Status = OrderParent.StatusEnum.Processing, OrderId = "1" });
+
+            var client = helper.GetService<Mock<IHttpRequestClient>>();
+            client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendAsync<OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+
+            // Act
+            await Assert.ThrowsAsync<LtsaException>(async () => await service.PostTitleOrder("titleNumber", "VA"));
+
+            // Assert
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+                It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
+            client.Verify(m => m.SendAsync<OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()), Times.AtLeastOnce());
         }
 
         [Fact]
@@ -363,7 +457,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostTitleOrder("titleNumber", "VA"));
@@ -388,7 +482,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.PostParcelInfoOrder("123-456-789");
@@ -396,10 +490,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             // Assert
             Assert.NotNull(result);
             Assert.IsAssignableFrom<OrderWrapper<ParcelInfoOrder>>(result);
-            client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
-                It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
-                It.IsAny<HttpRequestHeaders>(),
                 It.IsAny<OrderWrapper<ParcelInfoOrder>>(), null), Times.Once());
             result.Order.Should().Be(response.Order);
         }
@@ -426,7 +517,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostParcelInfoOrder("123-456-789"));
@@ -451,7 +542,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.PostSpcpOrder("123-456-789");
@@ -459,10 +550,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             // Assert
             Assert.NotNull(result);
             Assert.IsAssignableFrom<OrderWrapper<SpcpOrder>>(result);
-            client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
-                It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
-                It.IsAny<HttpRequestHeaders>(),
                 It.IsAny<OrderWrapper<SpcpOrder>>(), null), Times.Once());
             result.Order.Should().Be(response.Order);
         }
@@ -489,7 +577,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostSpcpOrder("123-456-789"));
@@ -526,9 +614,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleResponse);
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(parcelInfoResponse);
-            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleResponse);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(parcelInfoResponse);
+            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse);
 
             // Act
             var result = await service.PostLtsaFields("123-456-789");
@@ -536,13 +624,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             // Assert
             Assert.NotNull(result);
             Assert.IsAssignableFrom<LtsaOrders>(result);
-            client.Verify(m => m.PostJsonAsync(options.Value.AuthUrl + "/login/integrator",
-                It.IsAny<IntegratorCredentials>()), Times.Once);
             client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
-                It.IsAny<HttpRequestHeaders>(),
                 It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
             client.Verify(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
-                It.IsAny<HttpRequestHeaders>(),
                 It.IsAny<OrderWrapper<ParcelInfoOrder>>(), null), Times.Once());
             result.ParcelInfo.Should().Be(parcelInfoResponse.Order);
             result.TitleOrders.Should().BeEquivalentTo(new List<TitleOrder>() { titleResponse.Order });
@@ -581,9 +665,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
-            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpRequestHeaders>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse);
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostLtsaFields("123-456-789"));

@@ -18,30 +18,30 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_TitleIdentifier()
         {
-            Assert.Throws<InvalidDataException>(() => new Title(titleIdentifier: null));
+            Assert.Throws<InvalidDataException>(() => new Title(ownershipGroups: new List<TitleOwnershipGroup>(), taxAuthorities: new List<TaxAuthority>(), descriptionsOfLand: new List<DescriptionOfLand>(), tombstone: new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>()), titleIdentifier: null));
         }
 
         [Fact]
         public void TestConstructor_Null_Tombstone()
         {
-            Assert.Throws<InvalidDataException>(() => new Title(tombstone: null));
+            Assert.Throws<InvalidDataException>(() => new Title(titleIdentifier: new TitleIdentifier(titleNumber: "titleNumber"), ownershipGroups: new List<TitleOwnershipGroup>(), taxAuthorities: new List<TaxAuthority>(), descriptionsOfLand: new List<DescriptionOfLand>(), tombstone: null));
         }
 
         [Fact]
         public void TestConstructor_Null_OwnershipGroups()
         {
-            Assert.Throws<InvalidDataException>(() => new Title(ownershipGroups: null));
+            Assert.Throws<InvalidDataException>(() => new Title(titleIdentifier: new TitleIdentifier(titleNumber: "titleNumber"), taxAuthorities: new List<TaxAuthority>(), descriptionsOfLand: new List<DescriptionOfLand>(), tombstone: new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>()), ownershipGroups: null));
         }
 
         [Fact]
         public void TestConstructor_Null_TaxAuthorities()
         {
-            Assert.Throws<InvalidDataException>(() => new Title(taxAuthorities: null));
+            Assert.Throws<InvalidDataException>(() => new Title(titleIdentifier: new TitleIdentifier(titleNumber: "titleNumber"), ownershipGroups: new List<TitleOwnershipGroup>(), descriptionsOfLand: new List<DescriptionOfLand>(), tombstone: new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>()), taxAuthorities: null));
         }
         [Fact]
         public void TestConstructor_Null_DescriptionsOfLand()
         {
-            Assert.Throws<InvalidDataException>(() => new Title(descriptionsOfLand: null));
+            Assert.Throws<InvalidDataException>(() => new Title(titleIdentifier: new TitleIdentifier(titleNumber: "titleNumber"), ownershipGroups: new List<TitleOwnershipGroup>(), taxAuthorities: new List<TaxAuthority>(), tombstone: new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>()), descriptionsOfLand: null));
         }
 
         [Fact]

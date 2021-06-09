@@ -18,12 +18,12 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_OwnershipRemarks()
         {
-            Assert.Throws<InvalidDataException>(() => new TitleOwnershipGroup(ownershipRemarks: null));
+            Assert.Throws<InvalidDataException>(() => new TitleOwnershipGroup(titleOwners: new List<TitleOwner>(), ownershipRemarks: null));
         }
         [Fact]
         public void TestConstructor_Null_TitleOwners()
         {
-            Assert.Throws<InvalidDataException>(() => new TitleOwnershipGroup(titleOwners: null));
+            Assert.Throws<InvalidDataException>(() => new TitleOwnershipGroup(ownershipRemarks: "ownershipRemarks", titleOwners: null));
         }
 
         [Fact]

@@ -18,19 +18,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_Number()
         {
-            Assert.Throws<InvalidDataException>(() => new Altos1ChargeCorrection(number: null));
+            Assert.Throws<InvalidDataException>(() => new Altos1ChargeCorrection(correctionText: "correctionText", referenceDescription: "referenceDescription", number: null));
         }
 
         [Fact]
         public void TestConstructor_Null_ReferenceDescription()
         {
-            Assert.Throws<InvalidDataException>(() => new Altos1ChargeCorrection(referenceDescription: null));
+            Assert.Throws<InvalidDataException>(() => new Altos1ChargeCorrection(correctionText: "correctionText", number: "number", referenceDescription: null));
         }
 
         [Fact]
         public void TestConstructor_Null_CorrectionText()
         {
-            Assert.Throws<InvalidDataException>(() => new Altos1ChargeCorrection(correctionText: null));
+            Assert.Throws<InvalidDataException>(() => new Altos1ChargeCorrection(referenceDescription: "referenceDescription", number: "number", correctionText: null));
         }
 
         [Fact]

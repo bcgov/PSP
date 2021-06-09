@@ -18,13 +18,13 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_JointTenancyIndication()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeOwnershipGroup(jointTenancyIndication: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeOwnershipGroup(chargeOwners: new List<ChargeOwnershipGroupChargeOwner>(), jointTenancyIndication: null));
         }
 
         [Fact]
         public void TestConstructor_Null_ChargeOwners()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargeOwnershipGroup(chargeOwners: null));
+            Assert.Throws<InvalidDataException>(() => new ChargeOwnershipGroup(jointTenancyIndication: true, chargeOwners: null));
         }
 
         [Fact]

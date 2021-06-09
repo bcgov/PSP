@@ -18,25 +18,25 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_InterAlia()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(interAlia: null));
+            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(charge: new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>()), chargeNumber: "chargeNumber", chargeRemarks: "chargeRemarks", interAlia: null));
         }
 
         [Fact]
         public void TestConstructor_Null_ChargeNumber()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(chargeNumber: null));
+            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(charge: new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>()), chargeRemarks: "chargeRemarks", interAlia: true, chargeNumber: null));
         }
 
         [Fact]
         public void TestConstructor_Null_ChargeRemarks()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(chargeRemarks: null));
+            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(charge: new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>()), chargeNumber: "chargeNumber", interAlia: true, chargeRemarks: null));
         }
 
         [Fact]
         public void TestConstructor_Null_Charge()
         {
-            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(charge: null));
+            Assert.Throws<InvalidDataException>(() => new ChargesOnStrataCommonProperty(chargeNumber: "chargeNumber", chargeRemarks: "chargeRemarks", interAlia: true, charge: null));
         }
 
         [Fact]

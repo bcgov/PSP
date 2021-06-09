@@ -49,7 +49,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// </summary>
         /// <param name="pid">the parcel identifier to search for</param>
         /// <returns>An array of title summary matches.</returns>
-        [HttpGet("titleSummaries")]
+        [HttpGet("summaries")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.TitleSummariesResponse), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
@@ -67,7 +67,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <param name="titleNumber">the title number to create the order for</param>
         /// <param name="landTitleDistrictCode">the land title district code</param>
         /// <returns>The order created within LTSA</returns>
-        [HttpPost("titleOrder")]
+        [HttpPost("order/title")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.TitleOrder>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
@@ -84,7 +84,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// </summary>
         /// <param name="titleNumber">the title number to create the order for</param>
         /// <returns>The order created within LTSA</returns>
-        [HttpPost("parcelInfoOrder")]
+        [HttpPost("order/parcelInfo")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.ParcelInfoOrder>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
@@ -101,7 +101,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// </summary>
         /// <param name="strataPlanNumber">the title number to create the order for</param>
         /// <returns>The order created within LTSA</returns>
-        [HttpPost("spcpOrder")]
+        [HttpPost("order/spcp")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.SpcpOrder>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// </summary>
         /// <param name="pid">the pid to retrieve parcel and title information for</param>
         /// <returns>The orders created within LTSA</returns>
-        [HttpPost("ltsaFields")]
+        [HttpPost("all")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Model.LtsaOrders>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]

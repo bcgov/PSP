@@ -49,6 +49,7 @@ namespace Pims.Api.Test.Controllers.Tools
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.TitleSummariesResponse>(actionResult.Value);
+            service.Verify(m => m.GetTitleSummariesAsync(It.IsAny<Int32>()), Times.Once());
         }
         #endregion
 
@@ -71,6 +72,7 @@ namespace Pims.Api.Test.Controllers.Tools
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.TitleOrder>>(actionResult.Value);
+            service.Verify(m => m.PostTitleOrder(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
         }
         #endregion
 
@@ -93,6 +95,7 @@ namespace Pims.Api.Test.Controllers.Tools
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.ParcelInfoOrder>>(actionResult.Value);
+            service.Verify(m => m.PostParcelInfoOrder(It.IsAny<string>()), Times.Once());
         }
         #endregion
 
@@ -115,6 +118,7 @@ namespace Pims.Api.Test.Controllers.Tools
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.SpcpOrder>>(actionResult.Value);
+            service.Verify(m => m.PostSpcpOrder(It.IsAny<string>()), Times.Once());
         }
         #endregion
 
@@ -137,6 +141,7 @@ namespace Pims.Api.Test.Controllers.Tools
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.LtsaOrders>(actionResult.Value);
+            service.Verify(m => m.PostLtsaFields(It.IsAny<string>()), Times.Once());
         }
         #endregion
         #endregion

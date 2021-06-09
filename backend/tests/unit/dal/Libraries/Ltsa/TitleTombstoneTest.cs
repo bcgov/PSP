@@ -18,18 +18,18 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_NatureOfTransfers()
         {
-            Assert.Throws<InvalidDataException>(() => new TitleTombstone(natureOfTransfers: null));
+            Assert.Throws<InvalidDataException>(() => new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: null));
         }
         [Fact]
         public void TestConstructor_Null_ApplicationReceivedDate()
         {
-            Assert.Throws<InvalidDataException>(() => new TitleTombstone(applicationReceivedDate: null));
+            Assert.Throws<InvalidDataException>(() => new TitleTombstone(enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>(), applicationReceivedDate: null));
         }
 
         [Fact]
         public void TestConstructor_Null_EnteredDate()
         {
-            Assert.Throws<InvalidDataException>(() => new TitleTombstone(enteredDate: null));
+            Assert.Throws<InvalidDataException>(() => new TitleTombstone(applicationReceivedDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>(), enteredDate: null));
         }
 
         [Fact]

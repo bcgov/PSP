@@ -23,12 +23,13 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_CertificateIdentifier()
         {
-            Assert.Throws<InvalidDataException>(() => new DuplicateCertificate(certificateIdentifier: null));
+            Assert.Throws<InvalidDataException>(() => new DuplicateCertificate(issuedDate: DateTime.Now, certificateIdentifier: null));
         }
         [Fact]
         public void TestConstructor_Null_CertificateDelivery()
         {
-            Assert.Throws<InvalidDataException>(() => new DuplicateCertificate(certificateDelivery: null));
+            CertificateIdentifier certificateIdentifier = new CertificateIdentifier("documentNumber");
+            Assert.Throws<InvalidDataException>(() => new DuplicateCertificate(issuedDate: DateTime.Now, certificateIdentifier: certificateIdentifier, certificateDelivery: null));
         }
         [Fact]
         public void TestConstructor()

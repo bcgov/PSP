@@ -16,15 +16,15 @@ namespace Pims.Dal.Test.Libraries.Ltsa
     public class DescriptionOfLandTest
     {
         [Fact]
-        public void TestConstructor_Null_ChargeNumber()
+        public void TestConstructor_Null_ParcelIdentifier()
         {
-            Assert.Throws<InvalidDataException>(() => new DescriptionOfLand(parcelIdentifier: null));
+            Assert.Throws<InvalidDataException>(() => new DescriptionOfLand(fullLegalDescription: "fullLegalDescription", parcelIdentifier: null));
         }
 
         [Fact]
-        public void TestConstructor_Null_TransactionType()
+        public void TestConstructor_Null_FullLegalDescription()
         {
-            Assert.Throws<InvalidDataException>(() => new DescriptionOfLand(fullLegalDescription: null));
+            Assert.Throws<InvalidDataException>(() => new DescriptionOfLand(parcelIdentifier: "parcelIdentifier", fullLegalDescription: null));
         }
 
         [Fact]

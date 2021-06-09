@@ -18,13 +18,13 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_PlanNumber1()
         {
-            Assert.Throws<InvalidDataException>(() => new SubdividedShortLegalDescription(planNumber1: null));
+            Assert.Throws<InvalidDataException>(() => new SubdividedShortLegalDescription(concatShortLegal: "concatShortLegal", planNumber1: null));
         }
 
         [Fact]
         public void TestConstructor_Null_ConcatShortLegal()
         {
-            Assert.Throws<InvalidDataException>(() => new SubdividedShortLegalDescription(concatShortLegal: null));
+            Assert.Throws<InvalidDataException>(() => new SubdividedShortLegalDescription(planNumber1: "planNumber1", concatShortLegal: null));
         }
 
         [Fact]
