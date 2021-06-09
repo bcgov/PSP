@@ -188,7 +188,7 @@ namespace Pims.Api.Areas.Tools.Helpers
             // Extract properties from PID note.
             var pidNote = model.Notes?.FirstOrDefault(n => n.Key == "PID").Value;
             var pids = Regex.Matches(pidNote ?? "", "[0-9]{3}-[0-9]{3}-[0-9]{3}").Select(m => m.Value).NotNull().Distinct();
-            project.TierLevel = GetTier(model.Market, project.Properties.Any() ? project.Properties.Count() : pids.Count()); // Most projects have no properties linked.
+            project.TierLevel = GetTier(model.Market, project.Properties.Any() ? project.Properties.Count : pids.Count()); // Most projects have no properties linked.
             project.TierLevelId = project.TierLevel.Id;
             project.Risk = GetRisk(model.Risk);
             project.RiskId = project.Risk.Id;
@@ -427,43 +427,6 @@ namespace Pims.Api.Areas.Tools.Helpers
                         projectNote.Note = note;
                 }
             }
-        }
-
-        /// <summary>
-        /// Find the property for the specified 'pid' in inventory and add it to the project.
-        /// Assumption is made that if the parcel is added, then also add all the buildings on the parcel.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="pid"></param>
-        /// <returns></returns>
-        private Entity.Project AddProperty(Entity.Project project, string pid)
-        {
-            try
-            {
-                var pidValue = Int32.Parse(pid.Replace("-", ""));
-                var parcel = _adminService.Parcel.GetByPid(pidValue);
-                project.AddProperty(parcel).ForEach(p =>
-                {
-                    p.Project = null;
-                    p.Parcel = null; // Need to do this so that it isn't reattached.
-                });
-                var buildings = parcel.Buildings.Select(b => b.Building).ToArray();
-                project.AddProperty(buildings).ForEach(b =>
-                {
-                    b.Project = null;
-                    b.Building = null; // Need to do this so that it isn't reattached.
-                });
-                _logger.LogInformation($"Property '{pid}' added to project '{project.ProjectNumber}'.");
-            }
-            catch (KeyNotFoundException)
-            {
-                _logger.LogWarning($"Property '{pid}' not found on project '{project.ProjectNumber}'.");
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogWarning(ex, $"Property '{pid}' not found on project '{project.ProjectNumber}'.");
-            }
-            return project;
         }
 
         /// <summary>

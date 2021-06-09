@@ -1,33 +1,15 @@
 using Mapster;
 using Pims.Api.Mapping.Converters;
-using System.Collections.Generic;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Property.Models.Parcel;
 using BModel = Pims.Api.Models;
-using Pims.Dal.Helpers.Extensions;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
-using System.Linq;
 
 namespace Pims.Api.Areas.Property.Mapping.Parcel
 {
     public class ParcelParcelMap : IRegister
     {
-        #region Variables
-        private readonly JsonSerializerOptions _serializerOptions;
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// Creates a new instance of a ParcelParcelMap, initializes with specified arguments.
-        /// </summary>
-        /// <param name="serializerOptions"></param>
-        public ParcelParcelMap(IOptions<JsonSerializerOptions> serializerOptions)
-        {
-            _serializerOptions = serializerOptions.Value;
-        }
-        #endregion
-
         public void Register(TypeAdapterConfig config)
         {
             //all mappings for mapping between a subdivision parcel that has divided parcels. Users cannot edit parcels/subdivisions through entity relationships so just pass ids.
@@ -50,8 +32,6 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.ParcelId, src => src.Id)
                 .Map(dest => dest.Parcel.PID, src => ParcelConverter.ConvertPID(src.PID))
                 .Inherits<BModel.BaseModel, Entity.BaseEntity>();
-
-
 
             //all mappings for mapping between a divided parcel that has subdivisions. Users cannot edit parcels/subdivisions through entity relationships so just pass ids.
             config.NewConfig<Entity.Parcel, Model.ParcelSubdivisionModel>()

@@ -17,7 +17,7 @@ namespace Pims.Api.Mapping.Parcel
                 .Map(dest => dest.AdministrativeArea, src => src.AdministrativeArea)
                 .Map(dest => dest.ProvinceId, src => src.ProvinceId)
                 .Map(dest => dest.Province, src => src.Province == null ? null : src.Province.Name)
-                .Map(dest => dest.Postal, src => src.Postal.FormatAsPostal())
+                .Map(dest => dest.Postal, src => src.Postal == null ? null : src.Postal.FormatAsPostal())
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
 
@@ -28,7 +28,7 @@ namespace Pims.Api.Mapping.Parcel
                 .Map(dest => dest.AdministrativeArea, src => src.AdministrativeArea)
                 .Map(dest => dest.ProvinceId, src => src.ProvinceId)
                 .Map(dest => dest.Province, src => String.IsNullOrWhiteSpace(src.Province) ? null : new Entity.Province(src.ProvinceId, src.Province))
-                .Map(dest => dest.Postal, src => src.Postal.Replace(" ", ""))
+                .Map(dest => dest.Postal, src => src.Postal == null ? null : src.Postal.Replace(" ", ""))
                 .Inherits<Models.BaseModel, Entity.BaseEntity>();
         }
     }

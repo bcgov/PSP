@@ -1,0 +1,101 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: Build DotNet 5.0 base image
+  annotations:
+    openshift.io/display-name: DotNet 5.0 base image
+    description:
+      "Build a base DotNet 5.0 image so that the API can be built."
+parameters:
+  - name: NAME
+    displayName: Name
+    description: The name assigned to all objects and the resulting imagestream.
+    required: true
+    value: "dotnet-50"
+  - name: NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift project containing the application."
+    required: true
+    value: "3cd915"
+  - name: ENV_NAME
+    displayName: "Environment name"
+    description: "The name for this environment [dev, test, prod, tools]"
+    required: true
+    value: "tools"
+
+  - name: SOURCE_REPOSITORY_URL
+    displayName: Git Repository URL
+    description: The URL of the repository with your application source code.
+    required: true
+    value: https://github.com/bcgov/PSP.git
+  - name: SOURCE_REPOSITORY_REF
+    displayName: Git Reference
+    description:
+      Set this to a branch name, tag or other ref of your repository if you
+      are not using the default (dev) branch.
+    value: dev
+  - name: SOURCE_CONTEXT_DIR
+    displayName: Git Context Directory
+    description:
+      Set this to the directory where the build information is (e.g. Dockerfile)
+      if not using the default
+    value: /openshift/4.0/templates/base-images/dotnet50/
+  - name: DOCKERFILE_PATH
+    displayName: Path to Dockerfile
+    description: Path for alternate Dockerfile to use for build
+    value: Dockerfile
+
+  - name: BUILDER_IMAGE_NAME
+    displayName: Image name from which to build this pod
+    description:
+      The build image which this build pod will extend to create it's new
+      build pod type.
+    value: registry.redhat.io/rhel8/dotnet-50
+  - name: IMAGE_TAG
+    displayName: Image tag for Jenkins slave.
+    description: This is the image tag used for the Jenkins slave.
+    value: latest
+objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      labels:
+        build: ${NAME}
+      name: ${NAME}
+      namespace: ${NAMESPACE}-${ENV_NAME}
+
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      labels:
+        build: ${NAME}
+        type: image
+      name: ${NAME}
+      namespace: ${NAMESPACE}-${ENV_NAME}
+    spec:
+      nodeSelector:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "${NAME}:${IMAGE_TAG}"
+      postCommit: {}
+      resources: {}
+      runPolicy: Serial
+      source:
+        type: Git
+        contextDir: "${SOURCE_CONTEXT_DIR}"
+        git:
+          uri: "${SOURCE_REPOSITORY_URL}"
+          ref: "${SOURCE_REPOSITORY_REF}"
+      strategy:
+        type: Docker
+        dockerStrategy:
+          dockerfilePath: "${DOCKERFILE_PATH}"
+          from:
+            kind: DockerImage
+            name: "${BUILDER_IMAGE_NAME}"
+            imagePullPolicy: Always
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
