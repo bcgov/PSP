@@ -45,6 +45,7 @@ using Pims.Api.Helpers.Logging;
 using Prometheus;
 using Pims.Api.Helpers.Exceptions;
 using System.Diagnostics.CodeAnalysis;
+using Pims.Ltsa;
 
 namespace Pims.Api
 {
@@ -94,7 +95,8 @@ namespace Pims.Api
                 IgnoreNullValues = !String.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:IgnoreNullValues"]) && Boolean.Parse(this.Configuration["Serialization:Json:IgnoreNullValues"]),
                 PropertyNameCaseInsensitive = !String.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:PropertyNameCaseInsensitive"]) && Boolean.Parse(this.Configuration["Serialization:Json:PropertyNameCaseInsensitive"]),
                 PropertyNamingPolicy = this.Configuration["Serialization:Json:PropertyNamingPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null,
-                WriteIndented = !string.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:WriteIndented"]) && Boolean.Parse(this.Configuration["Serialization:Json:WriteIndented"])
+                WriteIndented = !string.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:WriteIndented"]) && Boolean.Parse(this.Configuration["Serialization:Json:WriteIndented"]),
+                Converters = { new JsonStringEnumMemberConverter(JsonNamingPolicy.CamelCase) }
             };
             services.AddMapster(jsonSerializerOptions, options =>
             {
@@ -113,7 +115,7 @@ namespace Pims.Api
                 options.PropertyNameCaseInsensitive = jsonSerializerOptions.PropertyNameCaseInsensitive;
                 options.PropertyNamingPolicy = jsonSerializerOptions.PropertyNamingPolicy;
                 options.WriteIndented = jsonSerializerOptions.WriteIndented;
-                options.Converters.Add(new JsonStringEnumConverter());
+                options.Converters.Add(new JsonStringEnumMemberConverter());
                 options.Converters.Add(new Int32ToStringJsonConverter());
             });
             services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
@@ -208,6 +210,7 @@ namespace Pims.Api
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
             services.AddChesService(this.Configuration.GetSection("Ches"));
+            services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
             services.AddNotificationsService(this.Configuration.GetSection("Notifications"));
             services.AddSingleton<IAuthorizationHandler, RealmAccessRoleHandler>();
             services.AddTransient<IClaimsTransformation, KeycloakClaimTransformer>();
@@ -321,10 +324,10 @@ namespace Pims.Api
                 options.RoutePrefix = this.Configuration.GetValue<string>("Swagger:RoutePrefix");
             });
 
-            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMiddleware<ResponseTimeMiddleware>();
             app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<LogResponseMiddleware>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             //app.UseHttpsRedirection();
 

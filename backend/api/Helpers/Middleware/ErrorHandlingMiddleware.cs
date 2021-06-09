@@ -175,6 +175,15 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "CHES unhandled exception.");
             }
+            else if (ex is LtsaException)
+            {
+                var exception = ex as LtsaException;
+                code = exception.StatusCode.Value;
+                message = exception.Message;
+                details = exception.Detail;
+
+                _logger.LogError(ex, "Ltsa unhandled exception.");
+            }
             else if (ex is HttpClientRequestException || ex is ProxyRequestException)
             {
                 var exception = ex as HttpClientRequestException;

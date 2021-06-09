@@ -104,6 +104,23 @@ parameters:
     description: "The Common Hosted Email Service password."
     required: true
 
+  - name: MY_LTSA_USERNAME
+    displayName: "My Ltsa Username."
+    description: "The LTSA username."
+    required: true
+  - name: MY_LTSA_PASSWORD
+    displayName: "My Ltsa password."
+    description: "The LTSA password."
+    required: true
+  - name: INTEGRATOR_USERNAME
+    displayName: "Ltsa Integrator Username."
+    description: "The LTSA username."
+    required: true
+  - name: INTEGRATOR_PASSWORD
+    displayName: "Ltsa Integrator password."
+    description: "The LTSA password."
+    required: true
+
   - name: GEOCODER_KEY
     displayName: "Geocoder Secret Key."
     description: "The Geocoder secret key that must be ."
@@ -249,6 +266,10 @@ objects:
     stringData:
       CHES_USERNAME: ${CHES_USERNAME}
       CHES_PASSWORD: ${CHES_PASSWORD}
+      MY_LTSA_USERNAME: ${MY_LTSA_USERNAME}
+      MY_LTSA_PASSWORD: ${MY_LTSA_PASSWORD}
+      INTEGRATOR_USERNAME: ${INTEGRATOR_USERNAME}
+      INTEGRATOR_PASSWORD: ${INTEGRATOR_PASSWORD}
 
   # Geocoder configuration secrets.
   - kind: Secret
@@ -413,6 +434,26 @@ objects:
                     secretKeyRef:
                       name: ${APP_NAME}-${ROLE_NAME}-ches${INSTANCE}
                       key: CHES_PASSWORD
+                - name: Ltsa__MyLtsaUsername
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+                      key: MY_LTSA_USERNAME
+                - name: Ltsa__MyLtsaUserPassword
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+                      key: MY_LTSA_PASSWORD
+                - name: Ltsa__IntegratorUsername
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+                      key: INTEGRATOR_USERNAME
+                - name: Ltsa__integratorPassword
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+                      key: INTEGRATOR_PASSWORD
                 - name: Geocoder__Key
                   valueFrom:
                     secretKeyRef:
