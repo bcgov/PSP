@@ -16,12 +16,12 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_LegalNotationNumber()
         {
-            Assert.Throws<InvalidDataException>(() => new LegalNotationsOnStrataCommonProperty(legalNotationNumber: null));
+            Assert.Throws<InvalidDataException>(() => new LegalNotationsOnStrataCommonProperty(legalNotation: new(legalNotationText: "legalNotationText"), legalNotationNumber: null));
         }
         [Fact]
         public void TestConstructor_Null_LegalNotation()
         {
-            Assert.Throws<InvalidDataException>(() => new LegalNotationsOnStrataCommonProperty(legalNotation: null));
+            Assert.Throws<InvalidDataException>(() => new LegalNotationsOnStrataCommonProperty(legalNotationNumber: "legalNotationNumber", legalNotation: null));
         }
 
         [Fact]

@@ -15,13 +15,13 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_DocOrPlanNumber()
         {
-            Assert.Throws<InvalidDataException>(() => new DocumentOrPlanOrderParameters(docOrPlanNumber: null));
+            Assert.Throws<InvalidDataException>(() => new DocumentOrPlanOrderParameters(includePlanCertificationPage: true, docOrPlanNumber: null));
         }
 
         [Fact]
         public void TestConstructor_Null_IncludePlanCertificationPage()
         {
-            Assert.Throws<InvalidDataException>(() => new DocumentOrPlanOrderParameters(includePlanCertificationPage: null));
+            Assert.Throws<InvalidDataException>(() => new DocumentOrPlanOrderParameters(docOrPlanNumber: "docOrPlanNumber", includePlanCertificationPage: null));
         }
 
         [Fact]
