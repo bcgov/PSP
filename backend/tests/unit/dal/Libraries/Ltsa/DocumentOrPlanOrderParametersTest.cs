@@ -21,7 +21,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_IncludePlanCertificationPage()
         {
-            Assert.Throws<InvalidDataException>(() => new DocumentOrPlanOrderParameters(docOrPlanNumber: "docOrPlanNumber", includePlanCertificationPage: null));
+            DocumentOrPlanOrderParameters obj = new(docOrPlanNumber: "docOrPlanNumber", includePlanCertificationPage: null);
+            obj.IncludePlanCertificationPage.Should().Be(false);
         }
 
         [Fact]
