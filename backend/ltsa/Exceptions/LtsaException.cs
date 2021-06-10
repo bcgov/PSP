@@ -1,10 +1,9 @@
-using Pims.Ltsa.Models;
 using Pims.Core.Http;
+using Pims.Ltsa.Models;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
 
 namespace Pims.Core.Exceptions
 {

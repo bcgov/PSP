@@ -1,7 +1,6 @@
+using Pims.Core.Extensions;
 using System;
 using System.Linq;
-using Pims.Dal.Entities;
-using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Helpers.Extensions
 {

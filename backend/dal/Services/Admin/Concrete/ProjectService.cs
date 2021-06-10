@@ -229,7 +229,7 @@ namespace Pims.Dal.Services.Admin
             {
                 projects.ForEach((project) =>
                 {
-                    if (project == null) throw new ArgumentNullException();
+                    if (project == null) throw new ArgumentNullException(nameof(projects));
 
                     project.Workflow = project.Workflow != null ? this.Context.Workflows.Find(project.WorkflowId) : null;
                     project.Status = project.Status != null ? this.Context.ProjectStatus.Find(project.StatusId) : null;
@@ -251,7 +251,7 @@ namespace Pims.Dal.Services.Admin
                 });
 
                 this.Context.CommitTransaction();
-            }    
+            }
         }
 
         /// <summary>

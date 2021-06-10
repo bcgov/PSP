@@ -1,6 +1,6 @@
-using System.Linq;
 using CommandLine;
 using Pims.Core.Extensions;
+using System.Linq;
 
 namespace Pims.Api.Configuration
 {

@@ -1,14 +1,10 @@
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Moq;
 using Pims.Core.Comparers;
-using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
 using System;
@@ -453,7 +449,7 @@ namespace Pims.Dal.Test.Services
             init.SaveChanges();
 
             var project = init.CreateProject(1);
-            
+
             init.SetStatus(project, "SPL", "AP-SPL");
             init.SaveChanges();
 
@@ -535,7 +531,7 @@ namespace Pims.Dal.Test.Services
                 NetProceeds = 100
             };
             snapshot.Metadata = JsonSerializer.Serialize(metadata);
-            
+
             init.SaveChanges();
             var projectReport = EntityHelper.CreateProjectReport(1, fromDate: fromDate, agency: project.Agency);
 
@@ -639,7 +635,7 @@ namespace Pims.Dal.Test.Services
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ProjectReportService>(user, options);
-            
+
             // Act
             var report = service.Get(projectReport.Id);
             report.Name = "A new name";
@@ -862,8 +858,8 @@ namespace Pims.Dal.Test.Services
 
             // Act
             // Assert
-           Assert.Throws<KeyNotFoundException>(() =>
-                service.Remove(find));
+            Assert.Throws<KeyNotFoundException>(() =>
+                 service.Remove(find));
         }
 
         /// <summary>

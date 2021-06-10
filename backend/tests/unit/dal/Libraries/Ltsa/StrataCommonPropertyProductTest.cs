@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,8 +14,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            StrataPlanCommonProperty strataCommonProperty = new StrataPlanCommonProperty();
-            StrataPlanCommonPropertyProduct obj = new StrataPlanCommonPropertyProduct(strataCommonProperty);
+            StrataPlanCommonProperty strataCommonProperty = new();
+            StrataPlanCommonPropertyProduct obj = new(strataCommonProperty);
             obj.StrataPlanCommonProperty.Should().Be(strataCommonProperty);
         }
     }

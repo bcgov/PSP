@@ -1,7 +1,7 @@
 using Mapster;
+using BModel = Pims.Api.Models;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Property.Models.Parcel;
-using BModel = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Mapping.Parcel
 {

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -85,7 +84,7 @@ namespace Pims.Dal.Services.Admin
                 if (filter.Page < 1) filter.Page = 1;
                 if (filter.Quantity < 1) filter.Quantity = 1;
                 if (filter.Quantity > 50) filter.Quantity = 50;
-                if (filter.Sort == null) filter.Sort = new string[] { };
+                if (filter.Sort == null) filter.Sort = Array.Empty<string>();
 
                 if (!string.IsNullOrWhiteSpace(filter.Username))
                     query = query.Where(u => EF.Functions.Like(u.Username, $"%{filter.Username}%"));
@@ -285,7 +284,7 @@ namespace Pims.Dal.Services.Admin
         public Paged<AccessRequest> GetAccessRequests(int page = 1, int quantity = 10, string sort = null,
             AccessRequestStatus status = AccessRequestStatus.OnHold)
         {
-            var sortArray = !string.IsNullOrWhiteSpace(sort) ? new[] { sort } : new string[0];
+            var sortArray = !string.IsNullOrWhiteSpace(sort) ? new[] { sort } : Array.Empty<string>();
             var filter = new AccessRequestFilter(page, quantity, sortArray, null, null, null, status);
             return GetAccessRequests(filter);
         }

@@ -2,7 +2,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pims.Core.Http;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json;
 
 namespace Pims.Ltsa
 {

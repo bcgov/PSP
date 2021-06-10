@@ -1,7 +1,7 @@
-﻿using System;
-using Pims.Dal.Helpers.Migrations;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
+using Pims.Dal.Helpers.Migrations;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Migrations

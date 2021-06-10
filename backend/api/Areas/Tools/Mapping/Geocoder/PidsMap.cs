@@ -1,6 +1,6 @@
+using Mapster;
 using System;
 using System.Collections.Generic;
-using Mapster;
 using GModel = Pims.Geocoder.Models;
 using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
@@ -18,7 +18,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
                 .Map(dest => dest.Pids, src => StringToList(src.Pids));
         }
 
-        private IEnumerable<string> StringToList(string commaSeparated)
+        private static IEnumerable<string> StringToList(string commaSeparated)
         {
             return commaSeparated != null ? commaSeparated.Split(",") : Array.Empty<string>();
         }

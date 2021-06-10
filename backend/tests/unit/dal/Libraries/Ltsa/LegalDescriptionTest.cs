@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -24,9 +22,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            List<SubdividedShortLegalDescription> subdividedShortLegalDescriptions = new List<SubdividedShortLegalDescription>();
-            List<UnsubdividedShortLegalDescription> unsubdividedShortLegalDescriptions = new List<UnsubdividedShortLegalDescription>();
-            LegalDescription obj = new LegalDescription("fullLegalDescription", subdividedShortLegalDescriptions, unsubdividedShortLegalDescriptions);
+            List<SubdividedShortLegalDescription> subdividedShortLegalDescriptions = new();
+            List<UnsubdividedShortLegalDescription> unsubdividedShortLegalDescriptions = new();
+            LegalDescription obj = new("fullLegalDescription", subdividedShortLegalDescriptions, unsubdividedShortLegalDescriptions);
             obj.FullLegalDescription.Should().Be("fullLegalDescription");
             obj.SubdividedShortLegals.Should().BeEquivalentTo(subdividedShortLegalDescriptions);
             obj.UnsubdividedShortLegals.Should().BeEquivalentTo(unsubdividedShortLegalDescriptions);

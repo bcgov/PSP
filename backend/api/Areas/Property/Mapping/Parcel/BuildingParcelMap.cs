@@ -1,13 +1,13 @@
 using Mapster;
 using Microsoft.Extensions.Options;
 using Pims.Api.Mapping.Converters;
-using System.Text.Json;
-using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Property.Models.Parcel;
-using BModel = Pims.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using BModel = Pims.Api.Models;
+using Entity = Pims.Dal.Entities;
+using Model = Pims.Api.Areas.Property.Models.Parcel;
 
 namespace Pims.Api.Areas.Property.Mapping.Parcel
 {
@@ -57,8 +57,8 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.Fiscals, src => src.Parcel.Fiscals)
                 .Map(dest => dest.RowVersion, src => src.Parcel.RowVersion == null ? null : Convert.ToBase64String(src.Parcel.RowVersion))
                 .Inherits<Entity.BaseEntity, BModel.BaseModel>();
-                
-                
+
+
 
             config.NewConfig<Model.BuildingParcelModel, Entity.Parcel>()
                 .EnableNonPublicMembers(true)

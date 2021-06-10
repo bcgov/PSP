@@ -121,7 +121,8 @@ namespace Pims.Dal.Entities
         /// <param name="longitude"></param>
         public Building(Parcel parcel, double latitude, double longitude) : base(latitude, longitude)
         {
-            if (parcel != null) {
+            if (parcel != null)
+            {
                 var pb = new ParcelBuilding(parcel, this);
                 this.Parcels.Add(pb);
             }

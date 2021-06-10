@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Pims.Dal.Services.Admin
 {
@@ -60,7 +60,7 @@ namespace Pims.Dal.Services.Admin
                 if (filter.Page < 1) filter.Page = 1;
                 if (filter.Quantity < 1) filter.Quantity = 1;
                 if (filter.Quantity > 50) filter.Quantity = 50;
-                if (filter.Sort == null) filter.Sort = new string[] { };
+                if (filter.Sort == null) filter.Sort = System.Array.Empty<string>();
 
                 if (!string.IsNullOrWhiteSpace(filter.Name))
                     query = query.Where(a => EF.Functions.Like(a.Name, $"%{filter.Name}%"));

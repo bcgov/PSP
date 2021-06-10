@@ -1,19 +1,17 @@
 using FluentAssertions;
+using Microsoft.Extensions.Options;
+using Moq;
 using Pims.Core.Exceptions;
 using Pims.Core.Http;
 using Pims.Core.Test;
+using Pims.Ltsa;
+using Pims.Ltsa.Configuration;
 using Pims.Ltsa.Models;
-using Moq;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using Xunit;
-using Pims.Core.Http.Models;
-using Microsoft.Extensions.Options;
-using Pims.Ltsa.Configuration;
-using Pims.Ltsa;
-using System.Linq;
 using System.Net.Http;
-using System.Collections.Generic;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -37,12 +35,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var user = PrincipalHelper.CreateForPermission();
 
             var options = Options.Create(new LtsaOptions());
-            var service = helper.Create<LtsaService>(options, user);
-
-            var token = new TokenModel()
-            {
-                AccessToken = "test"
-            };
+            helper.Create<LtsaService>(options, user);
 
             var exception = new HttpClientRequestException(message, status);
             var client = helper.GetService<Mock<IHttpRequestClient>>().Object;
@@ -82,10 +75,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var status = HttpStatusCode.OK;
 
             var innerException = new HttpClientRequestException(message, status);
-            new HttpResponseMessage(status)
-            {
-                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test")
-            };
             var ltsaException = new LtsaException(message, innerException, status);
 
             // Assert

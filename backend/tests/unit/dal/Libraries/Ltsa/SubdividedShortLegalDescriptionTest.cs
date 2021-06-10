@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -30,7 +27,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            SubdividedShortLegalDescription obj = new SubdividedShortLegalDescription("planNumber1", "townshipOrTownSite2", "range3", "block4", "subdivision5", "lotOrDistrictLotOrSubLot6", "subdivision7",
+            SubdividedShortLegalDescription obj = new("planNumber1", "townshipOrTownSite2", "range3", "block4", "subdivision5", "lotOrDistrictLotOrSubLot6", "subdivision7",
                 "lotOrParcel8", "section9", "quadrant10", "blockOrLot11", "lotOrParcel12", "parcelOrBlock13", "concatShortLegal", "marginalNotes");
             obj.PlanNumber1.Should().Be("planNumber1");
             obj.TownshipOrTownSite2.Should().Be("townshipOrTownSite2");

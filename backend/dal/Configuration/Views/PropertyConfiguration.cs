@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
-using System.Linq;
 using System;
+using System.Linq;
 
 namespace Pims.Dal.Configuration.Views
 {

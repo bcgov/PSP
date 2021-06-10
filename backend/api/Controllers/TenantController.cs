@@ -1,12 +1,12 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Pims.Dal;
-using Swashbuckle.AspNetCore.Annotations;
-using Model = Pims.Api.Models.Tenant;
-using Entity = Pims.Dal.Entities;
 using Pims.Api.Policies;
+using Pims.Dal;
 using Pims.Dal.Security;
+using Swashbuckle.AspNetCore.Annotations;
+using Entity = Pims.Dal.Entities;
+using Model = Pims.Api.Models.Tenant;
 
 namespace Pims.Api.Controllers
 {

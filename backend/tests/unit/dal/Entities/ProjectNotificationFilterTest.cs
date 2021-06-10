@@ -2,7 +2,6 @@ using FluentAssertions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 
 namespace Pims.Dal.Test.Entities

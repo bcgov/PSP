@@ -52,17 +52,17 @@ namespace Pims.Api.Areas.Reports.Mapping.Project
 
         }
 
-        private float? GetLandArea(Parcel parcel)
+        private static float? GetLandArea(Parcel parcel)
         {
             return parcel?.LandArea;
         }
 
-        private string GetAgencyCode(Agency agency)
+        private static string GetAgencyCode(Agency agency)
         {
             return agency.Parent?.Code ?? agency.Code;
         }
 
-        private string GetAgencyName(Agency agency)
+        private static string GetAgencyName(Agency agency)
         {
             return agency != null ? agency.Name : "";
         }

@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -29,8 +27,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            List<TitleOwner> titleOwners = new List<TitleOwner>();
-            TitleOwnershipGroup obj = new TitleOwnershipGroup("jointTenancyIndication", "interestFractionNumerator", "interestFractionDenominator", "ownershipRemarks", titleOwners);
+            List<TitleOwner> titleOwners = new();
+            TitleOwnershipGroup obj = new("jointTenancyIndication", "interestFractionNumerator", "interestFractionDenominator", "ownershipRemarks", titleOwners);
             obj.JointTenancyIndication.Should().Be("jointTenancyIndication");
             obj.InterestFractionNumerator.Should().Be("interestFractionNumerator");
             obj.InterestFractionDenominator.Should().Be("interestFractionDenominator");

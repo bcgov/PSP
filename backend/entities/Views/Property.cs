@@ -1,7 +1,7 @@
+using NetTopologySuite.Geometries;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using NetTopologySuite.Geometries;
 
 namespace Pims.Dal.Entities.Views
 {

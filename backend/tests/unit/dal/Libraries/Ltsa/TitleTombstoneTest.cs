@@ -1,11 +1,10 @@
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -38,10 +37,10 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             DateTime applicationReceivedDate = DateTime.Now;
             DateTime enteredDate = DateTime.Now;
             DateTime cancellationDate = DateTime.Now;
-            List<TitleIdentifier> fromTitles = new List<TitleIdentifier>();
-            List<NatureOfTransfer> natureOfTransfers = new List<NatureOfTransfer>();
+            List<TitleIdentifier> fromTitles = new();
+            List<NatureOfTransfer> natureOfTransfers = new();
 
-            TitleTombstone obj = new TitleTombstone(applicationReceivedDate, enteredDate, "titleRemarks", "rootOfTitle", cancellationDate, "marketValueAmount", fromTitles, natureOfTransfers);
+            TitleTombstone obj = new(applicationReceivedDate, enteredDate, "titleRemarks", "rootOfTitle", cancellationDate, "marketValueAmount", fromTitles, natureOfTransfers);
             obj.ApplicationReceivedDate.Should().Be(applicationReceivedDate);
             obj.EnteredDate.Should().Be(enteredDate);
             obj.TitleRemarks.Should().Be("titleRemarks");

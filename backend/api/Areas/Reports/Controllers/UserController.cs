@@ -7,11 +7,11 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Policies;
-using EModel = Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Pims.Dal.Services.Admin;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using EModel = Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Areas.Reports.Controllers
 {

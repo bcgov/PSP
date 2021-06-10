@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Pims.Ltsa.Models
 {
     public class IntegratorCredentials
     {
-        
+
         /// <summary>
         /// Integrator Password, required for LTSA title direct API authentication. Supplied by secrets.
         /// </summary>

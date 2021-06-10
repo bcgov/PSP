@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -26,7 +24,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         {
             DateTime dispositionDate = DateTime.Now;
             DateTime acceptanceDate = DateTime.Now;
-            TitleTransferDisposition obj = new TitleTransferDisposition("disposition", dispositionDate, acceptanceDate, "titleNumber", LandTitleDistrict.KAMLOOPS);
+            TitleTransferDisposition obj = new("disposition", dispositionDate, acceptanceDate, "titleNumber", LandTitleDistrict.KAMLOOPS);
             obj.Disposition.Should().Be("disposition");
             obj.DispositionDate.Should().Be(dispositionDate);
             obj.AcceptanceDate.Should().Be(acceptanceDate);

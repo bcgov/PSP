@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,7 +14,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            PendingApplication obj = new PendingApplication("applicationNumber", "transactionType", true);
+            PendingApplication obj = new("applicationNumber", "transactionType", true);
             obj.ApplicationNumber.Should().Be("applicationNumber");
             obj.TransactionType.Should().Be("transactionType");
             obj.Defected.Should().Be(true);

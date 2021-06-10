@@ -25,7 +25,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="DbUpdateException">The PID and PIN must be unique.</exception>
         public static void ThrowIfNotUnique(this DbSet<Entity.Parcel> parcels, Entity.Parcel parcel)
         {
-            if(parcel.PropertyTypeId == (int)Entity.PropertyTypes.Subdivision)
+            if (parcel.PropertyTypeId == (int)Entity.PropertyTypes.Subdivision)
             {
                 return;
             }
@@ -210,7 +210,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="parcel"></param>
         /// <param name="parcelEvaluations"></param>
         /// <param name="parcelFiscals"></param>
-        public static void UpdateParcelFinancials(this PimsContext context,  Entity.Parcel parcel,
+        public static void UpdateParcelFinancials(this PimsContext context, Entity.Parcel parcel,
             ICollection<Entity.ParcelEvaluation> parcelEvaluations, ICollection<Entity.ParcelFiscal> parcelFiscals)
         {
             foreach (var parcelEvaluation in parcelEvaluations)

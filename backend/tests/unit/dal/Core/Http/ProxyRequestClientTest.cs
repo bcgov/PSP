@@ -1,22 +1,8 @@
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Moq;
-using Pims.Core.Exceptions;
-using Pims.Core.Helpers;
 using Pims.Core.Http;
-using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
-using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
-using System.Text.Json;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Test.Helpers
 {

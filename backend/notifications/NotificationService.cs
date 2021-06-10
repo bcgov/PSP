@@ -1,6 +1,9 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Ches;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Notifications.Configuration;
 using RazorEngine;
 using RazorEngine.Templating;
@@ -8,11 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Model = Pims.Notifications.Models;
 using Entity = Pims.Dal.Entities;
-using Pims.Core.Exceptions;
-using Microsoft.Extensions.Logging;
-using Pims.Dal.Helpers.Extensions;
+using Model = Pims.Notifications.Models;
 
 namespace Pims.Notifications
 {
@@ -24,7 +24,7 @@ namespace Pims.Notifications
         #region Variables
         private const string SUBJECT_TEMPLATE_KEY = "template-subject:{0}";
         private const string BODY_TEMPLATE_KEY = "template-body:{0}";
-        private static readonly Dictionary<string, Model.IEmailTemplate> _cache = new Dictionary<string, Model.IEmailTemplate>();
+        private static readonly Dictionary<string, Model.IEmailTemplate> _cache = new();
         private readonly ILogger _logger;
         #endregion
 
@@ -305,7 +305,7 @@ namespace Pims.Notifications
         /// Compile the templates before running them.
         /// </summary>
         /// <param name="options"></param>
-        private void CompileTemplate<TModel>(string templateKey, Model.IEmailTemplate template)
+        private static void CompileTemplate<TModel>(string templateKey, Model.IEmailTemplate template)
         {
             var subjectKey = String.Format(SUBJECT_TEMPLATE_KEY, templateKey);
             var type = typeof(TModel) == typeof(object) || typeof(TModel).IsAnonymousType() ? null : typeof(TModel);
@@ -331,7 +331,7 @@ namespace Pims.Notifications
         /// <param name="template"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        private void Merge<TModel>(string templateKey, Model.IEmailTemplate template, TModel model)
+        private static void Merge<TModel>(string templateKey, Model.IEmailTemplate template, TModel model)
         {
             var type = typeof(TModel) == typeof(object) || typeof(TModel).IsAnonymousType() ? null : typeof(TModel);
             template.Subject = Engine.Razor.Run(String.Format(SUBJECT_TEMPLATE_KEY, templateKey), type, model);

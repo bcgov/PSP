@@ -1,13 +1,10 @@
-using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Mapping.Converters;
 using Pims.Api.Policies;
 using Pims.Dal.Security;
 using Pims.Ltsa;
-using Pims.Ltsa.Extensions;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Model = Pims.Ltsa.Models;
@@ -27,7 +24,6 @@ namespace Pims.Api.Areas.Tools.Controllers
     {
         #region Variables
         private readonly ILtsaService _ltsaService;
-        private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
@@ -35,11 +31,9 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// Creates a new instance of a LtsaController class.
         /// </summary>
         /// <param name="ltsaService"></param>
-        /// <param name="mapper"></param>
-        public LtsaController(ILtsaService ltsaService, IMapper mapper)
+        public LtsaController(ILtsaService ltsaService)
         {
             _ltsaService = ltsaService;
-            _mapper = mapper;
         }
         #endregion
 

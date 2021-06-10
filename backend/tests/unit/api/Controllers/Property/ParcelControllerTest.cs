@@ -1,12 +1,8 @@
 using MapsterMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Property.Controllers;
-using SModel = Pims.Api.Areas.Property.Models.Parcel;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Comparers;
-using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
@@ -14,9 +10,9 @@ using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using SModel = Pims.Api.Areas.Property.Models.Parcel;
 
 namespace Pims.Api.Test.Controllers.Property
 {

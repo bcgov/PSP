@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,7 +14,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            RecipientAddress obj = new RecipientAddress("addressLine1", "addressLine2", "city", "province", "postalCode", "country");
+            RecipientAddress obj = new("addressLine1", "addressLine2", "city", "province", "postalCode", "country");
             obj.AddressLine1.Should().Be("addressLine1");
             obj.AddressLine2.Should().Be("addressLine2");
             obj.City.Should().Be("city");

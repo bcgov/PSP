@@ -1,9 +1,9 @@
 using FluentAssertions;
+using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using System.Diagnostics.CodeAnalysis;
-using Xunit;
-using NetTopologySuite.Geometries;
 using System.Linq;
+using Xunit;
 
 namespace Pims.Api.Test.Core.Extensions
 {

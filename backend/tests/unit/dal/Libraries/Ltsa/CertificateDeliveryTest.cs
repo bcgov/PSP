@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -15,8 +13,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
     [ExcludeFromCodeCoverage]
     public class CertificateDeliveryTest
     {
-        DateTime issuedDate = DateTime.Now;
-        DateTime surrenderDate = DateTime.Now;
         [Fact]
         public void TestConstructor_Null_Number()
         {
@@ -26,8 +22,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            List<OwnerAddress> ownerAddresses = new List<OwnerAddress>();
-            CertificateDelivery obj = new CertificateDelivery("certificateText", "intendedRecipientLastName", "intendedRecipientGivenName", ownerAddresses);
+            List<OwnerAddress> ownerAddresses = new();
+            CertificateDelivery obj = new("certificateText", "intendedRecipientLastName", "intendedRecipientGivenName", ownerAddresses);
             obj.CertificateText.Should().Be("certificateText");
             obj.IntendedRecipientLastName.Should().Be("intendedRecipientLastName");
             obj.IntendedRecipientGivenName.Should().Be("intendedRecipientGivenName");

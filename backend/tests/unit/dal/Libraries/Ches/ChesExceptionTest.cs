@@ -1,18 +1,18 @@
 using FluentAssertions;
+using Microsoft.Extensions.Options;
+using Moq;
+using Pims.Ches;
+using Pims.Ches.Configuration;
+using Pims.Ches.Models;
 using Pims.Core.Exceptions;
 using Pims.Core.Http;
-using Pims.Core.Test;
-using Pims.Ches.Models;
-using Moq;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using Xunit;
 using Pims.Core.Http.Models;
-using Microsoft.Extensions.Options;
-using Pims.Ches.Configuration;
-using Pims.Ches;
+using Pims.Core.Test;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ches
 {

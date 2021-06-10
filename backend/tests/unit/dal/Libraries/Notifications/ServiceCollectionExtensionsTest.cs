@@ -1,14 +1,10 @@
 using FluentAssertions;
-using MapsterMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Ches;
-using Pims.Core.Http;
-using Pims.Core.Http.Configuration;
-using Pims.Core.Test;
 using Pims.Notifications;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;

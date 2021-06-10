@@ -1,6 +1,6 @@
 using FluentAssertions;
-using Moq;
 using Microsoft.Extensions.Options;
+using Moq;
 using Pims.Ches;
 using Pims.Ches.Models;
 using Pims.Core.Extensions;
@@ -22,7 +22,7 @@ namespace Pims.Dal.Test.Libraries.Notifications
     public class NotificationServiceTest
     {
         #region Data
-        public static IEnumerable<object[]> BadBuild = new List<object[]>(
+        public readonly static IEnumerable<object[]> BadBuild = new List<object[]>(
             new[] {
                 new object[] { null, new EmailTemplate(), typeof(ArgumentException) },
                 new object[] { "", new EmailTemplate(), typeof(ArgumentException) },
@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Libraries.Notifications
                 new object[] { "key", null, typeof(ArgumentNullException) }
             });
 
-        public static IEnumerable<object[]> BadSendNotification = new List<object[]>(
+        public readonly static IEnumerable<object[]> BadSendNotification = new List<object[]>(
             new[] {
                 new object[] { null, new Email(), typeof(ArgumentException) },
                 new object[] { "", new Email(), typeof(ArgumentException) },

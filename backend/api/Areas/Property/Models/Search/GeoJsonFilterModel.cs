@@ -1,11 +1,11 @@
+using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
-using NetTopologySuite.Geometries;
+using System.Linq;
 
 namespace Pims.Api.Areas.Property.Models.Search
 {
