@@ -197,7 +197,7 @@ namespace Pims.Api.Test.Controllers.Property
         [Theory]
         [MemberData(nameof(PropertyQueryFilters))]
         [SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters", Justification = "Not required for this test.")]
-        public void GetProperties_Query_Success(Uri uri)
+        public void GetProperties_Query_Success(Uri uri, bool includeParcels, bool includeBuildings)
         {
             // Arrange
             var helper = new TestHelper();
