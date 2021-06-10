@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -23,8 +20,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            RecipientAddress address = new RecipientAddress();
-            StateTitleCertificateOrderParameters obj = new StateTitleCertificateOrderParameters("titleNumber", "pendingApplicationNumber", "ltoClientNumber", "recipientName", LandTitleDistrictCode.KA, address);
+            RecipientAddress address = new();
+            StateTitleCertificateOrderParameters obj = new("titleNumber", "pendingApplicationNumber", "ltoClientNumber", "recipientName", LandTitleDistrictCode.KA, address);
             obj.TitleNumber.Should().Be("titleNumber");
             obj.PendingApplicationNumber.Should().Be("pendingApplicationNumber");
             obj.LtoClientNumber.Should().Be("ltoClientNumber");

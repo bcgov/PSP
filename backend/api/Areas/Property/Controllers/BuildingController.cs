@@ -5,9 +5,9 @@ using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Model = Pims.Api.Areas.Property.Models.Building;
 using ApiModels = Pims.Api.Models;
 using Entity = Pims.Dal.Entities;
+using Model = Pims.Api.Areas.Property.Models.Building;
 
 namespace Pims.Api.Areas.Property.Controllers
 {

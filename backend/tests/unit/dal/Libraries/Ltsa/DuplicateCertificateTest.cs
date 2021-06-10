@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -28,7 +26,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor_Null_CertificateDelivery()
         {
-            CertificateIdentifier certificateIdentifier = new CertificateIdentifier("documentNumber");
+            CertificateIdentifier certificateIdentifier = new("documentNumber");
             Assert.Throws<InvalidDataException>(() => new DuplicateCertificate(issuedDate: DateTime.Now, certificateIdentifier: certificateIdentifier, certificateDelivery: null));
         }
         [Fact]
@@ -36,9 +34,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         {
             DateTime issuedDate = DateTime.Now;
             DateTime surrenderedDate = DateTime.Now;
-            CertificateIdentifier certificateIdentifier = new CertificateIdentifier("documentNumber");
-            CertificateDelivery certificateDelivery = new CertificateDelivery("intendedRecipientLastName", "intendedRecipientGivenName");
-            DuplicateCertificate obj = new DuplicateCertificate(issuedDate, surrenderedDate, certificateIdentifier, certificateDelivery);
+            CertificateIdentifier certificateIdentifier = new("documentNumber");
+            CertificateDelivery certificateDelivery = new("intendedRecipientLastName", "intendedRecipientGivenName");
+            DuplicateCertificate obj = new(issuedDate, surrenderedDate, certificateIdentifier, certificateDelivery);
             obj.IssuedDate.Should().Be(issuedDate);
             obj.SurrenderDate.Should().Be(surrenderedDate);
             obj.CertificateIdentifier.Should().Be(certificateIdentifier);

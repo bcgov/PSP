@@ -1,6 +1,6 @@
+using Pims.Dal.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using Pims.Dal.Entities;
 
 namespace Pims.Api.Helpers.Extensions
 {

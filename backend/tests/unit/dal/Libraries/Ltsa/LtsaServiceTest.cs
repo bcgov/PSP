@@ -1,25 +1,21 @@
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Ltsa;
-using Pims.Ltsa.Configuration;
-using Pims.Ltsa.Models;
 using Pims.Core.Exceptions;
 using Pims.Core.Http;
 using Pims.Core.Http.Models;
 using Pims.Core.Test;
+using Pims.Ltsa;
+using Pims.Ltsa.Configuration;
+using Pims.Ltsa.Extensions;
+using Pims.Ltsa.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Web;
 using Xunit;
-using Pims.Ltsa.Extensions;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -125,7 +121,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
         #region GetTitleSummariesAsync
         [Fact]
-        public async void getTitleSummariesAsync_Valid()
+        public async void GetTitleSummariesAsync_Valid()
         {
             // Arrange
             var helper = new TestHelper();

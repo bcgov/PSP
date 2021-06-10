@@ -1,11 +1,10 @@
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -45,7 +44,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var charge = new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>());
             var chargeRelease = new ChargeRelease();
             DateTime enteredDate = DateTime.Now;
-            ChargesOnStrataCommonProperty obj = new ChargesOnStrataCommonProperty(ChargesOnStrataCommonProperty.StatusEnum.CANCELLED, ChargesOnStrataCommonProperty.CancellationTypeEnum.I, enteredDate, true, "chargeNumber", "chargeRemarks", charge, chargeRelease);
+            ChargesOnStrataCommonProperty obj = new(ChargesOnStrataCommonProperty.StatusEnum.CANCELLED, ChargesOnStrataCommonProperty.CancellationTypeEnum.I, enteredDate, true, "chargeNumber", "chargeRemarks", charge, chargeRelease);
             obj.Status.Should().Be(ChargesOnStrataCommonProperty.StatusEnum.CANCELLED);
             obj.CancellationType.Should().Be(ChargesOnStrataCommonProperty.CancellationTypeEnum.I);
             obj.EnteredDate.Should().Be(enteredDate);

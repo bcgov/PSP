@@ -5,15 +5,12 @@ using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Pims.Dal.Services.Admin;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -27,7 +24,7 @@ namespace Pims.Api.Test.Controllers.Reports
     public class UserControllerTest
     {
         #region Variables
-        public static IEnumerable<object[]> AllPropertiesFilters = new List<object[]>()
+        public readonly static IEnumerable<object[]> AllPropertiesFilters = new List<object[]>()
         {
             new object [] { new UserFilter(1, 100) },
             new object [] { new UserFilter(1, 100) { Username = "username" } },
@@ -40,7 +37,7 @@ namespace Pims.Api.Test.Controllers.Reports
             new object [] { new UserFilter(1, 100) { Role = "role" } },
         };
 
-        public static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
+        public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/users?Username=test") },
             new object [] { new Uri("http://host/api/users?DisplayName=test") },

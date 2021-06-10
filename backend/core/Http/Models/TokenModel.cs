@@ -1,6 +1,6 @@
 using System;
-using System.Text.Json.Serialization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json.Serialization;
 
 namespace Pims.Core.Http.Models
 {

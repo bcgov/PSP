@@ -1,6 +1,6 @@
 using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

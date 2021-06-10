@@ -1,11 +1,10 @@
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -40,7 +39,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var chargeRelease = new ChargeRelease();
             var charge = new Charge(chargeNumber: "chargeNumber", transactionType: "transactionType", chargeOwnershipGroups: new List<ChargeOwnershipGroup>());
 
-            ChargeOnTitle obj = new ChargeOnTitle("chargeNumber", ChargeOnTitle.StatusEnum.CANCELLED, ChargeOnTitle.CancellationTypeEnum.I, enteredDate, ChargeOnTitle.InterAliaEnum.NO, "chargeRemarks", chargeRelease, charge);
+            ChargeOnTitle obj = new("chargeNumber", ChargeOnTitle.StatusEnum.CANCELLED, ChargeOnTitle.CancellationTypeEnum.I, enteredDate, ChargeOnTitle.InterAliaEnum.NO, "chargeRemarks", chargeRelease, charge);
             obj.ChargeNumber.Should().Be("chargeNumber");
             obj.Status.Should().Be(ChargeOnTitle.StatusEnum.CANCELLED);
             obj.CancellationType.Should().Be(ChargeOnTitle.CancellationTypeEnum.I);

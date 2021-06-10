@@ -1,12 +1,10 @@
 using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 

@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Pims.Core.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;

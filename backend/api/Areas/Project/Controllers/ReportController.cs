@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Pims.Api.Areas.Project.Models.Report;
 using Pims.Api.Models;
 using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
+using System.Linq;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Areas.Project.Controllers

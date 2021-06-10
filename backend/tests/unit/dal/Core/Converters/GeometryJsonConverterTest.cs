@@ -1,12 +1,12 @@
+using NetTopologySuite.Geometries;
 using Pims.Core.Converters;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using Xunit;
-using NetTopologySuite.Geometries;
-using System;
 
 namespace Pims.Dal.Test.Core.Converters
 {
@@ -17,13 +17,13 @@ namespace Pims.Dal.Test.Core.Converters
     public class GeometryJsonConverterTest
     {
         #region Data
-        public static IEnumerable<object[]> WriteData = new List<object[]>()
+        public readonly static IEnumerable<object[]> WriteData = new List<object[]>()
         {
             new object[] { new Point(new Coordinate(1, 1)), "{\"test\":[1,1]}" },
             new object[] { new Polygon(new LinearRing(new Coordinate[] { new Coordinate(1, 1), new Coordinate(1, 2), new Coordinate(1, 3), new Coordinate(1, 1)})), "{\"test\":[[1,1],[1,2],[1,3],[1,1]]}" }
         };
 
-        public static IEnumerable<object[]> ReadData = new List<object[]>()
+        public readonly static IEnumerable<object[]> ReadData = new List<object[]>()
         {
             new object[] { "1,1", new Point(new Coordinate(1, 1)), typeof(Point) },
             new object[] { "[[1,1],[1,2],[1,3],[1,1]]", null, typeof(Polygon) }

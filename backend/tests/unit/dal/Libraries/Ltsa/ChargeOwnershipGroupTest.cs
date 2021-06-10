@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -30,8 +28,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            List<ChargeOwnershipGroupChargeOwner> chargeOwnershipGroupChargeOwner = new List<ChargeOwnershipGroupChargeOwner>();
-            ChargeOwnershipGroup obj = new ChargeOwnershipGroup(true, "creatingApplicationNumber", ChargeOwnershipGroup.CreatingApplicationStatusEnum.Draft, "cancellingApplicationNumber", ChargeOwnershipGroup.CancellingApplicationStatusEnum.Draft, "interestFractionNumerator", "interestFractionDenominator", "ownershipRemarks", chargeOwnershipGroupChargeOwner);
+            List<ChargeOwnershipGroupChargeOwner> chargeOwnershipGroupChargeOwner = new();
+            ChargeOwnershipGroup obj = new(true, "creatingApplicationNumber", ChargeOwnershipGroup.CreatingApplicationStatusEnum.Draft, "cancellingApplicationNumber", ChargeOwnershipGroup.CancellingApplicationStatusEnum.Draft, "interestFractionNumerator", "interestFractionDenominator", "ownershipRemarks", chargeOwnershipGroupChargeOwner);
             obj.CreatingApplicationNumber.Should().Be("creatingApplicationNumber");
             obj.CreatingApplicationStatus.Should().Be(ChargeOwnershipGroup.CreatingApplicationStatusEnum.Draft);
             obj.CancellingApplicationNumber.Should().Be("cancellingApplicationNumber");

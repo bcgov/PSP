@@ -1,7 +1,4 @@
-
-using System;
 using System.Diagnostics.CodeAnalysis;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
 {

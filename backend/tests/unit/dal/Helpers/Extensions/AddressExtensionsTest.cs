@@ -3,7 +3,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 
 namespace Pims.Dal.Test.Helpers.Extensions

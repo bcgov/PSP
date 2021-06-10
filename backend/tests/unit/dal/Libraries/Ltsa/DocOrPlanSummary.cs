@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,7 +14,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            DocOrPlanSummary obj = new DocOrPlanSummary("docOrPlanNumber", "documentDistrict", LandTitleDistrictCode.KA);
+            DocOrPlanSummary obj = new("docOrPlanNumber", "documentDistrict", LandTitleDistrictCode.KA);
             obj.DocOrPlanNumber.Should().Be("docOrPlanNumber");
             obj.DocumentDistrict.Should().Be("documentDistrict");
             obj.DocumentDistrictCode.Should().Be(LandTitleDistrictCode.KA);

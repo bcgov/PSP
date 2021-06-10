@@ -1,11 +1,10 @@
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -25,9 +24,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         public void TestConstructor()
         {
             DateTime applicationReceivedDate = DateTime.Now;
-            List<Altos1LegalNotationCorrection> altos1LegalNotationCorrections = new List<Altos1LegalNotationCorrection>();
-            List<LegalNotationCorrection> legalNotationCorrections = new List<LegalNotationCorrection>();
-            LegalNotation obj = new LegalNotation(applicationReceivedDate, "originalLegalNotationNumber", "planIdentifier", "legalNotationText", altos1LegalNotationCorrections, legalNotationCorrections);
+            List<Altos1LegalNotationCorrection> altos1LegalNotationCorrections = new();
+            List<LegalNotationCorrection> legalNotationCorrections = new();
+            LegalNotation obj = new(applicationReceivedDate, "originalLegalNotationNumber", "planIdentifier", "legalNotationText", altos1LegalNotationCorrections, legalNotationCorrections);
             obj.ApplicationReceivedDate.Should().Be(applicationReceivedDate);
             obj.OriginalLegalNotationNumber.Should().Be("originalLegalNotationNumber");
             obj.PlanIdentifier.Should().Be("planIdentifier");

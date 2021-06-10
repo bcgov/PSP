@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -38,7 +36,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         {
             DateTime enteredDate = DateTime.Now;
             DateTime correctionDate = DateTime.Now;
-            Altos1ChargeCorrection obj = new Altos1ChargeCorrection("number", "referenceDescription", enteredDate, correctionDate, "previousCorrectionNumber", "correctionText");
+            Altos1ChargeCorrection obj = new("number", "referenceDescription", enteredDate, correctionDate, "previousCorrectionNumber", "correctionText");
             obj.Number.Should().Be("number");
             obj.ReferenceDescription.Should().Be("referenceDescription");
             obj.EnteredDate.Should().Be(enteredDate);

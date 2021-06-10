@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -39,10 +37,10 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            ParcelTombstone parcelTombstone = new ParcelTombstone();
-            LegalDescription legalDescription = new LegalDescription(fullLegalDescription: "fullLegalDescription");
-            List<AssociatedPlan> associatedPlans = new List<AssociatedPlan>();
-            ParcelInfo obj = new ParcelInfo("parcelIdentifier", ParcelInfo.StatusEnum.ACTIVE, 1, 2, "miscellaneousNotes", parcelTombstone, legalDescription, associatedPlans);
+            ParcelTombstone parcelTombstone = new();
+            LegalDescription legalDescription = new(fullLegalDescription: "fullLegalDescription");
+            List<AssociatedPlan> associatedPlans = new();
+            ParcelInfo obj = new("parcelIdentifier", ParcelInfo.StatusEnum.ACTIVE, 1, 2, "miscellaneousNotes", parcelTombstone, legalDescription, associatedPlans);
             obj.ParcelIdentifier.Should().Be("parcelIdentifier");
             obj.Status.Should().Be(ParcelInfo.StatusEnum.ACTIVE);
             obj.RegisteredTitlesCount.Should().Be(1);

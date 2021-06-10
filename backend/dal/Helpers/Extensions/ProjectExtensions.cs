@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -26,7 +24,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="filter"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IQueryable<Entity.Project> GenerateQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.ProjectFilter filter, ProjectOptions options)
+        public static IQueryable<Entity.Project> GenerateQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.ProjectFilter filter)
         {
             filter.ThrowIfNull(nameof(user));
             filter.ThrowIfNull(nameof(filter));
@@ -668,7 +666,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (updatedProject == null) throw new ArgumentNullException(nameof(updatedProject));
 
-            var responses = new List<ProjectAgencyResponse>(updatedProject.Responses.Count());
+            var responses = new List<ProjectAgencyResponse>(updatedProject.Responses.Count);
             foreach (var response in updatedProject.Responses)
             {
                 var originalResponse = originalProject.Responses.FirstOrDefault(r => r.ProjectId == response.ProjectId && r.AgencyId == response.AgencyId);

@@ -2,12 +2,12 @@ using FluentAssertions;
 using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
-using Entity = Pims.Dal.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using System.Collections.Generic;
+using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
 {
@@ -68,8 +68,8 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             result.Username.Should().Be(user.Username);
             result.FirstName.Should().Be(user.FirstName);
             result.LastName.Should().Be(user.LastName);
-            result.Agencies.Count().Should().Be(euser.Agencies.Count());
-            result.Roles.Count().Should().Be(1);
+            result.Agencies.Count.Should().Be(euser.Agencies.Count);
+            result.Roles.Count.Should().Be(1);
             result.Roles.First().Role.KeycloakGroupId.Should().Be(user.Roles.First().Role.KeycloakGroupId);
 
             keycloakServiceMock.Verify(m => m.GetUserGroupsAsync(euser.Id), Times.Once);

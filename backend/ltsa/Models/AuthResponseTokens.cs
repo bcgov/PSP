@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Pims.Ltsa.Models
 {
     public class AuthResponseTokens

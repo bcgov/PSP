@@ -1,13 +1,13 @@
 using Mapster;
-using Pims.Api.Mapping.Converters;
-using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Property.Models.Building;
-using BModel = Pims.Api.Models;
-using Pims.Dal.Helpers.Extensions;
-using System.Text.Json;
 using Microsoft.Extensions.Options;
+using Pims.Api.Mapping.Converters;
+using Pims.Dal.Helpers.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using BModel = Pims.Api.Models;
+using Entity = Pims.Dal.Entities;
+using Model = Pims.Api.Areas.Property.Models.Building;
 
 namespace Pims.Api.Areas.Property.Mapping.Building
 {

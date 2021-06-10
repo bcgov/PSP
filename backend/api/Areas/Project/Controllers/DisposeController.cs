@@ -2,7 +2,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Pims.Api.Areas.Project.Models.Dispose;
 using Pims.Api.Models;
 using Pims.Api.Policies;

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
@@ -193,7 +192,7 @@ namespace Pims.Dal.Services
             var agency = this.User.GetAgency(this.Context) ??
                 throw new NotAuthorizedException("User must belong to an agency before adding parcels.");
 
-            if (parcel.Parcels.Count() > 0 && parcel.Subdivisions.Count() > 0) throw new InvalidOperationException("Parcel may only have associated parcels or subdivisions, not both.");
+            if (parcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0) throw new InvalidOperationException("Parcel may only have associated parcels or subdivisions, not both.");
 
             this.Context.Parcels.ThrowIfNotUnique(parcel);
             // If the user is not an admin, and their agency is not a parent override to their user agency

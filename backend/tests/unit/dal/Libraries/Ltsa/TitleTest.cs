@@ -1,11 +1,10 @@
+using FluentAssertions;
+using Pims.Ltsa.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -47,18 +46,18 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            TitleIdentifier titleIdentifier = new TitleIdentifier(titleNumber: "titleNumber");
-            TitleTombstone tombstone = new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>());
-            List<TitleOwnershipGroup> ownershipGroups = new List<TitleOwnershipGroup>();
-            List<TaxAuthority> taxAuthorities = new List<TaxAuthority>();
-            List<DescriptionOfLand> descriptionsOfLand = new List<DescriptionOfLand>();
-            List<LegalNotationOnTitle> legalNotationsOnTitle = new List<LegalNotationOnTitle>();
-            List<ChargeOnTitle> chargesOnTitle = new List<ChargeOnTitle>();
-            List<DuplicateCertificate> duplicateCertificatesOfTitle = new List<DuplicateCertificate>();
-            List<TitleTransferDisposition> titleTransfersOrDispositions = new List<TitleTransferDisposition>();
-            List<Altos1TitleCorrection> correctionsAltos1 = new List<Altos1TitleCorrection>();
-            List<TitleCorrection> corrections = new List<TitleCorrection>();
-            Title obj = new Title(Title.TitleStatusEnum.REGISTERED, titleIdentifier, tombstone, ownershipGroups, taxAuthorities, descriptionsOfLand, legalNotationsOnTitle,
+            TitleIdentifier titleIdentifier = new(titleNumber: "titleNumber");
+            TitleTombstone tombstone = new(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now, natureOfTransfers: new List<NatureOfTransfer>());
+            List<TitleOwnershipGroup> ownershipGroups = new();
+            List<TaxAuthority> taxAuthorities = new();
+            List<DescriptionOfLand> descriptionsOfLand = new();
+            List<LegalNotationOnTitle> legalNotationsOnTitle = new();
+            List<ChargeOnTitle> chargesOnTitle = new();
+            List<DuplicateCertificate> duplicateCertificatesOfTitle = new();
+            List<TitleTransferDisposition> titleTransfersOrDispositions = new();
+            List<Altos1TitleCorrection> correctionsAltos1 = new();
+            List<TitleCorrection> corrections = new();
+            Title obj = new(Title.TitleStatusEnum.REGISTERED, titleIdentifier, tombstone, ownershipGroups, taxAuthorities, descriptionsOfLand, legalNotationsOnTitle,
                 chargesOnTitle, duplicateCertificatesOfTitle, titleTransfersOrDispositions, correctionsAltos1, corrections);
             obj.TitleStatus.Should().Be(Title.TitleStatusEnum.REGISTERED);
             obj.TitleIdentifier.Should().Be(titleIdentifier);

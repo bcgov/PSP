@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -25,7 +23,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         public void TestConstructor()
         {
             DateTime enteredDate = DateTime.Now;
-            LegalNotationCorrection obj = new LegalNotationCorrection("reason", "originatingCorrectionApplication", enteredDate);
+            LegalNotationCorrection obj = new("reason", "originatingCorrectionApplication", enteredDate);
             obj.EnteredDate.Should().Be(enteredDate);
             obj.Reason.Should().Be("reason");
             obj.OriginatingCorrectionApplication.Should().Be("originatingCorrectionApplication");

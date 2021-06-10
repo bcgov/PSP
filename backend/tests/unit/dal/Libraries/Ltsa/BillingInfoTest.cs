@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,7 +14,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            BillingInfo obj = new BillingInfo(BillingInfo.BillingModelEnum.PROV, "productName", "productCode", true, 1, 2, 3, 4, 5, 6, 7);
+            BillingInfo obj = new(BillingInfo.BillingModelEnum.PROV, "productName", "productCode", true, 1, 2, 3, 4, 5, 6, 7);
             obj.BillingModel.Should().Be(BillingInfo.BillingModelEnum.PROV);
             obj.ProductName.Should().Be("productName");
             obj.ProductCode.Should().Be("productCode");

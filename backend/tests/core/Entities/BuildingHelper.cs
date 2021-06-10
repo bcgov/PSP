@@ -1,9 +1,9 @@
+using NetTopologySuite.Geometries;
 using Pims.Dal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entity = Pims.Dal.Entities;
-using NetTopologySuite.Geometries;
 
 namespace Pims.Core.Test
 {

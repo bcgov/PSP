@@ -1,5 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.InMemory.ValueGeneration.Internal;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Configuration.Generators
 {

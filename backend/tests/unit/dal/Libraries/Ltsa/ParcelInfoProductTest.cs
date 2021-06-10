@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,9 +14,9 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            LegalDescription legalDescription = new LegalDescription(fullLegalDescription: "fullLegalDescription");
-            ParcelInfo parcelInfo = new ParcelInfo("parcelIdentifier", registeredTitlesCount: 1, pendingApplicationCount: 2, legalDescription: legalDescription);
-            ParcelInfoProduct obj = new ParcelInfoProduct(parcelInfo);
+            LegalDescription legalDescription = new(fullLegalDescription: "fullLegalDescription");
+            ParcelInfo parcelInfo = new("parcelIdentifier", registeredTitlesCount: 1, pendingApplicationCount: 2, legalDescription: legalDescription);
+            ParcelInfoProduct obj = new(parcelInfo);
             obj.ParcelInfo.Should().Be(parcelInfo);
         }
     }

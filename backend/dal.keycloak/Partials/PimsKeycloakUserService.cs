@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Dal.Entities.Comparers;
@@ -9,8 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
-using Microsoft.Extensions.Logging;
-using Pims.Core.Exceptions;
 
 namespace Pims.Dal.Keycloak
 {

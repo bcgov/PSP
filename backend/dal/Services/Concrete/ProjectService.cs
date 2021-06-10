@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
@@ -70,7 +69,7 @@ namespace Pims.Dal.Services
             this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
-            var query = this.Context.GenerateQuery(this.User, filter, _options.Project);
+            var query = this.Context.GenerateQuery(this.User, filter);
             var total = query.Count();
             var items = query
                 .Skip((filter.Page - 1) * filter.Quantity)

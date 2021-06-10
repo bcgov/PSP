@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,7 +14,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            OrderCancellationResponse obj = new OrderCancellationResponse("orderId", "orderCancellationID", "status");
+            OrderCancellationResponse obj = new("orderId", "orderCancellationID", "status");
             obj.OrderId.Should().Be("orderId");
             obj.OrderCancellationID.Should().Be("orderCancellationID");
             obj.Status.Should().Be("status");

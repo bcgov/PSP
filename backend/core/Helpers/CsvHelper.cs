@@ -7,8 +7,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace Pims.Core.Helpers
 {

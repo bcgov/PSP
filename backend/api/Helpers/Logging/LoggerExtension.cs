@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Api.Helpers.Logging

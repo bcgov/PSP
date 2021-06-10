@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Pims.Ltsa.Models;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Ltsa.Models;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
 {
@@ -18,10 +15,10 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            StrataPlanIdentifier identifier = new StrataPlanIdentifier();
-            List<LegalNotationsOnStrataCommonProperty> legalNotations = new List<LegalNotationsOnStrataCommonProperty>();
-            List<ChargesOnStrataCommonProperty> chargesOnStrataCommonProperties = new List<ChargesOnStrataCommonProperty>();
-            StrataPlanCommonProperty obj = new StrataPlanCommonProperty(identifier, legalNotations, chargesOnStrataCommonProperties);
+            StrataPlanIdentifier identifier = new();
+            List<LegalNotationsOnStrataCommonProperty> legalNotations = new();
+            List<ChargesOnStrataCommonProperty> chargesOnStrataCommonProperties = new();
+            StrataPlanCommonProperty obj = new(identifier, legalNotations, chargesOnStrataCommonProperties);
             obj.StrataPlanIdentifier.Should().Be(identifier);
             obj.LegalNotationsOnSCP.Should().BeEquivalentTo(legalNotations);
             obj.ChargesOnSCP.Should().BeEquivalentTo(chargesOnStrataCommonProperties);

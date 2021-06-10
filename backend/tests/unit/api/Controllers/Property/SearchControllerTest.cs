@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Property.Controllers;
-using SModel = Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Comparers;
 using Pims.Core.Extensions;
@@ -17,6 +16,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using SModel = Pims.Api.Areas.Property.Models.Search;
 
 namespace Pims.Api.Test.Controllers.Property
 {
@@ -27,7 +27,7 @@ namespace Pims.Api.Test.Controllers.Property
     public class SearchControllerTest
     {
         #region Variables
-        public static IEnumerable<object[]> AllPropertiesFilters = new List<object[]>()
+        public readonly static IEnumerable<object[]> AllPropertiesFilters = new List<object[]>()
         {
             new object [] { new SModel.PropertyFilterModel(100, 0, 0, 0), false, false },
             new object [] { new SModel.PropertyFilterModel(0, 100, 0, 0), false, false },
@@ -41,7 +41,7 @@ namespace Pims.Api.Test.Controllers.Property
             new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { AdministrativeArea = "AdministrativeArea" }, true, true }
         };
 
-        public static IEnumerable<object[]> ParcelOnlyFilters = new List<object[]>()
+        public readonly static IEnumerable<object[]> ParcelOnlyFilters = new List<object[]>()
         {
             new [] { new SModel.PropertyFilterModel(100, 100, 0, 0) { MinLotArea = 1 } },
             new [] { new SModel.PropertyFilterModel(100, 100, 0, 0) { MaxLotArea = 1 } },
@@ -49,7 +49,7 @@ namespace Pims.Api.Test.Controllers.Property
             new [] { new SModel.PropertyFilterModel(100, 100, 0, 0) { MaxLandArea = 1 } }
         };
 
-        public static IEnumerable<object[]> BuildingOnlyFilters = new List<object[]>()
+        public readonly static IEnumerable<object[]> BuildingOnlyFilters = new List<object[]>()
         {
             new [] { new SModel.PropertyFilterModel(100, 100, 0, 0) { ConstructionTypeId = 1 } },
             new [] { new SModel.PropertyFilterModel(100, 100, 0, 0) { PredominateUseId = 1 } },
@@ -59,7 +59,7 @@ namespace Pims.Api.Test.Controllers.Property
             new [] { new SModel.PropertyFilterModel(100, 100, 0, 0) { MaxRentableArea = 1 } }
         };
 
-        public static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
+        public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/properties?Agencies=1,2"), true, true },
             new object [] { new Uri("http://host/api/properties?StatusId=2"), true, true },
@@ -197,8 +197,7 @@ namespace Pims.Api.Test.Controllers.Property
         [Theory]
         [MemberData(nameof(PropertyQueryFilters))]
         [SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters", Justification = "Not required for this test.")]
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Not required for this test.")]
-        public void GetProperties_Query_Success(Uri uri, bool includeParcels, bool includeBuildings)
+        public void GetProperties_Query_Success(Uri uri)
         {
             // Arrange
             var helper = new TestHelper();
