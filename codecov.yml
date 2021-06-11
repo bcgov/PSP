@@ -6,7 +6,10 @@ coverage:
   precision: 2
   round: down
   range: "70...100"
-
+  status:
+    patch:
+      default:
+        informational: true
 parsers:
   gcov:
     branch_detection:
