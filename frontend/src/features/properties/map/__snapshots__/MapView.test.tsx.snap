@@ -246,7 +246,7 @@ exports[`MapProperties View Renders the map 1`] = `
       <span
         class="c1 mr-auto"
       >
-        Submit a Property
+        Add to Inventory
       </span>
       <svg
         class="c2"

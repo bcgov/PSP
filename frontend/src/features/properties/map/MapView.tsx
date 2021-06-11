@@ -62,12 +62,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const disableFilter = urlParsed.sidebar === 'true' ? true : false;
   return (
     <div className={classNames(showSideBar ? 'side-bar' : '', 'd-flex')}>
-      <MapSideBarContainer
-        refreshParcels={() => {
-          mapRef.current?.leafletElement.fireEvent('clear');
-        }}
-        properties={properties}
-      />
+      <MapSideBarContainer />
       <FilterProvider>
         <Map
           sidebarSize={size}

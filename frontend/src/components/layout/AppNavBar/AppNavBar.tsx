@@ -9,7 +9,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { FaHome } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { FeatureHidden } from 'tenants';
+import { FeatureHidden, FeatureVisible } from 'tenants';
 
 /**
  * Nav bar with role-based functionality.
@@ -25,6 +25,9 @@ function AppNavBar() {
           <FeatureHidden tenant="MOTI">
             <SubmitProperty />
           </FeatureHidden>
+          <FeatureVisible tenant="MOTI">
+            <AddProperty />
+          </FeatureVisible>
           <ViewInventory />
           <FeatureHidden tenant="MOTI">
             <DisposeProjectsDropdown />
@@ -85,6 +88,42 @@ function SubmitProperty() {
     </Nav.Link>
   ) : null;
 }
+
+/**
+ * Add a property dropdown item.
+ */
+const AddProperty = () => {
+  const keycloak = useKeycloakWrapper();
+  const history = useHistory();
+  return keycloak.hasClaim(Claims.PROPERTY_ADD) ? (
+    <Nav.Link
+      className={
+        history.location.pathname.includes('mapview') &&
+        queryString.parse(history.location.search).sidebar === 'true'
+          ? 'active'
+          : 'idle'
+      }
+      onClick={() =>
+        history.push({
+          pathname: '/mapview',
+          search: queryString.stringify({
+            ...queryString.parse(history.location.search),
+            sidebar: true,
+            disabled: false,
+            loadDraft: false,
+            parcelId: undefined,
+            buildingId: undefined,
+            new: true,
+            sidebarContext: SidebarContextType.ADD_PROPERTY_TYPE_SELECTOR,
+            sidebarSize: 'narrow',
+          }),
+        })
+      }
+    >
+      Add a Property
+    </Nav.Link>
+  ) : null;
+};
 
 /**
  * View Inventory navigation item.

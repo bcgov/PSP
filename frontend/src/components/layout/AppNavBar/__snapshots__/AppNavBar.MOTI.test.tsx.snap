@@ -79,6 +79,11 @@ exports[`[ MOTI ] AppNavBar matches snapshot. 1`] = `
                     <FeatureHidden
                       tenant="MOTI"
                     />
+                    <FeatureVisible
+                      tenant="MOTI"
+                    >
+                      <AddProperty />
+                    </FeatureVisible>
                     <ViewInventory />
                     <FeatureHidden
                       tenant="MOTI"

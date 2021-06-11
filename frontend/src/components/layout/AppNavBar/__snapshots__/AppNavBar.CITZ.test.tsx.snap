@@ -81,6 +81,9 @@ exports[`[ CITZ ] AppNavBar matches snapshot. 1`] = `
                     >
                       <SubmitProperty />
                     </FeatureHidden>
+                    <FeatureVisible
+                      tenant="MOTI"
+                    />
                     <ViewInventory />
                     <FeatureHidden
                       tenant="MOTI"
