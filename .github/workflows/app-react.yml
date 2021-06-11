@@ -61,9 +61,13 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         if: ${{ github.event_name == 'push' }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
+          PROJECT_NAME: PIMS-APP
         with:
-          host: ${{secrets.SONAR_URL}}
-          login: ${{secrets.SONAR_TOKEN}}
           projectBaseDir: ${{env.working-directory}}
-          projectKey: format('pims-frontend-{0}', ${{steps.extract_branch.outputs.branch}})
-          projectName: format('PIMS Frontend [{0}]', ${{steps.extract_branch.outputs.branch}})
+          args: >
+            -Dsonar.projectKey=${{env.PROJECT_KEY}}
+            -Dsonar.projectName=${{env.PROJECT_NAME}}
