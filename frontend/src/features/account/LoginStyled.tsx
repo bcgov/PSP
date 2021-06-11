@@ -14,7 +14,7 @@ export const LoginStyled = styled(Container)`
       : ''};
   background-size: cover;
   background-position: center top;
-  position: absolute;
+  overflow: auto;
 
   .unauth {
     font-size: 24px;
