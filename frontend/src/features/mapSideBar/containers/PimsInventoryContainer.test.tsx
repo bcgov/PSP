@@ -10,7 +10,6 @@ import * as API from 'constants/API';
 import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import { IParcel } from 'interfaces';
-import { noop } from 'lodash';
 import * as _ from 'lodash';
 import { mockBuildingWithAssociatedLand, mockDetails, mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
@@ -27,7 +26,7 @@ import { networkSlice } from 'store/slices/network/networkSlice';
 import { propertiesSlice } from 'store/slices/properties';
 import { defaultTenant, TenantProvider } from 'tenants';
 
-import MapSideBarContainer from './MapSideBarContainer';
+import PimsInventoryContainer from './PimsInventoryContainer';
 
 jest.mock(
   'react-visibility-sensor',
@@ -119,14 +118,14 @@ const renderContainer = ({ store }: any) =>
             pauseOnFocusLoss={false}
           />
           <Route path="/mapView/:id?">
-            <MapSideBarContainer refreshParcels={noop} properties={[]} />
+            <PimsInventoryContainer />
           </Route>
         </Router>
       </Provider>
     </TenantProvider>,
   );
 
-describe('Parcel Detail MapSideBarContainer', () => {
+describe('Parcel Detail PimsInventoryContainer', () => {
   process.env.REACT_APP_TENANT = 'CITZ';
 
   // clear mocks before each test
@@ -155,6 +154,7 @@ describe('Parcel Detail MapSideBarContainer', () => {
   });
   afterAll(() => {
     jest.clearAllMocks();
+    cleanup();
   });
 
   describe('basic data loading and display', () => {
@@ -190,6 +190,24 @@ describe('Parcel Detail MapSideBarContainer', () => {
         store: getStore(mockDetails[0]),
       });
       wait(() => expect(history.location.pathname).toEqual('/mapview/'));
+    });
+
+    it('displays add parcel text appropriately', () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand');
+      const { getByText } = renderContainer({});
+      expect(getByText('Submit Land (to inventory)')).toBeInTheDocument();
+    });
+
+    it('displays add building text appropriately', () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addBuilding');
+      const { getByText } = renderContainer({});
+      expect(getByText('Submit a Building (to inventory)')).toBeInTheDocument();
+    });
+
+    it('displays add subdivision text appropriately', () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addSubdivisionLand');
+      const { getByText } = renderContainer({});
+      expect(getByText('Submit Subdivision (to inventory)')).toBeInTheDocument();
     });
   });
   describe('edit button display as rem', () => {
@@ -261,6 +279,69 @@ describe('Parcel Detail MapSideBarContainer', () => {
       history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
       await wait(() => expect(screen.getByDisplayValue('1234 mock Street')).toBeVisible());
     });
+
+    it('does nothing if the lat/lng is not specified', async () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+      const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+      mockAxios.reset();
+      mockAxios.onGet().reply(200, [{ ...parcel, propertyTypeId: 0 }]);
+      renderContainer({
+        store: mockStore({
+          [leafletMouseSlice.name]: {
+            mapClickEvent: {
+              originalEvent: { timeStamp: 1 },
+              latlng: undefined,
+            },
+          },
+          [lookupCodesSlice.name]: {
+            lookupCodes: [],
+          },
+          [propertiesSlice.name]: {
+            parcelDetail: {},
+            parcels: [],
+            draftParcels: [],
+          },
+        }),
+      });
+      act(() => {
+        const landSearchMarker = screen.getByTestId('land-search-marker');
+        fireEvent.click(landSearchMarker);
+        history.push('/mapview/?sidebar=false&sidebarContext=addBareLand&disabled=false');
+      });
+      await wait(() => expect(screen.queryByText('Address')).toBeNull());
+    });
+
+    it('sets form values based on the map click location by PIN', async () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+      const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+      mockAxios.reset();
+      mockAxios
+        .onGet()
+        .reply(200, [{ ...parcel, propertyTypeId: 0, pid: undefined, pin: 'pin', id: undefined }]);
+      renderContainer({});
+      act(() => {
+        const landSearchMarker = screen.getByTestId('land-search-marker');
+        fireEvent.click(landSearchMarker);
+        history.push('/mapview/?sidebar=false&sidebarContext=addBareLand&disabled=false');
+      });
+      await wait(() => expect(screen.queryByText('Address')).toBeNull());
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+    });
+
+    it('sets form values based on the map click location for non-parcels', async () => {
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+      const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+      mockAxios.reset();
+      mockAxios.onGet().reply(200, [{ ...parcel, propertyTypeId: 1 }]);
+      renderContainer({});
+      act(() => {
+        const landSearchMarker = screen.getByTestId('land-search-marker');
+        fireEvent.click(landSearchMarker);
+        history.push('/mapview/?sidebar=false&sidebarContext=addBareLand&disabled=false');
+      });
+      await wait(() => expect(screen.queryByText('Address')).toBeNull());
+      history.push('/mapview/?sidebar=true&sidebarContext=addBareLand&disabled=true');
+    });
   });
   describe('edit button display as admin', () => {
     beforeEach(() => {
@@ -309,6 +390,123 @@ describe('Parcel Detail MapSideBarContainer', () => {
 
         const editButton = await findByTestId('edit');
         expect(editButton).toBeInTheDocument();
+      });
+    });
+  });
+  describe('delete button display as admin', () => {
+    beforeEach(() => {
+      jest.resetAllMocks();
+      process.env.REACT_APP_TENANT = 'CITZ';
+      (useKeycloak as jest.Mock).mockReturnValue({
+        keycloak: {
+          userInfo: {
+            agencies: [1],
+            roles: [Claims.ADMIN_PROPERTIES],
+          },
+          subject: 'test',
+        },
+      });
+    });
+
+    it('delete button displayed in view mode if admin belongs to same agency as property', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&parcelId=1&disabled=true');
+        mockAxios.onGet().reply(200, mockDetails[0]);
+        const { findByTestId } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+      });
+    });
+
+    it('delete button displayed if admin does not belong to same agency as property', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&parcelId=1&disabled=true');
+        const parcel = { ...mockDetails[0], agencyId: 2 };
+        mockAxios.onGet().reply(200, parcel);
+        const { findByTestId } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+      });
+    });
+
+    it('delete button displayed if property in SPP project and user is admin', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&parcelId=1&disabled=true');
+        const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+        mockAxios.onGet().reply(200, parcel);
+        const { findByTestId } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+      });
+    });
+
+    it('delete button displayed if property in SPP project and user is admin', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&parcelId=1&disabled=true');
+        const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+        mockAxios.onGet().reply(200, parcel);
+        const { findByTestId } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+      });
+    });
+
+    it('delete button pops up modal and delete functionality works as expected for parcels', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&parcelId=1&disabled=true');
+        const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+        mockAxios.onGet().reply(200, parcel);
+        mockAxios.onDelete().reply(200);
+        const { findByTestId, findByText } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+
+        fireEvent.click(deleteButton);
+        const deleteModalButton = await findByText('Delete');
+        fireEvent.click(deleteModalButton);
+        await wait(() => {
+          expect(mockAxios.history.delete).toHaveLength(1);
+        });
+      });
+    });
+
+    it('delete button pops up modal and delete functionality works as expected for buildings', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&buildingId=1&disabled=true');
+        const building = { ...mockDetails[0], projectNumbers: ['SPP-10000'], propertyTypeId: 1 };
+        mockAxios.onGet().reply(200, building);
+        mockAxios.onDelete().reply(200);
+        const { findByTestId, findByText } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+
+        fireEvent.click(deleteButton);
+        const deleteModalButton = await findByText('Delete');
+        fireEvent.click(deleteModalButton);
+        await wait(() => {
+          expect(mockAxios.history.delete).toHaveLength(1);
+        });
+      });
+    });
+    it('delete button pops up modal and cancel functionality works as expected', async () => {
+      await act(async () => {
+        history.push('/mapview/?sidebar=true&parcelId=1&disabled=true');
+        const parcel = { ...mockDetails[0], projectNumbers: ['SPP-10000'] };
+        mockAxios.onGet().reply(200, parcel);
+        const { findByTestId, findByText } = renderContainer({});
+
+        const deleteButton = await findByTestId('delete');
+        expect(deleteButton).toBeInTheDocument();
+
+        fireEvent.click(deleteButton);
+        const cancelModalButton = await findByText('Cancel');
+        fireEvent.click(cancelModalButton);
       });
     });
   });

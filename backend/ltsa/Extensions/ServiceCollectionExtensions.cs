@@ -23,8 +23,8 @@ namespace Pims.Ltsa
             return services
                 .Configure<Configuration.LtsaOptions>(section)
                 .AddSingleton<ILtsaService, LtsaService>()
-                .AddScoped<IHttpRequestClient, HttpRequestClient>()
-                .AddTransient<JwtSecurityTokenHandler>();
+                .AddSingleton<IHttpRequestClient, HttpRequestClient>()
+                .AddSingleton<JwtSecurityTokenHandler>();
         }
     }
 }

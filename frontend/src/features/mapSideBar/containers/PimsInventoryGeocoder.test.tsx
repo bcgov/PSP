@@ -10,7 +10,6 @@ import { Claims } from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import { IGeocoderPidsResponse, IGeocoderResponse, PimsAPI, useApi } from 'hooks/useApi';
 import { IParcel } from 'interfaces';
-import { noop } from 'lodash';
 import * as _ from 'lodash';
 import { mockDetails } from 'mocks/filterDataMock';
 import React from 'react';
@@ -25,7 +24,7 @@ import { networkSlice } from 'store/slices/network/networkSlice';
 import { propertiesSlice } from 'store/slices/properties';
 import { defaultTenant, TenantProvider } from 'tenants';
 
-import MapSideBarContainer from './MapSideBarContainer';
+import PimsInventoryContainer from './PimsInventoryContainer';
 
 jest.mock(
   'react-visibility-sensor',
@@ -135,14 +134,14 @@ const renderContainer = ({ store }: any) =>
             pauseOnFocusLoss={false}
           />
           <Route path="/mapView/:id?">
-            <MapSideBarContainer refreshParcels={noop} properties={[]} />
+            <PimsInventoryContainer />
           </Route>
         </Router>
       </Provider>
     </TenantProvider>,
   );
 
-describe('MapSideBarContainer Geocoder functionality', () => {
+describe('PimsInventoryContainer Geocoder functionality', () => {
   // clear mocks before each test
   beforeEach(() => {
     (useKeycloak as jest.Mock).mockReturnValue({
@@ -320,7 +319,7 @@ describe('MapSideBarContainer Geocoder functionality', () => {
   });
 });
 
-describe('MapSideBarContainer PID/PIN search functionality', () => {
+describe('PimsInventoryContainer PID/PIN search functionality', () => {
   // clear mocks before each test
   beforeEach(() => {
     (useKeycloak as jest.Mock).mockReturnValue({
