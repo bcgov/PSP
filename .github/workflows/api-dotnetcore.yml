@@ -100,6 +100,7 @@ jobs:
 
       - name: SonarScanner for .NET 5 with pull request decoration support
         uses: highbyte/sonarscan-dotnet@2.0
+        if: ${{ github.event_name == 'push' }}
         with:
           dotnetBuildArguments: ${{env.working-directory}}
           dotnetDisableTests: true

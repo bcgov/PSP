@@ -59,7 +59,8 @@ jobs:
           fail_ci_if_error: true
 
       - name: SonarQube Scan
-        uses: kitabisa/sonarqube-action@v1.1.0
+        uses: sonarsource/sonarqube-scan-action@master
+        if: ${{ github.event_name == 'push' }}
         with:
           host: ${{secrets.SONAR_URL}}
           login: ${{secrets.SONAR_TOKEN}}
