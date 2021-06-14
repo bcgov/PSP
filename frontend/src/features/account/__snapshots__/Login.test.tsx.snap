@@ -6,7 +6,7 @@ exports[`login login renders correctly 1`] = `
   background-image: url("/tenants/MOTI/background-image.jpg");
   background-size: cover;
   background-position: center top;
-  position: absolute;
+  overflow: auto;
 }
 
 .c0 .unauth {
