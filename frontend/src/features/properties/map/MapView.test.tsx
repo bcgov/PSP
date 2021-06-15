@@ -11,15 +11,11 @@ import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { IParcel, IProperty } from 'interfaces';
 import { noop } from 'lodash';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
-import { TenantProvider } from 'tenants';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import MapView from './MapView';
