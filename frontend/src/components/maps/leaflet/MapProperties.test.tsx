@@ -13,14 +13,11 @@ import { IParcel, IProperty } from 'interfaces';
 import { Map as LeafletMap } from 'leaflet';
 import React, { createRef } from 'react';
 import { Map as ReactLeafletMap, MapProps as LeafletMapProps, Marker } from 'react-leaflet';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
-import { TenantProvider } from 'tenants';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import Map from './Map';

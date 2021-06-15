@@ -1,6 +1,4 @@
 import { useKeycloak } from '@react-keycloak/web';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import { MemoryHistory } from 'history';
 import { IRole } from 'interfaces';
 import { IAgency } from 'interfaces/agency';

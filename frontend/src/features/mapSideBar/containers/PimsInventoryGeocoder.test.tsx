@@ -12,17 +12,14 @@ import { IGeocoderPidsResponse, IGeocoderResponse, PimsAPI, useApi } from 'hooks
 import { IParcel } from 'interfaces';
 import * as _ from 'lodash';
 import { mockDetails } from 'mocks/filterDataMock';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Route, Router } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { Route } from 'react-router-dom';
 import VisibilitySensor from 'react-visibility-sensor';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { propertiesSlice } from 'store/slices/properties';
-import { defaultTenant, TenantProvider } from 'tenants';
+import { defaultTenant } from 'tenants';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import PimsInventoryContainer from './PimsInventoryContainer';
