@@ -2,12 +2,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Mapping.Converters;
 using Pims.Api.Policies;
+using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Pims.Ltsa;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Model = Pims.Ltsa.Models;
+using System.Linq;
+using Pims.Ltsa.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Pims.Api.Areas.Tools.Controllers
 {
@@ -76,7 +81,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <summary>
         /// Post a new order using default parameters and the passed in titleNumber.
         /// </summary>
-        /// <param name="titleNumber">the title number to create the order for</param>
+        /// <param name="pid">the pid to create the order for</param>
         /// <returns>The order created within LTSA</returns>
         [HttpPost("order/parcelInfo")]
         [Produces("application/json")]
@@ -84,10 +89,14 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
         [HasPermission(Permissions.PropertyEdit)]
-        public async Task<IActionResult> PostParcelInfoOrderAsync(string titleNumber)
+        public async Task<IActionResult> PostParcelInfoOrderAsync(string pid)
         {
-            var result = await _ltsaService.PostParcelInfoOrder(titleNumber);
-            return new JsonResult(result);
+            if (!string.IsNullOrEmpty(pid))
+            {
+                var result = await _ltsaService.PostParcelInfoOrder(ParcelConverter.ConvertPIDToDash(pid));
+                return new JsonResult(result);
+            }
+            throw new BadHttpRequestException("The pid of the desired property must be specified");
         }
 
         /// <summary>

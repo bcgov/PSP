@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { layerData } from 'constants/toasts';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { geoJSON, LatLng } from 'leaflet';
+import { geoJSON, LatLngLiteral } from 'leaflet';
 import { Dispatch, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
@@ -16,7 +16,7 @@ export interface IUserLayerQuery {
    * function to find GeoJSON shape containing a point (x, y)
    * @param latlng = {lat, lng}
    */
-  findOneWhereContains: (latlng: LatLng) => Promise<FeatureCollection>;
+  findOneWhereContains: (latlng: LatLngLiteral) => Promise<FeatureCollection>;
   /**
    * function to find GeoJSON shape matching the passed non-zero padded pid.
    * @param pid
@@ -40,7 +40,7 @@ export interface IUserLayerQuery {
   handleParcelDataLayerResponse: (
     response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
     dispatch: Dispatch<any>,
-    latLng?: LatLng,
+    latLng?: LatLngLiteral,
   ) => Promise<void>;
 }
 
@@ -52,7 +52,7 @@ export interface IUserLayerQuery {
 export const saveParcelDataLayerResponse = (
   resp: FeatureCollection<Geometry, GeoJsonProperties>,
   dispatch: Dispatch<any>,
-  latLng?: LatLng,
+  latLng?: LatLngLiteral,
 ) => {
   if (resp?.features?.length > 0) {
     //save with a synthetic event to timestamp the relevance of this data.
@@ -82,7 +82,7 @@ export const saveParcelDataLayerResponse = (
 export const handleParcelDataLayerResponse = (
   response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
   dispatch: Dispatch<any>,
-  latLng?: LatLng,
+  latLng?: LatLngLiteral,
 ) => {
   return response
     .then((resp: FeatureCollection<Geometry, GeoJsonProperties>) => {
@@ -132,7 +132,7 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
-    async (latlng: LatLng): Promise<FeatureCollection> => {
+    async (latlng: LatLngLiteral): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios().get(
           `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=4326;POINT ( ${latlng.lng} ${latlng.lat}))`,

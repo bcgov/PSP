@@ -138,6 +138,7 @@ export const useProperties = () => {
           dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
           dispatch(storeBuildingDetail({ property: response.data, position }));
           dispatch(hideLoading());
+          console.log(response);
           return response.data;
         })
         .catch((axiosError: AxiosError) => {
