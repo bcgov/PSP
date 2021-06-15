@@ -1,6 +1,5 @@
 import './MapSideBarLayout.scss';
 
-import variables from '_variables.module.scss';
 import classNames from 'classnames';
 import AbbreviatedText from 'components/common/AbbreviatedText';
 import TooltipWrapper from 'components/common/TooltipWrapper';
@@ -34,16 +33,19 @@ const HeaderRow = styled.div`
 `;
 
 const CloseIcon = styled(FaWindowClose)`
-  color: ${variables.textColor};
+  color: ${props => props.theme.css.textColor};
   font-size: 30px;
   cursor: pointer;
 `;
 
 const Title = styled.span`
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
   width: 100%;
   text-align: left;
+  border-bottom: 5px solid;
+  border-color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.css.textColor};
 `;
 
 /**
@@ -66,26 +68,28 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
         narrow: size === 'narrow',
       })}
     >
-      <VisibilitySensor partialVisibility={true}>
-        {({ isVisible }: any) => (
-          <>
-            <HeaderRow>
-              <Title className="mr-auto">{title}</Title>
-              {!hidePolicy && <InventoryPolicy />}
-              <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
-                <CloseIcon
-                  title="close"
-                  onClick={() => setShowSideBar(false, undefined, undefined, true)}
-                />
-              </TooltipWrapper>
-            </HeaderRow>
-            {propertyName && (
-              <AbbreviatedText text={propertyName} maxLength={50} className="propertyName" />
-            )}
-            {isVisible ? props.children : null}
-          </>
-        )}
-      </VisibilitySensor>
+      <div>
+        <VisibilitySensor partialVisibility={true}>
+          {({ isVisible }: any) => (
+            <>
+              <HeaderRow>
+                <Title className="mr-auto">{title}</Title>
+                {!hidePolicy && <InventoryPolicy />}
+                <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
+                  <CloseIcon
+                    title="close"
+                    onClick={() => setShowSideBar(false, undefined, undefined, true)}
+                  />
+                </TooltipWrapper>
+              </HeaderRow>
+              {propertyName && (
+                <AbbreviatedText text={propertyName} maxLength={50} className="propertyName" />
+              )}
+              {isVisible ? props.children : null}
+            </>
+          )}
+        </VisibilitySensor>
+      </div>
     </div>
   );
 };

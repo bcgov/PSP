@@ -21,6 +21,7 @@ import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
 import { TenantProvider } from 'tenants';
+import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import Map from './Map';
 import { createPoints } from './mapUtils';
@@ -163,25 +164,21 @@ describe('MapProperties View', () => {
     disableMapFilterBar: boolean = false,
   ) => {
     return (
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Map
-              lat={48.43}
-              lng={-123.37}
-              zoom={14}
-              properties={properties}
-              selectedProperty={selectedProperty}
-              agencies={[]}
-              lotSizes={[]}
-              onMarkerClick={jest.fn()}
-              mapRef={mapRef}
-              administrativeAreas={[]}
-              disableMapFilterBar={disableMapFilterBar}
-            />
-          </Router>
-        </Provider>
-      </TenantProvider>
+      <TestCommonWrapper store={store} history={history}>
+        <Map
+          lat={48.43}
+          lng={-123.37}
+          zoom={14}
+          properties={properties}
+          selectedProperty={selectedProperty}
+          agencies={[]}
+          lotSizes={[]}
+          onMarkerClick={jest.fn()}
+          mapRef={mapRef}
+          administrativeAreas={[]}
+          disableMapFilterBar={disableMapFilterBar}
+        />
+      </TestCommonWrapper>
     );
   };
 

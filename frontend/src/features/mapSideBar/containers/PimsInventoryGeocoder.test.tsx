@@ -23,6 +23,7 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { propertiesSlice } from 'store/slices/properties';
 import { defaultTenant, TenantProvider } from 'tenants';
+import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import PimsInventoryContainer from './PimsInventoryContainer';
 
@@ -122,23 +123,11 @@ jest.mock('hooks/useApi');
 
 const renderContainer = ({ store }: any) =>
   render(
-    <TenantProvider>
-      <Provider store={store ?? getStore()}>
-        <Router history={history}>
-          <ToastContainer
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-          />
-          <Route path="/mapView/:id?">
-            <PimsInventoryContainer />
-          </Route>
-        </Router>
-      </Provider>
-    </TenantProvider>,
+    <TestCommonWrapper store={store ?? getStore()} history={history}>
+      <Route path="/mapView/:id?">
+        <PimsInventoryContainer />
+      </Route>
+    </TestCommonWrapper>,
   );
 
 describe('PimsInventoryContainer Geocoder functionality', () => {
