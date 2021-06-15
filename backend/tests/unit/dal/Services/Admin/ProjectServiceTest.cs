@@ -113,7 +113,7 @@ namespace Pims.Dal.Test.Services.Admin
             Assert.Equal(expectedCount, result.Count());
         }
 
-                [Fact]
+        [Fact]
         public void Get_NotAuthorized()
         {
             // Arrange
@@ -233,6 +233,43 @@ namespace Pims.Dal.Test.Services.Admin
 
             // Assert
             project.Description.Should().Be("A new description");
+        }
+
+        [Fact]
+        public void Update_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var project = EntityHelper.CreateProject(1);
+            helper.CreatePimsContext(user).AddAndSaveChanges(project);
+
+            var service = helper.CreateService<ProjectService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() =>
+                service.Update(project));
+        }
+
+        /// <summary>
+        /// Project does not exist.
+        /// </summary>
+        [Fact]
+        public void Update_KeyNotFound()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView, Permissions.AdminProjects, Permissions.AgencyAdmin);
+            var project = EntityHelper.CreateProject(1);
+            helper.CreatePimsContext(user);
+
+            var service = helper.CreateService<ProjectService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<KeyNotFoundException>(() =>
+                service.Update(project));
         }
         #endregion
 

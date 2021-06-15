@@ -138,6 +138,24 @@ namespace Pims.Dal.Test.Services.Admin
             Assert.Throws<KeyNotFoundException>(() =>
                 service.Remove(province));
         }
+
+        [Fact]
+        public void Remove_Province_NullException()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            helper.CreatePimsContext(user, true);
+
+            var service = helper.CreateService<ProvinceService>(user);
+            var context = helper.GetService<PimsContext>();
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+                service.Remove(null));
+        }
         #endregion
         #endregion
     }

@@ -26,7 +26,7 @@ namespace Pims.Dal.Test.Services.Admin
         #region Tests
         #region Get
         [Fact]
-        public void GetAll_PropertyType()
+        public void GetAll_PropertyClassification()
         {
             // Arrange
             var helper = new TestHelper();
@@ -41,8 +41,9 @@ namespace Pims.Dal.Test.Services.Admin
             var result = service.GetAll();
 
             // Assert
-            // There are 8 classificaitons by default
-            Assert.True(result.Count() > 0);
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IEnumerable<Entity.PropertyClassification>>(result);
+            Assert.NotEmpty(result);
         }
         #endregion
         #region Update
@@ -73,6 +74,29 @@ namespace Pims.Dal.Test.Services.Admin
             Assert.Throws<KeyNotFoundException>(() =>
                 service.Update(classification));
         }
+
+        [Fact]
+        public void Update_Classification_Success()
+        {
+             // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles, Permissions.SystemAdmin);
+            var classification = EntityHelper.CreatePropertyClassification(1, "TEST");
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(classification);
+
+            var service = helper.CreateService<PropertyClassificationService>(user);
+
+
+            var newName = "UPDATED";
+            var updatedClassification = EntityHelper.CreatePropertyClassification(1, newName);
+
+            // Act
+            service.Update(updatedClassification);
+
+            // Assert
+            classification.Name.Should().Be(newName);
+        }
+
         #endregion
         #region Remove
         [Fact]

@@ -166,6 +166,38 @@ namespace Pims.Dal.Test.Services.Admin
             // Assert
             role.Name.Should().Be(newName);
         }
+
+        [Fact]
+        public void Update_Roles_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var role = EntityHelper.CreateRole(Guid.NewGuid(), "Role 1");
+
+            var service = helper.CreateService<RoleService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() =>
+                service.Update(role));
+        }
+
+        [Fact]
+        public void Update_Roles_NullException()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var service = helper.CreateService<RoleService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+                service.Update(null));
+        }
+
         #endregion
         #region Remove
         [Fact]
@@ -185,6 +217,37 @@ namespace Pims.Dal.Test.Services.Admin
 
             // Assert
             Assert.Equal(EntityState.Detached, context.Entry(role).State);
+        }
+
+        [Fact]
+        public void Remove_Roles_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var role = EntityHelper.CreateRole(Guid.NewGuid(), "Role 1");
+
+            var service = helper.CreateService<RoleService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() =>
+                service.Remove(role));
+        }
+
+        [Fact]
+        public void Remove_Roles_NullException()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var service = helper.CreateService<RoleService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+                service.Remove(null));
         }
 
         [Fact]
@@ -208,6 +271,24 @@ namespace Pims.Dal.Test.Services.Admin
             // Assert
             Assert.Equal(EntityState.Detached, context.Entry(role1).State);
             Assert.Equal(EntityState.Detached, context.Entry(role2).State);
+        }
+
+        [Fact]
+        public void RemoveAll_Roles_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+            var role = EntityHelper.CreateRole(Guid.NewGuid(), "Role 1");
+            Guid[] exclusions = new Guid[] {role.Id};
+
+
+            var service = helper.CreateService<RoleService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() =>
+                service.RemoveAll(exclusions));
         }
         #endregion
         #endregion

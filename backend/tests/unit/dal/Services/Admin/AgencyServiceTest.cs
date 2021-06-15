@@ -121,7 +121,9 @@ namespace Pims.Dal.Test.Services.Admin
             var result = service.GetAll();
 
             // Assert
-            Assert.Equal(18, result.Count());
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IEnumerable<Entity.Agency>>(result);
+            Assert.NotEmpty(result);
         }
 
         [Fact]

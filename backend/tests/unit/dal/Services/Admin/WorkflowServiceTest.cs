@@ -102,7 +102,6 @@ namespace Pims.Dal.Test.Services.Admin
             var assess =
                 EntityHelper
                     .CreateWorkflow(2, "Assess", "ASSESS", status.Take(2));
-            var expectedCount = 2;
             init.AddAndSaveChanges (submit, assess);
 
             var service = helper.CreateService<WorkflowService>(user);
@@ -111,7 +110,9 @@ namespace Pims.Dal.Test.Services.Admin
             var result = service.GetAll();
 
             // Assert
-            Assert.Equal(expectedCount, result.Count());
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IEnumerable<Entity.Workflow>>(result);
+            Assert.NotEmpty(result);
         }
 
         [Theory]

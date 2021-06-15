@@ -79,8 +79,9 @@ namespace Pims.Dal.Test.Services.Admin
             var result = service.GetAll();
 
             // Assert
-            // There are 6 default admin areas
-            Assert.Equal(6, result.Count());
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<IEnumerable<Entity.AdministrativeArea>>(result);
+            Assert.NotEmpty(result);
         }
         #endregion
 
