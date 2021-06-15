@@ -7,12 +7,14 @@ Go to - `/pims/openshift/4.0/templates/api`
 Create a build configuration file here - `build.dev.env`
 Update the configuration file and set the appropriate parameters.
 
+**NOTE -** the following configuration references a custom Dockerfile for building .NET 5 code on OpenShift
+
 **Example**
 
 ```conf
 GIT_REF=dev
-DOTNET_CONFIGURATION=Release
 OUTPUT_IMAGE_TAG=latest
+DOCKERFILE_PATH=Dockerfile.ocp
 CPU_LIMIT=1
 MEMORY_LIMIT=2Gi
 ```
@@ -20,7 +22,7 @@ MEMORY_LIMIT=2Gi
 Create the api build and save the template.
 
 ```bash
-oc project 354028-tools
+oc project 3cd915-tools
 oc process -f build.yaml --param-file=build.dev.env | oc create --save-config=true -f -
 ```
 
@@ -38,15 +40,15 @@ Update the configuration file and set the appropriate parameters.
 ```conf
 ENV_NAME=dev
 IMAGE_TAG=dev
-APP_DOMAIN=pims-dev.apps.silver.devops.gov.bc.ca
+APP_DOMAIN=pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca
 APP_PORT=8080
 API_PATH=/api
 ASPNETCORE_ENVIRONMENT=Development
 ASPNETCORE_URLS=http://*:8080
 CONNECTION_STRINGS_PIMS=Server=pims-database,1433;User ID=admin;Database=pims
 KEYCLOAK_AUDIENCE=pims-api
-KEYCLOAK_AUTHORITY=https://dev.oidc.gov.bc.ca/auth/realms/xz0xtue5
-KEYCLOAK_ADMIN_AUTHORITY=https://dev.oidc.gov.bc.ca/auth/admin/realms/xz0xtue5
+KEYCLOAK_AUTHORITY=https://dev.oidc.gov.bc.ca/auth/realms/72x8v9rw
+KEYCLOAK_ADMIN_AUTHORITY=https://dev.oidc.gov.bc.ca/auth/admin/realms/72x8v9rw
 KEYCLOAK_SECRET={SECRET} # This isn't currently a required value for the api configuration.
 KEYCLOAK_SERVICE_ACCOUNT_SECRET={SECRET} # Log into Keycloak and get the pims-service-account secret.
 CHES_USERNAME={SECRET} # Make a request to the CHES team for the username.
@@ -69,7 +71,7 @@ MEMORY_LIMIT=4Gi
 Create the api deployment and save the template.
 
 ```bash
-oc project 354028-dev
+oc project 3cd915-dev
 oc process -f deploy.yaml --param-file=deploy.dev.env | oc create --save-config=true -f -
 ```
 
@@ -94,7 +96,7 @@ tls:
 ```conf
 ENV_NAME=dev
 INSTANCE=
-APP_DOMAIN=pims-dev.apps.silver.devops.gov.bc.ca
+APP_DOMAIN=pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca
 APP_PORT=8080
 API_PATH=/api
 ```
