@@ -295,8 +295,8 @@ pipeline {
           dir(DEVOPS_DIRECTORY) {
             sh """
               RELEASE_TAG=${RELEASE_VERSION}
-              INSTANCE=${INSTANCE}
-              NAMESPACE_OVERRIDE=${NAMESPACE_OVERRIDE}
+              INSTANCE=\${INSTANCE:-}
+              NAMESPACE_OVERRIDE=\${NAMESPACE_OVERRIDE:-}
 
               ./player.sh deploy api ${DESTINATION} -apply
               ./player.sh deploy app ${DESTINATION} -apply
