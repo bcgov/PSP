@@ -2,6 +2,18 @@ PRINT 'Adding Claims'
 INSERT INTO
     dbo.[Claims] ([Id], [Name], [Description], [IsDisabled])
 VALUES
+-- Administration
+(
+    'b9e1e966-d2aa-420f-83c4-617b984d1268',
+    'system-administrator',
+    'Ability to administrate system.',
+    0
+), (
+    '6efd16d4-41ca-4feb-86f5-7598691f7bc6',
+    'agency-administrator',
+    'Ability to administrate agencies.',
+    0
+),
 (
     'fd86ddec-8f9d-4d7b-8c69-956062c5104f',
     'admin-users',
@@ -27,7 +39,10 @@ VALUES
     'admin-projects',
     'Ability to administrate projects.',
     0
-), (
+),
+
+-- Properties
+(
     '91fc8939-2dea-44a1-bd17-a1c8f0fe5dc1',
     'property-view',
     'Ability to view properties.',
@@ -48,6 +63,14 @@ VALUES
     'Ability to delete properties.',
     0
 ), (
+    '4dc0f39a-32f0-43a4-9d90-62fd94f20567',
+    'sensitive-view',
+    'Ability to view sensitive properties.',
+    0
+),
+
+-- Projects
+(
     '41747042-ad4a-4511-858b-67ed70c8e7e9',
     'dispose-request',
     'Ability to request to dispose properties.',
@@ -56,11 +79,6 @@ VALUES
     'd11ce982-f22b-4cd2-87d4-87b8f7f9a3c8',
     'dispose-approve',
     'Ability to approve disposal of a properties.',
-    0
-), (
-    '4dc0f39a-32f0-43a4-9d90-62fd94f20567',
-    'sensitive-view',
-    'Ability to view sensitive properties.',
     0
 ), (
     '9e578c1f-1c60-4a5f-98b5-966b079a35e9',
@@ -82,15 +100,23 @@ VALUES
     'project-delete',
     'Ability to delete projects.',
     0
-), (
-    'b9e1e966-d2aa-420f-83c4-617b984d1268',
-    'system-administrator',
-    'Ability to administrate system.',
-    0
-), (
-    '6efd16d4-41ca-4feb-86f5-7598691f7bc6',
-    'agency-administrator',
-    'Ability to administrate agencies.',
-    0
 )
+
+-- Reports
+, (
+    'e13d1c7d-f350-4aee-808e-c9603c29479b',
+    'reports-view',
+    'Ability to view reports.',
+    0
+), (
+    '0fbd370d-6cde-41e7-9039-f05ae60d75da',
+    'reports-spl',
+    'Ability to view SPL reports.',
+    0
+), (
+    '81ded21c-ed32-4694-8f33-79ef17833f2b',
+    'reports-spl-admin',
+    'Ability to view, create, and delete SPL Financial Reports.',
+    0
+);
 

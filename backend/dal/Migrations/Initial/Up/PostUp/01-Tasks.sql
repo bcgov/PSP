@@ -67,14 +67,6 @@ INSERT INTO dbo.[Tasks] (
     , 1
     , 2
 ), (
-    8
-    , 'Appraisal completed'
-    , 0
-    , 'An appraisal has been reviewed and completed.'
-    , 11
-    , 1
-    , 3
-), (
     9
     , 'Preparation and due diligence'
     , 0
@@ -110,7 +102,7 @@ INSERT INTO dbo.[Tasks] (
     13
     , 'Confirmation has been received from agency ADM'
     , 0
-    , 'ADM has confirmed request for exemption'
+    , 'ADM has approved the request for exemption'
     , 13
     , 0
     , 2
@@ -130,22 +122,6 @@ INSERT INTO dbo.[Tasks] (
     , 32 --Disposed
     , 0
     , 2
-), (
-    16
-    , 'Appraisal completed'
-    , 0
-    , 'An appraisal has been reviewed and completed.'
-    , 32 --Disposed
-    , 0
-    , 3
-), (
-    17
-    , 'Bid Rigging, Collusion and Bias'
-    , 0
-    , 'I confirm I have reviewed the offer and to the best of my knowledge confirm there is no identifiable opportunity for bid rigging, collusion and bias'
-    , 42 --Contract in Place
-    , 0
-    , 4
 )
 
 SET IDENTITY_INSERT dbo.[Tasks] OFF

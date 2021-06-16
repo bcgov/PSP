@@ -297,12 +297,23 @@ INSERT INTO dbo.[ProjectStatus] (
 ), (
     42
     , 20
+    , 'Contract in Place - Conditional'
     , 'Contract in Place'
-    , 'Contract in Place'
-    , 'SPL-CIP'
+    , 'SPL-CIP-C'
     , 0
     , 0
-    , 'The project has received an offer either conditional or unconditional.'
+    , 'The project has received a conditional offer.'
+    , '/projects/contractinplace'
+    , 0
+), (
+    43
+    , 20
+    , 'Contract in Place - Unconditional'
+    , 'Contract in Place'
+    , 'SPL-CIP-U'
+    , 0
+    , 0
+    , 'The project has received an unconditional offer.'
     , '/projects/contractinplace'
     , 0
 )

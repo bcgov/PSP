@@ -379,9 +379,9 @@ INSERT INTO dbo.[ProjectStatusTransitions] (
 ), (
     6 -- SPL
     , 41 -- Marketing
-    , 'Contract in Place'
+    , 'Contract in Place - Conditional'
     , 6 -- SPL
-    , 42 -- Contract in Place
+    , 42 -- Contract in Place - Conditional
     , 1
 ), (
     6 -- SPL
@@ -410,5 +410,182 @@ INSERT INTO dbo.[ProjectStatusTransitions] (
     , 'Cancel Project'
     , 6 -- SPL
     , 23 -- Cancelled
+    , 0
+),
+
+-- Allow progression from Pre-Marketing to Contract in Place
+(
+    6 -- SPL
+    , 40 -- Pre-Marketing
+    , 'Contract in Place - Conditional'
+    , 6 -- SPL
+    , 42 -- Contract in Place - Conditional
+    , 0
+), (
+    6 -- SPL
+    , 40 -- Pre-Marketing
+    , 'Contract in Place - Unconditional'
+    , 6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 0
+),
+
+-- Update Contract in Place - Conditional
+(
+    6 -- SPL
+    , 42 -- Contract in Place - Conditional
+    , 'Restart Marketing'
+    , 6 -- SPL
+    , 41 -- Marketing
+    , 0
+), (
+    6 -- SPL
+    , 42 -- Contract in Place - Conditional
+    , 'Contract in Place - Unconditional'
+    , 6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 1
+),
+
+-- Add new Contract in Place - Unconditional status
+(
+    6 -- SPL
+    , 41 -- Marketing
+    , 'Contract in Place - Unconditional'
+    , 6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 1
+), (
+    6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 'Dispose Externally'
+    , 6 -- SPL
+    , 32 -- Disposed
+    , 1
+), (
+    6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 'Restart Marketing'
+    , 6 -- SPL
+    , 41 -- Marketing
+    , 0
+), (
+    6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 'Restart Pre-Marketing'
+    , 6 -- SPL
+    , 40 -- Pre-Marketing
+    , 0
+), (
+    6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 'Cancel Project'
+    , 6 -- SPL
+    , 23 -- Cancelled
+    , 0
+),
+
+-- Provide way to remove from SPL.
+(
+    6 -- SPL
+    , 40 -- Pre-Marketing
+    , 'Switch to not included in SPL'
+    , 5 -- ERP
+    , 22 -- Not in SPL
+    , 0
+),
+
+-- Provide way to return to SPL
+(
+    5 -- ERP
+    , 22 -- Not in SPL
+    , 'Switch to not included in SPL'
+    , 6 -- SPL
+    , 21 -- Approved for SPL
+    , 0
+),
+
+(
+    5 -- ERP
+    , 14 -- Approved for ERP
+    , 'Approved for SPL'
+    , 6 -- SPL
+    , 21 -- Approved for SPL
+    , 1
+),
+
+-- Allow progression from Approved for ERP to Cancelled
+(
+    5 -- ERP
+    , 14 -- Approved for ERP
+    , 'Cancel Project'
+    , 5 -- ERP
+    , 23 -- Cancelled
+    , 0
+),
+
+-- Allow progression from Not in SPL to Cancelled
+(
+    5 -- ERP
+    , 22 -- Not in SPL
+    , 'Cancel Project'
+    , 5 -- ERP
+    , 23 -- Cancelled
+    , 0
+),
+
+-- Allow progression from Approved for SPL to Cancelled
+(
+    6 -- SPL
+    , 21 -- Approved for SPL
+    , 'Cancel Project'
+    , 6 -- SPL
+    , 23 -- Cancelled
+    , 0
+),
+
+-- Allow progression from Not in SPL to Cancelled
+(
+    4 -- ASSESS-EX-DISPOSAL
+    , 22 -- Not in SPL
+    , 'Cancel Project'
+    , 4 -- ASSESS-EX-DISPOSAL
+    , 23 -- Cancelled
+    , 0
+),
+-- Allow progression from Not in SPL to Transfer within GRE
+(
+    4 -- ASSESS-EX-DISPOSAL
+    , 22 -- Not in SPL
+    , 'Transfer within GRE'
+    , 4 -- ASSESS-EX-DISPOSAL
+    , 20 -- Transferred within GRE
+    , 0
+),
+-- Allow progression from Not in SPL to Approved for SPL
+(
+    4 -- 'ASSESS-EX-DISPOSAL'
+    , 22 -- Not in SPL
+    , 'Proceed to SPL'
+    , 6 -- SPL
+    , 21 -- Approved for SPL
+    , 0
+),
+-- Allow progression from Not in SPL to Approved for ERP
+(
+    4 -- 'ASSESS-EX-DISPOSAL'
+    , 22 -- Not in SPL
+    , 'Proceed to ERP'
+    , 5 -- ERP
+    , 14 -- Approved for ERP
+    , 0
+),
+-- Allow progression from Approved for ERP to Not in SPL
+(
+    5 -- ERP
+    , 14 -- Approved for ERP
+    , 'Proceed to Not in SPL'
+    , 5 -- ERP
+    , 22 -- Not in SPL
     , 0
 )

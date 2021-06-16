@@ -187,17 +187,22 @@ INSERT INTO dbo.[WorkflowProjectStatus] (
     , 3
 ), (
     6 -- SPL
-    , 42 -- Contract in Place
+    , 42 -- Contract in Place - Conditional
     , 0
     , 4
 ), (
     6 -- SPL
+    , 43 -- Contract in Place - Unconditional
+    , 0
+    , 5
+), (
+    6 -- SPL
     , 32 -- Disposed
     , 1
-    , 5
+    , 6
 ), (
     6 -- SPL
     , 23 -- Cancelled
     , 1
-    , 5
+    , 7
 )

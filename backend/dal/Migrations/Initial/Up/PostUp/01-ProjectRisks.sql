@@ -12,32 +12,25 @@ INSERT INTO dbo.[ProjectRisks] (
     , [SortOrder]
 ) VALUES (
     1
-    , 'COMP'
-    , 'Complete'
-    , '100% of the property value'
+    , 'GREEN'
+    , 'Green'
+    , '90-100% of the property value'
     , 0
     , 1
 ), (
     2
-    , 'GREEN'
-    , 'Green'
-    , '90% of the property value'
-    , 0
-    , 2
-), (
-    3
     , 'YELLOW'
     , 'Yellow'
     , '50% of the property value'
     , 0
-    , 3
+    , 2
 ), (
-    4
+    3
     , 'RED'
     , 'Red'
     , '0% of the property value'
     , 0
-    , 4
+    , 3
 )
 
 SET IDENTITY_INSERT dbo.[ProjectRisks] OFF

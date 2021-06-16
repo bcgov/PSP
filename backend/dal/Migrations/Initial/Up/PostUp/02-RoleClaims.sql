@@ -178,72 +178,6 @@ VALUES
     '7a7b2549-ae85-4ad6-a8d3-3a5f8d4f9ca5'
     , 'dbe02a47-34ec-48f9-9df5-3d959c46e174'   -- project-edit
 ),
-    -- assistant-deputy-minister
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , '91fc8939-2dea-44a1-bd17-a1c8f0fe5dc1'   -- property-view
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , '5fd96f19-abe1-47e7-8a54-0a707bc3e4a4'   -- property-add
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , '223664c7-650c-40ac-8581-f40e10064537'   -- property-edit
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , '4dc0f39a-32f0-43a4-9d90-62fd94f20567'   -- sensitive-view
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , '9e578c1f-1c60-4a5f-98b5-966b079a35e9'   -- project-view
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , 'cbf68973-e239-41a9-be27-bf0ede3bf335'   -- project-add
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , 'dbe02a47-34ec-48f9-9df5-3d959c46e174'   -- project-edit
-),
-(
-    'fbe5fc86-f69e-4610-a746-0113d29e04cd'
-    , 'd6e91b9c-9728-4e62-8d91-319af2701b9b'   -- project-delete
-),
-    -- executive-director
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , '91fc8939-2dea-44a1-bd17-a1c8f0fe5dc1'   -- property-view
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , '5fd96f19-abe1-47e7-8a54-0a707bc3e4a4'   -- property-add
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , '223664c7-650c-40ac-8581-f40e10064537'   -- property-edit
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , '4dc0f39a-32f0-43a4-9d90-62fd94f20567'   -- sensitive-view
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , '9e578c1f-1c60-4a5f-98b5-966b079a35e9'   -- project-view
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , 'cbf68973-e239-41a9-be27-bf0ede3bf335'   -- project-add
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , 'dbe02a47-34ec-48f9-9df5-3d959c46e174'   -- project-edit
-),
-(
-    '6cdfeb00-6f67-4457-b46a-85bbbc97066c'
-    , 'd6e91b9c-9728-4e62-8d91-319af2701b9b'   -- project-delete
-),
     -- SRES
 (
     '08c52eec-6917-4512-ac02-7d7ff89ed7a6'
@@ -264,4 +198,18 @@ VALUES
 (
     '08c52eec-6917-4512-ac02-7d7ff89ed7a6'
     , 'd11ce982-f22b-4cd2-87d4-87b8f7f9a3c8'   -- dispose-approve
-)
+),
+    -- SRES Financial Manager
+(
+    'd416f362-1e6f-4e24-a561-c6bb45a35194'     -- SRES Financial Manager
+    , '81ded21c-ed32-4694-8f33-79ef17833f2b'   -- reports-spl-admin
+),
+    -- SRES Financial Manager
+(
+    '5c6cea5b-9b7c-47e8-852c-693e90ed815e'     -- SRES Financial Reporter
+    , '0fbd370d-6cde-41e7-9039-f05ae60d75da'   -- reports-spl
+),
+(
+    '5c6cea5b-9b7c-47e8-852c-693e90ed815e'     -- SRES Financial Reporter
+    , 'e13d1c7d-f350-4aee-808e-c9603c29479b'   -- reports-view
+);

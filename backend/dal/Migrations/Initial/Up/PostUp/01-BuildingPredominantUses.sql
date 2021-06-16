@@ -26,50 +26,57 @@ INSERT INTO dbo.[BuildingPredominateUses] (
     , 0
 ), (
     5
-    , 'Senior Housing (Assisted Living / Skilled Nursing)'
+    , 'Shelters / Orphanages / Children''s Homes / Halfway Homes'
     , 0
 ), (
     6
-    , 'Shelters / Orphanages / Children’s Homes / Halfway Homes'
-    , 0
-), (
-    7
     , 'Social Assistance Housing'
     , 0
 ), (
-    8
+    7
     , 'Storage'
     , 0
 ), (
-    9
+    8
     , 'Storage Vehicle'
     , 0
 ), (
-    10
+    9
     , 'Trailer Office'
     , 0
 ), (
-    11
+    10
     , 'Trailer Other'
     , 0
 ), (
+    11
+    , 'University / College'
+    , 0
+), (
     12
-    , 'Training Center'
-    , 0
-), (
-    13
-    , 'Transportation (Airport / Rail / Bus station)'
-    , 0
-), (
-    14
-    , 'University / Collect'
-    , 0
-), (
-    15
     , 'Warehouse'
     , 0
 ), (
-    16
+    13
     , 'Weigh Station'
     , 0
+), (
+    14
+    , 'Marina'
+    , 0
+), (
+    15
+    , 'Jail / Prison'
+    , 0
+), (
+    16
+    , 'Community / Recreation Centre'
+    , 0
+), (
+    17
+    , 'Dormitory / Residence Halls'
+    , 0
 )
+
+
+

@@ -42,34 +42,26 @@ VALUES
         0
     ),
     (
-        'fbe5fc86-f69e-4610-a746-0113d29e04cd',
-        'Assistant Deputy Minister',
-        'Assistant Deputy Minister can manage properties within their agencies.',
-        1,
-        0,
-        0
-    ),
-    (
-        'c9fb2167-d675-455f-96ff-fb0c416246aa',
-        'Assistant Deputy Minister Assistant',
-        'Assistant Deputy Minister Assistant can manage properties within their agencies.',
-        1,
-        0,
-        0
-    ),
-    (
-        '6cdfeb00-6f67-4457-b46a-85bbbc97066c',
-        'Executive Director',
-        'Executive Director can manage properties within their agencies.',
-        1,
-        0,
-        0
-    ),
-    (
         '08c52eec-6917-4512-ac02-7d7ff89ed7a6',
         'SRES',
         'SRES group provides a way to add additional claims to users (i.e. property-delete).',
         0,
         0,
         0
-    )
+    ),
+    (
+        'd416f362-1e6f-4e24-a561-c6bb45a35194',
+        'SRES Financial Manager',
+        'SRES Financial Manager has claims specific to administering and viewing reports of financial data.',
+        0,
+        0,
+        0
+    ),
+    (
+        '5c6cea5b-9b7c-47e8-852c-693e90ed815e',
+        'SRES Financial Reporter',
+        'The SRES Financial Reporter can view, create, and delete non-final SPL reports.',
+        0,
+        0,
+        0
+    );

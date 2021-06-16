@@ -102,9 +102,23 @@ VALUES
     , 3
     , 30
 ), (
+    12 -- 30 day ERP notification - Watching Agencies
+    , NULL
+    , 30 -- In ERP
+    , 2
+    , 3
+    , 30
+), (
     13 -- 60 day ERP notification - Watching Agencies
     , NULL
     , 14
+    , 2
+    , 3
+    , 60
+), (
+    13 -- 60 day ERP notification - Watching Agencies
+    , NULL
+    , 30 -- In ERP
     , 2
     , 3
     , 60
@@ -115,4 +129,12 @@ VALUES
     , 2
     , 3
     , 90
+), (
+    14 -- 90 day ERP notification - Watching Agencies
+    , NULL
+    , 30 -- In ERP
+    , 2
+    , 3
+    , 90
 )
+
