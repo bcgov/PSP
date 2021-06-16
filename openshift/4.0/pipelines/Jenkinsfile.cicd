@@ -62,6 +62,13 @@ pipeline {
     DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
     VANITY_URL = sh(script: 'echo "${VANITY_URL:-https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/}"', returnStdout: true).trim()
 
+    // These two parameters allow the deployment of multiple "instances" to a single namespace
+    // E.g. to deploy a "test" instance to the DEV namespace in OpenShift:
+    //      INSTANCE = "-test" (or "-01", etc)
+    //      NAMESPACE_OVERRIDE = "3cd915-dev"
+    INSTANCE = sh(script: 'echo "${INSTANCE:-}"', returnStdout: true).trim()
+    NAMESPACE_OVERRIDE = sh(script: 'echo "${NAMESPACE_OVERRIDE:-}"', returnStdout: true).trim()
+
     // To enable pipeline verbose debug output set to "true"
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-false}"', returnStdout: true).trim()
   }
@@ -286,8 +293,14 @@ pipeline {
           }
 
           dir(DEVOPS_DIRECTORY) {
-            sh "RELEASE_TAG=${RELEASE_VERSION} ./player.sh deploy api ${DESTINATION} -apply"
-            sh "RELEASE_TAG=${RELEASE_VERSION} ./player.sh deploy app ${DESTINATION} -apply"
+            sh """
+              RELEASE_TAG=${RELEASE_VERSION}
+              INSTANCE=${INSTANCE}
+              NAMESPACE_OVERRIDE=${NAMESPACE_OVERRIDE}
+
+              ./player.sh deploy api ${DESTINATION} -apply
+              ./player.sh deploy app ${DESTINATION} -apply
+            """
           }
         }
       }
