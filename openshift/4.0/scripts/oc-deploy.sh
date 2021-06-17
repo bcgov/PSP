@@ -29,29 +29,40 @@ source "$(dirname ${0})/common.sh"
 SHORTNAME=${1:-}
 ENVIRONMENT_NAME="${2:-dev}"
 RELEASE_TAG=${RELEASE_TAG:-latest}
-PROJ_TARGET="${PROJ_PREFIX}-${ENVIRONMENT_NAME}"
 
-# E.g. <deploymentname>-prod
+# These two parameters allow the deployment of multiple "instances" to a single namespace
+# E.g. to deploy a "test" instance to the DEV namespace in OpenShift:
+#      INSTANCE = "-test" (or "-01", etc)
+#      NAMESPACE_OVERRIDE = "3cd915-dev"
+INSTANCE=${INSTANCE:-}
+NAMESPACE_OVERRIDE=${NAMESPACE_OVERRIDE:-}
+
+# Target namespace for deployments. Can be overwritten with NAMESPACE_OVERRIDE
+TARGET_NAMESPACE="${NAMESPACE_OVERRIDE:-${PROJ_PREFIX}-${ENVIRONMENT_NAME}}"
+
+# E.g. pims-api (no instance) OR
+#      pims-api-test (INSTANCE = "-test") to deploy a "test" instance onto the DEV namespace in OCP
 #
-IMG_DEST="${APP_NAME}-${SHORTNAME}"
-DEPLOYMENT_NAME="${APP_NAME}-${SHORTNAME}"
+DEPLOYMENT_NAME="${APP_NAME}-${SHORTNAME}${INSTANCE}"
+
+IMG_STREAM="${APP_NAME}-${SHORTNAME}"
 
 # Trigger the deployment manually when both tags reference the same image hash - retagging won't trigger a deployment
 #
-HASH_SOURCE="$(oc -n ${PROJ_TOOLS} get istag ${IMG_DEST}:${RELEASE_TAG} -o jsonpath='{.image.dockerImageReference}')"
-HASH_TARGET="$(oc -n ${PROJ_TOOLS} get istag ${IMG_DEST}:${ENVIRONMENT_NAME} -o jsonpath='{.image.dockerImageReference}')"
+HASH_SOURCE="$(oc -n ${PROJ_TOOLS} get istag ${IMG_STREAM}:${RELEASE_TAG} -o jsonpath='{.image.dockerImageReference}')"
+HASH_TARGET="$(oc -n ${PROJ_TOOLS} get istag ${IMG_STREAM}:${ENVIRONMENT_NAME} -o jsonpath='{.image.dockerImageReference}')"
 MANUAL_DEPLOY=$([ "${HASH_SOURCE:-}" != "${HASH_TARGET:-}" ] || echo true)
 
 # Cancel all previous deployments
 #
-OC_CANCEL_ALL_PREV_DEPLOY="oc -n ${PROJ_TARGET} rollout cancel dc/${DEPLOYMENT_NAME} || true"
+OC_CANCEL_ALL_PREV_DEPLOY="oc -n ${TARGET_NAMESPACE} rollout cancel dc/${DEPLOYMENT_NAME} || true"
 
 # Deploy and follow the progress
 #
-OC_IMG_RETAG="oc -n ${PROJ_TOOLS} tag ${IMG_DEST}:${RELEASE_TAG} ${IMG_DEST}:${ENVIRONMENT_NAME}"
-OC_DEPLOY="oc -n ${PROJ_TARGET} rollout latest dc/${DEPLOYMENT_NAME}"
+OC_IMG_RETAG="oc -n ${PROJ_TOOLS} tag ${IMG_STREAM}:${RELEASE_TAG} ${IMG_STREAM}:${ENVIRONMENT_NAME}"
+OC_DEPLOY="oc -n ${TARGET_NAMESPACE} rollout latest dc/${DEPLOYMENT_NAME}"
 [ "${MANUAL_DEPLOY}" ] || OC_DEPLOY=""
-OC_STATUS="oc -n ${PROJ_TARGET} rollout status dc/${DEPLOYMENT_NAME} --watch"
+OC_STATUS="oc -n ${TARGET_NAMESPACE} rollout status dc/${DEPLOYMENT_NAME} --watch"
 
 if [ "${APPLY}" ]; then
   echo "canceling previous deployments..."
@@ -61,8 +72,8 @@ if [ "${APPLY}" ]; then
   # Check previous deployment statuses before moving onto new deploying
   while [ $count -le $timeout ]; do
     sleep 1
-    PENDINGS="$(oc -n ${PROJ_TARGET} rollout history dc/${DEPLOYMENT_NAME} | awk '{print $2}' | grep -c Pending || true)"
-    RUNNINGS="$(oc -n ${PROJ_TARGET} rollout history dc/${DEPLOYMENT_NAME} | awk '{print $2}' | grep -c Running || true)"
+    PENDINGS="$(oc -n ${TARGET_NAMESPACE} rollout history dc/${DEPLOYMENT_NAME} | awk '{print $2}' | grep -c Pending || true)"
+    RUNNINGS="$(oc -n ${TARGET_NAMESPACE} rollout history dc/${DEPLOYMENT_NAME} | awk '{print $2}' | grep -c Running || true)"
     if [ "${PENDINGS}" == 0 ] && [ "${RUNNINGS}" == 0 ]; then
       # No pending or running replica controllers so exit the while loop
       break 2
