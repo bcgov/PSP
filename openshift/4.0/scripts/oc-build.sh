@@ -32,7 +32,7 @@ source "$(dirname ${0})/common.sh"
 OC_JOB_NAME=${OC_JOB_NAME:-dev}
 SHORTNAME=${1:-}
 
-# E.g. <buildname>-master
+# E.g. pims-api.dev
 #
 BUILD_NAME="${APP_NAME}-${SHORTNAME}.${OC_JOB_NAME}"
 

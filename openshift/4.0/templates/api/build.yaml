@@ -53,7 +53,7 @@ parameters:
   - name: DOCKERFILE_PATH
     displayName: Path to Dockerfile
     description: Path for alternate Dockerfile to use for build
-    value: Dockerfile
+    value: Dockerfile.ocp
 
   - name: OUTPUT_IMAGE_TAG
     displayName: Output Image Tag
