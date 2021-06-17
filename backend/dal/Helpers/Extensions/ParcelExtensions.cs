@@ -25,7 +25,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <exception type="DbUpdateException">The PID and PIN must be unique.</exception>
         public static void ThrowIfNotUnique(this DbSet<Entity.Parcel> parcels, Entity.Parcel parcel)
         {
-            if (parcel.PropertyTypeId == (int)Entity.PropertyTypes.Subdivision)
+            if (parcel.PropertyTypeId == (long)Entity.PropertyTypes.Subdivision)
             {
                 return;
             }
@@ -76,8 +76,8 @@ namespace Pims.Dal.Helpers.Extensions
             if (filter.Agencies?.Any() == true)
             {
                 // Get list of sub-agencies for any agency selected in the filter.
-                var filterAgencies = filter.Agencies.Select(a => (int?)a);
-                var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (int?)ac.Id)).ToArray()).Distinct();
+                var filterAgencies = filter.Agencies.Select(a => (long?)a);
+                var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (long?)ac.Id)).ToArray()).Distinct();
                 query = query.Where(p => agencies.Contains(p.AgencyId));
             }
             if (!String.IsNullOrWhiteSpace(filter.PID))
@@ -85,8 +85,6 @@ namespace Pims.Dal.Helpers.Extensions
                 var pidValue = filter.PID.Replace("-", "").Trim();
                 if (Int32.TryParse(pidValue, out int pid))
                     query = query.Include(p => p.Buildings)
-                        .Include(p => p.CreatedBy)
-                        .Include(p => p.UpdatedBy)
                         .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
                         .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
                         .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
@@ -104,8 +102,6 @@ namespace Pims.Dal.Helpers.Extensions
                 var pinValue = filter.PIN.Trim();
                 if (Int32.TryParse(pinValue, out int pin))
                     query = query.Include(p => p.Buildings)
-                        .Include(p => p.CreatedBy)
-                        .Include(p => p.UpdatedBy)
                         .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
                         .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
                         .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
@@ -185,7 +181,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="parcel"></param>
         /// <returns></returns>
-        public static int? GetId(this Entity.Parcel parcel)
+        public static long? GetId(this Entity.Parcel parcel)
         {
             return parcel?.Id;
         }

@@ -10,7 +10,7 @@ namespace Pims.Dal.Services.Admin
     public interface IClaimService : IBaseService<Claim>
     {
         Paged<Claim> Get(int page, int quantity, string name = null);
-        Claim Get(Guid id);
+        Claim Get(Guid key);
         Claim GetByName(string name);
         int RemoveAll(Guid[] exclude);
     }

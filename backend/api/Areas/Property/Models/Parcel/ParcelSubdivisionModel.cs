@@ -4,7 +4,7 @@ namespace Pims.Api.Areas.Property.Models.Parcel
 {
     public class ParcelSubdivisionModel : Model.BaseModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string PID { get; set; }
 

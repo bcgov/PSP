@@ -10,7 +10,7 @@ namespace Pims.Api.Areas.Keycloak.Models.Role.Update
         /// get/set - The rowversion of the item.
         /// </summary>
         /// <value></value>
-        public string RowVersion { get; set; }
+        public long RowVersion { get; set; }
         #endregion
     }
 }

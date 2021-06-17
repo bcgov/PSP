@@ -1,27 +1,38 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Task class, provides an entity for the datamodel to manage a list of process tasks that represent a to-do list.
     /// </summary>
-    public class Task : LookupEntity<int>
+    [MotiTable("PIMS_TASK", "TASK")]
+    public class Task : LookupEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify Task.
+        /// </summary>
+        [Column("TASK_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - A description of the tier.
         /// </summary>
+        [Column("DESCRIPTION")]
         public string Description { get; set; }
 
         /// <summary>
         /// get/set - Whether this task is required before a process can be completed.
         /// </summary>
+        [Column("IS_OPTIONAL")]
         public bool IsOptional { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the project status.
         /// </summary>
-        public int? StatusId { get; set; }
+        [Column("PROJECT_STATUS_ID")]
+        public long? StatusId { get; set; }
 
         /// <summary>
         /// get/set - The project status this task is associated with.

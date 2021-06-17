@@ -4,49 +4,49 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- This script provides a way to union both parcels and buildings into a single result of properties.
 -- Updating view to support many-to-many parcels and buildings.TEMPORARY
-CREATE   VIEW [dbo].[View_Properties] AS
+CREATE VIEW [dbo].[PROPERTY_VW] AS
 SELECT
-    p.[Id]
-    , p.[RowVersion]
-    , p.[PropertyTypeId]
-    , p.[ClassificationId]
-    , [Classification] = c.[Name]
-    , p.[AgencyId]
-    , [Agency] = ISNULL(pa.[Name], a.[Name])
-    , [AgencyCode] = ISNULL(pa.[Code], a.[Code])
+    p.[PARCEL_ID] AS [ID]
+    , p.[CONCURRENCY_CONTROL_NUMBER] AS [RowVersion]
+    , p.[PROPERTY_TYPE_ID] AS [PropertyTypeId]
+    , p.[PROPERTY_CLASSIFICATION_ID] AS [ClassificationId]
+    , [Classification] = c.[NAME]
+    , p.[AGENCY_ID] AS [AgencyId]
+    , [Agency] = ISNULL(pa.[NAME], a.[NAME])
+    , [AgencyCode] = ISNULL(pa.[CODE], a.[CODE])
     , [SubAgency] = (
-        SELECT CASE WHEN pa.[Id] IS NOT NULL
-            THEN a.[Name]
+        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+            THEN a.[NAME]
             ELSE NULL
         END)
     , [SubAgencyCode] = (
-        SELECT CASE WHEN pa.[Id] IS NOT NULL
-            THEN a.[Code]
+        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+            THEN a.[CODE]
             ELSE NULL
         END)
-    , p.[AddressId]
-    , [Address] = TRIM(ISNULL(adr.[Address1], '') + ' ' + ISNULL(adr.[Address2], ''))
-    , [AdministrativeArea] = adr.[AdministrativeArea]
-    , [Province] = ap.[Name]
-    , adr.[Postal]
-    , p.[ProjectNumbers]
-    , p.[Name]
-    , p.[Description]
-    , p.[Location]
-    , p.[Boundary]
-    , p.[IsSensitive]
-    , p.[IsVisibleToOtherAgencies]
+    , p.[ADDRESS_ID] AS [AddressId]
+    , [Address] = TRIM(ISNULL(adr.[ADDRESS1], '') + ' ' + ISNULL(adr.[ADDRESS2], ''))
+    , [AdministrativeArea] = adr.[ADMINISTRATIVE_AREA]
+    , [Province] = ap.[NAME]
+    , adr.[POSTAL] AS [Postal]
+    , p.[PROJECT_NUMBERS] AS [ProjectNumbers]
+    , p.[NAME] AS [Name]
+    , p.[DESCRIPTION] AS [Description]
+    , p.[LOCATION] AS [Location]
+    , p.[BOUNDARY] AS [Boundary]
+    , p.[IS_SENSITIVE] AS [IsSensitive]
+    , p.[IS_VISIBLE_TO_OTHER_AGENCIES] AS [IsVisibleToOtherAgencies]
 
     -- Parcel Properties
     , p.[PID]
     , p.[PIN]
-    , [LandArea] = p.[LandArea]
-    , [LandLegalDescription] = p.[LandLegalDescription]
-    , [Zoning] = p.[Zoning]
-    , [ZoningPotential] = p.[ZoningPotential]
+    , [LandArea] = p.[LAND_AREA]
+    , [LandLegalDescription] = p.[LAND_LEGAL_DESCRIPTION]
+    , [Zoning] = p.[ZONING]
+    , [ZoningPotential] = p.[ZONING_POTENTIAL]
 
     -- Building Properties
-    , [ParcelId] = p.[Id]
+    , [ParcelId] = p.[PARCEL_ID]
     , [BuildingConstructionTypeId] = 0
     , [BuildingConstructionType] = null
     , [BuildingFloorCount] = 0
@@ -60,157 +60,157 @@ SELECT
     , [OccupantName] = null
     , [TransferLeaseOnSale] = CAST(0 AS BIT)
 
-    , [AssessedLand] = eas.[Value]
-    , [AssessedLandDate] = eas.[Date]
-    , [AssessedBuilding] = eim.[Value]
-    , [AssessedBuildingDate] = eim.[Date]
-    , [Market] = ISNULL(fe.[Value], 0)
-    , [MarketFiscalYear] = fe.[FiscalYear]
-    , [NetBook] = ISNULL(fn.[Value], 0)
-    , [NetBookFiscalYear] = fn.[FiscalYear]
-FROM dbo.[Parcels] p
-LEFT JOIN (SELECT DISTINCT SubdivisionId FROM dbo.[ParcelParcels]) sp ON p.[Id] = sp.[SubdivisionId]
-JOIN dbo.[PropertyClassifications] c ON p.[ClassificationId] = c.[Id]
-LEFT JOIN dbo.[Agencies] a ON p.[AgencyId] = a.[Id]
-LEFT JOIN dbo.[Agencies] pa ON a.[ParentId] = pa.[Id]
-JOIN dbo.[Addresses] adr ON p.[AddressId] = adr.[Id]
-JOIN dbo.[Provinces] ap ON adr.[ProvinceId] = ap.[Id]
+    , [AssessedLand] = eas.[VALUE]
+    , [AssessedLandDate] = eas.[DATE]
+    , [AssessedBuilding] = eim.[VALUE]
+    , [AssessedBuildingDate] = eim.[DATE]
+    , [Market] = ISNULL(fe.[VALUE], 0)
+    , [MarketFiscalYear] = fe.[FISCAL_YEAR]
+    , [NetBook] = ISNULL(fn.[VALUE], 0)
+    , [NetBookFiscalYear] = fn.[FISCAL_YEAR]
+FROM dbo.[PIMS_PARCEL] p
+LEFT JOIN (SELECT DISTINCT [SUBDIVISION_PARCEL_ID] FROM dbo.[PIMS_PARCEL_PARCEL]) sp ON p.[PARCEL_ID] = sp.[SUBDIVISION_PARCEL_ID]
+JOIN dbo.[PIMS_PROPERTY_CLASSIFICATION] c ON p.[PROPERTY_CLASSIFICATION_ID] = c.[PROPERTY_CLASSIFICATION_ID]
+LEFT JOIN dbo.[PIMS_AGENCY] a ON p.[AGENCY_ID] = a.[AGENCY_ID]
+LEFT JOIN dbo.[PIMS_AGENCY] pa ON a.[PARENT_AGENCY_ID] = pa.[AGENCY_ID]
+JOIN dbo.[PIMS_ADDRESS] adr ON p.[ADDRESS_ID] = adr.[ADDRESS_ID]
+JOIN dbo.[PIMS_PROVINCE] ap ON adr.[PROVINCE_ID] = ap.[PROVINCE_ID]
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [Date]
-    FROM dbo.[ParcelEvaluations]
-    WHERE [ParcelId] = p.[Id]
-        AND [Key] = 0 -- Assessed Land
-    ORDER BY [Date] DESC
+        [VALUE]
+        , [DATE]
+    FROM dbo.[PIMS_PARCEL_EVALUATION]
+    WHERE [PARCEL_ID] = p.[PARCEL_ID]
+        AND [KEY] = 0 -- Assessed Land
+    ORDER BY [DATE] DESC
 ) AS eas
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [Date]
-    FROM dbo.[ParcelEvaluations]
-    WHERE [ParcelId] = p.[Id]
-        AND [Key] = 2 -- Assessed Building
-    ORDER BY [Date] DESC
+        [VALUE]
+        , [DATE]
+    FROM dbo.[PIMS_PARCEL_EVALUATION]
+    WHERE [PARCEL_ID] = p.[PARCEL_ID]
+        AND [KEY] = 2 -- Assessed Building
+    ORDER BY [DATE] DESC
 ) AS eim
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [FiscalYear]
-    FROM dbo.[ParcelFiscals]
-    WHERE [ParcelId] = p.[Id]
-        AND [Key] = 1 -- Market
-    ORDER BY [FiscalYear] DESC
+        [VALUE]
+        , [FISCAL_YEAR]
+    FROM dbo.[PIMS_PARCEL_FISCAL]
+    WHERE [PARCEL_ID] = p.[PARCEL_ID]
+        AND [KEY] = 1 -- Market
+    ORDER BY [FISCAL_YEAR] DESC
 ) AS fe
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [FiscalYear]
-    FROM dbo.[ParcelFiscals]
-    WHERE [ParcelId] = p.[Id]
-        AND [Key] = 0 -- NetBook
-    ORDER BY [FiscalYear] DESC
+        [VALUE]
+        , [FISCAL_YEAR]
+    FROM dbo.[PIMS_PARCEL_FISCAL]
+    WHERE [PARCEL_ID] = p.[PARCEL_ID]
+        AND [KEY] = 0 -- NetBook
+    ORDER BY [FISCAL_YEAR] DESC
 ) AS fn
 UNION ALL
 SELECT
-    b.[Id]
-    , b.[RowVersion]
-    , b.[PropertyTypeId]
-    , b.[ClassificationId]
-    , [Classification] = c.[Name]
-    , b.[AgencyId]
-    , [Agency] = ISNULL(pa.[Name], a.[Name])
-    , [AgencyCode] = ISNULL(pa.[Code], a.[Code])
+    b.[BUILDING_ID]
+    , b.[CONCURRENCY_CONTROL_NUMBER] AS [RowVersion]
+    , b.[PROPERTY_TYPE_ID] AS [PropertyTypeId]
+    , b.[PROPERTY_CLASSIFICATION_ID] AS [ClassificationId]
+    , [Classification] = c.[NAME]
+    , b.[AGENCY_ID] AS [AgencyId]
+    , [Agency] = ISNULL(pa.[NAME], a.[NAME])
+    , [AgencyCode] = ISNULL(pa.[CODE], a.[CODE])
     , [SubAgency] = (
-        SELECT CASE WHEN pa.[Id] IS NOT NULL
-            THEN a.[Name]
+        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+            THEN a.[NAME]
             ELSE NULL
         END)
     , [SubAgencyCode] = (
-        SELECT CASE WHEN pa.[Id] IS NOT NULL
-            THEN a.[Code]
+        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+            THEN a.[CODE]
             ELSE NULL
         END)
-    , b.[AddressId]
-    , [Address] = TRIM(ISNULL(adr.[Address1], '') + ' ' + ISNULL(adr.[Address2], ''))
-    , [AdministrativeArea] = adr.[AdministrativeArea]
-    , [Province] = ap.[Name]
-    , adr.[Postal]
-    , b.[ProjectNumbers]
-    , b.[Name]
-    , b.[Description]
-    , b.[Location]
-    , b.[Boundary]
-    , b.[IsSensitive]
-    , b.[IsVisibleToOtherAgencies]
+    , b.[ADDRESS_ID] AS [AddressId]
+    , [Address] = TRIM(ISNULL(adr.[ADDRESS1], '') + ' ' + ISNULL(adr.[ADDRESS2], ''))
+    , [AdministrativeArea] = adr.[ADMINISTRATIVE_AREA]
+    , [Province] = ap.[NAME]
+    , adr.[POSTAL] AS [Postal]
+    , b.[PROJECT_NUMBERS] AS [ProjectNumbers]
+    , b.[NAME] AS [Name]
+    , b.[DESCRIPTION] AS [Description]
+    , b.[LOCATION] AS [Location]
+    , b.[BOUNDARY] AS [Boundary]
+    , b.[IS_SENSITIVE] AS [IsSensitive]
+    , b.[IS_VISIBLE_TO_OTHER_AGENCIES] AS [IsVisibleToOtherAgencies]
 
     -- Parcel Properties
     , [PID] = p.[PID]
     , [PIN] = p.[PIN]
-    , [LandArea] = p.[LandArea]
-    , [LandLegalDescription] = p.[LandLegalDescription]
-    , [Zoning] = p.[Zoning]
-    , [ZoningPotential] = p.[ZoningPotential]
+    , [LandArea] = p.[LAND_AREA]
+    , [LandLegalDescription] = p.[LAND_LEGAL_DESCRIPTION]
+    , [Zoning] = p.[ZONING]
+    , [ZoningPotential] = p.[ZONING_POTENTIAL]
 
     -- Building Properties
-    , [ParcelId] = p.[Id]
-    , [BuildingConstructionTypeId] = b.[BuildingConstructionTypeId]
-    , [BuildingConstructionType] = bct.[Name]
-    , [BuildingFloorCount] = b.[BuildingFloorCount]
-    , [BuildingPredominateUseId] = b.[BuildingPredominateUseId]
-    , [BuildingPredominateUse] = bpu.[Name]
-    , [BuildingOccupantTypeId] = b.[BuildingOccupantTypeId]
-    , [BuildingOccupantType] = bot.[Name]
-    , [BuildingTenancy] = b.[BuildingTenancy]
-    , [RentableArea] = b.[RentableArea]
-    , [LeaseExpiry] = b.[LeaseExpiry]
-    , [OccupantName] = b.[OccupantName]
-    , [TransferLeaseOnSale] = b.[TransferLeaseOnSale]
+    , [ParcelId] = p.[PARCEL_ID]
+    , [BuildingConstructionTypeId] = b.[BUILDING_CONSTRUCTION_TYPE_ID]
+    , [BuildingConstructionType] = bct.[NAME]
+    , [BuildingFloorCount] = b.[BUILDING_FLOOR_COUNT]
+    , [BuildingPredominateUseId] = b.[BUILDING_PREDOMINATE_USE_ID]
+    , [BuildingPredominateUse] = bpu.[NAME]
+    , [BuildingOccupantTypeId] = b.[BUILDING_OCCUPANT_TYPE_ID]
+    , [BuildingOccupantType] = bot.[NAME]
+    , [BuildingTenancy] = b.[BUILDING_TENANCY]
+    , [RentableArea] = b.[RENTABLE_AREA]
+    , [LeaseExpiry] = b.[LEASE_EXPIRY]
+    , [OccupantName] = b.[OCCUPANT_NAME]
+    , [TransferLeaseOnSale] = b.[TRANSFER_LEASE_ON_SALE]
 
     , [AssessedLand] = null
     , [AssessedLandDate] = null
-    , [AssessedBuilding] = eim.[Value]
-    , [AssessedBuildingDate] = eim.[Date]
-    , [Market] = ISNULL(fe.[Value], 0)
-    , [MarketFiscalYear] = fe.[FiscalYear]
-    , [NetBook] = ISNULL(fn.[Value], 0)
-    , [NetBookFiscalYear] = fn.[FiscalYear]
-FROM dbo.[Buildings] b
-LEFT JOIN dbo.[ParcelBuildings] pb ON b.[Id] = pb.[BuildingId]
-LEFT JOIN dbo.[Parcels] p ON pb.[ParcelId] = p.[Id]
-JOIN dbo.[PropertyClassifications] c ON b.[ClassificationId] = c.[Id]
-LEFT JOIN dbo.[Agencies] a ON b.[AgencyId] = a.[Id]
-LEFT JOIN dbo.[Agencies] pa ON a.[ParentId] = pa.[Id]
-JOIN dbo.[Addresses] adr ON b.[AddressId] = adr.[Id]
-JOIN dbo.[Provinces] ap ON adr.[ProvinceId] = ap.[Id]
-JOIN dbo.[BuildingConstructionTypes] bct ON b.[BuildingConstructionTypeId] = bct.[Id]
-JOIN dbo.[BuildingOccupantTypes] bot ON b.[BuildingOccupantTypeId] = bot.[Id]
-JOIN dbo.[BuildingPredominateUses] bpu ON b.[BuildingPredominateUseId] = bpu.[Id]
+    , [AssessedBuilding] = eim.[VALUE]
+    , [AssessedBuildingDate] = eim.[DATE]
+    , [Market] = ISNULL(fe.[VALUE], 0)
+    , [MarketFiscalYear] = fe.[FISCAL_YEAR]
+    , [NetBook] = ISNULL(fn.[VALUE], 0)
+    , [NetBookFiscalYear] = fn.[FISCAL_YEAR]
+FROM dbo.[PIMS_BUILDING] b
+LEFT JOIN dbo.[PIMS_PARCEL_BUILDING] pb ON b.[BUILDING_ID] = pb.[BUILDING_ID]
+LEFT JOIN dbo.[PIMS_PARCEL] p ON pb.[PARCEL_ID] = p.[PARCEL_ID]
+JOIN dbo.[PIMS_PROPERTY_CLASSIFICATION] c ON b.[PROPERTY_CLASSIFICATION_ID] = c.[PROPERTY_CLASSIFICATION_ID]
+LEFT JOIN dbo.[PIMS_AGENCY] a ON b.[AGENCY_ID] = a.[AGENCY_ID]
+LEFT JOIN dbo.[PIMS_AGENCY] pa ON a.[PARENT_AGENCY_ID] = pa.[AGENCY_ID]
+JOIN dbo.[PIMS_ADDRESS] adr ON b.[ADDRESS_ID] = adr.[ADDRESS_ID]
+JOIN dbo.[PIMS_PROVINCE] ap ON adr.[PROVINCE_ID] = ap.[PROVINCE_ID]
+JOIN dbo.[PIMS_BUILDING_CONSTRUCTION_TYPE] bct ON b.[BUILDING_CONSTRUCTION_TYPE_ID] = bct.[BUILDING_CONSTRUCTION_TYPE_ID]
+JOIN dbo.[PIMS_BUILDING_OCCUPANT_TYPE] bot ON b.[BUILDING_OCCUPANT_TYPE_ID] = bot.[BUILDING_OCCUPANT_TYPE_ID]
+JOIN dbo.[PIMS_BUILDING_PREDOMINATE_USE] bpu ON b.[BUILDING_PREDOMINATE_USE_ID] = bpu.[BUILDING_PREDOMINATE_USE_ID]
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [Date]
-    FROM dbo.[BuildingEvaluations]
-    WHERE [BuildingId] = b.[Id]
-        AND [Key] = 0 -- Assessed
-    ORDER BY [Date] DESC
+        [VALUE]
+        , [DATE]
+    FROM dbo.[PIMS_BUILDING_EVALUATION]
+    WHERE [BUILDING_ID] = b.[BUILDING_ID]
+        AND [KEY] = 0 -- Assessed
+    ORDER BY [DATE] DESC
 ) AS eim
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [FiscalYear]
-    FROM dbo.[BuildingFiscals]
-    WHERE [BuildingId] = b.[Id]
-        AND [Key] = 1 -- Market
-    ORDER BY [FiscalYear] DESC
+        [VALUE]
+        , [FISCAL_YEAR]
+    FROM dbo.[PIMS_BUILDING_FISCAL]
+    WHERE [BUILDING_ID] = b.[BUILDING_ID]
+        AND [KEY] = 1 -- Market
+    ORDER BY [FISCAL_YEAR] DESC
 ) AS fe
 OUTER APPLY (
     SELECT TOP 1
-        [Value]
-        , [FiscalYear]
-    FROM dbo.[BuildingFiscals]
-    WHERE [BuildingId] = b.[Id]
-        AND [Key] = 0 -- NetBook
-    ORDER BY [FiscalYear] DESC
+        [VALUE]
+        , [FISCAL_YEAR]
+    FROM dbo.[PIMS_BUILDING_FISCAL]
+    WHERE [BUILDING_ID] = b.[BUILDING_ID]
+        AND [KEY] = 0 -- NetBook
+    ORDER BY [FISCAL_YEAR] DESC
 ) AS fn
 GO

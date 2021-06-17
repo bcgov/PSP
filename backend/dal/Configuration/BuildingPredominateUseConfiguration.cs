@@ -1,28 +1,29 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
     /// <summary>
     /// BuildingPredominateUseConfiguration class, provides a way to configure building predominate uses in the database.
     ///</summary>
-    public class BuildingPredominateUseConfiguration : LookupEntityConfiguration<BuildingPredominateUse, int>
+    public class BuildingPredominateUseConfiguration : LookupEntityConfiguration<BuildingPredominateUse>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<BuildingPredominateUse> builder)
         {
-            builder.ToTable("BuildingPredominateUses");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).IsRequired();
-            builder.Property(m => m.Id).ValueGeneratedNever();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Name).IsRequired();
-            builder.Property(m => m.Name).HasMaxLength(150);
+            builder.Property(m => m.Name).HasMaxLength(150).IsRequired()
+                .HasComment("A unique name to identify this record");
 
-            builder.HasIndex(m => new { m.Name }).IsUnique();
-            builder.HasIndex(m => new { m.IsDisabled, m.Name, m.SortOrder });
+            builder.HasIndex(m => new { m.Name }, "BLPRDU_NAME_TUC").IsUnique();
+            builder.HasIndex(m => new { m.IsDisabled, m.SortOrder }, "BLPRDU_IS_DISABLED_SORT_ORDER_IDX");
 
             base.Configure(builder);
         }

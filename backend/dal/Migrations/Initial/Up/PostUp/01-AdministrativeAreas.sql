@@ -1,6 +1,6 @@
-PRINT 'Adding AdministrativeAreas'
+PRINT N'Adding [PIMS_ADMINISTRATIVE_AREA]'
 
-MERGE INTO dbo.[AdministrativeAreas] Target
+MERGE INTO dbo.[PIMS_ADMINISTRATIVE_AREA] dest
 USING ( VALUES
 ('100 Mile House','2','Cariboo Regional District'),
 ('150 Mile House','3',NULL),
@@ -330,10 +330,14 @@ USING ( VALUES
 ('Winlaw','310',NULL),
 ('Woss','311',NULL),
 ('Yahk','312',NULL),
-('Zeballos','313','Strathcona Regional District')) AS MSrc (Name, Abbreviation, GroupName)
-ON Target.Name = MSrc.NAME
+('Zeballos','313','Strathcona Regional District')) AS src ([NAME], [ABBREVIATION], [GROUP_NAME])
+ON dest.[NAME] = src.[NAME]
 WHEN MATCHED THEN
 UPDATE
-SET Target.Abbreviation = MSrc.Abbreviation, Target.GroupName = MSrc.GroupName
+SET dest.[ABBREVIATION] = src.[ABBREVIATION], dest.[GROUP_NAME] = src.[GROUP_NAME]
 WHEN NOT MATCHED THEN
-INSERT (Name, Abbreviation, GroupName) VALUES (MSrc.Name, MSrc.Abbreviation, MSrc.GroupName);
+INSERT ([NAME], [ABBREVIATION], [GROUP_NAME]) VALUES (src.[NAME], src.[ABBREVIATION], src.[GROUP_NAME]);
+
+-- Update sequence so that it works with the latest data.
+GO
+ALTER SEQUENCE dbo.[PIMS_ADMINISTRATIVE_AREA_ID_SEQ] RESTART WITH 329

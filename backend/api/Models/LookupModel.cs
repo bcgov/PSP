@@ -3,16 +3,9 @@ namespace Pims.Api.Models
     /// <summary>
     /// LookupModel class, provides a model that represents a code lookup item.
     /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    public class LookupModel<TKey> : BaseModel
+    public class LookupModel : BaseModel
     {
         #region Properties
-        /// <summary>
-        /// get/set - The item's unique identifier.
-        /// </summary>
-        /// <value></value>
-        public TKey Id { get; set; }
-
         /// <summary>
         /// get/set - The item's name.
         /// </summary>

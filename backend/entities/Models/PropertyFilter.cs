@@ -80,13 +80,13 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The parcelId for the property
         /// </summary>
         /// <value></value>
-        public int? ParcelId { get; set; }
+        public long? ParcelId { get; set; }
 
         /// <summary>
         /// get/set - Building classification Id.
         /// </summary>
         /// <value></value>
-        public int? ClassificationId { get; set; }
+        public long? ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - The property description.
@@ -144,7 +144,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - An array of agencies.
         /// </summary>
         /// <value></value>
-        public int[] Agencies { get; set; }
+        public long[] Agencies { get; set; }
         #endregion
 
         #region Constructors
@@ -180,7 +180,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="maxAssessedValue"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public PropertyFilter(string address, int? agencyId, int? classificationId, decimal? minMarketValue, decimal? maxMarketValue, decimal? minAssessedValue, decimal? maxAssessedValue, string[] sort)
+        public PropertyFilter(string address, long? agencyId, long? classificationId, decimal? minMarketValue, decimal? maxMarketValue, decimal? minAssessedValue, decimal? maxAssessedValue, string[] sort)
         {
             this.Address = address;
             this.ClassificationId = classificationId;
@@ -217,14 +217,14 @@ namespace Pims.Dal.Entities.Models
             this.AdministrativeArea = filter.GetStringValue(nameof(this.AdministrativeArea));
 
             this.BareLandOnly = filter.GetBoolNullValue(nameof(this.BareLandOnly));
-            this.ClassificationId = filter.GetIntNullValue(nameof(this.ClassificationId));
+            this.ClassificationId = filter.GetLongNullValue(nameof(this.ClassificationId));
             this.Description = filter.GetStringValue(nameof(this.Description));
             this.MinMarketValue = filter.GetDecimalNullValue(nameof(this.MinMarketValue));
             this.MaxMarketValue = filter.GetDecimalNullValue(nameof(this.MaxMarketValue));
             this.MinAssessedValue = filter.GetDecimalNullValue(nameof(this.MinAssessedValue));
             this.MaxAssessedValue = filter.GetDecimalNullValue(nameof(this.MaxAssessedValue));
 
-            this.Agencies = filter.GetIntArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
+            this.Agencies = filter.GetLongArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
         }
         #endregion
 

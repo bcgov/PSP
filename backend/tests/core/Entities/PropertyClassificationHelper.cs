@@ -17,7 +17,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PropertyClassification CreatePropertyClassification(int id, string name, bool isVisible = true)
         {
-            return new Entity.PropertyClassification(id, name, isVisible) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.PropertyClassification(name, isVisible) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PropertyClassification CreatePropertyClassification(string name, bool isVisible = true)
         {
-            return new Entity.PropertyClassification(1, name, isVisible) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.PropertyClassification(name, isVisible) { Id = 1, RowVersion = 1 };
         }
 
         /// <summary>
@@ -39,13 +39,13 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PropertyClassification>()
             {
-                new Entity.PropertyClassification(0, "Core Operational") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.PropertyClassification(1, "Core Strategic") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.PropertyClassification(2, "Surplus Active") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.PropertyClassification(3, "Surplus Encumbered") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.PropertyClassification(4, "Disposed", false) { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.PropertyClassification(5, "Demolished", false) { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.PropertyClassification(6, "Subdivided", false) { RowVersion = new byte[] { 12, 13, 14 } }
+                new Entity.PropertyClassification("Core Operational") { Id = 0, RowVersion = 1 },
+                new Entity.PropertyClassification("Core Strategic") { Id = 1, RowVersion = 1 },
+                new Entity.PropertyClassification("Surplus Active") { Id = 2, RowVersion = 1 },
+                new Entity.PropertyClassification("Surplus Encumbered") { Id = 3, RowVersion = 1 },
+                new Entity.PropertyClassification("Disposed", false) { Id = 4, RowVersion = 1 },
+                new Entity.PropertyClassification("Demolished", false) { Id = 5, RowVersion = 1 },
+                new Entity.PropertyClassification("Subdivided", false) { Id = 6, RowVersion = 1 }
             };
         }
     }

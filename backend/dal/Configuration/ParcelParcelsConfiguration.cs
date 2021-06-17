@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,21 +13,23 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<ParcelParcel> builder)
         {
-            builder.ToTable("ParcelParcels");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => new { m.ParcelId, m.SubdivisionId });
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.ParcelId).IsRequired();
-            builder.Property(m => m.ParcelId).ValueGeneratedNever();
+            builder.Property(m => m.ParcelId).IsRequired()
+                .HasComment("Foreign key to the parent parcel");
+            builder.Property(m => m.SubdivisionId).IsRequired()
+                .HasComment("Foreign key to the parcel that is a subdivision");
 
-            builder.Property(m => m.SubdivisionId).IsRequired();
-            builder.Property(m => m.SubdivisionId).ValueGeneratedNever();
+            builder.HasOne(m => m.Parcel).WithMany(m => m.Subdivisions).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PRCPRC_PARCEL_ID_IDX");
+            builder.HasOne(m => m.Subdivision).WithMany(m => m.Parcels).HasForeignKey(m => m.SubdivisionId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRCPRC_SUBDIVISON_ID_IDX");
 
-
-            //I had some trouble getting this to work as A->A Many to Many relationships aren't documented well on the fluent efcore site. Based on:
-            // https://stackoverflow.com/questions/49214748/many-to-many-self-referencing-relationship/49219124#49219124
-            builder.HasOne(m => m.Parcel).WithMany(m => m.Subdivisions).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.Restrict);
-            builder.HasOne(m => m.Subdivision).WithMany(m => m.Parcels).HasForeignKey(m => m.SubdivisionId).OnDelete(DeleteBehavior.ClientCascade);
+            builder.HasIndex(m => new { m.ParcelId, m.SubdivisionId }, "PRCPRC_PARCEL_SUBDIVISION_TUC").IsUnique();
+            builder.HasIndex(m => m.ParcelId, "PRCPRC_PARCEL_ID_IDX");
+            builder.HasIndex(m => m.SubdivisionId, "PRCPRC_SUBDIVISON_ID_IDX");
 
             base.Configure(builder);
         }

@@ -117,7 +117,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Parcel Get(int id)
+        public Parcel Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             // Check if user has the ability to view sensitive properties.
@@ -139,8 +139,6 @@ namespace Pims.Dal.Services
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
                 .Include(p => p.Buildings)
-                .Include(p => p.CreatedBy)
-                .Include(p => p.UpdatedBy)
                 .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
                 .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
                 .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
@@ -179,8 +177,8 @@ namespace Pims.Dal.Services
         public Parcel Add(Parcel parcel)
         {
             parcel.ThrowIfNull(nameof(parcel));
-            parcel.PropertyTypeId = (int)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
-            if (parcel.PropertyTypeId == (int)PropertyTypes.Subdivision)
+            parcel.PropertyTypeId = (long)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
+            if (parcel.PropertyTypeId == (long)PropertyTypes.Subdivision)
             {
                 var parentPid = parcel.Parcels.FirstOrDefault()?.Parcel?.PID;
                 if (parentPid == null) throw new InvalidOperationException("Invalid parent parcel associated to subdivision, parent parcels must contain a valid PID");
@@ -265,7 +263,7 @@ namespace Pims.Dal.Services
                 .SingleOrDefault(p => p.Id == parcel.Id) ?? throw new KeyNotFoundException();
 
             var userAgencies = this.User.GetAgencies();
-            var originalAgencyId = (int)this.Context.Entry(originalParcel).OriginalValues[nameof(Parcel.AgencyId)];
+            var originalAgencyId = (long)this.Context.Entry(originalParcel).OriginalValues[nameof(Parcel.AgencyId)];
             var allowEdit = isAdmin || userAgencies.Contains(originalAgencyId);
             if (!allowEdit) throw new NotAuthorizedException("User may not edit parcels outside of their agency.");
 
@@ -302,13 +300,13 @@ namespace Pims.Dal.Services
                 .SingleOrDefault(p => p.Id == parcel.Id) ?? throw new KeyNotFoundException();
 
             var userAgencies = this.User.GetAgencies();
-            var originalAgencyId = (int)this.Context.Entry(originalParcel).OriginalValues[nameof(Parcel.AgencyId)];
+            var originalAgencyId = (long)this.Context.Entry(originalParcel).OriginalValues[nameof(Parcel.AgencyId)];
             var allowEdit = isAdmin || userAgencies.Contains(originalAgencyId);
             var ownsABuilding = originalParcel.Buildings.Any(pb => userAgencies.Contains(pb.Building.AgencyId.Value));
             if (!allowEdit && !ownsABuilding) throw new NotAuthorizedException("User may not edit parcels outside of their agency.");
 
             parcel.PropertyTypeId = originalParcel.PropertyTypeId; // property type cannot be changed directly.
-            if (parcel.PropertyTypeId == (int)PropertyTypes.Subdivision && parcel.Parcels.Any())
+            if (parcel.PropertyTypeId == (long)PropertyTypes.Subdivision && parcel.Parcels.Any())
             {
                 var parentPid = parcel.Parcels.FirstOrDefault()?.Parcel?.PID;
                 if (parentPid == null) throw new InvalidOperationException("Invalid parent parcel associated to subdivision, parent parcels must contain a valid PID");
@@ -324,13 +322,13 @@ namespace Pims.Dal.Services
             if (originalParcel.IsVisibleToOtherAgencies != parcel.IsVisibleToOtherAgencies) throw new InvalidOperationException("Parcel cannot be made visible to other agencies through this service.");
 
             // Only administrators can dispose a property.
-            if (!isAdmin && parcel.ClassificationId == (int)ClassificationTypes.Disposed) throw new NotAuthorizedException("Parcel classification cannot be changed to disposed."); // TODO: Classification '4' should be a config settings.
+            if (!isAdmin && parcel.ClassificationId == (long)ClassificationTypes.Disposed) throw new NotAuthorizedException("Parcel classification cannot be changed to disposed."); // TODO: Classification '4' should be a config settings.
 
             // Only administrators can set parcel to subdivided
-            if (!isAdmin && parcel.ClassificationId == (int)ClassificationTypes.Subdivided) throw new NotAuthorizedException("Parcel classification cannot be changed to subdivided.");
+            if (!isAdmin && parcel.ClassificationId == (long)ClassificationTypes.Subdivided) throw new NotAuthorizedException("Parcel classification cannot be changed to subdivided.");
 
             // Only buildings can be set to demolished
-            if (parcel.ClassificationId == (int)ClassificationTypes.Demolished) throw new NotAuthorizedException("Only buildings may be set to demolished.");
+            if (parcel.ClassificationId == (long)ClassificationTypes.Demolished) throw new NotAuthorizedException("Only buildings may be set to demolished.");
 
             if ((parcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0)
                 || (originalParcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0)
@@ -513,9 +511,9 @@ namespace Pims.Dal.Services
                 .SingleOrDefault(u => u.Id == parcel.Id) ?? throw new KeyNotFoundException();
 
             // Subdivisions can be deleted if the user has the edit claim.
-            if (originalParcel.PropertyTypeId == (int)PropertyTypes.Land)
+            if (originalParcel.PropertyTypeId == (long)PropertyTypes.Land)
                 parcel.ThrowIfNotAllowedToEdit(nameof(parcel), this.User, new[] { Permissions.PropertyDelete, Permissions.AdminProperties });
-            else if (originalParcel.PropertyTypeId == (int)PropertyTypes.Subdivision)
+            else if (originalParcel.PropertyTypeId == (long)PropertyTypes.Subdivision)
                 parcel.ThrowIfNotAllowedToEdit(nameof(parcel), this.User, new[] { Permissions.PropertyEdit, Permissions.AdminProperties });
 
             if (!isAdmin && (!userAgencies.Contains(originalParcel.AgencyId) || originalParcel.IsSensitive && !viewSensitive))
@@ -539,7 +537,7 @@ namespace Pims.Dal.Services
             this.Context.ParcelParcels.RemoveRange(originalParcel.Parcels);
             this.Context.ParcelParcels.RemoveRange(originalParcel.Subdivisions);
             this.Context.Parcels.Remove(originalParcel); // TODO: Shouldn't be allowed to permanently delete parcels entirely under certain conditions.
-            if (parcel.PropertyTypeId == (int)PropertyTypes.Land)
+            if (parcel.PropertyTypeId == (long)PropertyTypes.Land)
             {
                 var subdivisions = originalParcel.Subdivisions.Select(s => s.Subdivision);
                 this.Context.Parcels.RemoveRange(subdivisions);
@@ -548,12 +546,12 @@ namespace Pims.Dal.Services
             this.Context.CommitTransaction();
         }
 
-        public bool IsPidAvailable(int parcelId, int PID)
+        public bool IsPidAvailable(long parcelId, int PID)
         {
             return !Context.Parcels.Any(parcel => parcel.PID == PID && parcel.Id != parcelId);
         }
 
-        public bool IsPinAvailable(int parcelId, int PIN)
+        public bool IsPinAvailable(long parcelId, int PIN)
         {
             return !Context.Parcels.Any(parcel => parcel.PIN == PIN && parcel.Id != parcelId);
         }

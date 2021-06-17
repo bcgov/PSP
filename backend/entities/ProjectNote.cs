@@ -1,22 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ProjectNote class, provides an entity for the datamodel to manage project notes.
     /// </summary>
+    [MotiTable("PIMS_PROJECT_NOTE", "PROJNT")]
     public class ProjectNote : BaseEntity
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key identity insert.
         /// </summary>
-        public int Id { get; set; }
+        [Column("PROJECT_NOTE_ID")]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the owning project.
         /// </summary>
-        public int ProjectId { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// get/set - the project that this note belongs to.
@@ -26,11 +30,13 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The type of note.
         /// </summary>
+        [Column("NOTE_TYPE")]
         public NoteTypes NoteType { get; set; }
 
         /// <summary>
         /// get/set - The note.
         /// </summary>
+        [Column("NOTE")]
         public string Note { get; set; }
         #endregion
 

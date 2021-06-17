@@ -33,9 +33,9 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new ProjectFilter() { ProjectNumber = "ProjectNumber" }, 1 },
                 new object[] { new ProjectFilter() { Name = "Name" }, 1 },
-                new object[] { new ProjectFilter() { Agencies = new int[] { 3 } }, 1 },
+                new object[] { new ProjectFilter() { Agencies = new long[] { 3 } }, 1 },
                 new object[] { new ProjectFilter() { TierLevelId = 2 }, 1 },
-                new object[] { new ProjectFilter() { StatusId = new int[] { 2 } }, 1 }
+                new object[] { new ProjectFilter() { StatusId = new long[] { 2 } }, 1 }
             };
 
         public static IEnumerable<object[]> Workflows =>
@@ -1898,32 +1898,6 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(async () => await service.SetStatusAsync(null, workflowCode));
-        }
-
-        [Fact]
-        public async void SetStatus_NoRowVersion_RowVersionMissingException()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectEdit).AddAgency(1);
-
-            var init = helper.InitializeDatabase(user);
-            init.CreateDefaultWorkflowsWithStatus();
-            init.SaveChanges();
-
-            var project = init.CreateProject(1, 1);
-            init.SetStatus(project, "ASSESS-DISPOSAL", "AS-I");
-            init.SaveChanges();
-            project.RowVersion = null;
-
-            var service = helper.CreateService<ProjectService>(user);
-
-            var review = init.ProjectStatus.First(s => s.Code == "AS-D");
-            project.StatusId = review.Id;
-
-            // Act
-            // Assert
-            await Assert.ThrowsAsync<RowVersionMissingException>(async () => await service.SetStatusAsync(project, project.Workflow.Code));
         }
 
         [Fact]

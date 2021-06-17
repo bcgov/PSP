@@ -118,7 +118,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Building Get(int id)
+        public Building Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             // Check if user has the ability to view sensitive properties.
@@ -139,7 +139,6 @@ namespace Pims.Dal.Services
                 .Include(p => p.Agency).ThenInclude(a => a.Parent)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.UpdatedBy)
                 .Include(p => p.Projects).ThenInclude(pp => pp.Project).ThenInclude(p => p.Workflow)
                 .Include(p => p.Projects).ThenInclude(pp => pp.Project).ThenInclude(p => p.Status)
                 .AsNoTracking()
@@ -174,7 +173,7 @@ namespace Pims.Dal.Services
                 building.Agency = agency;
             }
 
-            building.PropertyTypeId = (int)PropertyTypes.Building;
+            building.PropertyTypeId = (long)PropertyTypes.Building;
             building.Address.Province = this.Context.Provinces.Find(building.Address.ProvinceId);
             building.Classification = this.Context.PropertyClassifications.Find(building.ClassificationId);
             building.IsVisibleToOtherAgencies = false;
@@ -236,13 +235,13 @@ namespace Pims.Dal.Services
             if (existingBuilding.IsVisibleToOtherAgencies != building.IsVisibleToOtherAgencies) throw new InvalidOperationException("Building cannot be made visible to other agencies through this service.");
 
             // Only administrators can dispose a property.
-            if (building.ClassificationId == (int)ClassificationTypes.Disposed && !isAdmin) throw new NotAuthorizedException("Building classification cannot be changed to disposed.");
+            if (building.ClassificationId == (long)ClassificationTypes.Disposed && !isAdmin) throw new NotAuthorizedException("Building classification cannot be changed to disposed.");
 
             // Only administrators can set a building to demolished
-            if (building.ClassificationId == (int)ClassificationTypes.Demolished && !isAdmin) throw new NotAuthorizedException("Building classification cannot be changed to demolished.");
+            if (building.ClassificationId == (long)ClassificationTypes.Demolished && !isAdmin) throw new NotAuthorizedException("Building classification cannot be changed to demolished.");
 
             // Only administrators can set property to subdivided
-            if (building.ClassificationId == (int)ClassificationTypes.Subdivided && !isAdmin) throw new NotAuthorizedException("Building classification cannot be changed to subdivided.");
+            if (building.ClassificationId == (long)ClassificationTypes.Subdivided && !isAdmin) throw new NotAuthorizedException("Building classification cannot be changed to subdivided.");
 
             var allowEdit = isAdmin || userAgencies.Contains(existingBuilding.AgencyId);
             // A building should have a unique name within the parcel it is located on.

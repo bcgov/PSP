@@ -18,8 +18,10 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
 
             config.NewConfig<Model.AccessRequestRoleModel, Entity.AccessRequestRole>()
                 .Map(dest => dest.RoleId, src => src.Id)
-                .Map(dest => dest.Role, src => new Entity.Role(src.Id, src.Name)
+                .Map(dest => dest.Role, src => new Entity.Role()
                 {
+                    Id = src.Id,
+                    Name = src.Name,
                     Description = src.Description,
                     IsDisabled = src.IsDisabled,
                     SortOrder = src.SortOrder

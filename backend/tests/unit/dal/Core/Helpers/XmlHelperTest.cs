@@ -23,8 +23,8 @@ namespace Pims.Api.Test.Helpers
                 new object[]
                 {
                     new[] {
-                        new Entity.TierLevel(1, "test1") { CreatedOn = DateTime.UtcNow },
-                        new Entity.TierLevel(2, "test2") { CreatedOn = DateTime.UtcNow }
+                        new Entity.TierLevel("test1") { Id = 1, CreatedOn = DateTime.UtcNow },
+                        new Entity.TierLevel("test2") { Id = 2, CreatedOn = DateTime.UtcNow }
                     },
                     9
                 }

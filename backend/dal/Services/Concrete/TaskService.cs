@@ -29,7 +29,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="statusId"></param>
         /// <returns></returns>
-        public IEnumerable<Task> GetForStatus(int statusId)
+        public IEnumerable<Task> GetForStatus(long statusId)
         {
             var tasks = from s in this.Context.ProjectStatus.AsNoTracking()
                         join t in this.Context.Tasks on s.Id equals t.StatusId

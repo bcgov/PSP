@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,25 +13,34 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<ParcelEvaluation> builder)
         {
-            builder.ToTable("ParcelEvaluations");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => new { m.ParcelId, m.Date, m.Key });
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.ParcelId).IsRequired();
-            builder.Property(m => m.ParcelId).ValueGeneratedNever();
+            builder.Property(m => m.ParcelId).IsRequired()
+                .HasComment("Foreign key to parcel");
 
-            builder.Property(m => m.Date).HasColumnType("DATE").IsRequired();
+            builder.Property(m => m.Date).IsRequired()
+                .HasColumnType("DATETIME")
+                .HasComment("The date this evaluation was taken");
 
-            builder.Property(m => m.Key).IsRequired();
+            builder.Property(m => m.Key).IsRequired()
+                .HasComment("The evaluation type");
 
-            builder.Property(m => m.Value).HasColumnType("MONEY");
-            builder.Property(m => m.Note).HasMaxLength(500);
-            builder.Property(m => m.Firm).HasMaxLength(150);
+            builder.Property(m => m.Value)
+                .HasComment("The value of the evaluation");
+            builder.Property(m => m.Note).HasMaxLength(500)
+                .HasComment("A note about the evaluation");
+            builder.Property(m => m.Firm).HasMaxLength(150)
+                .HasComment("The firm or company name that provided the evaluation");
 
-            builder.HasOne(m => m.Parcel).WithMany(m => m.Evaluations).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.ClientCascade);
+            builder.HasOne(m => m.Parcel).WithMany(m => m.Evaluations).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PREVAL_PARCEL_ID_IDX");
 
-            builder.HasIndex(m => new { m.ParcelId, m.Date, m.Key, m.Value });
-            builder.HasIndex(m => new { m.ParcelId, m.Key });
+            builder.HasIndex(m => new { m.ParcelId, m.Date, m.Key }, "PREVAL_PARCEL_ID_DATE_KEY_TUC").IsUnique();
+            builder.HasIndex(m => new { m.Value }, "PREVAL_VALUE_IDX");
+            builder.HasIndex(m => m.ParcelId, "PREVAL_PARCEL_ID_IDX");
 
             base.Configure(builder);
         }

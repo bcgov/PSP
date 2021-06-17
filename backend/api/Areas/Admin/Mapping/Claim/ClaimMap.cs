@@ -10,6 +10,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Claim
         {
             config.NewConfig<Entity.Claim, Model.ClaimModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.KeycloakRoleId, src => src.KeycloakRoleId)
@@ -18,6 +19,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Claim
 
             config.NewConfig<Model.ClaimModel, Entity.Claim>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.KeycloakRoleId, src => src.KeycloakRoleId)

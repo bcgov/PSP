@@ -12,12 +12,12 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The foreign key to the project.
         /// </summary>
-        public int ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the task.
         /// </summary>
-        public int AgencyId { get; set; }
+        public long AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The corresponding agency code.
@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The foreign key of the associated notification, or null.
         /// </summary>
-        public int? NotificationId { get; set; }
+        public long? NotificationId { get; set; }
 
         /// <summary>
         /// get/set - The response from this agency.

@@ -9,6 +9,6 @@ namespace Pims.Dal.Services.Admin
     public interface IProjectRiskService : IBaseService<ProjectRisk>
     {
         IEnumerable<ProjectRisk> GetAll();
-        ProjectRisk Get(int id);
+        ProjectRisk Get(long id);
     }
 }

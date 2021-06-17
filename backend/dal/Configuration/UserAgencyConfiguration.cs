@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,18 +13,24 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<UserAgency> builder)
         {
-            builder.ToTable("UserAgencies");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => new { m.UserId, m.AgencyId });
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.UserId).IsRequired();
-            builder.Property(m => m.UserId).ValueGeneratedNever();
+            builder.Property(m => m.UserId).IsRequired()
+                .HasComment("Foreign key to the user");
 
-            builder.Property(m => m.AgencyId).IsRequired();
-            builder.Property(m => m.AgencyId).ValueGeneratedNever();
+            builder.Property(m => m.AgencyId).IsRequired()
+                .HasComment("Foreign key to the agency");
 
-            builder.HasOne(m => m.User).WithMany(m => m.Agencies).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade);
-            builder.HasOne(m => m.Agency).WithMany(m => m.Users).HasForeignKey(m => m.AgencyId).OnDelete(DeleteBehavior.ClientCascade);
+            builder.HasOne(m => m.User).WithMany(m => m.Agencies).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRAGC_USER_ID_IDX");
+            builder.HasOne(m => m.Agency).WithMany(m => m.Users).HasForeignKey(m => m.AgencyId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRAGC_AGENCY_ID_IDX");
+
+            builder.HasIndex(m => new { m.UserId, m.AgencyId }, "USRAGC_USER_AGENCY_TUC").IsUnique();
+            builder.HasIndex(m => m.UserId, "USRAGC_USER_ID_IDX");
+            builder.HasIndex(m => m.AgencyId, "USRAGC_AGENCY_ID_IDX");
 
             base.Configure(builder);
         }

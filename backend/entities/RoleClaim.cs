@@ -1,35 +1,41 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// RoleClaim class, provides an entity for the datamodel to manage role agencies.
     /// </summary>
+    [MotiTable("PIMS_ROLE_CLAIM", "ROLCLM")]
     public class RoleClaim : BaseEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify this role claim.
+        /// </summary>
+        [Column("ROLE_CLAIM_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The foreign key to the role - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public Guid RoleId { get; set; }
+        [Column("ROLE_ID")]
+        public long RoleId { get; set; }
 
         /// <summary>
         /// get/set - The role that belongs to this claim.
         /// </summary>
-        /// <value></value>
         public Role Role { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the claim the role belongs to - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public Guid ClaimId { get; set; }
+        [Column("CLAIM_ID")]
+        public long ClaimId { get; set; }
 
         /// <summary>
         /// get/set - The claim the role belongs to.
         /// </summary>
-        /// <value></value>
         public Claim Claim { get; set; }
         #endregion
 
@@ -44,7 +50,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="roleId"></param>
         /// <param name="claimId"></param>
-        public RoleClaim(Guid roleId, Guid claimId)
+        public RoleClaim(int roleId, int claimId)
         {
             this.RoleId = roleId;
             this.ClaimId = claimId;

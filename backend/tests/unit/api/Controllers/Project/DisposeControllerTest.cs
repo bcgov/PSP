@@ -31,10 +31,10 @@ namespace Pims.Api.Test.Controllers
         public static IEnumerable<object[]> ProjectFilters =>
             new List<object[]>
             {
-                new object[] { new ProjectFilter() { Agencies = new int[] { 3 } } },
+                new object[] { new ProjectFilter() { Agencies = new long[] { 3 } } },
                 new object[] { new ProjectFilter() { ProjectNumber = "ProjectNumber" } },
                 new object[] { new ProjectFilter() { Name = "Name" } },
-                new object[] { new ProjectFilter() { StatusId = new[] { 1 } } },
+                new object[] { new ProjectFilter() { StatusId = new long[] { 1 } } },
                 new object[] { new ProjectFilter() { TierLevelId = 2 } }
             };
 
@@ -116,7 +116,7 @@ namespace Pims.Api.Test.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var project = EntityHelper.CreateProject(1, 1);
-            service.Setup(m => m.Project.Get(It.IsAny<int>())).Returns(project);
+            service.Setup(m => m.Project.Get(It.IsAny<long>())).Returns(project);
 
             // Act
             var result = controller.GetProject(project.Id);

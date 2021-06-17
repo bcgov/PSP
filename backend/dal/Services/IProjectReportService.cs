@@ -9,13 +9,13 @@ namespace Pims.Dal.Services
     public interface IProjectReportService : IService
     {
         IEnumerable<ProjectReport> GetAll();
-        ProjectReport Get(int id);
-        IEnumerable<ProjectSnapshot> GetSnapshots(int reportId);
+        ProjectReport Get(long id);
+        IEnumerable<ProjectSnapshot> GetSnapshots(long reportId);
         IEnumerable<ProjectSnapshot> GetSnapshots(ProjectReport report);
         ProjectReport Add(ProjectReport report);
         ProjectReport Add(ProjectReport report, IEnumerable<ProjectSnapshot> snapshots);
         ProjectReport Update(ProjectReport report);
-        IEnumerable<ProjectSnapshot> Refresh(int id);
+        IEnumerable<ProjectSnapshot> Refresh(long id);
         void Remove(ProjectReport report);
     }
 }

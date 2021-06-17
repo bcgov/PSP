@@ -15,7 +15,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The foreign key to the property building construction type.
         /// </summary>
-        public int? BuildingConstructionTypeId { get; set; }
+        public long? BuildingConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - The building construction type for this property.
@@ -25,12 +25,12 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The number of floors in the building.
         /// </summary>
-        public int? BuildingFloorCount { get; set; }
+        public long? BuildingFloorCount { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the building predominant use.
         /// </summary>
-        public int? BuildingPredominateUseId { get; set; }
+        public long? BuildingPredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - The building predominant use for this building.
@@ -50,7 +50,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The foreign key to the building occupant type.
         /// </summary>
-        public int? BuildingOccupantTypeId { get; set; }
+        public long? BuildingOccupantTypeId { get; set; }
 
         /// <summary>
         /// get/set - The type of occupant for this building.

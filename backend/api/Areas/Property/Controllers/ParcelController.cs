@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.ParcelModel), 200)]
         [SwaggerOperation(Tags = new[] { "parcel" })]
-        public IActionResult GetParcel(int id)
+        public IActionResult GetParcel(long id)
         {
             var entity = _pimsService.Parcel.Get(id);
             var parcel = _mapper.Map<Model.ParcelModel>(entity);
@@ -109,7 +109,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.CheckPidAvailabilityResponseModel), 200)]
         [SwaggerOperation(Tags = new[] { "parcel" })]
-        public IActionResult IsPidAvailable(int parcelId, int pid)
+        public IActionResult IsPidAvailable(long parcelId, int pid)
         {
             var result = new Model.CheckPidAvailabilityResponseModel
             { Available = _pimsService.Parcel.IsPidAvailable(parcelId, pid) };
@@ -125,7 +125,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.CheckPidAvailabilityResponseModel), 200)]
         [SwaggerOperation(Tags = new[] { "parcel" })]
-        public IActionResult IsPinAvailable(int parcelId, int pin)
+        public IActionResult IsPinAvailable(long parcelId, int pin)
         {
             var result = new Model.CheckPidAvailabilityResponseModel
             { Available = _pimsService.Parcel.IsPinAvailable(parcelId, pin) };
@@ -164,7 +164,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [ProducesResponseType(typeof(Model.ParcelModel), 200)]
         [SwaggerOperation(Tags = new[] { "parcel" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/update/{id})")]
-        public IActionResult UpdateParcel(int id, [FromBody] Model.ParcelModel model)
+        public IActionResult UpdateParcel(long id, [FromBody] Model.ParcelModel model)
         {
             var entity = _mapper.Map<Entity.Parcel>(model);
 
@@ -184,7 +184,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [ProducesResponseType(typeof(Model.ParcelModel), 200)]
         [SwaggerOperation(Tags = new[] { "parcel" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/update/{id})")]
-        public IActionResult UpdateParcelFinancials(int id, [FromBody] Model.ParcelModel model)
+        public IActionResult UpdateParcelFinancials(long id, [FromBody] Model.ParcelModel model)
         {
             var entity = _mapper.Map<Entity.Parcel>(model);
 
@@ -204,7 +204,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [ProducesResponseType(typeof(Model.ParcelModel), 200)]
         [SwaggerOperation(Tags = new[] { "parcel" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/delete/{id})")]
-        public IActionResult DeleteParcel(int id, [FromBody] Model.ParcelModel model)
+        public IActionResult DeleteParcel(long id, [FromBody] Model.ParcelModel model)
         {
             var entity = _mapper.Map<Entity.Parcel>(model);
 

@@ -1,35 +1,41 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// AccessRequestRole class, provides an entity for the datamodel to manage AccessRequest Roles.
     /// </summary>
+    [MotiTable("PIMS_ACCESS_REQUEST_ROLE", "ACCRQR")]
     public class AccessRequestRole : BaseEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify the access request role.
+        /// </summary>
+        [Column("ACCESS_REQUEST_ROLE_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The foreign key to the AccessRequest - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public int AccessRequestId { get; set; }
+        [Column("ACCESS_REQUEST_ID")]
+        public long AccessRequestId { get; set; }
 
         /// <summary>
         /// get/set - The access request that belongs to an Role.
         /// </summary>
-        /// <value></value>
         public AccessRequest AccessRequest { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the role the Role belongs to - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public Guid RoleId { get; set; }
+        [Column("ROLE_ID")]
+        public long RoleId { get; set; }
 
         /// <summary>
         /// get/set - The Role the AccessRequest belongs to.
         /// </summary>
-        /// <value></value>
         public Role Role { get; set; }
         #endregion
 
@@ -44,7 +50,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="accessRequestId"></param>
         /// <param name="roleId"></param>
-        public AccessRequestRole(int accessRequestId, Guid roleId)
+        public AccessRequestRole(long accessRequestId, long roleId)
         {
             this.AccessRequestId = accessRequestId;
             this.RoleId = roleId;

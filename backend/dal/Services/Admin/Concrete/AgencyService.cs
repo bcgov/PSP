@@ -95,7 +95,7 @@ namespace Pims.Dal.Services.Admin
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">Agency does not exists for the specified 'id'.</exception>
         /// <returns></returns>
-        public Agency Get(int id)
+        public Agency Get(long id)
         {
             return this.Context.Agencies.Find(id) ?? throw new KeyNotFoundException();
         }

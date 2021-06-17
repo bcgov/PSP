@@ -1,6 +1,6 @@
 using System;
 
-namespace Pims.Tools.Keycloak.Sync.Models
+namespace Pims.Tools.Keycloak.Sync.Models.Pims
 {
     /// <summary>
     /// ClaimModel class, provides a mdoel for claims.
@@ -9,9 +9,14 @@ namespace Pims.Tools.Keycloak.Sync.Models
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary unique key identifier.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - A unique name.

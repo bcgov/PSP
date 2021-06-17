@@ -24,13 +24,13 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - An array of status Id.
         /// </summary>
-        public int[] StatusId { get; set; }
+        public long[] StatusId { get; set; }
 
         /// <summary>
         /// get/set - The project tier level.
         /// </summary>
         /// <value></value>
-        public int? TierLevelId { get; set; }
+        public long? TierLevelId { get; set; }
 
         /// <summary>
         /// get/set - The actual or forecasted fiscal year of the project.
@@ -59,7 +59,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - An array of agencies.
         /// </summary>
         /// <value></value>
-        public int[] Agencies { get; set; }
+        public long[] Agencies { get; set; }
 
         /// <summary>
         /// get/set - An array of workflow [SUBMIT-DISPOSAL, ASSESS-DISPOSAL, ASSESS-EXEMPTION, ERP, SPL].
@@ -89,13 +89,13 @@ namespace Pims.Dal.Entities.Models
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
             this.ProjectNumber = filter.GetStringValue(nameof(this.ProjectNumber));
             this.Name = filter.GetStringValue(nameof(this.Name));
-            this.StatusId = filter.GetIntArrayValue("status");
-            this.StatusId = filter.GetIntArrayValue(nameof(this.StatusId));
+            this.StatusId = filter.GetLongArrayValue("status");
+            this.StatusId = filter.GetLongArrayValue(nameof(this.StatusId));
             this.TierLevelId = filter.GetIntNullValue(nameof(this.TierLevelId));
             this.CreatedByMe = filter.GetBoolNullValue(nameof(this.CreatedByMe));
             this.SPLWorkflow = filter.GetBoolNullValue(nameof(this.SPLWorkflow));
             this.Active = filter.GetBoolNullValue(nameof(this.Active));
-            this.Agencies = filter.GetIntArrayValue(nameof(this.Agencies));
+            this.Agencies = filter.GetLongArrayValue(nameof(this.Agencies));
             this.Workflows = filter.GetStringArrayValue(nameof(this.Workflows));
             this.ReportId = filter.GetIntNullValue(nameof(this.ReportId));
             this.FiscalYear = filter.GetIntNullValue(nameof(this.FiscalYear));

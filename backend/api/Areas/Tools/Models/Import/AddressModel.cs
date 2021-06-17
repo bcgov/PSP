@@ -3,7 +3,7 @@ namespace Pims.Api.Areas.Tools.Models.Import
     public class AddressModel : Api.Models.BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Line1 { get; set; }
 

@@ -1,11 +1,19 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// BuildingConstructionType class, provides an entity for the datamodel to manage a list of building contruction types.
     /// </summary>
-    public class BuildingConstructionType : LookupEntity<int>
+    [MotiTable("PIMS_BUILDING_CONSTRUCTION_TYPE", "BLCNTY")]
+    public class BuildingConstructionType : LookupEntity
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify building construction type.
+        /// </summary>
+        [Column("BUILDING_CONSTRUCTION_TYPE_ID")]
+        public long Id { get; set; }
         #endregion
 
         #region Constructors
@@ -17,9 +25,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a BuildingConstructionType class.
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="name"></param>
-        public BuildingConstructionType(int id, string name) : base(id, name)
+        public BuildingConstructionType(string name) : base(name)
         {
         }
         #endregion

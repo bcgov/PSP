@@ -8,7 +8,7 @@ namespace Pims.Dal.Services
     /// </summary>
     public interface ITaskService : IService
     {
-        IEnumerable<Task> GetForStatus(int statusId);
+        IEnumerable<Task> GetForStatus(long statusId);
         IEnumerable<Task> GetForStatus(string statusCode);
         IEnumerable<Task> GetForWorkflow(string workflowCode);
     }

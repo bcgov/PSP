@@ -16,7 +16,7 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The foreign key to the task.
         /// </summary>
-        public int TaskId { get; set; }
+        public long TaskId { get; set; }
 
         /// <summary>
         /// get/set - Whether the task is complete.
@@ -56,7 +56,7 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The task status Id.
         /// </summary>
-        public int? StatusId { get; set; }
+        public long? StatusId { get; set; }
 
         /// <summary>
         /// get/set - The task status code.

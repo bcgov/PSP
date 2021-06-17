@@ -1,4 +1,4 @@
-PRINT 'Create Spatial Indexes'
+PRINT N'Create Property Spatial Indexes'
 
-CREATE SPATIAL INDEX IX_Parcels_SpatialLocation ON Parcels(Location) using geography_auto_grid
-CREATE SPATIAL INDEX IX_Buildings_SpatialLocation ON Buildings(Location) using geography_auto_grid
+CREATE SPATIAL INDEX [PARCEL_LOCATION_IDX] ON dbo.[PIMS_PARCEL](Location) USING GEOGRAPHY_AUTO_GRID
+CREATE SPATIAL INDEX [BUILDG_LOCATION_IDX] ON dbo.[PIMS_BUILDING](Location) USING GEOGRAPHY_AUTO_GRID

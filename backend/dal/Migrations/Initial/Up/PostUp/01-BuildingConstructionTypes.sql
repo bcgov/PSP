@@ -1,9 +1,9 @@
-PRINT 'Adding BuildingConstructionTypes'
+PRINT N'Adding [PIMS_BUILDING_CONSTRUCTION_TYPE]'
 
-INSERT INTO dbo.[BuildingConstructionTypes] (
-    [Id]
-    , [Name]
-    , [IsDisabled]
+INSERT INTO dbo.[PIMS_BUILDING_CONSTRUCTION_TYPE] (
+    [BUILDING_CONSTRUCTION_TYPE_ID]
+    , [NAME]
+    , [IS_DISABLED]
 ) VALUES (
     0
     , 'Concrete'
@@ -25,3 +25,7 @@ INSERT INTO dbo.[BuildingConstructionTypes] (
     , 'Wood'
     , 0
 )
+
+-- Update sequence so that it works with the latest data.
+ALTER SEQUENCE dbo.[PIMS_BUILDING_CONSTRUCTION_TYPE_ID_SEQ]
+RESTART WITH 5

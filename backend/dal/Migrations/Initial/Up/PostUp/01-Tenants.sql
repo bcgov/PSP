@@ -1,9 +1,9 @@
-PRINT 'Add Tenants'
+PRINT N'Add [PIMS_TENANT]'
 
-INSERT INTO dbo.[Tenants] (
-  [Code]
-  , [Name]
-  , [Settings]
+INSERT INTO dbo.[PIMS_TENANT] (
+  [CODE]
+  , [NAME]
+  , [SETTINGS]
 ) VALUES (
   'MOTI'
   , 'Ministry of Transportation & Infrastructure'

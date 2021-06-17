@@ -44,24 +44,24 @@ namespace Pims.Api.Areas.Keycloak.Controllers
 
         #region Endpoints
         /// <summary>
-        /// Sync the user for the specified 'id' from keycloak with PIMS.
+        /// Sync the user for the specified 'key' from keycloak with PIMS.
         /// If the user does not exist in keycloak it will return a 400-BadRequest.
         /// If the user does not exist in PIMS it will add it.
         /// Also links the user to the appropriate groups it is a member of within keycloak.!--
         /// If the group does not exist in PIMS it will add it.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">The user does not exist in keycloak.</exception>
         /// <returns></returns>
-        [HttpPost("sync/{id}")]
+        [HttpPost("sync/{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
-        public async Task<IActionResult> SyncUserAsync(Guid id)
+        public async Task<IActionResult> SyncUserAsync(Guid key)
         {
-            var user = await _keycloakService.SyncUserAsync(id);
+            var user = await _keycloakService.SyncUserAsync(key);
             var result = _mapper.Map<Model.UserModel>(user);
 
             return new JsonResult(result);
@@ -91,39 +91,39 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         }
 
         /// <summary>
-        /// Fetch the user for the specified 'id'.
+        /// Fetch the user for the specified 'key'.
         /// If the user does not exist in keycloak or PIMS return a 400-BadRequest.
         /// </summary>
         /// <exception type="KeyNotFoundException">The user does not exist in keycloak.</exception>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
-        public async Task<IActionResult> GetUserAsync(Guid id)
+        public async Task<IActionResult> GetUserAsync(Guid key)
         {
-            var user = await _keycloakService.GetUserAsync(id);
+            var user = await _keycloakService.GetUserAsync(key);
             var result = _mapper.Map<Model.UserModel>(user);
 
             return new JsonResult(result);
         }
 
         /// <summary>
-        /// Update the user for the specified 'id'.
+        /// Update the user for the specified 'key'.
         /// If the user does not exist in Keycloak or PIMS return a 400-BadRequest.
         /// </summary>
         /// <exception type="KeyNotFoundException">The user does not exist in Keycloak or PIMS.</exception>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AdminModels.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is required for route.")]
-        public async Task<IActionResult> UpdateUserAsync(Guid id, [FromBody] AdminModels.UserModel model)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        public async Task<IActionResult> UpdateUserAsync(Guid key, [FromBody] AdminModels.UserModel model)
         {
             var user = _mapper.Map<Entity.User>(model);
             var entity = await _keycloakService.UpdateUserAsync(user);

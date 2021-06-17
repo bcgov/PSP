@@ -1,6 +1,6 @@
 using System;
 
-namespace Pims.Tools.Keycloak.Sync.Models
+namespace Pims.Tools.Keycloak.Sync.Models.Pims
 {
     /// <summary>
     /// BaseModel abstract class, provides the standard tracking properties for models.
@@ -21,7 +21,7 @@ namespace Pims.Tools.Keycloak.Sync.Models
         /// <summary>
         /// get/set - The rowvesion.
         /// </summary>
-        public string RowVersion { get; set; }
+        public long RowVersion { get; set; }
         #endregion
     }
 }

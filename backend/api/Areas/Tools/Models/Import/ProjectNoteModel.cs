@@ -11,7 +11,7 @@ namespace Pims.Api.Areas.Tools.Models.Import
         /// <summary>
         /// get/set - The primary key for the project note.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The type of note.

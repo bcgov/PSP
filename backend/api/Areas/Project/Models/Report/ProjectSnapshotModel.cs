@@ -13,12 +13,12 @@ namespace Pims.Api.Areas.Project.Models.Report
         /// <summary>
         /// get/set - The primary key to identify the project.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The project id corresponding to this snapshot.
         /// </summary>
-        public int ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The project corresponding to this snapshot.

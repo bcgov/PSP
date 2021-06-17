@@ -65,7 +65,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProject(int id)
+        public IActionResult GetProject(long id)
         {
             var project = _mapper.Map<ProjectModel>(_pimsService.Project.Get(id));
             return new JsonResult(project);
@@ -206,7 +206,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public async Task<IActionResult> SetStatusAsync(string workflowCode, int statusId, ProjectModel model)
+        public async Task<IActionResult> SetStatusAsync(string workflowCode, long statusId, ProjectModel model)
         {
             if (String.IsNullOrWhiteSpace(workflowCode)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(workflowCode));
 
@@ -228,7 +228,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(PageModel<NModel.NotificationQueueModel>), 200)]
         [SwaggerOperation(Tags = new[] { "project", "notification" })]
-        public async Task<IActionResult> GetProjectNotificationsAsync(int id)
+        public async Task<IActionResult> GetProjectNotificationsAsync(long id)
         {
             var uri = new Uri(this.Request.GetDisplayUrl());
             var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
@@ -271,7 +271,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(IEnumerable<NModel.NotificationQueueModel>), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project", "notification" })]
-        public async Task<IActionResult> CancelProjectNotificationsAsync(int id)
+        public async Task<IActionResult> CancelProjectNotificationsAsync(long id)
         {
             var notifications = await _pimsService.Project.CancelNotificationsAsync(id);
             _pimsService.NotificationQueue.Update(notifications);

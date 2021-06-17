@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.TierLevel CreateTierLevel(int id, string name)
         {
-            return new Entity.TierLevel(id, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.TierLevel(name) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.TierLevel CreateTierLevel(string name)
         {
-            return new Entity.TierLevel(1, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.TierLevel(name) { Id = 1, RowVersion = 1 };
         }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace Pims.Core.Test
         {
             return new List<Entity.TierLevel>()
             {
-                new Entity.TierLevel(1, "Tier 1") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.TierLevel(2, "Tier 2") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.TierLevel(3, "Tier 3") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.TierLevel(4, "Tier 4") { RowVersion = new byte[] { 12, 13, 14 } },
+                new Entity.TierLevel("Tier 1") { Id = 1, RowVersion = 1 },
+                new Entity.TierLevel("Tier 2") { Id = 2, RowVersion = 1 },
+                new Entity.TierLevel("Tier 3") { Id = 3, RowVersion = 1 },
+                new Entity.TierLevel("Tier 4") { Id = 4, RowVersion = 1 },
             };
         }
     }

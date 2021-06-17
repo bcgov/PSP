@@ -9,6 +9,6 @@ namespace Pims.Dal.Services
     public interface IProjectStatusService : IService
     {
         IEnumerable<ProjectStatus> Get();
-        ProjectStatus Get(int id);
+        ProjectStatus Get(long id);
     }
 }

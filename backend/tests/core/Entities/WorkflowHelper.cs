@@ -22,7 +22,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.Workflow CreateWorkflow(int id, string name, string code = null, IEnumerable<Entity.ProjectStatus> status = null)
         {
-            var workflow = new Entity.Workflow(name, code ?? name) { Id = id, RowVersion = new byte[] { 12, 13, 14 } };
+            var workflow = new Entity.Workflow(name, code ?? name) { Id = id, RowVersion = 1 };
             if (status?.Any() == true)
             {
                 var i = 1;
@@ -39,12 +39,12 @@ namespace Pims.Core.Test
         {
             return new List<Entity.Workflow>()
             {
-                new Entity.Workflow("Submit", "SUBMIT-DISPOSAL") { Id = 1, SortOrder = 1, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Workflow("Access", "ASSESS-DISPOSAL") { Id = 2, SortOrder = 2, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Workflow("Access Exemption", "ASSESS-EXEMPTION") { Id = 3, SortOrder = 3, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Workflow("Access", "ASSESS-EX-DISPOSAL") { Id = 4, SortOrder = 4, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Workflow("Enhanced Referral Program", "ERP") { Id = 5, SortOrder = 5, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Workflow("Surplus Property List", "SPL") { Id = 6, SortOrder = 6, RowVersion = new byte[] { 12, 13, 14 } }
+                new Entity.Workflow("Submit", "SUBMIT-DISPOSAL") { Id = 1, SortOrder = 1, RowVersion = 1 },
+                new Entity.Workflow("Access", "ASSESS-DISPOSAL") { Id = 2, SortOrder = 2, RowVersion = 1 },
+                new Entity.Workflow("Access Exemption", "ASSESS-EXEMPTION") { Id = 3, SortOrder = 3, RowVersion = 1 },
+                new Entity.Workflow("Access", "ASSESS-EX-DISPOSAL") { Id = 4, SortOrder = 4, RowVersion = 1 },
+                new Entity.Workflow("Enhanced Referral Program", "ERP") { Id = 5, SortOrder = 5, RowVersion = 1 },
+                new Entity.Workflow("Surplus Property List", "SPL") { Id = 6, SortOrder = 6, RowVersion = 1 }
             };
         }
 

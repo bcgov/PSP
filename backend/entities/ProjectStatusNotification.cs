@@ -1,22 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ProjectStatusNotification class, provides an entity for the datamodel to manage a notifications associated to project status.
     /// </summary>
+    [MotiTable("PIMS_PROJ_STATUS_NOTIFICATION", "PRJSNO")]
     public class ProjectStatusNotification : BaseEntity
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key unique identity for project status notification.
         /// </summary>
-        public int Id { get; set; }
+        [Column("PROJECT_STATUS_NOTIFICATION_ID")]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the notification template.
         /// </summary>
-        public int TemplateId { get; set; }
+        [Column("NOTIFICATION_TEMPLATE_ID")]
+        public long TemplateId { get; set; }
 
         /// <summary>
         /// get/set - The notification template.
@@ -26,7 +30,9 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Foreign key to the original project status before the status change.
         /// </summary>
-        public int? FromStatusId { get; set; }
+        [Column("FROM_PROJECT_STATUS_ID")]
+        [ForeignKey("PIMS_PRJSNO_PIMS_PRSTNT_FROM_STATUS_FK")]
+        public long? FromStatusId { get; set; }
 
         /// <summary>
         /// get/set - The original project status before the status change..
@@ -36,7 +42,9 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Foreign key to the desired project status after the status change.
         /// </summary>
-        public int? ToStatusId { get; set; }
+        [Column("TO_PROJECT_STATUS_ID")]
+        [ForeignKey("PIMS_PRJSNO_PIMS_PRSTNT_TO_STATUS_FK")]
+        public long? ToStatusId { get; set; }
 
         /// <summary>
         /// get/set - The desired project status after the status change.
@@ -46,16 +54,19 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The notification priority [low, normal, high]
         /// </summary>
+        [Column("PRIORITY")]
         public NotificationPriorities Priority { get; set; }
 
         /// <summary>
         /// get/set - Controls when the notification will be sent.
         /// </summary>
+        [Column("DELAY")]
         public NotificationDelays Delay { get; set; }
 
         /// <summary>
         /// get/set - The number of days to delay the notification.
         /// </summary>
+        [Column("DELAY_DAYS")]
         public int DelayDays { get; set; }
         #endregion
 

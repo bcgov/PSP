@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,27 +13,35 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<ParcelFiscal> builder)
         {
-            builder.ToTable("ParcelFiscals");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => new { m.ParcelId, m.FiscalYear, m.Key });
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.ParcelId).IsRequired();
-            builder.Property(m => m.ParcelId).ValueGeneratedNever();
+            builder.Property(m => m.ParcelId).IsRequired()
+                .HasComment("Foreign key to the parcel");
 
-            builder.Property(m => m.FiscalYear).IsRequired();
-            builder.Property(m => m.FiscalYear).ValueGeneratedNever();
+            builder.Property(m => m.FiscalYear).IsRequired()
+                .HasComment("The fiscal year this value is relevant to");
 
-            builder.Property(m => m.EffectiveDate).HasColumnType("DATE");
+            builder.Property(m => m.EffectiveDate)
+                .HasColumnType("DATETIME")
+                .HasComment("The effective date of the value");
 
-            builder.Property(m => m.Key).IsRequired();
+            builder.Property(m => m.Key).IsRequired()
+                .HasComment("The fiscal value type");
 
-            builder.Property(m => m.Value).HasColumnType("MONEY");
-            builder.Property(m => m.Note).HasMaxLength(500);
+            builder.Property(m => m.Value)
+                .HasComment("The value of the property");
+            builder.Property(m => m.Note).HasMaxLength(500)
+                .HasComment("A note about the fiscal value");
 
-            builder.HasOne(m => m.Parcel).WithMany(m => m.Fiscals).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.ClientCascade);
+            builder.HasOne(m => m.Parcel).WithMany(m => m.Fiscals).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRFSCL_PARCEL_ID_IDX");
 
-            builder.HasIndex(m => new { m.ParcelId, m.FiscalYear, m.Key, m.Value });
-            builder.HasIndex(m => new { m.ParcelId, m.Key });
+            builder.HasIndex(m => new { m.ParcelId, m.FiscalYear, m.Key }, "PRFSCL_PARCEL_ID_FISCAL_YEAR_KEY_TUC").IsUnique();
+            builder.HasIndex(m => new { m.Value }, "PRFSCL_VALUE_IDX");
+            builder.HasIndex(m => m.ParcelId, "PRFSCL_PARCEL_ID_IDX");
 
             base.Configure(builder);
         }

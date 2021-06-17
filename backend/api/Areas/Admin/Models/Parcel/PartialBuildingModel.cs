@@ -5,7 +5,7 @@ namespace Pims.Api.Areas.Admin.Models.Parcel
     public class PartialBuildingModel : Model.BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
 

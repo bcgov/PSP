@@ -21,7 +21,7 @@ namespace Pims.Dal.Test.Entities
             var number = new ProjectNumber();
 
             // Assert
-            number.Id.Should().Be(0);
+            number.Should().Be(0);
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace Pims.Dal.Test.Entities
             var result = number.ToString();
 
             // Assert
-            result.Should().Be(number.Id.ToString());
+            result.Should().Be(number.ToString());
         }
         #endregion
     }

@@ -19,12 +19,12 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The project id.
         /// </summary>
-        public int? ProjectId { get; set; }
+        public long? ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The agency id.
         /// </summary>
-        public int? AgencyId { get; set; }
+        public long? AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The tag.

@@ -10,6 +10,7 @@ namespace Pims.Api.Mapping.User
         {
             config.NewConfig<Entity.User, Model.AccessRequestUserModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.DisplayName, src => src.DisplayName)
                 .Map(dest => dest.FirstName, src => src.FirstName)
@@ -21,6 +22,7 @@ namespace Pims.Api.Mapping.User
 
             config.NewConfig<Model.AccessRequestUserModel, Entity.User>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.DisplayName, src => src.DisplayName)
                 .Map(dest => dest.FirstName, src => src.FirstName)

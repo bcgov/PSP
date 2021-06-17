@@ -12,10 +12,10 @@ namespace Pims.Dal.Services.Admin
         int Count();
         Paged<User> Get(int page, int quantity);
         Paged<User> Get(UserFilter filter);
-        User Get(Guid id);
+        User Get(Guid key);
 
         AccessRequest UpdateAccessRequest(AccessRequest accessRequest);
-        AccessRequest GetAccessRequest(int id);
+        AccessRequest GetAccessRequest(long id);
         Paged<AccessRequest> GetAccessRequests(int page = 1, int quantity = 10, string sort = null,
             AccessRequestStatus status = AccessRequestStatus.OnHold);
         Paged<AccessRequest> GetAccessRequests(AccessRequestFilter filter);

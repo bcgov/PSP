@@ -10,7 +10,7 @@ namespace Pims.Dal.Services
     {
         #region Methods
         IEnumerable<Workflow> Get();
-        Workflow Get(int id);
+        Workflow Get(long id);
         Workflow Get(string code);
         #endregion
     }

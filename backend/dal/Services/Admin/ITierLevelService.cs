@@ -9,6 +9,6 @@ namespace Pims.Dal.Services.Admin
     public interface ITierLevelService : IBaseService<TierLevel>
     {
         IEnumerable<TierLevel> GetAll();
-        TierLevel Get(int id);
+        TierLevel Get(long id);
     }
 }

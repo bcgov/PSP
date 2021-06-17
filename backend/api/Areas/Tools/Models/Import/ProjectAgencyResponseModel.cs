@@ -12,7 +12,7 @@ namespace Pims.Api.Areas.Tools.Models.Import
         /// <summary>
         /// get/set - The foreign key to the agency.
         /// </summary>
-        public int AgencyId { get; set; }
+        public long AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The agency code.

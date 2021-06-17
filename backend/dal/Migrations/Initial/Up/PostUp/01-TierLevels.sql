@@ -1,13 +1,11 @@
-PRINT 'Adding TierLevels'
+PRINT N'Adding [PIMS_TIER_LEVEL]'
 
-SET IDENTITY_INSERT dbo.[TierLevels] ON
-
-INSERT INTO dbo.[TierLevels] (
-    [Id]
-    , [Name]
-    , [IsDisabled]
-    , [Description]
-    , [SortOrder]
+INSERT INTO dbo.[PIMS_TIER_LEVEL] (
+    [TIER_LEVEL_ID]
+    , [NAME]
+    , [IS_DISABLED]
+    , [DESCRIPTION]
+    , [SORT_ORDER]
 ) VALUES (
     1
     , 'Tier 1'
@@ -35,4 +33,6 @@ INSERT INTO dbo.[TierLevels] (
     , 4
 )
 
-SET IDENTITY_INSERT dbo.[TierLevels] OFF
+-- Update sequence so that it works with the latest data.
+ALTER SEQUENCE dbo.[PIMS_TIER_LEVEL_ID_SEQ]
+RESTART WITH 5

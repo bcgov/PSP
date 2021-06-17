@@ -1,8 +1,6 @@
-using System;
-
 namespace Pims.Api.Models.Lookup
 {
-    public class RoleModel : LookupModel<Guid>
+    public class RoleModel : CommonLookupModel<long>
     {
         #region Properties
         public string Description { get; set; }

@@ -67,8 +67,6 @@ namespace Pims.Dal.Services.Admin
             var query = this.Context.Users
                 .Include(u => u.Agencies).ThenInclude(a => a.Agency)
                 .Include(u => u.Roles).ThenInclude(r => r.Role)
-                .Include(u => u.CreatedBy)
-                .Include(u => u.UpdatedBy)
                 .Include(u => u.ApprovedBy)
                 .AsNoTracking()
                 .Where(u => !u.IsSystem);
@@ -129,12 +127,12 @@ namespace Pims.Dal.Services.Admin
         }
 
         /// <summary>
-        /// Get the user with the specified 'id'.
+        /// Get the user with the specified 'key'.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public User Get(Guid id)
+        public User Get(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
@@ -144,7 +142,7 @@ namespace Pims.Dal.Services.Admin
                 .Include(u => u.Agencies)
                 .ThenInclude(a => a.Agency)
                 .AsNoTracking()
-                .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+                .SingleOrDefault(u => u.Key == key) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -179,13 +177,15 @@ namespace Pims.Dal.Services.Admin
                 .AsNoTracking()
                 .FirstOrDefault(u => u.Id == user.Id) ?? throw new KeyNotFoundException();
 
-            this.Context.SetOriginalRowVersion(existingUser);
-
             if (!existingUser.Agencies.Any())
             {
-                user.ApprovedById = this.User.GetUserId();
+                var key = this.User.GetUserKey();
+                var approvedBy = this.Context.Users.AsNoTracking().FirstOrDefault(u => u.Key == key) ?? throw new KeyNotFoundException($"Current user principal key:'{key}' does not exist");
+                user.ApprovedById = approvedBy.Id;
                 user.ApprovedOn = DateTime.UtcNow;
             }
+
+            this.Context.SetOriginalRowVersion(existingUser);
 
             var addRoles = user.Roles.Except(existingUser.Roles, new UserRoleRoleIdComparer());
             addRoles.ForEach(r => this.Context.Entry(r).State = EntityState.Added);
@@ -215,7 +215,7 @@ namespace Pims.Dal.Services.Admin
                 .Include(u => u.Roles)
                 .AsNoTracking()
                 .FirstOrDefault(u => u.Id == user.Id) ?? throw new KeyNotFoundException();
-
+            existingUser.RowVersion = user.RowVersion;
             this.Context.SetOriginalRowVersion(existingUser);
 
             existingUser.Roles.Clear();
@@ -244,8 +244,9 @@ namespace Pims.Dal.Services.Admin
 
             if (isApproving)
             {
+                var approvedBy = this.Context.Users.FirstOrDefault(u => u.Key == this.User.GetUserKey()) ?? throw new KeyNotFoundException("Current user principal does not exist");
                 var approvedUser = this.Context.Users.Find(existingAccessRequest.UserId);
-                approvedUser.ApprovedById = this.User.GetUserId();
+                approvedUser.ApprovedById = approvedBy.Id;
                 approvedUser.ApprovedOn = DateTime.UtcNow;
                 this.Context.Users.Update(approvedUser);
             }
@@ -259,7 +260,7 @@ namespace Pims.Dal.Services.Admin
         /// Get the access request with matching id
         /// </summary>
         /// <param name="id"></param>
-        public AccessRequest GetAccessRequest(int id)
+        public AccessRequest GetAccessRequest(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 

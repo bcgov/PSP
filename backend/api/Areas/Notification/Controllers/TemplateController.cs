@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationTemplateModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public IActionResult GetNotificationTemplate(int id)
+        public IActionResult GetNotificationTemplate(long id)
         {
             var template = _pimsService.NotificationTemplate.Get(id);
             return new JsonResult(_mapper.Map<NotificationTemplateModel>(template));
@@ -146,7 +146,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(Models.Queue.NotificationQueueModel), 201)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public async Task<IActionResult> SendProjectNotificationAsync(int templateId, string to, string cc, string bcc, int projectId)
+        public async Task<IActionResult> SendProjectNotificationAsync(long templateId, string to, string cc, string bcc, long projectId)
         {
             var project = _pimsService.Project.Get(projectId);
             var env = new Entity.Models.EnvironmentModel(_options.Environment.Uri, _options.Environment.Name, _options.Environment.Title);

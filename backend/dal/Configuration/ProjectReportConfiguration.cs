@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -13,18 +14,28 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<ProjectReport> builder)
         {
-            builder.ToTable("ProjectReports");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).IsRequired();
-            builder.Property(m => m.Id).ValueGeneratedOnAdd();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Name).HasMaxLength(250).IsNullable();
+            builder.Property(m => m.Name).HasMaxLength(250)
+                .HasComment("A name to identify the record").IsNullable();
+            builder.Property(m => m.ReportType)
+                .HasComment("The type of report");
 
-            builder.Property(m => m.From).HasColumnType("DATETIME2");
-            builder.Property(m => m.To).HasColumnType("DATETIME2").IsRequired();
+            builder.Property(m => m.From)
+                .HasColumnType("DATETIME")
+                .HasComment("The date this project period begins from");
+            builder.Property(m => m.To).IsRequired()
+                .HasColumnType("DATETIME")
+                .HasComment("The date this project period ends at");
 
-            builder.HasIndex(m => new { m.Id, m.To, m.From, m.IsFinal });
+            builder.Property(m => m.IsFinal)
+                .HasComment("Whether this report is considered final");
+
+            builder.HasIndex(m => new { m.To, m.From, m.IsFinal }, "PRJRPT_TO_FROM_IS_FINAL_IDX");
 
             base.Configure(builder);
         }

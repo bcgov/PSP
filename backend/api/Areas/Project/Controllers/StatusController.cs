@@ -88,7 +88,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(IEnumerable<TaskModel>), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetTasksForStatus(int statusId)
+        public IActionResult GetTasksForStatus(long statusId)
         {
             var tasks = _pimsService.Task.GetForStatus(statusId).Select(s => _mapper.Map<TaskModel>(s)).ToArray();
             return new JsonResult(tasks);

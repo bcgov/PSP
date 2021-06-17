@@ -1,17 +1,25 @@
-using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ProjectRisk class, provides an entity for the datamodel to manage project risks.
     /// </summary>
-    public class ProjectRisk : CodeEntity<int>
+    [MotiTable("PIMS_PROJECT_RISK", "PRJRSK")]
+    public class ProjectRisk : CodeEntity
     {
         #region Properties
         /// <summary>
+        /// get/set -
+        /// </summary>
+        [Column("PROJECT_RISK_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - A description of the risk.
         /// </summary>
+        [Column("DESCRIPTION")]
         public string Description { get; set; }
 
         /// <summary>
@@ -32,13 +40,8 @@ namespace Pims.Dal.Entities
         /// <param name="name"></param>
         /// <param name="code"></param>
         /// <param name="sortOrder"></param>
-        public ProjectRisk(string name, string code, int sortOrder)
+        public ProjectRisk(string name, string code, int sortOrder) : base(name, code)
         {
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException("Argument cannot be null, empty or whitespace.", nameof(name));
-            if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException("Argument cannot be null, empty or whitespace.", nameof(code));
-
-            this.Name = name;
-            this.Code = code;
             this.SortOrder = sortOrder;
         }
         #endregion

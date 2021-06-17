@@ -50,11 +50,11 @@ namespace Pims.Core.Test
                 BuildingConstructionTypeId = constructionType.Id,
                 BuildingOccupantType = occupantType,
                 BuildingOccupantTypeId = occupantType.Id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 },
+                RowVersion = 1,
                 PropertyTypeId = 1,
             };
         }
@@ -70,7 +70,7 @@ namespace Pims.Core.Test
         /// <param name="lng"></param>
         /// <param name="agency"></param>
         /// <returns></returns>
-        public static Entity.Building CreateBuilding(Entity.Parcel parcel, int id, string projectNumber = null, string name = null, int lat = 0, int lng = 0, Entity.Agency agency = null)
+        public static Entity.Building CreateBuilding(Entity.Parcel parcel, long id, string projectNumber = null, string name = null, int lat = 0, int lng = 0, Entity.Agency agency = null)
         {
             projectNumber ??= $"p{id}";
             agency ??= parcel?.Agency ?? EntityHelper.CreateAgency(id);
@@ -99,11 +99,11 @@ namespace Pims.Core.Test
                 BuildingConstructionTypeId = constructionType.Id,
                 BuildingOccupantType = occupantType,
                 BuildingOccupantTypeId = occupantType.Id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 },
+                RowVersion = 1,
                 PropertyTypeId = 1,
             };
         }
@@ -181,11 +181,11 @@ namespace Pims.Core.Test
                 BuildingConstructionTypeId = constructionType.Id,
                 BuildingOccupantType = occupantType,
                 BuildingOccupantTypeId = occupantType.Id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
             if (parcel != null)
             {

@@ -1,48 +1,54 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// BuildingEvaluation class, provides an entity to map building evaluation values to a date.
     /// </summary>
+    [MotiTable("PIMS_BUILDING_EVALUATION", "BLDEVL")]
     public class BuildingEvaluation : BaseEntity
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify the building evaluation.
+        /// </summary>
+        [Column("BUILDING_EVALUATION_ID")]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The primary key and the foreign key to the building.
         /// </summary>
-        /// <value></value>
-        public int BuildingId { get; set; }
+        [Column("BUILDING_ID")]
+        public long BuildingId { get; set; }
 
         /// <summary>
         /// get/set - The building.
         /// </summary>
-        /// <value></value>
         public Building Building { get; set; }
 
         /// <summary>
         /// get/set - The primary key and the date the evaluation is for.
         /// </summary>
-        /// <value></value>
+        [Column("DATE")]
         public DateTime Date { get; set; }
 
         /// <summary>
         /// get/set - The key for this fiscal value.
         /// </summary>
-        /// <value></value>
+        [Column("KEY")]
         public EvaluationKeys Key { get; set; }
 
         /// <summary>
         /// get/set - The value of the fiscal key for this building.
         /// </summary>
-        /// <value></value>
+        [Column("VALUE")]
         public decimal Value { get; set; }
 
         /// <summary>
         /// get/set - A note related to this fiscal value.
         /// </summary>
-        /// <value></value>
+        [Column("NOTE")]
         public string Note { get; set; }
         #endregion
 

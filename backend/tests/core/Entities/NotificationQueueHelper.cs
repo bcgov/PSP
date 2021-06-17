@@ -25,9 +25,9 @@ namespace Pims.Core.Test
             return new Entity.NotificationQueue(template, to, subject, body)
             {
                 Id = id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = new DateTime(2019, 1, 1, 18, 23, 22, DateTimeKind.Utc),
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 
@@ -97,9 +97,9 @@ namespace Pims.Core.Test
             return new Entity.NotificationQueue(template, project, agency ?? project.Agency, "test", "test")
             {
                 Id = id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 

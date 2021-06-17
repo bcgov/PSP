@@ -46,13 +46,13 @@ namespace Pims.Dal.Entities.Models
         /// get/set - Building construction type Id.
         /// </summary>
         /// <value></value>
-        public int? ConstructionTypeId { get; set; }
+        public long? ConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - Building predominant use Id.
         /// </summary>
         /// <value></value>
-        public int? PredominateUseId { get; set; }
+        public long? PredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - Building floor count Id.

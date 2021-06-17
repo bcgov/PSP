@@ -64,7 +64,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">The notification does not exist in the queue for the specified 'id'.</exception>
         /// <returns></returns>
-        public NotificationQueue Get(int id)
+        public NotificationQueue Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
@@ -121,7 +121,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async System.Threading.Tasks.Task<NotificationQueue> CancelNotificationAsync(int id)
+        public async System.Threading.Tasks.Task<NotificationQueue> CancelNotificationAsync(long id)
         {
             var notification = Get(id);
             await _notifyService.CancelAsync(notification);
@@ -141,7 +141,7 @@ namespace Pims.Dal.Services
         /// <param name="toStatusId"></param>
         /// <param name="includeOnlyTo">Control whether transitions only require a `To Status`, not a `From Status`.</param>
         /// <returns></returns>
-        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, int? fromStatusId, int? toStatusId, bool includeOnlyTo = true)
+        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, long? fromStatusId, long? toStatusId, bool includeOnlyTo = true)
         {
             if (project == null) throw new ArgumentNullException(nameof(project));
 
@@ -182,7 +182,7 @@ namespace Pims.Dal.Services
         /// <param name="project"></param>
         /// <param name="projectStatusNotificationId"></param>
         /// <returns></returns>
-        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, int projectStatusNotificationId)
+        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, long projectStatusNotificationId)
         {
             return GenerateNotifications(project, this.Self.ProjectNotification.Get(projectStatusNotificationId));
         }
@@ -310,7 +310,7 @@ namespace Pims.Dal.Services
             var env = new EnvironmentModel(_options.Environment.Uri, _options.Environment.Name, _options.Environment.Title);
             var model = new ProjectNotificationModel(Guid.NewGuid(), env, project, project.Agency);
             var email = !String.IsNullOrWhiteSpace(project.Agency.Email) ? project.Agency.Email :
-                this.Context.Users.FirstOrDefault(u => u.Id == project.CreatedById)?.Email;
+                this.Context.Users.FirstOrDefault(u => u.Username == project.CreatedBy)?.Email;
 
             return GenerateNotification(email, template, model);
         }

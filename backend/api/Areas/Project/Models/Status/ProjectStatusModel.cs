@@ -3,9 +3,14 @@ namespace Pims.Api.Areas.Project.Models.Status
     /// <summary>
     /// ProjectStatusModel class, provides a model to represent the project status.
     /// </summary>
-    public class ProjectStatusModel : Api.Models.CodeModel<int>
+    public class ProjectStatusModel : Api.Models.CodeModel
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify agency.
+        /// </summary>
+        public long Id { get; set; }
+
         /// <summary>
         /// get/set - A description of the status.
         /// </summary>

@@ -3,9 +3,14 @@ namespace Pims.Api.Areas.Project.Models.Workflow
     /// <summary>
     /// TaskModel class, provides a model to represent a task.
     /// </summary>
-    public class TaskModel : Api.Models.LookupModel<int>
+    public class TaskModel : Api.Models.LookupModel
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify task.
+        /// </summary>
+        public long Id { get; set; }
+
         /// <summary>
         /// get/set - The task description.
         /// </summary>

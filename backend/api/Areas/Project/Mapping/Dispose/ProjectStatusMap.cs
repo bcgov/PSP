@@ -9,11 +9,12 @@ namespace Pims.Api.Areas.Project.Mapping.Dispose
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.ProjectStatus, Model.ProjectStatusModel>()
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Route, src => src.Route)
                 .Map(dest => dest.Tasks, src => src.Tasks)
                 .Map(dest => dest.IsTerminal, src => src.IsTerminal)
-                .Inherits<Entity.CodeEntity<int>, Api.Models.CodeModel<int>>();
+                .Inherits<Entity.CodeEntity, Api.Models.CodeModel>();
         }
     }
 }

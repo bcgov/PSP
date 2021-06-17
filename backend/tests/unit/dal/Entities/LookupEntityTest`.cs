@@ -33,7 +33,6 @@ namespace Pims.Dal.Test.Entities
             var result = new TestClass();
 
             // Assert
-            result.Id.Should().Be(0);
             result.Name.Should().BeNull();
         }
 
@@ -41,14 +40,12 @@ namespace Pims.Dal.Test.Entities
         public void LookupEntity_Constructor_01()
         {
             // Arrange
-            var uid = 1;
             var name = "name";
 
             // Act
-            var result = new TestClass(uid, name);
+            var result = new TestClass(name);
 
             // Assert
-            result.Id.Should().Be(uid);
             result.Name.Should().Be(name);
         }
 
@@ -58,19 +55,17 @@ namespace Pims.Dal.Test.Entities
         public void LookupEntity_Constructor_01_ArgumentException(string name)
         {
             // Arrange
-            var uid = 1;
-
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new TestClass(uid, name));
+            Assert.Throws<ArgumentException>(() => new TestClass(name));
         }
         #endregion
 
         #region Test Classes
-        class TestClass : LookupEntity<int>
+        class TestClass : LookupEntity
         {
             public TestClass() : base() { }
-            public TestClass(int id, string name) : base(id, name) { }
+            public TestClass(string name) : base(name) { }
         }
         #endregion
     }

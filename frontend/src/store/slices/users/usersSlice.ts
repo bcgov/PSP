@@ -23,7 +23,7 @@ export const initialState: IUsersState = {
     agencies: [],
     roles: [],
     createdOn: '',
-    rowVersion: '',
+    rowVersion: 1,
   },
 };
 /**

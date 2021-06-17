@@ -82,43 +82,46 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         }
 
         /// <summary>
-        /// Fetch role for the specified 'id'.
+        /// Fetch role for the specified 'key'.
         /// If the group doesn't exist in keycloak it will return a 400 BadRequest.
         /// If the role doesn't exist in PIMS it will return a 400 BadRequest.
         /// </summary>
-        /// <exception type="KeyNotFoundException">The role does not exist for the specified 'id'.</exception>
+        /// <param name="key"></param>
+        /// <exception type="KeyNotFoundException">The role does not exist for the specified 'key'.</exception>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.RoleModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-role" })]
         [HasPermission(Permissions.AdminRoles)]
-        public async Task<IActionResult> GetRoleAsync(Guid id)
+        public async Task<IActionResult> GetRoleAsync(Guid key)
         {
-            var role = await _keycloakService.GetRoleAsync(id);
+            var role = await _keycloakService.GetRoleAsync(key);
             var result = _mapper.Map<Model.RoleModel>(role);
 
             return new JsonResult(result);
         }
 
         /// <summary>
-        /// Update the keycloak group and PIMS role for the specified 'id'.
+        /// Update the keycloak group and PIMS role for the specified 'key'.
         /// If the group doesn't exist in keycloak it will return a 400 BadRequest.
         /// If the role doesn't exist in PIMS it will create it.
         /// </summary>
-        /// <exception type="KeyNotFoundException">The role does not exist for the specified 'id'.</exception>
+        /// <param name="key"></param>
+        /// <param name="model"></param>
+        /// <exception type="KeyNotFoundException">The role does not exist for the specified 'key'.</exception>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.RoleModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-role" })]
         [HasPermission(Permissions.AdminRoles)]
-        public async Task<IActionResult> UpdateRoleAsync(Guid id, [FromBody] Model.Update.RoleModel model)
+        public async Task<IActionResult> UpdateRoleAsync(Guid key, [FromBody] Model.Update.RoleModel model)
         {
             var role = _mapper.Map<Entity.Role>(model);
-            role.Id = id;
+            role.Key = key;
             await _keycloakService.UpdateRoleAsync(role);
             var result = _mapper.Map<Model.RoleModel>(role);
 

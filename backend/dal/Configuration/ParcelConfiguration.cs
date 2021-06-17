@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,25 +13,47 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<Parcel> builder)
         {
-            builder.ToTable("Parcels");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).ValueGeneratedOnAdd();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.PID).IsRequired();
-            builder.Property(m => m.Zoning).HasMaxLength(50);
-            builder.Property(m => m.ZoningPotential).HasMaxLength(50);
-            builder.Property(m => m.LandLegalDescription).HasMaxLength(500);
-            builder.Property(m => m.EncumbranceReason).HasMaxLength(500);
-            builder.Property(m => m.NotOwned).HasDefaultValue(false);
+            builder.Property(m => m.AgencyId)
+                .HasComment("Foreign key to the owning agency");
+            builder.Property(m => m.AddressId)
+                .HasComment("Foreign key to the property address");
+            builder.Property(m => m.PropertyTypeId)
+                .HasComment("Foreign key to the property type");
+            builder.Property(m => m.ClassificationId)
+                .HasComment("Foreign key to the property classification");
 
-            builder.HasOne(m => m.Agency).WithMany(m => m.Parcels).HasForeignKey(m => m.AgencyId).OnDelete(DeleteBehavior.ClientSetNull);
-            builder.HasOne(m => m.PropertyType).WithOne().HasForeignKey<Parcel>(m => m.PropertyTypeId).OnDelete(DeleteBehavior.ClientNoAction);
+            builder.Property(m => m.PID).IsRequired()
+                .HasComment("A unique identifier for a titled property");
+            builder.Property(m => m.PIN)
+                .HasComment("A unique identifier for an non-titled property");
+            builder.Property(m => m.Zoning).HasMaxLength(50)
+                .HasComment("The current zoning of the property");
+            builder.Property(m => m.ZoningPotential).HasMaxLength(50)
+                .HasComment("The potential zoning of the property");
+            builder.Property(m => m.LandArea)
+                .HasComment("The area of the property");
+            builder.Property(m => m.LandLegalDescription).HasMaxLength(500)
+                .HasComment("The land legal description");
+            builder.Property(m => m.NotOwned).HasDefaultValue(false)
+                .HasComment("Whether this property is owned by an agency");
 
-            builder.HasIndex(m => m.PropertyTypeId).IsUnique(false);
-            builder.HasIndex(m => new { m.PID, m.PIN }).IsUnique(); // This will allow for Crown Land to set ParcelId=0 and PIN=#######.
-            builder.HasIndex(m => new { m.Id, m.AgencyId, m.IsSensitive, m.AddressId });
-            builder.HasIndex(m => new { m.Id, m.IsSensitive, m.AgencyId, m.ClassificationId, m.PID, m.PIN, m.AddressId, m.ProjectNumbers, m.LandArea, m.Zoning, m.ZoningPotential });
+            builder.HasOne(m => m.Agency).WithMany(m => m.Parcels).HasForeignKey(m => m.AgencyId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("PARCEL_AGENCY_ID_IDX");
+            builder.HasOne(m => m.Address).WithMany().HasForeignKey(m => m.AddressId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PARCEL_ADDRESS_ID_IDX");
+            builder.HasOne(m => m.PropertyType).WithMany().HasForeignKey(m => m.PropertyTypeId).OnDelete(DeleteBehavior.ClientNoAction).HasConstraintName("PARCEL_PROPERTY_TYPE_ID_IDX");
+            builder.HasOne(m => m.Classification).WithMany().HasForeignKey(m => m.ClassificationId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("PARCEL_PROPERTY_CLASSIFICATION_ID_IDX");
+
+            builder.HasIndex(m => new { m.PID, m.PIN }, "PARCEL_PID_PIN_TUC").IsUnique(); // This will allow for Crown Land to set ParcelId=0 and PIN=#######.
+            builder.HasIndex(m => new { m.IsSensitive, m.PID, m.PIN, m.ProjectNumbers }, "PARCEL_IS_SENSITIVE_PID_PIN_PROJECT_NUMBERS_IDX");
+            builder.HasIndex(m => m.AgencyId, "PARCEL_AGENCY_ID_IDX");
+            builder.HasIndex(m => m.AddressId, "PARCEL_ADDRESS_ID_IDX");
+            builder.HasIndex(m => m.PropertyTypeId, "PARCEL_PROPERTY_TYPE_ID_IDX");
+            builder.HasIndex(m => m.ClassificationId, "PARCEL_PROPERTY_CLASSIFICATION_ID_IDX");
 
             base.Configure(builder);
         }

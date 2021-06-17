@@ -23,10 +23,10 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
 
 
             config.NewConfig<Entity.BaseEntity, Model.Update.BaseModel>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion == null ? null : Convert.ToBase64String(src.RowVersion));
+                .Map(dest => dest.RowVersion, src => src.RowVersion);
 
             config.NewConfig<Model.Update.BaseModel, Entity.BaseEntity>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion == null ? null : Convert.FromBase64String(src.RowVersion));
+                .Map(dest => dest.RowVersion, src => src.RowVersion);
         }
     }
 }

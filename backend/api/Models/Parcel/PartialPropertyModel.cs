@@ -3,13 +3,13 @@ namespace Pims.Api.Models.Parcel
     public class PartialPropertyModel : BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
 
-        public int StatusId { get; set; }
+        public long StatusId { get; set; }
 
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         public double Latitude { get; set; }
 

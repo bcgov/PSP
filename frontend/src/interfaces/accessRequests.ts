@@ -8,7 +8,7 @@ export interface IAccessRequest {
   roles: any[];
   note?: string | null;
   status: AccessRequestStatus;
-  rowVersion?: string;
+  rowVersion?: number;
   createdOn?: string;
   position?: string;
 }
@@ -23,6 +23,6 @@ interface IUser {
   position?: string | null;
   isDisabled?: boolean;
   createdOn?: string;
-  rowVersion?: string;
+  rowVersion?: number;
   note?: string;
 }

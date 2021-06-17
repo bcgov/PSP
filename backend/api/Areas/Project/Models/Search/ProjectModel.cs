@@ -11,7 +11,7 @@ namespace Pims.Api.Areas.Project.Models.Search
         /// <summary>
         /// get/set - The primary key to identify the project.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - A unique project number to identify the project.
@@ -41,7 +41,7 @@ namespace Pims.Api.Areas.Project.Models.Search
         /// <summary>
         /// get/set - The foreign key to the project status.
         /// </summary>
-        public int StatusId { get; set; }
+        public long StatusId { get; set; }
 
         /// <summary>
         /// get/set - The code name of the status code.
@@ -61,7 +61,7 @@ namespace Pims.Api.Areas.Project.Models.Search
         /// <summary>
         /// get/set - The foreign key to the tier level.
         /// </summary>
-        public int TierLevelId { get; set; }
+        public long TierLevelId { get; set; }
 
         /// <summary>
         /// get/set - The tier level of the project.
@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Project.Models.Search
         /// <summary>
         /// get/set - The foreign key to the owning agency.
         /// </summary>
-        public int AgencyId { get; set; }
+        public long AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The owning agency name.

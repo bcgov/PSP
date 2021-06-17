@@ -10,7 +10,7 @@ namespace Pims.Api.Areas.Notification.Models.Queue
         /// <summary>
         /// get/set - Primary key unique identity for notification template.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - A unique key to identify this notification when recipients respond.
@@ -75,12 +75,12 @@ namespace Pims.Api.Areas.Notification.Models.Queue
         /// <summary>
         /// get/set - Foreign key to the project this notification is related to.
         /// </summary>
-        public int? ProjectId { get; set; }
+        public long? ProjectId { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the agency this notification was sent to.
         /// </summary>
-        public int? ToAgencyId { get; set; }
+        public long? ToAgencyId { get; set; }
 
         /// <summary>
         /// get/set - CHES message Id.

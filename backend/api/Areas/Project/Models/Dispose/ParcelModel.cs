@@ -10,7 +10,7 @@ namespace Pims.Api.Areas.Project.Models.Dispose
 
         public int? PIN { get; set; }
 
-        public int? PropertyTypeId { get; set; }
+        public long? PropertyTypeId { get; set; }
 
         public float LandArea { get; set; }
 

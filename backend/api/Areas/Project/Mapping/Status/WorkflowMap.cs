@@ -9,7 +9,8 @@ namespace Pims.Api.Areas.Project.Mapping.Status
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.Workflow, Model.WorkflowModel>()
-                .Inherits<Entity.CodeEntity<int>, Api.Models.CodeModel<int>>();
+                .Map(dest => dest.Id, src => src.Id)
+                .Inherits<Entity.CodeEntity, Api.Models.CodeModel>();
         }
     }
 }

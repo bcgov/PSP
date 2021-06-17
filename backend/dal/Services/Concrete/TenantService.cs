@@ -59,7 +59,7 @@ namespace Pims.Dal.Services
             originalTenant.Name = tenant.Name;
             originalTenant.Description = tenant.Description;
             originalTenant.Settings = tenant.Settings;
-            tenant.CopyRowVersionTo(originalTenant);
+            originalTenant.RowVersion = tenant.RowVersion;
 
             this.Context.Tenants.Update(originalTenant);
             this.Context.SaveChanges();

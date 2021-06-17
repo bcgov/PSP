@@ -37,9 +37,9 @@ namespace Pims.Dal.Helpers.Extensions
             if (filter.ClassificationId.HasValue)
                 query = query.Where(p => p.ClassificationId == filter.ClassificationId);
             else
-                query = query.Where(p => p.ClassificationId != (int)Entities.ClassificationTypes.Disposed
-                    && p.ClassificationId != (int)Entities.ClassificationTypes.Demolished
-                    && p.ClassificationId != (int)Entities.ClassificationTypes.Subdivided);
+                query = query.Where(p => p.ClassificationId != (long)Entities.ClassificationTypes.Disposed
+                    && p.ClassificationId != (long)Entities.ClassificationTypes.Demolished
+                    && p.ClassificationId != (long)Entities.ClassificationTypes.Subdivided);
 
             // Users are not allowed to view sensitive properties outside of their agency or sub-agencies.
             if (!viewSensitive)
@@ -58,7 +58,7 @@ namespace Pims.Dal.Helpers.Extensions
             if (filter.BareLandOnly == true)
             {
                 query = from p in query
-                        join pa in context.Parcels on new { p.Id, PropertyTypeId = (int)p.PropertyTypeId } equals new { pa.Id, PropertyTypeId = (int)pa.PropertyTypeId }
+                        join pa in context.Parcels on new { p.Id, PropertyTypeId = (long)p.PropertyTypeId } equals new { pa.Id, PropertyTypeId = (long)pa.PropertyTypeId }
                         where p.PropertyTypeId == Entity.PropertyTypes.Land
                             && pa.Buildings.Count() == 0
                         select p;
@@ -72,21 +72,21 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Agencies?.Any() == true)
             {
-                IEnumerable<int?> filterAgencies;
+                IEnumerable<long?> filterAgencies;
                 if (!isAdmin)
                 {
                     // Users can only search their own agencies.
-                    filterAgencies = filter.Agencies.Intersect(userAgencies.Select(a => (int)a)).Select(a => (int?)a);
+                    filterAgencies = filter.Agencies.Intersect(userAgencies.Select(a => (long)a)).Select(a => (long?)a);
                 }
                 else
                 {
                     // TODO: Ideally this list would be provided by the frontend, as it is expensive to do it here.
                     // Get list of sub-agencies for any agency selected in the filter.
-                    filterAgencies = filter.Agencies.Select(a => (int?)a);
+                    filterAgencies = filter.Agencies.Select(a => (long?)a);
                 }
                 if (filterAgencies.Any())
                 {
-                    var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (int?)ac.Id)).ToArray()).Distinct();
+                    var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (long?)ac.Id)).ToArray()).Distinct();
                     query = query.Where(p => agencies.Contains(p.AgencyId));
                 }
             }
@@ -186,7 +186,7 @@ namespace Pims.Dal.Helpers.Extensions
                                           .Where(p => p.PropertyType == Entities.PropertyTypes.Land
                                               || p.PropertyType == Entities.PropertyTypes.Subdivision)
                                           .Select(p => p.Parcel)
-                                      ) on new { vp.Id, PropertyTypeId = (int)vp.PropertyTypeId } equals new { pp.Id, PropertyTypeId = (int)pp.PropertyTypeId }
+                                      ) on new { vp.Id, PropertyTypeId = (long)vp.PropertyTypeId } equals new { pp.Id, PropertyTypeId = (long)pp.PropertyTypeId }
                                   select new { vp.Id, vp.PropertyTypeId })
                         .Union(from vp in context.Properties
                                join pp in (
@@ -195,7 +195,7 @@ namespace Pims.Dal.Helpers.Extensions
                                        .SelectMany(p => p.Properties)
                                        .Where(p => p.PropertyType == Entities.PropertyTypes.Building)
                                        .Select(p => p.Building)
-                                   ) on new { vp.Id, PropertyTypeId = (int)vp.PropertyTypeId } equals new { pp.Id, PropertyTypeId = (int)pp.PropertyTypeId }
+                                   ) on new { vp.Id, PropertyTypeId = (long)vp.PropertyTypeId } equals new { pp.Id, PropertyTypeId = (long)pp.PropertyTypeId }
                                select new { vp.Id, vp.PropertyTypeId })
                         .Distinct();
 
@@ -271,7 +271,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="parcel"></param>
         /// <param name="projectAgencyIds"></param>
         /// <returns></returns>
-        public static void ThrowIfPropertyNotInProjectAgency(this Entity.Property parcel, IEnumerable<int> projectAgencyIds)
+        public static void ThrowIfPropertyNotInProjectAgency(this Entity.Property parcel, IEnumerable<long> projectAgencyIds)
         {
             // properties may be in the same agency or sub-agency of a project. A parcel in a parent agency may not be added to a sub-agency project.
             if (!parcel.AgencyId.HasValue || !projectAgencyIds.Contains(parcel.AgencyId.Value))

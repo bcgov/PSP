@@ -657,7 +657,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();
@@ -688,7 +688,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var role = new RoleModel()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
             };
 
             var options = helper.CreateDefaultKeycloakOptions();

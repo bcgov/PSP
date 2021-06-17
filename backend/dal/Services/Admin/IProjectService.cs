@@ -10,11 +10,11 @@ namespace Pims.Dal.Services.Admin
     /// </summary>
     public interface IProjectService : IBaseService<Project>
     {
-        Project Get(int id);
-        Project Get(int id, params Expression<Func<Project, object>>[] includes);
+        Project Get(long id);
+        Project Get(long id, params Expression<Func<Project, object>>[] includes);
         Project Get(string projectNumber);
         Project Get(string projectNumber, params Expression<Func<Project, object>>[] includes);
-        IEnumerable<ProjectSnapshot> GetSnapshots(int projectId);
+        IEnumerable<ProjectSnapshot> GetSnapshots(long projectId);
         void Add(IEnumerable<Project> projects);
         void Update(IEnumerable<Project> projects);
         string GenerateProjectNumber();

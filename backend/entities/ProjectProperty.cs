@@ -1,5 +1,6 @@
 using Pims.Dal.Helpers.Extensions;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
@@ -7,55 +8,54 @@ namespace Pims.Dal.Entities
     /// ProjectProperty class, provides an entity for the datamodel to manage what properties are associated to which projects.
     /// A ProjectProperty must link to either a Parcel or a Building, not both.
     /// </summary>
+    [MotiTable("PIMS_PROJECT_PROPERTY", "PRJPRP")]
     public class ProjectProperty : BaseEntity
     {
         #region Properties
         /// <summary>
         /// get/set - The PRIMARY KEY
         /// </summary>
-        public int Id { get; set; }
+        [Column("PROJECT_PROPERTY_ID")]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the project - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public int ProjectId { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The project.
         /// </summary>
-        /// <value></value>
         public Project Project { get; set; }
 
         /// <summary>
         /// get/set - The property type [Land, Building].
         /// </summary>
-        /// <value></value>
+        [Column("PROPERTY_TYPE")]
         public PropertyTypes PropertyType { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the parcel - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public int? ParcelId { get; set; }
+        [Column("PARCEL_ID")]
+        public long? ParcelId { get; set; }
 
         /// <summary>
         /// get/set - The parcel.
         /// </summary>
-        /// <value></value>
         public Parcel Parcel { get; set; }
 
 
         /// <summary>
         /// get/set - The foreign key to the building - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public int? BuildingId { get; set; }
+        [Column("BUILDING_ID")]
+        public long? BuildingId { get; set; }
 
         /// <summary>
         /// get/set - The building.
         /// </summary>
-        /// <value></value>
         public Building Building { get; set; }
         #endregion
 
@@ -101,14 +101,14 @@ namespace Pims.Dal.Entities
             switch (this.PropertyType)
             {
                 case (PropertyTypes.Land):
-                    this.ParcelId = property?.Id ??
-                        throw new ArgumentNullException(nameof(property));
                     this.Parcel = property as Parcel;
+                    this.ParcelId = this.Parcel?.Id ??
+                        throw new ArgumentNullException(nameof(property));
                     break;
                 case (PropertyTypes.Building):
-                    this.BuildingId = property?.Id ??
-                        throw new ArgumentNullException(nameof(property));
                     this.Building = property as Building;
+                    this.BuildingId = this.Building?.Id ??
+                        throw new ArgumentNullException(nameof(property));
                     break;
                 default:
                     throw new ArgumentException("A property must be a parcel or a building.", nameof(property));

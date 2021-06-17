@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// WorkflowProjectStatus class, provides a way to manage which project status are related to this workflow.
     /// </summary>
+    [MotiTable("PIMS_WORKFLOW_PROJECT_STATUS", "WRPRST")]
     public class WorkflowProjectStatus : BaseEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify the workflow project status
+        /// </summary>
+        [Column("WORKFLOW_PROJECT_STATUS_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - Primary key and foreign key to the owning workflow.
         /// </summary>
-        public int WorkflowId { get; set; }
+        [Column("WORKFLOW_ID")]
+        public long WorkflowId { get; set; }
 
         /// <summary>
         /// get/set - Owning workflow.
@@ -22,7 +31,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Primary key and foreign key to the project status.
         /// </summary>
-        public int StatusId { get; set; }
+        [Column("PROJECT_STATUS_ID")]
+        public long StatusId { get; set; }
 
         /// <summary>
         /// get/set - The project status.
@@ -32,11 +42,13 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The sort order of the status for this workflow.
         /// </summary>
+        [Column("SORT_ORDER")]
         public int SortOrder { get; set; }
 
         /// <summary>
         /// get/set - Whether this workflow project status is an optional path.
         /// </summary>
+        [Column("IS_OPTIONAL")]
         public bool IsOptional { get; set; }
 
         /// <summary>

@@ -14,7 +14,7 @@ services:
     ports:
       - ${KEYCLOAK_PORT:-8080}:8080
     networks:
-      - pims
+      - psp
 
   ####################### Database #######################
   database:
@@ -29,7 +29,7 @@ services:
     volumes:
       - api-db-data:/var/opt/mssql
     networks:
-      - pims
+      - psp
 
   ####################### Backend #######################
   backend:
@@ -47,7 +47,7 @@ services:
       - database
       - keycloak
     networks:
-      - pims
+      - psp
 
   ####################### Frontend #######################
   frontend:
@@ -67,17 +67,17 @@ services:
       - backend
     env_file: ./frontend/.env
     networks:
-      - pims
+      - psp
 
 ####################### Networks Definition #######################
 networks:
-  pims:
-    name: pims-net
+  psp:
+    name: psp-net
     driver: bridge
 
 ####################### Volumes Definition #######################
 volumes:
   api-db-data:
-    name: pims-api-db-data
+    name: psp-api-db-data
   frontend-node-cache:
-    name: pims-frontend-node-cache
+    name: psp-frontend-node-cache

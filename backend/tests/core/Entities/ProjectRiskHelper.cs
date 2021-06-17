@@ -32,7 +32,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.ProjectRisk CreateProjectRisk(int id, string name, string code, int sortOrder)
         {
-            return new Entity.ProjectRisk(name, code, sortOrder) { Id = id, RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.ProjectRisk(name, code, sortOrder) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Pims.Core.Test
             for (var i = startId; i < quantity; i++)
             {
                 var name = StringHelper.Generate(10);
-                risk.Add(new Entity.ProjectRisk(name, name, sortOrder) { Id = i, RowVersion = new byte[] { 12, 13, 14 } });
+                risk.Add(new Entity.ProjectRisk(name, name, sortOrder) { Id = i, RowVersion = 1 });
             }
 
             return risk;
@@ -63,10 +63,10 @@ namespace Pims.Core.Test
         {
             return new List<Entity.ProjectRisk>()
             {
-                new Entity.ProjectRisk("Copmplete", "COMP", 1) { Id = 1, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.ProjectRisk("Green", "GREEN", 2) { Id = 2, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.ProjectRisk("Yellow", "YELLOW", 3) { Id = 3, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.ProjectRisk("Red", "RED", 4) { Id = 4, RowVersion = new byte[] { 12, 13, 14 } },
+                new Entity.ProjectRisk("Copmplete", "COMP", 1) { Id = 1, RowVersion = 1 },
+                new Entity.ProjectRisk("Green", "GREEN", 2) { Id = 2, RowVersion = 1 },
+                new Entity.ProjectRisk("Yellow", "YELLOW", 3) { Id = 3, RowVersion = 1 },
+                new Entity.ProjectRisk("Red", "RED", 4) { Id = 4, RowVersion = 1 },
             };
         }
 

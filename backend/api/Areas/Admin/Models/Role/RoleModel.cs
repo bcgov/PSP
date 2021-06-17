@@ -6,13 +6,22 @@ namespace Pims.Api.Areas.Admin.Models.Role
     /// <summary>
     /// RoleModel class, provides a model that represents a role.
     /// </summary>
-    public class RoleModel : Api.Models.LookupModel<Guid>
+    public class RoleModel : Api.Models.LookupModel
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify role.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the role.
+        /// </summary>
+        public Guid Key { get; set; }
+
+        /// <summary>
         /// get/set - The role description.
         /// </summary>
-        /// <value></value>
         public string Description { get; set; }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// <param name="projectId"></param>
         /// <param name="agencyId"></param>
         /// <returns></returns>
-        public static Entity.ProjectAgencyResponse CreateResponse(int projectId, int agencyId)
+        public static Entity.ProjectAgencyResponse CreateResponse(long projectId, long agencyId)
         {
             return new Entity.ProjectAgencyResponse()
             {
@@ -34,7 +34,7 @@ namespace Pims.Core.Test
         /// <param name="projectId"></param>
         /// <param name="agencyId"></param>
         /// <returns></returns>
-        public static List<Entity.ProjectAgencyResponse> CreateDefaultResponses(int projectId, int agencyId)
+        public static List<Entity.ProjectAgencyResponse> CreateDefaultResponses(long projectId, long agencyId)
         {
             return new List<Entity.ProjectAgencyResponse>()
             {
@@ -49,7 +49,7 @@ namespace Pims.Core.Test
         /// <param name="projectId"></param>
         /// <param name="agencyId"></param>
         /// <returns></returns>
-        public static Entity.ProjectAgencyResponse CreateResponse(this PimsContext context, int projectId, int agencyId)
+        public static Entity.ProjectAgencyResponse CreateResponse(this PimsContext context, long projectId, long agencyId)
         {
             var response = new Entity.ProjectAgencyResponse()
             {
@@ -58,11 +58,11 @@ namespace Pims.Core.Test
                 Note = "NOTE",
                 ReceivedOn = DateTime.UtcNow,
                 Response = Entity.NotificationResponses.Subscribe,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
 
             context.ProjectAgencyResponses.Add(response);

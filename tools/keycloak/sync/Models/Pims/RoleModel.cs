@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Pims.Tools.Keycloak.Sync.Models
+namespace Pims.Tools.Keycloak.Sync.Models.Pims
 {
     /// <summary>
     /// RoleModel class, provides a model for roles.
@@ -10,9 +10,14 @@ namespace Pims.Tools.Keycloak.Sync.Models
     {
         #region Properties
         /// <summary>
-        /// get/set - The unique primary key for the role.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the role.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - A unique name to identify the role.

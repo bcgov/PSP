@@ -60,7 +60,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The project associated with the notification.
         /// </summary>
         /// <value></value>
-        public int? ProjectId { get; set; }
+        public long? ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The project number associated with the notification.
@@ -72,7 +72,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The agency the notification was sent to.
         /// </summary>
         /// <value></value>
-        public int? AgencyId { get; set; }
+        public long? AgencyId { get; set; }
         #endregion
 
         #region Constructors
@@ -95,8 +95,8 @@ namespace Pims.Dal.Entities.Models
             this.Tag = filter.GetStringValue(nameof(this.Tag));
             this.Subject = filter.GetStringValue(nameof(this.Subject));
             this.Body = filter.GetStringValue(nameof(this.Body));
-            this.ProjectId = filter.GetIntNullValue(nameof(this.ProjectId));
-            this.AgencyId = filter.GetIntNullValue(nameof(this.AgencyId));
+            this.ProjectId = filter.GetLongNullValue(nameof(this.ProjectId));
+            this.AgencyId = filter.GetLongNullValue(nameof(this.AgencyId));
             this.Key = filter.GetGuidNullValue(nameof(this.Key));
             this.MinSendOn = filter.GetDateTimeNullValue(nameof(this.MinSendOn));
             this.MaxSendOn = filter.GetDateTimeNullValue(nameof(this.MaxSendOn));

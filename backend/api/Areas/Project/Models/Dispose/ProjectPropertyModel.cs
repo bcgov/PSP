@@ -11,7 +11,7 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The primary key to the relational table.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to identify the project.
@@ -26,14 +26,14 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The foreign key to the parcel.
         /// </summary>
-        public int? ParcelId { get; set; }
+        public long? ParcelId { get; set; }
 
         public ParcelModel Parcel { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the building.
         /// </summary>
-        public int? BuildingId { get; set; }
+        public long? BuildingId { get; set; }
 
         public BuildingModel Building { get; set; }
         #endregion

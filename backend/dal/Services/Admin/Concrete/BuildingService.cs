@@ -59,7 +59,7 @@ namespace Pims.Dal.Services.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Building Get(int id)
+        public Building Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
 
@@ -188,7 +188,7 @@ namespace Pims.Dal.Services.Admin
             if (building.BuildingOccupantType != null && !this.Context.BuildingOccupantTypes.Local.Any(a => a.Id == building.BuildingOccupantTypeId))
                 this.Context.Entry(building.BuildingOccupantType).State = EntityState.Unchanged;
 
-            building.PropertyTypeId = (int)PropertyTypes.Building;
+            building.PropertyTypeId = (long)PropertyTypes.Building;
             building.Agency = this.Context.Agencies.Local.FirstOrDefault(a => a.Id == building.AgencyId);
             building.Classification = this.Context.PropertyClassifications.Local.FirstOrDefault(a => a.Id == building.ClassificationId);
             building.BuildingConstructionType = this.Context.BuildingConstructionTypes.Local.FirstOrDefault(a => a.Id == building.BuildingConstructionTypeId);
@@ -217,10 +217,9 @@ namespace Pims.Dal.Services.Admin
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
 
             var buildings = entities.Where(e => e != null);
-            var userId = this.User.GetUserId();
             buildings.ForEach((building) =>
             {
-                building.PropertyTypeId = (int)PropertyTypes.Building;
+                building.PropertyTypeId = (long)PropertyTypes.Building;
                 if (building.Agency != null && !this.Context.Agencies.Local.Any(a => a.Id == building.BuildingOccupantTypeId))
                     this.Context.Entry(building.Agency).State = EntityState.Unchanged;
                 if (building.Classification != null && !this.Context.PropertyClassifications.Local.Any(a => a.Id == building.ClassificationId))

@@ -1,35 +1,41 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// UserAgency class, provides an entity for the datamodel to manage user agencies.
     /// </summary>
+    [MotiTable("PIMS_USER_AGENCY", "USRAGC")]
     public class UserAgency : BaseEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify the user agency.
+        /// </summary>
+        [Column("USER_AGENCY_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The foreign key to the user - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public Guid UserId { get; set; }
+        [Column("USER_ID")]
+        public long UserId { get; set; }
 
         /// <summary>
         /// get/set - The user that belongs to this agency.
         /// </summary>
-        /// <value></value>
         public User User { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the agency the user belongs to - PRIMARY KEY.
         /// </summary>
-        /// <value></value>
-        public int AgencyId { get; set; }
+        [Column("AGENCY_ID")]
+        public long AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The agency the user belongs to.
         /// </summary>
-        /// <value></value>
         public Agency Agency { get; set; }
         #endregion
 
@@ -44,7 +50,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="agencyId"></param>
-        public UserAgency(Guid userId, int agencyId)
+        public UserAgency(int userId, int agencyId)
         {
             this.UserId = userId;
             this.AgencyId = agencyId;

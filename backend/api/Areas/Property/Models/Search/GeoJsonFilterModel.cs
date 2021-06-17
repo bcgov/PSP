@@ -39,12 +39,12 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - Parcel classification Id.
         /// </summary>
-        public int? ClassificationId { get; set; }
+        public long? ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - Parcel status Id.
         /// </summary>
-        public int? StatusId { get; set; }
+        public long? StatusId { get; set; }
 
         /// <summary>
         /// get/set - The property address.
@@ -115,7 +115,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - An array of agencies.
         /// </summary>
-        public int[] Agencies { get; set; }
+        public long[] Agencies { get; set; }
 
         /// <summary>
         /// get/set - Whether to include properties not owned by user's agency when searching.
@@ -144,7 +144,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - Building construction type Id.
         /// </summary>
-        public int? ConstructionTypeId { get; set; }
+        public long? ConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - Property name.
@@ -155,12 +155,12 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - Building predominant use Id.
         /// </summary>
-        public int? PredominateUseId { get; set; }
+        public long? PredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - Parent Parcel Id.
         /// </summary>
-        public int? ParcelId { get; set; }
+        public long? ParcelId { get; set; }
 
         /// <summary>
         /// get/set - Parent Property Type Id.
@@ -284,7 +284,7 @@ namespace Pims.Api.Areas.Property.Models.Search
             this.MinAssessedValue = filter.GetDecimalNullValue(nameof(this.MinAssessedValue));
             this.MaxAssessedValue = filter.GetDecimalNullValue(nameof(this.MaxAssessedValue));
 
-            this.Agencies = filter.GetIntArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
+            this.Agencies = filter.GetLongArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
             this.Name = filter.GetStringValue(nameof(this.Name));
 

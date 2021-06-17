@@ -34,11 +34,9 @@ namespace Pims.Api.Areas.Project.Mapping.Search
                 .Map(dest => dest.Appraised, src => src.Appraised)
                 .Map(dest => dest.Properties, src => src.Properties)
                 .Map(dest => dest.UpdatedOn, src => src.UpdatedOn)
-                .Map(dest => dest.UpdatedBy,
-                    src => src.UpdatedBy != null ? src.UpdatedBy.DisplayName : null)
+                .Map(dest => dest.UpdatedBy, src => src.UpdatedByName)
                 .Map(dest => dest.CreatedOn, src => src.CreatedOn)
-                .Map(dest => dest.CreatedBy,
-                    src => src.CreatedBy != null ? src.CreatedBy.DisplayName : null)
+                .Map(dest => dest.CreatedBy, src => src.CreatedByName)
                 .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
         }
     }

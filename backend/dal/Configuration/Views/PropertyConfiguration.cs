@@ -31,7 +31,7 @@ namespace Pims.Dal.Configuration.Views
         {
             if (!this.Context.Database.IsInMemory())
             {
-                builder.ToView("View_Properties");
+                builder.ToView("PROPERTY_VW");
                 builder.HasNoKey();
             }
             else

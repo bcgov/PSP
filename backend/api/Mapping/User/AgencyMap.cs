@@ -13,15 +13,15 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Parent, src => src.Parent)
                 .Map(dest => dest.Children, src => src.Children)
                 .Map(dest => dest.Users, src => src.Users)
-                .Inherits<Entity.CodeEntity<int>, Models.CodeModel<int>>();
+                .Inherits<Entity.CodeEntity, Models.CodeModel>();
 
             config.NewConfig<Model.AgencyModel, Entity.Agency>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.ParentId, src => src.Parent == null ? (int?)null : src.Parent.Id)
+                .Map(dest => dest.ParentId, src => src.Parent == null ? (long?)null : src.Parent.Id)
                 .Map(dest => dest.Parent, src => src.Parent)
                 .Map(dest => dest.Children, src => src.Children)
                 .Map(dest => dest.Users, src => src.Users)
-                .Inherits<Models.CodeModel<int>, Entity.CodeEntity<int>>();
+                .Inherits<Models.CodeModel, Entity.CodeEntity>();
         }
     }
 }

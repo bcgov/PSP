@@ -9,51 +9,48 @@ namespace Pims.Api.Areas.Admin.Models.User
     {
         #region Properties
         /// <summary>
-        /// get/set - The user's unique identifier.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        /// <value></value>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - The user's display name.
         /// </summary>
-        /// <value></value>
         public string DisplayName { get; set; }
 
         /// <summary>
         /// get/set - The user's given name.
         /// </summary>
-        /// <value></value>
         public string FirstName { get; set; }
 
         /// <summary>
         /// get/set - The user's middlename.
         /// </summary>
-        /// <value></value>
         public string MiddleName { get; set; }
 
         /// <summary>
         /// get/set - The user's surname.
         /// </summary>
-        /// <value></value>
         public string LastName { get; set; }
 
         /// <summary>
         /// get/set - The user's email.
         /// </summary>
-        /// <value></value>
         public string Email { get; set; }
 
         /// <summary>
         /// get/set - The username.
         /// </summary>
-        /// <value></value>
         public string Username { get; set; }
 
         /// <summary>
         /// get/set - The position.
         /// </summary>
-        /// <value></value>
         public string Position { get; set; }
         #endregion
     }

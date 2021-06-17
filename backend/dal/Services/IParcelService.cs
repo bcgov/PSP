@@ -12,13 +12,13 @@ namespace Pims.Dal.Services
         IEnumerable<Parcel> Get(double neLat, double neLong, double swLat, double swLong);
         IEnumerable<Parcel> Get(ParcelFilter filter);
         Paged<Parcel> GetPage(ParcelFilter filter);
-        Parcel Get(int id);
+        Parcel Get(long id);
         Parcel Add(Parcel parcel);
         Parcel PendingUpdate(Parcel parcel);
         Parcel Update(Parcel parcel);
         Parcel UpdateFinancials(Parcel parcel);
         void Remove(Parcel parcel);
-        bool IsPidAvailable(int parcelId, int PID);
-        bool IsPinAvailable(int parcelId, int PIN);
+        bool IsPidAvailable(long parcelId, int PID);
+        bool IsPinAvailable(long parcelId, int PIN);
     }
 }

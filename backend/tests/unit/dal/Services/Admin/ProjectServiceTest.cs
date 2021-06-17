@@ -31,9 +31,9 @@ namespace Pims.Dal.Test.Services.Admin
             {
                 new object[] { new ProjectFilter() { ProjectNumber = "ProjectNumber" }, 1 },
                 new object[] { new ProjectFilter() { Name = "Name" }, 1 },
-                new object[] { new ProjectFilter() { Agencies = new int[] { 3 } }, 1 },
+                new object[] { new ProjectFilter() { Agencies = new long[] { 3 } }, 1 },
                 new object[] { new ProjectFilter() { TierLevelId = 2 }, 1 },
-                new object[] { new ProjectFilter() { StatusId = new int[] { 2 } }, 1 }
+                new object[] { new ProjectFilter() { StatusId = new long[] { 2 } }, 1 }
             };
 
         public static IEnumerable<object[]> Workflows =>

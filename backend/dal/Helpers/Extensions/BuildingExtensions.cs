@@ -70,8 +70,8 @@ namespace Pims.Dal.Helpers.Extensions
             if (filter.Agencies?.Any() == true)
             {
                 // Get list of sub-agencies for any agency selected in the filter.
-                var filterAgencies = filter.Agencies.Select(a => (int?)a);
-                var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (int?)ac.Id)).ToArray()).Distinct();
+                var filterAgencies = filter.Agencies.Select(a => (long?)a);
+                var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (long?)ac.Id)).ToArray()).Distinct();
                 query = query.Where(p => agencies.Contains(p.AgencyId));
             }
             if (filter.ClassificationId.HasValue)
@@ -199,7 +199,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="building"></param>
         /// <returns></returns>
-        public static int? GetParcelId(this Entity.Building building)
+        public static long? GetParcelId(this Entity.Building building)
         {
             return building.Parcels.FirstOrDefault()?.ParcelId;
         }

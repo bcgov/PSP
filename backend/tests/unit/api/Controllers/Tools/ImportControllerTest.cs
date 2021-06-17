@@ -87,7 +87,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var service = helper.GetService<Mock<IPimsAdminService>>();
             service.Setup(m => m.BuildingConstructionType.GetAll()).Returns(new Entity.BuildingConstructionType[0]);
             service.Setup(m => m.BuildingPredominateUse.GetAll()).Returns(new Entity.BuildingPredominateUse[0]);
-            service.Setup(m => m.PropertyClassification.GetAll()).Returns(new[] { new Entity.PropertyClassification(1, "Classification") });
+            service.Setup(m => m.PropertyClassification.GetAll()).Returns(new[] { new Entity.PropertyClassification("Classification") { Id = 1 } });
             service.Setup(m => m.Agency.GetAll()).Returns(new[] { new Entity.Agency("AEST", "Advanced Education, Skills & Training") });
             service.Setup(m => m.Parcel.GetByPidWithoutTracking(It.IsAny<int>())).Returns(parcel);
             service.Setup(m => m.AdministrativeArea.Get(It.IsAny<string>())).Returns(new Entity.AdministrativeArea("test"));
@@ -145,7 +145,7 @@ namespace Pims.Api.Test.Controllers.Tools
             pimsService.Setup(m => m.ProjectReport.GetAll()).Returns(Array.Empty<Entity.ProjectReport>().ToArray());
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -262,7 +262,7 @@ namespace Pims.Api.Test.Controllers.Tools
             pimsService.Setup(m => m.Task.GetForWorkflow(It.IsAny<string>())).Returns(new Entity.Task[0]);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -362,7 +362,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "FirstTier");
+            var tier = new Entity.TierLevel("FirstTier") { Id = 1 };
             var project = new Entity.Project("RAEG-0001", "Name", tier);
             project.Responses.Add(new Entity.ProjectAgencyResponse(project, agency, Entity.NotificationResponses.Unsubscribe, DateTime.UtcNow.AddDays(-1)));
 
@@ -380,7 +380,7 @@ namespace Pims.Api.Test.Controllers.Tools
             service.Setup(m => m.ProjectStatus.GetAll()).Returns(new[] { status });
             service.Setup(m => m.ProjectRisk.GetAll()).Returns(new[] { risk });
             service.Setup(m => m.Agency.GetAll()).Returns(new[] { agency });
-            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel(2, "TierLevel") });
+            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel("TierLevel") { Id = 2 } });
             service.Setup(m => m.Agency.Get(It.IsAny<int>())).Returns(agency);
             service.Setup(m => m.TierLevel.Get(It.IsAny<int>())).Returns(tier);
             service.Setup(m => m.ProjectRisk.Get(It.IsAny<int>())).Returns(risk);
@@ -468,7 +468,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "FirstTier");
+            var tier = new Entity.TierLevel("FirstTier") { Id = 1 };
             var project = new Entity.Project("RAEG-0001", "Name", tier);
 
             var pimsService = helper.GetService<Mock<IPimsService>>();
@@ -485,7 +485,7 @@ namespace Pims.Api.Test.Controllers.Tools
             service.Setup(m => m.ProjectStatus.GetAll()).Returns(new[] { status });
             service.Setup(m => m.ProjectRisk.GetAll()).Returns(new[] { risk });
             service.Setup(m => m.Agency.GetAll()).Returns(new[] { agency });
-            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel(2, "TierLevel") });
+            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel("TierLevel") { Id = 2 } });
             service.Setup(m => m.Agency.Get(It.IsAny<int>())).Returns(agency);
             service.Setup(m => m.TierLevel.Get(It.IsAny<int>())).Returns(tier);
             service.Setup(m => m.ProjectRisk.Get(It.IsAny<int>())).Returns(risk);
@@ -570,7 +570,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "FirstTier");
+            var tier = new Entity.TierLevel("FirstTier") { Id = 1 };
             var project = new Entity.Project("RAEG-0001", "Name", tier);
             project.Notes.Add(new Entity.ProjectNote(project, Entity.NoteTypes.Financial, "some note"));
 
@@ -588,7 +588,7 @@ namespace Pims.Api.Test.Controllers.Tools
             service.Setup(m => m.ProjectStatus.GetAll()).Returns(new[] { status });
             service.Setup(m => m.ProjectRisk.GetAll()).Returns(new[] { risk });
             service.Setup(m => m.Agency.GetAll()).Returns(new[] { agency });
-            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel(2, "TierLevel") });
+            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel("TierLevel") { Id = 2 } });
             service.Setup(m => m.Agency.Get(It.IsAny<int>())).Returns(agency);
             service.Setup(m => m.TierLevel.Get(It.IsAny<int>())).Returns(tier);
             service.Setup(m => m.ProjectRisk.Get(It.IsAny<int>())).Returns(risk);
@@ -674,7 +674,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "FirstTier");
+            var tier = new Entity.TierLevel("FirstTier") { Id = 1 };
             var project = new Entity.Project("RAEG-0001", "Name", tier);
 
             var pimsService = helper.GetService<Mock<IPimsService>>();
@@ -691,7 +691,7 @@ namespace Pims.Api.Test.Controllers.Tools
             service.Setup(m => m.ProjectStatus.GetAll()).Returns(new[] { status });
             service.Setup(m => m.ProjectRisk.GetAll()).Returns(new[] { risk });
             service.Setup(m => m.Agency.GetAll()).Returns(new[] { agency });
-            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel(2, "TierLevel") });
+            service.Setup(m => m.TierLevel.GetAll()).Returns(new[] { tier, new Entity.TierLevel("TierLevel") { Id = 2 } });
             service.Setup(m => m.Agency.Get(It.IsAny<int>())).Returns(agency);
             service.Setup(m => m.TierLevel.Get(It.IsAny<int>())).Returns(tier);
             service.Setup(m => m.ProjectRisk.Get(It.IsAny<int>())).Returns(risk);
@@ -859,7 +859,7 @@ namespace Pims.Api.Test.Controllers.Tools
             pimsService.Setup(m => m.ProjectReport.GetAll()).Returns(Array.Empty<Entity.ProjectReport>().ToArray());
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -963,7 +963,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var project = new Entity.Project();
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -1029,7 +1029,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var project = new Entity.Project();
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -1095,7 +1095,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var project = new Entity.Project();
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -1161,7 +1161,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var project = new Entity.Project();
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tier = new Entity.TierLevel(1, "TierLevel");
+            var tier = new Entity.TierLevel("TierLevel") { Id = 1 };
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
             var status = new Entity.ProjectStatus("Status", "Status");
             var workflow = new Entity.Workflow("Workflow", "Workflow");
@@ -1227,7 +1227,11 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
@@ -1296,7 +1300,11 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
@@ -1365,7 +1373,11 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
@@ -1434,7 +1446,11 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var risk = new Entity.ProjectRisk("Risk", "Risk", 1);
@@ -1505,7 +1521,11 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var pimsService = helper.GetService<Mock<IPimsService>>();
@@ -1578,7 +1598,11 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var pimsService = helper.GetService<Mock<IPimsService>>();
@@ -1651,7 +1675,13 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel"), new Entity.TierLevel(3, "TierLevel"), new Entity.TierLevel(4, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 },
+                new Entity.TierLevel("TierLevel") { Id = 3 },
+                new Entity.TierLevel("TierLevel") { Id = 4 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
 
             var pimsService = helper.GetService<Mock<IPimsService>>();
@@ -1724,7 +1754,13 @@ namespace Pims.Api.Test.Controllers.Tools
             var controller = helper.CreateController<ImportController>(Permissions.SystemAdmin, Permissions.PropertyAdd, Permissions.AdminProperties);
 
             var agency = new Entity.Agency("Agency", "Agency");
-            var tiers = new[] { new Entity.TierLevel(1, "FirstTier"), new Entity.TierLevel(2, "TierLevel"), new Entity.TierLevel(3, "TierLevel"), new Entity.TierLevel(4, "TierLevel") };
+            var tiers = new[]
+            {
+                new Entity.TierLevel("FirstTier") { Id = 1 },
+                new Entity.TierLevel("TierLevel") { Id = 2 },
+                new Entity.TierLevel("TierLevel") { Id = 3 },
+                new Entity.TierLevel("TierLevel") { Id = 4 }
+            };
             var project = new Entity.Project("RAEG-0001", "Name", tiers.First());
             project.AddProperty(EntityHelper.CreateParcel(1));
             project.AddProperty(EntityHelper.CreateParcel(2));

@@ -6,7 +6,15 @@ namespace Pims.Api.Models.User
     public class UserModel : Pims.Api.Models.BaseModel
     {
         #region Properties
-        public Guid Id { get; set; }
+        /// <summary>
+        /// get/set - The primary key IDENTITY.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
 
         public bool IsDisabled { get; set; }
 

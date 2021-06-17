@@ -3,7 +3,7 @@ namespace Pims.Api.Areas.Tools.Models.Import
     public class BuildingFiscalModel : Api.Models.BaseModel
     {
         #region Properties
-        public int BuildingId { get; set; }
+        public long BuildingId { get; set; }
 
         public int FiscalYear { get; set; }
 

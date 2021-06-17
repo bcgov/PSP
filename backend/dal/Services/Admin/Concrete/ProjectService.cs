@@ -44,7 +44,7 @@ namespace Pims.Dal.Services.Admin
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Project Get(int id)
+        public Project Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
 
@@ -62,7 +62,7 @@ namespace Pims.Dal.Services.Admin
         /// <param name="id"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public Project Get(int id, params Expression<Func<Project, object>>[] includes)
+        public Project Get(long id, params Expression<Func<Project, object>>[] includes)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
             var query = this.Context.Projects.AsNoTracking();
@@ -110,7 +110,7 @@ namespace Pims.Dal.Services.Admin
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        public IEnumerable<ProjectSnapshot> GetSnapshots(int projectId)
+        public IEnumerable<ProjectSnapshot> GetSnapshots(long projectId)
         {
             return this.Context.ProjectSnapshots
                 .Where(s => s.ProjectId == projectId)

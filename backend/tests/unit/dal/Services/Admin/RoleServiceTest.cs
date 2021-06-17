@@ -52,7 +52,7 @@ namespace Pims.Dal.Test.Services.Admin
 
             var service = helper.CreateService<RoleService>(user);
 
-            var result = service.Get(1,1, "Role 1");
+            var result = service.Get(1, 1, "Role 1");
 
             Assert.NotNull(result);
             Assert.IsAssignableFrom<Paged<Entity.Role>>(result);
@@ -67,13 +67,13 @@ namespace Pims.Dal.Test.Services.Admin
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles);
             using var init = helper.InitializeDatabase(user);
             var role = EntityHelper.CreateRole("Role 1");
-            var roleId = role.Id;
+            var roleKey = role.Key;
             init.AddAndSaveChanges(role);
 
             var service = helper.CreateService<RoleService>(user);
 
             // Act
-            var result = service.Get(roleId);
+            var result = service.Get(roleKey);
 
             // Assert
             Assert.NotNull(result);
@@ -147,7 +147,7 @@ namespace Pims.Dal.Test.Services.Admin
         [Fact]
         public void Update_Role()
         {
-             // Arrange
+            // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles, Permissions.SystemAdmin);
             var id = Guid.NewGuid();
@@ -259,7 +259,7 @@ namespace Pims.Dal.Test.Services.Admin
             var role1 = EntityHelper.CreateRole("Delete Me");
             var role2 = EntityHelper.CreateRole("And Me");
             var role3 = EntityHelper.CreateRole("Not Me");
-            Guid[] exclusions = new Guid[] {role3.Id};
+            Guid[] exclusions = new Guid[] { role3.Key };
             helper.CreatePimsContext(user, true).AddAndSaveChanges(role1, role2);
 
             var service = helper.CreateService<RoleService>(user);
@@ -280,7 +280,7 @@ namespace Pims.Dal.Test.Services.Admin
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var role = EntityHelper.CreateRole(Guid.NewGuid(), "Role 1");
-            Guid[] exclusions = new Guid[] {role.Id};
+            Guid[] exclusions = new Guid[] { role.Key };
 
 
             var service = helper.CreateService<RoleService>(user);

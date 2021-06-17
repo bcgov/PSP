@@ -14,13 +14,12 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The primary key IDENTITY SEED.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        /// <value></value>
-        public byte[] RowVersion { get; set; }
+        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The property type [0=Parcel, 1=Building].
@@ -35,7 +34,7 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The foreign key to the property classification.
         /// </summary>
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - The classification for this property.
@@ -45,7 +44,7 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The foreign key to the agency that owns this property.
         /// </summary>
-        public int? AgencyId { get; set; }
+        public long? AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The parent agency this property belongs to.
@@ -80,7 +79,7 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The foreign key to the property address.
         /// </summary>
-        public int AddressId { get; set; }
+        public long AddressId { get; set; }
 
         /// <summary>
         /// get/set - The address for this property.
@@ -210,12 +209,12 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The parent parcel Id.
         /// </summary>
-        public int? ParcelId { get; set; }
+        public long? ParcelId { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the property building construction type.
         /// </summary>
-        public int? BuildingConstructionTypeId { get; set; }
+        public long? BuildingConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - The building construction type for this property.
@@ -230,7 +229,7 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The foreign key to the building predominant use.
         /// </summary>
-        public int? BuildingPredominateUseId { get; set; }
+        public long? BuildingPredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - The building predominant use for this building.
@@ -250,7 +249,7 @@ namespace Pims.Dal.Entities.Views
         /// <summary>
         /// get/set - The foreign key to the building occupant type.
         /// </summary>
-        public int? BuildingOccupantTypeId { get; set; }
+        public long? BuildingOccupantTypeId { get; set; }
 
         /// <summary>
         /// get/set - The type of occupant for this building.
@@ -289,7 +288,7 @@ namespace Pims.Dal.Entities.Views
         /// <param name="property"></param>
         public Property(Entities.Property property)
         {
-            this.Id = property.Id;
+            this.Id = typeof(Parcel).IsAssignableFrom(property.GetType()) ? ((Parcel)property).Id : ((Building)property).Id;
             this.ProjectNumbers = property.ProjectNumbers;
             this.ClassificationId = property.ClassificationId;
             this.Classification = property.Classification?.Name;

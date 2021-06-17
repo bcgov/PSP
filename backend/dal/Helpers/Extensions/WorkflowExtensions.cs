@@ -69,7 +69,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static ProjectStatusTransition AddTransition(this WorkflowProjectStatus workflowStatus, string action, WorkflowProjectStatus toWorkflowStatus)
         {
-            var toTransition = workflowStatus.ToStatus.FirstOrDefault(s => s.ToStatusId == toWorkflowStatus.StatusId) ?? new ProjectStatusTransition(workflowStatus, action, toWorkflowStatus);
+            var toTransition = workflowStatus.ToStatus.FirstOrDefault(s => s.ToWorkflowStatusId == toWorkflowStatus.Id) ?? new ProjectStatusTransition(workflowStatus, action, toWorkflowStatus);
             return toTransition;
         }
     }

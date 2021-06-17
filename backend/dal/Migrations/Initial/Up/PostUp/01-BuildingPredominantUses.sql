@@ -1,9 +1,9 @@
-PRINT 'Adding BuildingPredominateUses'
+PRINT N'Adding [PIMS_BUILDING_PREDOMINATE_USE]'
 
-INSERT INTO dbo.[BuildingPredominateUses] (
-    [Id]
-    , [Name]
-    , [IsDisabled]
+INSERT INTO dbo.[PIMS_BUILDING_PREDOMINATE_USE] (
+    [BUILDING_PREDOMINATE_USE_ID]
+    , [NAME]
+    , [IS_DISABLED]
 ) VALUES (
     0
     , 'Religious'
@@ -77,6 +77,10 @@ INSERT INTO dbo.[BuildingPredominateUses] (
     , 'Dormitory / Residence Halls'
     , 0
 )
+
+-- Update sequence so that it works with the latest data.
+ALTER SEQUENCE dbo.[PIMS_BUILDING_PREDOMINATE_USE_ID_SEQ]
+RESTART WITH 18
 
 
 

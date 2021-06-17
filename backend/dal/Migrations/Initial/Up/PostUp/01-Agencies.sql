@@ -1,16 +1,14 @@
-PRINT 'Adding Agencies'
-
-SET IDENTITY_INSERT dbo.[Agencies] ON
+PRINT N'Adding [PIMS_AGENCY]'
 
 -- Parent Agencies.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
-    , [Email]
-    , [AddressTo]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
+    , [EMAIL]
+    , [ADDRESS_TO]
 ) VALUES (
     1
     , 'AEST'
@@ -142,13 +140,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for HLTH.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     20
     , 7
@@ -194,13 +192,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for EMPR.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     30
     , 10
@@ -211,13 +209,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for MAH.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     40
     , 8
@@ -242,13 +240,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for MAG.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     50
     , 11
@@ -266,13 +264,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for JEDC.
---INSERT INTO dbo.[Agencies] (
---    [Id]
---    , [ParentId]
---    , [Code]
---    , [Name]
---    , [IsDisabled]
---    , [SendEmail]
+--INSERT INTO dbo.[PIMS_AGENCY] (
+--    [AGENCY_ID]
+--    , [PARENT_AGENCY_ID]
+--    , [CODE]
+--    , [NAME]
+--    , [IS_DISABLED]
+--    , [SEND_EMAIL]
 --) VALUES (
 --    50
 --    , 12
@@ -283,13 +281,13 @@ INSERT INTO dbo.[Agencies] (
 --)
 
 -- Child Agencies for EDUC.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     70
     , 4
@@ -300,13 +298,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for AEST.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     80
     , 1
@@ -471,13 +469,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for CITZ.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     110
     , 2
@@ -488,13 +486,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for FLNR.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     120
     , 6
@@ -505,13 +503,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for TRAN.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     130
     , 9
@@ -536,13 +534,13 @@ INSERT INTO dbo.[Agencies] (
 )
 
 -- Child Agencies for MTAC.
-INSERT INTO dbo.[Agencies] (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+INSERT INTO dbo.[PIMS_AGENCY] (
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 ) VALUES (
     140
     , 13
@@ -552,7 +550,7 @@ INSERT INTO dbo.[Agencies] (
     , 0
 )
 
-MERGE INTO dbo.[Agencies] dest
+MERGE INTO dbo.[PIMS_AGENCY] dest
 USING (
     -- Child Agencies for MAH.
     VALUES (
@@ -790,38 +788,39 @@ USING (
         , 0
     )
 ) AS src (
-    [Id]
-    , [ParentId]
-    , [Code]
-    , [Name]
-    , [IsDisabled]
-    , [SendEmail]
+    [AGENCY_ID]
+    , [PARENT_AGENCY_ID]
+    , [CODE]
+    , [NAME]
+    , [IS_DISABLED]
+    , [SEND_EMAIL]
 )
-ON dest.[Id] = src.[Id]
+ON dest.[AGENCY_ID] = src.[AGENCY_ID]
 WHEN MATCHED THEN
     UPDATE
         SET
-            dest.[ParentId] = src.[ParentId]
-            , dest.[Code] = src.[Code]
-            , dest.[Name] = src.[Name]
-            , dest.[IsDisabled] = src.[IsDisabled]
-            , dest.[SendEmail] = src.[SendEmail]
+            dest.[PARENT_AGENCY_ID] = src.[PARENT_AGENCY_ID]
+            , dest.[CODE] = src.[CODE]
+            , dest.[NAME] = src.[NAME]
+            , dest.[IS_DISABLED] = src.[IS_DISABLED]
+            , dest.[SEND_EMAIL] = src.[SEND_EMAIL]
 WHEN NOT MATCHED THEN
     INSERT (
-        [Id]
-        , [ParentId]
-        , [Code]
-        , [Name]
-        , [IsDisabled]
-        , [SendEmail]
+        [AGENCY_ID]
+        , [PARENT_AGENCY_ID]
+        , [CODE]
+        , [NAME]
+        , [IS_DISABLED]
+        , [SEND_EMAIL]
     ) VALUES (
-        src.[id]
-        , src.[ParentId]
-        , src.[Code]
-        , src.[Name]
-        , src.[IsDisabled]
-        , src.[SendEmail]
+        src.[AGENCY_ID]
+        , src.[PARENT_AGENCY_ID]
+        , src.[CODE]
+        , src.[NAME]
+        , src.[IS_DISABLED]
+        , src.[SEND_EMAIL]
     );
 
-SET IDENTITY_INSERT dbo.[Agencies] OFF
-
+-- Update sequence so that it works with the latest data.
+ALTER SEQUENCE dbo.[PIMS_AGENCY_ID_SEQ]
+RESTART WITH 200

@@ -5,9 +5,14 @@ namespace Pims.Api.Areas.Keycloak.Models.Role
     /// <summary>
     /// RoleModel class, provides a model that represents a role.
     /// </summary>
-    public class RoleModel : Api.Models.LookupModel<Guid>
+    public class RoleModel : Api.Models.LookupModel
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify the role model.
+        /// </summary>
+        public long Id { get; set; }
+
         /// <summary>
         /// get/set - The GUID that identifies this Group in Keycloak.
         /// </summary>

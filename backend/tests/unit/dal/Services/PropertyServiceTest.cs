@@ -25,7 +25,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new AllPropertyFilter(48.571155, -123.657596, 48.492947, -123.731803) { PropertyType = Entity.PropertyTypes.Land }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter(48.821333, -123.795017, 48.763431, -123.959783) { PropertyType = Entity.PropertyTypes.Land }, new[] { 1, 3 }, 0, 0 },
-                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, Agencies = new int[] { 3 } }, new[] { 1, 3 }, 1, 1 },
+                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, Agencies = new long[] { 3 } }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, ClassificationId = 2 }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, Description = "DescriptionTest" }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 1, 1 },
@@ -39,7 +39,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new AllPropertyFilter(48.571155, -123.657596, 48.492947, -123.731803) { PropertyType = Entity.PropertyTypes.Building }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter(48.821333, -123.795017, 48.763431, -123.959783) { PropertyType = Entity.PropertyTypes.Building }, new[] { 1, 3 }, 0, 0 },
-                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, Agencies = new int[] { 3 } }, new[] { 1, 3 }, 6, 6 },
+                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, Agencies = new long[] { 3 } }, new[] { 1, 3 }, 6, 6 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, ClassificationId = 2 }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, Description = "DescriptionTest" }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 10, 10 },
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new AllPropertyFilter(48.571155, -123.657596, 48.492947, -123.731803), new[] { 1, 3 }, 2, 2 },
                 new object[] { new AllPropertyFilter(48.821333, -123.795017, 48.763431, -123.959783), new[] { 1, 3 }, 0, 0 },
-                new object[] { new AllPropertyFilter() { Agencies = new int[] { 3 } }, new[] { 1, 3 }, 7, 7 },
+                new object[] { new AllPropertyFilter() { Agencies = new long[] { 3 } }, new[] { 1, 3 }, 7, 7 },
                 new object[] { new AllPropertyFilter() { ClassificationId = 2 }, new[] { 1, 3 }, 2, 2 },
                 new object[] { new AllPropertyFilter() { Page = 1, Quantity = 10, Description = "DescriptionTest" }, new[] { 1, 3 }, 2, 2 },
                 new object[] { new AllPropertyFilter() { AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 11, 10 },

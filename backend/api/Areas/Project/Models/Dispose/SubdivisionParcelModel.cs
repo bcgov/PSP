@@ -4,7 +4,7 @@ namespace Pims.Api.Areas.Project.Models.Dispose
 {
     public class SubdivisionParcelModel : Model.BaseModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string PID { get; set; }
 

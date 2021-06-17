@@ -6,7 +6,7 @@ namespace Pims.Api.Areas.Admin.Models.User
     public class AccessRequestModel : Api.Models.BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
         public AccessRequestStatus Status { get; set; }
         public string Note { get; set; }
         public AccessRequestUserModel User { get; set; }

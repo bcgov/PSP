@@ -30,7 +30,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">The project status notification does not exist for the specified 'id'.</exception>
         /// <returns></returns>
-        public ProjectStatusNotification Get(int id)
+        public ProjectStatusNotification Get(long id)
         {
             return this.Context.ProjectStatusNotifications
                 .Include(t => t.Template)
@@ -43,7 +43,7 @@ namespace Pims.Dal.Services
         /// <param name="fromStatusId"></param>
         /// <param name="toStatusId"></param>
         /// <returns></returns>
-        public IEnumerable<ProjectStatusNotification> GetFor(int? fromStatusId, int? toStatusId)
+        public IEnumerable<ProjectStatusNotification> GetFor(long? fromStatusId, long? toStatusId)
         {
             return this.Context.ProjectStatusNotifications
                 .AsNoTracking()

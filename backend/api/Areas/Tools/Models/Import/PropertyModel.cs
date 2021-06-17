@@ -3,11 +3,11 @@ namespace Pims.Api.Areas.Tools.Models.Import
     public class PropertyModel : Pims.Api.Models.BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string ProjectNumber { get; set; }
 
-        public int StatusId { get; set; }
+        public long StatusId { get; set; }
 
         public string Status { get; set; }
 
@@ -15,11 +15,11 @@ namespace Pims.Api.Areas.Tools.Models.Import
 
         public string Description { get; set; }
 
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         public string Classification { get; set; }
 
-        public int AgencyId { get; set; }
+        public long AgencyId { get; set; }
 
         public string SubAgency { get; set; }
 

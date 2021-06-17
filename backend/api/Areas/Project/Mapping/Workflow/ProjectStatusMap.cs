@@ -9,10 +9,11 @@ namespace Pims.Api.Areas.Project.Mapping.Workflow
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.ProjectStatus, Model.ProjectStatusModel>()
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsMilestone, src => src.IsMilestone)
                 .Map(dest => dest.Route, src => src.Route)
-                .Inherits<Entity.CodeEntity<int>, Api.Models.CodeModel<int>>();
+                .Inherits<Entity.CodeEntity, Api.Models.CodeModel>();
 
             config.NewConfig<Entity.WorkflowProjectStatus, Model.ProjectStatusModel>()
                 .Map(dest => dest.Id, src => src.StatusId)
@@ -29,7 +30,7 @@ namespace Pims.Api.Areas.Project.Mapping.Workflow
 
 
             config.NewConfig<Entity.ProjectStatusTransition, Model.ProjectStatusModel>()
-                .Map(dest => dest.Id, src => src.ToStatusId)
+                .Map(dest => dest.Id, src => src.ToWorkflowStatus.StatusId)
                 .Map(dest => dest.Code, src => src.ToWorkflowStatus.Status.Code)
                 .Map(dest => dest.WorkflowCode, src => src.ToWorkflowStatus.Workflow.Code)
                 .Map(dest => dest.Name, src => src.ToWorkflowStatus.Status.Name)

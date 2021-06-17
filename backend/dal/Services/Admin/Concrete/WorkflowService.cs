@@ -46,7 +46,7 @@ namespace Pims.Dal.Services.Admin
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">Workflow does not exists for the specified 'id'.</exception>
         /// <returns></returns>
-        public Workflow Get(int id)
+        public Workflow Get(long id)
         {
             return this.Context.Workflows.Find(id) ?? throw new KeyNotFoundException();
         }

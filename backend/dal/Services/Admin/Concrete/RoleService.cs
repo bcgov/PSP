@@ -55,10 +55,10 @@ namespace Pims.Dal.Services.Admin
         /// <summary>
         /// Get the user with the specified 'id'.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role Get(Guid id)
+        public Role Get(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
@@ -66,7 +66,7 @@ namespace Pims.Dal.Services.Admin
                 .Include(r => r.Claims)
                 .ThenInclude(r => r.Claim)
                 .AsNoTracking()
-                .FirstOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(u => u.Key == key) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Pims.Dal.Services.Admin
         }
 
         /// <summary>
-        /// Get the user with the specified keycloak group 'id'.
+        /// Get the user with the specified keycloak group 'key'.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role GetByKeycloakId(Guid id)
+        public Role GetByKeycloakId(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
@@ -98,7 +98,7 @@ namespace Pims.Dal.Services.Admin
                 .Include(r => r.Claims)
                 .ThenInclude(r => r.Claim)
                 .AsNoTracking()
-                .FirstOrDefault(u => u.KeycloakGroupId == id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(u => u.KeycloakGroupId == key) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Pims.Dal.Services.Admin
         public int RemoveAll(Guid[] exclude)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-            var roles = this.Context.Roles.Include(r => r.Claims).Include(r => r.Users).Where(r => !exclude.Contains(r.Id));
+            var roles = this.Context.Roles.Include(r => r.Claims).Include(r => r.Users).Where(r => !exclude.Contains(r.Key));
             roles.ForEach(r =>
             {
                 r.Claims.Clear();

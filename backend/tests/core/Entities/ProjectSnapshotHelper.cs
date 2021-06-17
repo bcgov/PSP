@@ -31,19 +31,19 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.ProjectSnapshot CreateProjectSnapshot(int id, int projectId = 0, DateTime? snapshotOn = null, Agency agency = null)
         {
-            var user = CreateUser(Guid.NewGuid(), "project tester", "asasa", "asasa", agency: agency);
+            var user = CreateUser(1, Guid.NewGuid(), "project tester", "asasa", "asasa", agency: agency);
             return new Entity.ProjectSnapshot()
             {
                 Id = id,
                 ProjectId = projectId,
                 SnapshotOn = snapshotOn ?? DateTime.UtcNow,
-                CreatedBy = user,
-                CreatedById = user.Id,
+                CreatedByName = user.DisplayName,
+                CreatedBy = user.Username,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = user.Id,
-                UpdatedBy = user,
+                UpdatedBy = user.Username,
+                UpdatedByName = user.DisplayName,
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 

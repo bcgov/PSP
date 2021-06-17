@@ -94,7 +94,7 @@ namespace Pims.Dal.Services
         /// <exception cref="KeyNotFoundException">Project does not exist in the datasource.</exception>
         /// <exception cref="NotAuthorizedException">User does not have permission to view project.</exception>
         /// <returns></returns>
-        public Project Get(int id)
+        public Project Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
@@ -168,7 +168,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <param name="includes"></param>
         /// <returns></returns>
-        public Project Get(int id, params Expression<Func<Project, object>>[] includes)
+        public Project Get(long id, params Expression<Func<Project, object>>[] includes)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
 
@@ -495,7 +495,7 @@ namespace Pims.Dal.Services
             }
 
             var userAgencies = this.User.GetAgencies();
-            var originalAgencyId = (int)this.Context.Entry(originalProject).OriginalValues[nameof(Project.AgencyId)];
+            var originalAgencyId = (long)this.Context.Entry(originalProject).OriginalValues[nameof(Project.AgencyId)];
             if (!isAdmin && !userAgencies.Contains(originalAgencyId)) throw new NotAuthorizedException("User may not edit projects outside of their agency.");
 
             // If the user isn't allowed to update the project, just update the notes.
@@ -519,7 +519,7 @@ namespace Pims.Dal.Services
             if (originalProjectNumber != project.ProjectNumber) throw new InvalidOperationException("Project number cannot be changed.");
 
             // Only allow valid non-milestone project status transitions.
-            var fromStatusId = (int)this.Context.Entry(originalProject).OriginalValues[nameof(Project.StatusId)];
+            var fromStatusId = (long)this.Context.Entry(originalProject).OriginalValues[nameof(Project.StatusId)];
             if (fromStatusId != project.StatusId)
             {
                 var fromStatus = this.Context.WorkflowProjectStatus
@@ -531,7 +531,7 @@ namespace Pims.Dal.Services
                     .Include(s => s.Tasks)
                     .FirstOrDefault(s => s.Id == project.StatusId);
                 if (toStatus.IsMilestone) throw new InvalidOperationException($"Project status transitions from '{fromStatus.Status.Name}' to '{toStatus?.Name}' requires a milestone transition.");
-                if (!fromStatus.ToStatus.Any(s => s.ToStatusId == project.StatusId)) throw new InvalidOperationException($"Invalid project status transitions from '{fromStatus.Status.Name}' to '{toStatus?.Name}'.");
+                if (!fromStatus.ToStatus.Any(s => s.Id == project.StatusId)) throw new InvalidOperationException($"Invalid project status transitions from '{fromStatus.Status.Name}' to '{toStatus?.Name}'.");
 
                 // Validate that all required tasks have been completed for the current status before allowing transition from one status to another.
                 var incompleteTaskIds = project.Tasks.Where(t => t.IsCompleted == false).Select(t => t.TaskId);
@@ -689,7 +689,7 @@ namespace Pims.Dal.Services
             if (!isAdmin && !userAgencies.Contains(originalProject.AgencyId)) throw new NotAuthorizedException("User may not edit projects outside of their agency.");
 
             // Only allow valid project status transitions.
-            var fromStatusId = (int)this.Context.Entry(originalProject).OriginalValues[nameof(Project.StatusId)];
+            var fromStatusId = (long)this.Context.Entry(originalProject).OriginalValues[nameof(Project.StatusId)];
             var fromStatus = this.Context.WorkflowProjectStatus
                 .Include(s => s.ToStatus)
                 .Include(s => s.Status)
@@ -701,9 +701,9 @@ namespace Pims.Dal.Services
 
             if (fromStatus.StatusId != toStatus.Id && (fromStatus.Status.SortOrder <= toStatus.SortOrder || toStatus.IsTerminal))
             {
-                var fromWorkflow = fromStatus.ToStatus.FirstOrDefault(s => s.ToStatusId == project.StatusId);
+                var fromWorkflow = fromStatus.ToStatus.FirstOrDefault(s => s.Id == project.StatusId);
                 if (fromWorkflow == null) throw new InvalidOperationException($"Invalid project status transitions from '{fromStatus.Status.Name}' to '{toStatus?.Name}'.");
-                project.WorkflowId = fromWorkflow.ToWorkflowId; // Transition to the new workflow if required.
+                project.WorkflowId = fromWorkflow.ToWorkflowStatus.WorkflowId; // Transition to the new workflow if required.
 
                 // TODO: Ideally this would handle scenarios where some tasks would need to be performed for termnating a project.
                 if (fromWorkflow.ValidateTasks)
@@ -821,7 +821,7 @@ namespace Pims.Dal.Services
             originalProject.Status = toStatus;
 
             originalProject.Metadata = this.Context.Serialize(metadata);
-            project.CopyRowVersionTo(originalProject);
+            originalProject.RowVersion = project.RowVersion;
             this.Context.CommitTransaction();
 
             await SendNotificationsAsync(originalProject, fromStatusId, responses, noteChanged);
@@ -837,7 +837,7 @@ namespace Pims.Dal.Services
         /// <param name="projectId"></param>
         /// <param name="agencyId"></param>
         /// <returns></returns>
-        public async System.Threading.Tasks.Task<IEnumerable<NotificationQueue>> CancelNotificationsAsync(int projectId, int? agencyId = null)
+        public async System.Threading.Tasks.Task<IEnumerable<NotificationQueue>> CancelNotificationsAsync(long projectId, long? agencyId = null)
         {
             // TODO: Handle paging better, right now we're assuming 1,000 is enough.
             var page = GetNotificationsInQueue(new ProjectNotificationFilter() { Quantity = 1000, ProjectId = projectId, AgencyId = agencyId, Status = new[] { NotificationStatus.Accepted, NotificationStatus.Pending } });
@@ -925,7 +925,7 @@ namespace Pims.Dal.Services
         /// <param name="responses"></param>
         /// <param name="noteChanged"></param>
         /// <returns></returns>
-        private async System.Threading.Tasks.Task SendNotificationsAsync(Project project, int? fromStatusId, IEnumerable<ProjectAgencyResponse> responses, bool noteChanged)
+        private async System.Threading.Tasks.Task SendNotificationsAsync(Project project, long? fromStatusId, IEnumerable<ProjectAgencyResponse> responses, bool noteChanged)
         {
             var notifications = new List<NotificationQueue>();
             if (noteChanged)

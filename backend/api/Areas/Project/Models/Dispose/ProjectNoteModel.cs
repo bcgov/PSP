@@ -9,12 +9,12 @@ namespace Pims.Api.Areas.Project.Models.Dispose
         /// <summary>
         /// get/set - The primary key for the project note.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The linked project.
         /// </summary>
-        public int ProjectId { get; set; }
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The type of note.

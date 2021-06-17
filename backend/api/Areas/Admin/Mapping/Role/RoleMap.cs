@@ -12,19 +12,21 @@ namespace Pims.Api.Areas.Admin.Mapping.Role
         {
             config.NewConfig<Entity.Role, Model.RoleModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Claims, src => src.Claims.Select(c => c.Claim))
-                .Inherits<Entity.LookupEntity<Guid>, Api.Models.LookupModel<Guid>>();
+                .Inherits<Entity.LookupEntity, Api.Models.LookupModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Claims, src => src.Claims)
-                .Inherits<Api.Models.LookupModel<Guid>, Entity.LookupEntity<Guid>>();
+                .Inherits<Api.Models.LookupModel, Entity.LookupEntity>();
         }
     }
 }

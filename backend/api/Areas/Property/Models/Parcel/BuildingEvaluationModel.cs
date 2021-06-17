@@ -6,7 +6,7 @@ namespace Pims.Api.Areas.Property.Models.Parcel
     public class BuildingEvaluationModel : Model.BaseModel
     {
         #region Properties
-        public int BuildingId { get; set; }
+        public long BuildingId { get; set; }
 
         public DateTime Date { get; set; }
 

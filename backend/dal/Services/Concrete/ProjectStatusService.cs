@@ -47,7 +47,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">Project status does not exist for the specified 'id'.</exception>
         /// <returns></returns>
-        public ProjectStatus Get(int id)
+        public ProjectStatus Get(long id)
         {
             return this.Context.ProjectStatus
                 .Find(id) ?? throw new KeyNotFoundException();

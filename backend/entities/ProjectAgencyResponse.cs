@@ -1,17 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ProjectAgencyResponse class, provides an entity for the datamodel to manage a responses from agencies on specific projects.
     /// </summary>
+    [MotiTable("PIMS_PROJECT_AGENCY_RESPONSE", "PRAGRP")]
     public class ProjectAgencyResponse : BaseEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify the project agency response.
+        /// </summary>
+        [Column("PROJECT_AGENCY_RESPONSE_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - Primary key and foreign key to the project.
         /// </summary>
-        public int ProjectId { get; set; }
+        [Column("PROJECT_ID")]
+        public long ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The project this response is for.
@@ -21,7 +30,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Primary key and foreign key to the agency responding..
         /// </summary>
-        public int AgencyId { get; set; }
+        [Column("AGENCY_ID")]
+        public long AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The agency who responded.
@@ -31,12 +41,14 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - amount offered by an agency for the project.
         /// </summary>
+        [Column("OFFER_AMOUNT")]
         public decimal OfferAmount { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the notification queue.
         /// </summary>
-        public int? NotificationId { get; set; }
+        [Column("NOTIFICATION_QUEUE_ID")]
+        public long? NotificationId { get; set; }
 
         /// <summary>
         /// get/set - The notification queue.
@@ -46,16 +58,19 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The agencies response to the project [ignore, watch].
         /// </summary>
+        [Column("RESPONSE")]
         public NotificationResponses Response { get; set; }
 
         /// <summary>
         /// get/set - The date SRES received a business case from this agency.
         /// </summary>
+        [Column("RECEIVED_ON")]
         public DateTime? ReceivedOn { get; set; }
 
         /// <summary>
         /// get/set - An agency specific note viewable/editable by SRES only.
         /// </summary>
+        [Column("NOTE")]
         public string Note { get; set; }
         #endregion
 

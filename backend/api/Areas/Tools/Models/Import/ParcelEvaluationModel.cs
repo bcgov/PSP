@@ -5,7 +5,7 @@ namespace Pims.Api.Areas.Tools.Models.Import
     public class ParcelEvaluationModel : Api.Models.BaseModel
     {
         #region Properties
-        public int ParcelId { get; set; }
+        public long ParcelId { get; set; }
 
         public DateTime Date { get; set; }
 

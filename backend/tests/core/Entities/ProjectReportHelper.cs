@@ -17,7 +17,7 @@ namespace Pims.Core.Test
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static Entity.ProjectReport CreateProjectReport(int id, string name)
+        public static Entity.ProjectReport CreateProjectReport(long id, string name)
         {
             return CreateProjectReport(id, name, DateTime.Now, DateTime.Now.AddDays(-1), false);
         }
@@ -31,9 +31,9 @@ namespace Pims.Core.Test
         /// <param name="fromDate"></param>
         /// <param name="isFinal"></param>
         /// <returns></returns>
-        public static Entity.ProjectReport CreateProjectReport(int id, string name = null, DateTime? toDate = null, DateTime? fromDate = null, bool isFinal = false, Agency agency = null)
+        public static Entity.ProjectReport CreateProjectReport(long id, string name = null, DateTime? toDate = null, DateTime? fromDate = null, bool isFinal = false, Agency agency = null)
         {
-            var user = CreateUser(Guid.NewGuid(), "project tester", "asasa", "asasa", null, agency);
+            var user = CreateUser(1, Guid.NewGuid(), "project tester", "asasa", "asasa", null, agency);
             return new Entity.ProjectReport()
             {
                 Id = id,
@@ -42,13 +42,13 @@ namespace Pims.Core.Test
                 From = fromDate,
                 IsFinal = isFinal,
                 ReportType = 0,
-                CreatedBy = user,
-                CreatedById = user.Id,
+                CreatedByName = user.DisplayName,
+                CreatedBy = user.Username,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = user.Id,
-                UpdatedBy = user,
+                UpdatedBy = user.Username,
+                UpdatedByName = user.DisplayName,
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 
@@ -58,7 +58,7 @@ namespace Pims.Core.Test
         /// <param name="startId"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static List<Entity.ProjectReport> CreateProjectReports(int startId, int count)
+        public static List<Entity.ProjectReport> CreateProjectReports(long startId, int count)
         {
             var projects = new List<Entity.ProjectReport>(count);
             for (var i = startId; i < (startId + count); i++)
@@ -75,7 +75,7 @@ namespace Pims.Core.Test
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static Entity.ProjectReport CreateProjectReport(this PimsContext context, int id, string name)
+        public static Entity.ProjectReport CreateProjectReport(this PimsContext context, long id, string name)
         {
             return context.CreateProjectReport(id, name);
         }
@@ -90,7 +90,7 @@ namespace Pims.Core.Test
         /// <param name="fromDate"></param>
         /// <param name="isFinal"></param>
         /// <returns></returns>
-        public static Entity.ProjectReport CreateProjectReport(this PimsContext context, int id, string name = null, DateTime? toDate = null, DateTime? fromDate = null, bool isFinal = false, Agency agency = null)
+        public static Entity.ProjectReport CreateProjectReport(this PimsContext context, long id, string name = null, DateTime? toDate = null, DateTime? fromDate = null, bool isFinal = false, Agency agency = null)
         {
             var projectReport = EntityHelper.CreateProjectReport(id, name, toDate, fromDate, isFinal, agency);
             context.ProjectReports.Add(projectReport);
@@ -104,7 +104,7 @@ namespace Pims.Core.Test
         /// <param name="startId"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static List<Entity.ProjectReport> CreateProjectReports(this PimsContext context, int startId, int count)
+        public static List<Entity.ProjectReport> CreateProjectReports(this PimsContext context, long startId, int count)
         {
 
             var projectReports = new List<Entity.ProjectReport>(count);

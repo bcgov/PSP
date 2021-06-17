@@ -166,7 +166,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 403)]
         [SwaggerOperation(Tags = new[] { "user" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is used for consistent routing.")]
-        public IActionResult UpdateAccessRequest(int id, [FromBody] Model.AccessRequestModel model)
+        public IActionResult UpdateAccessRequest(long id, [FromBody] Model.AccessRequestModel model)
         {
             if (model == null || model.Agencies == null || model.Roles == null)
             {

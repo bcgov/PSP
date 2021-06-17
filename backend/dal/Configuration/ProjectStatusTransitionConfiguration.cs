@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,22 +13,26 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<ProjectStatusTransition> builder)
         {
-            builder.ToTable("ProjectStatusTransitions");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => new { m.FromWorkflowId, m.FromStatusId, m.ToWorkflowId, m.ToStatusId });
-            builder.Property(m => m.FromWorkflowId).IsRequired();
-            builder.Property(m => m.FromWorkflowId).ValueGeneratedNever();
-            builder.Property(m => m.FromStatusId).IsRequired();
-            builder.Property(m => m.FromStatusId).ValueGeneratedNever();
-            builder.Property(m => m.ToWorkflowId).IsRequired();
-            builder.Property(m => m.ToWorkflowId).ValueGeneratedNever();
-            builder.Property(m => m.ToStatusId).IsRequired();
-            builder.Property(m => m.ToStatusId).ValueGeneratedNever();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Action).HasMaxLength(100);
+            builder.Property(m => m.FromWorkflowStatusId).IsRequired()
+                .HasComment("Foreign key to the workflow status");
+            builder.Property(m => m.ToWorkflowStatusId).IsRequired()
+                .HasComment("Foreign key the the from workflow status");
 
-            builder.HasOne(m => m.FromWorkflowStatus).WithMany(m => m.ToStatus).HasForeignKey(m => new { m.FromWorkflowId, m.FromStatusId }).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(m => m.ToWorkflowStatus).WithMany(m => m.FromStatus).HasForeignKey(m => new { m.ToWorkflowId, m.ToStatusId }).OnDelete(DeleteBehavior.ClientCascade);
+            builder.Property(m => m.Action).HasMaxLength(100)
+                .HasComment("Description of the action being performed in this transition");
+
+            builder.HasOne(m => m.FromWorkflowStatus).WithMany(m => m.ToStatus).HasForeignKey(m => m.FromWorkflowStatusId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PRSTTX_FROM_WORKFLOW_PROJECT_STATUS_ID_IDX");
+            builder.HasOne(m => m.ToWorkflowStatus).WithMany(m => m.FromStatus).HasForeignKey(m => m.ToWorkflowStatusId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRSTTX_TO_WORKFLOW_PROJECT_STATUS_ID_IDX");
+
+            builder.HasIndex(m => new { m.FromWorkflowStatusId, m.ToWorkflowStatusId }, "PRSTTX_FROM_WORKFLOW_TO_WORKFLOW_TUC").IsUnique();
+            builder.HasIndex(m => m.FromWorkflowStatusId, "PRSTTX_FROM_WORKFLOW_PROJECT_STATUS_ID_IDX");
+            builder.HasIndex(m => m.ToWorkflowStatusId, "PRSTTX_TO_WORKFLOW_PROJECT_STATUS_ID_IDX");
 
             base.Configure(builder);
         }

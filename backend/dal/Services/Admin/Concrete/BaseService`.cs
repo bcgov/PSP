@@ -75,7 +75,6 @@ namespace Pims.Dal.Services.Admin
         {
             entity.ThrowIfNull(nameof(entity));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
-            entity.ThrowIfRowVersionNull(nameof(entity));
 
             this.UpdateOne(entity);
             this.Context.CommitTransaction();
@@ -89,7 +88,6 @@ namespace Pims.Dal.Services.Admin
         public virtual void UpdateOne(ET entity)
         {
             entity.ThrowIfNull(nameof(entity));
-            entity.ThrowIfRowVersionNull(nameof(entity));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
             this.Context.Entry(entity).State = EntityState.Modified;
         }
@@ -101,7 +99,6 @@ namespace Pims.Dal.Services.Admin
         public virtual void Remove(ET entity)
         {
             entity.ThrowIfNull(nameof(entity));
-            entity.ThrowIfRowVersionNull(nameof(entity));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
 
             this.RemoveOne(entity);
@@ -115,7 +112,6 @@ namespace Pims.Dal.Services.Admin
         public virtual void RemoveOne(ET entity)
         {
             entity.ThrowIfNull(nameof(entity));
-            entity.ThrowIfRowVersionNull(nameof(entity));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
             this.Context.Entry(entity).State = EntityState.Deleted;
         }

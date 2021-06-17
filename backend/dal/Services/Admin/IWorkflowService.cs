@@ -9,7 +9,7 @@ namespace Pims.Dal.Services.Admin
     public interface IWorkflowService : IBaseService<Workflow>
     {
         IEnumerable<Workflow> GetAll();
-        Workflow Get(int id);
+        Workflow Get(long id);
         IEnumerable<Workflow> GetForStatus(string code);
     }
 }

@@ -92,7 +92,7 @@ namespace Pims.Api.Areas.Project.Mapping.Dispose
                 .ConstructUsing(src => Dal.Helpers.GeometryHelper.CreatePoint(src.Longitude, src.Latitude));
         }
 
-        static int GetAddressId(Api.Models.Parcel.AddressModel address)
+        static long GetAddressId(Api.Models.Parcel.AddressModel address)
         {
             return address?.Id ?? 0;
         }

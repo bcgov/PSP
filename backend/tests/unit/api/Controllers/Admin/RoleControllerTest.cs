@@ -92,14 +92,14 @@ namespace PimsApi.Test.Admin.Controllers
             service.Setup(m => m.Role.Get(It.IsAny<Guid>())).Returns(role);
 
             // Act
-            var result = controller.GetRole(role.Id);
+            var result = controller.GetRole(role.Key);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Role.Get(role.Id), Times.Once());
+            service.Verify(m => m.Role.Get(role.Key), Times.Once());
         }
         #endregion
 
@@ -144,7 +144,7 @@ namespace PimsApi.Test.Admin.Controllers
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
-            var result = controller.UpdateRole(role.Id, model);
+            var result = controller.UpdateRole(role.Key, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -170,7 +170,7 @@ namespace PimsApi.Test.Admin.Controllers
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
-            var result = controller.DeleteRole(role.Id, model);
+            var result = controller.DeleteRole(role.Key, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

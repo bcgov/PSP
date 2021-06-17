@@ -40,11 +40,9 @@ namespace Pims.Api.Areas.Reports.Mapping.Project
                 .Map(dest => dest.Ministry, src => src.Agency.ParentId.HasValue ? src.Agency.Parent.Code : src.Agency.Code)
                 .Map(dest => dest.Agency, src => src.Agency.Name)
                 .Map(dest => dest.UpdatedOn, src => src.UpdatedOn)
-                .Map(dest => dest.UpdatedBy,
-                    src => src.UpdatedById != null ? src.UpdatedBy.DisplayName : null)
+                .Map(dest => dest.UpdatedBy, src => src.UpdatedByName)
                 .Map(dest => dest.CreatedOn, src => src.CreatedOn)
-                .Map(dest => dest.CreatedBy,
-                    src => src.CreatedById != null ? src.CreatedBy.DisplayName : null)
+                .Map(dest => dest.CreatedBy, src => src.CreatedByName)
 
             #region Notes
                 .Map(dest => dest.Note, src => src.GetNoteText(Entity.NoteTypes.General))

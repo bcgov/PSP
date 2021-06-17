@@ -125,14 +125,14 @@ namespace PimsApi.Test.Admin.Controllers
             service.Setup(m => m.User.Get(It.IsAny<Guid>())).Returns(user);
 
             // Act
-            var result = controller.GetUser(user.Id);
+            var result = controller.GetUser(user.Key);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.UserModel>(user), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.User.Get(user.Id), Times.Once());
+            service.Verify(m => m.User.Get(user.Key), Times.Once());
         }
         #endregion
 
@@ -167,7 +167,7 @@ namespace PimsApi.Test.Admin.Controllers
             actualResult.MiddleName.Should().Be(user.MiddleName);
             actualResult.Note.Should().Be(user.Note);
             actualResult.Position.Should().Be(user.Position);
-            actualResult.RowVersion.Should().Be(user.RowVersion.ConvertRowVersion());
+            actualResult.RowVersion.Should().Be(user.RowVersion);
             actualResult.UpdatedOn.Should().Be(user.UpdatedOn);
             actualResult.Username.Should().Be(user.Username);
             service.Verify(m => m.User.Add(It.IsAny<Entity.User>()), Times.Once());
@@ -189,7 +189,7 @@ namespace PimsApi.Test.Admin.Controllers
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
-            var result = controller.UpdateUser(user.Id, model);
+            var result = controller.UpdateUser(user.Key, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -205,7 +205,7 @@ namespace PimsApi.Test.Admin.Controllers
             actualResult.MiddleName.Should().Be(user.MiddleName);
             actualResult.Note.Should().Be(user.Note);
             actualResult.Position.Should().Be(user.Position);
-            actualResult.RowVersion.Should().Be(user.RowVersion.ConvertRowVersion());
+            actualResult.RowVersion.Should().Be(user.RowVersion);
             actualResult.UpdatedOn.Should().Be(user.UpdatedOn);
             actualResult.Username.Should().Be(user.Username);
             service.Verify(m => m.User.Update(It.IsAny<Entity.User>()), Times.Once());
@@ -227,7 +227,7 @@ namespace PimsApi.Test.Admin.Controllers
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
-            var result = controller.DeleteUser(user.Id, model);
+            var result = controller.DeleteUser(user.Key, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

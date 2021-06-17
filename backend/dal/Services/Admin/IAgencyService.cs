@@ -10,7 +10,7 @@ namespace Pims.Dal.Services.Admin
     public interface IAgencyService : IBaseService<Agency>
     {
         IEnumerable<Agency> GetAll();
-        Agency Get(int id);
+        Agency Get(long id);
         Paged<Agency> Get(int page, int quantity);
         Paged<Agency> Get(AgencyFilter filter);
     }

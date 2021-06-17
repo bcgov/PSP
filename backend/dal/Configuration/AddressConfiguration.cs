@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,27 +13,31 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.ToTable("Addresses");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).ValueGeneratedOnAdd();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Address1).HasMaxLength(150);
+            builder.Property(m => m.Address1).HasMaxLength(150)
+                .HasComment("The first line of the address");
 
-            builder.Property(m => m.Address2).HasMaxLength(150);
+            builder.Property(m => m.Address2).HasMaxLength(150)
+                .HasComment("The second line of the address");
 
-            builder.Property(m => m.Postal).HasMaxLength(6);
+            builder.Property(m => m.Postal).HasMaxLength(6)
+                .HasComment("The postal code of the address");
 
-            builder.Property(m => m.ProvinceId).HasMaxLength(2);
-            builder.Property(m => m.ProvinceId).IsRequired();
+            builder.Property(m => m.ProvinceId).HasMaxLength(2).IsRequired()
+                .HasComment("Foreign key to the province");
 
-            builder.HasOne(m => m.Province).WithMany().HasForeignKey(m => m.ProvinceId).OnDelete(DeleteBehavior.ClientSetNull);
+            builder.Property(m => m.AdministrativeArea).HasMaxLength(150).IsRequired()
+                .HasComment("Administrative area name (city, district, region, etc.)");
 
-            builder.HasIndex(m => new { m.Id, m.AdministrativeArea }).IncludeProperties(m => new { m.Address1, m.Address2 });
-            builder.HasIndex(m => new { m.Id, m.Postal }).IncludeProperties(m => new { m.Address1, m.Address2 });
-            builder.HasIndex(m => new { m.Id, m.Address1 }).IncludeProperties(m => new { m.Address2 });
-            builder.HasIndex(m => new { m.AdministrativeArea, m.ProvinceId }).IncludeProperties(m => new { m.Address1, m.Address2 });
-            builder.HasIndex(m => new { m.Id, m.ProvinceId, m.AdministrativeArea, m.Postal, m.Address1 }).IncludeProperties(m => new { m.Address2 });
+            builder.HasOne(m => m.Province).WithMany().HasForeignKey(m => m.ProvinceId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ADDR_PROVINCE_ID_IDX");
+
+            builder.HasIndex(m => new { m.Address1, m.AdministrativeArea, m.Postal }, "ADDR_ADDRESS1_ADMINISTRATIVE_AREA_POSTAL_IDX").IncludeProperties(m => new { m.Address2 });
+            builder.HasIndex(m => m.ProvinceId, "ADDR_PROVINCE_ID_IDX");
 
             base.Configure(builder);
         }

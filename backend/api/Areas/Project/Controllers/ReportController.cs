@@ -54,7 +54,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ProjectReportModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProjectReport(int id)
+        public IActionResult GetProjectReport(long id)
         {
             var report = _pimsService.ProjectReport.Get(id);
             return new JsonResult(_mapper.Map<ProjectReportModel>(report));
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter to satisfy URL pattern.")]
-        public IActionResult GetProjectReportSnapshots(int reportId, ProjectReportModel model)
+        public IActionResult GetProjectReportSnapshots(long reportId, ProjectReportModel model)
         {
             var snapshots = _pimsService.ProjectReport.GetSnapshots(_mapper.Map<Entity.ProjectReport>(model));
             return new JsonResult(_mapper.Map<ProjectSnapshotModel[]>(snapshots));
@@ -105,7 +105,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ProjectSnapshotModel[]), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GetProjectReportSnapshots(int reportId)
+        public IActionResult GetProjectReportSnapshots(long reportId)
         {
             var snapshots = _pimsService.ProjectReport.GetSnapshots(reportId);
             return new JsonResult(_mapper.Map<ProjectSnapshotModel[]>(snapshots));
@@ -150,7 +150,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter to satisfy URL pattern.")]
-        public IActionResult UpdateProjectReport(int id, ProjectReportModel model)
+        public IActionResult UpdateProjectReport(long id, ProjectReportModel model)
         {
             var report = _pimsService.ProjectReport.Update(_mapper.Map<Entity.ProjectReport>(model));
             return new JsonResult(_mapper.Map<ProjectReportModel>(report));
@@ -167,7 +167,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ProjectSnapshotModel[]), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
-        public IActionResult GenerateProjectSnapshots(int id)
+        public IActionResult GenerateProjectSnapshots(long id)
         {
             var snapshots = _pimsService.ProjectReport.Refresh(id);
             return new JsonResult(_mapper.Map<ProjectSnapshotModel[]>(snapshots));
@@ -186,7 +186,7 @@ namespace Pims.Api.Areas.Project.Controllers
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/{id})")]
-        public IActionResult DeleteProjectReport(int id, ProjectReportModel model)
+        public IActionResult DeleteProjectReport(long id, ProjectReportModel model)
         {
             _pimsService.ProjectReport.Remove(_mapper.Map<Entity.ProjectReport>(model));
             return new JsonResult(model);

@@ -12,7 +12,7 @@ namespace Pims.Api.Areas.Notification.Models.Template
         /// <summary>
         /// get/set - Primary key unique identity for notification template.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - A unique name to identify the template.

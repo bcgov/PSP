@@ -1,17 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Workflow class, provides a way to manage workflows within the solution.
     /// </summary>
-    public class Workflow : CodeEntity<int>
+    [MotiTable("PIMS_WORKFLOW", "WRKFLW")]
+    public class Workflow : CodeEntity
     {
         #region Properties
         /// <summary>
-        /// get/set - A description of 
+        /// get/set - Primary key to the workflow.
         /// </summary>
+        [Column("WORKFLOW_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - A description of
+        /// </summary>
+        [Column("DESCRIPTION")]
         public string Description { get; set; }
 
         /// <summary>
@@ -36,12 +45,8 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="name"></param>
         /// <param name="code"></param>
-        public Workflow(string name, string code)
+        public Workflow(string name, string code) : base(name, code)
         {
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException("Argument cannot be null, empty or whitespace.", nameof(name));
-            if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException("Argument cannot be null, empty or whitespace.", nameof(code));
-            this.Name = name;
-            this.Code = code;
         }
         #endregion
     }

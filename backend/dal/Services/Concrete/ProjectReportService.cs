@@ -56,7 +56,7 @@ namespace Pims.Dal.Services
         /// <exception cref="KeyNotFoundException">Project report does not exist in the datasource.</exception>
         /// <exception cref="NotAuthorizedException">User does not have permission to view report.</exception>
         /// <returns></returns>
-        public ProjectReport Get(int reportId)
+        public ProjectReport Get(long reportId)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ReportsSpl);
 
@@ -95,7 +95,7 @@ namespace Pims.Dal.Services
                 return GenerateSnapshots(report.From, (DateTime)report.To);
             }
 
-            var fromSnapshots = currentSnapshots.Where(s => s.SnapshotOn == report.From).ToDictionary(s => (int?)s.ProjectId, s => s);
+            var fromSnapshots = currentSnapshots.Where(s => s.SnapshotOn == report.From).ToDictionary(s => (long?)s.ProjectId, s => s);
             if (fromSnapshots.Count() == 0) throw new KeyNotFoundException("If specified report FROM value must return valid snapshots");
 
             foreach (ProjectSnapshot snapshot in toSnapshots)
@@ -118,7 +118,7 @@ namespace Pims.Dal.Services
         /// <exception cref="KeyNotFoundException">Project report does not exist in the datasource.</exception>
         /// <exception cref="NotAuthorizedException">User does not have permission to view snapshots.</exception>
         /// <returns></returns>
-        public IEnumerable<ProjectSnapshot> GetSnapshots(int reportId)
+        public IEnumerable<ProjectSnapshot> GetSnapshots(long reportId)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ReportsSpl);
 
@@ -214,7 +214,7 @@ namespace Pims.Dal.Services
         /// <param name="project"></param>
         /// <exception cref="NotAuthorizedException">User does not have permission to get refreshed snapshots.</exception>
         /// <returns></returns>
-        public IEnumerable<ProjectSnapshot> Refresh(int reportId)
+        public IEnumerable<ProjectSnapshot> Refresh(long reportId)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ReportsSpl);
             var report = Get(reportId);
@@ -306,7 +306,7 @@ namespace Pims.Dal.Services
                 .Where(p => p.Workflow.Code == "SPL" && p.Status.Code != "CA" && p.Status.Code != "T-GRE");
             // TODO: Because project status codes could change in the future, this should be updated to not be magic strings.
 
-            var fromSnapshots = new Dictionary<int, ProjectSnapshot>();
+            var fromSnapshots = new Dictionary<long, ProjectSnapshot>();
             if (from.HasValue)
             {
                 fromSnapshots = this.Context.ProjectSnapshots
@@ -314,7 +314,7 @@ namespace Pims.Dal.Services
                     .ToDictionary(s => s.ProjectId, s => s);
             }
 
-            var toSnapshots = new Dictionary<int, ProjectSnapshot>();
+            var toSnapshots = new Dictionary<long, ProjectSnapshot>();
             if (originalTo.HasValue)
             {
                 toSnapshots = this.Context.ProjectSnapshots

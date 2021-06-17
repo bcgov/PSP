@@ -34,7 +34,7 @@ namespace Pims.Api.Test.Controllers.Property
             new object [] { new SModel.PropertyFilterModel(0, 0, 10, 0), false, false },
             new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10), false, false },
             new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { Address = "Address" }, false, false },
-            new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { Agencies = new [] { 1 } }, false, false },
+            new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { Agencies = new long[] { 1 } }, false, false },
             new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { StatusId = 1 }, true, true },
             new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { ClassificationId = 1 }, true, true },
             new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { ProjectNumber = "ProjectNumber" }, true, true },

@@ -7,7 +7,7 @@ namespace Pims.Api.Models.User
     public class AccessRequestModel : BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
         public Guid UserId { get; set; }
         public AccessRequestUserModel User { get; set; }
         public IEnumerable<AccessRequestAgencyModel> Agencies { get; set; }

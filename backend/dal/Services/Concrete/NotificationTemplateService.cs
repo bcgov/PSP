@@ -58,7 +58,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">The notification template does not exist for the specified 'id'.</exception>
         /// <returns></returns>
-        public NotificationTemplate Get(int id)
+        public NotificationTemplate Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
@@ -142,7 +142,7 @@ namespace Pims.Dal.Services
             this.Context.CommitTransaction();
         }
 
-        public async Task<NotificationQueue> SendNotificationAsync(int templateId, string to)
+        public async Task<NotificationQueue> SendNotificationAsync(long templateId, string to)
         {
             return await SendNotificationAsync<object>(templateId, to, null);
 
@@ -154,7 +154,7 @@ namespace Pims.Dal.Services
         /// <param name="templateId"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public async Task<NotificationQueue> SendNotificationAsync<T>(int templateId, string to, T model) where T : class // TODO: Allow for a way to pass a model to this function.
+        public async Task<NotificationQueue> SendNotificationAsync<T>(long templateId, string to, T model) where T : class // TODO: Allow for a way to pass a model to this function.
         {
             return await SendNotificationAsync<T>(templateId, to, null, null, model);
         }
@@ -167,7 +167,7 @@ namespace Pims.Dal.Services
         /// <param name="cc"></param>
         /// <param name="bcc"></param>
         /// <returns></returns>
-        public async Task<NotificationQueue> SendNotificationAsync<T>(int templateId, string to, string cc, string bcc, T model) where T : class // TODO: Allow for a way to pass a model to this function.
+        public async Task<NotificationQueue> SendNotificationAsync<T>(long templateId, string to, string cc, string bcc, T model) where T : class // TODO: Allow for a way to pass a model to this function.
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 

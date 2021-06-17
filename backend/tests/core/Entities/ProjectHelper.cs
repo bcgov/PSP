@@ -41,7 +41,7 @@ namespace Pims.Core.Test
             var status = workflowStatus?.Status ?? EntityHelper.CreateProjectStatus("Draft", "DR");
             var workflow = workflowStatus?.Workflow ?? EntityHelper.CreateWorkflow(id, "Submit", "SUBMIT-DISPOSAL", new[] { status });
 
-            var user = CreateUser(Guid.NewGuid(), "project tester", "asasa", "asasa", null, agency);
+            var user = CreateUser(1, Guid.NewGuid(), "project tester", "asasa", "asasa", null, agency);
             var project = new Entity.Project($"SPP-{id:00000}", $"test-{id}", tierLevel)
             {
                 Id = id,
@@ -56,14 +56,14 @@ namespace Pims.Core.Test
                 Status = status,
                 StatusId = status.Id,
                 Description = $"description-{id}",
-                CreatedBy = user,
-                CreatedById = user.Id,
+                CreatedByName = user.DisplayName,
+                CreatedBy = user.Username,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = user.Id,
-                UpdatedBy = user,
+                UpdatedBy = user.Username,
+                UpdatedByName = user.DisplayName,
                 UpdatedOn = DateTime.UtcNow,
                 Metadata = "{\"offerAmount\": 123}",
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
             project.AddOrUpdateNote(Entity.NoteTypes.Public, $"publicNote-{id}");
             project.AddOrUpdateNote(Entity.NoteTypes.Private, $"privateNote-{id}");

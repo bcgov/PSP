@@ -35,8 +35,6 @@ namespace Pims.Dal.Helpers.Extensions
 
             // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning agency.
             var query = context.Projects
-                .Include(p => p.CreatedBy)
-                .Include(p => p.UpdatedBy)
                 .Include(p => p.Status)
                 .Include(p => p.TierLevel)
                 .Include(p => p.Risk)
@@ -59,7 +57,7 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(p => p.TierLevelId == filter.TierLevelId);
             if (filter.CreatedByMe.HasValue && filter.CreatedByMe.Value)
             {
-                query = query.Where(p => p.CreatedById.Equals(user.GetUserId()));
+                query = query.Where(p => p.CreatedBy.Equals(user.GetUsername()));
             }
 
             if (filter.FiscalYear.HasValue)
@@ -107,18 +105,14 @@ namespace Pims.Dal.Helpers.Extensions
             return query;
         }
 
-        /// Generate a new project number in the database.
-        /// NOTE - this saves current changes to the datasource and should be called before other changes.
-        /// If the subsequent save to the database fails the project number will be unused and result in an orphan.
+        /// <summary>
+        /// Requests the next number in the sequence for project numbers.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static Entity.ProjectNumber GenerateProjectNumber(this PimsContext context)
+        public static int GenerateProjectNumber(this PimsContext context)
         {
-            var projectNumber = new Entity.ProjectNumber();
-            context.ProjectNumbers.Add(projectNumber);
-            context.SaveChanges();
-            return projectNumber;
+            return context.ProjectNumbers.First().Value;
         }
 
         /// <summary>
@@ -141,9 +135,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="projectNumber"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string Generate(this Entity.ProjectNumber projectNumber, string format)
+        public static string Generate(this int projectNumber, string format)
         {
-            return String.Format(format, projectNumber.Id);
+            return String.Format(format, projectNumber);
         }
 
         /// <summary>
@@ -215,7 +209,7 @@ namespace Pims.Dal.Helpers.Extensions
                     originalProperty.Parcel.AgencyId = property.Parcel.AgencyId;
                     originalProperty.Parcel.ClassificationId = property.Parcel.ClassificationId;
                     originalProperty.Parcel.ProjectNumbers = "[]";
-                    originalProperty.Parcel.PropertyTypeId = (int)PropertyTypes.Land; // when an agency transition occurs, and subdivisions should transition into parcels.
+                    originalProperty.Parcel.PropertyTypeId = (long)PropertyTypes.Land; // when an agency transition occurs, and subdivisions should transition into parcels.
                     return originalProperty.Parcel;
                 case (Entity.PropertyTypes.Building):
                     if (originalProperty.Building == null || property.Building == null) throw new InvalidOperationException("Unable to transfer building.");
@@ -291,7 +285,7 @@ namespace Pims.Dal.Helpers.Extensions
                         if (p.Parcel == null) throw new InvalidOperationException("Unable to update parcel status.");
                         p.Parcel.ClassificationId = disposed.Id;
                         p.Parcel.AgencyId = null;
-                        p.Parcel.PropertyTypeId = (int)PropertyTypes.Land; // all subdivisions should be transitioned to parcels after they are disposed.
+                        p.Parcel.PropertyTypeId = (long)PropertyTypes.Land; // all subdivisions should be transitioned to parcels after they are disposed.
                         p.Parcel.Parcels.Clear(); // remove all references to parent parcels.
                         break;
                     case (Entity.PropertyTypes.Building):
@@ -396,12 +390,12 @@ namespace Pims.Dal.Helpers.Extensions
             var agency = originalProject.Agency;
             var originalMetadata = context.Deserialize<DisposalProjectMetadata>(originalProject.Metadata ?? "{}"); // TODO: Need to test whether automatically overwriting the metadata is correct.
 
-            var createdById = originalProject.CreatedById;
-            var updatedById = originalProject.UpdatedById;
+            var createdBy = originalProject.CreatedBy;
+            var updatedBy = originalProject.UpdatedBy;
             context.Entry(originalProject).CurrentValues.SetValues(updatedProject);
             originalProject.Agency = agency; // Don't want to allow agency to change through this method.
-            originalProject.CreatedById = updatedById; // Don't want these updated externally.
-            originalProject.UpdatedById = updatedById; // Don't want these updated externally.
+            originalProject.CreatedBy = updatedBy; // Don't want these updated externally.
+            originalProject.UpdatedBy = updatedBy; // Don't want these updated externally.
             context.SetOriginalRowVersion(originalProject);
 
             var agencies = originalProject.Agency.ParentId.HasValue ? new[] { originalProject.AgencyId } : context.Agencies.Where(a => a.ParentId == originalProject.AgencyId || a.Id == originalProject.AgencyId).Select(a => a.Id).ToArray();

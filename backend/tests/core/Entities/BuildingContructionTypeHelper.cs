@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.BuildingConstructionType CreateBuildingConstructionType(int id, string name)
         {
-            return new Entity.BuildingConstructionType(id, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.BuildingConstructionType(name) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.BuildingConstructionType CreateBuildingConstructionType(string name)
         {
-            return new Entity.BuildingConstructionType(1, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.BuildingConstructionType(name) { Id = 1, RowVersion = 1 };
         }
 
         /// <summary>
@@ -37,11 +37,11 @@ namespace Pims.Core.Test
         {
             return new List<Entity.BuildingConstructionType>()
             {
-                new Entity.BuildingConstructionType(0, "Concrete") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingConstructionType(1, "Masonry") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingConstructionType(2, "Mixed") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingConstructionType(3, "Steel") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingConstructionType(4, "Wood") { RowVersion = new byte[] { 12, 13, 14 } }
+                new Entity.BuildingConstructionType("Concrete") { Id = 0, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Masonry") { Id = 1, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Mixed") { Id = 2, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Steel") { Id = 3, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Wood") { Id = 4, RowVersion = 1 }
             };
         }
     }

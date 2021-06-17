@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,17 +13,33 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<AccessRequestAgency> builder)
         {
-            builder.ToTable("AccessRequestAgencies");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => new { m.AccessRequestId, m.AgencyId });
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.AccessRequestId).IsRequired();
-            builder.Property(m => m.AccessRequestId).ValueGeneratedNever();
+            builder.Property(m => m.AccessRequestId)
+                .IsRequired()
+                .HasComment("Foreign key to the access request");
+            builder.Property(m => m.AgencyId)
+                .IsRequired()
+                .HasComment("Foreign key to the agency");
 
-            builder.Property(m => m.AgencyId).IsRequired();
-            builder.Property(m => m.AgencyId).ValueGeneratedNever();
+            builder.HasOne(m => m.AccessRequest)
+                .WithMany(m => m.Agencies)
+                .HasForeignKey(m => m.AccessRequestId)
+                .OnDelete(DeleteBehavior.ClientCascade)
+                .HasConstraintName("ACRQAG_ACCESS_REQUEST_ID_IDX");
+            builder.HasOne(m => m.Agency)
+                .WithMany()
+                .HasForeignKey(m => m.AgencyId)
+                .OnDelete(DeleteBehavior.ClientCascade)
+                .HasConstraintName("ACRQAG_AGENCY_ID_IDX");
 
-            builder.HasOne(m => m.AccessRequest).WithMany(m => m.Agencies).HasForeignKey(m => m.AccessRequestId).OnDelete(DeleteBehavior.ClientCascade);
+            builder.HasIndex(m => new { m.AccessRequestId, m.AgencyId }, "ACRQAG_ACCESS_REQUEST_AGENCY_TUC").IsUnique();
+            builder.HasIndex(m => m.AccessRequestId, "ACRQAG_ACCESS_REQUEST_ID_IDX");
+            builder.HasIndex(m => m.AgencyId, "ACRQAG_AGENCY_ID_IDX");
 
             base.Configure(builder);
         }

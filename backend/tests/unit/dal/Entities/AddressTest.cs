@@ -19,10 +19,10 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> Addresses =>
             new List<object[]>
             {
-                new object[] { new Address("address1", "address2", "administrativeArea", "provinceId", "postal"), "address1, address2, administrativeArea, provinceId, postal" },
-                new object[] { new Address("address1", "", "administrativeArea", "provinceId", "postal"), "address1, administrativeArea, provinceId, postal" },
-                new object[] { new Address("address1", " ", "administrativeArea", "provinceId", "postal"), "address1, administrativeArea, provinceId, postal" },
-                new object[] { new Address("address1", null, "administrativeArea", "provinceId", "postal"), "address1, administrativeArea, provinceId, postal" }
+                new object[] { new Address("address1", "address2", "administrativeArea", 1, "postal"), "address1, address2, administrativeArea, provinceId, postal" },
+                new object[] { new Address("address1", "", "administrativeArea", 1, "postal"), "address1, administrativeArea, provinceId, postal" },
+                new object[] { new Address("address1", " ", "administrativeArea", 1, "postal"), "address1, administrativeArea, provinceId, postal" },
+                new object[] { new Address("address1", null, "administrativeArea", 1, "postal"), "address1, administrativeArea, provinceId, postal" }
             };
         #endregion
 
@@ -32,13 +32,13 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var address = new Address("address1", "address2", "administrativeArea", "provinceId", "postal");
+            var address = new Address("address1", "address2", "administrativeArea", 1, "postal");
 
             // Assert
             address.Address1.Should().Be("address1");
             address.Address2.Should().Be("address2");
             address.AdministrativeArea.Should().Be("administrativeArea");
-            address.ProvinceId.Should().Be("provinceId");
+            address.ProvinceId.Should().Be(1);
             address.Postal.Should().Be("postal");
         }
 
@@ -48,14 +48,14 @@ namespace Pims.Dal.Test.Entities
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new Address("address1", "address2", null, "provinceId", "postal"));
+            Assert.Throws<ArgumentNullException>(() => new Address("address1", "address2", null, 1, "postal"));
         }
 
         [Fact]
         public void Address_Constructor_02()
         {
             // Arrange
-            var province = EntityHelper.CreateProvince("ON", "Ontario");
+            var province = EntityHelper.CreateProvince(1, "ON", "Ontario");
 
             // Act
             var address = new Address("address1", "address2", "administrativeArea", province, "postal");
@@ -73,7 +73,7 @@ namespace Pims.Dal.Test.Entities
         public void Address_Constructor_02_AdministrativeArea_ArgumentNullException()
         {
             // Arrange
-            var province = EntityHelper.CreateProvince("ON", "Ontario");
+            var province = EntityHelper.CreateProvince(1, "ON", "Ontario");
 
             // Act
             // Assert

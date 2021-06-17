@@ -53,7 +53,7 @@ namespace Pims.Core.Test
                 AccessRequestId = id
             });
 
-            var roleId = Guid.NewGuid();
+            var roleId = 1;
             accessRequest.Roles.Add(new Entity.AccessRequestRole()
             {
                 RoleId = roleId,

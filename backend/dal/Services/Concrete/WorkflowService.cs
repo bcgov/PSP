@@ -50,7 +50,7 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">The workflow for the specified 'id' does not exist.</exception>
         /// <returns></returns>
-        public Workflow Get(int id)
+        public Workflow Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
             var workflow = this.Context.Workflows

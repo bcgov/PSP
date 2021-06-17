@@ -33,7 +33,6 @@ namespace Pims.Api.Areas.Property.Mapping.Search
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.Property, Model.PropertyModel>()
-                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeId)
                 .Map(dest => dest.ClassificationId, src => src.ClassificationId)
                 .Map(dest => dest.Classification, src => src.Classification == null ? null : src.Classification.Name)
@@ -58,6 +57,7 @@ namespace Pims.Api.Areas.Property.Mapping.Search
 
             config.NewConfig<Entity.Parcel, Model.PropertyModel>()
                 .Inherits<Entity.Property, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeId)
                 .Map(dest => dest.PID, src => src.ParcelIdentity)
                 .Map(dest => dest.PIN, src => src.PIN)
@@ -79,6 +79,7 @@ namespace Pims.Api.Areas.Property.Mapping.Search
 
             config.NewConfig<Entity.Building, Model.PropertyModel>()
                 .Inherits<Entity.Property, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeId)
                 .Map(dest => dest.ConstructionTypeId, src => src.BuildingConstructionTypeId)
                 .Map(dest => dest.ConstructionType, src => src.GetConstructionType())
@@ -106,7 +107,7 @@ namespace Pims.Api.Areas.Property.Mapping.Search
             config.NewConfig<Entity.Views.Property, Model.PropertyModel>()
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeId)
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.RowVersion, src => src.RowVersion == null ? null : Convert.ToBase64String(src.RowVersion))
+                .Map(dest => dest.RowVersion, src => src.RowVersion)
                 .Map(dest => dest.ClassificationId, src => src.ClassificationId)
                 .Map(dest => dest.Classification, src => src.Classification)
                 .Map(dest => dest.Name, src => src.Name)

@@ -13,7 +13,7 @@ namespace Pims.Api.Areas.Project.Models.Report
         /// <summary>
         /// get/set - The primary key provides a unique identity for the project report.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - Whether this report is final and should not be deleted.

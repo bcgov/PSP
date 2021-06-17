@@ -9,12 +9,12 @@ namespace Pims.Api.Areas.Notification.Models.Template
         /// <summary>
         /// get/set - Primary key unique identity for project status notification.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the original project status before the status change.
         /// </summary>
-        public int? FromStatusId { get; set; }
+        public long? FromStatusId { get; set; }
 
         /// <summary>
         /// get/set - The from status name.
@@ -24,7 +24,7 @@ namespace Pims.Api.Areas.Notification.Models.Template
         /// <summary>
         /// get/set - Foreign key to the desired project status after the status change.
         /// </summary>
-        public int? ToStatusId { get; set; }
+        public long? ToStatusId { get; set; }
 
         /// <summary>
         /// get/set - The to status name.

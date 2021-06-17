@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Project class, provides an entity for the datamodel to manage projects.
     /// </summary>
+    [MotiTable("PIMS_PROJECT", "PROJCT")]
     public class Project : BaseEntity
     {
         #region Properties
@@ -13,36 +15,43 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The primary key provides a unique identity for the project.
         /// </summary>
-        public int Id { get; set; }
+        [Column("PROJECT_ID")]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - A unique identity for the project.
         /// </summary>
+        [Column("PROJECT_NUMBER")]
         public string ProjectNumber { get; set; }
 
         /// <summary>
         /// get/set - The type of project this is.
         /// </summary>
+        [Column("PROJECT_TYPE")]
         public ProjectTypes ProjectType { get; set; }
 
         /// <summary>
         /// get/set - A display name to identify the project.
         /// </summary>
+        [Column("NAME")]
         public string Name { get; set; }
 
         /// <summary>
         /// get/set - A description of the project.
         /// </summary>
+        [Column("DESCRIPTION")]
         public string Description { get; set; }
 
         /// <summary>
         /// get/set - The reported fiscal year this project.
         /// </summary>
+        [Column("REPORTED_FISCAL_YEAR")]
         public int ReportedFiscalYear { get; set; }
 
         /// <summary>
         /// get/set - The actual or forecasted fiscal year.
         /// </summary>
+        [Column("ACTUAL_FISCAL_YEAR")]
         public int ActualFiscalYear { get; set; }
         #endregion
 
@@ -50,7 +59,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The foreign key to the owning agency.
         /// </summary>
-        public int AgencyId { get; set; }
+        [Column("AGENCY_ID")]
+        public long AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The owning agency.
@@ -60,6 +70,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The project manager name(s).
         /// </summary>
+        [Column("MANAGER")]
         public string Manager { get; set; }
         #endregion
 
@@ -67,7 +78,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The foreign key to the tier level.
         /// </summary>
-        public int TierLevelId { get; set; }
+        [Column("TIER_LEVEL_ID")]
+        public long TierLevelId { get; set; }
 
         /// <summary>
         /// get/set - The tier level.
@@ -79,7 +91,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Foreign key to the risk level of the project.
         /// </summary>
-        public int RiskId { get; set; }
+        [Column("PROJECT_RISK_ID")]
+        public long RiskId { get; set; }
 
         /// <summary>
         /// get/set - The risk level of the project.
@@ -91,7 +104,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Foreign key to the current workflow the project is in.
         /// </summary>
-        public int? WorkflowId { get; set; }
+        [Column("WORKFLOW_ID")]
+        public long? WorkflowId { get; set; }
 
         /// <summary>
         /// get/set - The current workflow the project is in.
@@ -101,7 +115,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The foreign key to the project status.
         /// </summary>
-        public int StatusId { get; set; }
+        [Column("PROJECT_STATUS_ID")]
+        public long StatusId { get; set; }
 
         /// <summary>
         /// get/set - The project status.
@@ -112,33 +127,38 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Additional serialized metadata.
         /// </summary>
+        [Column("METADATA")]
         public string Metadata { get; set; }
 
         #region Dates
         /// <summary>
         /// get/set - When the project was submitted.
         /// </summary>
+        [Column("SUBMITTED_ON")]
         public DateTime? SubmittedOn { get; set; }
 
         /// <summary>
         /// get/set - When the project was approved.
         /// </summary>
+        [Column("APPROVED_ON")]
         public DateTime? ApprovedOn { get; set; }
 
         /// <summary>
         /// get/set - When the project was denied.
         /// </summary>
+        [Column("DENIED_ON")]
         public DateTime? DeniedOn { get; set; }
 
         /// <summary>
         /// get/set - When the project was cancelled.
         /// </summary>
+        [Column("CANCELLED_ON")]
         public DateTime? CancelledOn { get; set; }
 
         /// <summary>
         /// get/set - When the project was completed.
         /// </summary>
-        /// <value></value>
+        [Column("COMPLETED_ON")]
         public DateTime? CompletedOn { get; set; }
         #endregion
 
@@ -146,21 +166,25 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The net book value.
         /// </summary>
+        [Column("NET_BOOK")]
         public decimal? NetBook { get; set; }
 
         /// <summary>
         /// get/set - The market value.
         /// </summary>
+        [Column("MARKET")]
         public decimal? Market { get; set; }
 
         /// <summary>
         /// get/set - The assessed value.
         /// </summary>
+        [Column("ASSESSED")]
         public decimal? Assessed { get; set; }
 
         /// <summary>
         /// get/set - The appraised value.
         /// </summary>
+        [Column("APPRAISED")]
         public decimal? Appraised { get; set; }
         #endregion
 

@@ -6,9 +6,9 @@ namespace Pims.Api.Areas.Property.Models.Building
     public class BuildingFiscalModel : Model.BaseModel
     {
         #region Properties
-        public int BuildingId { get; set; }
+        public long BuildingId { get; set; }
 
-        public int FiscalYear { get; set; }
+        public long FiscalYear { get; set; }
 
         public DateTime? EffectiveDate { get; set; }
 

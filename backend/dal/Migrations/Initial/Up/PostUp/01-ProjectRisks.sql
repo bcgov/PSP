@@ -1,15 +1,13 @@
-PRINT 'Adding ProjectRisks'
-
-SET IDENTITY_INSERT dbo.[ProjectRisks] ON
+PRINT N'Adding [PIMS_PROJECT_RISK]'
 
 -- Parent Agencies.
-INSERT INTO dbo.[ProjectRisks] (
-    [Id]
-    , [Code]
-    , [Name]
-    , [Description]
-    , [IsDisabled]
-    , [SortOrder]
+INSERT INTO dbo.[PIMS_PROJECT_RISK] (
+    [PROJECT_RISK_ID]
+    , [CODE]
+    , [NAME]
+    , [DESCRIPTION]
+    , [IS_DISABLED]
+    , [SORT_ORDER]
 ) VALUES (
     1
     , 'GREEN'
@@ -33,4 +31,6 @@ INSERT INTO dbo.[ProjectRisks] (
     , 3
 )
 
-SET IDENTITY_INSERT dbo.[ProjectRisks] OFF
+-- Update sequence so that it works with the latest data.
+ALTER SEQUENCE dbo.[PIMS_PROJECT_RISK_ID_SEQ]
+RESTART WITH 4

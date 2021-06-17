@@ -29,7 +29,7 @@ export const DISABLED = [
 export const CLASSIFICATIONS = [
   {
     name: 'Core Operational',
-    id: '0',
+    id: 0,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 1,
@@ -37,7 +37,7 @@ export const CLASSIFICATIONS = [
   },
   {
     name: 'Core Strategic',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 2,
@@ -45,7 +45,7 @@ export const CLASSIFICATIONS = [
   },
   {
     name: 'Disposed',
-    id: '4',
+    id: 4,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 5,
@@ -57,14 +57,14 @@ export const ADMINISTRATIVEAREAS = [
   {
     code: '0',
     name: 'Victoria',
-    id: '0',
+    id: 0,
     isDisabled: false,
     type: 'AdministrativeArea',
   },
   {
     code: '1',
     name: 'Royal Oak',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'AdministrativeArea',
   },
@@ -74,42 +74,43 @@ export const AGENCIES = [
   {
     code: 'AEST',
     name: 'AEST',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'HTLH',
     name: 'HTLH',
-    id: '2',
+    id: 2,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'MOTI',
     name: 'MOTI',
-    id: '3',
+    id: 3,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'FLNR',
     name: 'FLNR',
-    id: '4',
+    id: 4,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'MAH',
     name: 'MAH',
-    id: '5',
+    id: 5,
     isDisabled: false,
     type: 'Agency',
   },
 ];
 
 export const mockUser: IUserDetails = {
-  id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  id: 1,
+  key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   displayName: 'User, Admin',
   firstName: 'Admin',
   lastName: 'User',
@@ -727,7 +728,7 @@ export const mockAccessRequest: IAccessRequest = {
       createdOn: '2021-05-07T00:37:06.2457315',
       updatedByName: 'unknown',
       updatedByEmail: 'unknown',
-      rowVersion: 'AAAAAAAAJyM=',
+      rowVersion: 1,
     },
   ],
   createdOn: '2021-05-07T00:37:06.2457303',

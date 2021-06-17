@@ -41,13 +41,13 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// get/set - Parcel classification Id.
         /// </summary>
         /// <value></value>
-        public int? ClassificationId { get; set; }
+        public long? ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - Parcel status Id.
         /// </summary>
         /// <value></value>
-        public int? StatusId { get; set; }
+        public long? StatusId { get; set; }
 
         /// <summary>
         /// get/set - The property address.
@@ -132,7 +132,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// get/set - An array of agencies.
         /// </summary>
         /// <value></value>
-        public int[] Agencies { get; set; }
+        public long[] Agencies { get; set; }
 
         #region Parcel Filters
         /// <summary>
@@ -159,13 +159,13 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// get/set - Building construction type Id.
         /// </summary>
         /// <value></value>
-        public int? ConstructionTypeId { get; set; }
+        public long? ConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - Building predominant use Id.
         /// </summary>
         /// <value></value>
-        public int? PredominateUseId { get; set; }
+        public long? PredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - Bare land only flag
@@ -177,7 +177,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// get/set - Parent Parcel Id.
         /// </summary>
         /// <value></value>
-        public int? ParcelId { get; set; }
+        public long? ParcelId { get; set; }
 
         /// <summary>
         /// get/set - Parent Property Type Id.
@@ -310,7 +310,7 @@ namespace Pims.Api.Areas.Property.Models.Search
             this.MaxAssessedValue = filter.GetDecimalNullValue(nameof(this.MaxAssessedValue));
             this.Name = filter.GetStringValue(nameof(this.Name));
 
-            this.Agencies = filter.GetIntArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
+            this.Agencies = filter.GetLongArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
 
             // Parcel filters.

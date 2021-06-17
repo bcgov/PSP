@@ -69,18 +69,18 @@ namespace Pims.Api.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// GET - Returns a role for the specified 'id' from the datasource.
+        /// GET - Returns a role for the specified 'key' from the datasource.
         /// </summary>
-        /// <param name="id">The unique 'id' for the role to return.</param>
+        /// <param name="key">The unique 'key' for the role to return.</param>
         /// <returns>The role requested.</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.RoleModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-role" })]
-        public IActionResult GetRole(Guid id)
+        public IActionResult GetRole(Guid key)
         {
-            var entity = _pimsAdminService.Role.Get(id);
+            var entity = _pimsAdminService.Role.Get(key);
             var role = _mapper.Map<Model.RoleModel>(entity);
             return new JsonResult(role);
         }
@@ -124,16 +124,16 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// PUT - Update the role in the datasource.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <param name="model">The role model.</param>
         /// <returns>The role updated.</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.RoleModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-role" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is required for route.")]
-        public IActionResult UpdateRole(Guid id, [FromBody] Model.RoleModel model)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        public IActionResult UpdateRole(Guid key, [FromBody] Model.RoleModel model)
         {
             var entity = _mapper.Map<Role>(model);
             _pimsAdminService.Role.Update(entity);
@@ -145,16 +145,16 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// DELETE - Delete the role from the datasource.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <param name="model">The role model.</param>
         /// <returns>The role who was deleted.</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.RoleModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-role" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is required for route.")]
-        public IActionResult DeleteRole(Guid id, [FromBody] Model.RoleModel model)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        public IActionResult DeleteRole(Guid key, [FromBody] Model.RoleModel model)
         {
             var entity = _mapper.Map<Role>(model);
             _pimsAdminService.Role.Remove(entity);

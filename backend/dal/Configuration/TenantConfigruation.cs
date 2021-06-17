@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,21 +13,24 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<Tenant> builder)
         {
-            builder.ToTable("Tenants");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).ValueGeneratedOnAdd();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Code).HasMaxLength(6);
-            builder.Property(m => m.Code).IsRequired();
+            builder.Property(m => m.Code).HasMaxLength(6).IsRequired()
+                .HasComment("Code value for entry");
 
-            builder.Property(m => m.Name).HasMaxLength(150);
-            builder.Property(m => m.Name).IsRequired();
+            builder.Property(m => m.Name).HasMaxLength(150).IsRequired()
+                .HasComment("Name of the entry for display purposes");
 
-            builder.Property(m => m.Description).HasMaxLength(500);
-            builder.Property(m => m.Settings).HasMaxLength(2000);
+            builder.Property(m => m.Description).HasMaxLength(500)
+                .HasComment("Description of the entry for display purposes");
+            builder.Property(m => m.Settings).HasMaxLength(2000)
+                .HasComment("Serialized JSON value for the configuration");
 
-            builder.HasIndex(m => new { m.Code }).IsUnique();
+            builder.HasIndex(m => new { m.Code }, "TENANT_CODE_TUC").IsUnique();
 
             base.BaseConfigure(builder);
         }

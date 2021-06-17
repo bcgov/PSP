@@ -3,8 +3,7 @@ namespace Pims.Api.Models
     /// <summary>
     /// CodeModel class, provides a model that represents a code code item.
     /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    public class CodeModel<TKey> : LookupModel<TKey>
+    public class CodeModel : LookupModel
     {
         #region Properties
         /// <summary>
@@ -16,7 +15,7 @@ namespace Pims.Api.Models
         /// <summary>
         /// get/set - The parent id of this item.
         /// </summary>
-        public int? ParentId { get; set; } // TODO: this isn't ideal as it will only currently be used by agency.
+        public long? ParentId { get; set; } // TODO: this isn't ideal as it will only currently be used by agency.
         #endregion
     }
 }

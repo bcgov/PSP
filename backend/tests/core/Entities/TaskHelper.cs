@@ -20,7 +20,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.Task CreateTask(int id, string name, Entity.ProjectStatus status = null, bool isOptional = false)
         {
-            return new Entity.Task(name, status, isOptional) { Id = id, RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.Task(name, status, isOptional) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.Task CreateTask(string name, Entity.ProjectStatus status = null, bool isOptional = false)
         {
-            return new Entity.Task(name, status, isOptional) { Id = 1, RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.Task(name, status, isOptional) { Id = 1, RowVersion = 1 };
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.Task>()
             {
-                new Entity.Task("Task 1", status) { Id = 1, RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Task("Task 2", status) { Id = 2, RowVersion = new byte[] { 12, 13, 14 } }
+                new Entity.Task("Task 1", status) { Id = 1, RowVersion = 1 },
+                new Entity.Task("Task 2", status) { Id = 2, RowVersion = 1 }
             };
         }
 
@@ -63,12 +63,12 @@ namespace Pims.Core.Test
             var task = new Entity.Task(name, status, isOptional)
             {
                 Id = id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
                 IsOptional = false,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
 
             if (status != null)

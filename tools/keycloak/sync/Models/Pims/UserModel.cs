@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pims.Tools.Keycloak.Sync.Models
+namespace Pims.Tools.Keycloak.Sync.Models.Pims
 {
 
     /// <summary>
@@ -12,9 +12,14 @@ namespace Pims.Tools.Keycloak.Sync.Models
     {
         #region Properties
         /// <summary>
-        /// get/set - The user's unique identifier.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the user.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - The user's unique identity.
@@ -91,7 +96,7 @@ namespace Pims.Tools.Keycloak.Sync.Models
         /// <param name="user"></param>
         public UserModel(Core.Keycloak.Models.UserModel user)
         {
-            this.Id = user.Id;
+            this.Key = user.Id;
             this.Username = user.Username;
             this.Position = user.Attributes?.ContainsKey("position") ?? false ? user.Attributes["position"].FirstOrDefault() : null;
             this.FirstName = user.FirstName;
@@ -101,8 +106,9 @@ namespace Pims.Tools.Keycloak.Sync.Models
             this.Email = user.Email;
             this.IsDisabled = !user.Enabled;
             this.EmailVerified = user.EmailVerified;
-            this.Agencies = user.Attributes?.ContainsKey("agencies") ?? false ? user.Attributes["agencies"].Select(a => {
-                if (Int32.TryParse(a, out int id))
+            this.Agencies = user.Attributes?.ContainsKey("agencies") ?? false ? user.Attributes["agencies"].Select(a =>
+            {
+                if (long.TryParse(a, out long id))
                     return new AgencyModel() { Id = id };
                 return null;
             }).Where(a => a != null).Distinct().ToList() : null;

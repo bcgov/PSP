@@ -6,9 +6,9 @@ namespace Pims.Api.Areas.Property.Models.Parcel
     public class PropertyModel : Model.BaseModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int PropertyTypeId { get; set; }
+        public long PropertyTypeId { get; set; }
 
         public IEnumerable<string> ProjectNumbers { get; set; }
 
@@ -20,13 +20,13 @@ namespace Pims.Api.Areas.Property.Models.Parcel
 
         public string Description { get; set; }
 
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         public string Classification { get; set; }
 
         public string EncumbranceReason { get; set; }
 
-        public int AgencyId { get; set; }
+        public long AgencyId { get; set; }
 
         public virtual string SubAgency { get; set; }
 

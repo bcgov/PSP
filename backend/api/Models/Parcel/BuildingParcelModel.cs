@@ -6,6 +6,6 @@ namespace Pims.Api.Models.Parcel
     {
         public override IEnumerable<ParcelBuildingModel> Buildings { get; set; } = new List<ParcelBuildingModel>();
         public string OwnershipNote { get; set; }
-        public int BuildingId { get; set; }
+        public long BuildingId { get; set; }
     }
 }

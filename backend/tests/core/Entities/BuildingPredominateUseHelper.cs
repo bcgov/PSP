@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.BuildingPredominateUse CreateBuildingPredominateUse(int id, string name)
         {
-            return new Entity.BuildingPredominateUse(id, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.BuildingPredominateUse(name) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.BuildingPredominateUse CreateBuildingPredominateUse(string name)
         {
-            return new Entity.BuildingPredominateUse(1, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.BuildingPredominateUse(name) { Id = 1, RowVersion = 1 };
         }
 
         /// <summary>
@@ -37,24 +37,24 @@ namespace Pims.Core.Test
         {
             return new List<Entity.BuildingPredominateUse>()
             {
-                new Entity.BuildingPredominateUse(0, "Religious") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(1, "Research & Development Facility") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(2, "Residential Detached") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(3, "Residential Multi") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(4, "Retail") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(5, "Senior Housing (Assisted Living / Skilled Nursing)") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(6, "Shelters / Orphanages / Children’s Homes / Halfway Homes") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(7, "Social Assistance Housing") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(8, "Storage") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(9, "Storage Vehicle") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(10, "Trailer Office") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(11, "Trailer Other") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(12, "Training Center") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(13, "Transportation (Airport / Rail / Bus station)") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(14, "University / Collect") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(15, "Warehouse") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(16, "Weigh Station") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.BuildingPredominateUse(17, "Marina") { RowVersion = new byte[] { 12, 13, 14 } }
+                new Entity.BuildingPredominateUse("Religious") { Id = 0, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Research & Development Facility") { Id = 1, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Residential Detached") { Id = 2, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Residential Multi") { Id = 3, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Retail") { Id = 4, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Senior Housing (Assisted Living / Skilled Nursing)") { Id = 5, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Shelters / Orphanages / Children’s Homes / Halfway Homes") { Id = 6, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Social Assistance Housing") { Id = 7, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Storage") { Id = 8, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Storage Vehicle") { Id = 9, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Trailer Office") { Id = 10, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Trailer Other") { Id = 11, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Training Center") { Id = 12, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Transportation (Airport / Rail / Bus station)") { Id = 13, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("University / Collect") { Id = 14, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Warehouse") { Id = 15, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Weigh Station") { Id = 16, RowVersion = 1 },
+                new Entity.BuildingPredominateUse("Marina") { Id = 17, RowVersion = 1 }
             };
         }
     }

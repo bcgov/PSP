@@ -8,7 +8,7 @@ namespace Pims.Dal.Services
     /// </summary>
     public interface IProjectNotificationService : IService
     {
-        ProjectStatusNotification Get(int id);
-        IEnumerable<ProjectStatusNotification> GetFor(int? fromStatusId, int? toStatusId);
+        ProjectStatusNotification Get(long id);
+        IEnumerable<ProjectStatusNotification> GetFor(long? fromStatusId, long? toStatusId);
     }
 }

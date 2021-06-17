@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 
-namespace Pims.Tools.Keycloak.Sync.Models
+namespace Pims.Tools.Keycloak.Sync.Models.Pims
 {
     /// <summary>
     /// PageModel class, provides a paging model.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class PageModel<T>
-        where T: class
+        where T : class
     {
         #region Properties
         /// <summary>
@@ -23,7 +23,7 @@ namespace Pims.Tools.Keycloak.Sync.Models
         /// <summary>
         /// get/set - The total number of items that match the filter.
         /// </summary>
-        public int Total { get; set;  }
+        public int Total { get; set; }
 
         /// <summary>
         /// get/set - The items on the page.

@@ -13,7 +13,7 @@ namespace Pims.Api.Models
 
         public string UpdatedByEmail { get; set; }
 
-        public string RowVersion { get; set; }
+        public long RowVersion { get; set; }
         #endregion
     }
 }

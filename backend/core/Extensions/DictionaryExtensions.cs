@@ -46,6 +46,42 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as an long.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static long GetLongValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, long defaultValue = 0)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && long.TryParse(dValue, out long value) ? value : defaultValue;
+        }
+
+        /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as an long.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public static long? GetLongNullValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, long? defaultValue = null)
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues dValue) && long.TryParse(dValue, out long value) ? value : defaultValue;
+        }
+
+        /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as an array of long.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static long[] GetLongArrayValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, string separator = ",")
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Split(separator).Select(v => { return long.TryParse(v, out long iv) ? (long?)iv : null; }).Where(v => v != null).Select(v => (long)v).ToArray() : Array.Empty<long>();
+        }
+
+        /// <summary>
         /// Get the value from the dictionary for the specified 'key' and return it as an float.
         /// </summary>
         /// <param name="dict"></param>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
 using Pims.Dal.Configuration;
@@ -27,7 +28,7 @@ namespace Pims.Dal
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Pims.Dal.Entities.Claim> Claims { get; set; }
+        public DbSet<Claim> Claims { get; set; }
 
         #region Properties
         public DbSet<Address> Addresses { get; set; }
@@ -85,10 +86,7 @@ namespace Pims.Dal
         /// Creates a new instance of a PimsContext class.
         /// </summary>
         /// <returns></returns>
-        public PimsContext()
-        {
-
-        }
+        public PimsContext() { }
 
         /// <summary>
         /// Creates a new instance of a PimsContext class.
@@ -116,6 +114,9 @@ namespace Pims.Dal
                 optionsBuilder.EnableSensitiveDataLogging();
             }
 
+            optionsBuilder.ReplaceService<IMigrationsSqlGenerator, PimsMigrationSqlGenerator>();
+            optionsBuilder.ReplaceService<IHistoryRepository, PimsHistoryRepository>();
+
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -126,6 +127,7 @@ namespace Pims.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyAllConfigurations(typeof(AddressConfiguration), this);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -137,23 +139,29 @@ namespace Pims.Dal
         {
             // get entries that are being Added or Updated
             var modifiedEntries = ChangeTracker.Entries()
-                    .Where(x => (x.State == EntityState.Added || x.State == EntityState.Modified));
+                    .Where(x => x.State.IsIn(EntityState.Added, EntityState.Modified, EntityState.Deleted));
 
-            var userId = _httpContextAccessor.HttpContext.User.GetUserId();
+            // Default values are provided because depending on the claim source it may or may not have these values.
+            var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "service";
+            var key = _httpContextAccessor.HttpContext.User.GetUserKey();
+            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? "keycloak";
             foreach (var entry in modifiedEntries)
             {
                 if (entry.Entity is BaseEntity entity)
                 {
+                    var date = DateTime.UtcNow;
                     if (entry.State == EntityState.Added)
                     {
-                        entity.CreatedById = userId;
-                        entity.CreatedOn = DateTime.UtcNow;
+                        entity.CreatedOn = date;
+                        entity.CreatedBy = username;
+                        entity.CreatedByKey = key;
+                        entity.CreatedByDirectory = directory;
                     }
-                    else if (entry.State != EntityState.Deleted)
-                    {
-                        entity.UpdatedById = userId;
-                        entity.UpdatedOn = DateTime.UtcNow;
-                    }
+                    entity.UpdatedOn = date;
+                    entity.UpdatedBy = username;
+                    entity.UpdatedByKey = key;
+                    entity.UpdatedByDirectory = directory;
+                    entity.RowVersion += 1;
                 }
             }
 
