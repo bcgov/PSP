@@ -21,6 +21,7 @@ namespace Pims.Dal.Test.Services.Admin
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
+    [Trait("area", "admin")]
     [Trait("group", "project")]
     [ExcludeFromCodeCoverage]
     public class ProjectRiskServiceTest
