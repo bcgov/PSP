@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Tools.Controllers;
@@ -96,6 +97,44 @@ namespace Pims.Api.Test.Controllers.Tools
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.ParcelInfoOrder>>(actionResult.Value);
             service.Verify(m => m.PostParcelInfoOrder(It.IsAny<string>()), Times.Once());
+        }
+
+        [Fact]
+        public async void PostParcelInfoOrderAsync_Success_ConvertPid()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
+
+            var response = new Model.OrderWrapper<Model.ParcelInfoOrder>(new Model.ParcelInfoOrder());
+
+            var service = helper.GetService<Mock<ILtsaService>>();
+            service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
+
+            // Act
+            var result = await controller.PostParcelInfoOrderAsync("123456789");
+
+            // Assert
+            JsonResult actionResult = Assert.IsType<JsonResult>(result);
+            var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.ParcelInfoOrder>>(actionResult.Value);
+            service.Verify(m => m.PostParcelInfoOrder(It.Is<string>(s => s.Equals("123-456-789"))), Times.Once());
+        }
+
+        [Fact]
+        public async void PostParcelInfoOrderAsync_MissingPidFailure()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
+
+            var response = new Model.OrderWrapper<Model.ParcelInfoOrder>(new Model.ParcelInfoOrder());
+
+            var service = helper.GetService<Mock<ILtsaService>>();
+            service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
+
+            // Act
+            await Assert.ThrowsAsync<BadHttpRequestException>(() => controller.PostParcelInfoOrderAsync(""));
+
         }
         #endregion
 

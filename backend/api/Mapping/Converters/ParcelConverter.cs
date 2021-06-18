@@ -1,3 +1,6 @@
+using System;
+using System.Text.RegularExpressions;
+
 namespace Pims.Api.Mapping.Converters
 {
     /// <summary>
@@ -14,6 +17,11 @@ namespace Pims.Api.Mapping.Converters
         {
             int.TryParse(pid?.Replace("-", "") ?? "", out int value);
             return value;
+        }
+
+        public static string ConvertPIDToDash(string pid)
+        {
+            return String.Join("-", Regex.Split(pid.Replace("-", "").PadLeft(9, '0'), @"(?<=\G.{3})(?!$)"));
         }
     }
 }

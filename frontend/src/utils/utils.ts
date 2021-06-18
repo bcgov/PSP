@@ -270,8 +270,8 @@ export const generateUtcNowDateTime = () =>
 /**
  * Returns true only if the passed mouse event occurred within the last 500ms, or the mouse event is null.
  */
-export const isMouseEventRecent = (e?: MouseEvent | null) =>
-  e === null || (!!e?.timeStamp && e.timeStamp >= (document?.timeline?.currentTime ?? 0) - 500);
+export const isMouseEventRecent = (timeStamp?: number) =>
+  !!timeStamp && timeStamp >= (document?.timeline?.currentTime ?? 0) - 500;
 
 /**
  * Convert the passed square meter value to hectares.

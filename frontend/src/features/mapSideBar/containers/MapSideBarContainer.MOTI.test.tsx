@@ -22,6 +22,6 @@ describe('MapSideBarContainer functionality', () => {
   });
   it('Displays MOTI sidebar data if MOTI is the tenant', () => {
     const { getByText } = renderContainer();
-    expect(getByText('Add to Inventory')).toBeInTheDocument();
+    expect(getByText('Add Titled Property to Inventory')).toBeInTheDocument();
   });
 });
