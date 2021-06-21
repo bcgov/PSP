@@ -164,11 +164,7 @@ const useParcelLayerData = ({
   const keycloak = useKeycloakWrapper();
 
   useDeepCompareEffect(() => {
-    if (
-      !!formikRef?.current &&
-      isMouseEventRecent(parcelLayerData?.e?.timeStamp) &&
-      !!parcelLayerData?.data
-    ) {
+    if (!!formikRef?.current && isMouseEventRecent(parcelLayerData?.e) && !!parcelLayerData?.data) {
       if (!parcelId) {
         setParcelFieldsFromLayerData(
           parcelLayerData,

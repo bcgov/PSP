@@ -51,12 +51,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
 
   const saveLatLng = (e: LeafletMouseEvent) => {
     if (!props.disabled) {
-      dispatch(
-        saveLeafletMouseEvent({
-          latlng: { lat: e.latlng.lat, lng: e.latlng.lng },
-          originalEvent: { timeStamp: e.originalEvent.timeStamp },
-        }),
-      );
+      dispatch(saveLeafletMouseEvent(e));
     }
   };
 

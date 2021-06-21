@@ -13,12 +13,14 @@ import { IParcel, IProperty } from 'interfaces';
 import { Map as LeafletMap } from 'leaflet';
 import React, { createRef } from 'react';
 import { Map as ReactLeafletMap, MapProps as LeafletMapProps, Marker } from 'react-leaflet';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+import { TenantProvider } from 'tenants';
 
 import Map from './Map';
 import { createPoints } from './mapUtils';
@@ -161,21 +163,25 @@ describe('MapProperties View', () => {
     disableMapFilterBar: boolean = false,
   ) => {
     return (
-      <TestCommonWrapper store={store} history={history}>
-        <Map
-          lat={48.43}
-          lng={-123.37}
-          zoom={14}
-          properties={properties}
-          selectedProperty={selectedProperty}
-          agencies={[]}
-          lotSizes={[]}
-          onMarkerClick={jest.fn()}
-          mapRef={mapRef}
-          administrativeAreas={[]}
-          disableMapFilterBar={disableMapFilterBar}
-        />
-      </TestCommonWrapper>
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <Map
+              lat={48.43}
+              lng={-123.37}
+              zoom={14}
+              properties={properties}
+              selectedProperty={selectedProperty}
+              agencies={[]}
+              lotSizes={[]}
+              onMarkerClick={jest.fn()}
+              mapRef={mapRef}
+              administrativeAreas={[]}
+              disableMapFilterBar={disableMapFilterBar}
+            />
+          </Router>
+        </Provider>
+      </TenantProvider>
     );
   };
 

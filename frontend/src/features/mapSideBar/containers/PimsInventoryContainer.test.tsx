@@ -12,8 +12,11 @@ import { createMemoryHistory } from 'history';
 import { IParcel } from 'interfaces';
 import * as _ from 'lodash';
 import { mockBuildingWithAssociatedLand, mockDetails, mockParcel } from 'mocks/filterDataMock';
+import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { Route, Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import VisibilitySensor from 'react-visibility-sensor';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -21,8 +24,7 @@ import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { propertiesSlice } from 'store/slices/properties';
-import { defaultTenant } from 'tenants';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+import { defaultTenant, TenantProvider } from 'tenants';
 
 import PimsInventoryContainer from './PimsInventoryContainer';
 
@@ -104,11 +106,23 @@ const history = createMemoryHistory({
 
 const renderContainer = ({ store }: any) =>
   render(
-    <TestCommonWrapper store={store ?? getStore()} history={history}>
-      <Route path="/mapView/:id?">
-        <PimsInventoryContainer />
-      </Route>
-    </TestCommonWrapper>,
+    <TenantProvider>
+      <Provider store={store ?? getStore()}>
+        <Router history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          <Route path="/mapView/:id?">
+            <PimsInventoryContainer />
+          </Route>
+        </Router>
+      </Provider>
+    </TenantProvider>,
   );
 
 describe('Parcel Detail PimsInventoryContainer', () => {
