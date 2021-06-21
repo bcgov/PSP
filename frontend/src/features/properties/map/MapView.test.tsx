@@ -11,12 +11,15 @@ import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { IParcel, IProperty } from 'interfaces';
 import { noop } from 'lodash';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
-import TestCommonWrapper from 'utils/TestCommonWrapper';
+import { TenantProvider } from 'tenants';
 
 import MapView from './MapView';
 
@@ -130,7 +133,7 @@ const store = mockStore({
 });
 
 let history = createMemoryHistory();
-describe('MapView', () => {
+describe('MapProperties View', () => {
   const onMarkerClick = jest.fn();
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
@@ -165,14 +168,18 @@ describe('MapView', () => {
   const getMap = () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     return (
-      <TestCommonWrapper store={store} history={history}>
-        <MapView
-          disableMapFilterBar={false}
-          disabled={false}
-          showParcelBoundaries={true}
-          onMarkerPopupClosed={noop}
-        />
-      </TestCommonWrapper>
+      <TenantProvider>
+        <Provider store={store}>
+          <Router history={history}>
+            <MapView
+              disableMapFilterBar={false}
+              disabled={false}
+              showParcelBoundaries={true}
+              onMarkerPopupClosed={noop}
+            />
+          </Router>
+        </Provider>
+      </TenantProvider>
     );
   };
 

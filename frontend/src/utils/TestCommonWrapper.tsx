@@ -1,11 +1,12 @@
 import { useKeycloak } from '@react-keycloak/web';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { MemoryHistory } from 'history';
 import { IRole } from 'interfaces';
 import { IAgency } from 'interfaces/agency';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import { ThemeProvider } from 'styled-components';
-import { TenantConsumer, TenantProvider } from 'tenants';
+import { TenantProvider } from 'tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';
@@ -31,38 +32,32 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
   agencies,
   history,
 }) => {
-  if (!!roles || !!agencies) {
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: {
-        userInfo: {
-          agencies: agencies ?? [1],
-          roles: roles ?? [],
-        },
-        subject: 'test',
+  (useKeycloak as jest.Mock).mockReturnValue({
+    keycloak: {
+      userInfo: {
+        agencies: agencies ?? [1],
+        roles: roles ?? [],
       },
-    });
-  }
+      subject: 'test',
+    },
+  });
+  const mockAxios = new MockAdapter(axios);
+  mockAxios.onAny().reply(200);
   return (
     <TenantProvider>
-      <TenantConsumer>
-        {({ tenant }) => (
-          <TestProviderWrapper store={store}>
-            <TestRouterWrapper history={history}>
-              <ThemeProvider theme={{ tenant, css: {} }}>
-                <ToastContainer
-                  autoClose={5000}
-                  hideProgressBar
-                  newestOnTop={false}
-                  closeOnClick={false}
-                  rtl={false}
-                  pauseOnFocusLoss={false}
-                />
-                {children}
-              </ThemeProvider>
-            </TestRouterWrapper>
-          </TestProviderWrapper>
-        )}
-      </TenantConsumer>
+      <TestProviderWrapper store={store}>
+        <TestRouterWrapper history={history}>
+          <ToastContainer
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
+          {children}
+        </TestRouterWrapper>
+      </TestProviderWrapper>
     </TenantProvider>
   );
 };

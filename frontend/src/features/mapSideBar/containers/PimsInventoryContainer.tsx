@@ -10,7 +10,7 @@ import { FormikValues, getIn, setIn } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IBuilding, IParcel } from 'interfaces';
-import { LatLngLiteral } from 'leaflet';
+import { LatLng } from 'leaflet';
 import _, { cloneDeep, noop } from 'lodash';
 import * as React from 'react';
 import { useState } from 'react';
@@ -226,7 +226,7 @@ const PimsInventoryContainer: React.FunctionComponent = () => {
     return await fetchPimsOrLayerParcel({ pid }, noop, nameSpace, noop);
   };
 
-  const droppedMarkerSearch = (nameSpace: string, latLng?: LatLngLiteral, isParcel?: boolean) => {
+  const droppedMarkerSearch = (nameSpace: string, latLng?: LatLng, isParcel?: boolean) => {
     if (!latLng) {
       return;
     }
@@ -259,7 +259,7 @@ const PimsInventoryContainer: React.FunctionComponent = () => {
     });
   };
 
-  const parcelLayerSearch = (properties: any, latLng?: LatLngLiteral) => {
+  const parcelLayerSearch = (properties: any, latLng?: LatLng) => {
     const response = properties.PID
       ? parcelLayerService.findByPid(properties.PID)
       : parcelLayerService.findByPin(properties.PIN);
@@ -286,7 +286,7 @@ const PimsInventoryContainer: React.FunctionComponent = () => {
     if (
       movingPinNameSpace !== undefined &&
       !!formikRef?.current &&
-      isMouseEventRecent(leafletMouseEvent?.originalEvent?.timeStamp)
+      isMouseEventRecent(leafletMouseEvent?.originalEvent)
     ) {
       let nameSpace = (movingPinNameSpace?.length ?? 0) > 0 ? `${movingPinNameSpace}.` : '';
       formikRef.current.setFieldValue(`${nameSpace}latitude`, leafletMouseEvent?.latlng?.lat || 0);
