@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         public async Task<IActionResult> FindTitleSummariesAsync(string pid)
         {
             var result = await _ltsaService.GetTitleSummariesAsync(ParcelConverter.ConvertPID(pid));
-            return new JsonResult(result);
+            return new JsonResult(result.TitleSummaries);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         public async Task<IActionResult> PostTitleOrderAsync(string titleNumber, string landTitleDistrictCode)
         {
             var result = await _ltsaService.PostTitleOrder(titleNumber, landTitleDistrictCode);
-            return new JsonResult(result);
+            return new JsonResult(result?.Order);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Pims.Api.Areas.Tools.Controllers
             if (!string.IsNullOrEmpty(pid))
             {
                 var result = await _ltsaService.PostParcelInfoOrder(ParcelConverter.ConvertPIDToDash(pid));
-                return new JsonResult(result);
+                return new JsonResult(result?.Order);
             }
             throw new BadHttpRequestException("The pid of the desired property must be specified");
         }
@@ -113,7 +113,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         public async Task<IActionResult> PostSpcpOrderAsync(string strataPlanNumber)
         {
             var result = await _ltsaService.PostSpcpOrder(strataPlanNumber);
-            return new JsonResult(result);
+            return new JsonResult(result?.Order);
         }
 
         /// <summary>

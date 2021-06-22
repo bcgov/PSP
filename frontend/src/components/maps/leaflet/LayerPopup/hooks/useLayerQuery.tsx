@@ -2,10 +2,10 @@ import axios, { AxiosError } from 'axios';
 import { layerData } from 'constants/toasts';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
+import { useMemo } from 'react';
 import { Dispatch, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
-import { useAppSelector } from 'store/hooks';
 import { logError } from 'store/slices/network/networkSlice';
 import parcelLayerDataSlice, {
   saveParcelLayerData,
@@ -128,7 +128,6 @@ const wfsAxios = () => {
  * @param geometry the name of the geometry in the feature collection
  */
 export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUserLayerQuery => {
-  const parcelLayerData = useAppSelector(state => state.parcelLayerData?.parcelLayerData);
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
@@ -168,33 +167,32 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
     async (pid: string): Promise<FeatureCollection> => {
       //Do not make a request if we our currently cached response matches the requested pid.
       const formattedPid = pid.replace(/-/g, '');
-      const data: FeatureCollection =
-        parcelLayerData?.data?.PID === formattedPid ||
-        parcelLayerData?.data?.PID_NUMBER.toString() === formattedPid
-          ? undefined
-          : (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)).data;
+      const data: FeatureCollection = (
+        await wfsAxios().get(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)
+      ).data;
       return data;
     },
-    [baseUrl, parcelLayerData],
+    [baseUrl],
   );
 
   const findByPin = useCallback(
     async (pin: string): Promise<FeatureCollection> => {
       //Do not make a request if we our currently cached response matches the requested pid.
-      const data: FeatureCollection =
-        parcelLayerData?.data?.PIN === pin
-          ? undefined
-          : (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PIN=${pin}`)).data;
+      const data: FeatureCollection = (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PIN=${pin}`))
+        .data;
       return data;
     },
-    [baseUrl, parcelLayerData],
+    [baseUrl],
   );
 
-  return {
-    findOneWhereContains,
-    findByPid,
-    findByPin,
-    findByAdministrative,
-    handleParcelDataLayerResponse,
-  };
+  return useMemo(
+    () => ({
+      findOneWhereContains,
+      findByPid,
+      findByPin,
+      findByAdministrative,
+      handleParcelDataLayerResponse,
+    }),
+    [findByAdministrative, findByPid, findByPin, findOneWhereContains],
+  );
 };

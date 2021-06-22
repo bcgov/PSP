@@ -64,7 +64,7 @@ const useGeocoder = ({ formikRef, fetchPimsOrLayerParcel }: IUseGeocoderProps) =
       const administrativeArea = data.administrativeArea
         ? lookupCodes.find(code => {
             return (
-              code.type === API.AMINISTRATIVE_AREA_CODE_SET_NAME &&
+              code.type === API.ADMINISTRATIVE_AREA_CODE_SET_NAME &&
               code.name === data.administrativeArea
             );
           })

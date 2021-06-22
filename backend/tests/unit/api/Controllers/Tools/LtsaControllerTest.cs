@@ -49,7 +49,7 @@ namespace Pims.Api.Test.Controllers.Tools
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<Model.TitleSummariesResponse>(actionResult.Value);
+            var results = Assert.IsAssignableFrom<ICollection<Model.TitleSummary>>(actionResult.Value);
             service.Verify(m => m.GetTitleSummariesAsync(It.IsAny<Int32>()), Times.Once());
         }
         #endregion
@@ -72,7 +72,7 @@ namespace Pims.Api.Test.Controllers.Tools
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.TitleOrder>>(actionResult.Value);
+            var results = Assert.IsAssignableFrom<Model.TitleOrder>(actionResult.Value);
             service.Verify(m => m.PostTitleOrder(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
         }
         #endregion
@@ -95,7 +95,7 @@ namespace Pims.Api.Test.Controllers.Tools
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.ParcelInfoOrder>>(actionResult.Value);
+            var results = Assert.IsAssignableFrom<Model.ParcelInfoOrder>(actionResult.Value);
             service.Verify(m => m.PostParcelInfoOrder(It.IsAny<string>()), Times.Once());
         }
 
@@ -116,7 +116,7 @@ namespace Pims.Api.Test.Controllers.Tools
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.ParcelInfoOrder>>(actionResult.Value);
+            var results = Assert.IsAssignableFrom<Model.ParcelInfoOrder>(actionResult.Value);
             service.Verify(m => m.PostParcelInfoOrder(It.Is<string>(s => s.Equals("123-456-789"))), Times.Once());
         }
 
@@ -156,7 +156,7 @@ namespace Pims.Api.Test.Controllers.Tools
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
-            var results = Assert.IsAssignableFrom<Model.OrderWrapper<Model.SpcpOrder>>(actionResult.Value);
+            var results = Assert.IsAssignableFrom<Model.SpcpOrder>(actionResult.Value);
             service.Verify(m => m.PostSpcpOrder(It.IsAny<string>()), Times.Once());
         }
         #endregion

@@ -92,7 +92,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onChange, defaultFilter }) => {
   );
   const lookupCodes = useLookupCodeHelpers();
   const adminAreas = lookupCodes
-    .getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME)
+    .getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME)
     .map(c => mapLookupCode(c));
   const [clear, setClear] = useState(false);
 

@@ -3,10 +3,11 @@ import { IGeoSearchParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
 import { IApiProperty } from 'features/projects/common';
+import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { IBuilding, IParcel } from 'interfaces';
 import * as _ from 'lodash';
 import queryString from 'query-string';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { store } from 'store/store';
@@ -47,7 +48,7 @@ export interface PimsAPI extends AxiosInstance {
 
 export const useApi = (): PimsAPI => {
   const dispatch = useDispatch();
-  const axios = CustomAxios() as PimsAPI;
+  const axios = useMemo(() => CustomAxios() as PimsAPI, []);
 
   axios.interceptors.request.use(
     config => {
@@ -211,5 +212,5 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  return axios;
+  return useDeepCompareMemo(() => axios, [axios]);
 };

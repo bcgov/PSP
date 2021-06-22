@@ -19,6 +19,8 @@ const SearchMarkerButton = styled.button`
 `;
 
 const SearchForm = styled(Row)`
+  padding-bottom: 20px;
+  padding-left: 30px;
   .form-row {
     margin: 0.5rem;
     justify-content: flex-end;
@@ -34,18 +36,24 @@ const SearchForm = styled(Row)`
   }
   .GeocoderAutoComplete {
     width: auto;
+    .suggestionList {
+      position: absolute;
+      top: 40px;
+      left: 10px;
+    }
   }
 `;
 
 const SearchHeader = styled.h5`
   text-align: left;
+  font-size: 22px;
 `;
 
 interface ISearchFormProps {
   /** used for determining nameSpace of field */
   nameSpace?: string;
   /** handle the population of Geocoder information */
-  handleGeocoderChanges: (data: IGeocoderResponse, nameSpace?: string) => Promise<void>;
+  handleGeocoderChange: (data: IGeocoderResponse, nameSpace?: string) => Promise<void>;
   /** help set the cursor type when click the add marker button */
   setMovingPinNameSpace: (nameSpace?: string) => void;
   /** handle the pid formatting on change */
@@ -61,9 +69,9 @@ interface IPropertySearchFields {
  * Search component which displays a vertically stacked set of search fields, used to find matching parcels within pims or the parcel layer.
  * @param {ISearchFormProps} param0
  */
-const PropertySearchForm = ({
+export const PropertySearchForm = ({
   nameSpace,
-  handleGeocoderChanges,
+  handleGeocoderChange,
   setMovingPinNameSpace,
   handlePidChange,
   ...props
@@ -129,7 +137,7 @@ const PropertySearchForm = ({
                 disabled={!geocoderResponse}
                 onClick={(e: any) => {
                   e.preventDefault();
-                  geocoderResponse && handleGeocoderChanges(geocoderResponse, nameSpace);
+                  geocoderResponse && handleGeocoderChange(geocoderResponse, nameSpace);
                 }}
               />
             </Form.Row>
@@ -138,10 +146,7 @@ const PropertySearchForm = ({
             <h5>OR</h5>
           </Col>
           <Col md={5} className="instruction">
-            <p>
-              Click on the pin, and then click your desired location on the map to pull the parcel
-              details.
-            </p>
+            <p>Locate the property on the map.</p>
             <Row>
               <Col className="marker-svg">
                 <ClickAwayListener

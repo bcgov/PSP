@@ -1,10 +1,9 @@
-import { AMINISTRATIVE_AREA_CODE_SET_NAME } from 'constants/API';
+import { ADMINISTRATIVE_AREA_CODE_SET_NAME } from 'constants/API';
 import { getInitialValues } from 'features/mapSideBar/SidebarContents/LandForm';
 import { FormikValues, getIn, setIn } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import _ from 'lodash';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -14,7 +13,7 @@ import {
   clearParcelLayerData,
   IParcelLayerData,
 } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
-import { isMouseEventRecent, squareMetersToHectares } from 'utils';
+import { getAdminAreaFromLayerData, isMouseEventRecent, squareMetersToHectares } from 'utils';
 
 import { pidFormatter } from '../components/forms/subforms/PidPinForm';
 
@@ -123,32 +122,6 @@ const setParcelFieldsFromLayerData = (
 };
 
 /**
- * Using the administrative areas code set, find the matching municipality returned by the parcel layer, if present.
- * @param administrativeAreas the full list from the administrative areas code set.
- * @param layerMunicipality the municipality returned by the layer.
- */
-const getAdminAreaFromLayerData = (
-  administrativeAreas: ILookupCode[],
-  layerMunicipality: string,
-) => {
-  let administrativeArea = _.find(administrativeAreas, { name: layerMunicipality });
-  if (administrativeArea) {
-    return administrativeArea;
-  }
-  if (!!layerMunicipality?.length) {
-    const splitLayerMunicipality = layerMunicipality.split(',');
-    if (splitLayerMunicipality.length === 2) {
-      const formattedLayerMunicipality = `${splitLayerMunicipality[1].trim()} ${splitLayerMunicipality[0].trim()}`;
-      let match = _.find(administrativeAreas, { name: formattedLayerMunicipality });
-      if (!match) {
-        match = _.find(administrativeAreas, { name: splitLayerMunicipality[0].trim() });
-      }
-      return match;
-    }
-  }
-};
-
-/**
  * hook providing methods to update the parcel detail form using parcel layer data.
  */
 const useParcelLayerData = ({
@@ -173,7 +146,7 @@ const useParcelLayerData = ({
         setParcelFieldsFromLayerData(
           parcelLayerData,
           formikRef,
-          getByType(AMINISTRATIVE_AREA_CODE_SET_NAME),
+          getByType(ADMINISTRATIVE_AREA_CODE_SET_NAME),
           nameSpace ?? '',
           agencyId ?? keycloak.agencyId,
         );
@@ -191,7 +164,7 @@ const useParcelLayerData = ({
       setParcelFieldsFromLayerData(
         parcelLayerData,
         formikRef,
-        getByType(AMINISTRATIVE_AREA_CODE_SET_NAME),
+        getByType(ADMINISTRATIVE_AREA_CODE_SET_NAME),
         nameSpace ?? '',
         agencyId ?? keycloak.agencyId,
       ),

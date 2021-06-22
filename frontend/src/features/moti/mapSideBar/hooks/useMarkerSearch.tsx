@@ -37,12 +37,14 @@ export const useMarkerSearch = (
   //Add a pin to the map where the user has clicked.
   useDeepCompareEffect(() => {
     //If we click on the map, create a new pin at the click location.
-    if (!!formikRef?.current && isMouseEventRecent(leafletMouseEvent?.originalEvent?.timeStamp)) {
-      formikRef.current.setFieldValue(`latitude`, leafletMouseEvent?.latlng?.lat || 0);
-      formikRef.current.setFieldValue(`longitude`, leafletMouseEvent?.latlng?.lng || 0);
+    if (
+      movingPinNameSpace !== undefined &&
+      isMouseEventRecent(leafletMouseEvent?.originalEvent?.timeStamp)
+    ) {
+      setMovingPinNameSpace(undefined);
       latLngSeach(leafletMouseEvent?.latlng);
     }
-  }, [leafletMouseEvent, showSideBar]);
+  }, [leafletMouseEvent, showSideBar, movingPinNameSpace]);
 
   return { movingPinNameSpace, setMovingPinNameSpace };
 };

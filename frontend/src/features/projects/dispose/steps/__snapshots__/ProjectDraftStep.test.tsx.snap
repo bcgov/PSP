@@ -73,6 +73,7 @@ exports[`Project Draft Step renders correctly 1`] = `
             for="input-name"
           >
             Name
+             
           </label>
           <input
             class="col-md-5 form-control"
@@ -95,6 +96,7 @@ exports[`Project Draft Step renders correctly 1`] = `
             for="input-description"
           >
             Description
+             
           </label>
           <textarea
             class="col-md-auto form-control"

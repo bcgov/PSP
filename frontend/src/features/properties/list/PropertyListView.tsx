@@ -255,7 +255,7 @@ const PropertyListView: React.FC = () => {
   const [dirtyRows, setDirtyRows] = useState<IChangedRow[]>([]);
   const keycloak = useKeycloakWrapper();
   const municipalities = useMemo(
-    () => lookupCodes.getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME),
+    () => lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME),
     [lookupCodes],
   );
   const agencies = useMemo(() => lookupCodes.getByType(API.AGENCY_CODE_SET_NAME), [lookupCodes]);
@@ -267,7 +267,7 @@ const PropertyListView: React.FC = () => {
     lookupCodes,
   ]);
   const administrativeAreas = useMemo(
-    () => lookupCodes.getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME),
+    () => lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME),
     [lookupCodes],
   );
 

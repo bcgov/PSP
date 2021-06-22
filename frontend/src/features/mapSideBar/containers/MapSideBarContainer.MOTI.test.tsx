@@ -5,7 +5,7 @@ import MapSideBarContainer from './MapSideBarContainer';
 
 const renderContainer = () =>
   render(
-    <TestCommonWrapper>
+    <TestCommonWrapper agencies={[1] as any} store={{ lookupCode: { lookupCodes: [] } }}>
       <MapSideBarContainer />
     </TestCommonWrapper>,
   );

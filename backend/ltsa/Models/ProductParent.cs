@@ -12,11 +12,16 @@ using System.Runtime.Serialization;
 
 namespace Pims.Ltsa.Models
 {
+    public interface IProduct<T>
+    {
+        T FieldedData { get; set; }
+    }
+
     /// <summary>
     /// ProductParent
     /// </summary>
     [DataContract]
-    public partial class ProductParent
+    public abstract partial class ProductParent<T> where T : IFieldedData
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductParent" /> class.
@@ -33,5 +38,7 @@ namespace Pims.Ltsa.Models
         /// <value>URI to retrieve the ordered product PDF.  # It is suggested that third party software confirms the order status is completed before retrieving the ordered product via this URI.  The system will return a 404 (Not Found) response if the ordered product PDF is not yet available. </value>
         [DataMember(Name = "href", EmitDefaultValue = false)]
         public string Href { get; set; }
+
+        public abstract T FieldedData { get; set; }
     }
 }

@@ -7,13 +7,19 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
+import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { createMemoryHistory } from 'history';
 import { useApiLtsa } from 'hooks/pims-api/useApiLtsa';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
+import { mockParcelLayerResponse } from 'mocks/filterDataMock';
 import { Route } from 'react-router-dom';
 import VisibilitySensor from 'react-visibility-sensor';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { propertiesSlice } from 'store/slices/properties';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 import { fillInput } from 'utils/testUtils';
 
@@ -36,8 +42,10 @@ const history = createMemoryHistory({
 
 jest.mock('hooks/pims-api/useApiLtsa');
 const getParcelInfo = jest.fn();
+const getTitleSummaries = jest.fn();
 (useApiLtsa as jest.Mock).mockReturnValue({
   getParcelInfo,
+  getTitleSummaries,
 });
 
 const findOneWhereContains = jest.fn();
@@ -48,9 +56,31 @@ jest.mock('components/maps/leaflet/LayerPopup');
   findByPid,
 });
 
+const mockStore = configureMockStore([thunk]);
+const defaultStore = mockStore({
+  [leafletMouseSlice.name]: {
+    mapClickEvent: {
+      originalEvent: { timeStamp: 1 },
+      latlng: { lat: 1, lng: 2 },
+    },
+  },
+  [lookupCodesSlice.name]: {
+    lookupCodes: [
+      { name: 'BC', code: 'BC', id: '1', isDisabled: false, type: PROVINCE_CODE_SET_NAME },
+      {
+        name: 'Victoria',
+        id: '1',
+        isDisabled: false,
+        type: ADMINISTRATIVE_AREA_CODE_SET_NAME,
+      },
+    ],
+  },
+  [propertiesSlice.name]: { parcels: [], draftParcels: [] },
+});
+
 const renderContainer = ({ store }: any) =>
   render(
-    <TestCommonWrapper history={history} store={store}>
+    <TestCommonWrapper history={history} store={store ?? defaultStore} agencies={[1 as any]}>
       <Route path="/mapview/:id?">
         <MotiInventoryContainer />
       </Route>
@@ -111,15 +141,30 @@ describe('MotiInventoryContainer functionality', () => {
       jest.clearAllMocks();
     });
     it('searches by pid', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
       const { container, getByTestId, findByTestId } = renderContainer({});
 
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      await wait(() => {
-        expect(findByPid).toHaveBeenCalledWith('123-456-789');
-        expect(getParcelInfo).toHaveBeenCalledWith('123-456-789');
-      });
+      const cityInput = await screen.findByDisplayValue('Victoria');
+
+      expect(findByPid).toHaveBeenCalledWith('123-456-789');
+      expect(getParcelInfo).toHaveBeenCalledWith('123456789');
+      expect(findOneWhereContains).toHaveBeenCalled();
+      expect(cityInput).toBeInTheDocument();
+    });
+
+    it('returns an error if pid not found', async () => {
+      const { container, getByTestId, findByTestId } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const toast = await screen.findByText(
+        'Unable to find parcel identifier (PID) for the searched location. A property must have a PID to be added to PSP, ensure this property has a PID.',
+      );
+      expect(toast).toBeInTheDocument();
     });
 
     it('does not search when no pid is provided', async () => {
@@ -134,28 +179,78 @@ describe('MotiInventoryContainer functionality', () => {
     });
 
     it('displays a warning when the pid cannot be found in ltsa', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
       getParcelInfo.mockRejectedValueOnce({ response: { status: 404 } });
       const { getByTestId, container, findByText, findByTestId } = renderContainer({});
 
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      const toast = await findByText(
-        `PID: 123-456-789 not found in Land Title Direct Search Service.`,
-      );
+      const toast = await findByText(`PID: 123-456-789 not found in Title Direct Search Service.`);
       expect(toast).toBeInTheDocument();
     });
 
     it('displays an error when the ltsa request fails', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
       getParcelInfo.mockRejectedValueOnce({ response: { status: 500 } });
       const { getByTestId, container, findByText, findByTestId } = renderContainer({});
 
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      const toast = await findByText(
-        `Failed to load parcel info from Land Title Direct Search Service.`,
-      );
+      const toast = await findByText(`Request failed from Title Direct Search Service.`);
+      expect(toast).toBeInTheDocument();
+    });
+
+    it('displays the ltsa error from the API if specified', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      getParcelInfo.mockRejectedValueOnce({
+        response: { status: 500, data: { details: 'test error' } },
+      });
+      const { getByTestId, container, findByText, findByTestId } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const toast = await findByText('test error');
+      expect(toast).toBeInTheDocument();
+    });
+
+    it('displays a warning when the pid cannot be found in the ltsa title summary service', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      getTitleSummaries.mockRejectedValueOnce({ response: { status: 404 } });
+      const { getByTestId, container, findByText, findByTestId } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const toast = await findByText(`PID: 123-456-789 not found in Title Direct Search Service.`);
+      expect(toast).toBeInTheDocument();
+    });
+
+    it('displays an error when the ltsa title summary request fails', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      getTitleSummaries.mockRejectedValueOnce({ response: { status: 500 } });
+      const { getByTestId, container, findByText, findByTestId } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const toast = await findByText('Request failed from Title Direct Search Service.');
+      expect(toast).toBeInTheDocument();
+    });
+
+    it('displays the ltsa error from the title summary API if specified', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      getTitleSummaries.mockRejectedValueOnce({
+        response: { status: 500, data: { details: 'test error' } },
+      });
+      const { getByTestId, container, findByText, findByTestId } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const toast = await findByText('test error');
       expect(toast).toBeInTheDocument();
     });
 
@@ -166,19 +261,17 @@ describe('MotiInventoryContainer functionality', () => {
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      const toast = await findByText('Failed to load parcel info from parcel layer');
+      const toast = await findByText(
+        'Property search failed. Please check your search criteria and try again. If this error persists, contact the Help Desk.',
+      );
       expect(toast).toBeInTheDocument();
     });
 
-    it('does not search when no pid is provided', async () => {
+    it('address button is disabled by default', async () => {
       const { findByTestId } = renderContainer({});
 
-      const searchButton = await findByTestId('pid-search-button');
-      fireEvent.click(searchButton);
-      await wait(() => {
-        expect(findByPid).not.toHaveBeenCalled();
-        expect(getParcelInfo).not.toHaveBeenCalled();
-      });
+      const searchButton = await findByTestId('address-search-button');
+      expect(searchButton).toBeDisabled();
     });
     it('searches by address', async () => {
       findOneWhereContains.mockResolvedValueOnce({
@@ -229,7 +322,7 @@ describe('MotiInventoryContainer functionality', () => {
       });
 
       const toast = await findByText(
-        'Unable to perform search, property missing latitude/longitude',
+        'Unable to find parcel identifier (PID) for the searched location. A property must have a PID to be added to PSP, ensure this property has a PID.',
       );
       expect(toast).toBeInTheDocument();
     });
@@ -253,7 +346,9 @@ describe('MotiInventoryContainer functionality', () => {
         addressSearchButton.click();
       });
 
-      const toast = await findByText('Failed to load parcel info from parcel layer');
+      const toast = await findByText(
+        'Property search failed. Please check your search criteria and try again. If this error persists, contact the Help Desk.',
+      );
       expect(toast).toBeInTheDocument();
     });
   });
@@ -269,6 +364,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       renderContainer({
         store: {
+          ...(defaultStore.getState() as any),
           [leafletMouseSlice.name]: {
             mapClickEvent: {
               originalEvent: { timeStamp: 1 },
@@ -285,6 +381,70 @@ describe('MotiInventoryContainer functionality', () => {
         expect(findOneWhereContains).toHaveBeenCalledWith({ lat: 1, lng: 2 });
         expect(getParcelInfo).toHaveBeenCalledWith('987-654-321');
       });
+    });
+  });
+  describe('form functionality', () => {
+    beforeEach(() => {
+      history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
+      jest.clearAllMocks();
+    });
+    it('the cancel and submit buttons are disabled by default', async () => {
+      const { findByText } = renderContainer({});
+
+      const cancelButton = await findByText('Cancel');
+      const submitButton = await findByText('Save');
+
+      expect(cancelButton).toBeDisabled();
+      expect(submitButton).toBeDisabled();
+    });
+
+    it('the cancel and submit buttons are enabled when a valid property is found', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      const { container, getByTestId, findByTestId, findByText } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const cancelButton = await findByText('Cancel');
+      const submitButton = await findByText('Save');
+
+      expect(cancelButton).not.toBeDisabled();
+      expect(submitButton).not.toBeDisabled();
+    });
+
+    it('the submit button displays a toast message', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      const { container, getByTestId, findByTestId, findByText } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const submitButton = await findByText('Save');
+      expect(submitButton).not.toBeDisabled();
+      fireEvent.click(submitButton);
+
+      const message = await findByText('Save Property Placeholder message');
+      expect(message).toBeInTheDocument();
+    });
+
+    it('the tabs are disabled by default', async () => {
+      const { findByText } = renderContainer({});
+
+      const propertyTab = await findByText('Property');
+
+      expect(propertyTab).toHaveClass('disabled');
+    });
+
+    it('the tabs are enabled when a valid property is found', async () => {
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+      const { container, getByTestId, findByTestId, findByText } = renderContainer({});
+
+      await findByTestId('pid-search-button');
+      await fillInput(container, 'searchPid', '123-456-789');
+      fireEvent.click(getByTestId('pid-search-button'));
+      const propertyTab = await findByText('Property');
+
+      expect(propertyTab).not.toHaveClass('disabled');
     });
   });
 });

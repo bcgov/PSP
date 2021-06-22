@@ -351,19 +351,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             {
                 AccessToken = "test"
             };
-            var response = new OrderWrapper<TitleOrder>(new TitleOrder());
+            var response = new OrderWrapper<OrderParent<Title>>(new TitleOrder());
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.PostTitleOrder("titleNumber", "VA");
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<OrderWrapper<TitleOrder>>(result);
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            Assert.IsAssignableFrom<OrderWrapper<OrderParent<Title>>>(result);
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
             result.Order.Should().Be(response.Order);
         }
@@ -382,21 +382,21 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             {
                 AccessToken = "test"
             };
-            var orderResponse = new OrderWrapper<TitleOrder>(new TitleOrder() { Status = OrderParent.StatusEnum.Processing, OrderId = "1" });
-            var orderIdResponse = new OrderWrapper<TitleOrder>(new TitleOrder() { Status = OrderParent.StatusEnum.Completed, OrderId = "1" });
+            var orderResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Processing, OrderId = "1" });
+            var orderIdResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Completed, OrderId = "1" });
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(orderResponse);
-            client.Setup(m => m.SendAsync<OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(orderIdResponse);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(orderResponse);
+            client.Setup(m => m.SendAsync<OrderWrapper<OrderParent<Title>>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(orderIdResponse);
 
             // Act
             var result = await service.PostTitleOrder("titleNumber", "VA");
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<OrderWrapper<TitleOrder>>(result);
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            Assert.IsAssignableFrom<OrderWrapper<OrderParent<Title>>>(result);
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
             result.Order.Should().Be(orderIdResponse.Order);
         }
@@ -415,20 +415,20 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             {
                 AccessToken = "test"
             };
-            var response = new OrderWrapper<TitleOrder>(new TitleOrder() { Status = OrderParent.StatusEnum.Processing, OrderId = "1" });
+            var response = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Processing, OrderId = "1" });
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
-            client.Setup(m => m.SendAsync<OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendAsync<OrderWrapper<OrderParent<Title>>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostTitleOrder("titleNumber", "VA"));
 
             // Assert
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
-            client.Verify(m => m.SendAsync<OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()), Times.AtLeastOnce());
+            client.Verify(m => m.SendAsync<OrderWrapper<OrderParent<Title>>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>()), Times.AtLeastOnce());
         }
 
         [Fact]
@@ -453,7 +453,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostTitleOrder("titleNumber", "VA"));
@@ -474,19 +474,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             {
                 AccessToken = "test"
             };
-            var response = new OrderWrapper<ParcelInfoOrder>(new ParcelInfoOrder());
+            var response = new OrderWrapper<OrderParent<ParcelInfo>>(new ParcelInfoOrder());
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<ParcelInfo>>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.PostParcelInfoOrder("123-456-789");
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<OrderWrapper<ParcelInfoOrder>>(result);
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            Assert.IsAssignableFrom<OrderWrapper<OrderParent<ParcelInfo>>>(result);
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<ParcelInfo>>, OrderWrapper<ParcelInfoOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<ParcelInfoOrder>>(), null), Times.Once());
             result.Order.Should().Be(response.Order);
         }
@@ -513,7 +513,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<ParcelInfo>>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostParcelInfoOrder("123-456-789"));
@@ -534,19 +534,19 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             {
                 AccessToken = "test"
             };
-            var response = new OrderWrapper<SpcpOrder>(new SpcpOrder());
+            var response = new OrderWrapper<OrderParent<StrataPlanCommonProperty>>(new SpcpOrder());
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<StrataPlanCommonProperty>>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(response);
 
             // Act
             var result = await service.PostSpcpOrder("123-456-789");
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<OrderWrapper<SpcpOrder>>(result);
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            Assert.IsAssignableFrom<OrderWrapper<OrderParent<StrataPlanCommonProperty>>>(result);
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<StrataPlanCommonProperty>>, OrderWrapper<SpcpOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<SpcpOrder>>(), null), Times.Once());
             result.Order.Should().Be(response.Order);
         }
@@ -573,7 +573,7 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<SpcpOrder>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<StrataPlanCommonProperty>>, OrderWrapper<SpcpOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<SpcpOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
 
             // Act
             await Assert.ThrowsAsync<LtsaException>(async () => await service.PostSpcpOrder("123-456-789"));
@@ -594,8 +594,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             {
                 AccessToken = "test"
             };
-            var titleResponse = new OrderWrapper<TitleOrder>(new TitleOrder());
-            var parcelInfoResponse = new OrderWrapper<ParcelInfoOrder>(new ParcelInfoOrder());
+            var titleResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder());
+            var parcelInfoResponse = new OrderWrapper<OrderParent<ParcelInfo>>(new ParcelInfoOrder());
             var titleSummariesResponse = new TitleSummariesResponse()
             {
                 TitleSummaries = new List<TitleSummary>()
@@ -610,8 +610,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleResponse);
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(parcelInfoResponse);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleResponse);
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<ParcelInfo>>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(parcelInfoResponse);
             client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse);
 
             // Act
@@ -620,12 +620,12 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             // Assert
             Assert.NotNull(result);
             Assert.IsAssignableFrom<LtsaOrders>(result);
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<TitleOrder>>(), null), Times.Once());
-            client.Verify(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
+            client.Verify(m => m.SendJsonAsync<OrderWrapper<OrderParent<ParcelInfo>>, OrderWrapper<ParcelInfoOrder>>(options.Value.HostUri.AppendToURL(options.Value.OrdersEndpoint), HttpMethod.Post,
                 It.IsAny<OrderWrapper<ParcelInfoOrder>>(), null), Times.Once());
             result.ParcelInfo.Should().Be(parcelInfoResponse.Order);
-            result.TitleOrders.Should().BeEquivalentTo(new List<TitleOrder>() { titleResponse.Order });
+            result.TitleOrders.Should().BeEquivalentTo(new List<OrderParent<Title>>() { titleResponse.Order });
         }
 
         [Fact]
@@ -661,8 +661,8 @@ namespace Pims.Dal.Test.Libraries.Ltsa
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<TitleOrder>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
-            client.Setup(m => m.SendJsonAsync<OrderWrapper<ParcelInfoOrder>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<Title>>, OrderWrapper<TitleOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<TitleOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
+            client.Setup(m => m.SendJsonAsync<OrderWrapper<OrderParent<ParcelInfo>>, OrderWrapper<ParcelInfoOrder>>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<OrderWrapper<ParcelInfoOrder>>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ThrowsAsync(new HttpClientRequestException(response));
             client.Setup(m => m.SendAsync<TitleSummariesResponse>(It.IsAny<string>(), It.IsAny<HttpMethod>(), It.IsAny<HttpContent>(), It.IsAny<Func<HttpResponseMessage, bool>>())).ReturnsAsync(titleSummariesResponse);
 
             // Act

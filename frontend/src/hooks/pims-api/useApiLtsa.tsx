@@ -1,4 +1,4 @@
-import { ParcelInfo, TitleSummary } from 'interfaces/ltsaModels';
+import { ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import React from 'react';
 
 import { useApi } from '.';
@@ -12,9 +12,10 @@ export const useApiLtsa = () => {
 
   return React.useMemo(
     () => ({
-      getTitleSummaries: (pid: number) => api.get<TitleSummary>(`/tools/ltsa/summaries?pid=${pid}`),
+      getTitleSummaries: (pid: number) =>
+        api.get<TitleSummary[]>(`/tools/ltsa/summaries?pid=${pid}`),
       getParcelInfo: (pid: string) =>
-        api.post<ParcelInfo>(`/tools/ltsa/order/parcelInfo?pid=${pid}`),
+        api.post<ParcelInfoOrder>(`/tools/ltsa/order/parcelInfo?pid=${pid}`),
     }),
     [api],
   );

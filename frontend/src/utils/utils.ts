@@ -3,6 +3,7 @@ import { SelectOption } from 'components/common/form';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { IStatus } from 'features/projects/common';
 import { FormikProps, getIn } from 'formik';
+import _ from 'lodash';
 import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
 import moment from 'moment-timezone';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -296,4 +297,43 @@ export function emptyStringToNull(value: any, originalValue: any) {
  */
 export const clearanceNotificationSentOnRequired = (statusCode: string) => {
   return ['ERP-ON', 'ERP-OH'].includes(statusCode);
+};
+
+/**
+ * postalCodeFormatter takes the specified postal code and formats it with a space in the middle
+ * @param {string} postal The target postal to be formatted
+ */
+export const postalCodeFormatter = (postal: string) => {
+  const regex = /([a-zA-z][0-9][a-zA-z])[\s-]?([0-9][a-zA-z][0-9])/;
+  const format = postal.match(regex);
+  if (format !== null && format.length === 3) {
+    postal = `${format[1]} ${format[2]}`;
+  }
+  return postal.toUpperCase();
+};
+
+/**
+ * Using the administrative areas code set, find the matching municipality returned by the parcel layer, if present.
+ * @param administrativeAreas the full list from the administrative areas code set.
+ * @param layerMunicipality the municipality returned by the layer.
+ */
+export const getAdminAreaFromLayerData = (
+  administrativeAreas: ILookupCode[],
+  layerMunicipality: string,
+) => {
+  let administrativeArea = _.find(administrativeAreas, { name: layerMunicipality });
+  if (administrativeArea) {
+    return administrativeArea;
+  }
+  if (!!layerMunicipality?.length) {
+    const splitLayerMunicipality = layerMunicipality.split(',');
+    if (splitLayerMunicipality.length === 2) {
+      const formattedLayerMunicipality = `${splitLayerMunicipality[1].trim()} ${splitLayerMunicipality[0].trim()}`;
+      let match = _.find(administrativeAreas, { name: formattedLayerMunicipality });
+      if (!match) {
+        match = _.find(administrativeAreas, { name: splitLayerMunicipality[0].trim() });
+      }
+      return match;
+    }
+  }
 };

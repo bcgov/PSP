@@ -89,7 +89,7 @@ const getStore = (parcelDetail?: IParcel) =>
           name: 'Victoria',
           id: '1',
           isDisabled: false,
-          type: API.AMINISTRATIVE_AREA_CODE_SET_NAME,
+          type: API.ADMINISTRATIVE_AREA_CODE_SET_NAME,
         },
       ],
     },
