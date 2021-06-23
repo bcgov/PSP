@@ -109,11 +109,11 @@ export const PropertyForm: React.FunctionComponent<IPropertyFormProps> = ({ form
             </FormSection>
             <FormSection>
               <InlineFormFields md={6}>
-                <Input label="MOTI Region" field="Region" />
+                <SmallInput label="MOTI Region" field="Region" />
               </InlineFormFields>
               <InlineFormFields md={6}>
-                <Input label="MOTI Classification" field="classification" />
-                <Input label="Purpose" field="purpose" />
+                <SmallInput label="MOTI Classification" field="classification" />
+                <SmallInput label="Purpose" field="purpose" />
               </InlineFormFields>
             </FormSection>
             <FormSection>
