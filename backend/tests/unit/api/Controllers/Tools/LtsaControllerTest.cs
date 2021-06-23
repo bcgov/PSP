@@ -62,7 +62,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var helper = new TestHelper();
             var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
 
-            var response = new Model.OrderWrapper<Model.TitleOrder>(new Model.TitleOrder());
+            var response = new Model.OrderWrapper<Model.OrderParent<Model.Title>>(new Model.TitleOrder());
 
             var service = helper.GetService<Mock<ILtsaService>>();
             service.Setup(m => m.PostTitleOrder(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(response);
@@ -85,7 +85,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var helper = new TestHelper();
             var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
 
-            var response = new Model.OrderWrapper<Model.ParcelInfoOrder>(new Model.ParcelInfoOrder());
+            var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
 
             var service = helper.GetService<Mock<ILtsaService>>();
             service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
@@ -106,7 +106,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var helper = new TestHelper();
             var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
 
-            var response = new Model.OrderWrapper<Model.ParcelInfoOrder>(new Model.ParcelInfoOrder());
+            var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
 
             var service = helper.GetService<Mock<ILtsaService>>();
             service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
@@ -127,7 +127,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var helper = new TestHelper();
             var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
 
-            var response = new Model.OrderWrapper<Model.ParcelInfoOrder>(new Model.ParcelInfoOrder());
+            var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
 
             var service = helper.GetService<Mock<ILtsaService>>();
             service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
@@ -146,7 +146,7 @@ namespace Pims.Api.Test.Controllers.Tools
             var helper = new TestHelper();
             var controller = helper.CreateController<LtsaController>(Permissions.PropertyEdit);
 
-            var response = new Model.OrderWrapper<Model.SpcpOrder>(new Model.SpcpOrder());
+            var response = new Model.OrderWrapper<Model.OrderParent<Model.StrataPlanCommonProperty>>(new Model.SpcpOrder());
 
             var service = helper.GetService<Mock<ILtsaService>>();
             service.Setup(m => m.PostSpcpOrder(It.IsAny<string>())).ReturnsAsync(response);
