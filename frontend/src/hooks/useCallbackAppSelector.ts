@@ -1,7 +1,6 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { RootState, useAppSelector } from '../store/store';
-import useDeepCompareEffect from './useDeepCompareEffect';
 
 /**
  * Hook that wraps useSelector, fires only when the selector is updated. Does not fire on initial load.
@@ -15,11 +14,13 @@ export function useCallbackAppSelector<TState = RootState, TSelected = unknown>(
   const selected: TSelected = useAppSelector(selector as any);
   const isInitialMount = useRef(true);
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
       callbackFn && callbackFn(selected);
     }
-  }, [callbackFn, selected]);
+    // TODO: currently useApi is causing this to refresh when the jwt token expires, that hook needs to be re-written
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 }

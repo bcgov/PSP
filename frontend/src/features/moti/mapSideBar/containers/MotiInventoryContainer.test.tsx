@@ -19,7 +19,9 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
+import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { propertiesSlice } from 'store/slices/properties';
+import { store } from 'store/store';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 import { fillInput } from 'utils/testUtils';
 
@@ -87,6 +89,7 @@ const renderContainer = ({ store }: any) =>
     </TestCommonWrapper>,
   );
 
+const isPidAvailable = jest.fn();
 const geocoderResponse = {
   siteId: '1',
   fullAddress: '12345 fake st.',
@@ -101,6 +104,7 @@ const searchAddress = jest.fn();
 jest.mock('hooks/useApi');
 ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
   searchAddress,
+  isPidAvailable,
 });
 
 describe('MotiInventoryContainer functionality', () => {
@@ -138,6 +142,7 @@ describe('MotiInventoryContainer functionality', () => {
   describe('search functionality', () => {
     beforeEach(() => {
       history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
+      isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
     });
     it('searches by pid', async () => {
@@ -355,6 +360,7 @@ describe('MotiInventoryContainer functionality', () => {
   describe('move marker functionality', () => {
     beforeEach(() => {
       history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
+      isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
     });
     it('queries for data as expected when the marker is placed on the map', async () => {
@@ -386,6 +392,7 @@ describe('MotiInventoryContainer functionality', () => {
   describe('form functionality', () => {
     beforeEach(() => {
       history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
+      isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
     });
     it('the cancel and submit buttons are disabled by default', async () => {
@@ -445,6 +452,105 @@ describe('MotiInventoryContainer functionality', () => {
       const propertyTab = await findByText('Property');
 
       expect(propertyTab).not.toHaveClass('disabled');
+    });
+  });
+  describe('duplicate pid functionality', () => {
+    const { open } = window;
+    beforeAll(() => {
+      delete (window as any).open;
+      window.open = jest.fn();
+    });
+
+    afterAll(() => {
+      window.open = open;
+    });
+
+    beforeEach(() => {
+      history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
+      isPidAvailable.mockResolvedValue({ available: false });
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+    });
+
+    it('displays the duplicate pid modal if a duplicate pid is detected.', async () => {
+      const { container, getByTestId } = renderContainer({});
+      await fillInput(container, 'searchPid', '123-456-789');
+      act(() => {
+        fireEvent.click(getByTestId('pid-search-button'));
+      });
+      const modal = await screen.findByText(/The parcel identifier \(PID\) 123-456-789/g);
+      expect(modal).toBeInTheDocument();
+    });
+    it('does not display the modal text if there is no duplicate pid', async () => {
+      isPidAvailable.mockResolvedValue({ available: true });
+      const { container, getByTestId } = renderContainer({});
+      await fillInput(container, 'searchPid', '123-456-789');
+      act(() => {
+        fireEvent.click(getByTestId('pid-search-button'));
+      });
+      const modal = await screen.queryByText(/The parcel identifier \(PID\) 123-456-789/g);
+      expect(modal).not.toBeInTheDocument();
+    });
+    it('opens the expected url in a new window when Yes clicked', async () => {
+      const { container, getByTestId } = renderContainer({});
+      await fillInput(container, 'searchPid', '123-456-789');
+      act(() => {
+        fireEvent.click(getByTestId('pid-search-button'));
+      });
+      await screen.findByText(/The parcel identifier \(PID\) 123-456-789/g);
+      const yesButton = screen.getByText('Yes');
+      act(() => {
+        yesButton.click();
+      });
+      expect(window.open).toHaveBeenCalled();
+    });
+    it('closes the modal when no is clicked', async () => {
+      const { container, getByTestId } = renderContainer({});
+      await fillInput(container, 'searchPid', '123-456-789');
+      act(() => {
+        fireEvent.click(getByTestId('pid-search-button'));
+      });
+      await screen.findByText(/The parcel identifier \(PID\) 123-456-789/g);
+      const noButton = screen.getByText('No');
+      act(() => {
+        noButton.click();
+      });
+      expect(window.open).not.toHaveBeenCalled();
+    });
+  });
+  describe('populate search form functionality', () => {
+    beforeEach(() => {
+      history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
+      isPidAvailable.mockResolvedValue({ available: true });
+      findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+    });
+
+    it('does not call pid search field with original store value', async () => {
+      store.dispatch(
+        saveParcelLayerData({ e: {} as any, data: mockParcelLayerResponse.features[0].properties }),
+      );
+      renderContainer({ store: store });
+      await screen.findByText('Search for a Property');
+
+      expect(findByPid).not.toHaveBeenCalledWith('');
+    });
+    it('populates the pid search field', async () => {
+      renderContainer({ store: store });
+      await screen.findByText('Search for a Property');
+      store.dispatch(
+        saveParcelLayerData({ e: {} as any, data: mockParcelLayerResponse.features[0].properties }),
+      );
+      const pidInput = await screen.findByDisplayValue('123-456-789');
+      expect(pidInput).toBeInTheDocument();
+    });
+
+    it('calls findByPid with the expected pid', async () => {
+      renderContainer({ store: store });
+      await screen.findByText('Search for a Property');
+      store.dispatch(
+        saveParcelLayerData({ e: {} as any, data: mockParcelLayerResponse.features[0].properties }),
+      );
+      await screen.findByDisplayValue('123-456-789');
+      expect(findByPid).toHaveBeenCalledWith('123456789');
     });
   });
 });

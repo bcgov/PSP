@@ -3,7 +3,6 @@ import { IGeoSearchParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
 import { IApiProperty } from 'features/projects/common';
-import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { IBuilding, IParcel } from 'interfaces';
 import * as _ from 'lodash';
 import queryString from 'query-string';
@@ -11,6 +10,8 @@ import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { store } from 'store/store';
+
+import { useAppSelector } from './../store/store';
 
 export interface IGeocoderResponse {
   siteId: string;
@@ -48,7 +49,8 @@ export interface PimsAPI extends AxiosInstance {
 
 export const useApi = (): PimsAPI => {
   const dispatch = useDispatch();
-  const axios = useMemo(() => CustomAxios() as PimsAPI, []);
+  const axios = CustomAxios() as PimsAPI;
+  const jwt = useAppSelector(state => state.jwt);
 
   axios.interceptors.request.use(
     config => {
@@ -212,5 +214,7 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  return useDeepCompareMemo(() => axios, [axios]);
+  // The below memo is only intended to run once, at startup. Or when the jwt is updated.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useMemo(() => axios, [jwt]);
 };

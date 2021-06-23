@@ -14,7 +14,8 @@ import { pidFormatter } from 'features/properties/components/forms/subforms/PidP
 import { FormikProps, FormikValues, getIn } from 'formik';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useApiLtsa } from 'hooks/pims-api/useApiLtsa';
-import { IGeocoderResponse } from 'hooks/useApi';
+import { IGeocoderResponse, useApi } from 'hooks/useApi';
+import { useCallbackAppSelector } from 'hooks/useCallbackAppSelector';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import { geoJSON, LatLngLiteral } from 'leaflet';
@@ -22,6 +23,8 @@ import * as React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { IParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
+import { RootState } from 'store/store';
 import { getAdminAreaFromLayerData } from 'utils';
 
 import {
@@ -43,6 +46,7 @@ import SubmitPropertySelector from '../SubmitPropertySelector';
  */
 export const MotiInventoryContainer: React.FunctionComponent = () => {
   const formikRef = React.useRef<FormikProps<FormikValues>>();
+  const searchRef = React.useRef<FormikProps<FormikValues>>();
   const { showSideBar, setShowSideBar, size, context: sidebarContext } = useQueryParamSideBar(
     formikRef,
   );
@@ -54,7 +58,8 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
   const parcelLayerService = useLayerQuery(PARCELS_LAYER_URL);
   const electoralLayerService = useLayerQuery(ELECTORAL_LAYER_URL);
   const { getParcelInfo, getTitleSummaries } = useApiLtsa();
-  const { ErrorModal } = useDuplicatePidModal();
+  const { ErrorModal, setDuplicatePid } = useDuplicatePidModal();
+  const api = useApi();
 
   /**
    * synchronize the state of the property tracked by this container (which should be the currently displayed form) and the map.
@@ -153,6 +158,10 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
           );
           return;
         }
+        if (properties?.PID && !(await api.isPidAvailable(undefined, properties?.PID)).available) {
+          setDuplicatePid(properties?.PID);
+          return;
+        }
         const calculatedLatLng =
           latLng ??
           geoJSON(parcelLayerResponse?.features[0]?.geometry)
@@ -178,11 +187,11 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
           ltsaTitleResponse?.data,
           geocoderResponse,
         );
+        searchRef?.current?.resetForm();
       } catch (error) {
         toast.error(
           'Property search failed. Please check your search criteria and try again. If this error persists, contact the Help Desk.',
         );
-        console.debug(JSON.stringify(error));
       } finally {
         setLoading(false);
       }
@@ -193,6 +202,8 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       getParcelInfo,
       getParcelLayerResponse,
       getTitleSummaries,
+      api,
+      setDuplicatePid,
     ],
   );
 
@@ -203,6 +214,20 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       }
     },
     [populateForm],
+  );
+
+  /** call the following function whenever the underlying parcel layer data function updates */
+  const parcelLayerUpdateCallback = useCallback(
+    (updatedValue: IParcelLayerData | null) => {
+      handlePidChange(updatedValue?.data?.PID);
+      searchRef?.current?.setFieldValue('searchPid', updatedValue?.data?.PID);
+    },
+    [handlePidChange],
+  );
+
+  useCallbackAppSelector(
+    (state: RootState) => state.parcelLayerData?.parcelLayerData,
+    parcelLayerUpdateCallback,
   );
 
   /**
@@ -250,6 +275,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         <>
           <FilterBackdrop show={loading} />
           <PropertySearchForm
+            formikRef={searchRef}
             handlePidChange={handlePidChange}
             handleGeocoderChange={async (data: IGeocoderResponse) => {
               populateForm({ lat: data.latitude, lng: data.longitude }, undefined, data);
