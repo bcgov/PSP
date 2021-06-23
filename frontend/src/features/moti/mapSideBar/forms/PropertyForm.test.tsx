@@ -7,6 +7,7 @@ import {
   PURPOSE_CODE_SET_NAME,
   RURAL_AREA_CODE_SET_NAME,
 } from 'constants/API';
+import { enableFetchMocks } from 'jest-fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -16,6 +17,8 @@ import TestCommonWrapper from 'utils/TestCommonWrapper';
 import { fillInput } from 'utils/testUtils';
 
 import PropertyForm from './PropertyForm';
+
+enableFetchMocks();
 
 const mockStore = configureMockStore([thunk]);
 const defaultStore = mockStore({
@@ -70,6 +73,7 @@ describe('Property Form functionality', () => {
       </TestCommonWrapper>,
     );
   it('reformats postal code into expected format', async () => {
+    fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
     const { container } = renderContainer({});
     await fillInput(container, 'address.postal', 'V8V1V1');
     expect(screen.getByDisplayValue('V8V 1V1')).toBeInTheDocument();
