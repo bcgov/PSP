@@ -19,7 +19,7 @@ namespace Pims.Ltsa.Models
     /// ParcelInfo
     /// </summary>
     [DataContract]
-    public partial class ParcelInfo
+    public partial class ParcelInfo : IFieldedData
     {
         /// <summary>
         /// Indicates the state with respect to Parcel lifecycle.

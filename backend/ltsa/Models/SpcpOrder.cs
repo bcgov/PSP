@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// SpcpOrder
     /// </summary>
     [DataContract]
-    public partial class SpcpOrder : OrderParent
+    public partial class SpcpOrder : OrderParent<StrataPlanCommonProperty>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SpcpOrder" /> class.
@@ -41,6 +41,6 @@ namespace Pims.Ltsa.Models
         /// Gets or Sets OrderedProduct
         /// </summary>
         [DataMember(Name = "orderedProduct", EmitDefaultValue = false)]
-        public OrderedProduct<StrataPlanCommonProperty> OrderedProduct { get; set; }
+        public override OrderedProduct<StrataPlanCommonProperty> OrderedProduct { get; set; }
     }
 }

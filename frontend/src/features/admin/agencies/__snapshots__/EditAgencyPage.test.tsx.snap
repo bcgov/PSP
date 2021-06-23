@@ -45,6 +45,7 @@ exports[`Edit agency page EditAgencyPage renders 1`] = `
             for="input-name"
           >
             Agency
+             
           </label>
           <input
             class="form-control"
@@ -62,6 +63,7 @@ exports[`Edit agency page EditAgencyPage renders 1`] = `
             for="input-code"
           >
             Short Name (Code)
+             
           </label>
           <input
             class="form-control"
@@ -107,6 +109,7 @@ exports[`Edit agency page EditAgencyPage renders 1`] = `
             for="input-description"
           >
             Description
+             
           </label>
           <input
             class="form-control"
@@ -124,6 +127,7 @@ exports[`Edit agency page EditAgencyPage renders 1`] = `
             for="input-email"
           >
             Agency e-mail address
+             
           </label>
           <input
             class="form-control"
@@ -141,6 +145,7 @@ exports[`Edit agency page EditAgencyPage renders 1`] = `
             for="input-addressTo"
           >
             Email Addressed To
+             
           </label>
           <input
             class="form-control"

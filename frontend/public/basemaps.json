@@ -1,9 +1,9 @@
 {
   "basemaps": [
     {
-      "name": "Map",
-      "url": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      "attribution": "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
+      "name": "BC Roads",
+      "url": "https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}",
+      "attribution": "&copy; Government of British Columbia, DataBC, GeoBC",
       "thumbnail": "/streets.jpg"
     },
     {

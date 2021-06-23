@@ -96,20 +96,20 @@ namespace Pims.Ltsa
         /// <param name="method"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        private async Task<OrderWrapper<TR>> SendOrderAsync<TR, TD>(string url, HttpMethod method, TD data) where TR : OrderParent
+        private async Task<OrderWrapper<OrderParent<TR>>> SendOrderAsync<TR, TD>(string url, HttpMethod method, TD data) where TR : IFieldedData
             where TD : class
         {
             var orderProcessingPolicy = Policy
-                .HandleResult<OrderWrapper<TR>>(result => result.Order.Status == OrderParent.StatusEnum.Processing)
+                .HandleResult<OrderWrapper<OrderParent<TR>>>(result => IsResponseMissingJsonAndProcessing(result))
                  .WaitAndRetryAsync(MAX_RETRIES, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
             try
             {
-                var response = await _authPolicy.ExecuteAsync(async () => await this.Client.SendJsonAsync<OrderWrapper<TR>, TD>(url, method, data));
-                if (response?.Order?.Status == OrderParent.StatusEnum.Processing)
+                var response = await _authPolicy.ExecuteAsync(async () => await this.Client.SendJsonAsync<OrderWrapper<OrderParent<TR>>, TD>(url, method, data));
+                if (IsResponseMissingJsonAndProcessing(response))
                 {
-                    response = await _authPolicy.WrapAsync(orderProcessingPolicy).ExecuteAsync(async () => await GetOrderbyId<TR>(response?.Order?.OrderId));
-                    if (response?.Order?.Status == OrderParent.StatusEnum.Processing)
+                    response = await _authPolicy.WrapAsync(orderProcessingPolicy).ExecuteAsync(async () => await GetOrderById<TR>(response?.Order?.OrderId));
+                    if (IsResponseMissingJsonAndProcessing(response))
                     {
                         throw new LtsaException("Request timed out waiting for ltsa response", HttpStatusCode.RequestTimeout);
                     }
@@ -121,6 +121,11 @@ namespace Pims.Ltsa
                 Error error = await GetLtsaError(ex, url);
                 throw new LtsaException(ex, this.Client, error);
             }
+        }
+
+        private bool IsResponseMissingJsonAndProcessing<T>(OrderWrapper<OrderParent<T>> response) where T : IFieldedData
+        {
+            return response?.Order?.Status == OrderParent<T>.StatusEnum.Processing && response?.Order?.OrderedProduct == null;
         }
 
         private async Task<Error> GetLtsaError(HttpClientRequestException ex, string url)
@@ -219,11 +224,11 @@ namespace Pims.Ltsa
         /// <param name="titleNumber"></param>
         /// <param name="landTitleDistrictCode"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<TitleOrder>> PostTitleOrder(string titleNumber, string landTitleDistrictCode)
+        public async Task<OrderWrapper<OrderParent<Title>>> PostTitleOrder(string titleNumber, string landTitleDistrictCode)
         {
             TitleOrder order = new(new TitleOrderParameters(titleNumber, Enum.Parse<LandTitleDistrictCode>(landTitleDistrictCode)));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
-            return await SendOrderAsync<TitleOrder, OrderWrapper<TitleOrder>>(url, HttpMethod.Post, new OrderWrapper<TitleOrder>(order));
+            return await SendOrderAsync<Title, OrderWrapper<TitleOrder>>(url, HttpMethod.Post, new OrderWrapper<TitleOrder>(order));
         }
 
         /// <summary>
@@ -231,11 +236,11 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<ParcelInfoOrder>> PostParcelInfoOrder(string pid)
+        public async Task<OrderWrapper<OrderParent<ParcelInfo>>> PostParcelInfoOrder(string pid)
         {
             ParcelInfoOrder order = new(new ParcelInfoOrderParameters(pid));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
-            return await SendOrderAsync<ParcelInfoOrder, OrderWrapper<ParcelInfoOrder>>(url, HttpMethod.Post, new OrderWrapper<ParcelInfoOrder>(order));
+            return await SendOrderAsync<ParcelInfo, OrderWrapper<ParcelInfoOrder>>(url, HttpMethod.Post, new OrderWrapper<ParcelInfoOrder>(order));
         }
 
         /// <summary>
@@ -243,11 +248,11 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="strataPlanNumber"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<SpcpOrder>> PostSpcpOrder(string strataPlanNumber)
+        public async Task<OrderWrapper<OrderParent<StrataPlanCommonProperty>>> PostSpcpOrder(string strataPlanNumber)
         {
             SpcpOrder order = new(new StrataPlanCommonPropertyOrderParameters(strataPlanNumber));
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
-            return await SendOrderAsync<SpcpOrder, OrderWrapper<SpcpOrder>>(url, HttpMethod.Post, new OrderWrapper<SpcpOrder>(order));
+            return await SendOrderAsync<StrataPlanCommonProperty, OrderWrapper<SpcpOrder>>(url, HttpMethod.Post, new OrderWrapper<SpcpOrder>(order));
         }
 
         /// <summary>
@@ -255,10 +260,10 @@ namespace Pims.Ltsa
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public async Task<OrderWrapper<T>> GetOrderbyId<T>(string orderId) where T : OrderParent
+        public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T: IFieldedData
         {
             var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
-            return await SendAsync<OrderWrapper<T>>(url, HttpMethod.Get);
+            return await SendAsync<OrderWrapper<OrderParent<T>>>(url, HttpMethod.Get);
         }
 
         /// <summary>
@@ -273,7 +278,7 @@ namespace Pims.Ltsa
             var postParcelInfoOrderTask = PostParcelInfoOrder(pid);
             var titleSummaries = await titleSummariesTask;
 
-            ICollection<Task<OrderWrapper<TitleOrder>>> titleOrderTasks = new List<Task<OrderWrapper<TitleOrder>>>();
+            ICollection<Task<OrderWrapper<OrderParent<Title>>>> titleOrderTasks = new List<Task<OrderWrapper<OrderParent<Title>>>>();
             foreach (TitleSummary titleSummary in titleSummaries.TitleSummaries)
             {
                 titleOrderTasks.Add(PostTitleOrder(titleSummary.TitleNumber, titleSummary.LandTitleDistrictCode.ToString()));

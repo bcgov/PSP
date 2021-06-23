@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// StcOrder
     /// </summary>
     [DataContract]
-    public partial class StcOrder : OrderParent
+    public partial class StcOrder : OrderParent<IFieldedData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StcOrder" /> class.
@@ -32,5 +32,7 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public StateTitleCertificateOrderParameters ProductOrderParameters { get; set; }
+
+        public override OrderedProduct<IFieldedData> OrderedProduct { get; set; }
     }
 }
