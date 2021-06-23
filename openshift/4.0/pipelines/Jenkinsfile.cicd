@@ -62,6 +62,10 @@ pipeline {
     DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
     VANITY_URL = sh(script: 'echo "${VANITY_URL:-https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/}"', returnStdout: true).trim()
 
+    // To force manual approval before each CI/CD run set this to "true". By default CI/CD runs without approval.
+    // This is useful for UAT deployments where manual approval is required.
+    APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-false}"', returnStdout: true).trim()
+
     // These two parameters allow the deployment of multiple "instances" to a single namespace
     // E.g. to deploy a "test" instance to the DEV namespace in OpenShift:
     //      INSTANCE = "-test" (or "-01", etc)
@@ -114,6 +118,20 @@ pipeline {
             echo sh(returnStdout: true, script: 'env')
           }
         }
+      }
+    }
+
+    stage('Approval Prompt') {
+      when {
+        expression { new Boolean(env.APPROVAL_REQUIRED) }
+      }
+      options { timeout(time: 1, unit: 'HOURS') }
+      input {
+        message "Proceed with deployment to [${DESTINATION}] ?"
+        ok 'Yes, go ahead'
+      }
+      steps {
+        echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
       }
     }
 
