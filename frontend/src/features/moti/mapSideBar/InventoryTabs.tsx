@@ -26,7 +26,7 @@ const StyledTabs = styled.div`
     border: #8c8c8c solid 3px;
     background-color: white;
     font-size: 16px;
-    margin: 0px 4px -2px 0px;
+    margin: 0px 4px -3px 0px;
     height: 45px;
   }
   .nav-tabs .nav-item.nav-link.active {
