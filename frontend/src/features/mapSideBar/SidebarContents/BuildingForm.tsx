@@ -39,7 +39,7 @@ import {
   ValuationSchema,
 } from 'utils/YupSchema';
 
-import { InventoryPolicy } from '../components/InventoryPolicy';
+import { InventoryPolicy } from '../../../components/common/InventoryPolicy';
 import { useBuildingApi } from '../hooks/useBuildingApi';
 import { BuildingForm } from '.';
 import { valuesToApiFormat as landValuesToApiFormat } from './LandForm';

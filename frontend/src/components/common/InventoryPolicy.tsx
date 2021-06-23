@@ -16,6 +16,9 @@ const InventoryPolicyLabel = styled.small`
   font-weight: bold;
 `;
 
+/**
+ * Property Inventory Policy link for CITZ PIMS
+ */
 export const InventoryPolicy = () => (
   <InventoryPolicyContainer>
     <SresManual hideText={true} clickUrl={INVENTORY_POLICY_URL} />

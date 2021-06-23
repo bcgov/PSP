@@ -6,9 +6,9 @@ namespace Pims.Ltsa
     public interface ILtsaService
     {
         Task<TitleSummariesResponse> GetTitleSummariesAsync(int pid);
-        Task<OrderWrapper<TitleOrder>> PostTitleOrder(string titleNumber, string landTitleDistrictCode);
-        Task<OrderWrapper<ParcelInfoOrder>> PostParcelInfoOrder(string pid);
-        Task<OrderWrapper<SpcpOrder>> PostSpcpOrder(string strataPlanNumber);
+        Task<OrderWrapper<OrderParent<Title>>> PostTitleOrder(string titleNumber, string landTitleDistrictCode);
+        Task<OrderWrapper<OrderParent<ParcelInfo>>> PostParcelInfoOrder(string pid);
+        Task<OrderWrapper<OrderParent<StrataPlanCommonProperty>>> PostSpcpOrder(string strataPlanNumber);
         Task<LtsaOrders> PostLtsaFields(string pid);
     }
 }

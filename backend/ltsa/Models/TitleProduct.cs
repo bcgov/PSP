@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// TitleProduct
     /// </summary>
     [DataContract]
-    public partial class TitleProduct : ProductParent
+    public partial class TitleProduct : ProductParent<Title>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TitleProduct" /> class.
@@ -32,5 +32,6 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "title", EmitDefaultValue = false)]
         public Title Title { get; set; }
+        public override Title FieldedData { get; set; }
     }
 }

@@ -44,7 +44,7 @@ import {
   ValuationSchema,
 } from 'utils/YupSchema';
 
-import { InventoryPolicy } from '../components/InventoryPolicy';
+import { InventoryPolicy } from '../../../components/common/InventoryPolicy';
 import { LandReviewPage } from './subforms/LandReviewPage';
 import { LandUsageForm } from './subforms/LandUsageForm';
 import { LandValuationForm } from './subforms/LandValuationForm';

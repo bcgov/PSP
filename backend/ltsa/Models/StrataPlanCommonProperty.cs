@@ -17,7 +17,7 @@ namespace Pims.Ltsa.Models
     /// StrataPlanCommonProperty
     /// </summary>
     [DataContract]
-    public partial class StrataPlanCommonProperty
+    public partial class StrataPlanCommonProperty : IFieldedData
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StrataPlanCommonProperty" /> class.
