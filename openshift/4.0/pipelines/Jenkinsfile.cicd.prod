@@ -100,7 +100,7 @@ pipeline {
         ok 'Yes, go ahead'
       }
       steps {
-        echo '*** Promotion from TEST to PROD was approved. Proceeding... ***'
+        echo '*** Promotion from UAT to PROD was approved. Proceeding... ***'
       }
     }
 
@@ -132,29 +132,29 @@ pipeline {
       }
     }
 
-    stage('Database backup') {
-      options { timeout(time: 10, unit: 'MINUTES') }
-      steps {
-        dir(DEVOPS_DIRECTORY) {
-          sh "./player.sh backup ${DESTINATION} -apply"
-        }
-      }
-    }
+    // stage('Database backup') {
+    //   options { timeout(time: 10, unit: 'MINUTES') }
+    //   steps {
+    //     dir(DEVOPS_DIRECTORY) {
+    //       sh "./player.sh backup ${DESTINATION} -apply"
+    //     }
+    //   }
+    // }
 
-    stage('Database migration') {
-      options { timeout(time: 25, unit: 'MINUTES') }
-      environment {
-        DB_PASSWORD = sh(script: "oc -n 354028-${DESTINATION} get secret pims-database -o jsonpath='{.data.DB_PASSWORD}' | base64 -d", returnStdout: true).trim()
-        DB_CONNECTION_STRING = sh(script: "oc -n 354028-${DESTINATION} get cm pims-api-database -o jsonpath='{.data.CONNECTION_STRINGS_PIMS}'", returnStdout: true).trim()
-      }
-      steps {
-        dir(DEVOPS_DIRECTORY) {
-          sh "MIGRATION_TAG=${OC_JOB_NAME} ./player.sh migrate ${DESTINATION} -apply"
-        }
-      }
-    }
+    // stage('Database migration') {
+    //   options { timeout(time: 25, unit: 'MINUTES') }
+    //   environment {
+    //     DB_PASSWORD = sh(script: "oc -n 354028-${DESTINATION} get secret pims-database -o jsonpath='{.data.DB_PASSWORD}' | base64 -d", returnStdout: true).trim()
+    //     DB_CONNECTION_STRING = sh(script: "oc -n 354028-${DESTINATION} get cm pims-api-database -o jsonpath='{.data.CONNECTION_STRINGS_PIMS}'", returnStdout: true).trim()
+    //   }
+    //   steps {
+    //     dir(DEVOPS_DIRECTORY) {
+    //       sh "MIGRATION_TAG=${OC_JOB_NAME} ./player.sh migrate ${DESTINATION} -apply"
+    //     }
+    //   }
+    // }
 
-    stage('Promote to PROD') {
+    stage('Promote UAT to PROD') {
       options { timeout(time: 10, unit: 'MINUTES') }
       steps {
         dir(DEVOPS_DIRECTORY) {
