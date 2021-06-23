@@ -147,7 +147,7 @@ export const ParcelIdentificationForm: React.FC<IIdentificationProps> = ({
               const administrativeArea = selection.administrativeArea
                 ? lookupCodes.find(code => {
                     return (
-                      code.type === API.AMINISTRATIVE_AREA_CODE_SET_NAME &&
+                      code.type === API.ADMINISTRATIVE_AREA_CODE_SET_NAME &&
                       code.name === selection.administrativeArea
                     );
                   })

@@ -763,3 +763,58 @@ export const mockAccessRequest: IAccessRequest = {
   ],
   createdOn: '2021-05-07T00:37:06.2457303',
 };
+
+export const mockParcelLayerResponse = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-666e6d6_17a1c384547_692b',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [-123.33988214, 48.42497172],
+            [-123.3399637, 48.42525348],
+            [-123.34015684, 48.4252027],
+            [-123.34015485, 48.42519625],
+            [-123.34002144, 48.4247626],
+            [-123.33983527, 48.42480982],
+            [-123.33987042, 48.42493125],
+            [-123.33988214, 48.42497172],
+          ],
+        ],
+      },
+      geometry_name: 'SHAPE',
+      properties: {
+        PARCEL_FABRIC_POLY_ID: 4381977,
+        PARCEL_NAME: '123456789',
+        PLAN_NUMBER: 'VIP309',
+        PIN: null,
+        PID: '123456789',
+        PID_NUMBER: 99996,
+        PARCEL_STATUS: 'Active',
+        PARCEL_CLASS: 'Subdivision',
+        OWNER_TYPE: 'Private',
+        PARCEL_START_DATE: null,
+        MUNICIPALITY: 'Victoria, The Corporation of the City of',
+        REGIONAL_DISTRICT: 'Capital Regional District',
+        WHEN_UPDATED: '2021-05-10Z',
+        FEATURE_AREA_SQM: 742.8769,
+        FEATURE_LENGTH_M: 130.1602,
+        OBJECTID: 462844205,
+        SE_ANNO_CAD_DATA: null,
+      },
+    },
+  ],
+  totalFeatures: 1,
+  numberMatched: 1,
+  numberReturned: 1,
+  timeStamp: '2021-06-17T23:04:51.421Z',
+  crs: {
+    type: 'name',
+    properties: {
+      name: 'urn:ogc:def:crs:EPSG::4326',
+    },
+  },
+};

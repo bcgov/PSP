@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// ParcelInfoProduct
     /// </summary>
     [DataContract]
-    public partial class ParcelInfoProduct : ProductParent
+    public partial class ParcelInfoProduct : ProductParent<ParcelInfo>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ParcelInfoProduct" /> class.
@@ -32,5 +32,6 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "parcelInfo", EmitDefaultValue = false)]
         public ParcelInfo ParcelInfo { get; set; }
+        public override ParcelInfo FieldedData { get; set; }
     }
 }

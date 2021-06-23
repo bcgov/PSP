@@ -4,7 +4,7 @@ namespace Pims.Ltsa.Models
 {
     public class LtsaOrders
     {
-        public ParcelInfoOrder ParcelInfo { get; set; }
-        public IEnumerable<TitleOrder> TitleOrders { get; set; }
+        public OrderParent<ParcelInfo> ParcelInfo { get; set; }
+        public IEnumerable<OrderParent<Title>> TitleOrders { get; set; }
     }
 }

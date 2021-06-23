@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Pims.Ltsa.Models;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
@@ -14,9 +15,12 @@ namespace Pims.Dal.Test.Libraries.Ltsa
         [Fact]
         public void TestConstructor()
         {
-            TitleOrder titleOrder = new();
-            OrderedProduct<TitleOrder> obj = new() { FieldedData = titleOrder };
-            obj.FieldedData.Should().Be(titleOrder);
+            Title title = new(titleIdentifier: new TitleIdentifier("titleNumber"), tombstone: new TitleTombstone(applicationReceivedDate: DateTime.Now, enteredDate: DateTime.Now,
+                natureOfTransfers: new System.Collections.Generic.List<NatureOfTransfer>()), ownershipGroups: new System.Collections.Generic.List<TitleOwnershipGroup>(),
+                taxAuthorities: new System.Collections.Generic.List<TaxAuthority>(),
+                descriptionsOfLand: new System.Collections.Generic.List<DescriptionOfLand>());
+            OrderedProduct<IFieldedData> obj = new() { FieldedData = (IFieldedData)title };
+            obj.FieldedData.Should().Be(title);
         }
     }
 }

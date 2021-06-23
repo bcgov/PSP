@@ -1,11 +1,17 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { LeafletMouseEvent } from 'leaflet';
 
-export const saveClickLatLng = createAction<LeafletMouseEvent>('saveClickLatLng');
+export const saveClickLatLng = createAction<ISerializableLeafletMouseEvent>('saveClickLatLng');
 export const clearClickLatLng = createAction('clearLatLng');
 
+export interface ISerializableLeafletMouseEvent {
+  latlng: { lat: number; lng: number };
+  originalEvent: {
+    timeStamp: number | undefined;
+  };
+}
+
 export interface ILeafletMouseSlice {
-  mapClickEvent: LeafletMouseEvent | null;
+  mapClickEvent: ISerializableLeafletMouseEvent | null;
 }
 
 const leafletMouseSlice = createSlice({

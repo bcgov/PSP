@@ -3,7 +3,7 @@ import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { InventoryPolicy } from '../components/InventoryPolicy';
+import { InventoryPolicy } from '../../../components/common/InventoryPolicy';
 
 const SidebarContent = styled.div`
   background-color: #fff;
