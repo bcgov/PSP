@@ -56,6 +56,12 @@ const Layout = styled.div`
   .tab-wrapper {
     height: calc(100vh - 46px - 72px - 45px - 310px);
   }
+  .form-label,
+  .label {
+    color: ${props => props.theme.css.textColor};
+    font-weight: 700;
+    font-size: 16px;
+  }
 `;
 
 /**

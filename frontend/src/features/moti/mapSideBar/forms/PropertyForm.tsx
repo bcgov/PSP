@@ -77,7 +77,7 @@ export const PropertyForm: React.FunctionComponent<IPropertyFormProps> = ({ form
                 <SmallInput label="Province:" field="address.provinceId" disabled />
                 <Form.Group className="postal">
                   <Label>
-                    Postal Code&nbsp;
+                    Postal Code:&nbsp;
                     <TooltipWrapper
                       toolTipId="postal-lookup-link"
                       toolTip={lookupPostalCodeTooltip}
@@ -109,17 +109,17 @@ export const PropertyForm: React.FunctionComponent<IPropertyFormProps> = ({ form
             </FormSection>
             <FormSection>
               <InlineFormFields md={6}>
-                <SmallInput label="MOTI Region" field="Region" />
+                <SmallInput label="MOTI Region:" field="Region" />
               </InlineFormFields>
               <InlineFormFields md={6}>
-                <SmallInput label="MOTI Classification" field="classification" />
-                <SmallInput label="Purpose" field="purpose" />
+                <SmallInput label="MOTI Classification:" field="classification" />
+                <SmallInput label="Purpose:" field="purpose" />
               </InlineFormFields>
             </FormSection>
             <FormSection>
               <Col md={12}>
                 <Input label="Regional District:" field="regionalDistrict" disabled />
-                <Input label="Rural Area" field="ruralArea" outerClassName="d-flex flex-column" />
+                <Input label="Rural Area:" field="ruralArea" outerClassName="d-flex flex-column" />
                 <Input label="Provincial Electoral District:" field="electoralDistrict" disabled />
               </Col>
             </FormSection>
