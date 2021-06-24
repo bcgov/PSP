@@ -392,8 +392,16 @@ const Map: React.FC<MapProps> = ({
                     data={layerPopup.data as any}
                     config={layerPopup.config as any}
                     center={layerPopup.center}
-                    onAddToParcel={(e: MouseEvent, data: { [key: string]: string }) => {
-                      dispatch(saveParcelLayerData({ e, data }));
+                    onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
+                      dispatch(
+                        saveParcelLayerData({
+                          e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
+                          data: {
+                            ...data,
+                            CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
+                          },
+                        }),
+                      );
                     }}
                     bounds={layerPopup.bounds}
                   />
