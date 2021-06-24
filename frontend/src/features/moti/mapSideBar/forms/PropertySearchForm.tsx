@@ -31,6 +31,9 @@ const SearchForm = styled(Row)`
   .form-group {
     margin: 0 0.5rem;
   }
+  .form-row {
+    flex-wrap: nowrap;
+  }
   .btn {
     min-height: 20px;
   }
@@ -42,6 +45,7 @@ const SearchForm = styled(Row)`
       left: 10px;
     }
   }
+  max-height: 135px;
 `;
 
 const SearchHeader = styled.h5`
