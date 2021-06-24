@@ -31,7 +31,7 @@ parameters:
     displayName: Output Image Tag
     description: The tag given to the built image.
     required: true
-    value: latest
+    value: dev
   - name: NGINXBASE_IMAGE
     displayName: NGINX Base Image Name
     description: The nginx base image [e.g nginx-base].
@@ -50,7 +50,7 @@ objects:
   - kind: BuildConfig
     apiVersion: v1
     metadata:
-      name: ${NAME}
+      name: ${NAME}.${GIT_REF}
       labels:
         app: ${NAME}
     spec:

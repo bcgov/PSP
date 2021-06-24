@@ -21,21 +21,15 @@ PIMS uses a custom **Source-to-Image (S2I)** Nginx image that requires you to bu
 
 ### Option 1 (Recommended)
 
-This option is recommended because Docker Hub imposes a rate limit on daily image pulls (max = 200 pulls/day). Since all applications deployed to OpenShift share a common IP you will get docker errors when trying to build **nginx-runtime** in OpenShift because the rate limit has been reached. 
+This option is recommended because Docker Hub imposes a rate limit on daily image pulls (max = 200 pulls/day). Since all applications deployed to OpenShift share a common IP you will get docker errors when trying to build **nginx-runtime** in OpenShift because the rate limit has been reached.
 
 Go to - `/openshift/s2i/nginx-runtime`
 
-Next create an empty image stream **nginx-base** in your project for the image using `oc create imagestream`. 
+Next create an empty image stream **nginx-base** in your project for the image using `oc create imagestream`.
 
 ```bash
 $ oc create imagestream nginx-base
 imagestream "nginx-base" created
-```
-
-Create an image stream for the **nginx-runtime** image.
-
-```bash
-$ oc process -f nginx-runtime.yaml | oc create -f -
 ```
 
 Pull the latest **nginx** image from Docker Hub into your local workstation
@@ -62,7 +56,7 @@ Next tag the local image you wish to push with the details of the image registry
 $ docker tag nginx:mainline image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/nginx-base:mainline
 ```
 
-* Note how the local image is **nginx:mainline** but we want the remote image in OpenShift to be **nginx-base:mainline**
+- Note how the local image is **nginx:mainline** but we want the remote image in OpenShift to be **nginx-base:mainline**
 
 You are then ready to push the image to the OpenShift internal image registry.
 
@@ -79,13 +73,66 @@ The push refers to repository [image-registry.apps.silver.devops.gov.bc.ca/3cd91
 mainline: digest: sha256:61191087790c31e43eb37caa10de1135b002f10c09fdda7fa8a5989db74033aa size: 1570
 ```
 
-Finally, you can kick off a build in OpenShift for **nginx-runtime**
+Create image stream and associated build configurations for nginx-runtime for **the following environments:**
 
-```bash
-$ oc start-build nginx-runtime
+- DEV
+- TEST
+- UAT
+
+Create a build configuration file here - `build.dev.env`
+Update the configuration file and set the appropriate parameters.
+
+**Example**
+
+```conf
+GIT_REF=dev
+OUTPUT_IMAGE_TAG=dev
 ```
 
-You should watch the build in OpenShift. If everything went smoothly you should see something like this. 
+Create the **nginx-runtime** build for each environment
+
+```bash
+# DEV (from dev branch)
+$ oc process -f nginx-runtime.yaml --param-file=build.dev.env | oc create -f -
+```
+
+For **TEST**
+
+`build.test.env`
+
+```conf
+GIT_REF=test
+OUTPUT_IMAGE_TAG=test
+```
+
+```bash
+# TEST (from test branch)
+$ oc process -f nginx-runtime.yaml --param-file=build.test.env  | oc create -f -
+```
+
+For **UAT**
+
+`build.uat.env`
+
+```conf
+GIT_REF=master
+OUTPUT_IMAGE_TAG=tag
+```
+
+```bash
+# UAT (from master branch)
+$ oc process -f nginx-runtime.yaml --param-file=build.uat.env  | oc create -f -
+```
+
+Finally, you can kick off the builds in OpenShift for **nginx-runtime** for the various environments (DEV, TEST, UAT)
+
+```bash
+$ oc start-build nginx-runtime.dev
+$ oc start-build nginx-runtime.test
+$ oc start-build nginx-runtime.uat
+```
+
+You should watch the build in OpenShift. If everything went smoothly you should see something like this.
 
 ![nginx-build](nginx-build.png)
 
