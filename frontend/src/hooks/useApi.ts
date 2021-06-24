@@ -1,13 +1,11 @@
-import { AxiosInstance } from 'axios';
 import { IGeoSearchParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
 import { IApiProperty } from 'features/projects/common';
-import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import { IBuilding, IParcel } from 'interfaces';
 import * as _ from 'lodash';
 import queryString from 'query-string';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { store } from 'store/store';
@@ -28,7 +26,7 @@ export interface IGeocoderPidsResponse {
   pids: string[];
 }
 
-export interface PimsAPI extends AxiosInstance {
+export interface PimsAPI {
   isPidAvailable: (
     parcelId: number | '' | undefined,
     pid: string | undefined,
@@ -48,32 +46,35 @@ export interface PimsAPI extends AxiosInstance {
 
 export const useApi = (): PimsAPI => {
   const dispatch = useDispatch();
-  const axios = useMemo(() => CustomAxios() as PimsAPI, []);
 
-  axios.interceptors.request.use(
-    config => {
-      config.headers.Authorization = `Bearer ${store.getState().jwt}`;
-      dispatch(showLoading());
-      return config;
-    },
-    error => {
-      dispatch(hideLoading());
-      return Promise.reject(error);
-    },
-  );
+  const getAxios = useCallback(() => {
+    const axios = CustomAxios();
+    axios.interceptors.request.use(
+      config => {
+        config.headers.Authorization = `Bearer ${store.getState().jwt}`;
+        dispatch(showLoading());
+        return config;
+      },
+      error => {
+        dispatch(hideLoading());
+        return Promise.reject(error);
+      },
+    );
 
-  axios.interceptors.response.use(
-    config => {
-      dispatch(hideLoading());
-      return config;
-    },
-    error => {
-      dispatch(hideLoading());
-      return Promise.reject(error);
-    },
-  );
+    axios.interceptors.response.use(
+      config => {
+        dispatch(hideLoading());
+        return config;
+      },
+      error => {
+        dispatch(hideLoading());
+        return Promise.reject(error);
+      },
+    );
+    return axios;
+  }, [dispatch]);
 
-  axios.isPidAvailable = useCallback(
+  const isPidAvailable = useCallback(
     async (parcelId: number | '' | undefined, pid: string | undefined) => {
       const pidParam = `pid=${Number(
         pid
@@ -83,7 +84,7 @@ export const useApi = (): PimsAPI => {
           .join(''),
       )}`;
       let params = parcelId ? `${pidParam}&parcelId=${parcelId}` : pidParam;
-      const { data } = await axios.get(
+      const { data } = await getAxios().get(
         `${ENVIRONMENT.apiUrl}/properties/parcels/check/pid-available?${params}`,
       );
       return data;
@@ -92,11 +93,11 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  axios.isPinAvailable = useCallback(
+  const isPinAvailable = useCallback(
     async (parcelId: number | '' | undefined, pin: number | '' | undefined) => {
       const pinParam = `pin=${Number(pin)}`;
       let params = parcelId ? `${pinParam}&parcelId=${parcelId}` : pinParam;
-      const { data } = await axios.get(
+      const { data } = await getAxios().get(
         `${ENVIRONMENT.apiUrl}/properties/parcels/check/pin-available?${params}`,
       );
       return data;
@@ -105,9 +106,9 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  axios.searchAddress = useCallback(
+  const searchAddress = useCallback(
     async (address: string): Promise<IGeocoderResponse[]> => {
-      const { data } = await axios.get<IGeocoderResponse[]>(
+      const { data } = await getAxios().get<IGeocoderResponse[]>(
         `${ENVIRONMENT.apiUrl}/tools/geocoder/addresses?address=${address}+BC`,
       );
       return _.orderBy(data, (r: IGeocoderResponse) => r.score, ['desc']);
@@ -116,9 +117,9 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  axios.getSitePids = useCallback(
+  const getSitePids = useCallback(
     async (siteId: string): Promise<IGeocoderPidsResponse> => {
-      const { data } = await axios.get<IGeocoderPidsResponse>(
+      const { data } = await getAxios().get<IGeocoderPidsResponse>(
         `${ENVIRONMENT.apiUrl}/tools/geocoder/parcels/pids/${siteId}`,
       );
       return data;
@@ -127,10 +128,10 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  axios.loadProperties = useCallback(
+  const loadProperties = useCallback(
     async (params?: IGeoSearchParams): Promise<any[]> => {
       try {
-        const { data } = await axios.get<any[]>(
+        const { data } = await getAxios().get<any[]>(
           `${ENVIRONMENT.apiUrl}/properties/search/wfs?${
             params ? queryString.stringify(params) : ''
           }`,
@@ -151,9 +152,9 @@ export const useApi = (): PimsAPI => {
    * @param id The building primary key 'id' value.
    * @returns A promise containing the building.
    */
-  axios.getBuilding = useCallback(
+  const getBuilding = useCallback(
     async (id: number) => {
-      const { data } = await axios.get<IBuilding>(
+      const { data } = await getAxios().get<IBuilding>(
         `${ENVIRONMENT.apiUrl}/properties/buildings/${id}`,
       );
       return data;
@@ -167,9 +168,11 @@ export const useApi = (): PimsAPI => {
    * @param id The parcel primary key 'id' value.
    * @returns A promise containing the parcel.
    */
-  axios.getParcel = useCallback(
+  const getParcel = useCallback(
     async (id: number) => {
-      const { data } = await axios.get<IParcel>(`${ENVIRONMENT.apiUrl}/properties/parcels/${id}`);
+      const { data } = await getAxios().get<IParcel>(
+        `${ENVIRONMENT.apiUrl}/properties/parcels/${id}`,
+      );
       return data;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,9 +185,9 @@ export const useApi = (): PimsAPI => {
    * @param parcel - the parcel data to be update
    * @returns A promise containing the parcel.
    */
-  axios.updateParcel = useCallback(
+  const updateParcel = useCallback(
     async (id: number, parcel: IApiProperty) => {
-      const { data } = await axios.put<IParcel>(
+      const { data } = await getAxios().put<IParcel>(
         `${ENVIRONMENT.apiUrl}/properties/parcels/${id}/financials`,
         parcel,
       );
@@ -200,9 +203,9 @@ export const useApi = (): PimsAPI => {
    * @param building - the building data to be update
    * @returns A promise containing the building.
    */
-  axios.updateBuilding = useCallback(
+  const updateBuilding = useCallback(
     async (id: number, building: IApiProperty) => {
-      const { data } = await axios.put<IBuilding>(
+      const { data } = await getAxios().put<IBuilding>(
         `${ENVIRONMENT.apiUrl}/properties/buildings/${id}/financials`,
         building,
       );
@@ -212,5 +215,17 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  return useDeepCompareMemo(() => axios, [axios]);
+  // The below memo is only intended to run once, at startup. Or when the jwt is updated.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return {
+    updateBuilding,
+    updateParcel,
+    getParcel,
+    getBuilding,
+    loadProperties,
+    getSitePids,
+    searchAddress,
+    isPinAvailable,
+    isPidAvailable,
+  };
 };

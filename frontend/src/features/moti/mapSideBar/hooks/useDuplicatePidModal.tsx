@@ -15,7 +15,7 @@ export const useDuplicatePidModal = () => {
   const ErrorModal = (
     <GenericModal
       display={!!duplicatePid}
-      title=""
+      title="Duplicate Parcel Identifier (PID)"
       message={
         <p>
           The parcel identifier (PID) {duplicatePid && pidFormatter(duplicatePid)} has already been

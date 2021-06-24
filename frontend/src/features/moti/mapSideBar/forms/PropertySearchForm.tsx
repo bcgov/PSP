@@ -58,6 +58,8 @@ interface ISearchFormProps {
   setMovingPinNameSpace: (nameSpace?: string) => void;
   /** handle the pid formatting on change */
   handlePidChange: (pid: string, nameSpace?: string) => void;
+  /** inner ref to underlying formik search form */
+  formikRef: any;
 }
 
 interface IPropertySearchFields {
@@ -74,6 +76,7 @@ export const PropertySearchForm = ({
   handleGeocoderChange,
   setMovingPinNameSpace,
   handlePidChange,
+  formikRef,
   ...props
 }: ISearchFormProps) => {
   const defaultValues: IPropertySearchFields = {
@@ -82,7 +85,7 @@ export const PropertySearchForm = ({
   };
   const [geocoderResponse, setGeocoderResponse] = useState<IGeocoderResponse | undefined>();
   return (
-    <Formik initialValues={defaultValues} onSubmit={() => {}}>
+    <Formik initialValues={defaultValues} innerRef={formikRef} onSubmit={() => {}}>
       {({ values, setFieldValue, errors, touched }) => (
         <SearchForm noGutters className="section">
           <Col md={12}>
