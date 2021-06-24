@@ -19,7 +19,7 @@ parameters:
     displayName: "Component Role Name"
     description: "The name of the application component"
     required: true
-    value: "pimsLog"
+    value: "pimslog"
   - name: PROJECT_NAMESPACE
     displayName: "OpenShift Project Namespace"
     description: "The namespace of the OpenShift project containing the application."
