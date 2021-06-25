@@ -27,7 +27,7 @@ services:
     ports:
       - ${DATABASE_PORT:-5433}:1433
     volumes:
-      - api-db-data:/var/opt/mssql
+      - api-db-data:/var/opt/data
     networks:
       - psp
 

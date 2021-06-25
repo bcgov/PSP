@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Building
 {
-    public class BuildingFiscalModel : BaseModel
+    public class BuildingFiscalModel : BaseAppModel
     {
         #region Properties
         public long BuildingId { get; set; }

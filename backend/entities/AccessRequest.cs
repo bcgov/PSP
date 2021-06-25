@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// AccessRequest class, provides an entity for the datamodel to manage submitted access request forms for unauthorized users.
     /// </summary>
     [MotiTable("PIMS_ACCESS_REQUEST", "ACCRQT")]
-    public class AccessRequest : BaseEntity
+    public class AccessRequest : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -43,12 +43,22 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get - the list of agencies that the user is requesting to be added to.
         /// </summary>
-        public ICollection<AccessRequestAgency> Agencies { get; private set; } = new List<AccessRequestAgency>();
+        public ICollection<Agency> Agencies { get; } = new List<Agency>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to agencies.
+        /// </summary>
+        public ICollection<AccessRequestAgency> AgenciesManyToMany { get; } = new List<AccessRequestAgency>();
 
         /// <summary>
         /// get - the list of roles this user is requesting.
         /// </summary>
-        public ICollection<AccessRequestRole> Roles { get; private set; } = new List<AccessRequestRole>();
+        public ICollection<Role> Roles { get; } = new List<Role>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to roles.
+        /// </summary>
+        public ICollection<AccessRequestRole> RolesManyToMany { get; } = new List<AccessRequestRole>();
         #endregion
 
         #region Constructors

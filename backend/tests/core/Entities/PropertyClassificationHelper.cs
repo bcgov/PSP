@@ -39,13 +39,13 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PropertyClassification>()
             {
-                new Entity.PropertyClassification("Core Operational") { Id = 0, RowVersion = 1 },
-                new Entity.PropertyClassification("Core Strategic") { Id = 1, RowVersion = 1 },
-                new Entity.PropertyClassification("Surplus Active") { Id = 2, RowVersion = 1 },
-                new Entity.PropertyClassification("Surplus Encumbered") { Id = 3, RowVersion = 1 },
-                new Entity.PropertyClassification("Disposed", false) { Id = 4, RowVersion = 1 },
-                new Entity.PropertyClassification("Demolished", false) { Id = 5, RowVersion = 1 },
-                new Entity.PropertyClassification("Subdivided", false) { Id = 6, RowVersion = 1 }
+                new Entity.PropertyClassification("Core Operational") { Id = 1, RowVersion = 1 },
+                new Entity.PropertyClassification("Core Strategic") { Id = 2, RowVersion = 1 },
+                new Entity.PropertyClassification("Surplus Active") { Id = 3, RowVersion = 1 },
+                new Entity.PropertyClassification("Surplus Encumbered") { Id = 4, RowVersion = 1 },
+                new Entity.PropertyClassification("Disposed", false) { Id = 5, RowVersion = 1 },
+                new Entity.PropertyClassification("Demolished", false) { Id = 6, RowVersion = 1 },
+                new Entity.PropertyClassification("Subdivided", false) { Id = 7, RowVersion = 1 }
             };
         }
     }

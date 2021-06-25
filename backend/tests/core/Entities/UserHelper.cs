@@ -38,8 +38,8 @@ namespace Pims.Core.Test
                 RowVersion = 1
             };
 
-            user.Roles.Add(new Entity.UserRole(user, role ?? EntityHelper.CreateRole("Real Estate Manager")));
-            user.Agencies.Add(new Entity.UserAgency(user, agency ?? EntityHelper.CreateAgency()));
+            user.Roles.Add(role ?? EntityHelper.CreateRole("Real Estate Manager"));
+            user.Agencies.Add(agency ?? EntityHelper.CreateAgency());
 
             return user;
         }

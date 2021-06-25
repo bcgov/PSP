@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// UserAgency class, provides an entity for the datamodel to manage user agencies.
     /// </summary>
     [MotiTable("PIMS_USER_AGENCY", "USRAGC")]
-    public class UserAgency : BaseEntity
+    public class UserAgency : BaseAppEntity
     {
         #region Properties
         /// <summary>

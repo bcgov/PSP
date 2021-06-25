@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// User class, provides an entity for the datamodel to manage users.
     /// </summary>
     [MotiTable("PIMS_USER", "USER")]
-    public class User : BaseEntity
+    public class User : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -116,12 +116,22 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get - A collection of agencies this user belongs to.
         /// </summary>
-        public ICollection<UserAgency> Agencies { get; } = new List<UserAgency>();
+        public ICollection<Agency> Agencies { get; } = new List<Agency>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to agencies.
+        /// </summary>
+        public ICollection<UserAgency> AgenciesManyToMany { get; } = new List<UserAgency>();
 
         /// <summary>
         /// get - A collection of roles this user belongs to.
         /// </summary>
-        public ICollection<UserRole> Roles { get; } = new List<UserRole>();
+        public ICollection<Role> Roles { get; } = new List<Role>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to roles.
+        /// </summary>
+        public ICollection<UserRole> RolesManyToMany { get; } = new List<UserRole>();
 
         /// <summary>
         /// get - A collection of access requests belonging to this user.

@@ -48,7 +48,7 @@ namespace Pims.Api.Test.Routes.Project
         public void ImportProperties_Route()
         {
             // Arrange
-            var endpoint = typeof(ImportController).FindMethod(nameof(ImportController.ImportProperties), typeof(Model.ImportPropertyModel[]));
+            var endpoint = typeof(ImportController).FindMethod(nameof(ImportController.ImportProperties), typeof(Model.ImportPropertyModel[]), typeof(string));
 
             // Act
             // Assert
@@ -67,21 +67,6 @@ namespace Pims.Api.Test.Routes.Project
             // Assert
             Assert.NotNull(endpoint);
             endpoint.HasPost("properties/financials");
-            endpoint.HasPermissions(Permissions.SystemAdmin);
-        }
-        #endregion
-
-        #region Projects
-        [Fact]
-        public void ImportProjects_Route()
-        {
-            // Arrange
-            var endpoint = typeof(ImportController).FindMethod(nameof(ImportController.ImportProjects), typeof(Model.ImportProjectModel[]), typeof(bool), typeof(DateTime?), typeof(string));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost("projects");
             endpoint.HasPermissions(Permissions.SystemAdmin);
         }
         #endregion

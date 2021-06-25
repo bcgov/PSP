@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// BuildingFiscal class, provides an entity to map values to a fiscal year.
     /// </summary>
     [MotiTable("PIMS_BUILDING_FISCAL", "BLDFSC")]
-    public class BuildingFiscal : BaseEntity
+    public class BuildingFiscal : BaseAppEntity
     {
         #region Properties
         /// <summary>

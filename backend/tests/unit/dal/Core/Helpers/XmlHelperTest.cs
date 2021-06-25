@@ -23,10 +23,10 @@ namespace Pims.Api.Test.Helpers
                 new object[]
                 {
                     new[] {
-                        new Entity.TierLevel("test1") { Id = 1, CreatedOn = DateTime.UtcNow },
-                        new Entity.TierLevel("test2") { Id = 2, CreatedOn = DateTime.UtcNow }
+                        new Entity.PropertyType("test1") { Id = 1 },
+                        new Entity.PropertyType("test2") { Id = 2 }
                     },
-                    9
+                    5
                 }
             };
         #endregion

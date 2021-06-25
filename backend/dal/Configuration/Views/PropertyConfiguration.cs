@@ -84,12 +84,12 @@ namespace Pims.Dal.Configuration.Views
                             BuildingPredominateUse = b.BuildingPredominateUse.Name,
                             BuildingTenancy = b.BuildingTenancy,
 
-                            PID = b.Parcels.FirstOrDefault().Parcel.PID,
-                            PIN = b.Parcels.FirstOrDefault().Parcel.PIN,
-                            Zoning = b.Parcels.FirstOrDefault().Parcel.Zoning,
-                            ZoningPotential = b.Parcels.FirstOrDefault().Parcel.ZoningPotential,
-                            LandArea = b.Parcels.FirstOrDefault().Parcel.LandArea,
-                            LandLegalDescription = b.Parcels.FirstOrDefault().Parcel.LandLegalDescription
+                            PID = b.Parcels.FirstOrDefault().PID,
+                            PIN = b.Parcels.FirstOrDefault().PIN,
+                            Zoning = b.Parcels.FirstOrDefault().Zoning,
+                            ZoningPotential = b.Parcels.FirstOrDefault().ZoningPotential,
+                            LandArea = b.Parcels.FirstOrDefault().LandArea,
+                            LandLegalDescription = b.Parcels.FirstOrDefault().LandLegalDescription
                         })
                         .Union(
                             from p in this.Context.Parcels

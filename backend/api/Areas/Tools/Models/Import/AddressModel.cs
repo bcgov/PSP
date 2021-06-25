@@ -1,6 +1,6 @@
 namespace Pims.Api.Areas.Tools.Models.Import
 {
-    public class AddressModel : Api.Models.BaseModel
+    public class AddressModel : Api.Models.BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

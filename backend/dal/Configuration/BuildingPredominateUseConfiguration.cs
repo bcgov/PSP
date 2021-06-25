@@ -23,7 +23,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("A unique name to identify this record");
 
             builder.HasIndex(m => new { m.Name }, "BLPRDU_NAME_TUC").IsUnique();
-            builder.HasIndex(m => new { m.IsDisabled, m.SortOrder }, "BLPRDU_IS_DISABLED_SORT_ORDER_IDX");
+            builder.HasIndex(m => new { m.IsDisabled, m.SortOrder }, "BLPRDU_IS_DISABLED_DISPLAY_ORDER_IDX");
 
             base.Configure(builder);
         }

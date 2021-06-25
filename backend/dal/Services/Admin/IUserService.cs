@@ -13,6 +13,7 @@ namespace Pims.Dal.Services.Admin
         Paged<User> Get(int page, int quantity);
         Paged<User> Get(UserFilter filter);
         User Get(Guid key);
+        User Get(long id);
 
         AccessRequest UpdateAccessRequest(AccessRequest accessRequest);
         AccessRequest GetAccessRequest(long id);

@@ -5,15 +5,19 @@ INSERT INTO dbo.[PIMS_PROPERTY_TYPE] (
     , [NAME]
     , [IS_DISABLED]
 ) VALUES (
-    0
+    1
     , 'Land'
     , 0
 ), (
-    1
+    2
     , 'Building'
+    , 0
+), (
+    3
+    , 'Subdivision'
     , 0
 )
 
 -- Update sequence so that it works with the latest data.
 ALTER SEQUENCE dbo.[PIMS_PROPERTY_TYPE_ID_SEQ]
-RESTART WITH 2
+RESTART WITH 4

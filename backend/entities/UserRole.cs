@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// UserRole class, provides an entity for the datamodel to manage user agencies.
     /// </summary>
     [MotiTable("PIMS_USER_ROLE", "USRROL")]
-    public class UserRole : BaseEntity
+    public class UserRole : BaseAppEntity
     {
         #region Properties
         /// <summary>

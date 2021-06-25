@@ -7,15 +7,18 @@ namespace Pims.Api.Models
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify record.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The item's name.
         /// </summary>
-        /// <value></value>
         public string Name { get; set; }
 
         /// <summary>
         /// get/set - Whether the item is disabled.
         /// </summary>
-        /// <value></value>
         public bool IsDisabled { get; set; }
 
         /// <summary>
@@ -26,13 +29,11 @@ namespace Pims.Api.Models
         /// <summary>
         /// get/set - The item's sort order.
         /// </summary>
-        /// <value></value>
         public int SortOrder { get; set; }
 
         /// <summary>
         /// get/set - The item's type.
         /// </summary>
-        /// <value></value>
         public string Type { get; set; }
         #endregion
     }

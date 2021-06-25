@@ -61,7 +61,7 @@ namespace Pims.Dal.Services
             IQueryable<Building> query = null;
             // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning agency.
             query = this.Context.Buildings
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel)
+                .Include(b => b.Parcels)
                 .AsNoTracking()
                 .Where(b =>
                 (isAdmin || b.IsVisibleToOtherAgencies || !b.IsSensitive || (viewSensitive && userAgencies.Contains(b.AgencyId))));
@@ -127,10 +127,10 @@ namespace Pims.Dal.Services
             var isAdmin = this.User.HasPermission(Permissions.AdminProperties);
 
             var building = this.Context.Buildings
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Evaluations)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Fiscals)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Address).ThenInclude(a => a.Province)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Classification)
+                .Include(b => b.Parcels).ThenInclude(b => b.Evaluations)
+                .Include(b => b.Parcels).ThenInclude(b => b.Fiscals)
+                .Include(b => b.Parcels).ThenInclude(b => b.Address).ThenInclude(a => a.Province)
+                .Include(b => b.Parcels).ThenInclude(b => b.Classification)
                 .Include(b => b.Classification)
                 .Include(p => p.BuildingPredominateUse)
                 .Include(p => p.BuildingConstructionType)
@@ -139,8 +139,6 @@ namespace Pims.Dal.Services
                 .Include(p => p.Agency).ThenInclude(a => a.Parent)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.Projects).ThenInclude(pp => pp.Project).ThenInclude(p => p.Workflow)
-                .Include(p => p.Projects).ThenInclude(pp => pp.Project).ThenInclude(p => p.Status)
                 .AsNoTracking()
                 .FirstOrDefault(b => b.Id == id
                     && (isAdmin
@@ -165,7 +163,7 @@ namespace Pims.Dal.Services
                 throw new NotAuthorizedException("User must belong to an agency before adding buildings.");
 
             // A building should have a unique name within the parcel it is located on.
-            building.Parcels.ForEach(pb => this.Context.ThrowIfNotUnique(pb.Parcel, building));
+            building.ParcelsManyToMany.ForEach(pb => this.Context.ThrowIfNotUnique(pb.Parcel, building));
             // If the user is not an admin, and their agency is not a parent override to their user agency
             if (!this.User.HasPermission(Permissions.AdminProperties) && agency.ParentId != null)
             {
@@ -178,7 +176,7 @@ namespace Pims.Dal.Services
             building.Classification = this.Context.PropertyClassifications.Find(building.ClassificationId);
             building.IsVisibleToOtherAgencies = false;
 
-            building.Parcels.ForEach(bp =>
+            building.ParcelsManyToMany.ForEach(bp =>
             {
                 bp.Building = building;
                 //The Parcel may already exist, if it does update the existing parcel.
@@ -216,11 +214,11 @@ namespace Pims.Dal.Services
                 .Include(b => b.Address).ThenInclude(a => a.Province)
                 .Include(b => b.Evaluations)
                 .Include(b => b.Fiscals)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Buildings)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Evaluations)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Classification)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Fiscals)
-                .Include(b => b.Parcels).ThenInclude(pb => pb.Parcel).ThenInclude(b => b.Address).ThenInclude(a => a.Province)
+                .Include(b => b.Parcels).ThenInclude(b => b.Buildings)
+                .Include(b => b.Parcels).ThenInclude(b => b.Evaluations)
+                .Include(b => b.Parcels).ThenInclude(b => b.Classification)
+                .Include(b => b.Parcels).ThenInclude(b => b.Fiscals)
+                .Include(b => b.Parcels).ThenInclude(b => b.Address).ThenInclude(a => a.Province)
                 .FirstOrDefault(b => b.Id == building.Id) ?? throw new KeyNotFoundException();
 
             var userAgencies = this.User.GetAgenciesAsNullable();
@@ -245,13 +243,13 @@ namespace Pims.Dal.Services
 
             var allowEdit = isAdmin || userAgencies.Contains(existingBuilding.AgencyId);
             // A building should have a unique name within the parcel it is located on.
-            existingBuilding.Parcels.ForEach(pb => this.Context.ThrowIfNotUnique(pb.Parcel, building));
+            existingBuilding.Parcels.ForEach(p => this.Context.ThrowIfNotUnique(p, building));
 
-            foreach (var parcel in building.Parcels.Select(pb => pb.Parcel))
+            foreach (var parcel in building.Parcels)
             {
                 // Check if the parcel already exists.
-                var existingAssociatedParcel = existingBuilding.Parcels.Where(pb => pb.Parcel.Id != 0)
-                    .FirstOrDefault(pb => pb.ParcelId == parcel.Id)?.Parcel;
+                var existingAssociatedParcel = existingBuilding.Parcels.Where(p => p.Id != 0)
+                    .FirstOrDefault(p => p.Id == parcel.Id);
 
                 // Reset all relationships that are not changed through this update.
                 parcel.Address.Province = this.Context.Provinces.FirstOrDefault(p => p.Id == parcel.Address.ProvinceId);
@@ -271,7 +269,7 @@ namespace Pims.Dal.Services
                         _service.Parcel.PendingUpdate(parcel);
                     }
 
-                    existingBuilding.Parcels.Add(new ParcelBuilding(existingParcel ?? parcel, building));
+                    existingBuilding.Parcels.Add(existingParcel ?? parcel);
                 }
                 else
                 {
@@ -290,14 +288,14 @@ namespace Pims.Dal.Services
                 this.Context.UpdateBuildingFinancials(existingBuilding, building.Evaluations, building.Fiscals);
 
                 // Go through the existing parcels and see if they have been deleted from the updated buildings.
-                foreach (var parcelBuilding in existingBuilding.Parcels)
+                foreach (var parcelBuilding in existingBuilding.ParcelsManyToMany)
                 {
-                    var updateParcel = building.Parcels.FirstOrDefault(pb => pb.ParcelId == parcelBuilding.ParcelId);
+                    var updateParcel = building.Parcels.FirstOrDefault(pb => pb.Id == parcelBuilding.ParcelId);
                     if (updateParcel == null)
                     {
                         this.ThrowIfNotAllowedToUpdate(parcelBuilding.Building, _options.Project);
 
-                        building.Parcels.Remove(parcelBuilding);
+                        building.ParcelsManyToMany.Remove(parcelBuilding);
                         this.Context.ParcelBuildings.Remove(parcelBuilding);
 
                         continue;
@@ -307,7 +305,7 @@ namespace Pims.Dal.Services
                     foreach (var parcelEvaluation in parcelBuilding.Parcel.Evaluations)
                     {
                         // Delete the evaluations that have been removed.
-                        if (!updateParcel.Parcel.Evaluations.Any(e => (e.ParcelId == parcelEvaluation.ParcelId && e.Date == parcelEvaluation.Date && e.Key == parcelEvaluation.Key)))
+                        if (!updateParcel.Evaluations.Any(e => (e.ParcelId == parcelEvaluation.ParcelId && e.Date == parcelEvaluation.Date && e.Key == parcelEvaluation.Key)))
                         {
                             this.Context.ParcelEvaluations.Remove(parcelEvaluation);
                         }
@@ -315,7 +313,7 @@ namespace Pims.Dal.Services
                     foreach (var parcelFiscal in parcelBuilding.Parcel.Fiscals)
                     {
                         // Delete the fiscals that have been removed.
-                        if (!updateParcel.Parcel.Fiscals.Any(e => (e.ParcelId == parcelFiscal.ParcelId && e.FiscalYear == parcelFiscal.FiscalYear && e.Key == parcelFiscal.Key)))
+                        if (!updateParcel.Fiscals.Any(e => (e.ParcelId == parcelFiscal.ParcelId && e.FiscalYear == parcelFiscal.FiscalYear && e.Key == parcelFiscal.Key)))
                         {
                             this.Context.ParcelFiscals.Remove(parcelFiscal);
                         }

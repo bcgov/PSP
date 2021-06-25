@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Parcel
 {
-    public class PartialPropertyModel : BaseModel
+    public class PartialPropertyModel : BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

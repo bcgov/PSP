@@ -84,69 +84,9 @@ VALUES
     , 'sensitive-view'
     , 'Ability to view sensitive properties.'
     , 0
-),
-
--- Projects
-(
-    13
-    , '41747042-ad4a-4511-858b-67ed70c8e7e9'
-    , 'dispose-request'
-    , 'Ability to request to dispose properties.'
-    , 0
-), (
-    14
-    , 'd11ce982-f22b-4cd2-87d4-87b8f7f9a3c8'
-    , 'dispose-approve'
-    , 'Ability to approve disposal of a properties.'
-    , 0
-), (
-    15
-    , '9e578c1f-1c60-4a5f-98b5-966b079a35e9'
-    , 'project-view'
-    , 'Ability to view projects.'
-    , 0
-), (
-    16
-    , 'cbf68973-e239-41a9-be27-bf0ede3bf335'
-    , 'project-add'
-    , 'Ability to add projects.'
-    , 0
-), (
-    17
-    , 'dbe02a47-34ec-48f9-9df5-3d959c46e174'
-    , 'project-edit'
-    , 'Ability to edit projects.'
-    , 0
-), (
-    18
-    , 'd6e91b9c-9728-4e62-8d91-319af2701b9b'
-    , 'project-delete'
-    , 'Ability to delete projects.'
-    , 0
 )
-
--- Reports
-, (
-    19
-    , 'e13d1c7d-f350-4aee-808e-c9603c29479b'
-    , 'reports-view'
-    , 'Ability to view reports.'
-    , 0
-), (
-    20
-    , '0fbd370d-6cde-41e7-9039-f05ae60d75da'
-    , 'reports-spl'
-    , 'Ability to view SPL reports.'
-    , 0
-), (
-    21
-    , '81ded21c-ed32-4694-8f33-79ef17833f2b'
-    , 'reports-spl-admin'
-    , 'Ability to view, create, and delete SPL Financial Reports.'
-    , 0
-);
 
 -- Update sequence so that it works with the latest data.
 ALTER SEQUENCE dbo.[PIMS_CLAIM_ID_SEQ]
-RESTART WITH 22
+RESTART WITH 13
 

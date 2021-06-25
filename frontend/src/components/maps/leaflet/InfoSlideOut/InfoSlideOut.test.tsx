@@ -22,7 +22,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { mockKeycloak } from 'utils/testUtils';
+import { mockKeycloak } from 'utils';
 
 import InfoSlideOut from './InfoSlideOut';
 

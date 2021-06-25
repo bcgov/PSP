@@ -4,7 +4,7 @@ using Model = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Admin.Models.Parcel
 {
-    public class ParcelBuildingModel : Model.BaseModel
+    public class ParcelBuildingModel : Model.BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

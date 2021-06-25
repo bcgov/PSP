@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// AddressConfiguration class, provides a way to configure addresses in the database.
     ///</summary>
-    public class AddressConfiguration : BaseEntityConfiguration<Address>
+    public class AddressConfiguration : BaseAppEntityConfiguration<Address>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<Address> builder)

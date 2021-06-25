@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// AccessRequestRole class, provides an entity for the datamodel to manage AccessRequest Roles.
     /// </summary>
     [MotiTable("PIMS_ACCESS_REQUEST_ROLE", "ACCRQR")]
-    public class AccessRequestRole : BaseEntity
+    public class AccessRequestRole : BaseAppEntity
     {
         #region Properties
         /// <summary>

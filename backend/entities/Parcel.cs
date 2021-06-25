@@ -67,7 +67,12 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - A collection of buildings on this parcel.
         /// </summary>
-        public ICollection<ParcelBuilding> Buildings { get; } = new List<ParcelBuilding>();
+        public ICollection<Building> Buildings { get; } = new List<Building>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to buildings.
+        /// </summary>
+        public ICollection<ParcelBuilding> BuildingsManyToMany { get; } = new List<ParcelBuilding>();
 
         /// <summary>
         /// get - A collection of evaluations for this parcel.
@@ -80,26 +85,34 @@ namespace Pims.Dal.Entities
         public ICollection<ParcelFiscal> Fiscals { get; } = new List<ParcelFiscal>();
 
         /// <summary>
-        /// get - A collection of projects this parcel is assocated to.
-        /// </summary>
-        public ICollection<ProjectProperty> Projects { get; } = new List<ProjectProperty>();
-
-        /// <summary>
         /// get/set - A collection of parcels associated to this subdivision (empty if this parcel is not a subdivision).
         /// </summary>
-        public ICollection<ParcelParcel> Parcels { get; } = new List<ParcelParcel>();
+        public ICollection<Parcel> Parcels { get; } = new List<Parcel>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to parcels.
+        /// </summary>
+        public ICollection<ParcelParcel> ParcelsManyToMany { get; } = new List<ParcelParcel>();
 
         /// <summary>
         /// get/set - A collection of subdivisions associated to this parcel (empty if this parcel is not subdivided).
         /// </summary>
-        public ICollection<ParcelParcel> Subdivisions { get; } = new List<ParcelParcel>();
+        public ICollection<Parcel> Subdivisions { get; } = new List<Parcel>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to subdivisions.
+        /// </summary>
+        public ICollection<ParcelParcel> SubdivisionsManyToMany { get; } = new List<ParcelParcel>();
         #endregion
 
         #region Constructors
         /// <summary>
         /// Create a new instance of a Parcel class.
         /// </summary>
-        public Parcel() { }
+        public Parcel()
+        {
+            this.PropertyTypeId = (long)PropertyTypes.Land;
+        }
 
         /// <summary>
         /// Create a new instance of a Parcel class.
@@ -110,6 +123,7 @@ namespace Pims.Dal.Entities
         public Parcel(int pid, double latitude, double longitude) : base(latitude, longitude)
         {
             this.PID = pid;
+            this.PropertyTypeId = (long)PropertyTypes.Land;
         }
         #endregion
     }

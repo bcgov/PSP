@@ -6,7 +6,7 @@ namespace Pims.Api.Areas.Admin.Models.User
     /// <summary>
     /// UserModel class, provides a model that represents a user.
     /// </summary>
-    public class UserModel : Pims.Api.Models.BaseModel
+    public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
         /// <summary>

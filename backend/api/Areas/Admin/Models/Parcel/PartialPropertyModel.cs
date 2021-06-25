@@ -2,7 +2,7 @@ using Model = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Admin.Models.Parcel
 {
-    public class PartialPropertyModel : Model.BaseModel
+    public class PartialPropertyModel : Model.BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

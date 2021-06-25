@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// UserConfiguration class, provides a way to configure users in the database.
     ///</summary>
-    public class UserConfiguration : BaseEntityConfiguration<User>
+    public class UserConfiguration : BaseAppEntityConfiguration<User>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<User> builder)
@@ -61,6 +61,10 @@ namespace Pims.Dal.Configuration
                 .HasComment("The user's last login date");
 
             builder.HasOne(m => m.ApprovedBy).WithMany().HasForeignKey(m => m.ApprovedById).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("USER_USER_APPROVED_BY_ID_IDX");
+            builder.HasMany(m => m.Roles).WithMany(r => r.Users).UsingEntity<UserRole>(
+                m => m.HasOne(m => m.Role).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.RoleId),
+                m => m.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId)
+            );
 
             builder.HasIndex(m => new { m.Key }, "USER_USER_UID_TUC").IsUnique();
             builder.HasIndex(m => new { m.Email }, "USER_EMAIL_TUC").IsUnique();

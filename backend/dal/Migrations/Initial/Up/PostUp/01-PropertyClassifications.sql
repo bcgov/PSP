@@ -5,33 +5,33 @@ INSERT INTO dbo.[PIMS_PROPERTY_CLASSIFICATION] (
     , [NAME]
     , [IS_DISABLED]
     , [IS_VISIBLE]
-    , [SORT_ORDER]
+    , [DISPLAY_ORDER]
 ) VALUES (
-    0
+    1
     , 'Core Operational'
     , 0
     , 1
     , 1
 ), (
-    1
+    2
     , 'Core Strategic'
     , 0
     , 1
     , 2
 ), (
-    2
+    3
     , 'Surplus Active'
     , 0
     , 1
     , 3
 ), (
-    3
+    4
     , 'Surplus Encumbered'
     , 0
     , 1
     , 4
 ), (
-    4
+    5
     , 'Disposed'
     , 0
     , 0
@@ -40,4 +40,4 @@ INSERT INTO dbo.[PIMS_PROPERTY_CLASSIFICATION] (
 
 -- Update sequence so that it works with the latest data.
 ALTER SEQUENCE dbo.[PIMS_PROPERTY_CLASSIFICATION_ID_SEQ]
-RESTART WITH 5
+RESTART WITH 6

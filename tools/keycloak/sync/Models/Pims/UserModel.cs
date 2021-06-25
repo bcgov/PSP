@@ -8,7 +8,7 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
     /// <summary>
     /// UserModel class, provides a model that represents a user.
     /// </summary>
-    public class UserModel : BaseModel
+    public class UserModel : BaseAppModel
     {
         #region Properties
         /// <summary>

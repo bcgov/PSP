@@ -28,7 +28,7 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.GroupName).HasMaxLength(250)
                 .HasComment("A group name to associate multiple records");
 
-            builder.HasIndex(m => new { m.IsDisabled, m.Name, m.SortOrder }, "ADMINA_IS_DISABLED_NAME_SORT_ORDER_IDX");
+            builder.HasIndex(m => new { m.IsDisabled, m.Name, m.SortOrder }, "ADMINA_IS_DISABLED_NAME_DISPLAY_ORDER_IDX");
 
             base.Configure(builder);
         }

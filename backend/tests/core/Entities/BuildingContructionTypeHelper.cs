@@ -37,11 +37,11 @@ namespace Pims.Core.Test
         {
             return new List<Entity.BuildingConstructionType>()
             {
-                new Entity.BuildingConstructionType("Concrete") { Id = 0, RowVersion = 1 },
-                new Entity.BuildingConstructionType("Masonry") { Id = 1, RowVersion = 1 },
-                new Entity.BuildingConstructionType("Mixed") { Id = 2, RowVersion = 1 },
-                new Entity.BuildingConstructionType("Steel") { Id = 3, RowVersion = 1 },
-                new Entity.BuildingConstructionType("Wood") { Id = 4, RowVersion = 1 }
+                new Entity.BuildingConstructionType("Concrete") { Id = 1, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Masonry") { Id = 2, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Mixed") { Id = 3, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Steel") { Id = 4, RowVersion = 1 },
+                new Entity.BuildingConstructionType("Wood") { Id = 5, RowVersion = 1 }
             };
         }
     }

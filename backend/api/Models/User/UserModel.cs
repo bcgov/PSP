@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.User
 {
-    public class UserModel : Pims.Api.Models.BaseModel
+    public class UserModel : BaseAppModel
     {
         #region Properties
         /// <summary>

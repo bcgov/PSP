@@ -5,8 +5,8 @@ import { IEvaluation, IFiscal } from 'interfaces';
 import moment, { Moment } from 'moment';
 import { getCurrentFiscalYear } from 'utils';
 
+import { getCurrentFiscal, getMostRecentAppraisal, getMostRecentEvaluation } from '.';
 import { toFlatProperty } from './propertyUtils';
-import { getCurrentFiscal, getMostRecentAppraisal, getMostRecentEvaluation } from './utils';
 
 const createAppraisal = (date: Moment): IEvaluation => {
   return {

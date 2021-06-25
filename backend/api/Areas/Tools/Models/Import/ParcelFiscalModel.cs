@@ -1,6 +1,6 @@
 namespace Pims.Api.Areas.Tools.Models.Import
 {
-    public class ParcelFiscalModel : Api.Models.BaseModel
+    public class ParcelFiscalModel : Api.Models.BaseAppModel
     {
         #region Properties
         public long ParcelId { get; set; }

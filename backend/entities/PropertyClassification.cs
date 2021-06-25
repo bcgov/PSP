@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to property classification.
         /// </summary>
         [Column("PROPERTY_CLASSIFICATION_ID")]
-        public long Id { get; set; }
+        public override long Id { get; set; }
 
         /// <summary>
         /// get/set - Whether this classification is generally visible.

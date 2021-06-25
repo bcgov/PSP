@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -33,7 +32,7 @@ namespace Pims.Dal.Services
         /// <param name="service"></param>
         /// <param name="notifyService"></param>
         /// <param name="logger"></param>
-        public NotificationQueueService(PimsContext dbContext, ClaimsPrincipal user, IOptions<PimsOptions> options, IPimsService service, INotificationService notifyService, ILogger<TaskService> logger) : base(dbContext, user, service, logger)
+        public NotificationQueueService(PimsContext dbContext, ClaimsPrincipal user, IOptions<PimsOptions> options, IPimsService service, INotificationService notifyService, ILogger<NotificationQueueService> logger) : base(dbContext, user, service, logger)
         {
             _options = options.Value;
             _notifyService = notifyService;
@@ -41,7 +40,6 @@ namespace Pims.Dal.Services
         #endregion
 
         #region Methods
-
         /// <summary>
         /// Get an array of notifications within the specified filter.
         /// </summary>
@@ -130,192 +128,6 @@ namespace Pims.Dal.Services
             return notification;
         }
 
-        #region Project Notifications
-        /// <summary>
-        /// Generate an array of notifications for the specified 'project', and for the specified 'fromStatusId' and 'toStatusId'.
-        /// This will generate all notifications that should be generated for the specified status transition,
-        /// along with any notifications that are only specifically for the 'toStatusId'.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="fromStatusId"></param>
-        /// <param name="toStatusId"></param>
-        /// <param name="includeOnlyTo">Control whether transitions only require a `To Status`, not a `From Status`.</param>
-        /// <returns></returns>
-        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, long? fromStatusId, long? toStatusId, bool includeOnlyTo = true)
-        {
-            if (project == null) throw new ArgumentNullException(nameof(project));
-
-            var options = this.Context.ProjectStatusNotifications
-                .Include(n => n.Template)
-                .Where(n => !n.Template.IsDisabled
-                    && (n.FromStatusId == fromStatusId || (includeOnlyTo && n.FromStatusId == null))
-                    && n.ToStatusId == toStatusId).ToArray();
-
-            var parcelIds = project.Properties.Where(p => p.PropertyType == PropertyTypes.Land).Select(p => p.ParcelId).ToArray();
-            this.Context.Parcels
-                .Include(p => p.Agency)
-                .Include(p => p.Address)
-                .Include(p => p.Classification)
-                .Where(p => parcelIds.Contains(p.Id)).Load();
-
-            var buildingIds = project.Properties.Where(p => p.PropertyType == PropertyTypes.Building).Select(p => p.BuildingId).ToArray();
-            this.Context.Buildings
-                .Include(p => p.Agency)
-                .Include(p => p.Address)
-                .Include(p => p.Classification)
-                .Include(p => p.BuildingConstructionType)
-                .Include(p => p.BuildingOccupantType)
-                .Include(p => p.BuildingPredominateUse)
-                .Where(p => buildingIds.Contains(p.Id)).Load();
-
-            var queue = new List<NotificationQueue>();
-            foreach (var o in options)
-            {
-                queue.AddRange(GenerateNotifications(project, o));
-            }
-            return queue;
-        }
-
-        /// <summary>
-        /// Generate an array of notifications for the specified 'project', and for the specified 'projectStatusNotificationId'.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="projectStatusNotificationId"></param>
-        /// <returns></returns>
-        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, long projectStatusNotificationId)
-        {
-            return GenerateNotifications(project, this.Self.ProjectNotification.Get(projectStatusNotificationId));
-        }
-
-        /// <summary>
-        /// Generate an array of notifications for the specified 'project', and for the specified 'options' that represent the status transitions.
-        /// If any notifications have a delay that expects a given date, use the specified 'sendOn' date.
-        /// Depending on the notification template audience a number of notifications will be generated.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="options"></param>
-        /// <param name="sendOn"></param>
-        /// <returns></returns>
-        public IEnumerable<NotificationQueue> GenerateNotifications(Project project, ProjectStatusNotification options, DateTime? sendOn = null)
-        {
-            if (project == null) throw new ArgumentNullException(nameof(project));
-            if (options == null) throw new ArgumentNullException(nameof(options));
-            if (options.Template == null) throw new ArgumentNullException(nameof(options), "Argument property 'Template' is cannot be null.");
-
-            var env = new EnvironmentModel(_options.Environment.Uri, _options.Environment.Name, _options.Environment.Title);
-            var notifications = new List<NotificationQueue>();
-            if (options.Template.Audience == NotificationAudiences.OwningAgency)
-            {
-                // Generate a notification for the owning agency of the project.
-                notifications.Add(GenerateNotification(options, new ProjectNotificationModel(Guid.NewGuid(), env, project, project.Agency), sendOn));
-            }
-            else if (options.Template.Audience == NotificationAudiences.Agencies)
-            {
-                // Generate a notification for all enabled agencies that have not turned of emails, or indicated they are not interested in the project.
-                var agencies = (from a in this.Context.Agencies
-                                join par in this.Context.ProjectAgencyResponses on new { AgencyId = a.Id, ProjectId = project.Id } equals new { par.AgencyId, par.ProjectId } into g
-                                from n in g.DefaultIfEmpty()
-                                where !a.IsDisabled && a.SendEmail && (n == null || (n.Response != NotificationResponses.Unsubscribe && n.Response != NotificationResponses.Watch))
-                                select a).ToArray();
-
-                foreach (var agency in agencies)
-                {
-                    notifications.Add(GenerateNotification(options, new ProjectNotificationModel(Guid.NewGuid(), env, project, agency), sendOn));
-                }
-            }
-            else if (options.Template.Audience == NotificationAudiences.ParentAgencies)
-            {
-                // Generate a notification for all enabled parent agencies that have not turned of emails, or asked to ignore the project.
-                var agencies = (from a in this.Context.Agencies
-                                join par in this.Context.ProjectAgencyResponses on new { AgencyId = a.Id, ProjectId = project.Id } equals new { par.AgencyId, par.ProjectId } into g
-                                from n in g.DefaultIfEmpty()
-                                where a.ParentId == null
-                                 && !a.IsDisabled
-                                 && a.SendEmail
-                                 && (n == null || (n.Response != NotificationResponses.Unsubscribe && n.Response != NotificationResponses.Watch))
-                                select a).ToArray();
-
-                foreach (var agency in agencies)
-                {
-                    notifications.Add(GenerateNotification(options, new ProjectNotificationModel(Guid.NewGuid(), env, project, agency), sendOn));
-                }
-            }
-            else if (options.Template.Audience == NotificationAudiences.Default)
-            {
-                // Generate a notification for the default specified 'To' email addresses.
-                notifications.Add(GenerateNotification(options, new ProjectNotificationModel(Guid.NewGuid(), env, project), sendOn));
-            }
-            else if (options.Template.Audience == NotificationAudiences.WatchingAgencies)
-            {
-                // Generate a notification for agencies that have expressed interest.
-                var agencies = (from a in this.Context.Agencies
-                                join par in this.Context.ProjectAgencyResponses on new { AgencyId = a.Id, ProjectId = project.Id } equals new { par.AgencyId, par.ProjectId } into g
-                                from n in g.DefaultIfEmpty()
-                                where !a.IsDisabled
-                                 && a.SendEmail
-                                 && n != null
-                                 && n.Response == NotificationResponses.Watch
-                                select a).ToArray();
-
-                foreach (var agency in agencies)
-                {
-                    notifications.Add(GenerateNotification(options, new ProjectNotificationModel(Guid.NewGuid(), env, project, agency), sendOn));
-                }
-            }
-
-            return notifications.NotNull();
-        }
-
-        /// <summary>
-        /// Generate a notification for the specified 'project', 'options' and 'agency'.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="options"></param>
-        /// <param name="agency"></param>
-        /// <param name="sendOn">When provided the notification will be sent on this date.</param>
-        /// <returns></returns>
-        public NotificationQueue GenerateNotification(Project project, ProjectStatusNotification options, Agency agency, DateTime? sendOn = null)
-        {
-            if (project == null) throw new ArgumentNullException(nameof(project));
-            if (options == null) throw new ArgumentNullException(nameof(options));
-            if (options.Template == null) throw new ArgumentNullException(nameof(options), "Argument property 'Template' is cannot be null.");
-
-            var env = new EnvironmentModel(_options.Environment.Uri, _options.Environment.Name, _options.Environment.Title);
-            return GenerateNotification(options, new ProjectNotificationModel(Guid.NewGuid(), env, project, agency), sendOn);
-        }
-
-        /// <summary>
-        /// Generate a notification for the specified 'project' and 'templateName'.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="templateName"></param>
-        /// <returns></returns>
-        public NotificationQueue GenerateNotification(Project project, string templateName)
-        {
-            var template = this.Context.NotificationTemplates.FirstOrDefault(n => n.Name == templateName) ?? throw new InvalidOperationException($"Notification template '{templateName}' does not exist.");
-            return GenerateNotification(project, template);
-        }
-
-        /// <summary>
-        /// Generate a notification for the specified 'project' and 'template'.
-        /// </summary>
-        /// <param name="project"></param>
-        /// <param name="template"></param>
-        /// <returns></returns>
-        public NotificationQueue GenerateNotification(Project project, NotificationTemplate template)
-        {
-            if (project == null) throw new ArgumentNullException(nameof(project));
-            if (template == null) throw new ArgumentNullException(nameof(template));
-
-            var env = new EnvironmentModel(_options.Environment.Uri, _options.Environment.Name, _options.Environment.Title);
-            var model = new ProjectNotificationModel(Guid.NewGuid(), env, project, project.Agency);
-            var email = !String.IsNullOrWhiteSpace(project.Agency.Email) ? project.Agency.Email :
-                this.Context.Users.FirstOrDefault(u => u.Username == project.CreatedBy)?.Email;
-
-            return GenerateNotification(email, template, model);
-        }
-        #endregion
-
         /// <summary>
         /// Send the notifications to CHES.
         /// Update the queue with the latest information.
@@ -377,57 +189,6 @@ namespace Pims.Dal.Services
             catch (Exception ex)
             {
                 this.Logger.LogError(ex, $"Failed to generate notification for template '{template.Id}'.");
-                if (_options.Notifications.ThrowExceptions)
-                    throw;
-                return null;
-            }
-            return notification;
-        }
-        #endregion
-
-        #region Helpers
-        /// <summary>
-        /// Generate the notification for the specified `options` and `model`.
-        /// Build the template and merge the model into the Subject and Body properties of the notification.
-        /// Use the specified `sendOn` date if the notification template delay requires it.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="model"></param>
-        /// <param name="sendOn">When provided the notification will be sent on this date.</param>
-        /// <returns></returns>
-        private NotificationQueue GenerateNotification(ProjectStatusNotification options, ProjectNotificationModel model, DateTime? sendOn = null)
-        {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            if (options == null) throw new ArgumentNullException(nameof(options));
-            if (options.Template == null) throw new ArgumentNullException(nameof(options), "Argument property 'Template' is cannot be null.");
-
-            var now = DateTime.UtcNow;
-            sendOn ??= options.Delay switch
-            {
-                NotificationDelays.Days => now.AddDays(options.DelayDays),
-                NotificationDelays.EndOfDay => DateTime.Now.Date,
-                NotificationDelays.EndOfMonth => new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month)).Date,
-                NotificationDelays.SetDate => sendOn,
-                _ => now
-            };
-            var notification = new NotificationQueue(options.Template, model.Project, model.ToAgency, options.Template.Subject, options.Template.Body)
-            {
-                Key = model.NotificationKey,
-                Status = NotificationStatus.Pending,
-                Priority = options.Priority,
-                SendOn = sendOn.Value,
-                To = String.Join(";", new[] { model.ToAgency?.Email, options.Template.To }.NotNull()),
-                Cc = options.Template.Cc,
-                Bcc = options.Template.Bcc
-            };
-
-            try
-            {
-                _notifyService.Generate(notification, model);
-            }
-            catch (Exception ex)
-            {
-                this.Logger.LogError(ex, $"Failed to generate notification for template '{options.TemplateId}'.");
                 if (_options.Notifications.ThrowExceptions)
                     throw;
                 return null;

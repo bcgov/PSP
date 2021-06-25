@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// NotificationTemplate class, provides an entity for the datamodel to manage a notification templates.
     /// </summary>
     [MotiTable("PIMS_NOTIFICATION_TEMPLATE", "NTTMPL")]
-    public class NotificationTemplate : BaseEntity
+    public class NotificationTemplate : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -94,11 +94,6 @@ namespace Pims.Dal.Entities
         /// </summary>
         [Column("TAG")]
         public string Tag { get; set; }
-
-        /// <summary>
-        /// get - A collection of project status that reference this template.
-        /// </summary>
-        public ICollection<ProjectStatusNotification> Status { get; } = new List<ProjectStatusNotification>();
 
         /// <summary>
         /// get - A collection of notifications in the queue that used this template.

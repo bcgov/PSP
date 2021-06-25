@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// ParcelBuilding class, provides the many-to-many relationship between parcels and buildings.
     /// </summary>
     [MotiTable("PIMS_PARCEL_BUILDING", "PRCLBL")]
-    public class ParcelBuilding : BaseEntity
+    public class ParcelBuilding : BaseAppEntity
     {
         #region Properties
         /// <summary>

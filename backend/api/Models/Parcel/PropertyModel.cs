@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Models.Parcel
 {
-    public class PropertyModel : BaseModel
+    public class PropertyModel : BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

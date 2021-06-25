@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// BuildingFiscalConfiguration class, provides a way to configure building fiscals in the database.
     ///</summary>
-    public class BuildingFiscalConfiguration : BaseEntityConfiguration<BuildingFiscal>
+    public class BuildingFiscalConfiguration : BaseAppEntityConfiguration<BuildingFiscal>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<BuildingFiscal> builder)
@@ -24,15 +24,13 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.FiscalYear).IsRequired()
                 .HasComment("The fiscal year this value is for");
-
             builder.Property(m => m.EffectiveDate)
-                .HasColumnType("DATETIME")
+                .HasColumnType("DATE")
                 .HasComment("The effective date this value is for");
-
             builder.Property(m => m.Key).IsRequired()
                 .HasComment("The fiscal value type");
-
             builder.Property(m => m.Value)
+                .HasColumnType("MONEY")
                 .HasComment("The value of the building");
             builder.Property(m => m.Note).HasMaxLength(500)
                 .HasComment("A note about this fiscal value");

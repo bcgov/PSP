@@ -37,9 +37,9 @@ namespace Pims.Core.Test
         {
             return new List<Entity.BuildingOccupantType>()
             {
-                new Entity.BuildingOccupantType("Leased") { Id = 0, RowVersion = 1 },
-                new Entity.BuildingOccupantType("Occupied By Owning Ministry") { Id = 1, RowVersion = 1 },
-                new Entity.BuildingOccupantType("Unoccupied") { Id = 2, RowVersion = 1 }
+                new Entity.BuildingOccupantType("Leased") { Id = 1, RowVersion = 1 },
+                new Entity.BuildingOccupantType("Occupied By Owning Ministry") { Id = 2, RowVersion = 1 },
+                new Entity.BuildingOccupantType("Unoccupied") { Id = 3, RowVersion = 1 }
             };
         }
     }

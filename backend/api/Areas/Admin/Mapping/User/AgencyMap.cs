@@ -22,7 +22,8 @@ namespace Pims.Api.Areas.Admin.Mapping.User
 
 
             config.NewConfig<Entity.UserAgency, Model.AgencyModel>()
-                .Map(dest => dest.Id, src => src.AgencyId);
+                .Map(dest => dest.Id, src => src.AgencyId)
+                .Map(dest => dest.Name, src => src.Agency.Name);
 
             config.NewConfig<Model.AgencyModel, Entity.UserAgency>()
                 .Map(dest => dest.AgencyId, src => src.Id);

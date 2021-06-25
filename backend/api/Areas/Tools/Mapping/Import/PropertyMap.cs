@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Import
                 .Map(dest => dest.Longitude, src => src.Location.X)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Entity.Parcel, Model.PropertyModel>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -36,7 +36,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Import
                 .Map(dest => dest.Longitude, src => src.Location.X)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Entity.Building, Model.PropertyModel>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -51,7 +51,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Import
                 .Map(dest => dest.Longitude, src => src.Location.X)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
         }
     }
 }

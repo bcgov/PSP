@@ -91,6 +91,23 @@ namespace Pims.Api.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// GET - Returns a user for the specified 'id' from the datasource.
+        /// </summary>
+        /// <param name="id">The unique 'id' for the user to return.</param>
+        /// <returns>The user requested.</returns>
+        [HttpGet("{id:long}")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Model.UserModel), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "admin-user" })]
+        public IActionResult GetUser(long id)
+        {
+            var entity = _pimsAdminService.User.Get(id);
+            var user = _mapper.Map<Model.UserModel>(entity);
+            return new JsonResult(user);
+        }
+
+        /// <summary>
         /// GET - Returns a user for the specified 'key' from the datasource.
         /// </summary>
         /// <param name="key">The unique 'key' for the user to return.</param>

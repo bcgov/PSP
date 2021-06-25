@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// ParcelEvaluationConfiguration class, provides a way to configure parcel evaluations in the database.
     ///</summary>
-    public class ParcelEvaluationConfiguration : BaseEntityConfiguration<ParcelEvaluation>
+    public class ParcelEvaluationConfiguration : BaseAppEntityConfiguration<ParcelEvaluation>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<ParcelEvaluation> builder)
@@ -24,12 +24,12 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.Date).IsRequired()
                 .HasColumnType("DATETIME")
+                .HasDefaultValueSql("GETUTCDATE()") // This should not be a default value however MOTI standards requires it to have a default value.
                 .HasComment("The date this evaluation was taken");
-
             builder.Property(m => m.Key).IsRequired()
                 .HasComment("The evaluation type");
-
             builder.Property(m => m.Value)
+                .HasColumnType("MONEY")
                 .HasComment("The value of the evaluation");
             builder.Property(m => m.Note).HasMaxLength(500)
                 .HasComment("A note about the evaluation");

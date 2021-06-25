@@ -24,6 +24,7 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.AddressId)
                 .HasComment("Foreign key to the property address");
             builder.Property(m => m.PropertyTypeId)
+                .HasDefaultValue(PropertyTypes.Land)
                 .HasComment("Foreign key to the property type");
             builder.Property(m => m.ClassificationId)
                 .HasComment("Foreign key to the property classification");
@@ -47,9 +48,13 @@ namespace Pims.Dal.Configuration
             builder.HasOne(m => m.Address).WithMany().HasForeignKey(m => m.AddressId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PARCEL_ADDRESS_ID_IDX");
             builder.HasOne(m => m.PropertyType).WithMany().HasForeignKey(m => m.PropertyTypeId).OnDelete(DeleteBehavior.ClientNoAction).HasConstraintName("PARCEL_PROPERTY_TYPE_ID_IDX");
             builder.HasOne(m => m.Classification).WithMany().HasForeignKey(m => m.ClassificationId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("PARCEL_PROPERTY_CLASSIFICATION_ID_IDX");
+            builder.HasMany(m => m.Subdivisions).WithMany(m => m.Parcels).UsingEntity<ParcelParcel>(
+                m => m.HasOne(m => m.Subdivision).WithMany(m => m.ParcelsManyToMany).HasForeignKey(m => m.SubdivisionId),
+                m => m.HasOne(m => m.Parcel).WithMany(m => m.SubdivisionsManyToMany).HasForeignKey(m => m.ParcelId)
+            );
 
             builder.HasIndex(m => new { m.PID, m.PIN }, "PARCEL_PID_PIN_TUC").IsUnique(); // This will allow for Crown Land to set ParcelId=0 and PIN=#######.
-            builder.HasIndex(m => new { m.IsSensitive, m.PID, m.PIN, m.ProjectNumbers }, "PARCEL_IS_SENSITIVE_PID_PIN_PROJECT_NUMBERS_IDX");
+            builder.HasIndex(m => m.IsSensitive, "PARCEL_IS_SENSITIVE_IDX");
             builder.HasIndex(m => m.AgencyId, "PARCEL_AGENCY_ID_IDX");
             builder.HasIndex(m => m.AddressId, "PARCEL_ADDRESS_ID_IDX");
             builder.HasIndex(m => m.PropertyTypeId, "PARCEL_PROPERTY_TYPE_ID_IDX");

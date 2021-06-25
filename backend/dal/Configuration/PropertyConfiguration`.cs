@@ -7,7 +7,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// PropertyConfiguration class, provides a way to configure properties in the database.
     ///</summary>
-    public abstract class PropertyConfiguration<TBase> : BaseEntityConfiguration<TBase>
+    public abstract class PropertyConfiguration<TBase> : BaseAppEntityConfiguration<TBase>
         where TBase : Property
     {
         #region Methods

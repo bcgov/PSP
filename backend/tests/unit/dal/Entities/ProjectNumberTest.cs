@@ -21,20 +21,7 @@ namespace Pims.Dal.Test.Entities
             var number = new ProjectNumber();
 
             // Assert
-            number.Should().Be(0);
-        }
-
-        [Fact]
-        public void ProjectNumber_ToString()
-        {
-            // Arrange
-            var number = new ProjectNumber();
-
-            // Act
-            var result = number.ToString();
-
-            // Assert
-            result.Should().Be(number.ToString());
+            number.Value.Should().Be(0);
         }
         #endregion
     }

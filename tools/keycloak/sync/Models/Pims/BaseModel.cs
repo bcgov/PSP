@@ -9,16 +9,6 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
     {
         #region Properties
         /// <summary>
-        /// get/set - When the item was created.
-        /// </summary>
-        public DateTime CreatedOn { get; set; }
-
-        /// <summary>
-        /// get/set - When the item was updated.
-        /// </summary>
-        public DateTime? UpdatedOn { get; set; }
-
-        /// <summary>
         /// get/set - The rowvesion.
         /// </summary>
         public long RowVersion { get; set; }

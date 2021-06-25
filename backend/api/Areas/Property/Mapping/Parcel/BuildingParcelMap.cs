@@ -56,9 +56,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.Evaluations, src => src.Parcel.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Parcel.Fiscals)
                 .Map(dest => dest.RowVersion, src => src.Parcel.RowVersion)
-                .Inherits<Entity.BaseEntity, BModel.BaseModel>();
-
-
+                .Inherits<Entity.BaseAppEntity, BModel.BaseAppModel>();
 
             config.NewConfig<Model.BuildingParcelModel, Entity.Parcel>()
                 .EnableNonPublicMembers(true)
@@ -82,14 +80,14 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.Buildings, src => src.Buildings)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<BModel.BaseModel, Entity.BaseEntity>();
+                .Inherits<BModel.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Model.BuildingParcelModel, Entity.ParcelBuilding>()
                 .EnableNonPublicMembers(true)
                 .Map(dest => dest.ParcelId, src => src.Id)
                 .Map(dest => dest.Parcel, src => src)
                 .Map(dest => dest.BuildingId, src => src.BuildingId)
-                .Inherits<BModel.BaseModel, Entity.BaseEntity>();
+                .Inherits<BModel.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Model.ParcelModel, NetTopologySuite.Geometries.Point>()
                 .ConstructUsing(src => Dal.Helpers.GeometryHelper.CreatePoint(src.Longitude, src.Latitude));

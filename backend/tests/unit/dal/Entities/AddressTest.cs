@@ -19,10 +19,11 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> Addresses =>
             new List<object[]>
             {
-                new object[] { new Address("address1", "address2", "administrativeArea", 1, "postal"), "address1, address2, administrativeArea, provinceId, postal" },
-                new object[] { new Address("address1", "", "administrativeArea", 1, "postal"), "address1, administrativeArea, provinceId, postal" },
-                new object[] { new Address("address1", " ", "administrativeArea", 1, "postal"), "address1, administrativeArea, provinceId, postal" },
-                new object[] { new Address("address1", null, "administrativeArea", 1, "postal"), "address1, administrativeArea, provinceId, postal" }
+                new object[] { new Address("address1", "address2", "administrativeArea", 1, "postal"), "address1, address2, administrativeArea, postal" },
+                new object[] { new Address("address1", "", "administrativeArea", 1, "postal"), "address1, administrativeArea, postal" },
+                new object[] { new Address("address1", " ", "administrativeArea", 1, "postal"), "address1, administrativeArea, postal" },
+                new object[] { new Address("address1", null, "administrativeArea", 1, "postal"), "address1, administrativeArea, postal" },
+                new object[] { new Address("address1", null, "administrativeArea", new Province("BC", "British Columbia"), "postal"), "address1, administrativeArea, BC, postal" }
             };
         #endregion
 

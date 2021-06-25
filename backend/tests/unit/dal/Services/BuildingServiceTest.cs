@@ -11,6 +11,7 @@ using Pims.Dal.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -95,7 +96,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 2, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -133,7 +134,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 2, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -172,7 +173,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 2, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -210,7 +211,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 2, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -287,7 +288,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 10, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -326,7 +327,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 10, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -366,7 +367,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 10, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -405,7 +406,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcel1, 10, 20);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -635,32 +636,6 @@ namespace Pims.Dal.Test.Services
         #endregion
 
         #region Update Building
-
-        [Fact]
-        public void Update_Building_LinkedToProject_NotAllowed()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit).AddAgency(1);
-            var init = helper.InitializeDatabase(user);
-            var project = init.CreateProject(1);
-            project.ReportedFiscalYear = 2020;
-            var building = init.CreateBuilding(null, 2, agency: project.Agency);
-            var fiscal = init.CreateFiscal(building, 2020, Entity.FiscalKeys.NetBook, 10);
-            project.AddProperty(building);
-            init.SaveChanges();
-
-            var options = ControllerHelper.CreateDefaultPimsOptions();
-            var service = helper.CreateService<BuildingService>(user, options);
-
-            // Act
-            building.Name = "change";
-
-            // Assert, updating a building in a project should not throw an exception.
-            Assert.Throws<NotAuthorizedException>(() =>
-                service.Update(building));
-        }
-
         [Fact]
         public void Update_Building_NoPermission_NotAuthorized()
         {

@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// ParcelFiscalConfiguration class, provides a way to configure parcel fiscals in the database.
     ///</summary>
-    public class ParcelFiscalConfiguration : BaseEntityConfiguration<ParcelFiscal>
+    public class ParcelFiscalConfiguration : BaseAppEntityConfiguration<ParcelFiscal>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<ParcelFiscal> builder)
@@ -24,15 +24,13 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.FiscalYear).IsRequired()
                 .HasComment("The fiscal year this value is relevant to");
-
             builder.Property(m => m.EffectiveDate)
-                .HasColumnType("DATETIME")
+                .HasColumnType("DATE")
                 .HasComment("The effective date of the value");
-
             builder.Property(m => m.Key).IsRequired()
                 .HasComment("The fiscal value type");
-
             builder.Property(m => m.Value)
+                .HasColumnType("MONEY")
                 .HasComment("The value of the property");
             builder.Property(m => m.Note).HasMaxLength(500)
                 .HasComment("A note about the fiscal value");

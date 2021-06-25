@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// AccessRequestAgency class, provides an entity for the datamodel to manage access request agencies.
     /// </summary>
     [MotiTable("PIMS_ACCESS_REQUEST_AGENCY", "ACRQAG")]
-    public class AccessRequestAgency : BaseEntity
+    public class AccessRequestAgency : BaseAppEntity
     {
         #region Properties
         /// <summary>

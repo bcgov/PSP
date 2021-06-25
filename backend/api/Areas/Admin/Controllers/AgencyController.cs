@@ -83,7 +83,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">The unique 'id' for the agency to return.</param>
         /// <returns>The agency requested.</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.AgencyModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
@@ -112,7 +112,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.Users.ForEachAsync(async u =>
             {
-                var user = _pimsAdminService.User.Get(u.User.Key);
+                var user = _pimsAdminService.User.Get(u.Key);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 
@@ -139,7 +139,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.Users.ForEachAsync(async u =>
             {
-                var user = _pimsAdminService.User.Get(u.User.Key);
+                var user = _pimsAdminService.User.Get(u.Key);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 
@@ -165,7 +165,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.Users.ForEachAsync(async u =>
             {
-                var user = _pimsAdminService.User.Get(u.User.Key);
+                var user = _pimsAdminService.User.Get(u.Key);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 

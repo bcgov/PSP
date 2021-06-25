@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Parcel
 {
-    public class ParcelFiscalModel : BaseModel
+    public class ParcelFiscalModel : BaseAppModel
     {
         #region Properties
         public long ParcelId { get; set; }

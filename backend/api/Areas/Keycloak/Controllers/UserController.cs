@@ -96,7 +96,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// </summary>
         /// <exception type="KeyNotFoundException">The user does not exist in keycloak.</exception>
         /// <returns></returns>
-        [HttpGet("{key}")]
+        [HttpGet("{key:guid}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
@@ -116,7 +116,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// </summary>
         /// <exception type="KeyNotFoundException">The user does not exist in Keycloak or PIMS.</exception>
         /// <returns></returns>
-        [HttpPut("{key}")]
+        [HttpPut("{key:guid}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AdminModels.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
@@ -135,6 +135,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// <summary>
         /// Update an access request, generally to grant/deny it.
         /// </summary>
+        /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("access/request")]
         [Produces("application/json")]
@@ -142,12 +143,11 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
-        public async Task<IActionResult> UpdateAccessRequestAsync(Model.AccessRequestModel updateModel)
+        public async Task<IActionResult> UpdateAccessRequestAsync(Model.AccessRequestModel model)
         {
-            var entity = _mapper.Map<Entity.AccessRequest>(updateModel);
-            var updatedEntity = await _keycloakService.UpdateAccessRequestAsync(entity);
-            var user = _mapper.Map<Model.AccessRequestModel>(updatedEntity);
-            return new JsonResult(user);
+            var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
+            var result = await _keycloakService.UpdateAccessRequestAsync(accessRequest);
+            return new JsonResult(_mapper.Map<Model.AccessRequestModel>(result));
         }
         #endregion
         #endregion

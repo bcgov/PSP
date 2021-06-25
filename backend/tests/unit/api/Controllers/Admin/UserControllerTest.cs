@@ -147,7 +147,8 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsAdminService>>();
             var user = EntityHelper.CreateUser("user1");
-            service.Setup(m => m.User.Add(It.IsAny<Entity.User>())).Callback<Entity.User>(u => u.Agencies.First().Agency = user.Agencies.First().Agency);
+            var agency = user.Agencies.First();
+            service.Setup(m => m.User.Add(It.IsAny<Entity.User>())).Callback<Entity.User>(u => { });
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
@@ -157,7 +158,6 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            actualResult.CreatedOn.Should().Be(user.CreatedOn);
             actualResult.DisplayName.Should().Be(user.DisplayName);
             actualResult.Email.Should().Be(user.Email);
             actualResult.EmailVerified.Should().Be(user.EmailVerified);
@@ -168,7 +168,6 @@ namespace PimsApi.Test.Admin.Controllers
             actualResult.Note.Should().Be(user.Note);
             actualResult.Position.Should().Be(user.Position);
             actualResult.RowVersion.Should().Be(user.RowVersion);
-            actualResult.UpdatedOn.Should().Be(user.UpdatedOn);
             actualResult.Username.Should().Be(user.Username);
             service.Verify(m => m.User.Add(It.IsAny<Entity.User>()), Times.Once());
         }
@@ -195,7 +194,6 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            actualResult.CreatedOn.Should().Be(user.CreatedOn);
             actualResult.DisplayName.Should().Be(user.DisplayName);
             actualResult.Email.Should().Be(user.Email);
             actualResult.EmailVerified.Should().Be(user.EmailVerified);
@@ -206,7 +204,6 @@ namespace PimsApi.Test.Admin.Controllers
             actualResult.Note.Should().Be(user.Note);
             actualResult.Position.Should().Be(user.Position);
             actualResult.RowVersion.Should().Be(user.RowVersion);
-            actualResult.UpdatedOn.Should().Be(user.UpdatedOn);
             actualResult.Username.Should().Be(user.Username);
             service.Verify(m => m.User.Update(It.IsAny<Entity.User>()), Times.Once());
         }

@@ -24,6 +24,7 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.AddressId)
                 .HasComment("Foreign key to the property address");
             builder.Property(m => m.PropertyTypeId)
+                .HasDefaultValue(PropertyTypes.Building)
                 .HasComment("Foreign key to the property type");
             builder.Property(m => m.ClassificationId)
                 .HasComment("Foreign key to the property classification");
@@ -44,7 +45,9 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.BuildingFloorCount).IsRequired()
                 .HasComment("Number of floors the building has");
-            builder.Property(m => m.BuildingTenancy).IsRequired()
+            builder.Property(m => m.BuildingTenancy)
+                .HasDefaultValueSql("''") // This should not be a default value however MOTI standards requires it to have a default value.
+                .IsRequired()
                 .HasComment("Type of tenancy in the building");
             builder.Property(m => m.LeaseExpiry)
                 .HasColumnType("DATETIME")
@@ -65,8 +68,12 @@ namespace Pims.Dal.Configuration
             builder.HasOne(m => m.PropertyType).WithMany().HasForeignKey(m => m.PropertyTypeId).OnDelete(DeleteBehavior.ClientNoAction).HasConstraintName("BUILDG_PROPERTY_TYPE_ID_IDX");
             builder.HasOne(m => m.Classification).WithMany().HasForeignKey(m => m.ClassificationId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("BUILDG_PROPERTY_CLASSIFICATION_ID_IDX");
             builder.HasOne(m => m.Address).WithMany().HasForeignKey(m => m.AddressId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("BUILDG_ADDRESS_ID_IDX");
+            builder.HasMany(m => m.Parcels).WithMany(m => m.Buildings).UsingEntity<ParcelBuilding>(
+                m => m.HasOne(m => m.Parcel).WithMany(m => m.BuildingsManyToMany).HasForeignKey(m => m.ParcelId),
+                m => m.HasOne(m => m.Building).WithMany(m => m.ParcelsManyToMany).HasForeignKey(m => m.BuildingId)
+            );
 
-            builder.HasIndex(m => new { m.IsSensitive, m.ProjectNumbers }, "BUILDG_IS_SENSITIVE_PROJECT_NUMBERS_IDX");
+            builder.HasIndex(m => m.IsSensitive, "BUILDG_IS_SENSITIVE_IDX");
             builder.HasIndex(m => m.AgencyId, "BUILDG_AGENCY_ID_IDX");
             builder.HasIndex(m => m.PropertyTypeId, "BUILDG_PROPERTY_TYPE_ID_IDX");
             builder.HasIndex(m => m.ClassificationId, "BUILDG_PROPERTY_CLASSIFICATION_ID_IDX");

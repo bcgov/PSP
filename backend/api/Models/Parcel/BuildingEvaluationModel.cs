@@ -2,7 +2,7 @@ using System;
 
 namespace Pims.Api.Models.Parcel
 {
-    public class BuildingEvaluationModel : BaseModel
+    public class BuildingEvaluationModel : BaseAppModel
     {
         #region Properties
         public long BuildingId { get; set; }

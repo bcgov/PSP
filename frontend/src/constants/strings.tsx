@@ -45,3 +45,6 @@ export const HARMFUL_DISCLOSURE_URL =
 export const AUTHORIZATION_URL = 'https://github.com/bcgov/PIMS/wiki/Architecture-Security';
 export const INVENTORY_POLICY_URL =
   'https://www2.gov.bc.ca/gov/content/governments/services-for-government/real-estate-space/asset-management-services/inventory-policy';
+
+export const tabErrorWarning =
+  'Please correct all of the highlighted errors within the red coloured tab(s) before continuing.';

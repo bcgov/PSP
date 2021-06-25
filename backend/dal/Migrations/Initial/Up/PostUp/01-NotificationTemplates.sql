@@ -15,6 +15,10 @@ INSERT INTO dbo.[PIMS_NOTIFICATION_TEMPLATE] (
     , [SUBJECT]
     , [BODY]
     , [TAG]
+    , [APP_CREATE_USERID]
+    , [APP_CREATE_USER_DIRECTORY]
+    , [APP_LAST_UPDATE_USERID]
+    , [APP_LAST_UPDATE_USER_DIRECTORY]
 ) VALUES (
     1
     , 'Access Request'
@@ -32,6 +36,10 @@ INSERT INTO dbo.[PIMS_NOTIFICATION_TEMPLATE] (
 <html><head><title>@Model.Environment.Title</title></head>
 <body><p>Dear Administrator,</p><p>@Model.AccessRequest.User.FirstName @Model.AccessRequest.User.LastName has submitted an access request to <a href="@Model.Environment.Uri">PIMS</a>.</p><p>Signin and review their request.</p></body></html>'
     , 'Access Request'
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 )
 
 -- Update sequence so that it works with the latest data.

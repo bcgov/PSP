@@ -22,10 +22,10 @@ namespace Pims.Api.Areas.Admin.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => src.Agencies.Select(a => a.Agency))
-                .Map(dest => dest.Roles, src => src.Roles.Select(a => a.Role))
+                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany)
+                .Map(dest => dest.Roles, src => src.RolesManyToMany)
                 .Map(dest => dest.LastLogin, src => src.LastLogin)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.UserModel, Entity.User>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -39,17 +39,17 @@ namespace Pims.Api.Areas.Admin.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => src.Agencies)
-                .Map(dest => dest.Roles, src => src.Roles)
+                .Map(dest => dest.AgenciesManyToMany, src => src.Agencies)
+                .Map(dest => dest.RolesManyToMany, src => src.Roles)
                 .AfterMappingInline((m, e) => UpdateUser(m, e))
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required for signature")]
         private void UpdateUser(Model.UserModel model, Entity.User entity)
         {
-            entity.Agencies.Where(a => a != null).ForEach(a => a.UserId = entity.Id);
-            entity.Roles.Where(r => r != null).ForEach(r => r.UserId = entity.Id);
+            entity.Agencies.Where(a => a != null).ForEach(a => a.Id = entity.Id);
+            entity.Roles.Where(r => r != null).ForEach(r => r.Id = entity.Id);
         }
     }
 }

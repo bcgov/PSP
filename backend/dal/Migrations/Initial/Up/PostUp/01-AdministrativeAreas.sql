@@ -330,13 +330,22 @@ USING ( VALUES
 ('Winlaw','310',NULL),
 ('Woss','311',NULL),
 ('Yahk','312',NULL),
-('Zeballos','313','Strathcona Regional District')) AS src ([NAME], [ABBREVIATION], [GROUP_NAME])
+('Zeballos','313','Strathcona Regional District')) AS src (
+  [NAME]
+  , [ABBREVIATION]
+  , [GROUP_NAME]
+)
 ON dest.[NAME] = src.[NAME]
 WHEN MATCHED THEN
 UPDATE
-SET dest.[ABBREVIATION] = src.[ABBREVIATION], dest.[GROUP_NAME] = src.[GROUP_NAME]
+SET dest.[ABBREVIATION] = src.[ABBREVIATION]
+  , dest.[GROUP_NAME] = src.[GROUP_NAME]
 WHEN NOT MATCHED THEN
-INSERT ([NAME], [ABBREVIATION], [GROUP_NAME]) VALUES (src.[NAME], src.[ABBREVIATION], src.[GROUP_NAME]);
+INSERT ([NAME], [ABBREVIATION], [GROUP_NAME]) VALUES (
+  src.[NAME]
+  , src.[ABBREVIATION]
+  , src.[GROUP_NAME]
+);
 
 -- Update sequence so that it works with the latest data.
 GO

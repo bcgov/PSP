@@ -9,7 +9,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// NotificationQueueConfiguration class, provides a way to manage a notification queue in the database.
     ///</summary>
-    public class NotificationQueueConfiguration : BaseEntityConfiguration<NotificationQueue>
+    public class NotificationQueueConfiguration : BaseAppEntityConfiguration<NotificationQueue>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<NotificationQueue> builder)
@@ -20,8 +20,6 @@ namespace Pims.Dal.Configuration
             builder.HasMotiSequence(m => m.Id)
                 .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.ProjectId)
-                .HasComment("Foreign key to the project");
             builder.Property(m => m.ToAgencyId)
                 .HasComment("Foreign key to the agency the notification was sent to");
             builder.Property(m => m.TemplateId)
@@ -36,6 +34,7 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.SendOn)
                 .HasColumnType("DATETIME")
+                .HasDefaultValueSql("GETUTCDATE()") // This should not be a default value however MOTI standards requires it to have a default value.
                 .HasComment("The date the message will be sent on");
 
             builder.Property(m => m.Priority).HasMaxLength(50)
@@ -64,13 +63,11 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.Bcc).HasMaxLength(500)
                 .HasComment("One more more email addresses the notification was blind carbon copied to");
 
-            builder.HasOne(m => m.Project).WithMany(m => m.Notifications).HasForeignKey(m => m.ProjectId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("NOTIFQ_PROJECT_ID_IDX");
             builder.HasOne(m => m.ToAgency).WithMany(m => m.Notifications).HasForeignKey(m => m.ToAgencyId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("NOTIFQ_TO_AGENCY_ID_IDX");
             builder.HasOne(m => m.Template).WithMany(m => m.Notifications).HasForeignKey(m => m.TemplateId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("NOTIFQ_NOTIFICATION_TEMPLATE_ID_IDX");
 
             builder.HasIndex(m => new { m.Key }, "NOTIFQ_NOTIFICATION_UID_TUC").IsUnique();
             builder.HasIndex(m => new { m.Status, m.SendOn, m.Subject }, "NOTIFQ_STATUS_SEND_ON_SUBJECT_IDX");
-            builder.HasIndex(m => m.ProjectId, "NOTIFQ_PROJECT_ID_IDX");
             builder.HasIndex(m => m.ToAgencyId, "NOTIFQ_TO_AGENCY_ID_IDX");
             builder.HasIndex(m => m.TemplateId, "NOTIFQ_NOTIFICATION_TEMPLATE_ID_IDX");
 

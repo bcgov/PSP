@@ -96,8 +96,6 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(p => p.ProjectNumbers.Contains(filter.ProjectNumber));
             if (filter.IgnorePropertiesInProjects == true)
                 query = query.Where(p => p.ProjectNumbers == null || p.ProjectNumbers == "[]");
-            if (filter.InSurplusPropertyProgram == true)
-                query = query.Where(p => !String.IsNullOrWhiteSpace(p.ProjectNumbers) && p.ProjectNumbers != "[]");
             if (!String.IsNullOrWhiteSpace(filter.Description))
                 query = query.Where(p => EF.Functions.Like(p.Description, $"%{filter.Description}%"));
             if (!String.IsNullOrWhiteSpace(filter.Name))
@@ -157,58 +155,6 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Generates a query that returns properties in ERP and/or SPL.
-        /// Note - this does not filter properties that a user shouldn't not be able to view.
-        /// Note - this will return sensitive properties.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        private static IQueryable<Entity.Views.Property> GenerateProjectQuery(this PimsContext context, Entity.Models.AllPropertyFilter filter)
-        {
-            filter.ThrowIfNull(nameof(filter));
-
-            if (filter.InEnhancedReferralProcess == true || filter.InSurplusPropertyProgram == true)
-            {
-                var workflowCodes = new List<string>();
-                if (filter.InEnhancedReferralProcess == true) workflowCodes.Add("ERP"); // TODO: This should be configurable, not hardcoded.
-                if (filter.InSurplusPropertyProgram == true) workflowCodes.Add("SPL"); // TODO: This should be configurable, not hardcoded.
-                var codes = workflowCodes.ToArray();
-
-                var doNotIncludeCodes = new[] { "DE", "DIS", "CA", "T-GRE" }; // TODO: This should be configurable, not hardcoded.
-
-                // Generate a query that finds all properties in projects that match the specified workflow.
-                var properties = (from vp in context.Properties
-                                  join pp in (
-                                      context.Projects
-                                          .Where(p => codes.Contains(p.Workflow.Code) && !doNotIncludeCodes.Contains(p.Status.Code))
-                                          .SelectMany(p => p.Properties)
-                                          .Where(p => p.PropertyType == Entities.PropertyTypes.Land
-                                              || p.PropertyType == Entities.PropertyTypes.Subdivision)
-                                          .Select(p => p.Parcel)
-                                      ) on new { vp.Id, PropertyTypeId = (long)vp.PropertyTypeId } equals new { pp.Id, PropertyTypeId = (long)pp.PropertyTypeId }
-                                  select new { vp.Id, vp.PropertyTypeId })
-                        .Union(from vp in context.Properties
-                               join pp in (
-                                   context.Projects
-                                       .Where(p => codes.Contains(p.Workflow.Code) && !doNotIncludeCodes.Contains(p.Status.Code))
-                                       .SelectMany(p => p.Properties)
-                                       .Where(p => p.PropertyType == Entities.PropertyTypes.Building)
-                                       .Select(p => p.Building)
-                                   ) on new { vp.Id, PropertyTypeId = (long)vp.PropertyTypeId } equals new { pp.Id, PropertyTypeId = (long)pp.PropertyTypeId }
-                               select new { vp.Id, vp.PropertyTypeId })
-                        .Distinct();
-
-                // Join result of prior query to view this way because spatial data types cannot be included in a union statement.
-                return (from p in context.Properties
-                        join pp in properties on new { p.Id, p.PropertyTypeId } equals new { pp.Id, pp.PropertyTypeId }
-                        select p).AsNoTracking();
-            }
-
-            return context.Properties.AsNoTracking();
-        }
-
-        /// <summary>
         /// Generate a query for the specified 'filter'.
         /// Only includes properties that belong to the user's agency or sub-agencies.
         /// </summary>
@@ -222,7 +168,7 @@ namespace Pims.Dal.Helpers.Extensions
             filter.ThrowIfNull(nameof(user));
 
             // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning agency.
-            var query = context.GenerateProjectQuery(filter);
+            var query = context.Properties.AsNoTracking();
 
             // Users can only view their agency or sub-agency properties.
             var isAdmin = user.HasPermission(Permissions.AdminProperties);
@@ -251,7 +197,7 @@ namespace Pims.Dal.Helpers.Extensions
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
-            var query = context.GenerateProjectQuery(filter);
+            var query = context.Properties.AsNoTracking();
 
             // Only return properties owned by user's agency or sub-agencies.
             if (!filter.IncludeAllProperties)
@@ -288,53 +234,6 @@ namespace Pims.Dal.Helpers.Extensions
         {
             var isAdmin = user.HasPermission(Permissions.AdminProperties);
             if (!isAdmin && property?.ProjectNumbers?.Contains("SPP") == true) throw new NotAuthorizedException("User may not remove buildings that are in a SPP Project.");
-        }
-
-        /// <summary>
-        /// Get the latest project associated to this property, using the workflow sort order.
-        /// </summary>
-        /// <param name="property"></param>
-        /// <returns>The workflow code of the latest workflow associated to this property</returns>
-        public static Entity.Project GetLatestProject(this Entity.Property property)
-        {
-            Entity.Project latestProject = null;
-            if (property is Entity.Parcel parcel && parcel.Projects.Select(pp => pp.Project).Any())
-            {
-                latestProject = parcel.Projects.Select(pp => pp.Project).
-                    Aggregate((Entity.Project projectWithLatestWorkflow, Entity.Project current) => current.Workflow?.SortOrder > projectWithLatestWorkflow?.Workflow?.SortOrder && current?.Status?.IsTerminal == false ? current : projectWithLatestWorkflow);
-            }
-            else if (property is Entity.Building building && building.Projects.Select(pp => pp.Project).Any())
-            {
-                latestProject = building.Projects.Select(pp => pp.Project).
-                    Aggregate((Entity.Project projectWithLatestWorkflow, Entity.Project current) => current?.Workflow?.SortOrder > projectWithLatestWorkflow?.Workflow?.SortOrder && current?.Status?.IsTerminal == false ? current : projectWithLatestWorkflow);
-            }
-            if (latestProject?.Status?.IsTerminal == true)
-            {
-                return null;
-            }
-            return latestProject;
-        }
-
-        /// <summary>
-        /// Get the latest non-terminal workflow associated to this property, using the workflow sort order.
-        /// </summary>
-        /// <param name="property"></param>
-        /// <returns>The workflow code of the latest workflow associated to this property</returns>
-        public static String GetLatestWorkflowCode(this Entity.Property property)
-        {
-            Entity.Project latestProject = GetLatestProject(property);
-            return latestProject?.Workflow?.Code;
-        }
-
-        /// <summary>
-        /// Get the latest non-terminal project status associated to this property, using the workflow sort order.
-        /// </summary>
-        /// <param name="property"></param>
-        /// <returns>The status of the latest project associated to this property</returns>
-        public static String GetLatestProjectStatus(this Entity.Property property)
-        {
-            Entity.Project latestProject = GetLatestProject(property);
-            return latestProject?.Status?.Name;
         }
 
         /// <summary>

@@ -64,7 +64,7 @@ namespace Pims.Api.Test.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var expectedTestBuilding = new Entity.Building();
-            service.Setup(m => m.Building.Get(It.IsAny<int>())).Returns(expectedTestBuilding);
+            service.Setup(m => m.Building.Get(It.IsAny<long>())).Returns(expectedTestBuilding);
             int expectedBuildingId = 1;
 
             // Act

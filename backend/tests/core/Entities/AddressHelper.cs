@@ -1,3 +1,4 @@
+using System.Linq;
 using Pims.Dal;
 using Entity = Pims.Dal.Entities;
 
@@ -58,7 +59,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.Address CreateAddress(this PimsContext context, long id, string address1, string address2, string postal)
         {
-            var province = context.Provinces.Find("BC") ?? EntityHelper.CreateProvince(id, "BC", "British Columbia");
+            var province = context.Provinces.FirstOrDefault(p => p.Code == "BC") ?? EntityHelper.CreateProvince(id, "BC", "British Columbia");
             return new Entity.Address(address1, address2, "Victoria", province, postal)
             {
                 Id = id,

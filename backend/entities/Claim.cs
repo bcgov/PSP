@@ -50,8 +50,12 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get - A collection of roles that have this claim.
         /// </summary>
-        /// <typeparam name="RoleClaim"></typeparam>
-        public ICollection<RoleClaim> Roles { get; } = new List<RoleClaim>();
+        public ICollection<Role> Roles { get; } = new List<Role>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to roles.
+        /// </summary>
+        public ICollection<RoleClaim> RolesManyToMany { get; } = new List<RoleClaim>();
         #endregion
 
         #region Constructors

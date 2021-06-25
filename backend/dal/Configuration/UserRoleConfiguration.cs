@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// UserRoleConfiguration class, provides a way to configure user roles in the database.
     ///</summary>
-    public class UserRoleConfiguration : BaseEntityConfiguration<UserRole>
+    public class UserRoleConfiguration : BaseAppEntityConfiguration<UserRole>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<UserRole> builder)
@@ -25,8 +25,8 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.RoleId).IsRequired()
                 .HasComment("Foreign key to the role");
 
-            builder.HasOne(m => m.User).WithMany(m => m.Roles).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRROL_USER_ID_IDX");
-            builder.HasOne(m => m.Role).WithMany(m => m.Users).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRROL_ROLE_ID_IDX");
+            builder.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRROL_USER_ID_IDX");
+            builder.HasOne(m => m.Role).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRROL_ROLE_ID_IDX");
 
             builder.HasIndex(m => new { m.UserId, m.RoleId }, "USRROL_USER_ROLE_TUC").IsUnique();
             builder.HasIndex(m => m.UserId, "USRROL_USER_ID_IDX");

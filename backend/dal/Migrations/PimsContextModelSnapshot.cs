@@ -29,6 +29,7 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_ACCESS_REQUEST_ID_SEQ");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -36,6 +37,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -56,43 +58,8 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<string>("Note")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("NVARCHAR(MAX)")
                         .HasColumnName("NOTE")
                         .HasComment("A note about the request");
 
@@ -100,7 +67,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -111,6 +78,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("The status of the request");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -118,6 +86,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -130,7 +99,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -175,6 +144,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the agency");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -182,6 +152,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -202,50 +173,17 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -253,6 +191,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -265,7 +204,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -303,6 +242,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the access request");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -310,6 +250,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -330,40 +271,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("RoleId")
                         .HasColumnType("BIGINT")
                         .HasColumnName("ROLE_ID")
@@ -373,12 +280,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -386,6 +294,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -398,7 +307,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -450,6 +359,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Administrative area name (city, district, region, etc.)");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -457,6 +367,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -477,40 +388,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<string>("Postal")
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)")
@@ -527,12 +404,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -540,6 +418,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -552,7 +431,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -594,68 +473,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("BOUNDARY_TYPE")
                         .HasComment("A boundary type representing this record");
 
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<string>("GroupName")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)")
@@ -680,7 +497,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -689,41 +506,13 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("ADMINA_PK");
 
-                    b.HasIndex(new[] { "IsDisabled", "Name", "SortOrder" }, "ADMINA_IS_DISABLED_NAME_SORT_ORDER_IDX");
+                    b.HasIndex(new[] { "IsDisabled", "Name", "SortOrder" }, "ADMINA_IS_DISABLED_NAME_DISPLAY_ORDER_IDX");
 
                     b.ToTable("PIMS_ADMINISTRATIVE_AREA");
 
@@ -750,9 +539,10 @@ namespace Pims.Dal.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)")
                         .HasColumnName("CODE")
-                        .HasComment("A unique human friendly code to identify the agency");
+                        .HasComment("Unique human friendly code name to identity this record");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -760,6 +550,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -779,40 +570,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -849,7 +606,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -863,10 +620,11 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -874,6 +632,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -886,7 +645,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -901,7 +660,7 @@ namespace Pims.Dal.Migrations
                         .IsUnique()
                         .HasFilter("[PARENT_AGENCY_ID] IS NOT NULL");
 
-                    b.HasIndex(new[] { "IsDisabled", "Code", "Name", "ParentId", "SortOrder" }, "AGNCY_IS_DISABLED_CODE_NAME_PARENT_ID_SORT_ORDER_IDX");
+                    b.HasIndex(new[] { "IsDisabled", "Code", "Name", "ParentId", "SortOrder" }, "AGNCY_IS_DISABLED_CODE_NAME_PARENT_ID_DISPLAY_ORDER_IDX");
 
                     b.HasIndex(new[] { "ParentId" }, "AGNCY_PARENT_AGENCY_ID_IDX");
 
@@ -956,8 +715,10 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("BuildingTenancy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("BUILDING_TENANCY")
+                        .HasDefaultValueSql("''")
                         .HasComment("Type of tenancy in the building");
 
                     b.Property<DateTime?>("BuildingTenancyUpdatedOn")
@@ -971,6 +732,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the property classification");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -978,6 +740,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -997,40 +760,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(2000)
@@ -1093,7 +822,9 @@ namespace Pims.Dal.Migrations
                         .HasComment("A comma-separated list of project numbers associated with this property");
 
                     b.Property<long>("PropertyTypeId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
+                        .HasDefaultValue(2L)
                         .HasColumnName("PROPERTY_TYPE_ID")
                         .HasComment("Foreign key to the property type");
 
@@ -1106,7 +837,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -1124,6 +855,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Whether the lease would transfer on sale");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -1131,6 +863,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -1143,7 +876,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -1164,7 +897,7 @@ namespace Pims.Dal.Migrations
 
                     b.HasIndex(new[] { "BuildingPredominateUseId" }, "BUILDG_BUILDING_PREDOMINATE_USE_ID_IDX");
 
-                    b.HasIndex(new[] { "IsSensitive", "ProjectNumbers" }, "BUILDG_IS_SENSITIVE_PROJECT_NUMBERS_IDX");
+                    b.HasIndex(new[] { "IsSensitive" }, "BUILDG_IS_SENSITIVE_IDX");
 
                     b.HasIndex(new[] { "ClassificationId" }, "BUILDG_PROPERTY_CLASSIFICATION_ID_IDX");
 
@@ -1184,68 +917,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("BUILDING_CONSTRUCTION_TYPE_ID")
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_BUILDING_CONSTRUCTION_TYPE_ID_SEQ");
 
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1264,7 +935,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -1273,41 +944,13 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("BLCNTY_PK");
 
-                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "BLCNTY_IS_DISABLED_SORT_ORDER_IDX");
+                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "BLCNTY_IS_DISABLED_DISPLAY_ORDER_IDX");
 
                     b.HasIndex(new[] { "Name" }, "BLCNTY_NAME_TUC")
                         .IsUnique();
@@ -1332,6 +975,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the building");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -1339,6 +983,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -1360,43 +1005,11 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<DateTime>("Date")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("DATE")
+                        .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("The date this evaluation is for");
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<int>("Key")
                         .HasColumnType("int")
@@ -1413,12 +1026,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -1426,6 +1040,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -1438,7 +1053,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -1447,7 +1062,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 92);
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("MONEY")
                         .HasColumnName("VALUE")
                         .HasComment("The value of the evaluation");
 
@@ -1481,6 +1096,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the building");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -1488,6 +1104,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -1508,42 +1125,8 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<DateTime?>("EffectiveDate")
-                        .HasColumnType("DATETIME")
+                        .HasColumnType("DATE")
                         .HasColumnName("EFFECTIVE_DATE")
                         .HasComment("The effective date this value is for");
 
@@ -1567,12 +1150,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -1580,6 +1164,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -1592,7 +1177,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -1601,7 +1186,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 92);
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("MONEY")
                         .HasColumnName("VALUE")
                         .HasComment("The value of the building");
 
@@ -1629,68 +1214,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("BUILDING_OCCUPANT_TYPE_ID")
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_BUILDING_OCCUPANT_TYPE_ID_SEQ");
 
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1709,7 +1232,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -1718,41 +1241,13 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("BLOCCT_PK");
 
-                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "BLOCCT_IS_DISABLED_SORT_ORDER_IDX");
+                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "BLOCCT_IS_DISABLED_DISPLAY_ORDER_IDX");
 
                     b.HasIndex(new[] { "Name" }, "BLOCCT_NAME_TUC")
                         .IsUnique();
@@ -1770,68 +1265,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnType("BIGINT")
                         .HasColumnName("BUILDING_PREDOMINATE_USE_ID")
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_BUILDING_PREDOMINATE_USE_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
@@ -1851,7 +1284,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -1860,41 +1293,13 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("BLPRDU_PK");
 
-                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "BLPRDU_IS_DISABLED_SORT_ORDER_IDX");
+                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "BLPRDU_IS_DISABLED_DISPLAY_ORDER_IDX");
 
                     b.HasIndex(new[] { "Name" }, "BLPRDU_NAME_TUC")
                         .IsUnique();
@@ -1912,68 +1317,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnType("BIGINT")
                         .HasColumnName("CLAIM_ID")
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_CLAIM_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -2007,38 +1350,10 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("CLAIM_PK");
@@ -2092,7 +1407,7 @@ namespace Pims.Dal.Migrations
 
                     b.Property<Guid?>("ChesMessageId")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Ches_Message_Id")
+                        .HasColumnName("CHES_MESSAGE_ID")
                         .HasComment("Common Hosted Email Service message key");
 
                     b.Property<Guid?>("ChesTransactionId")
@@ -2101,6 +1416,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Common hosted Email Service transaction key");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -2108,6 +1424,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -2127,40 +1444,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Encoding")
                         .IsRequired()
@@ -2182,23 +1465,20 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("PRIORITY")
                         .HasComment("The email priority");
 
-                    b.Property<long?>("ProjectId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasComment("Foreign key to the project");
-
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<DateTime>("SendOn")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("SEND_ON")
+                        .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("The date the message will be sent on");
 
                     b.Property<int>("Status")
@@ -2235,6 +1515,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the agency the notification was sent to");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -2242,6 +1523,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -2254,7 +1536,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -2269,8 +1551,6 @@ namespace Pims.Dal.Migrations
 
                     b.HasIndex(new[] { "Key" }, "NOTIFQ_NOTIFICATION_UID_TUC")
                         .IsUnique();
-
-                    b.HasIndex(new[] { "ProjectId" }, "NOTIFQ_PROJECT_ID_IDX");
 
                     b.HasIndex(new[] { "Status", "SendOn", "Subject" }, "NOTIFQ_STATUS_SEND_ON_SUBJECT_IDX");
 
@@ -2321,6 +1601,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("One or more email address to carbon copy the notification to");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -2328,6 +1609,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -2347,40 +1629,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -2418,7 +1666,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -2443,6 +1691,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("One or more email address to send the notification to");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -2450,6 +1699,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -2462,7 +1712,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -2513,6 +1763,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the property classification");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -2520,6 +1771,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -2539,40 +1791,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(2000)
@@ -2647,7 +1865,9 @@ namespace Pims.Dal.Migrations
                         .HasComment("A comma-separated list of project numbers associated with this property");
 
                     b.Property<long>("PropertyTypeId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
                         .HasColumnName("PROPERTY_TYPE_ID")
                         .HasComment("Foreign key to the property type");
 
@@ -2655,12 +1875,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -2668,6 +1889,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -2680,7 +1902,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -2707,7 +1929,7 @@ namespace Pims.Dal.Migrations
 
                     b.HasIndex(new[] { "AgencyId" }, "PARCEL_AGENCY_ID_IDX");
 
-                    b.HasIndex(new[] { "IsSensitive", "PID", "PIN", "ProjectNumbers" }, "PARCEL_IS_SENSITIVE_PID_PIN_PROJECT_NUMBERS_IDX");
+                    b.HasIndex(new[] { "IsSensitive" }, "PARCEL_IS_SENSITIVE_IDX");
 
                     b.HasIndex(new[] { "PID", "PIN" }, "PARCEL_PID_PIN_TUC")
                         .IsUnique()
@@ -2737,6 +1959,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the building");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -2744,6 +1967,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -2764,40 +1988,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("ParcelId")
                         .HasColumnType("BIGINT")
                         .HasColumnName("PARCEL_ID")
@@ -2807,12 +1997,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -2820,6 +2011,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -2832,7 +2024,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -2865,6 +2057,7 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_PARCEL_EVALUATION_ID_SEQ");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -2872,6 +2065,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -2893,43 +2087,11 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<DateTime>("Date")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("DATE")
+                        .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("The date this evaluation was taken");
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Firm")
                         .HasMaxLength(150)
@@ -2957,12 +2119,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -2970,6 +2133,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -2982,7 +2146,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -2991,7 +2155,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 92);
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("MONEY")
                         .HasColumnName("VALUE")
                         .HasComment("The value of the evaluation");
 
@@ -3020,6 +2184,7 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_PARCEL_FISCAL_ID_SEQ");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -3027,6 +2192,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -3047,42 +2213,8 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<DateTime?>("EffectiveDate")
-                        .HasColumnType("DATETIME")
+                        .HasColumnType("DATE")
                         .HasColumnName("EFFECTIVE_DATE")
                         .HasComment("The effective date of the value");
 
@@ -3111,12 +2243,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -3124,6 +2257,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -3136,7 +2270,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -3145,7 +2279,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 92);
 
                     b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("MONEY")
                         .HasColumnName("VALUE")
                         .HasComment("The value of the property");
 
@@ -3174,6 +2308,7 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_PARCEL_PARCEL_ID_SEQ");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -3181,6 +2316,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -3201,40 +2337,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("ParcelId")
                         .HasColumnType("BIGINT")
                         .HasColumnName("PARCEL_ID")
@@ -3244,7 +2346,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -3255,6 +2357,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the parcel that is a subdivision");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -3262,6 +2365,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -3274,7 +2378,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -3298,552 +2402,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("Auto-sequenced unique key value");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.Project", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_ID_SEQ");
-
-                    b.Property<int>("ActualFiscalYear")
-                        .HasColumnType("int")
-                        .HasColumnName("ACTUAL_FISCAL_YEAR")
-                        .HasComment("The fiscal year the project was completed in");
-
-                    b.Property<long>("AgencyId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("AGENCY_ID")
-                        .HasComment("Foreign key to the owning agency");
-
-                    b.Property<decimal?>("Appraised")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("APPRAISED")
-                        .HasComment("The appraised value of the project");
-
-                    b.Property<DateTime?>("ApprovedOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APPROVED_ON")
-                        .HasComment("The date when the project was approved");
-
-                    b.Property<decimal?>("Assessed")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("ASSESSED")
-                        .HasComment("The assessed value of the project");
-
-                    b.Property<DateTime?>("CancelledOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("CANCELLED_ON")
-                        .HasComment("The date when the project was cancelled");
-
-                    b.Property<DateTime?>("CompletedOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("COMPLETED_ON")
-                        .HasComment("The date when the project was completed");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<DateTime?>("DeniedOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DENIED_ON")
-                        .HasComment("The date when the project was denied");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasComment("A description of the project");
-
-                    b.Property<string>("Manager")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("MANAGER")
-                        .HasComment("The name of the project manager");
-
-                    b.Property<decimal?>("Market")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("MARKET")
-                        .HasComment("The market value of the project");
-
-                    b.Property<string>("Metadata")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("METADATA")
-                        .HasComment("Serialized JSON data containing additional project information");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("NAME")
-                        .HasComment("A name to identify the project");
-
-                    b.Property<decimal?>("NetBook")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NET_BOOK")
-                        .HasComment("The netbook value of the project");
-
-                    b.Property<string>("ProjectNumber")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)")
-                        .HasColumnName("PROJECT_NUMBER")
-                        .HasComment("A unique human friendly number to identify this project");
-
-                    b.Property<int>("ProjectType")
-                        .HasColumnType("int")
-                        .HasColumnName("PROJECT_TYPE")
-                        .HasComment("The type of project");
-
-                    b.Property<int>("ReportedFiscalYear")
-                        .HasColumnType("int")
-                        .HasColumnName("REPORTED_FISCAL_YEAR")
-                        .HasComment("The fiscal year the project was report in");
-
-                    b.Property<long>("RiskId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_RISK_ID")
-                        .HasComment("Foreign key to the project risk this project is in");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<long>("StatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_STATUS_ID")
-                        .HasComment("Foreign key to the project status this project is currently in");
-
-                    b.Property<DateTime?>("SubmittedOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("SUBMITTED_ON")
-                        .HasComment("The date when the project was submitted");
-
-                    b.Property<long>("TierLevelId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TIER_LEVEL_ID")
-                        .HasComment("Foreign key to the tier level this project is in");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.Property<long?>("WorkflowId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("WORKFLOW_ID")
-                        .HasComment("Foreign key to workflow this project is currently in");
-
-                    b.HasKey("Id")
-                        .HasName("PROJCT_PK");
-
-                    b.HasIndex(new[] { "AgencyId" }, "PROJCT_AGENCY_ID_IDX");
-
-                    b.HasIndex(new[] { "Name", "Assessed", "ReportedFiscalYear", "ActualFiscalYear" }, "PROJCT_NAME_ASSESSED_REPORTED_FISCAL_ACTUAL_FISCAL_IDX");
-
-                    b.HasIndex(new[] { "ProjectNumber" }, "PROJCT_PROJECT_NUMBER_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "RiskId" }, "PROJCT_PROJECT_RISK_ID_IDX");
-
-                    b.HasIndex(new[] { "StatusId" }, "PROJCT_PROJECT_STATUS_ID_IDX");
-
-                    b.HasIndex(new[] { "TierLevelId" }, "PROJCT_TIER_LEVEL_ID_IDX");
-
-                    b.HasIndex(new[] { "WorkflowId" }, "PROJCT_WORKFLOW_ID_IDX");
-
-                    b.ToTable("PIMS_PROJECT");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectAgencyResponse", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_AGENCY_RESPONSE_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_AGENCY_RESPONSE_ID_SEQ");
-
-                    b.Property<long>("AgencyId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("AGENCY_ID")
-                        .HasComment("Foreign key to the agency");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("NOTE")
-                        .HasComment("A note about the agency response");
-
-                    b.Property<long?>("NotificationId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("NOTIFICATION_QUEUE_ID")
-                        .HasComment("Foreign key to the notification queue");
-
-                    b.Property<decimal>("OfferAmount")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("OFFER_AMOUNT")
-                        .HasComment("The amount offered by the agency to purchase the property");
-
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasComment("Foreign key to the project");
-
-                    b.Property<DateTime?>("ReceivedOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("RECEIVED_ON")
-                        .HasComment("The date the response was received on");
-
-                    b.Property<int>("Response")
-                        .HasColumnType("int")
-                        .HasColumnName("RESPONSE")
-                        .HasComment("The response type");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRAGRP_PK");
-
-                    b.HasIndex(new[] { "AgencyId" }, "PRAGRP_AGENCY_ID_IDX");
-
-                    b.HasIndex(new[] { "NotificationId" }, "PRAGRP_NOTIFICATION_QUEUE_ID_IDX");
-
-                    b.HasIndex(new[] { "ProjectId", "AgencyId" }, "PRAGRP_PROJECT_AGENCY_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "ProjectId" }, "PRAGRP_PROJECT_ID_IDX");
-
-                    b.HasIndex(new[] { "Response", "ReceivedOn" }, "PRAGRP_RESPONSE_RECEIVED_ON_IDX");
-
-                    b.ToTable("PIMS_PROJECT_AGENCY_RESPONSE");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectNote", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_NOTE_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_NOTE_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NOTE")
-                        .HasComment("The message of the note");
-
-                    b.Property<int>("NoteType")
-                        .HasColumnType("int")
-                        .HasColumnName("NOTE_TYPE")
-                        .HasComment("The type of note");
-
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasComment("Foreign key to the project");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PROJNT_PK");
-
-                    b.HasIndex(new[] { "NoteType" }, "PROJNT_NOTE_TYPE_IDX");
-
-                    b.HasIndex(new[] { "ProjectId" }, "PROJNT_PROJECT_ID_IDX");
-
-                    b.ToTable("PIMS_PROJECT_NOTE");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.ProjectNumber", b =>
                 {
                     b.Property<int>("Value")
@@ -3853,1231 +2411,6 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("Relational:SqlQuery", "SELECT NEXT VALUE FOR dbo.[PIMS_PROJECT_NUMBER_SEQ]");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectProperty", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_PROPERTY_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_PROPERTY_ID_SEQ");
-
-                    b.Property<long?>("BuildingId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("BUILDING_ID")
-                        .HasComment("Foreign key to the building");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<long?>("ParcelId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PARCEL_ID")
-                        .HasComment("Foreign key to the parcel");
-
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasComment("Foreign key to the project");
-
-                    b.Property<int>("PropertyType")
-                        .HasColumnType("int")
-                        .HasColumnName("PROPERTY_TYPE")
-                        .HasComment("The type of property associated with this project");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJPRP_PK");
-
-                    b.HasIndex(new[] { "BuildingId" }, "PRJPRP_BUILDING_ID_IDX");
-
-                    b.HasIndex(new[] { "ParcelId" }, "PRJPRP_PARCEL_ID_IDX");
-
-                    b.HasIndex(new[] { "ProjectId" }, "PRJPRP_PROJECT_ID_IDX");
-
-                    b.HasIndex(new[] { "ProjectId", "ParcelId", "BuildingId" }, "PRJPRP_PROJECT_ID_PARCEL_ID_BUILDING_ID_TUC")
-                        .IsUnique()
-                        .HasFilter("[PARCEL_ID] IS NOT NULL AND [BUILDING_ID] IS NOT NULL");
-
-                    b.ToTable("PIMS_PROJECT_PROPERTY");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectReport", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_REPORT_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_REPORT_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<DateTime?>("From")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("FROM")
-                        .HasComment("The date this project period begins from");
-
-                    b.Property<bool>("IsFinal")
-                        .HasColumnType("bit")
-                        .HasColumnName("IS_FINAL")
-                        .HasComment("Whether this report is considered final");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)")
-                        .HasColumnName("NAME")
-                        .HasComment("A name to identify the record");
-
-                    b.Property<int>("ReportType")
-                        .HasColumnType("int")
-                        .HasColumnName("REPORT_TYPE")
-                        .HasComment("The type of report");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<DateTime?>("To")
-                        .IsRequired()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("TO")
-                        .HasComment("The date this project period ends at");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJRPT_PK");
-
-                    b.HasIndex(new[] { "To", "From", "IsFinal" }, "PRJRPT_TO_FROM_IS_FINAL_IDX");
-
-                    b.ToTable("PIMS_PROJECT_REPORT");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectRisk", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_RISK_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_RISK_ID_SEQ");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasColumnName("CODE")
-                        .HasComment("Unique human friendly code name to identity this record");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasComment("A description of the record");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("NAME")
-                        .HasComment("A name to identify the record");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJRSK_PK");
-
-                    b.HasIndex(new[] { "Code" }, "PRJRSK_CODE_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "IsDisabled", "Name", "SortOrder" }, "PRJRSK_IS_DISABLED_NAME_SORT_ORDER_IDX");
-
-                    b.ToTable("PIMS_PROJECT_RISK");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectSnapshot", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_SNAPSHOT_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_SNAPSHOT_ID_SEQ");
-
-                    b.Property<decimal?>("Appraised")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("APPRAISED")
-                        .HasComment("The project appraised value");
-
-                    b.Property<decimal?>("Assessed")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("ASSESSED")
-                        .HasComment("The project assessed value");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<decimal?>("Market")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("MARKET")
-                        .HasComment("The project market value");
-
-                    b.Property<string>("Metadata")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("METADATA")
-                        .HasComment("A JSON serialized summary of the project");
-
-                    b.Property<decimal?>("NetBook")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("NET_BOOK")
-                        .HasComment("The project netbook value");
-
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasComment("Foreign key to the project");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<DateTime>("SnapshotOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("SNAPSHOT_ON")
-                        .HasComment("The date the snapshot was taken");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJSNP_PK");
-
-                    b.HasIndex(new[] { "ProjectId" }, "PRJSNP_PROJECT_ID_IDX");
-
-                    b.HasIndex(new[] { "SnapshotOn" }, "PRJSNP_SNAPSHOT_ON_IDX");
-
-                    b.ToTable("PIMS_PROJECT_SNAPSHOT");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectStatus", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_STATUS_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_STATUS_ID_SEQ");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasColumnName("CODE")
-                        .HasComment("A unique human friendly code to identify the record");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasComment("A description of the project status");
-
-                    b.Property<string>("GroupName")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("GROUP_NAME")
-                        .HasComment("A name to group related records");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<bool>("IsMilestone")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_MILESTONE")
-                        .HasComment("Whether this project status is a milestone");
-
-                    b.Property<bool>("IsTerminal")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_TERMINAL")
-                        .HasComment("Whether this project status is a terminal status");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("NAME")
-                        .HasComment("A name to identify the record");
-
-                    b.Property<string>("Route")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("ROUTE")
-                        .HasComment("A path that represents this status");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJSTS_PK");
-
-                    b.HasIndex(new[] { "Code" }, "PRJSTS_CODE_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "IsDisabled", "Name", "SortOrder" }, "PRJSTS_IS_DISABLED_NAME_SORT_ORDER_IDX");
-
-                    b.ToTable("PIMS_PROJECT_STATUS");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectStatusNotification", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_STATUS_NOTIFICATION_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_STATUS_NOTIFICATION_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<int>("Delay")
-                        .HasColumnType("int")
-                        .HasColumnName("DELAY")
-                        .HasComment("The type of delay this notification will have");
-
-                    b.Property<int>("DelayDays")
-                        .HasColumnType("int")
-                        .HasColumnName("DELAY_DAYS")
-                        .HasComment("The number of days to delay this notification");
-
-                    b.Property<long?>("FromStatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("FROM_PROJECT_STATUS_ID")
-                        .HasComment("Foreign key to project status which describes the from transition");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int")
-                        .HasColumnName("PRIORITY")
-                        .HasComment("Priority of the notification");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("NOTIFICATION_TEMPLATE_ID")
-                        .HasComment("Foreign key to notification template");
-
-                    b.Property<long?>("ToStatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TO_PROJECT_STATUS_ID")
-                        .HasComment("Foreign key to project status which describes the to transition");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJSNO_PK");
-
-                    b.HasIndex(new[] { "FromStatusId" }, "PRSTNT_FROM_PROJECT_STATUS_ID_IDX");
-
-                    b.HasIndex(new[] { "FromStatusId", "ToStatusId" }, "PRSTNT_FROM_PROJECT_STATUS_ID_TO_PROJECT_STATUS_ID_IDX");
-
-                    b.HasIndex(new[] { "TemplateId" }, "PRSTNT_NOTIFICATION_TEMPLATE_ID_IDX");
-
-                    b.HasIndex(new[] { "ToStatusId" }, "PRSTNT_TO_PROJECT_STATUS_ID_IDX");
-
-                    b.ToTable("PIMS_PROJ_STATUS_NOTIFICATION");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectStatusTransition", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_STATUS_TRANSITION_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_STATUS_TRANSITION_ID_SEQ");
-
-                    b.Property<string>("Action")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("ACTION")
-                        .HasComment("Description of the action being performed in this transition");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<long>("FromWorkflowStatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("FROM_WORKFLOW_PROJECT_STATUS_ID")
-                        .HasComment("Foreign key to the workflow status");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<long>("ToWorkflowStatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TO_WORKFLOW_PROJECT_STATUS_ID")
-                        .HasComment("Foreign key the the from workflow status");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.Property<bool>("ValidateTasks")
-                        .HasColumnType("bit")
-                        .HasColumnName("VALIDATE_TASKS");
-
-                    b.HasKey("Id")
-                        .HasName("PRJSTR_PK");
-
-                    b.HasIndex(new[] { "FromWorkflowStatusId" }, "PRSTTX_FROM_WORKFLOW_PROJECT_STATUS_ID_IDX");
-
-                    b.HasIndex(new[] { "FromWorkflowStatusId", "ToWorkflowStatusId" }, "PRSTTX_FROM_WORKFLOW_TO_WORKFLOW_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "ToWorkflowStatusId" }, "PRSTTX_TO_WORKFLOW_PROJECT_STATUS_ID_IDX");
-
-                    b.ToTable("PIMS_PROJ_STATUS_TRANSITION");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectTask", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_TASK_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROJECT_TASK_ID_SEQ");
-
-                    b.Property<DateTime?>("CompletedOn")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("COMPLETED_ON")
-                        .HasComment("The date the task was completed");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IS_COMPLETED")
-                        .HasComment("Whether this task is completed");
-
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_ID")
-                        .HasComment("Foreign key to the project");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<long>("TaskId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TASK_ID")
-                        .HasComment("Foreign key to the task");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PRJTSK_PK");
-
-                    b.HasIndex(new[] { "IsCompleted", "CompletedOn" }, "PRJTSK_IS_COMPLETED_COMPLETED_ON_IDX");
-
-                    b.HasIndex(new[] { "ProjectId" }, "PRJTSK_PROJECT_ID_IDX");
-
-                    b.HasIndex(new[] { "ProjectId", "TaskId" }, "PRJTSK_PROJECT_TASK_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "TaskId" }, "PRJTSK_TASK_ID_IDX");
-
-                    b.ToTable("PIMS_PROJECT_TASK");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.PropertyClassification", b =>
                 {
                     b.Property<long>("Id")
@@ -5085,68 +2418,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnType("BIGINT")
                         .HasColumnName("PROPERTY_CLASSIFICATION_ID")
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROPERTY_CLASSIFICATION_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
@@ -5171,7 +2442,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -5180,36 +2451,8 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("PRPCLS_PK");
@@ -5233,68 +2476,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("PROPERTY_TYPE_ID")
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROPERTY_TYPE_ID_SEQ");
 
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -5313,7 +2494,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -5322,41 +2503,13 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("PRPTYP_PK");
 
-                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "PRPTYP_IS_DISABLED_SORT_ORDER_IDX");
+                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "PRPTYP_IS_DISABLED_DISPLAY_ORDER_IDX");
 
                     b.HasIndex(new[] { "Name" }, "PRPTYP_NAME_TUC")
                         .IsUnique();
@@ -5377,72 +2530,12 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(2)
                         .HasColumnType("nvarchar(2)")
-                        .HasColumnName("CODE")
-                        .HasComment("Unique human friendly code name to identity this record");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
+                        .HasColumnName("PROVINCE_CODE")
+                        .HasDefaultValueSql("''")
+                        .HasComment("A unique human friendly code to identify the record");
 
                     b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
@@ -5462,7 +2555,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -5471,36 +2564,8 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("PROV_PK");
@@ -5526,6 +2591,7 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_ROLE_ID_SEQ");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -5533,6 +2599,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -5552,40 +2619,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -5626,7 +2659,7 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
@@ -5635,10 +2668,11 @@ namespace Pims.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
+                        .HasColumnName("DISPLAY_ORDER")
                         .HasComment("Sorting order of record");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -5646,6 +2680,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -5658,7 +2693,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -5697,6 +2732,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the claim");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -5704,6 +2740,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -5724,40 +2761,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("RoleId")
                         .HasColumnType("BIGINT")
                         .HasColumnName("ROLE_ID")
@@ -5767,12 +2770,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -5780,6 +2784,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -5792,7 +2797,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -5816,163 +2821,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("Auto-sequenced unique key value");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.Task", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TASK_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_TASK_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasComment("A description of the task");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<bool>("IsOptional")
-                        .HasColumnType("bit")
-                        .HasColumnName("IS_OPTIONAL")
-                        .HasComment("Whether this task is optional");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("NAME")
-                        .HasComment("A name to identify the record");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<long?>("StatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_STATUS_ID")
-                        .HasComment("Foreign key to the project status this task belongs to");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("TASK_PK");
-
-                    b.HasIndex(new[] { "IsDisabled", "IsOptional", "Name", "SortOrder" }, "TASK_IS_DISABLED_IS_OPTIONAL_NAME_SORT_ORDER_IDX");
-
-                    b.HasIndex(new[] { "StatusId" }, "TASK_PROJECT_STATUS_ID_IDX");
-
-                    b.ToTable("PIMS_TASK");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.Tenant", b =>
                 {
                     b.Property<long>("Id")
@@ -5987,68 +2835,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnType("nvarchar(6)")
                         .HasColumnName("CODE")
                         .HasComment("Code value for entry");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -6067,44 +2853,17 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("Settings")
+                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)")
                         .HasColumnName("SETTINGS")
                         .HasComment("Serialized JSON value for the configuration");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
 
                     b.HasKey("Id")
                         .HasName("TENANT_PK");
@@ -6113,154 +2872,6 @@ namespace Pims.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("PIMS_TENANT");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.TierLevel", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TIER_LEVEL_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_TIER_LEVEL_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasComment("A description of the tier level");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("NAME")
-                        .HasComment("A unique human friendly name to identify the record");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("TRLEVL_PK");
-
-                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "TRLEVL_IS_DISABLED_SORT_ORDER_IDX");
-
-                    b.HasIndex(new[] { "Name" }, "TRLEVL_NAME_TUC")
-                        .IsUnique();
-
-                    b.ToTable("PIMS_TIER_LEVEL");
 
                     b
                         .HasComment("Auto-sequenced unique key value");
@@ -6285,6 +2896,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("When the user account was approved");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -6292,6 +2904,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -6311,40 +2924,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
@@ -6425,12 +3004,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -6438,6 +3018,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -6450,7 +3031,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -6501,6 +3082,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to the agency");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -6508,6 +3090,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -6528,50 +3111,17 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -6579,6 +3129,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -6591,7 +3142,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -6629,6 +3180,7 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_USER_ROLE_ID_SEQ");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
@@ -6636,6 +3188,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
@@ -6656,40 +3209,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
                     b.Property<long>("RoleId")
                         .HasColumnType("BIGINT")
                         .HasColumnName("ROLE_ID")
@@ -6699,12 +3218,13 @@ namespace Pims.Dal.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
+                        .HasDefaultValue(1L)
                         .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
@@ -6712,6 +3232,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
@@ -6724,7 +3245,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Reference to the user uid who updated this record")
                         .HasAnnotation("ColumnOrder", 94);
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("DATETIME")
                         .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
@@ -6875,8 +3396,8 @@ namespace Pims.Dal.Migrations
                     b.Property<string>("ProjectNumbers")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PropertyTypeId")
-                        .HasColumnType("int");
+                    b.Property<long>("PropertyTypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Province")
                         .HasColumnType("nvarchar(max)");
@@ -6905,308 +3426,6 @@ namespace Pims.Dal.Migrations
                     b.ToView("PROPERTY_VW");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.Workflow", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("WORKFLOW_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_WORKFLOW_ID_SEQ");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("CODE")
-                        .HasComment("A human friendly unique code to identify the record");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasComment("A description of the workflow");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
-                        .HasColumnName("NAME")
-                        .HasComment("A unique name to identify the record");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<int>("SortOrder")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
-                        .HasColumnName("SORT_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("WRKFLW_PK");
-
-                    b.HasIndex(new[] { "IsDisabled", "SortOrder" }, "WRKFLOW_IS_DISABLED_SORT_ORDER_IDX");
-
-                    b.HasIndex(new[] { "Code" }, "WRKFLW_CODE_TUC")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "Name" }, "WRKFLW_NAME_TUC")
-                        .IsUnique();
-
-                    b.ToTable("PIMS_WORKFLOW");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.WorkflowProjectStatus", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("WORKFLOW_PROJECT_STATUS_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_WORKFLOW_PROJECT_STATUS_ID_SEQ");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("DbCreatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who created this record")
-                        .HasAnnotation("ColumnOrder", 97);
-
-                    b.Property<DateTime>("DbCreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 96);
-
-                    b.Property<string>("DbUpdatedBy")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("DB_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 99);
-
-                    b.Property<DateTime?>("DbUpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 98);
-
-                    b.Property<bool>("IsOptional")
-                        .HasColumnType("bit")
-                        .HasColumnName("IS_OPTIONAL")
-                        .HasComment("Whether this workflow project status is optional");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(0L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int")
-                        .HasColumnName("SORT_ORDER")
-                        .HasComment("The sorting order to display this record");
-
-                    b.Property<long>("StatusId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROJECT_STATUS_ID")
-                        .HasComment("Foreign key to the project status");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.Property<long>("WorkflowId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("WORKFLOW_ID")
-                        .HasComment("Foreign key to the workflow");
-
-                    b.HasKey("Id")
-                        .HasName("WRPRST_PK");
-
-                    b.HasIndex(new[] { "StatusId" }, "WRPRST_PROJECT_STATUS_ID_IDX");
-
-                    b.HasIndex(new[] { "WorkflowId" }, "WRPRST_WORKFLOW_ID_IDX");
-
-                    b.HasIndex(new[] { "WorkflowId", "StatusId" }, "WRPRST_WORKFLOW_ID_PROJECT_STATUS_ID_TUC")
-                        .IsUnique();
-
-                    b.ToTable("PIMS_WORKFLOW_PROJECT_STATUS");
-
-                    b
-                        .HasComment("Auto-sequenced unique key value");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.AccessRequest", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.User", "User")
@@ -7221,14 +3440,14 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.AccessRequestAgency", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.AccessRequest", "AccessRequest")
-                        .WithMany("Agencies")
+                        .WithMany("AgenciesManyToMany")
                         .HasForeignKey("AccessRequestId")
                         .HasConstraintName("ACRQAG_ACCESS_REQUEST_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.Agency", "Agency")
-                        .WithMany()
+                        .WithMany("AccessRequestsManyToMany")
                         .HasForeignKey("AgencyId")
                         .HasConstraintName("ACRQAG_AGENCY_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7242,14 +3461,14 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.AccessRequestRole", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.AccessRequest", "AccessRequest")
-                        .WithMany("Roles")
+                        .WithMany("RolesManyToMany")
                         .HasForeignKey("AccessRequestId")
                         .HasConstraintName("ACCRQR_ACCESS_REQUEST_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.Role", "Role")
-                        .WithMany()
+                        .WithMany("AccessRequestsManyToMany")
                         .HasForeignKey("RoleId")
                         .HasConstraintName("ACCRQR_ROLE_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7367,12 +3586,6 @@ namespace Pims.Dal.Migrations
 
             modelBuilder.Entity("Pims.Dal.Entities.NotificationQueue", b =>
                 {
-                    b.HasOne("Pims.Dal.Entities.Project", "Project")
-                        .WithMany("Notifications")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("NOTIFQ_PROJECT_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
                     b.HasOne("Pims.Dal.Entities.NotificationTemplate", "Template")
                         .WithMany("Notifications")
                         .HasForeignKey("TemplateId")
@@ -7382,8 +3595,6 @@ namespace Pims.Dal.Migrations
                         .WithMany("Notifications")
                         .HasForeignKey("ToAgencyId")
                         .HasConstraintName("NOTIFQ_TO_AGENCY_ID_IDX");
-
-                    b.Navigation("Project");
 
                     b.Navigation("Template");
 
@@ -7429,14 +3640,14 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.ParcelBuilding", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Building", "Building")
-                        .WithMany("Parcels")
+                        .WithMany("ParcelsManyToMany")
                         .HasForeignKey("BuildingId")
                         .HasConstraintName("PRCLBL_BUILDING_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.Parcel", "Parcel")
-                        .WithMany("Buildings")
+                        .WithMany("BuildingsManyToMany")
                         .HasForeignKey("ParcelId")
                         .HasConstraintName("PRCLBL_PARCEL_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7474,14 +3685,14 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.ParcelParcel", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Parcel", "Parcel")
-                        .WithMany("Subdivisions")
+                        .WithMany("SubdivisionsManyToMany")
                         .HasForeignKey("ParcelId")
                         .HasConstraintName("PRCPRC_PARCEL_ID_IDX")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.Parcel", "Subdivision")
-                        .WithMany("Parcels")
+                        .WithMany("ParcelsManyToMany")
                         .HasForeignKey("SubdivisionId")
                         .HasConstraintName("PRCPRC_SUBDIVISON_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7492,214 +3703,17 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Subdivision");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.Project", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Agency", "Agency")
-                        .WithMany("Projects")
-                        .HasForeignKey("AgencyId")
-                        .HasConstraintName("PROJCT_AGENCY_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.ProjectRisk", "Risk")
-                        .WithMany("Projects")
-                        .HasForeignKey("RiskId")
-                        .HasConstraintName("PROJCT_PROJECT_RISK_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.ProjectStatus", "Status")
-                        .WithMany("Projects")
-                        .HasForeignKey("StatusId")
-                        .HasConstraintName("PROJCT_PROJECT_STATUS_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.TierLevel", "TierLevel")
-                        .WithMany("Projects")
-                        .HasForeignKey("TierLevelId")
-                        .HasConstraintName("PROJCT_TIER_LEVEL_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.Workflow", "Workflow")
-                        .WithMany("Projects")
-                        .HasForeignKey("WorkflowId")
-                        .HasConstraintName("PROJCT_WORKFLOW_ID_IDX");
-
-                    b.Navigation("Agency");
-
-                    b.Navigation("Risk");
-
-                    b.Navigation("Status");
-
-                    b.Navigation("TierLevel");
-
-                    b.Navigation("Workflow");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectAgencyResponse", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Agency", "Agency")
-                        .WithMany("ProjectResponses")
-                        .HasForeignKey("AgencyId")
-                        .HasConstraintName("PRAGRP_AGENCY_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.NotificationQueue", "Notification")
-                        .WithMany("Responses")
-                        .HasForeignKey("NotificationId")
-                        .HasConstraintName("PRAGRP_NOTIFICATION_QUEUE_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("Pims.Dal.Entities.Project", "Project")
-                        .WithMany("Responses")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("PRAGRP_PROJECT_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Agency");
-
-                    b.Navigation("Notification");
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectNote", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Project", "Project")
-                        .WithMany("Notes")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("PROJNT_PROJECT_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectProperty", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Building", "Building")
-                        .WithMany("Projects")
-                        .HasForeignKey("BuildingId")
-                        .HasConstraintName("PRJPRP_BUILDING_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("Pims.Dal.Entities.Parcel", "Parcel")
-                        .WithMany("Projects")
-                        .HasForeignKey("ParcelId")
-                        .HasConstraintName("PRJPRP_PARCEL_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("Pims.Dal.Entities.Project", "Project")
-                        .WithMany("Properties")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("PRJPRP_PROJECT_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Building");
-
-                    b.Navigation("Parcel");
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectSnapshot", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Project", "Project")
-                        .WithMany("Snapshots")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("PRJSNP_PROJECT_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectStatusNotification", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.ProjectStatus", "FromStatus")
-                        .WithMany()
-                        .HasForeignKey("FromStatusId")
-                        .HasConstraintName("PRSTNT_FROM_PROJECT_STATUS_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("Pims.Dal.Entities.NotificationTemplate", "Template")
-                        .WithMany("Status")
-                        .HasForeignKey("TemplateId")
-                        .HasConstraintName("PRSTNT_NOTIFICATION_TEMPLATE_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.ProjectStatus", "ToStatus")
-                        .WithMany()
-                        .HasForeignKey("ToStatusId")
-                        .HasConstraintName("PRSTNT_TO_PROJECT_STATUS_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.Navigation("FromStatus");
-
-                    b.Navigation("Template");
-
-                    b.Navigation("ToStatus");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectStatusTransition", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.WorkflowProjectStatus", "FromWorkflowStatus")
-                        .WithMany("ToStatus")
-                        .HasForeignKey("FromWorkflowStatusId")
-                        .HasConstraintName("PRSTTX_FROM_WORKFLOW_PROJECT_STATUS_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.WorkflowProjectStatus", "ToWorkflowStatus")
-                        .WithMany("FromStatus")
-                        .HasForeignKey("ToWorkflowStatusId")
-                        .HasConstraintName("PRSTTX_TO_WORKFLOW_PROJECT_STATUS_ID_IDX")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("FromWorkflowStatus");
-
-                    b.Navigation("ToWorkflowStatus");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectTask", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Project", "Project")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("PRJTSK_PROJECT_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.Task", "Task")
-                        .WithMany()
-                        .HasForeignKey("TaskId")
-                        .HasConstraintName("PRJTSK_TASK_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Task");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.RoleClaim", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Claim", "Claim")
-                        .WithMany("Roles")
+                        .WithMany("RolesManyToMany")
                         .HasForeignKey("ClaimId")
                         .HasConstraintName("ROLCLM_CLAIM_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.Role", "Role")
-                        .WithMany("Claims")
+                        .WithMany("ClaimsManyToMany")
                         .HasForeignKey("RoleId")
                         .HasConstraintName("ROLCLM_ROLE_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7708,16 +3722,6 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Claim");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.Task", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.ProjectStatus", "Status")
-                        .WithMany("Tasks")
-                        .HasForeignKey("StatusId")
-                        .HasConstraintName("TASK_PROJECT_STATUS_ID_IDX");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.User", b =>
@@ -7733,14 +3737,14 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.UserAgency", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Agency", "Agency")
-                        .WithMany("Users")
+                        .WithMany("UsersManyToMany")
                         .HasForeignKey("AgencyId")
                         .HasConstraintName("USRAGC_AGENCY_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.User", "User")
-                        .WithMany("Agencies")
+                        .WithMany("AgenciesManyToMany")
                         .HasForeignKey("UserId")
                         .HasConstraintName("USRAGC_USER_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7754,14 +3758,14 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.UserRole", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Role", "Role")
-                        .WithMany("Users")
+                        .WithMany("UsersManyToMany")
                         .HasForeignKey("RoleId")
                         .HasConstraintName("USRROL_ROLE_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.User", "User")
-                        .WithMany("Roles")
+                        .WithMany("RolesManyToMany")
                         .HasForeignKey("UserId")
                         .HasConstraintName("USRROL_USER_ID_IDX")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -7772,36 +3776,17 @@ namespace Pims.Dal.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.WorkflowProjectStatus", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.ProjectStatus", "Status")
-                        .WithMany("Workflows")
-                        .HasForeignKey("StatusId")
-                        .HasConstraintName("WRPRST_PROJECT_STATUS_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.Workflow", "Workflow")
-                        .WithMany("Status")
-                        .HasForeignKey("WorkflowId")
-                        .HasConstraintName("WRPRST_WORKFLOW_ID_IDX")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Status");
-
-                    b.Navigation("Workflow");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.AccessRequest", b =>
                 {
-                    b.Navigation("Agencies");
+                    b.Navigation("AgenciesManyToMany");
 
-                    b.Navigation("Roles");
+                    b.Navigation("RolesManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Agency", b =>
                 {
+                    b.Navigation("AccessRequestsManyToMany");
+
                     b.Navigation("Buildings");
 
                     b.Navigation("Children");
@@ -7810,11 +3795,7 @@ namespace Pims.Dal.Migrations
 
                     b.Navigation("Parcels");
 
-                    b.Navigation("ProjectResponses");
-
-                    b.Navigation("Projects");
-
-                    b.Navigation("Users");
+                    b.Navigation("UsersManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Building", b =>
@@ -7823,105 +3804,48 @@ namespace Pims.Dal.Migrations
 
                     b.Navigation("Fiscals");
 
-                    b.Navigation("Parcels");
-
-                    b.Navigation("Projects");
+                    b.Navigation("ParcelsManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Claim", b =>
                 {
-                    b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.NotificationQueue", b =>
-                {
-                    b.Navigation("Responses");
+                    b.Navigation("RolesManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.NotificationTemplate", b =>
                 {
                     b.Navigation("Notifications");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Parcel", b =>
                 {
-                    b.Navigation("Buildings");
+                    b.Navigation("BuildingsManyToMany");
 
                     b.Navigation("Evaluations");
 
                     b.Navigation("Fiscals");
 
-                    b.Navigation("Parcels");
+                    b.Navigation("ParcelsManyToMany");
 
-                    b.Navigation("Projects");
-
-                    b.Navigation("Subdivisions");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.Project", b =>
-                {
-                    b.Navigation("Notes");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("Properties");
-
-                    b.Navigation("Responses");
-
-                    b.Navigation("Snapshots");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectRisk", b =>
-                {
-                    b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.ProjectStatus", b =>
-                {
-                    b.Navigation("Projects");
-
-                    b.Navigation("Tasks");
-
-                    b.Navigation("Workflows");
+                    b.Navigation("SubdivisionsManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Role", b =>
                 {
-                    b.Navigation("Claims");
+                    b.Navigation("AccessRequestsManyToMany");
 
-                    b.Navigation("Users");
-                });
+                    b.Navigation("ClaimsManyToMany");
 
-            modelBuilder.Entity("Pims.Dal.Entities.TierLevel", b =>
-                {
-                    b.Navigation("Projects");
+                    b.Navigation("UsersManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.User", b =>
                 {
                     b.Navigation("AccessRequests");
 
-                    b.Navigation("Agencies");
+                    b.Navigation("AgenciesManyToMany");
 
-                    b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.Workflow", b =>
-                {
-                    b.Navigation("Projects");
-
-                    b.Navigation("Status");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.WorkflowProjectStatus", b =>
-                {
-                    b.Navigation("FromStatus");
-
-                    b.Navigation("ToStatus");
+                    b.Navigation("RolesManyToMany");
                 });
 #pragma warning restore 612, 618
         }

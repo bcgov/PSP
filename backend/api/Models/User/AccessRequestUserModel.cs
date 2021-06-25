@@ -5,7 +5,7 @@ namespace Pims.Api.Models.User
     /// <summary>
     /// AccessRequestUserModel class, provides a model that represents a user attached to an access request.
     /// </summary>
-    public class AccessRequestUserModel : BaseModel
+    public class AccessRequestUserModel : BaseAppModel
     {
         #region Properties
         /// <summary>

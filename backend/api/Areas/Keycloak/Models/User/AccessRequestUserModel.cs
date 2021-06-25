@@ -5,7 +5,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     /// <summary>
     /// AccessRequestUserModel class, provides a model that represents a user attached to an access request.
     /// </summary>
-    public class AccessRequestUserModel : Pims.Api.Models.BaseModel
+    public class AccessRequestUserModel : Api.Models.BaseAppModel
     {
         #region Properties
         /// <summary>

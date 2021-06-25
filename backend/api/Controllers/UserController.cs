@@ -103,7 +103,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 403)]
         [SwaggerOperation(Tags = new[] { "user" })]
-        public IActionResult GetAccessRequest(int id)
+        public IActionResult GetAccessRequest(long id)
         {
             var accessRequest = _pimsService.User.GetAccessRequest(id);
             return new JsonResult(_mapper.Map<Model.AccessRequestModel>(accessRequest));
@@ -139,7 +139,7 @@ namespace Pims.Api.Controllers
             try
             {
                 var template = _pimsService.NotificationTemplate.Get(_options.AccessRequest.NotificationTemplate);
-                var administrators = _pimsService.User.GetAdmininstrators(accessRequest.Agencies.Select(a => a.AgencyId).ToArray());
+                var administrators = _pimsService.User.GetAdmininstrators(accessRequest.Agencies.Select(a => a.Id).ToArray());
                 var notification = _pimsService.NotificationQueue.GenerateNotification(
                     String.Join(";", administrators.Select(a => a.Email).Concat(new[] { _options.AccessRequest.SendTo }).Where(e => !String.IsNullOrWhiteSpace(e))),
                     template,
@@ -174,11 +174,11 @@ namespace Pims.Api.Controllers
             }
             if (model.Agencies.Count() != 1)
             {
-                throw new BadRequestException("Each access request can only contain one agency.");
+                throw new BadRequestException("Each access request must only contain one agency.");
             }
             if (model.Roles.Count() != 1)
             {
-                throw new BadRequestException("Each access request can only contain one role.");
+                throw new BadRequestException("Each access request must only contain one role.");
             }
             var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
             _pimsService.User.UpdateAccessRequest(accessRequest);

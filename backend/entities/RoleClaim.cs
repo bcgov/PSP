@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// RoleClaim class, provides an entity for the datamodel to manage role agencies.
     /// </summary>
     [MotiTable("PIMS_ROLE_CLAIM", "ROLCLM")]
-    public class RoleClaim : BaseEntity
+    public class RoleClaim : BaseAppEntity
     {
         #region Properties
         /// <summary>

@@ -11,6 +11,7 @@ namespace Pims.Dal.Services.Admin
     {
         IEnumerable<Agency> GetAll();
         Agency Get(long id);
+        IEnumerable<Agency> GetChildren(long parentId);
         Paged<Agency> Get(int page, int quantity);
         Paged<Agency> Get(AgencyFilter filter);
     }

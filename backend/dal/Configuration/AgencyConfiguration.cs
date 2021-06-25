@@ -38,12 +38,20 @@ namespace Pims.Dal.Configuration
                 .HasComment("A description of the agency");
 
             builder.HasOne(m => m.Parent).WithMany(m => m.Children).HasForeignKey(m => m.ParentId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("AGNCY_PARENT_AGENCY_ID_IDX");
+            builder.HasMany(m => m.AccessRequests).WithMany(a => a.Agencies).UsingEntity<AccessRequestAgency>(
+                m => m.HasOne(m => m.AccessRequest).WithMany(ar => ar.AgenciesManyToMany).HasForeignKey(m => m.AccessRequestId),
+                m => m.HasOne(m => m.Agency).WithMany(a => a.AccessRequestsManyToMany).HasForeignKey(m => m.AgencyId)
+            );
+            builder.HasMany(m => m.Users).WithMany(a => a.Agencies).UsingEntity<UserAgency>(
+                m => m.HasOne(m => m.User).WithMany(ar => ar.AgenciesManyToMany).HasForeignKey(m => m.UserId),
+                m => m.HasOne(m => m.Agency).WithMany(a => a.UsersManyToMany).HasForeignKey(m => m.AgencyId)
+            );
 
             builder.HasIndex(m => new { m.Code, m.ParentId }, "AGNCY_AGENCY_PARENT_AGENCY_TUC").IsUnique();
-            builder.HasIndex(m => new { m.IsDisabled, m.Code, m.Name, m.ParentId, m.SortOrder }, "AGNCY_IS_DISABLED_CODE_NAME_PARENT_ID_SORT_ORDER_IDX");
+            builder.HasIndex(m => new { m.IsDisabled, m.Code, m.Name, m.ParentId, m.SortOrder }, "AGNCY_IS_DISABLED_CODE_NAME_PARENT_ID_DISPLAY_ORDER_IDX");
             builder.HasIndex(m => m.ParentId, "AGNCY_PARENT_AGENCY_ID_IDX");
 
-            base.LookupConfigure(builder);
+            base.Configure(builder);
         }
         #endregion
     }

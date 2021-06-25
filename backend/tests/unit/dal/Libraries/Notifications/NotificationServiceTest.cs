@@ -346,7 +346,7 @@ namespace Pims.Dal.Test.Libraries.Notifications
             var helper = new TestHelper();
             var service = helper.Create<NotificationService>();
 
-            var template = EntityHelper.CreateNotificationTemplate(1, "template", "subject @Model.Id @Model.Name", "body @Model.Id @Model.Name");
+            var template = EntityHelper.CreateNotificationTemplate(2, "template", "subject @Model.Id @Model.Name", "body @Model.Id @Model.Name");
             template.RowVersion = 1;
             var notification = EntityHelper.CreateNotificationQueue(1, template);
 

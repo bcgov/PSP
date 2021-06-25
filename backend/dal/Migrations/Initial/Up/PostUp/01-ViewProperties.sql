@@ -7,67 +7,65 @@ GO
 CREATE VIEW [dbo].[PROPERTY_VW] AS
 SELECT
     p.[PARCEL_ID] AS [ID]
-    , p.[CONCURRENCY_CONTROL_NUMBER] AS [RowVersion]
-    , p.[PROPERTY_TYPE_ID] AS [PropertyTypeId]
-    , p.[PROPERTY_CLASSIFICATION_ID] AS [ClassificationId]
-    , [Classification] = c.[NAME]
-    , p.[AGENCY_ID] AS [AgencyId]
-    , [Agency] = ISNULL(pa.[NAME], a.[NAME])
-    , [AgencyCode] = ISNULL(pa.[CODE], a.[CODE])
-    , [SubAgency] = (
-        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
-            THEN a.[NAME]
-            ELSE NULL
-        END)
-    , [SubAgencyCode] = (
-        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
-            THEN a.[CODE]
-            ELSE NULL
-        END)
-    , p.[ADDRESS_ID] AS [AddressId]
-    , [Address] = TRIM(ISNULL(adr.[ADDRESS1], '') + ' ' + ISNULL(adr.[ADDRESS2], ''))
-    , [AdministrativeArea] = adr.[ADMINISTRATIVE_AREA]
-    , [Province] = ap.[NAME]
-    , adr.[POSTAL] AS [Postal]
-    , p.[PROJECT_NUMBERS] AS [ProjectNumbers]
-    , p.[NAME] AS [Name]
-    , p.[DESCRIPTION] AS [Description]
-    , p.[LOCATION] AS [Location]
-    , p.[BOUNDARY] AS [Boundary]
-    , p.[IS_SENSITIVE] AS [IsSensitive]
-    , p.[IS_VISIBLE_TO_OTHER_AGENCIES] AS [IsVisibleToOtherAgencies]
+    , p.[CONCURRENCY_CONTROL_NUMBER] AS [CONCURRENCY_CONTROL_NUMBER]
+    , p.[PROPERTY_TYPE_ID] AS [PROPERTY_TYPE_ID]
+    , p.[PROPERTY_CLASSIFICATION_ID] AS [CLASSIFICATION_ID]
+    , c.[NAME] AS [CLASSIFICATION]
+    , p.[AGENCY_ID] AS [AGENCY_ID]
+    , ISNULL(pa.[NAME], a.[NAME]) AS [AGENCY]
+    , ISNULL(pa.[CODE], a.[CODE]) AS [AGENCY_CODE]
+    , (SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+        THEN a.[NAME]
+        ELSE NULL
+        END) AS [SUB_AGENCY]
+    , (SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+        THEN a.[CODE]
+        ELSE NULL
+        END) AS [SUB_AGENCY_CODE]
+    , p.[ADDRESS_ID] AS [ADDRESS_ID]
+    , TRIM(ISNULL(adr.[ADDRESS1], '') + ' ' + ISNULL(adr.[ADDRESS2], '')) AS [ADDRESS]
+    , adr.[ADMINISTRATIVE_AREA] AS [ADMINISTRATIVE_AREA]
+    , ap.[NAME] AS [PROVINCE]
+    , adr.[POSTAL] AS [POSTAL]
+    , p.[PROJECT_NUMBERS] AS [PROJECT_NUMBERS]
+    , p.[NAME] AS [NAME]
+    , p.[DESCRIPTION] AS [DESCRIPTION]
+    , p.[LOCATION] AS [LOCATION]
+    , p.[BOUNDARY] AS [BOUNDARY]
+    , p.[IS_SENSITIVE] AS [IS_SENSITIVE]
+    , p.[IS_VISIBLE_TO_OTHER_AGENCIES] AS [IS_VISIBLE_TO_OTHER_AGENCIES]
 
     -- Parcel Properties
     , p.[PID]
     , p.[PIN]
-    , [LandArea] = p.[LAND_AREA]
-    , [LandLegalDescription] = p.[LAND_LEGAL_DESCRIPTION]
-    , [Zoning] = p.[ZONING]
-    , [ZoningPotential] = p.[ZONING_POTENTIAL]
+    , p.[LAND_AREA] AS [LAND_AREA]
+    , p.[LAND_LEGAL_DESCRIPTION] AS [LAND_LEGAL_DESCRIPTION]
+    , p.[ZONING] AS [ZONING]
+    , p.[ZONING_POTENTIAL] AS [ZONING_POTENTIAL]
 
     -- Building Properties
-    , [ParcelId] = p.[PARCEL_ID]
-    , [BuildingConstructionTypeId] = 0
-    , [BuildingConstructionType] = null
-    , [BuildingFloorCount] = 0
-    , [BuildingPredominateUseId] = 0
-    , [BuildingPredominateUse] = null
-    , [BuildingOccupantTypeId] = 0
-    , [BuildingOccupantType] = null
-    , [BuildingTenancy] = null
-    , [RentableArea] = 0
-    , [LeaseExpiry] = null
-    , [OccupantName] = null
-    , [TransferLeaseOnSale] = CAST(0 AS BIT)
+    , p.[PARCEL_ID] AS [PARCEL_ID]
+    , 0 AS [BUILDING_CONSTRUCTION_TYPE_ID]
+    , null AS [BUILDING_CONSTRUCTION_TYPE]
+    , 0 AS [BUILDING_FLOOR_COUNT]
+    , 0 AS [BUILDING_PREDOMINATE_USE_ID]
+    , null AS [BUILDING_PREDOMINATE_USE]
+    , 0 AS [BUILDING_OCCUPANT_TYPE_ID]
+    , null AS [BUILDING_OCCUPANT_TYPE]
+    , null AS [BUILDING_TENANCY]
+    , 0 AS [RENTABLE_AREA]
+    , null AS [LEASE_EXPIRY]
+    , null AS [OCCUPANT_NAME]
+    , CAST(0 AS BIT) AS [TRANSFER_LEASE_ON_SALE]
 
-    , [AssessedLand] = eas.[VALUE]
-    , [AssessedLandDate] = eas.[DATE]
-    , [AssessedBuilding] = eim.[VALUE]
-    , [AssessedBuildingDate] = eim.[DATE]
-    , [Market] = ISNULL(fe.[VALUE], 0)
-    , [MarketFiscalYear] = fe.[FISCAL_YEAR]
-    , [NetBook] = ISNULL(fn.[VALUE], 0)
-    , [NetBookFiscalYear] = fn.[FISCAL_YEAR]
+    , eas.[VALUE] AS [ASSESSED_LAND]
+    , eas.[DATE] AS [ASSESSED_LAND_DATE]
+    , eim.[VALUE] AS [ASSESSED_BUILDING]
+    , eim.[DATE] AS [ASSESSED_BUILDING_DATE]
+    , ISNULL(fe.[VALUE], 0) AS [MARKET]
+    , fe.[FISCAL_YEAR] AS [MARKET_FISCAL_YEAR]
+    , ISNULL(fn.[VALUE], 0) AS [NET_BOOK]
+    , fn.[FISCAL_YEAR] AS [NET_BOOK_FISCAL_YEAR]
 FROM dbo.[PIMS_PARCEL] p
 LEFT JOIN (SELECT DISTINCT [SUBDIVISION_PARCEL_ID] FROM dbo.[PIMS_PARCEL_PARCEL]) sp ON p.[PARCEL_ID] = sp.[SUBDIVISION_PARCEL_ID]
 JOIN dbo.[PIMS_PROPERTY_CLASSIFICATION] c ON p.[PROPERTY_CLASSIFICATION_ID] = c.[PROPERTY_CLASSIFICATION_ID]
@@ -113,68 +111,66 @@ OUTER APPLY (
 ) AS fn
 UNION ALL
 SELECT
-    b.[BUILDING_ID]
-    , b.[CONCURRENCY_CONTROL_NUMBER] AS [RowVersion]
-    , b.[PROPERTY_TYPE_ID] AS [PropertyTypeId]
+    b.[BUILDING_ID] AS [ID]
+    , b.[CONCURRENCY_CONTROL_NUMBER] AS [CONCURRENCY_CONTROL_NUMBER]
+    , b.[PROPERTY_TYPE_ID] AS [PROPERTY_TYPE_ID]
     , b.[PROPERTY_CLASSIFICATION_ID] AS [ClassificationId]
-    , [Classification] = c.[NAME]
-    , b.[AGENCY_ID] AS [AgencyId]
-    , [Agency] = ISNULL(pa.[NAME], a.[NAME])
-    , [AgencyCode] = ISNULL(pa.[CODE], a.[CODE])
-    , [SubAgency] = (
-        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
-            THEN a.[NAME]
-            ELSE NULL
-        END)
-    , [SubAgencyCode] = (
-        SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
-            THEN a.[CODE]
-            ELSE NULL
-        END)
-    , b.[ADDRESS_ID] AS [AddressId]
-    , [Address] = TRIM(ISNULL(adr.[ADDRESS1], '') + ' ' + ISNULL(adr.[ADDRESS2], ''))
-    , [AdministrativeArea] = adr.[ADMINISTRATIVE_AREA]
-    , [Province] = ap.[NAME]
-    , adr.[POSTAL] AS [Postal]
-    , b.[PROJECT_NUMBERS] AS [ProjectNumbers]
-    , b.[NAME] AS [Name]
-    , b.[DESCRIPTION] AS [Description]
-    , b.[LOCATION] AS [Location]
-    , b.[BOUNDARY] AS [Boundary]
-    , b.[IS_SENSITIVE] AS [IsSensitive]
-    , b.[IS_VISIBLE_TO_OTHER_AGENCIES] AS [IsVisibleToOtherAgencies]
+    , c.[NAME] AS [CLASSIFICATION]
+    , b.[AGENCY_ID] AS [AGENCY_ID]
+    , ISNULL(pa.[NAME], a.[NAME]) AS [AGENCY]
+    , ISNULL(pa.[CODE], a.[CODE]) AS [AGENCY_CODE]
+    , (SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+        THEN a.[NAME]
+        ELSE NULL
+        END) AS [SUB_AGENCY]
+    , (SELECT CASE WHEN pa.[AGENCY_ID] IS NOT NULL
+        THEN a.[CODE]
+        ELSE NULL
+        END) AS [SUB_AGENCY_CODE]
+    , b.[ADDRESS_ID] AS [ADDRESS_ID]
+    , TRIM(ISNULL(adr.[ADDRESS1], '') + ' ' + ISNULL(adr.[ADDRESS2], '')) AS [ADDRESS]
+    , adr.[ADMINISTRATIVE_AREA] AS [ADMINISTRATIVE_AREA]
+    , ap.[NAME] AS [PROVINCE]
+    , adr.[POSTAL] AS [POSTAL]
+    , b.[PROJECT_NUMBERS] AS [PROJECT_NUMBERS]
+    , b.[NAME] AS [NAME]
+    , b.[DESCRIPTION] AS [DESCRIPTION]
+    , b.[LOCATION] AS [LOCATION]
+    , b.[BOUNDARY] AS [BOUNDARY]
+    , b.[IS_SENSITIVE] AS [IS_SENSITIVE]
+    , b.[IS_VISIBLE_TO_OTHER_AGENCIES] AS [IS_VISIBLE_TO_OTHER_AGENCIES]
 
     -- Parcel Properties
-    , [PID] = p.[PID]
-    , [PIN] = p.[PIN]
-    , [LandArea] = p.[LAND_AREA]
-    , [LandLegalDescription] = p.[LAND_LEGAL_DESCRIPTION]
-    , [Zoning] = p.[ZONING]
-    , [ZoningPotential] = p.[ZONING_POTENTIAL]
+    , p.[PID]
+    , p.[PIN]
+    , p.[LAND_AREA] AS [LAND_AREA]
+    , p.[LAND_LEGAL_DESCRIPTION] AS [LAND_LEGAL_DESCRIPTION]
+    , p.[ZONING] AS [ZONING]
+    , p.[ZONING_POTENTIAL] AS [ZONING_POTENTIAL]
 
     -- Building Properties
-    , [ParcelId] = p.[PARCEL_ID]
-    , [BuildingConstructionTypeId] = b.[BUILDING_CONSTRUCTION_TYPE_ID]
-    , [BuildingConstructionType] = bct.[NAME]
-    , [BuildingFloorCount] = b.[BUILDING_FLOOR_COUNT]
-    , [BuildingPredominateUseId] = b.[BUILDING_PREDOMINATE_USE_ID]
-    , [BuildingPredominateUse] = bpu.[NAME]
-    , [BuildingOccupantTypeId] = b.[BUILDING_OCCUPANT_TYPE_ID]
-    , [BuildingOccupantType] = bot.[NAME]
-    , [BuildingTenancy] = b.[BUILDING_TENANCY]
-    , [RentableArea] = b.[RENTABLE_AREA]
-    , [LeaseExpiry] = b.[LEASE_EXPIRY]
-    , [OccupantName] = b.[OCCUPANT_NAME]
-    , [TransferLeaseOnSale] = b.[TRANSFER_LEASE_ON_SALE]
+    , p.[PARCEL_ID] AS [PARCEL_ID]
+    , b.[BUILDING_CONSTRUCTION_TYPE_ID] AS [BUILDING_CONSTRUCTION_TYPE_ID]
+    , bct.[NAME] AS [BUILDING_CONSTRUCTION_TYPE]
+    , b.[BUILDING_FLOOR_COUNT] AS [BUILDING_FLOOR_COUNT]
+    , b.[BUILDING_PREDOMINATE_USE_ID] AS [BUILDING_PREDOMINATE_USE_ID]
+    , bpu.[NAME] AS [BUILDING_PREDOMINATE_USE]
+    , b.[BUILDING_OCCUPANT_TYPE_ID] AS [BUILDING_OCCUPANT_TYPE_ID]
+    , bot.[NAME] AS [BUILDING_OCCUPANT_TYPE]
+    , b.[BUILDING_TENANCY] AS [BUILDING_TENANCY]
+    , b.[RENTABLE_AREA] AS [RENTABLE_AREA]
+    , b.[LEASE_EXPIRY] AS [LEASE_EXPIRY]
+    , b.[OCCUPANT_NAME] AS [OCCUPANT_NAME]
+    , b.[TRANSFER_LEASE_ON_SALE] AS [TRANSFER_LEASE_ON_SALE]
 
-    , [AssessedLand] = null
-    , [AssessedLandDate] = null
-    , [AssessedBuilding] = eim.[VALUE]
-    , [AssessedBuildingDate] = eim.[DATE]
-    , [Market] = ISNULL(fe.[VALUE], 0)
-    , [MarketFiscalYear] = fe.[FISCAL_YEAR]
-    , [NetBook] = ISNULL(fn.[VALUE], 0)
-    , [NetBookFiscalYear] = fn.[FISCAL_YEAR]
+    , null AS [ASSESSED_LAND]
+    , null AS [ASSESSED_LAND_DATE]
+    , eim.[VALUE] AS [ASSESSED_BUILDING]
+    , eim.[DATE] AS [ASSESSED_BUILDING_DATE]
+    , ISNULL(fe.[VALUE], 0) AS [MARKET]
+    , fe.[FISCAL_YEAR] AS [MARKET_FISCAL_YEAR]
+    , ISNULL(fn.[VALUE], 0) AS [NET_BOOK]
+    , fn.[FISCAL_YEAR] AS [NET_BOOK_FISCAL_YEAR]
 FROM dbo.[PIMS_BUILDING] b
 LEFT JOIN dbo.[PIMS_PARCEL_BUILDING] pb ON b.[BUILDING_ID] = pb.[BUILDING_ID]
 LEFT JOIN dbo.[PIMS_PARCEL] p ON pb.[PARCEL_ID] = p.[PARCEL_ID]

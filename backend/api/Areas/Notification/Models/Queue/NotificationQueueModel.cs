@@ -4,7 +4,7 @@ using System;
 
 namespace Pims.Api.Areas.Notification.Models.Queue
 {
-    public class NotificationQueueModel : BaseModel
+    public class NotificationQueueModel : BaseAppModel
     {
         #region Properties
         /// <summary>

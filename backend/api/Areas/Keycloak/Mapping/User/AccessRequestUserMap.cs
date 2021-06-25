@@ -15,7 +15,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.MiddleName, src => src.MiddleName)
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.AccessRequestUserModel, Entity.User>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -24,7 +24,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.MiddleName, src => src.MiddleName)
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

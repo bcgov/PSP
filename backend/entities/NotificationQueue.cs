@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// NotificationQueue class, provides an entity for the datamodel to manage a notification queue.
     /// </summary>
     [MotiTable("PIMS_NOTIFICATION_QUEUE", "NOTIFQ")]
-    public class NotificationQueue : BaseEntity
+    public class NotificationQueue : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -90,17 +90,6 @@ namespace Pims.Dal.Entities
         public string Tag { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the project this notification is related to.
-        /// </summary>
-        [Column("PROJECT_ID")]
-        public long? ProjectId { get; set; }
-
-        /// <summary>
-        /// get/set - The project this notification is related to.
-        /// </summary>
-        public Project Project { get; set; }
-
-        /// <summary>
         /// get/set - Foreign key to the agency this notification was sent to.
         /// </summary>
         [Column("TO_AGENCY_ID")]
@@ -125,7 +114,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - CHES message Id.
         /// </summary>
-        [Column("Ches_Message_Id")]
+        [Column("CHES_MESSAGE_ID")]
         public Guid? ChesMessageId { get; set; }
 
         /// <summary>
@@ -133,11 +122,6 @@ namespace Pims.Dal.Entities
         /// </summary>
         [Column("CHES_TRANSACTION_ID")]
         public Guid? ChesTransactionId { get; set; }
-
-        /// <summary>
-        /// get - A collection of responses to this notification.
-        /// </summary>
-        public ICollection<ProjectAgencyResponse> Responses { get; } = new List<ProjectAgencyResponse>();
         #endregion
 
         #region Constructors
@@ -150,11 +134,10 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a NotificationQueue class, initializes with specified parameters.
         /// </summary>
         /// <param name="template"></param>
-        /// <param name="project"></param>
         /// <param name="to"></param>
         /// <param name="subject"></param>
         /// <param name="body"></param>
-        public NotificationQueue(NotificationTemplate template, Project project, string to, string subject, string body)
+        public NotificationQueue(NotificationTemplate template, string to, string subject, string body)
         {
             if (String.IsNullOrWhiteSpace(to)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(to));
             if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(subject));
@@ -168,8 +151,6 @@ namespace Pims.Dal.Entities
             this.BodyType = template.BodyType;
             this.Encoding = template.Encoding;
             this.Priority = template.Priority;
-            this.ProjectId = project?.Id;
-            this.Project = project;
             this.To = to;
             this.SendOn = DateTime.UtcNow;
             this.Tag = template.Tag;
@@ -179,11 +160,10 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a NotificationQueue class, initializes with specified parameters.
         /// </summary>
         /// <param name="template"></param>
-        /// <param name="project"></param>
         /// <param name="toAgency"></param>
         /// <param name="subject"></param>
         /// <param name="body"></param>
-        public NotificationQueue(NotificationTemplate template, Project project, Agency toAgency, string subject, string body)
+        public NotificationQueue(NotificationTemplate template, Agency toAgency, string subject, string body)
         {
             if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(subject));
             if (String.IsNullOrWhiteSpace(body)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(body));
@@ -196,24 +176,11 @@ namespace Pims.Dal.Entities
             this.BodyType = template.BodyType;
             this.Encoding = template.Encoding;
             this.Priority = template.Priority;
-            this.ProjectId = project?.Id;
-            this.Project = project;
             this.ToAgencyId = toAgency?.Id;
             this.ToAgency = toAgency;
             this.To = toAgency?.Email;
             this.SendOn = DateTime.UtcNow;
             this.Tag = template.Tag;
-        }
-
-        /// <summary>
-        /// Create a new instance of a NotificationQueue class, initializes with specified parameters.
-        /// </summary>
-        /// <param name="template"></param>
-        /// <param name="to"></param>
-        /// <param name="subject"></param>
-        /// <param name="body"></param>
-        public NotificationQueue(NotificationTemplate template, string to, string subject, string body) : this(template, to, null, null, subject, body)
-        {
         }
 
         /// <summary>

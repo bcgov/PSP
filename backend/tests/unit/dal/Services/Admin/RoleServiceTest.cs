@@ -46,7 +46,7 @@ namespace Pims.Dal.Test.Services.Admin
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles);
             using var init = helper.InitializeDatabase(user);
-            var role = EntityHelper.CreateRole("Role 1");
+            var role = EntityHelper.CreateRole(99, "Role 1");
             init.AddAndSaveChanges(role);
             int expectedCount = 1;
 
@@ -66,7 +66,7 @@ namespace Pims.Dal.Test.Services.Admin
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles);
             using var init = helper.InitializeDatabase(user);
-            var role = EntityHelper.CreateRole("Role 1");
+            var role = EntityHelper.CreateRole(99, "Role 1");
             var roleKey = role.Key;
             init.AddAndSaveChanges(role);
 
@@ -88,7 +88,7 @@ namespace Pims.Dal.Test.Services.Admin
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles);
             using var init = helper.InitializeDatabase(user);
-            var role = EntityHelper.CreateRole("Role 1");
+            var role = EntityHelper.CreateRole(50, "Role 1");
             init.AddAndSaveChanges(role);
 
             var service = helper.CreateService<RoleService>(user);
@@ -127,7 +127,7 @@ namespace Pims.Dal.Test.Services.Admin
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles);
             using var init = helper.InitializeDatabase(user);
-            var role = EntityHelper.CreateRole("Role 1");
+            var role = EntityHelper.CreateRole(50, "Role 1");
             role.KeycloakGroupId = Guid.NewGuid();
             var keycloakId = role.KeycloakGroupId;
             init.AddAndSaveChanges(role);
@@ -151,12 +151,12 @@ namespace Pims.Dal.Test.Services.Admin
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles, Permissions.SystemAdmin);
             var id = Guid.NewGuid();
-            var role = EntityHelper.CreateRole(id, "Role 1");
+            var role = EntityHelper.CreateRole(1, id, "Role 1");
             helper.CreatePimsContext(user, true).AddAndSaveChanges(role);
 
             var service = helper.CreateService<RoleService>(user);
 
-            var updatedRole = EntityHelper.CreateRole(id, "Role 1");
+            var updatedRole = EntityHelper.CreateRole(1, id, "Role 1");
             var newName = "Updated Role";
             updatedRole.Name = newName;
 
@@ -256,9 +256,9 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin, Permissions.AdminRoles);
-            var role1 = EntityHelper.CreateRole("Delete Me");
-            var role2 = EntityHelper.CreateRole("And Me");
-            var role3 = EntityHelper.CreateRole("Not Me");
+            var role1 = EntityHelper.CreateRole(1, "Delete Me");
+            var role2 = EntityHelper.CreateRole(2, "And Me");
+            var role3 = EntityHelper.CreateRole(3, "Not Me");
             Guid[] exclusions = new Guid[] { role3.Key };
             helper.CreatePimsContext(user, true).AddAndSaveChanges(role1, role2);
 

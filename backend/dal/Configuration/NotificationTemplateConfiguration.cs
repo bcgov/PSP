@@ -9,7 +9,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// NotificationTemplateConfiguration class, provides a way to configure notification templates in the database.
     ///</summary>
-    public class NotificationTemplateConfiguration : BaseEntityConfiguration<NotificationTemplate>
+    public class NotificationTemplateConfiguration : BaseAppEntityConfiguration<NotificationTemplate>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<NotificationTemplate> builder)

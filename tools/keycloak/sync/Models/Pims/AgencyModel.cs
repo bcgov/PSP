@@ -5,7 +5,7 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
     /// <summary>
     /// AgencyModel class, provides a model that represents the agency.
     /// </summary>
-    public class AgencyModel : BaseModel
+    public class AgencyModel : BaseAppModel
     {
         #region Properties
         /// <summary>

@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// ParcelFiscal class, provides an entity to map values to a fiscal year.
     /// </summary>
     [MotiTable("PIMS_PARCEL_FISCAL", "PRFSCL")]
-    public class ParcelFiscal : BaseEntity
+    public class ParcelFiscal : BaseAppEntity
     {
         #region Properties
         /// <summary>

@@ -6,9 +6,14 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// LookupEntity class, provides an entity for the datamodel to manage entities that represent codified values.
     /// </summary>
-    public abstract class LookupEntity : BaseEntity
+    public abstract class LookupEntity : BaseEntity, ILookupEntity
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key for lookup record.
+        /// </summary>
+        public abstract long Id { get; set; }
+
         /// <summary>
         /// get/set - The name of the code.
         /// </summary>
@@ -24,7 +29,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The sort order of the lookup item.
         /// </summary>
-        [Column("SORT_ORDER", Order = 96)]
+        [Column("DISPLAY_ORDER", Order = 96)]
         public int SortOrder { get; set; }
         #endregion
 

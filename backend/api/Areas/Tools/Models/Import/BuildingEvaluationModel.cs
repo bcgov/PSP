@@ -2,7 +2,7 @@ using System;
 
 namespace Pims.Api.Areas.Tools.Models.Import
 {
-    public class BuildingEvaluationModel : Api.Models.BaseModel
+    public class BuildingEvaluationModel : Api.Models.BaseAppModel
     {
         #region Properties
         public long BuildingId { get; set; }

@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// AccessRequestConfiguration class, provides a way to configure users access requests in the database.
     ///</summary>
-    public class AccessRequestConfiguration : BaseEntityConfiguration<AccessRequest>
+    public class AccessRequestConfiguration : BaseAppEntityConfiguration<AccessRequest>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<AccessRequest> builder)
@@ -25,7 +25,7 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.Status)
                 .HasComment("The status of the request");
 
-            builder.Property(m => m.Note).HasMaxLength(2000)
+            builder.Property(m => m.Note).HasColumnType("NVARCHAR(MAX)")
                 .HasComment("A note about the request");
 
             builder.HasOne(m => m.User).WithMany(u => u.AccessRequests).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ACCRQT_USER_ID_IDX");

@@ -432,8 +432,6 @@ namespace Pims.Api.Areas.Property.Models.Search
                 ProjectNumber = model.ProjectNumber,
                 BareLandOnly = model.BareLandOnly,
                 IgnorePropertiesInProjects = model.IgnorePropertiesInProjects,
-                InSurplusPropertyProgram = model.InSurplusPropertyProgram,
-                InEnhancedReferralProcess = model.InEnhancedReferralProcess,
                 Name = model.Name,
                 ParcelId = model.ParcelId,
                 PropertyType = model.PropertyType,

@@ -64,6 +64,7 @@ namespace Pims.Dal.Test.Entities
         #region Test Classes
         class TestClass : LookupEntity
         {
+            public override long Id { get; set; }
             public TestClass() : base() { }
             public TestClass(string name) : base(name) { }
         }

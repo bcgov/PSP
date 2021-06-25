@@ -10,15 +10,21 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
         {
             config.NewConfig<Entity.Role, Model.RoleModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.LookupEntity, Api.Models.LookupModel>();
+                .Map(dest => dest.Name, src => src.Name)
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Api.Models.LookupModel, Entity.LookupEntity>();
+                .Map(dest => dest.Name, src => src.Name)
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+
+            config.NewConfig<Entity.UserRole, Model.RoleModel>()
+                .Map(dest => dest.Id, src => src.UserId)
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+
+            config.NewConfig<Model.RoleModel, Entity.UserRole>()
+                .Map(dest => dest.UserId, src => src.Id)
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

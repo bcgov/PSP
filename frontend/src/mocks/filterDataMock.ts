@@ -111,15 +111,16 @@ export const AGENCIES = [
 export const mockUser: IUserDetails = {
   id: 1,
   key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  username: 'admin',
+  email: 'admin@pims.gov.bc.ca',
   displayName: 'User, Admin',
   firstName: 'Admin',
   lastName: 'User',
-  email: 'admin@pims.gov.bc.ca',
-  username: 'admin',
   position: '',
-  createdOn: '2021-05-04T19:07:09.6920606',
   agencies: [],
   roles: [],
+  createdOn: '2021-05-04T19:07:09.6920606',
+  rowVersion: 1,
 };
 
 export const PARCELS = [
@@ -694,11 +695,12 @@ export const ACTIVE = {
 
 export const mockAccessRequest: IAccessRequest = {
   id: 2,
-  userId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  userId: 1,
   status: AccessRequestStatus.OnHold,
   note: '',
   user: {
-    id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    id: 1,
+    key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     displayName: 'User, Admin',
     firstName: 'Admin',
     lastName: 'User',
@@ -709,10 +711,10 @@ export const mockAccessRequest: IAccessRequest = {
   },
   agencies: [
     {
-      description: '',
-      code: 'AG',
       id: 251,
+      code: 'AG',
       name: 'Attorney General',
+      description: '',
       isDisabled: false,
       sortOrder: 0,
       createdOn: '2021-05-07T00:37:06.2457312',
@@ -720,9 +722,9 @@ export const mockAccessRequest: IAccessRequest = {
   ],
   roles: [
     {
-      description: 'Real Estate Manager can manage properties within their agencies.',
-      id: 'aad8c03d-892c-4cc3-b992-5b41c4f2392c',
+      id: 1,
       name: 'Real Estate Manager',
+      description: 'Real Estate Manager can manage properties within their agencies.',
       isDisabled: false,
       sortOrder: 0,
       createdOn: '2021-05-07T00:37:06.2457315',

@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Property class, provides an entity for the datamodel to manage properties.
     /// </summary>
-    public abstract class Property : BaseEntity
+    public abstract class Property : BaseAppEntity
     {
         #region Properties
         #region Identity
@@ -110,14 +110,17 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a Property class.
         /// </summary>
-        public Property() { }
+        public Property()
+        {
+            this.ClassificationId = 1L;
+        }
 
         /// <summary>
         /// Create a new instance of a Property class.
         /// </summary>
         /// <param name="lat"></param>
         /// <param name="lng"></param>
-        public Property(double lat, double lng)
+        public Property(double lat, double lng) : this()
         {
             this.Location = new Point(lng, lat) { SRID = 4326 };
         }

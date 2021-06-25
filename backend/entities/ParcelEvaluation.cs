@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// ParcelEvaluation class, provides an entity to map parcel evaluation values to a date.
     /// </summary>
     [MotiTable("PIMS_PARCEL_EVALUATION", "PREVAL")]
-    public class ParcelEvaluation : BaseEntity
+    public class ParcelEvaluation : BaseAppEntity
     {
         #region Properties
         /// <summary>

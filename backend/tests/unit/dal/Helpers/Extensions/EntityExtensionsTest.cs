@@ -106,7 +106,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.ProjectEdit));
+            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.AdminProjects));
         }
         #endregion
 

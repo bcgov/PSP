@@ -101,17 +101,14 @@ namespace Pims.Api.Test.Controllers.Property
 
             var parcel = new Entity.Parcel(1, 51, 25);
             var parcels = new[] { parcel };
-            var building = new Entity.Building(parcel, 51, 25)
-            {
-                PropertyTypeId = 1
-            };
+            var building = new Entity.Building(parcel, 51, 25);
             var buildings = new[] { building };
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
             var items = parcels.Select(p => new Entity.Views.Property(p))
-                .Concat(buildings.Select(b => new Entity.Views.Property(b))).Select(x => new ProjectProperty(x));
+                .Concat(buildings.Select(b => new Entity.Views.Property(b)));
             service.Setup(m => m.Property.Get(It.IsAny<AllPropertyFilter>())).Returns(items);
 
             // Act
@@ -145,7 +142,7 @@ namespace Pims.Api.Test.Controllers.Property
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            var items = parcels.Select(p => new ProjectProperty(new Entity.Views.Property(p)));
+            var items = parcels.Select(p => new Entity.Views.Property(p));
             service.Setup(m => m.Property.Get(It.IsAny<AllPropertyFilter>())).Returns(items);
 
             // Act
@@ -177,7 +174,7 @@ namespace Pims.Api.Test.Controllers.Property
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            var items = buildings.Select(p => new ProjectProperty(new Entity.Views.Property(p)));
+            var items = buildings.Select(p => new Entity.Views.Property(p));
             service.Setup(m => m.Property.Get(It.IsAny<AllPropertyFilter>())).Returns(items);
 
             // Act
@@ -214,8 +211,8 @@ namespace Pims.Api.Test.Controllers.Property
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            var items = parcels.Select(p => new ProjectProperty(new Entity.Views.Property(p)))
-                .Concat(buildings.Select(b => new ProjectProperty(new Entity.Views.Property(b))));
+            var items = parcels.Select(p => new Entity.Views.Property(p))
+                .Concat(buildings.Select(b => new Entity.Views.Property(b)));
             service.Setup(m => m.Property.Get(It.IsAny<AllPropertyFilter>())).Returns(items);
 
             // Act

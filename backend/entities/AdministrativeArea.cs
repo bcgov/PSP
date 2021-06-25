@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <value></value>
         [Column("ADMINISTRATIVE_AREA_ID")]
-        public long Id { get; set; }
+        public override long Id { get; set; }
 
         /// <summary>
         /// get/set - An appreviated name.

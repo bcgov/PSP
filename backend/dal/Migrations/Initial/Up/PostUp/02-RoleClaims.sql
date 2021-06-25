@@ -1,75 +1,110 @@
 PRINT N'Adding [PIMS_ROLE_CLAIM]'
 
-INSERT INTO dbo.[PIMS_ROLE_CLAIM]
-    (
+INSERT INTO dbo.[PIMS_ROLE_CLAIM] (
     [ROLE_ID]
     , [CLAIM_ID]
-    )
+    , [APP_CREATE_USERID]
+    , [APP_CREATE_USER_DIRECTORY]
+    , [APP_LAST_UPDATE_USERID]
+    , [APP_LAST_UPDATE_USER_DIRECTORY]
+)
 VALUES
 -- system-administrator
 (
     1
     , 8   -- property-view
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 9   -- property-add
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 10   -- property-edit
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 11   -- property-delete
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 12   -- sensitive-view
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 3   -- admin-users
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 4   -- admin-roles
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 5   -- admin-properties
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 6   -- admin-agencies
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 7   -- admin-projects
-),
-(
-    1
-    , 15   -- project-view
-),
-(
-    1
-    , 16   -- project-add
-),
-(
-    1
-    , 17   -- project-edit
-),
-(
-    1
-    , 18   -- project-delete
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 1   -- system-administrator
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     1
     , 2   -- agency-administrator
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 
 
@@ -77,108 +112,116 @@ VALUES
 (
     2
     , 8   -- property-view
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     2
     , 9   -- property-add
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     2
     , 10   -- property-edit
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     2
     , 12   -- sensitive-view
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     2
     , 3   -- admin-users
-),
-(
-    2
-    , 15   -- project-view
-),
-(
-    2
-    , 16   -- project-add
-),
-(
-    2
-    , 17   -- project-edit
-),
-(
-    2
-    , 18   -- project-delete
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     2
     , 2   -- agency-administrator
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 
 -- real-estate-manager
 (
     3
     , 8   -- property-view
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     3
     , 9   -- property-add
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     3
     , 10   -- property-edit
-),
-(
-    3
-    , 13   -- dispose-request
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     3
     , 12   -- sensitive-view
-),
-(
-    3
-    , 15   -- project-view
-),
-(
-    3
-    , 16   -- project-add
-),
-(
-    3
-    , 17   -- project-edit
-),
-(
-    3
-    , 18   -- project-delete
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 
 -- real-estate-assistant
 (
     4
     , 8   -- property-view
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     4
     , 9   -- property-add
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     4
     , 10   -- property-edit
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     4
     , 12   -- sensitive-view
-),
-(
-    4
-    , 15   -- project-view
-),
-(
-    4
-    , 16   -- project-add
-),
-(
-    4
-    , 17   -- project-edit
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 )

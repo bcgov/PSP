@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// UserAgencyConfiguration class, provides a way to configure user agencies in the database.
     ///</summary>
-    public class UserAgencyConfiguration : BaseEntityConfiguration<UserAgency>
+    public class UserAgencyConfiguration : BaseAppEntityConfiguration<UserAgency>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<UserAgency> builder)
@@ -25,8 +25,8 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.AgencyId).IsRequired()
                 .HasComment("Foreign key to the agency");
 
-            builder.HasOne(m => m.User).WithMany(m => m.Agencies).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRAGC_USER_ID_IDX");
-            builder.HasOne(m => m.Agency).WithMany(m => m.Users).HasForeignKey(m => m.AgencyId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRAGC_AGENCY_ID_IDX");
+            builder.HasOne(m => m.User).WithMany(m => m.AgenciesManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRAGC_USER_ID_IDX");
+            builder.HasOne(m => m.Agency).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.AgencyId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRAGC_AGENCY_ID_IDX");
 
             builder.HasIndex(m => new { m.UserId, m.AgencyId }, "USRAGC_USER_AGENCY_TUC").IsUnique();
             builder.HasIndex(m => m.UserId, "USRAGC_USER_ID_IDX");

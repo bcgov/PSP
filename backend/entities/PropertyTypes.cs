@@ -5,8 +5,17 @@ namespace Pims.Dal.Entities
     /// </summary>
     public enum PropertyTypes : long
     {
-        Land = 0,
-        Building = 1,
-        Subdivision = 2
+        /// <summary>
+        /// Represents a parcel of land.
+        /// </summary>
+        Land = 1,
+        /// <summary>
+        /// Represents a building on land.
+        /// </summary>
+        Building = 2,
+        /// <summary>
+        /// Represents a subdivision draft parcel.
+        /// </summary>
+        Subdivision = 3
     }
 }

@@ -65,7 +65,7 @@ namespace Pims.Api.Test.Routes.Admin
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("{id}");
+            endpoint.HasGet("{key}");
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace Pims.Api.Test.Routes.Admin
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPut("{id}");
+            endpoint.HasPut("{key}");
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace Pims.Api.Test.Routes.Admin
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasDelete("{id}");
+            endpoint.HasDelete("{key}");
         }
         #endregion
     }

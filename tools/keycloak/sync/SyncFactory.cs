@@ -406,7 +406,7 @@ namespace Pims.Tools.Keycloak.Sync
                         var agencies = user.Agencies.ToArray();
                         foreach (var agency in agencies)
                         {
-                            var aexists = await _client.HandleRequestAsync<PModel.AgencyModel>(HttpMethod.Get, $"{_options.Api.Uri}/admin/agencies/{agency.Key}", r =>
+                            var aexists = await _client.HandleRequestAsync<PModel.AgencyModel>(HttpMethod.Get, $"{_options.Api.Uri}/admin/agencies/{agency.Id}", r =>
                             {
                                 _logger.LogError($"Agency '{agency.Id}' does not exist in PIMS.", user);
                                 log.Append($"PIMS - Agency missing '{agency.Id}'{Environment.NewLine}");

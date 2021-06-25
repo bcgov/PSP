@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// Address class, provides an entity for the datamodel to manage property addresses.
     /// </summary>
     [MotiTable("PIMS_ADDRESS", "ADDR")]
-    public class Address : BaseEntity
+    public class Address : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -67,7 +67,7 @@ namespace Pims.Dal.Entities
         /// <param name="administrativeArea"></param>
         /// <param name="provinceId"></param>
         /// <param name="postal"></param>
-        public Address(string address1, string address2, string administrativeArea, int provinceId, string postal)
+        public Address(string address1, string address2, string administrativeArea, long provinceId, string postal)
         {
             this.Address1 = address1;
             this.Address2 = address2;

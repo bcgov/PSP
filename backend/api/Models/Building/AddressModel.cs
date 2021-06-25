@@ -1,6 +1,6 @@
 namespace Pims.Api.Models.Building
 {
-    public class AddressModel : BaseModel
+    public class AddressModel : BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

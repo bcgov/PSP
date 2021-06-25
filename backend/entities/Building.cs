@@ -107,7 +107,12 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get - A collection of parcels this building is located on.
         /// </summary>
-        public ICollection<ParcelBuilding> Parcels { get; } = new List<ParcelBuilding>();
+        public ICollection<Parcel> Parcels { get; } = new List<Parcel>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to users.
+        /// </summary>
+        public ICollection<ParcelBuilding> ParcelsManyToMany { get; } = new List<ParcelBuilding>();
 
         /// <summary>
         /// get - A collection of evaluations for this building.
@@ -120,18 +125,19 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <typeparam name="BuildingFiscals"></typeparam>
         public ICollection<BuildingFiscal> Fiscals { get; } = new List<BuildingFiscal>();
-
-        /// <summary>
-        /// get - A collection of projects this building is assocated to.
-        /// </summary>
-        public ICollection<ProjectProperty> Projects { get; } = new List<ProjectProperty>();
         #endregion
 
         #region Constructors
         /// <summary>
         /// Create a new instance of a Building class.
         /// </summary>
-        public Building() { }
+        public Building()
+        {
+            this.PropertyTypeId = (long)PropertyTypes.Building;
+            this.BuildingOccupantTypeId = 1L;
+            this.BuildingConstructionTypeId = 1L;
+            this.BuildingPredominateUseId = 1L;
+        }
 
         /// <summary>
         /// Create a new instance of a Building class.
@@ -143,9 +149,13 @@ namespace Pims.Dal.Entities
         {
             if (parcel != null)
             {
-                var pb = new ParcelBuilding(parcel, this);
-                this.Parcels.Add(pb);
+                this.Parcels.Add(parcel);
             }
+            this.PropertyTypeId = (long)PropertyTypes.Building;
+            this.BuildingOccupantTypeId = 1L;
+            this.BuildingConstructionTypeId = 1L;
+            this.BuildingPredominateUseId = 1L;
+
         }
         #endregion
     }

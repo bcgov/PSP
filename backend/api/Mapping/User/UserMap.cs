@@ -22,7 +22,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Agencies, src => src.Agencies)
                 .Map(dest => dest.Roles, src => src.Roles)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
 
             config.NewConfig<Model.UserModel, Entity.User>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -38,7 +38,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Agencies, src => src.Agencies)
                 .Map(dest => dest.Roles, src => src.Roles)
-                .Inherits<Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

@@ -18,12 +18,12 @@ import { UserUpdateSchema } from 'utils/YupSchema';
 import { Form, Input, Select, SelectOption } from '../../../components/common/form';
 
 interface IEditUserPageProps {
-  id: string;
+  key: string;
   match?: any;
 }
 
 const EditUserPage = (props: IEditUserPageProps) => {
-  const userId = props?.match?.params?.id || props.id;
+  const userId = props?.match?.params?.key || props.key;
   const history = useHistory();
   const { updateUser, fetchUserDetail } = useUsers();
 
@@ -38,7 +38,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   const user = useAppSelector(state => state.users.userDetail);
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
     label: code.name,
-    value: code.id.toString(),
+    value: code.id,
     selected: !!user?.roles?.find(x => x.id === code.id.toString()) ?? [],
   });
 
@@ -133,6 +133,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
               }
               updateUser({
                 id: user.id,
+                key: user.key,
                 username: user.username,
                 displayName: values.displayName,
                 firstName: values.firstName,

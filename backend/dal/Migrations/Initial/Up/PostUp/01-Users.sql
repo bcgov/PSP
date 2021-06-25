@@ -9,6 +9,10 @@ INSERT INTO dbo.[PIMS_USER] (
     , [EMAIL]
     , [IS_DISABLED]
     , [IS_SYSTEM]
+    , [APP_CREATE_USERID]
+    , [APP_CREATE_USER_DIRECTORY]
+    , [APP_LAST_UPDATE_USERID]
+    , [APP_LAST_UPDATE_USER_DIRECTORY]
 ) VALUES (
     '00000000-0000-0000-0000-000000000000'
     , 'system'
@@ -18,6 +22,10 @@ INSERT INTO dbo.[PIMS_USER] (
     , 'pims@Pims.gov.bc.ca'
     , 1
     , 1
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 )
 
 -- Update sequence so that it works with the latest data.

@@ -6,7 +6,7 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
     /// <summary>
     /// RoleModel class, provides a model for roles.
     /// </summary>
-    public class RoleModel : BaseModel
+    public class RoleModel : BaseAppModel
     {
         #region Properties
         /// <summary>

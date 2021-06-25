@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Tools.Models.Import
 {
-    public class ParcelBuildingModel : Pims.Api.Models.BaseModel
+    public class ParcelBuildingModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
         public long Id { get; set; }

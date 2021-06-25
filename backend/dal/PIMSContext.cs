@@ -5,8 +5,8 @@ using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
 using Pims.Dal.Configuration;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 using Pims.Dal.Helpers.Migrations;
-using System;
 using System.Linq;
 using System.Text.Json;
 
@@ -50,24 +50,10 @@ namespace Pims.Dal
         #endregion
 
         #region Projects
-        public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectNumber> ProjectNumbers { get; set; }
-        public DbSet<ProjectSnapshot> ProjectSnapshots { get; set; }
 
-        public DbSet<ProjectReport> ProjectReports { get; set; }
-        public DbSet<ProjectStatus> ProjectStatus { get; set; }
-        public DbSet<ProjectRisk> ProjectRisks { get; set; }
-        public DbSet<ProjectProperty> ProjectProperties { get; set; }
-        public DbSet<ProjectNote> ProjectNotes { get; set; }
-        public DbSet<ProjectTask> ProjectTasks { get; set; }
-        public DbSet<TierLevel> TierLevels { get; set; }
-        public DbSet<Task> Tasks { get; set; }
-        public DbSet<Workflow> Workflows { get; set; }
-        public DbSet<WorkflowProjectStatus> WorkflowProjectStatus { get; set; }
         public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
-        public DbSet<ProjectStatusNotification> ProjectStatusNotifications { get; set; }
-        public DbSet<ProjectStatusTransition> ProjectStatusTransitions { get; set; }
-        public DbSet<ProjectAgencyResponse> ProjectAgencyResponses { get; set; }
+
         public DbSet<NotificationQueue> NotificationQueue { get; set; }
         #endregion
         #endregion
@@ -144,25 +130,10 @@ namespace Pims.Dal
             // Default values are provided because depending on the claim source it may or may not have these values.
             var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "service";
             var key = _httpContextAccessor.HttpContext.User.GetUserKey();
-            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? "keycloak";
+            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? "";
             foreach (var entry in modifiedEntries)
             {
-                if (entry.Entity is BaseEntity entity)
-                {
-                    var date = DateTime.UtcNow;
-                    if (entry.State == EntityState.Added)
-                    {
-                        entity.CreatedOn = date;
-                        entity.CreatedBy = username;
-                        entity.CreatedByKey = key;
-                        entity.CreatedByDirectory = directory;
-                    }
-                    entity.UpdatedOn = date;
-                    entity.UpdatedBy = username;
-                    entity.UpdatedByKey = key;
-                    entity.UpdatedByDirectory = directory;
-                    entity.RowVersion += 1;
-                }
+                entry.UpdateAppAuditProperties(username, key, directory);
             }
 
             return base.SaveChanges();

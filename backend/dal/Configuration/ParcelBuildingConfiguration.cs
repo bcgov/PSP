@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// ParcelBuildingConfiguration class, provides a way to configure parcel and building relationships in the database.
     ///</summary>
-    public class ParcelBuildingConfiguration : BaseEntityConfiguration<ParcelBuilding>
+    public class ParcelBuildingConfiguration : BaseAppEntityConfiguration<ParcelBuilding>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<ParcelBuilding> builder)
@@ -24,8 +24,8 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.BuildingId).IsRequired()
                 .HasComment("Foreign key to the building");
 
-            builder.HasOne(m => m.Parcel).WithMany(m => m.Buildings).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRCLBL_PARCEL_ID_IDX");
-            builder.HasOne(m => m.Building).WithMany(m => m.Parcels).HasForeignKey(m => m.BuildingId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRCLBL_BUILDING_ID_IDX");
+            builder.HasOne(m => m.Parcel).WithMany(m => m.BuildingsManyToMany).HasForeignKey(m => m.ParcelId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRCLBL_PARCEL_ID_IDX");
+            builder.HasOne(m => m.Building).WithMany(m => m.ParcelsManyToMany).HasForeignKey(m => m.BuildingId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PRCLBL_BUILDING_ID_IDX");
 
             builder.HasIndex(m => new { m.ParcelId, m.BuildingId }, "PRCLBL_PARCEL_BUILDING_TUC").IsUnique();
             builder.HasIndex(m => m.ParcelId, "PRCLBL_PARCEL_ID_IDX");

@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify building occupant type.
         /// </summary>
         [Column("BUILDING_OCCUPANT_TYPE_ID")]
-        public long Id { get; set; }
+        public override long Id { get; set; }
         #endregion
 
         #region Constructors

@@ -139,31 +139,29 @@ namespace Pims.Dal.Services
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
                 .Include(p => p.Buildings)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingPredominateUse)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingOccupantType)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Evaluations)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Classification)
-                .Include(p => p.Parcels).ThenInclude(pp => pp.Parcel)
-                .Include(p => p.Subdivisions).ThenInclude(pp => pp.Subdivision)
-                .Include(p => p.Projects).ThenInclude(pp => pp.Project).ThenInclude(p => p.Workflow)
-                .Include(p => p.Projects).ThenInclude(pp => pp.Project).ThenInclude(p => p.Status)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address.Province)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingConstructionType)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingPredominateUse)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingOccupantType)
+                .Include(p => p.Buildings).ThenInclude(b => b.Evaluations)
+                .Include(p => p.Buildings).ThenInclude(b => b.Fiscals)
+                .Include(p => p.Buildings).ThenInclude(b => b.Classification)
+                .Include(p => p.Parcels)
+                .Include(p => p.Subdivisions)
                 .FirstOrDefault(p => p.Id == id
                     && (ownsABuilding || isAdmin || p.IsVisibleToOtherAgencies || !p.IsSensitive || (viewSensitive && userAgencies.Contains(p.AgencyId)))) ?? throw new KeyNotFoundException();
 
             // Remove any sensitive buildings from the results if the user is not allowed to view them.
             if (!viewSensitive)
             {
-                parcel?.Buildings.RemoveAll(pb => pb.Building.IsSensitive);
+                parcel?.Buildings.RemoveAll(pb => pb.IsSensitive);
             }
 
             // Remove any properties not owned by user's agency.
             if (!isAdmin)
             {
-                parcel?.Buildings.RemoveAll(pb => !userAgencies.Contains(pb.Building.AgencyId));
+                parcel?.Buildings.RemoveAll(pb => !userAgencies.Contains(pb.AgencyId));
             }
 
             return parcel;
@@ -177,10 +175,10 @@ namespace Pims.Dal.Services
         public Parcel Add(Parcel parcel)
         {
             parcel.ThrowIfNull(nameof(parcel));
-            parcel.PropertyTypeId = (long)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
+            parcel.PropertyTypeId = (long)(parcel.Parcels.Count > 0 || parcel.ParcelsManyToMany.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
             if (parcel.PropertyTypeId == (long)PropertyTypes.Subdivision)
             {
-                var parentPid = parcel.Parcels.FirstOrDefault()?.Parcel?.PID;
+                var parentPid = this.Context.Parcels.Find(parcel.Parcels.FirstOrDefault()?.PID ?? parcel.ParcelsManyToMany.FirstOrDefault()?.ParcelId)?.PID;
                 if (parentPid == null) throw new InvalidOperationException("Invalid parent parcel associated to subdivision, parent parcels must contain a valid PID");
                 parcel.PID = parentPid.Value;
                 parcel.PIN = this.Context.GetUniquePidPin(parcel.PID);
@@ -190,41 +188,64 @@ namespace Pims.Dal.Services
             var agency = this.User.GetAgency(this.Context) ??
                 throw new NotAuthorizedException("User must belong to an agency before adding parcels.");
 
-            if (parcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0) throw new InvalidOperationException("Parcel may only have associated parcels or subdivisions, not both.");
+            if ((parcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0) || (parcel.ParcelsManyToMany.Count > 0 && parcel.SubdivisionsManyToMany.Count > 0))
+                throw new InvalidOperationException("Parcel may only have associated parcels or subdivisions, not both.");
 
             this.Context.Parcels.ThrowIfNotUnique(parcel);
             // If the user is not an admin, and their agency is not a parent override to their user agency
             if (!this.User.HasPermission(Permissions.AdminProperties) && agency.ParentId != null)
             {
                 parcel.AgencyId = agency.Id;
-                parcel.Agency = agency;
             }
 
+            // To reduce issues a new parcel should only reference relationships through foreign key.
+            // This will stop attempts to add duplicate entities to the db.
             parcel.Address.Province = this.Context.Provinces.Find(parcel.Address.ProvinceId);
-            parcel.Classification = this.Context.PropertyClassifications.Find(parcel.ClassificationId);
+            parcel.Agency = null;
+            parcel.PropertyType = null;
+            parcel.Classification = null;
             parcel.IsVisibleToOtherAgencies = false;
 
-            parcel.Parcels.ForEach(pp =>
+            parcel.ParcelsManyToMany.ForEach(pp =>
             {
                 pp.Subdivision = parcel;
                 pp.Parcel = this.Context.Parcels.Find(pp.ParcelId);
             });
-            parcel.Subdivisions.ForEach(pp =>
+            parcel.SubdivisionsManyToMany.ForEach(pp =>
             {
                 pp.Parcel = parcel;
-                pp.Subdivision = this.Context.Parcels.Find(pp.ParcelId);
+                pp.Subdivision = this.Context.Parcels.Find(pp.SubdivisionId);
             });
 
-            parcel.Buildings.Where(pb => pb.Building != null).ForEach(pb =>
+            // TODO: loops below are problematic.  They don't deal with different entity state.
+            parcel.Buildings.ForEach(b =>
             {
-                pb.Parcel = parcel;
-                pb.Building.Address.AdministrativeArea = parcel.Address.AdministrativeArea;
-                pb.Building.Address.Province = this.Context.Provinces.Find(parcel.Address.ProvinceId);
-                pb.Building.Classification = this.Context.PropertyClassifications.Find(parcel.ClassificationId);
-                pb.Building.BuildingConstructionType = this.Context.BuildingConstructionTypes.Find(pb.Building.BuildingConstructionTypeId);
-                pb.Building.BuildingOccupantType = this.Context.BuildingOccupantTypes.Find(pb.Building.BuildingOccupantTypeId);
-                pb.Building.BuildingPredominateUse = this.Context.BuildingPredominateUses.Find(pb.Building.BuildingPredominateUseId);
-
+                var exists = this.Context.Buildings.Find(b.Id);
+                if (exists == null)
+                {
+                    b.Agency = null;
+                    b.Address.AdministrativeArea = parcel.Address.AdministrativeArea;
+                    b.Address.Province = this.Context.Provinces.Find(parcel.Address.ProvinceId);
+                    b.Classification = null;
+                    b.BuildingConstructionType = null;
+                    b.BuildingOccupantType = null;
+                    b.BuildingPredominateUse = null;
+                }
+            });
+            parcel.BuildingsManyToMany.Where(pb => pb.Building != null).ForEach(pb =>
+            {
+                var exists = this.Context.Buildings.Find(pb.BuildingId);
+                if (exists == null)
+                {
+                    pb.Parcel = parcel;
+                    pb.Building.Agency = null;
+                    pb.Building.Address.AdministrativeArea = parcel.Address.AdministrativeArea;
+                    pb.Building.Address.Province = this.Context.Provinces.Find(parcel.Address.ProvinceId);
+                    pb.Building.Classification = null;
+                    pb.Building.BuildingConstructionType = null;
+                    pb.Building.BuildingOccupantType = null;
+                    pb.Building.BuildingPredominateUse = null;
+                }
             });
 
             this.Context.Parcels.Add(parcel);
@@ -292,23 +313,23 @@ namespace Pims.Dal.Services
                 .Include(p => p.Address)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Evaluations)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
-                .Include(p => p.Parcels).ThenInclude(pp => pp.Parcel)
-                .Include(p => p.Subdivisions).ThenInclude(pp => pp.Subdivision)
+                .Include(p => p.BuildingsManyToMany).ThenInclude(p => p.Building).ThenInclude(b => b.Evaluations)
+                .Include(p => p.BuildingsManyToMany).ThenInclude(p => p.Building).ThenInclude(b => b.Fiscals)
+                .Include(p => p.BuildingsManyToMany).ThenInclude(p => p.Building).ThenInclude(b => b.Address)
+                .Include(p => p.ParcelsManyToMany).ThenInclude(p => p.Parcel)
+                .Include(p => p.SubdivisionsManyToMany).ThenInclude(p => p.Subdivision)
                 .SingleOrDefault(p => p.Id == parcel.Id) ?? throw new KeyNotFoundException();
 
             var userAgencies = this.User.GetAgencies();
             var originalAgencyId = (long)this.Context.Entry(originalParcel).OriginalValues[nameof(Parcel.AgencyId)];
             var allowEdit = isAdmin || userAgencies.Contains(originalAgencyId);
-            var ownsABuilding = originalParcel.Buildings.Any(pb => userAgencies.Contains(pb.Building.AgencyId.Value));
+            var ownsABuilding = originalParcel.Buildings.Any(pb => userAgencies.Contains(pb.AgencyId.Value));
             if (!allowEdit && !ownsABuilding) throw new NotAuthorizedException("User may not edit parcels outside of their agency.");
 
             parcel.PropertyTypeId = originalParcel.PropertyTypeId; // property type cannot be changed directly.
-            if (parcel.PropertyTypeId == (long)PropertyTypes.Subdivision && parcel.Parcels.Any())
+            if (parcel.PropertyTypeId == (long)PropertyTypes.Subdivision && (parcel.Parcels.Any() || parcel.ParcelsManyToMany.Any()))
             {
-                var parentPid = parcel.Parcels.FirstOrDefault()?.Parcel?.PID;
+                var parentPid = parcel.Parcels.FirstOrDefault()?.PID ?? parcel.ParcelsManyToMany.FirstOrDefault()?.Parcel?.PID;
                 if (parentPid == null) throw new InvalidOperationException("Invalid parent parcel associated to subdivision, parent parcels must contain a valid PID");
                 parcel.PID = parentPid.Value;
             }
@@ -332,7 +353,10 @@ namespace Pims.Dal.Services
 
             if ((parcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0)
                 || (originalParcel.Parcels.Count > 0 && parcel.Subdivisions.Count > 0)
-                || (originalParcel.Subdivisions.Count > 0 && parcel.Parcels.Count > 0)) throw new InvalidOperationException("Parcel may only have associated parcels or subdivisions, not both.");
+                || (originalParcel.Subdivisions.Count > 0 && parcel.Parcels.Count > 0)
+                || (parcel.ParcelsManyToMany.Count > 0 && parcel.SubdivisionsManyToMany.Count > 0)
+                || (originalParcel.ParcelsManyToMany.Count > 0 && parcel.SubdivisionsManyToMany.Count > 0)
+                || (originalParcel.SubdivisionsManyToMany.Count > 0 && parcel.ParcelsManyToMany.Count > 0)) throw new InvalidOperationException("Parcel may only have associated parcels or subdivisions, not both.");
 
             // Users who don't own the parcel, but only own a building cannot update the parcel.
             if (allowEdit)
@@ -343,11 +367,10 @@ namespace Pims.Dal.Services
                 this.Context.SetOriginalRowVersion(originalParcel);
             }
 
-            foreach (var building in parcel.Buildings.Select(pb => pb.Building))
+            foreach (var building in parcel.Buildings)
             {
                 // Check if the building already exists.
-                var existingBuilding = originalParcel.Buildings
-                    .FirstOrDefault(pb => pb.BuildingId == building.Id)?.Building;
+                var existingBuilding = originalParcel.Buildings.FirstOrDefault(b => b.Id == building.Id);
 
                 // Reset all relationships that are not changed through this update.
                 building.Address.Province = this.Context.Provinces.FirstOrDefault(p => p.Id == building.Address.ProvinceId);
@@ -360,7 +383,7 @@ namespace Pims.Dal.Services
                 {
                     if (!allowEdit) throw new NotAuthorizedException("User may not add properties to a parcel they don't own.");
 
-                    originalParcel.Buildings.Add(new ParcelBuilding(parcel, building));
+                    originalParcel.Buildings.Add(building);
                 }
                 else
                 {
@@ -378,14 +401,16 @@ namespace Pims.Dal.Services
             }
 
             // This property is a divided parcel with child subdivision parcels.
-            if (parcel.Subdivisions.Count > 0 || originalParcel.Subdivisions.Count > 0)
+            if (parcel.Subdivisions.Count > 0 || originalParcel.Subdivisions.Count > 0
+                || parcel.SubdivisionsManyToMany.Count > 0 || originalParcel.SubdivisionsManyToMany.Count > 0)
             {
                 // loop through all passed in subdivisions, add any new subdivisions and remove any missing subdivisions from the current divided parcel.
-                foreach (var subdivisionId in parcel.Subdivisions.Select(pb => pb.SubdivisionId))
+                var subIds = parcel.Subdivisions.Any() ? parcel.Subdivisions.Select(pb => pb.Id) : parcel.SubdivisionsManyToMany.Select(s => s.SubdivisionId);
+                foreach (var subdivisionId in subIds)
                 {
                     // Check if the subdivision already exists.
-                    var existingSubdivision = originalParcel.Subdivisions
-                        .FirstOrDefault(pb => pb.SubdivisionId == subdivisionId)?.Subdivision;
+                    var existingSubdivision = originalParcel.Subdivisions.FirstOrDefault(p => p.Id == subdivisionId)
+                        ?? originalParcel.SubdivisionsManyToMany.FirstOrDefault(p => p.SubdivisionId == subdivisionId)?.Subdivision;
 
                     //Just add any new subdivisions, users cannot edit a subdivision within a parent parcel.
                     if (existingSubdivision == null)
@@ -394,15 +419,19 @@ namespace Pims.Dal.Services
                         // This parcel is a divided parent parcel with one or more subdivisions. Therefore, add the current parcel id as the parent divided ParcelId with a ParcelParcel relationship to the new subdivisionId.
                         var pp = new ParcelParcel() { SubdivisionId = subdivisionId, ParcelId = parcel.Id };
 
-                        originalParcel.Subdivisions.Add(pp);
+                        originalParcel.SubdivisionsManyToMany.Add(pp);
                     }
                 }
-                foreach (var subdivision in originalParcel.Subdivisions)
+
+                var subdivisionIds = originalParcel.Subdivisions.Any() ? originalParcel.Subdivisions.Select(s => s.Id) : originalParcel.SubdivisionsManyToMany.Select(s => s.SubdivisionId);
+                foreach (var subdivisionId in subdivisionIds)
                 {
                     // Delete the subdivisions that have been removed from this parent divided parcel.
-                    if (!parcel.Subdivisions.Any(e => (e.SubdivisionId == subdivision.SubdivisionId)))
+                    var found = parcel.Subdivisions.Any() ? !parcel.Subdivisions.Any(e => e.Id == subdivisionId) : !parcel.SubdivisionsManyToMany.Any(s => s.SubdivisionId == subdivisionId);
+                    if (found)
                     {
-                        this.Context.ParcelParcels.Remove(subdivision);
+                        var subdivision = this.Context.Parcels.Find(subdivisionId);
+                        this.Context.Remove(subdivision);
                     }
                 }
             }
@@ -410,11 +439,12 @@ namespace Pims.Dal.Services
             {
                 // This property is a Subdivision with parent divided parcels.
                 // loop through all passed in owning divided parcels, adding any new divided parcels and removing any missing divided parcels from the current subdivision.
-                foreach (var dividedParcelId in parcel.Parcels.Select(pb => pb.ParcelId))
+                var parIds = parcel.Parcels.Any() ? parcel.Parcels.Select(pb => pb.Id) : parcel.ParcelsManyToMany.Select(s => s.ParcelId);
+                foreach (var dividedParcelId in parIds)
                 {
                     // Check if the subdivided parcel already exists.
-                    var existingDividedParcel = originalParcel.Parcels
-                        .FirstOrDefault(pb => pb.ParcelId == dividedParcelId)?.Parcel;
+                    var existingDividedParcel = originalParcel.Parcels.FirstOrDefault(pb => pb.Id == dividedParcelId)
+                        ?? originalParcel.ParcelsManyToMany.FirstOrDefault(p => p.ParcelId == dividedParcelId)?.Parcel;
 
                     //Just add any new divided parcels, users cannot edit a parcel within a subdivision.
                     if (existingDividedParcel == null)
@@ -423,15 +453,19 @@ namespace Pims.Dal.Services
                         // This parcel is a subdivision with one or more parent divided parcels. Therefore, add the current parcel id as the SubdivisionId with a ParcelParcel relationship to the new dividedParcelId.
                         var pp = new ParcelParcel() { SubdivisionId = parcel.Id, ParcelId = dividedParcelId };
 
-                        originalParcel.Parcels.Add(pp);
+                        originalParcel.ParcelsManyToMany.Add(pp);
                     }
                 }
-                foreach (var dividedParcel in originalParcel.Parcels)
+
+                var parentParcelIds = originalParcel.Parcels.Any() ? originalParcel.Parcels.Select(p => p.Id) : originalParcel.ParcelsManyToMany.Select(s => s.ParcelId);
+                foreach (var parentParcelId in parentParcelIds)
                 {
                     // Delete the divided parcels that have been removed from this subdivision parcel.
-                    if (!parcel.Parcels.Any(e => (e.ParcelId == dividedParcel.ParcelId)))
+                    var remove = parcel.Parcels.Any() ? !parcel.Parcels.Any(e => e.Id == parentParcelId) : !parcel.ParcelsManyToMany.Any(s => s.ParcelId == parentParcelId);
+                    if (remove)
                     {
-                        this.Context.ParcelParcels.Remove(dividedParcel);
+                        var parentParcel = this.Context.ParcelParcels.FirstOrDefault(pp => pp.ParcelId == parentParcelId && pp.SubdivisionId == parcel.Id);
+                        this.Context.Remove(parentParcel);
                     }
                 }
             }
@@ -442,23 +476,25 @@ namespace Pims.Dal.Services
 
                 // Go through the existing buildings and see if they have been deleted from the updated parcel.
                 // If they have been removed, delete them from the datasource.
-                foreach (var parcelBuilding in originalParcel.Buildings)
+                var buildings = originalParcel.Buildings.Any() ? originalParcel.Buildings : originalParcel.BuildingsManyToMany.Select(b => b.Building);
+                foreach (var building in buildings)
                 {
-                    var updateBuilding = parcel.Buildings.FirstOrDefault(pb => pb.BuildingId == parcelBuilding.BuildingId);
+                    var updateBuilding = parcel.Buildings.FirstOrDefault(pb => pb.Id == building.Id)
+                        ?? parcel.BuildingsManyToMany.FirstOrDefault(b => b.BuildingId == building.Id)?.Building;
 
                     // The building may have evaluations or fiscals that need to be deleted.
-                    foreach (var buildingEvaluation in parcelBuilding.Building.Evaluations)
+                    foreach (var buildingEvaluation in building.Evaluations)
                     {
                         // Delete the evaluations that have been removed.
-                        if (!updateBuilding.Building.Evaluations.Any(e => (e.BuildingId == buildingEvaluation.BuildingId && e.Date == buildingEvaluation.Date && e.Key == buildingEvaluation.Key)))
+                        if (!updateBuilding.Evaluations.Any(e => e.BuildingId == buildingEvaluation.BuildingId && e.Date == buildingEvaluation.Date && e.Key == buildingEvaluation.Key))
                         {
                             this.Context.BuildingEvaluations.Remove(buildingEvaluation);
                         }
                     }
-                    foreach (var buildingFiscal in parcelBuilding.Building.Fiscals)
+                    foreach (var buildingFiscal in building.Fiscals)
                     {
                         // Delete the fiscals that have been removed.
-                        if (!updateBuilding.Building.Fiscals.Any(e => (e.BuildingId == buildingFiscal.BuildingId && e.FiscalYear == buildingFiscal.FiscalYear && e.Key == buildingFiscal.Key)))
+                        if (!updateBuilding.Fiscals.Any(e => e.BuildingId == buildingFiscal.BuildingId && e.FiscalYear == buildingFiscal.FiscalYear && e.Key == buildingFiscal.Key))
                         {
                             this.Context.BuildingFiscals.Remove(buildingFiscal);
                         }
@@ -503,11 +539,11 @@ namespace Pims.Dal.Services
                 .Include(p => p.Address)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Evaluations)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
-                .Include(p => p.Subdivisions).ThenInclude(p => p.Subdivision)
-                .Include(p => p.Parcels)
+                .Include(p => p.BuildingsManyToMany).ThenInclude(b => b.Building).ThenInclude(b => b.Evaluations)
+                .Include(p => p.BuildingsManyToMany).ThenInclude(b => b.Building).ThenInclude(b => b.Fiscals)
+                .Include(p => p.BuildingsManyToMany).ThenInclude(b => b.Building).ThenInclude(b => b.Address)
+                .Include(p => p.SubdivisionsManyToMany).ThenInclude(b => b.Subdivision)
+                .Include(p => p.ParcelsManyToMany).ThenInclude(b => b.Parcel)
                 .SingleOrDefault(u => u.Id == parcel.Id) ?? throw new KeyNotFoundException();
 
             // Subdivisions can be deleted if the user has the edit claim.
@@ -525,7 +561,7 @@ namespace Pims.Dal.Services
             this.Context.Entry(originalParcel).CurrentValues.SetValues(parcel);
             this.Context.SetOriginalRowVersion(originalParcel);
 
-            originalParcel.Buildings.ForEach(b =>
+            originalParcel.BuildingsManyToMany.ForEach(b =>
             {
                 this.ThrowIfNotAllowedToUpdate(b.Building, _options.Project);
                 this.Context.ParcelBuildings.Remove(b);
@@ -534,12 +570,12 @@ namespace Pims.Dal.Services
             });
             this.Context.ParcelEvaluations.RemoveRange(originalParcel.Evaluations);
             this.Context.ParcelFiscals.RemoveRange(originalParcel.Fiscals);
-            this.Context.ParcelParcels.RemoveRange(originalParcel.Parcels);
-            this.Context.ParcelParcels.RemoveRange(originalParcel.Subdivisions);
+            this.Context.ParcelParcels.RemoveRange(originalParcel.ParcelsManyToMany);
+            this.Context.ParcelParcels.RemoveRange(originalParcel.SubdivisionsManyToMany);
             this.Context.Parcels.Remove(originalParcel); // TODO: Shouldn't be allowed to permanently delete parcels entirely under certain conditions.
             if (parcel.PropertyTypeId == (long)PropertyTypes.Land)
             {
-                var subdivisions = originalParcel.Subdivisions.Select(s => s.Subdivision);
+                var subdivisions = originalParcel.SubdivisionsManyToMany.Select(s => s.Subdivision);
                 this.Context.Parcels.RemoveRange(subdivisions);
             }
 

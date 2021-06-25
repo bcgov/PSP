@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// BuildingEvaluationConfiguration class, provides a way to configure building evaluations in the database.
     ///</summary>
-    public class BuildingEvaluationConfiguration : BaseEntityConfiguration<BuildingEvaluation>
+    public class BuildingEvaluationConfiguration : BaseAppEntityConfiguration<BuildingEvaluation>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<BuildingEvaluation> builder)
@@ -24,12 +24,12 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.Date).IsRequired()
                 .HasColumnType("DATETIME")
+                .HasDefaultValueSql("GETUTCDATE()") // This should not be a default value however MOTI standards requires it to have a default value.
                 .HasComment("The date this evaluation is for");
-
             builder.Property(m => m.Key).IsRequired()
                 .HasComment("The type of evaluation taken");
-
             builder.Property(m => m.Value)
+                .HasColumnType("MONEY")
                 .HasComment("The value of the evaluation");
             builder.Property(m => m.Note).HasMaxLength(500)
                 .HasComment("A note about the evaluation");

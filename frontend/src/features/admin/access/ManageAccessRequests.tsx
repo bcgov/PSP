@@ -36,11 +36,8 @@ const ManageAccessRequests = () => {
   );
 
   const pagedAccessRequests = useAppSelector(state => state.accessRequests.pagedAccessRequests);
-
   const pageSize = useAppSelector(state => state.accessRequests?.pageSize);
-
   const pageIndex = useAppSelector(state => state.accessRequests.pageIndex);
-
   const filter = useAppSelector(state => state.accessRequests.filter);
 
   const { fetchAccessRequests } = useAccessRequests();
@@ -59,7 +56,7 @@ const ManageAccessRequests = () => {
     ar =>
       ({
         id: ar.id as number,
-        userId: ar.user.id as string,
+        userId: ar.user.id as number,
         username: ar.user.username as string,
         firstName: ar.user.firstName as string,
         lastName: ar.user.lastName as string,
@@ -67,7 +64,7 @@ const ManageAccessRequests = () => {
         status: ar.status as string,
         note: ar.note as string,
         position: ar.user.position,
-        agency: ar.agencies && ar.agencies.length !== 0 ? ar.agencies[0].name : ('' as string),
+        agency: ar.agencies && ar.agencies.length !== 0 ? ar.agencies[0].name : '',
         role: ar.roles && ar.roles.length !== 0 ? ar.roles[0].name : '',
       } as IAccessRequestModel),
   );

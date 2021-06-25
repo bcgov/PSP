@@ -6,7 +6,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     /// <summary>
     /// UserModel class, provides a model to represent a user.
     /// </summary>
-    public class UserModel : Pims.Api.Models.BaseModel
+    public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
         /// <summary>

@@ -63,8 +63,7 @@ namespace Pims.Dal.Services.Admin
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
             return this.Context.Roles
-                .Include(r => r.Claims)
-                .ThenInclude(r => r.Claim)
+                .Include(r => r.ClaimsManyToMany).ThenInclude(c => c.Claim)
                 .AsNoTracking()
                 .FirstOrDefault(u => u.Key == key) ?? throw new KeyNotFoundException();
         }
@@ -78,8 +77,7 @@ namespace Pims.Dal.Services.Admin
         public Role GetByName(string name)
         {
             return this.Context.Roles
-                .Include(r => r.Claims)
-                .ThenInclude(r => r.Claim)
+                .Include(r => r.ClaimsManyToMany).ThenInclude(c => c.Claim)
                 .AsNoTracking()
                 .FirstOrDefault(r => r.Name == name) ?? throw new KeyNotFoundException();
         }
@@ -95,8 +93,7 @@ namespace Pims.Dal.Services.Admin
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
             return this.Context.Roles
-                .Include(r => r.Claims)
-                .ThenInclude(r => r.Claim)
+                .Include(r => r.ClaimsManyToMany).ThenInclude(c => c.Claim)
                 .AsNoTracking()
                 .FirstOrDefault(u => u.KeycloakGroupId == key) ?? throw new KeyNotFoundException();
         }
@@ -104,19 +101,20 @@ namespace Pims.Dal.Services.Admin
         /// <summary>
         /// Updates the specified role in the datasource.
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="role"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public override void Update(Role entity)
+        public override void Update(Role role)
         {
-            entity.ThrowIfNull(nameof(entity));
+            role.ThrowIfNull(nameof(role));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var role = this.Context.Roles.Find(entity.Id) ?? throw new KeyNotFoundException();
+            var entity = this.Context.Roles.Find(role.Id) ?? throw new KeyNotFoundException();
 
+            this.Context.Entry(entity).CurrentValues.SetValues(role);
+            base.Update(entity);
+            this.Context.Detach(entity);
             this.Context.Entry(role).CurrentValues.SetValues(entity);
-            base.Update(role);
-            this.Context.Detach(role);
         }
 
         /// <summary>

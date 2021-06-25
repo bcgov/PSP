@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// BuildingEvaluation class, provides an entity to map building evaluation values to a date.
     /// </summary>
     [MotiTable("PIMS_BUILDING_EVALUATION", "BLDEVL")]
-    public class BuildingEvaluation : BaseEntity
+    public class BuildingEvaluation : BaseAppEntity
     {
         #region Properties
         /// <summary>

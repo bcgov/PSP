@@ -51,7 +51,7 @@ namespace Pims.Api.Test.Helpers
         {
             // Arrange
             var o1 = EntityHelper.CreatePropertyClassification("test");
-            var o2 = new { Id = 1, Name = "test", IsVisible = true, IsDisabled = false, SortOrder = 0, o1.CreatedBy, o1.CreatedOn, o1.UpdatedBy, o1.UpdatedOn, o1.RowVersion };
+            var o2 = new { Id = 1, Name = "test", IsVisible = true, IsDisabled = false, SortOrder = 0, o1.RowVersion };
 
             var comparer = new ShallowPropertyCompare();
 

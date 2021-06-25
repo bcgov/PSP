@@ -7,7 +7,7 @@ namespace Pims.Dal.Entities
     /// Agency class, provides an entity for the datamodel to manage property agencies.
     /// </summary>
     [MotiTable("PIMS_AGENCY", "AGNCY")]
-    public class Agency : CodeEntity
+    public class Agency : CodeEntity, ICodeEntity
     {
         #region Properties
         /// <summary>
@@ -69,22 +69,27 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get - A collection of users that belong to this agency.
         /// </summary>
-        public ICollection<UserAgency> Users { get; } = new List<UserAgency>();
+        public ICollection<User> Users { get; } = new List<User>();
 
         /// <summary>
-        /// get - A collection of projects that belong to this agency.
+        /// get - Collection of many-to-many relational entities to support the relationship to users.
         /// </summary>
-        public ICollection<Project> Projects { get; } = new List<Project>();
-
-        /// <summary>
-        /// get - A collection of responses to project notifications.
-        /// </summary>
-        public ICollection<ProjectAgencyResponse> ProjectResponses { get; } = new List<ProjectAgencyResponse>();
+        public ICollection<UserAgency> UsersManyToMany { get; } = new List<UserAgency>();
 
         /// <summary>
         /// get/set - A collection of notifications sent to this agency.
         /// </summary>
         public ICollection<NotificationQueue> Notifications { get; } = new List<NotificationQueue>();
+
+        /// <summary>
+        /// get - A collection of access requests that belong to this agency.
+        /// </summary>
+        public ICollection<AccessRequest> AccessRequests { get; } = new List<AccessRequest>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to access requests.
+        /// </summary>
+        public ICollection<AccessRequestAgency> AccessRequestsManyToMany { get; } = new List<AccessRequestAgency>();
         #endregion
 
         #region Constructors

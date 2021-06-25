@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
@@ -13,7 +14,7 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify property type.
         /// </summary>
         [Column("PROPERTY_TYPE_ID")]
-        public long Id { get; set; }
+        public override long Id { get; set; }
         #endregion
 
         #region Constructors
@@ -26,8 +27,11 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a PropertyType class.
         /// </summary>
         /// <param name="name"></param>
-        public PropertyType(string name) : base(name)
+        public PropertyType(string name)
         {
+            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' must have a valid value.", nameof(name));
+
+            this.Name = name;
         }
         #endregion
     }

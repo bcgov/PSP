@@ -1,6 +1,6 @@
 namespace Pims.Api.Areas.Tools.Models.Import
 {
-    public class BuildingFiscalModel : Api.Models.BaseModel
+    public class BuildingFiscalModel : Api.Models.BaseAppModel
     {
         #region Properties
         public long BuildingId { get; set; }

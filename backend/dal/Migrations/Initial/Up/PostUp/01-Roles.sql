@@ -7,7 +7,11 @@ INSERT INTO dbo.[PIMS_ROLE] (
     , [DESCRIPTION]
     , [IS_PUBLIC]
     , [IS_DISABLED]
-    , [SORT_ORDER]
+    , [DISPLAY_ORDER]
+    , [APP_CREATE_USERID]
+    , [APP_CREATE_USER_DIRECTORY]
+    , [APP_LAST_UPDATE_USERID]
+    , [APP_LAST_UPDATE_USER_DIRECTORY]
 )
 VALUES
 (
@@ -18,6 +22,10 @@ VALUES
     , 0
     , 0
     , 0
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     2
@@ -27,6 +35,10 @@ VALUES
     , 0
     , 0
     , 0
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     3
@@ -36,6 +48,10 @@ VALUES
     , 1
     , 0
     , 0
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 ),
 (
     4
@@ -45,6 +61,10 @@ VALUES
     , 1
     , 0
     , 0
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 )
 
 -- Update sequence so that it works with the latest data.

@@ -89,7 +89,7 @@ namespace Pims.Dal.Services.Admin
                 .Include(p => p.BuildingOccupantType)
                 .Include(p => p.Address).ThenInclude(a => a.Province)
                 .Include(p => p.Agency).ThenInclude(a => a.Parent)
-                .Where(b => b.Parcels.Any(pb => pb.Parcel.PID == pid) && (name == null || EF.Functions.Like(b.Name, $"{name}%")));
+                .Where(b => b.Parcels.Any(pb => pb.PID == pid) && (name == null || EF.Functions.Like(b.Name, $"{name}%")));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Pims.Dal.Services.Admin
                 .Include(p => p.BuildingOccupantType)
                 .Include(p => p.Address).ThenInclude(a => a.Province)
                 .Include(p => p.Agency).ThenInclude(a => a.Parent)
-                .AsNoTracking().Where(b => b.Parcels.Any(pb => pb.Parcel.PID == pid) && (name == null || EF.Functions.Like(b.Name, $"{name}%")));
+                .AsNoTracking().Where(b => b.Parcels.Any(pb => pb.PID == pid) && (name == null || EF.Functions.Like(b.Name, $"{name}%")));
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Pims.Dal.Services.Admin
                 entry.State = EntityState.Unchanged;
             }
 
-            entry.Collection(b => b.Parcels)
+            entry.Collection(b => b.ParcelsManyToMany)
                 .Query()
                 .Include(pb => pb.Parcel)
                 .Load();
@@ -338,15 +338,11 @@ namespace Pims.Dal.Services.Admin
             this.Context.Entry(originalBuilding).Collection(p => p.Parcels).Load();
             this.Context.Entry(originalBuilding).Collection(p => p.Evaluations).Load();
             this.Context.Entry(originalBuilding).Collection(p => p.Fiscals).Load();
-            this.Context.Entry(originalBuilding).Collection(p => p.Projects).Load();
 
             this.Context.Entry(originalBuilding).CurrentValues.SetValues(building);
             originalBuilding.Parcels.Clear();
             originalBuilding.Evaluations.Clear();
             originalBuilding.Fiscals.Clear();
-            originalBuilding.Projects.Clear();
-            // this.Context.BuildingEvaluations.RemoveRange(originalBuilding.Evaluations);
-            // this.Context.BuildingFiscals.RemoveRange(originalBuilding.Fiscals);
             base.Remove(originalBuilding);
         }
         #endregion

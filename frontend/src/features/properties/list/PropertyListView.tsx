@@ -18,6 +18,7 @@ import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useRouterFilter } from 'hooks/useRouterFilter';
+import { IApiProperty } from 'interfaces';
 import { fill, intersection, isEmpty, keys, noop, pick, range } from 'lodash';
 import queryString from 'query-string';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
@@ -32,16 +33,16 @@ import {
   getCurrentFiscal,
   getCurrentYearEvaluation,
   mapLookupCode,
+  toApiProperty,
 } from 'utils';
 import download from 'utils/download';
-import { toApiProperty } from 'utils/propertyUtils';
 import * as Yup from 'yup';
 
 import { PropertyTypeNames } from '../../../constants/propertyTypeNames';
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import service from '../service';
-import { IApiProperty, IProperty, IPropertyQueryParams } from '.';
+import { IProperty, IPropertyQueryParams } from '.';
 import { Buildings } from './buildings';
 import { buildingColumns as buildingCols, columns as cols } from './columns';
 

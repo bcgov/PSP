@@ -59,7 +59,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<Entity.BaseEntity, BModel.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, BModel.BaseAppModel>();
 
             config.NewConfig<Model.ParcelBuildingModel, Entity.Building>()
                 .EnableNonPublicMembers(true)
@@ -84,7 +84,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<BModel.BaseModel, Entity.BaseEntity>();
+                .Inherits<BModel.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Entity.ParcelBuilding, Model.ParcelBuildingModel>()
                 .EnableNonPublicMembers(true)
@@ -116,7 +116,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.Building.IsVisibleToOtherAgencies)
                 .Map(dest => dest.Evaluations, src => src.Building.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Building.Fiscals)
-                .Inherits<Entity.BaseEntity, BModel.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, BModel.BaseAppModel>();
 
             config.NewConfig<Model.ParcelBuildingModel, Entity.ParcelBuilding>()
                 .EnableNonPublicMembers(true)
@@ -142,7 +142,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.Building.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
                 .Map(dest => dest.Building.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Building.Fiscals, src => src.Fiscals)
-                .Inherits<BModel.BaseModel, Entity.BaseEntity>();
+                .Inherits<BModel.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Model.ParcelBuildingModel, NetTopologySuite.Geometries.Point>()
                 .ConstructUsing(src => Dal.Helpers.GeometryHelper.CreatePoint(src.Longitude, src.Latitude));

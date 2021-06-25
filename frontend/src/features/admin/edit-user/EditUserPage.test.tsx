@@ -69,7 +69,7 @@ const testRender = () =>
   render(
     <Provider store={store}>
       <Router history={history}>
-        <EditUserPage id="TEST-ID" />,
+        <EditUserPage key="TEST-ID" />,
       </Router>
     </Provider>,
   );
@@ -86,7 +86,7 @@ const renderEditUserPage = () =>
           rtl={false}
           pauseOnFocusLoss={false}
         />
-        <EditUserPage id="TEST-ID" />,
+        <EditUserPage key="TEST-ID" />,
       </Router>
     </Provider>,
   );
@@ -103,7 +103,7 @@ describe('Edit user page', () => {
     const { container } = render(
       <Provider store={noDateStore}>
         <Router history={history}>
-          <EditUserPage id="TEST-ID" />,
+          <EditUserPage key="TEST-ID" />,
         </Router>
       </Provider>,
     );
