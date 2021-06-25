@@ -124,7 +124,7 @@ export const PropertySearchForm = ({
               />
             </Form.Row>
             <Form.Row>
-              <Label>
+              <Label className="d-flex flex-nowrap">
                 Address&nbsp;
                 <TooltipIcon toolTipId="geocoder-tooltip" toolTip={geocoderTooltip}></TooltipIcon>
               </Label>
