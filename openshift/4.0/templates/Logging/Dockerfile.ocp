@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-glibc:latest
 
-ARG OC_VERSION=4.6.173
+ARG OC_VERSION=3.11.173
 ARG BUILD_DEPS='tar gzip'
 ARG RUN_DEPS='bash curl ca-certificates gettext'
 
