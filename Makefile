@@ -59,7 +59,15 @@ stop: ## Stops the local containers (n=service name)
 
 build: ## Builds the local containers (n=service name)
 	@echo "$(P) Building images..."
-	@docker-compose build --no-cache $(n)
+	@docker-compose build --force-rm --no-cache $(n)
+
+build-fe: ## Rebuilds the frontend container
+	@echo "$(P) Building frontend..."
+	@make build n=frontend
+
+build-be: ## Rebuilds the backend container
+	@echo "$(P) Building backend..."
+	@make build n=backend
 
 rebuild: ## Build the local contains (n=service name) and then start them after building
 	@make build n=$(n)
