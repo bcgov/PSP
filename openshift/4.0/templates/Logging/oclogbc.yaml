@@ -108,6 +108,10 @@ objects:
       strategy:
         dockerStrategy:
           dockerfilePath: "${DOCKERFILE_PATH}"
+          from:
+            kind: ImageStreamTag
+            namespace: 3cd915-tools
+            name: alpine-glibc:latest
         type: Docker
       output:
         to:
