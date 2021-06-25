@@ -155,7 +155,7 @@ describe('MotiInventoryContainer functionality', () => {
       const cityInput = await screen.findByDisplayValue('Victoria');
 
       expect(findByPid).toHaveBeenCalledWith('123-456-789');
-      expect(getParcelInfo).toHaveBeenCalledWith('123456789');
+      expect(getParcelInfo).toHaveBeenCalledWith('123-456-789');
       expect(findOneWhereContains).toHaveBeenCalled();
       expect(cityInput).toBeInTheDocument();
     });
