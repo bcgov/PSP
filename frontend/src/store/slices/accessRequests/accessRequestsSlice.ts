@@ -20,7 +20,6 @@ export const toAccessRequest = (values: any): IAccessRequest => {
       email: values.user.email,
       position: values.user.position,
     },
-    agencies: isNaN(values.agency) ? [] : [{ id: parseInt(values.agency) }],
     roles: [{ id: values.role }],
     status: values.status,
     note: values.note,

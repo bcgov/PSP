@@ -737,17 +737,6 @@ export const mockAccessRequest: IAccessRequest = {
     position: '',
     createdOn: '2021-05-04T19:07:09.6920606',
   },
-  agencies: [
-    {
-      description: '',
-      code: 'AG',
-      id: 251,
-      name: 'Attorney General',
-      isDisabled: false,
-      sortOrder: 0,
-      createdOn: '2021-05-07T00:37:06.2457312',
-    },
-  ],
   roles: [
     {
       description: 'Real Estate Manager can manage properties within their agencies.',

@@ -40,7 +40,6 @@ const accessRequests = {
       id: 1,
       status: AccessRequestStatus.OnHold,
       roles: [{ id: '1', name: 'role1' }],
-      agencies: [{ id: '1', name: 'agency 1' }],
       user: {
         id: 'userid',
         displayName: 'testUser',
