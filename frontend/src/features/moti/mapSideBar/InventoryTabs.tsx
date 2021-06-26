@@ -23,10 +23,10 @@ const StyledTabs = styled.div`
   }
   .nav-tabs .nav-item.nav-link {
     color: ${props => props.theme.css.slideOutBlue};
-    border: #8c8c8c solid 3px;
+    border: #8c8c8c solid 2px;
     background-color: white;
     font-size: 16px;
-    margin: 0px 4px -3px 0px;
+    margin: 0px 4px -2px 0px;
     height: 45px;
   }
   .nav-tabs .nav-item.nav-link.active {
@@ -36,7 +36,7 @@ const StyledTabs = styled.div`
   }
   .tab-content {
     background-color: ${props => props.theme.css.filterBackgroundColor};
-    border: #8c8c8c solid 3px;
+    border: #8c8c8c solid 2px;
     border-radius: 4px;
     padding: 0 2rem 2rem;
     height: calc(100% - 45px);

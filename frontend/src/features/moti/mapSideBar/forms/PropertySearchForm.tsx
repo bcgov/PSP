@@ -2,6 +2,8 @@ import { ReactComponent as ParcelDraftIcon } from 'assets/images/draft-parcel-ic
 import { Input } from 'components/common/form';
 import SearchButton from 'components/common/form/SearchButton';
 import { Label } from 'components/common/Label';
+import TooltipIcon from 'components/common/TooltipIcon';
+import TooltipWrapper from 'components/common/TooltipWrapper';
 import { pidFormatter } from 'features/properties/components/forms/subforms/PidPinForm';
 import { GeocoderAutoComplete } from 'features/properties/components/GeocoderAutoComplete';
 import { Formik, getIn } from 'formik';
@@ -10,6 +12,8 @@ import { useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import ClickAwayListener from 'react-click-away-listener';
 import styled from 'styled-components';
+
+import { geocoderTooltip, markerSearchTooltip } from '../strings';
 
 const SearchMarkerButton = styled.button`
   top: 20px;
@@ -120,7 +124,10 @@ export const PropertySearchForm = ({
               />
             </Form.Row>
             <Form.Row>
-              <Label>Address</Label>
+              <Label className="d-flex flex-nowrap">
+                Address&nbsp;
+                <TooltipIcon toolTipId="geocoder-tooltip" toolTip={geocoderTooltip}></TooltipIcon>
+              </Label>
               <GeocoderAutoComplete
                 value={values.searchAddress}
                 field={'searchAddress'}
@@ -137,11 +144,12 @@ export const PropertySearchForm = ({
                 error={getIn(errors, 'searchAddress')}
                 touch={getIn(touched, 'searchAddress')}
                 displayErrorTooltips
+                autoSetting="off"
               />
               <SearchButton
                 className=""
                 data-testid="address-search-button"
-                disabled={!geocoderResponse}
+                disabled={!geocoderResponse || !values.searchAddress}
                 onClick={(e: any) => {
                   e.preventDefault();
                   geocoderResponse && handleGeocoderChange(geocoderResponse, nameSpace);
@@ -169,7 +177,12 @@ export const PropertySearchForm = ({
                       e.preventDefault();
                     }}
                   >
-                    <ParcelDraftIcon className="parcel-icon" />
+                    <TooltipWrapper
+                      toolTipId="property-marker-search-tooltip"
+                      toolTip={markerSearchTooltip}
+                    >
+                      <ParcelDraftIcon className="parcel-icon" />
+                    </TooltipWrapper>
                   </SearchMarkerButton>
                 </ClickAwayListener>
               </Col>

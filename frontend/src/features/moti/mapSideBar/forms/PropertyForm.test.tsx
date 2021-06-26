@@ -1,12 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import {
-  ADMINISTRATIVE_AREA_CODE_SET_NAME,
-  MOTI_CLASSIFICATION_CODE_SET_NAME,
-  MOTI_REGION_CODE_SET_NAME,
-  PROVINCE_CODE_SET_NAME,
-  PURPOSE_CODE_SET_NAME,
-  RURAL_AREA_CODE_SET_NAME,
-} from 'constants/API';
+import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -36,30 +29,6 @@ const defaultStore = mockStore({
         id: '1',
         isDisabled: false,
         type: ADMINISTRATIVE_AREA_CODE_SET_NAME,
-      },
-      {
-        name: 'rural',
-        id: '1',
-        isDisabled: false,
-        type: RURAL_AREA_CODE_SET_NAME,
-      },
-      {
-        name: 'classification',
-        id: '1',
-        isDisabled: false,
-        type: MOTI_CLASSIFICATION_CODE_SET_NAME,
-      },
-      {
-        name: 'region',
-        id: '1',
-        isDisabled: false,
-        type: MOTI_REGION_CODE_SET_NAME,
-      },
-      {
-        name: 'purpose',
-        id: '1',
-        isDisabled: false,
-        type: PURPOSE_CODE_SET_NAME,
       },
     ],
   },

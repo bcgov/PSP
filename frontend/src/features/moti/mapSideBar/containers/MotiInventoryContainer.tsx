@@ -152,14 +152,15 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         setLoading(true);
         const parcelLayerResponse = await getParcelLayerResponse(latLng, pid);
         const properties = getIn(parcelLayerResponse, 'features.0.properties');
-        if (!properties?.PID) {
+        pid = pid ?? properties?.PID;
+        if (pid && !(await api.isPidAvailable(undefined, pid)).available) {
+          setDuplicatePid(pid);
+          return;
+        }
+        if (!properties?.PID || !pid) {
           toast.warning(
             'Unable to find parcel identifier (PID) for the searched location. A property must have a PID to be added to PSP, ensure this property has a PID.',
           );
-          return;
-        }
-        if (properties?.PID && !(await api.isPidAvailable(undefined, properties?.PID)).available) {
-          setDuplicatePid(properties?.PID);
           return;
         }
         const calculatedLatLng =
@@ -170,13 +171,10 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         const electoralLayerResponse = await electoralLayerService.findOneWhereContains(
           calculatedLatLng,
         );
-        const ltsaResponse = await handleLtsaRequest(
-          getParcelInfo(properties?.PID),
-          properties?.PID,
-        );
+        const ltsaResponse = await handleLtsaRequest(getParcelInfo(pid), pid);
         const ltsaTitleResponse = await handleLtsaRequest(
-          getTitleSummaries(properties?.PID),
-          properties?.PID,
+          getTitleSummaries(+pid?.replace(/-/g, '')),
+          pid,
         );
 
         formikParcelDataPopulateCallback(
@@ -192,6 +190,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         toast.error(
           'Property search failed. Please check your search criteria and try again. If this error persists, contact the Help Desk.',
         );
+        console.debug(error);
       } finally {
         setLoading(false);
       }
@@ -209,9 +208,7 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
 
   const handlePidChange = useCallback(
     async (pid: string) => {
-      if (pid) {
-        populateForm(undefined, pid);
-      }
+      populateForm(undefined, pid);
     },
     [populateForm],
   );
