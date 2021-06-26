@@ -124,35 +124,6 @@ exports[`Edit user page EditUserPage renders 1`] = `
             value="test@user.com"
           />
         </div>
-        <div
-          class="required form-group"
-        >
-          <label
-            class="form-label"
-            for="input-agency"
-          >
-            Agency
-          </label>
-          <select
-            class="form-select form-control"
-            data-testid="agency"
-            id="input-agency"
-            name="agency"
-            required=""
-          >
-            <option
-              value=""
-            >
-              Please Select
-            </option>
-            <option
-              class="option"
-              value="1"
-            >
-              agencyVal
-            </option>
-          </select>
-        </div>
         <p
           class="label"
         >
