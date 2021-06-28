@@ -1,11 +1,4 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  wait,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, fireEvent, render, screen, wait } from '@testing-library/react';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { createMemoryHistory } from 'history';
@@ -101,10 +94,12 @@ const geocoderResponse = {
   score: 100,
 };
 const searchAddress = jest.fn();
+const getNearestAddress = jest.fn();
 jest.mock('hooks/useApi');
 ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
   searchAddress,
   isPidAvailable,
+  getNearestAddress,
 });
 
 describe('MotiInventoryContainer functionality', () => {
@@ -133,10 +128,12 @@ describe('MotiInventoryContainer functionality', () => {
   });
   it('does not display when close icon clicked', async () => {
     history.push('/mapview?sidebar=true');
-    const { getByTitle, getByText } = renderContainer({});
+    const { getByTitle, container } = renderContainer({});
     const closeTitleButton = getByTitle('close');
     fireEvent.click(closeTitleButton);
-    waitForElementToBeRemoved(() => getByText('Add Titled Property to Inventory'));
+    await wait(() => {
+      expect(container.querySelector('.map-side-drawer')).toHaveClass('close');
+    });
   });
 
   describe('search functionality', () => {
@@ -156,6 +153,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       expect(findByPid).toHaveBeenCalledWith('123-456-789');
       expect(getParcelInfo).toHaveBeenCalledWith('123-456-789');
+      expect(getNearestAddress).toHaveBeenCalledWith({ lat: 48.42500804, lng: -123.339996055 });
       expect(findOneWhereContains).toHaveBeenCalled();
       expect(cityInput).toBeInTheDocument();
     });
@@ -180,6 +178,7 @@ describe('MotiInventoryContainer functionality', () => {
       await wait(() => {
         expect(findByPid).not.toHaveBeenCalled();
         expect(getParcelInfo).not.toHaveBeenCalled();
+        expect(getNearestAddress).not.toHaveBeenCalled();
       });
     });
 
@@ -303,6 +302,7 @@ describe('MotiInventoryContainer functionality', () => {
       await wait(() => {
         expect(findOneWhereContains).toHaveBeenCalledWith({ lat: 1, lng: 2 });
         expect(getParcelInfo).toHaveBeenCalledWith('987-654-321');
+        expect(getNearestAddress).not.toHaveBeenCalled();
       });
     });
 
@@ -386,6 +386,7 @@ describe('MotiInventoryContainer functionality', () => {
       await wait(() => {
         expect(findOneWhereContains).toHaveBeenCalledWith({ lat: 1, lng: 2 });
         expect(getParcelInfo).toHaveBeenCalledWith('987-654-321');
+        expect(getNearestAddress).toHaveBeenCalledWith({ lat: 1, lng: 2 });
       });
     });
   });

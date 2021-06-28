@@ -224,6 +224,78 @@ namespace Pims.Dal.Test.Libraries.Geocoder
         }
         #endregion
 
+        #region GetNearestSiteAsync
+        [Fact]
+        public async Task GetNearestSiteAsync_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+            var parameters = new NearestParameters()
+            {
+                Point = "123,456"
+            };
+
+            // Act
+            var result = await service.GetNearestSiteAsync(parameters);
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/sites/nearest.json?point=123,456&excludeUnits=false&onlyCivic=false&outputSRS=4326&locationDescriptor=any&setBack=0&brief=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+        #endregion
+
+        #region GetNearSitesAsync
+        [Fact]
+        public async Task GetNearSitesAsync_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var options = Options.Create(new GeocoderOptions()
+            {
+                Key = "test"
+            });
+            var mockRequestClient = new Mock<IHttpRequestClient>();
+            var features = new FeatureCollectionModel()
+            {
+                Type = "Feature"
+            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            var clientFactory = helper.CreateHttpClientFactory(response);
+            mockRequestClient.Setup(m => m.Client).Returns(clientFactory.CreateClient());
+            mockRequestClient.Setup(m => m.GetAsync<FeatureCollectionModel>(It.IsAny<string>())).ReturnsAsync(features);
+            var service = helper.Create<GeocoderService>(options, mockRequestClient.Object);
+            var parameters = new NearParameters()
+            {
+                Point = "123,456"
+            };
+
+            // Act
+            var result = await service.GetNearSitesAsync(parameters);
+
+            // Assert
+            var url = "https://geocoder.api.gov.bc.ca/sites/near.json?maxResults=5&point=123,456&excludeUnits=false&onlyCivic=false&outputSRS=4326&locationDescriptor=any&setBack=0&brief=false";
+            result.Should().NotBeNull();
+            mockRequestClient.Verify(m => m.GetAsync<FeatureCollectionModel>(url), Times.Once());
+            result.Should().Be(features);
+        }
+        #endregion
+
         #region GetPids
         [Fact]
         public async Task GetPids_Success()
