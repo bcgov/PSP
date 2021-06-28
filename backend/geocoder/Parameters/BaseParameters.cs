@@ -31,7 +31,7 @@ namespace Pims.Geocoder.Parameters
         /// <summary>
         /// get/set - The maximum distance (in metres) to search from the given point. If not specified, the search distance is unlimited.
         /// </summary>
-        public double? MaxDistance { get; set; }
+        public virtual double? MaxDistance { get; set; }
         /// <summary>
         /// get/set - If true, include only basic match and address details in results. Not supported for shp, csv, and gml formats.
         /// </summary>

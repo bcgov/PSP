@@ -43,6 +43,11 @@ namespace Pims.Geocoder.Parameters
         public int MinScore { get; set; }
 
         /// <summary>
+        /// get/set - The maximum distance (in metres) to search from the given point. If not specified, the search distance is unlimited.
+        /// </summary>
+        public override double? MaxDistance { get; set; } = 0;
+
+        /// <summary>
         /// get/set - The level of precision of an address match. Here are the nine levels from the most precise to least precise:
         /// OCCUPANT – the site occupant name matched
         /// SITE – the site name matched
