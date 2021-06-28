@@ -80,7 +80,6 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindPidsAsync(Guid siteId)
         {
-            var parameters = this.Request.QueryString.ParseQueryString<NearestParameters>();
             var result = await _geocoderService.GetPids(siteId);
             return new JsonResult(_mapper.Map<Model.SitePidsResponseModel>(result));
         }
