@@ -53,13 +53,6 @@ export const columnDefinitions: ColumnWithProps<IAccessRequestModel>[] = [
       AccessStatusDisplayMapper[props.row.original.status],
   },
   {
-    Header: 'Agency',
-    accessor: 'agency',
-    align: 'left',
-    clickable: true,
-    minWidth: 200,
-  },
-  {
     Header: 'Role',
     accessor: 'role',
     align: 'left',

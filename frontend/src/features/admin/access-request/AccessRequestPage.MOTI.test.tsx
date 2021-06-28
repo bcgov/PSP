@@ -111,7 +111,7 @@ describe('[ MOTI ] AccessRequestPage', () => {
 
   // Enzyme tests
   describe('component functionality when requestAccess status is 200 and fetching is false', () => {
-    it('initializes form with null for agencies and roles', () => {
+    it('initializes form with null roles', () => {
       const componentRender = mount(
         <TenantProvider>
           <Provider store={successStore}>
@@ -127,9 +127,6 @@ describe('[ MOTI ] AccessRequestPage', () => {
           .first()
           .prop('initialValues'),
       ).toEqual({
-        agencies: [],
-        showAgency: false,
-        agency: undefined,
         id: 0,
         status: 'OnHold',
         note: '',

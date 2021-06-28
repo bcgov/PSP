@@ -275,7 +275,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
             Object {
               "display": "flex",
               "flex": "1 0 auto",
-              "minWidth": "780px",
+              "minWidth": "580px",
             }
           }
         >
@@ -479,36 +479,6 @@ exports[`Manage access requests Snapshot matches 1`] = `
             <div
               className="sortable-column"
             >
-              Agency
-              <span
-                style={
-                  Object {
-                    "flex": "1 1 auto",
-                  }
-                }
-              />
-            </div>
-          </div>
-          <div
-            className="th"
-            colSpan={1}
-            role="columnheader"
-            style={
-              Object {
-                "alignItems": "center",
-                "boxSizing": "border-box",
-                "display": "flex",
-                "flex": "200 0 auto",
-                "justifyContent": "flex-start",
-                "minWidth": "200px",
-                "textAlign": "left",
-                "width": "200px",
-              }
-            }
-          >
-            <div
-              className="sortable-column"
-            >
               Role
               <span
                 style={
@@ -565,7 +535,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               Object {
                 "display": "flex",
                 "flex": "1 0 auto",
-                "minWidth": "780px",
+                "minWidth": "580px",
               }
             }
           >
@@ -691,26 +661,6 @@ exports[`Manage access requests Snapshot matches 1`] = `
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
               On Hold
-            </div>
-            <div
-              className="td clickable"
-              onClick={[Function]}
-              role="cell"
-              style={
-                Object {
-                  "alignItems": "flex-start",
-                  "boxSizing": "border-box",
-                  "display": "flex",
-                  "flex": "200 0 auto",
-                  "justifyContent": "flex-start",
-                  "minWidth": "200px",
-                  "textAlign": "left",
-                  "width": "200px",
-                }
-              }
-              title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
-            >
-              agency 1
             </div>
             <div
               className="td clickable"

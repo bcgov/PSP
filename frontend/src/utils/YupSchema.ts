@@ -14,13 +14,6 @@ Yup.addMethod(Yup.string, 'optional', function optional() {
 });
 
 export const AccessRequestSchema = Yup.object().shape({
-  showAgency: Yup.boolean(),
-  agency: Yup.number().when('showAgency', {
-    is: true,
-    then: Yup.number()
-      .min(1, 'Invalid Agency')
-      .required('Required'),
-  }),
   role: Yup.string()
     .min(1, 'Invalid Role')
     .required('Required'),
