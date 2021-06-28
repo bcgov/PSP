@@ -123,6 +123,7 @@ pipeline {
 
     stage('Approval Prompt') {
       when {
+        beforeInput true
         expression { new Boolean(env.APPROVAL_REQUIRED) }
       }
       options { timeout(time: 1, unit: 'HOURS') }
