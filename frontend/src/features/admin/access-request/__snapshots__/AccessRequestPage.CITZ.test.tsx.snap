@@ -1,58 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Edit user page EditUserPage renders 1`] = `
-<div>
-  <nav
-    class="navBar navbar navbar-expand-sm navbar-light bg-light"
-  >
-    <a
-      class="navbar-brand"
-      href="#"
-    >
-      User Information
-    </a>
-  </nav>
+exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
+<div
+  class="accessRequestPage"
+>
+  <div>
+    <h3>
+      Access Request
+    </h3>
+  </div>
+  <hr />
   <div
     class="container-fluid"
   >
     <div
-      class="user-edit-form-container row"
+      class="justify-content-md-center row"
     >
       <form
         class="userInfo"
         novalidate=""
       >
-        <p
-          class="label"
-        >
-          IDIR/BCeID
-        </p>
         <div
           class="form-group"
         >
+          <label
+            class="form-label"
+            for="input-user.username"
+          >
+            IDIR/BCeID
+             
+          </label>
           <input
             class="form-control"
-            data-testid="username"
-            id="input-username"
-            name="username"
-            readonly=""
-            type="text"
-            value="test.user"
-          />
-        </div>
-        <p
-          class="label"
-        >
-          Last Login
-        </p>
-        <div
-          class="form-group"
-        >
-          <input
-            class="form-control"
-            data-testid="lastLogin"
-            id="input-lastLogin"
-            name="lastLogin"
+            id="input-user.username"
+            name="user.username"
             readonly=""
             type="text"
             value=""
@@ -64,64 +45,67 @@ exports[`Edit user page EditUserPage renders 1`] = `
           <div
             class="col"
           >
-            <p
-              class="label"
-            >
-              First Name
-            </p>
             <div
               class="form-group"
             >
+              <label
+                class="form-label"
+                for="input-user.firstName"
+              >
+                First Name
+                 
+              </label>
               <input
                 class="form-control"
-                data-testid="firstName"
-                id="input-firstName"
-                name="firstName"
-                placeholder="Test"
+                id="input-user.firstName"
+                name="user.firstName"
+                readonly=""
                 type="text"
-                value="Test"
+                value=""
               />
             </div>
           </div>
           <div
             class="col"
           >
-            <p
-              class="label"
-            >
-              Last Name
-            </p>
             <div
               class="form-group"
             >
+              <label
+                class="form-label"
+                for="input-user.lastName"
+              >
+                Last Name
+                 
+              </label>
               <input
                 class="form-control"
-                data-testid="lastName"
-                id="input-lastName"
-                name="lastName"
-                placeholder="User"
+                id="input-user.lastName"
+                name="user.lastName"
+                readonly=""
                 type="text"
-                value="User"
+                value=""
               />
             </div>
           </div>
         </div>
-        <p
-          class="label"
-        >
-          Email
-        </p>
         <div
           class="form-group"
         >
+          <label
+            class="form-label"
+            for="input-user.email"
+          >
+            Email
+             
+          </label>
           <input
             class="form-control"
-            data-testid="email"
-            id="input-email"
-            name="email"
-            placeholder="test@user.com"
+            id="input-user.email"
+            name="user.email"
+            readonly=""
             type="email"
-            value="test@user.com"
+            value=""
           />
         </div>
         <div
@@ -135,7 +119,6 @@ exports[`Edit user page EditUserPage renders 1`] = `
           </label>
           <select
             class="form-select form-control"
-            data-testid="agency"
             id="input-agency"
             name="agency"
             required=""
@@ -153,19 +136,20 @@ exports[`Edit user page EditUserPage renders 1`] = `
             </option>
           </select>
         </div>
-        <p
-          class="label"
-        >
-          Position
-        </p>
         <div
           class="form-group"
         >
+          <label
+            class="form-label"
+            for="input-user.position"
+          >
+            Position
+             
+          </label>
           <input
             class="form-control"
-            data-testid="position"
-            id="input-position"
-            name="position"
+            id="input-user.position"
+            name="user.position"
             placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
             type="text"
             value=""
@@ -192,12 +176,15 @@ exports[`Edit user page EditUserPage renders 1`] = `
           >
             <select
               class="form-select form-control"
-              data-testid="role"
-              id="input-roles"
-              multiple=""
-              name="roles"
+              id="input-role"
+              name="role"
               required=""
             >
+              <option
+                value=""
+              >
+                Please Select
+              </option>
               <option
                 class="option"
                 value="1"
@@ -207,40 +194,40 @@ exports[`Edit user page EditUserPage renders 1`] = `
             </select>
           </div>
         </div>
-        <p
-          class="label"
-        >
-          Notes
-        </p>
         <div
-          class="form-group"
-        >
-          <textarea
-            class="form-control"
-            data-testid="note"
-            id="input-note"
-            name="note"
-            placeholder="A note about this user"
-            type="text"
-          >
-            test note
-          </textarea>
-        </div>
-        <div
-          class="is-disabled form-group"
+          class="required form-group"
         >
           <label
             class="form-label"
+            for="input-note"
           >
-            Disable Account? 
+            Notes
+             
           </label>
-          <input
-            data-testid="isDisabled"
-            name="isDisabled"
-            type="checkbox"
-            value="false"
+          <textarea
+            class="form-control"
+            id="input-note"
+            name="note"
+            placeholder="Please specify why you need access to PIMS and include your manager's name."
           />
         </div>
+        <p>
+          By clicking request, you agree to our
+           
+          <a
+            href="https://www2.gov.bc.ca//gov/content/home/disclaimer"
+          >
+            Terms and Conditions
+          </a>
+           and that you have read our
+           
+          <a
+            href="http://www.gov.bc.ca/gov/content/home/privacy"
+          >
+            Privacy Policy
+          </a>
+          .
+        </p>
         <div
           class="justify-content-md-center row"
         >
@@ -249,16 +236,10 @@ exports[`Edit user page EditUserPage renders 1`] = `
             role="toolbar"
           >
             <button
-              class="mr-5 btn btn-secondary"
-              type="button"
-            >
-              Cancel
-            </button>
-            <button
               class="mr-5 btn btn-primary"
               type="submit"
             >
-              Save
+              Submit
             </button>
           </div>
         </div>

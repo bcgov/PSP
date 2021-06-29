@@ -15,18 +15,21 @@ import { Alert, Button, ButtonToolbar, Col, Container, Row } from 'react-bootstr
 import { useAppSelector } from 'store/hooks';
 import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
+import { FeatureHidden, useTenant } from 'tenants';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
 import { Form, Input, Select, TextArea } from '../../../components/common/form';
 
 interface IAccessRequestForm extends IAccessRequest {
+  showAgency: boolean;
+  agency?: number;
   role: string;
 }
 
 /**
  * The AccessRequestPage provides a way to new authenticated users to submit a request
- * that associates them with a role within PSP.
+ * that associates them with a specific agency and a role within the agency.
  * If they have an active access request already submitted, it will allow them to update it until it has been approved or disabled.
  * If their prior request was disabled they will then be able to submit a new request.
  */
@@ -43,7 +46,8 @@ const AccessRequestPage = () => {
 
   const data = useAppSelector(state => state.accessRequests);
 
-  const { getPublicByType } = useLookupCodeHelpers();
+  const { getByType, getPublicByType } = useLookupCodeHelpers();
+  const agencies = getByType(API.AGENCY_CODE_SET_NAME);
   const roles = getPublicByType(API.ROLE_CODE_SET_NAME);
 
   const accessRequest = data?.accessRequest;
@@ -59,14 +63,36 @@ const AccessRequestPage = () => {
       email: userInfo?.email,
       position: accessRequest?.user?.position ?? userInfo?.position ?? '',
     },
+    agencies: accessRequest?.agencies ?? [],
     status: accessRequest?.status || AccessRequestStatus.OnHold,
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
+    showAgency: true,
+    agency: accessRequest?.agencies?.find((agency: any) => agency).id,
     role: accessRequest?.roles?.find(role => role).id,
     rowVersion: accessRequest?.rowVersion,
   };
 
+  // PSP-722 Disable agency dropdown from Access Request Form (only for MOTI)
+  const tenant = useTenant();
+  if (tenant?.id === 'MOTI') {
+    initialValues.showAgency = false;
+  }
+
+  const selectAgencies = agencies.map(c => mapLookupCode(c, initialValues.agency));
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues.role));
+
+  const checkAgencies = (
+    <FeatureHidden tenant="MOTI">
+      <Select
+        label="Agency"
+        field="agency"
+        required={true}
+        options={selectAgencies}
+        placeholder={initialValues?.agencies?.length > 0 ? undefined : 'Please Select'}
+      />
+    </FeatureHidden>
+  );
 
   const checkRoles = (
     <Form.Group className="check-roles">
@@ -171,6 +197,8 @@ const AccessRequestPage = () => {
                   readOnly={true}
                   type="email"
                 />
+
+                {checkAgencies}
 
                 <Input
                   label="Position"

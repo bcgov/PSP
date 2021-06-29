@@ -4,6 +4,7 @@ export interface IAccessRequest {
   id: number;
   userId: string;
   user: IUser;
+  agencies: any[];
   roles: any[];
   note?: string | null;
   status: AccessRequestStatus;

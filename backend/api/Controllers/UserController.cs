@@ -120,9 +120,13 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public async Task<IActionResult> AddAccessRequestAsync([FromBody] Model.AccessRequestModel model)
         {
-            if (model == null || model.Roles == null)
+            if (model == null || model.Agencies == null || model.Roles == null)
             {
                 throw new BadRequestException("Invalid access request specified");
+            }
+            if (model.Agencies.Count() != 1)
+            {
+                throw new BadRequestException("Each access request can only contain one agency.");
             }
             if (model.Roles.Count() != 1)
             {
@@ -164,9 +168,13 @@ namespace Pims.Api.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is used for consistent routing.")]
         public IActionResult UpdateAccessRequest(int id, [FromBody] Model.AccessRequestModel model)
         {
-            if (model == null || model.Roles == null)
+            if (model == null || model.Agencies == null || model.Roles == null)
             {
                 throw new BadRequestException("Invalid access request specified");
+            }
+            if (model.Agencies.Count() != 1)
+            {
+                throw new BadRequestException("Each access request can only contain one agency.");
             }
             if (model.Roles.Count() != 1)
             {

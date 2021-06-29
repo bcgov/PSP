@@ -114,7 +114,18 @@ describe('Edit user page', () => {
     const { getAllByText, getByTestId } = renderEditUserPage();
     expect(getAllByText(/Roles/i));
     expect(getAllByText(/roleVal/i));
+    expect(getAllByText(/agencyVal/i));
     expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
+  });
+
+  it('displays enabled agencies', () => {
+    const { queryByText } = testRender();
+    expect(queryByText('agencyVal')).toBeVisible();
+  });
+
+  it('Does not display disabled agencies', () => {
+    const { queryByText } = testRender();
+    expect(queryByText('disabledAgency')).toBeNull();
   });
 
   it('displays enabled roles', () => {
