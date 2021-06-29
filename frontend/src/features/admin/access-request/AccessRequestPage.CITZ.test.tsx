@@ -97,9 +97,9 @@ const testRender = () =>
     </TenantProvider>,
   );
 
-describe('[ MOTI ] AccessRequestPage', () => {
+describe('[ CITZ ] AccessRequestPage', () => {
   beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    process.env.REACT_APP_TENANT = 'CITZ';
   });
   afterEach(() => {
     delete process.env.REACT_APP_TENANT;
@@ -128,7 +128,7 @@ describe('[ MOTI ] AccessRequestPage', () => {
           .prop('initialValues'),
       ).toEqual({
         agencies: [],
-        showAgency: false,
+        showAgency: true,
         agency: undefined,
         id: 0,
         status: 'OnHold',
@@ -166,16 +166,26 @@ describe('[ MOTI ] AccessRequestPage', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it(`should not show agencies for MOTI`, () => {
+  it('renders dropdown for agencies', () => {
     const { container } = testRender();
     const dropdown = container.querySelector(`select[name="agency"]`);
-    expect(dropdown).toBeNull();
+    expect(dropdown).toBeVisible();
   });
 
   it('renders dropdown for roles', () => {
     const { container } = testRender();
     const dropdown = container.querySelector(`select[name="role"]`);
     expect(dropdown).toBeVisible();
+  });
+
+  it('displays enabled agencies', () => {
+    const { queryByText } = testRender();
+    expect(queryByText('agencyVal')).toBeVisible();
+  });
+
+  it('does not display disabled agencies', () => {
+    const { queryByText } = testRender();
+    expect(queryByText('disabledAgency')).toBeNull();
   });
 
   it('displays enabled roles', () => {
@@ -196,6 +206,7 @@ describe('[ MOTI ] AccessRequestPage', () => {
   it('displays a success message upon form submission', async () => {
     const { addAccessRequest } = useAccessRequests();
     const { container, getByText } = testRender();
+    await fillInput(container, 'agency', '1', 'select');
     await fillInput(container, 'role', '1', 'select');
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
@@ -207,7 +218,9 @@ describe('[ MOTI ] AccessRequestPage', () => {
   it('displays an error message upon failure to submit', async () => {
     const { addAccessRequest } = useAccessRequests();
     (addAccessRequest as jest.Mock).mockRejectedValueOnce(new Error('network-error'));
+
     const { container, getByText } = testRender();
+    await fillInput(container, 'agency', '1', 'select');
     await fillInput(container, 'role', '1', 'select');
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');

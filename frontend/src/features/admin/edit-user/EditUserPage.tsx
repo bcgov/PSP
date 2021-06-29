@@ -32,6 +32,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
+  const agencies = getByType(API.AGENCY_CODE_SET_NAME);
   const roles = getByType(API.ROLE_CODE_SET_NAME);
 
   const user = useAppSelector(state => state.users.userDetail);
@@ -41,10 +42,25 @@ const EditUserPage = (props: IEditUserPageProps) => {
     selected: !!user?.roles?.find(x => x.id === code.id.toString()) ?? [],
   });
 
+  const selectAgencies = agencies.map(c => mapLookupCode(c));
   const selectRoles = roles.map(c => mapLookupCode(c));
 
   // Arrays below are used to add the role/agency from the dropdown later in code
+  let agenciesToUpdate: any[];
   let rolesToUpdate: any[];
+
+  const checkAgencies = (
+    <Select
+      label="Agency"
+      field="agency"
+      data-testid="agency"
+      required={true}
+      options={selectAgencies}
+      placeholder={
+        user?.agencies?.length && user?.agencies?.length > 0 ? undefined : 'Please Select'
+      }
+    />
+  );
 
   const checkRoles = (
     <Form.Group className={'check-roles'}>
@@ -83,9 +99,10 @@ const EditUserPage = (props: IEditUserPageProps) => {
     isDisabled: !!user.isDisabled,
     rowVersion: user.rowVersion,
     emailVerified: false,
-    agencies: [],
+    agencies: user.agencies,
     roles: user?.roles?.map(x => x.id) ?? [],
     note: user.note,
+    agency: user.agencies && user.agencies.length !== 0 ? user.agencies[0].id : '',
     role: user.roles && user.roles.length !== 0 ? user.roles[0].id : '',
     position: user.position,
     lastLogin: formatApiDateTime(user.lastLogin),
@@ -103,6 +120,12 @@ const EditUserPage = (props: IEditUserPageProps) => {
             initialValues={initialValues}
             validationSchema={UserUpdateSchema}
             onSubmit={(values, { setSubmitting }) => {
+              if (values.agency !== '') {
+                agenciesToUpdate = [{ id: Number(values.agency) }];
+              } else {
+                agenciesToUpdate = user.agencies ?? [];
+              }
+
               if (values.roles) {
                 rolesToUpdate = values.roles.map(r => ({ id: r }));
               } else {
@@ -118,7 +141,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                 isDisabled: values.isDisabled,
                 rowVersion: values.rowVersion,
                 emailVerified: values.emailVerified,
-                agencies: [],
+                agencies: agenciesToUpdate,
                 roles: rolesToUpdate,
                 position: values.position ?? undefined,
                 note: values.note,
@@ -173,6 +196,8 @@ const EditUserPage = (props: IEditUserPageProps) => {
                   placeholder={props.values.email}
                   type="email"
                 />
+
+                {checkAgencies}
 
                 <Label>Position</Label>
                 <Input
