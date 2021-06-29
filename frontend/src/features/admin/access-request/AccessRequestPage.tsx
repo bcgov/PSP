@@ -68,7 +68,7 @@ const AccessRequestPage = () => {
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
     showAgency: true,
-    agency: accessRequest?.agencies?.find((agency: any) => agency).id,
+    agency: agencies.find(a => a.code === 'TRAN')?.id,
     role: accessRequest?.roles?.find(role => role).id,
     rowVersion: accessRequest?.rowVersion,
   };
