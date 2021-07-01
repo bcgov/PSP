@@ -42,6 +42,10 @@ pipeline {
     ROCKET_CHAT_SECRET = 'rocket-chat-secrets'
     ROCKET_CHAT_WEBHOOK_KEY = 'rocket-deploy-webhook'
 
+    // MS Teams Configuration
+    MS_TEAMS_SECRET = 'ms-teams-secrets'
+    MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
+
     // Environment Variables that should be set in OpenShift
     // -----------------------------------------------------
     // The job identifier (i.e 'pr-5' OR 'dev' OR 'master')
@@ -83,7 +87,7 @@ pipeline {
         script {
           // load supporting functions from external script files
           commonPipeline = load "${DEVOPS_DIRECTORY}/pipelines/scripts/common.groovy"
-          notify = load "${DEVOPS_DIRECTORY}/pipelines/scripts/notify.groovy"
+          notify = load "${DEVOPS_DIRECTORY}/pipelines/scripts/notify-teams.groovy"
 
           // Cancel any running builds in progress
           timeout(time: 10, unit: 'MINUTES') {
@@ -93,7 +97,8 @@ pipeline {
 
           // ensure required secrets and credentials are available in the CI environment
           // [add more secrets here if needed...]
-          env.ROCKET_DEPLOY_WEBHOOK = sh(script: "oc extract --to=- --keys=${ROCKET_CHAT_WEBHOOK_KEY} secret/${ROCKET_CHAT_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
+          // env.ROCKET_DEPLOY_WEBHOOK = sh(script: "oc extract --to=- --keys=${ROCKET_CHAT_WEBHOOK_KEY} secret/${ROCKET_CHAT_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
+          env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/${MS_TEAMS_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
           env.SONAR_TOKEN = sh(script: "oc extract --to=- --keys=${SONARQUBE_TOKEN_KEY} secret/${SONARQUBE_TOKEN_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
 
           // initialize CI environment values
@@ -123,6 +128,7 @@ pipeline {
 
     stage('Approval Prompt') {
       when {
+        beforeInput true
         expression { new Boolean(env.APPROVAL_REQUIRED) }
       }
       options { timeout(time: 1, unit: 'HOURS') }
@@ -328,13 +334,13 @@ pipeline {
     success {
       script {
         if (new Boolean(env.SKIP_BUILD) == false) {
-          notify.success(APP_NAME.toUpperCase(), RELEASE_VERSION, DESTINATION.toUpperCase(), ROCKET_DEPLOY_WEBHOOK)
+          notify.success(APP_NAME.toUpperCase(), RELEASE_VERSION, DESTINATION.toUpperCase(), NOTIFICATION_WEBHOOK_URL)
         }
       }
     }
     failure {
       script {
-        notify.failure(APP_NAME.toUpperCase(), RELEASE_VERSION, DESTINATION.toUpperCase(), ROCKET_DEPLOY_WEBHOOK)
+        notify.failure(APP_NAME.toUpperCase(), RELEASE_VERSION, DESTINATION.toUpperCase(), NOTIFICATION_WEBHOOK_URL)
       }
     }
   } // post-stages
