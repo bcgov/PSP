@@ -1,5 +1,4 @@
 import { AccessRequestStatus } from 'constants/accessStatus';
-import { Workflows } from 'constants/index';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { IAccessRequest, IBuilding, IParcel, IProperty, IUserDetails } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -42,22 +41,6 @@ export const CLASSIFICATIONS = [
     isDisabled: false,
     type: 'Classification',
     sortOrder: 2,
-    isVisible: true,
-  },
-  {
-    name: 'Surplus Active',
-    id: '2',
-    isDisabled: false,
-    type: 'Classification',
-    sortOrder: 3,
-    isVisible: true,
-  },
-  {
-    name: 'Surplus Encumbered',
-    id: '3',
-    isDisabled: false,
-    type: 'Classification',
-    sortOrder: 4,
     isVisible: true,
   },
   {
@@ -147,7 +130,6 @@ export const mockParcel = {
   id: 1,
   pid: '000-000-000',
   pin: '',
-  projectNumber: '',
   zoning: '',
   zoningPotential: '',
   classificationId: 1,
@@ -192,9 +174,6 @@ export const mockParcel = {
   agencyFullName: 'Ministry of Advanced Education',
   subAgency: 'KPU',
   subAgencyFullName: 'Kwantlen Polytechnic University',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'In ERP',
-  projectWorkflow: Workflows.ERP,
 } as IParcel;
 
 export const mockBuilding = {
@@ -249,9 +228,6 @@ export const mockBuilding = {
   occupantName: 'test',
   parcels: [mockParcel],
   buildingTenancy: '100%',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'On Market',
-  projectWorkflow: Workflows.SPL,
 } as IBuilding;
 
 export const mockProperty: IProperty = {
@@ -299,7 +275,6 @@ export const mockParcelDetail: IPropertyDetail = {
     zoning: '20',
     zoningPotential: '21',
     agencyId: 22,
-    projectNumbers: ['24'],
     assessedLand: 25,
     assessedBuilding: 26,
     encumbranceReason: '27',
@@ -319,7 +294,6 @@ export const mockDetails = [
     id: 1,
     pid: '000-000-000',
     pin: '',
-    projectNumber: '',
     zoning: '',
     zoningPotential: '',
     classificationId: 1,
@@ -504,7 +478,6 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
           fiscals: [],
           id: 1640,
           propertyTypeId: 0,
-          projectNumbers: ['DRAFT-00031'],
           name: '',
           description: '',
           classificationId: 0,
@@ -527,7 +500,6 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
       parcels: [],
       id: 2,
       propertyTypeId: 0,
-      projectNumbers: [],
       name: 'Traditional site',
       description: 'Traditional site',
       classificationId: 0,
@@ -584,7 +556,6 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
   ],
   id: 1,
   propertyTypeId: 0,
-  projectNumbers: ['DRAFT-00031'],
   name: '',
   description: '',
   classificationId: 0,
@@ -665,7 +636,6 @@ export const mockFlatBuildingProperty: IFlatProperty = {
   postal: '',
   predominateUse: 'Commercial',
   predominateUseId: 26,
-  projectNumbers: [],
   province: 'British Columbia',
   rentableArea: 0,
   subAgency: 'Insurance Corporation of BC',
@@ -678,7 +648,6 @@ export const ACTIVE = {
   id: 1,
   pid: '000-000-000',
   pin: '',
-  projectNumber: '',
   zoning: '',
   zoningPotential: '',
   classificationId: 1,

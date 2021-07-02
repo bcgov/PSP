@@ -1,7 +1,6 @@
 import variables from '_variables.module.scss';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { IBuilding, IParcel } from 'interfaces';
-import queryString from 'query-string';
 import * as React from 'react';
 import { Row } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
@@ -18,11 +17,6 @@ const LinkMenu = styled(Row)`
     padding: 0px 10px;
     color: ${variables.slideOutBlue};
   }
-`;
-
-const VerticalBar = styled.div`
-  border-left: 2px solid rgba(96, 96, 96, 0.2);
-  height: 18px;
 `;
 
 interface IHeaderActions {
@@ -59,64 +53,9 @@ const HeaderActions: React.FC<IHeaderActions> = ({
 }) => {
   const location = useLocation();
 
-  const buildingId = propertyTypeId === PropertyTypes.BUILDING ? propertyInfo?.id : undefined;
-  const parcelId = [PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(
-    propertyTypeId as PropertyTypes,
-  )
-    ? propertyInfo?.id
-    : undefined;
   return (
     <LinkMenu>
       Actions:
-      {canViewDetails && (
-        <>
-          <Link
-            onClick={() => {
-              jumpToView();
-              if (onLinkClick) onLinkClick();
-            }}
-            to={{
-              pathname: `/mapview`,
-              search: queryString.stringify({
-                ...queryString.parse(location.search),
-                sidebar: true,
-                disabled: true,
-                loadDraft: false,
-                buildingId: buildingId,
-                parcelId: parcelId,
-              }),
-            }}
-          >
-            View details
-          </Link>
-
-          {canEditDetails && (
-            <>
-              <VerticalBar />
-              <Link
-                onClick={() => {
-                  jumpToView();
-                  if (onLinkClick) onLinkClick();
-                }}
-                to={{
-                  pathname: `/mapview`,
-                  search: queryString.stringify({
-                    ...queryString.parse(location.search),
-                    disabled: false,
-                    sidebar: true,
-                    loadDraft: false,
-                    buildingId: buildingId,
-                    parcelId: parcelId,
-                  }),
-                }}
-              >
-                Update
-              </Link>
-            </>
-          )}
-          <VerticalBar />
-        </>
-      )}
       <Link to={{ ...location }} onClick={zoomToView}>
         Zoom map
       </Link>

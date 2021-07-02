@@ -10,15 +10,13 @@ import { useApi } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IBuilding, IParcel } from 'interfaces';
 import * as L from 'leaflet';
-import queryString from 'query-string';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
-import { FaInfo, FaPlusSquare } from 'react-icons/fa';
+import { FaInfo } from 'react-icons/fa';
 import { useLeaflet } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { storeBuildingDetail } from 'store/slices/properties';
 import styled from 'styled-components';
@@ -142,7 +140,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   const { getParcel, getBuilding } = useApi();
   const leaflet = useLeaflet();
   const { propertyInfo } = popUpContext;
-  const location = useLocation();
   const jumpToView = () =>
     leaflet.map?.setView(
       [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
@@ -166,29 +163,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   const [generalInfoOpen, setGeneralInfoOpen] = React.useState<boolean>(true);
 
   const isBuilding = popUpContext.propertyTypeID === PropertyTypes.BUILDING;
-
-  const addAssociatedBuildingLink = (
-    <>
-      <FaPlusSquare color="#1a5a96" className="mr-1" />
-      <Link
-        style={{ color: variables.slideOutBlue }}
-        to={{
-          pathname: `/mapview`,
-          search: queryString.stringify({
-            ...queryString.parse(location.search),
-            sidebar: true,
-            disabled: true,
-            loadDraft: false,
-            buildingId: 0,
-            associatedParcelId: propertyInfo?.id,
-            parcelId: undefined,
-          }),
-        }}
-      >
-        Add a new Building
-      </Link>
-    </>
-  );
 
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
@@ -226,7 +200,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
           return (
             <AssociatedBuildingsList
               propertyInfo={popUpContext.propertyInfo as IParcel}
-              addAssociatedBuildingLink={addAssociatedBuildingLink}
               canEditDetails={canEditProperty}
             />
           );

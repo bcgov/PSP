@@ -1,4 +1,4 @@
-import { Classifications, PropertyTypes, Workflows } from 'constants/index';
+import { PropertyTypes } from 'constants/index';
 import { IProperty } from 'interfaces';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import Supercluster from 'supercluster';
@@ -271,37 +271,13 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
  * Get an icon type for the specified cluster property details (type, draft, erp, spp etc)
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
-  const { propertyTypeId, projectWorkflow, classificationId, parcelDetail } = feature?.properties;
+  const { propertyTypeId } = feature?.properties;
   if (propertyTypeId === PropertyTypes.DRAFT_PARCEL) {
     return draftParcelIcon;
   } else if (propertyTypeId === PropertyTypes.DRAFT_BUILDING) {
     return draftBuildingIcon;
   } else if (selected) {
-    if (
-      [Workflows.ERP].includes(projectWorkflow) ||
-      [Workflows.ERP].includes(parcelDetail?.projectWorkflow)
-    ) {
-      switch (propertyTypeId) {
-        case PropertyTypes.SUBDIVISION:
-          return subdivisionErpIconSelect;
-        case PropertyTypes.BUILDING:
-          return buildingErpIconSelect;
-        default:
-          return landErpIconSelect;
-      }
-    } else if (
-      [Workflows.SPL, Workflows.ASSESS_EX_DISPOSAL].includes(projectWorkflow) ||
-      [Workflows.SPL, Workflows.ASSESS_EX_DISPOSAL].includes(parcelDetail?.projectWorkflow)
-    ) {
-      switch (propertyTypeId) {
-        case PropertyTypes.BUILDING:
-          return buildingSppIconSelect;
-        case PropertyTypes.SUBDIVISION:
-          return subdivisionSppIconSelect;
-        default:
-          return landSppIconSelect;
-      }
-    } else if (propertyTypeId === PropertyTypes.PARCEL) {
+    if (propertyTypeId === PropertyTypes.PARCEL) {
       return parcelIconSelect;
     } else if (propertyTypeId === PropertyTypes.SUBDIVISION) {
       return subdivisionIconSelect;
@@ -309,30 +285,7 @@ export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
       return buildingIconSelect;
     }
   } else {
-    if ([Workflows.ERP].includes(projectWorkflow)) {
-      switch (propertyTypeId) {
-        case PropertyTypes.SUBDIVISION:
-          return subdivisionErpIcon;
-        case PropertyTypes.BUILDING:
-          return buildingErpIcon;
-        default:
-          return landErpIcon;
-      }
-    } else if (
-      (classificationId === Classifications.SurplusActive ||
-        classificationId === Classifications.SurplusEncumbered) &&
-      projectWorkflow &&
-      [Workflows.SPL, Workflows.ASSESS_EX_DISPOSAL].includes(projectWorkflow)
-    ) {
-      switch (propertyTypeId) {
-        case PropertyTypes.BUILDING:
-          return buildingSppIcon;
-        case PropertyTypes.SUBDIVISION:
-          return subdivisionSppIcon;
-        default:
-          return landSppIcon;
-      }
-    } else if (propertyTypeId === PropertyTypes.PARCEL) {
+    if (propertyTypeId === PropertyTypes.PARCEL) {
       return parcelIcon;
     } else if (propertyTypeId === PropertyTypes.SUBDIVISION) {
       return subdivisionIcon;

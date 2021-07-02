@@ -1,15 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import { layerData } from 'constants/toasts';
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { geoJSON, LatLngLiteral } from 'leaflet';
+import { Feature, FeatureCollection } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 import { useMemo } from 'react';
-import { Dispatch, useCallback } from 'react';
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
-import { logError } from 'store/slices/network/networkSlice';
-import parcelLayerDataSlice, {
-  saveParcelLayerData,
-} from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 export interface IUserLayerQuery {
   /**
@@ -32,72 +28,8 @@ export interface IUserLayerQuery {
    * @param city
    */
   findByAdministrative: (city: string) => Promise<Feature | null>;
-  /**
-   * Standard logic to handle a parcel layer data response, independent of whether this is a lat/lng or pid query response.
-   * @param response axios response
-   * @param dispatch redux store, required to save results.
-   */
-  handleParcelDataLayerResponse: (
-    response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
-    dispatch: Dispatch<any>,
-    latLng?: LatLngLiteral,
-  ) => Promise<void>;
 }
 
-/**
- * Save the parcel data layer response to redux for use within other components. Also save an entire copy of the feature for display on the map.
- * @param resp
- * @param dispatch
- */
-export const saveParcelDataLayerResponse = (
-  resp: FeatureCollection<Geometry, GeoJsonProperties>,
-  dispatch: Dispatch<any>,
-  latLng?: LatLngLiteral,
-) => {
-  if (resp?.features?.length > 0) {
-    //save with a synthetic event to timestamp the relevance of this data.
-    dispatch(
-      saveParcelLayerData({
-        e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
-        data: {
-          ...resp.features[0].properties!,
-          CENTER:
-            latLng ??
-            geoJSON(resp.features[0].geometry)
-              .getBounds()
-              .getCenter(),
-        },
-      }),
-    );
-  } else {
-    toast.warning(`Failed to find parcel layer data. Ensure that the search criteria is valid`);
-  }
-};
-
-/**
- * Standard logic to handle a parcel layer data response, independent of whether this is a lat/lng or pid query response.
- * @param response axios response
- * @param dispatch redux store, required to save results.
- */
-export const handleParcelDataLayerResponse = (
-  response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
-  dispatch: Dispatch<any>,
-  latLng?: LatLngLiteral,
-) => {
-  return response
-    .then((resp: FeatureCollection<Geometry, GeoJsonProperties>) => {
-      saveParcelDataLayerResponse(resp, dispatch, latLng);
-    })
-    .catch((axiosError: AxiosError) => {
-      dispatch(
-        logError({
-          name: parcelLayerDataSlice.reducer.name,
-          status: axiosError?.response?.status,
-          error: axiosError,
-        }),
-      );
-    });
-};
 const MAX_RETRIES = 2;
 const wfsAxios = () => {
   const instance = axios.create({ timeout: 5000 });
@@ -191,7 +123,6 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
       findByPid,
       findByPin,
       findByAdministrative,
-      handleParcelDataLayerResponse,
     }),
     [findByAdministrative, findByPid, findByPin, findOneWhereContains],
   );

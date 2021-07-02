@@ -28,7 +28,7 @@ describe('useTenant hook', () => {
       ...OLD_ENV,
       REACT_APP_TENANT: undefined,
     };
-    global.fetch = mockFetch;
+    global.fetch = mockFetch as any;
   });
 
   afterAll(() => {
@@ -37,16 +37,16 @@ describe('useTenant hook', () => {
     jest.restoreAllMocks();
   });
 
-  it('Tenant returns correct default configuration', () => {
-    act(() => {
+  it('Tenant returns correct default configuration', async () => {
+    await act(async () => {
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
       expect(title).toContainHTML(JSON.stringify(defaultTenant));
     });
   });
 
-  it('Tenant returns correct non-existing configuration', () => {
-    act(() => {
+  it('Tenant returns correct non-existing configuration', async () => {
+    await act(async () => {
       process.env.REACT_APP_TENANT = 'FAKE';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
@@ -54,8 +54,8 @@ describe('useTenant hook', () => {
     });
   });
 
-  it('Tenant returns correct MOTI configuration', () => {
-    act(() => {
+  it('Tenant returns correct MOTI configuration', async () => {
+    await act(async () => {
       process.env.REACT_APP_TENANT = 'MOTI';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
@@ -63,8 +63,8 @@ describe('useTenant hook', () => {
     });
   });
 
-  it('Tenant returns correct CITZ configuration', () => {
-    act(() => {
+  it('Tenant returns correct CITZ configuration', async () => {
+    await act(async () => {
       process.env.REACT_APP_TENANT = 'CITZ';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');

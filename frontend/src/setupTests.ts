@@ -5,6 +5,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
 var localStorageMock = (function() {
   var store: any = {};
 
@@ -40,3 +43,7 @@ var createElementNSOrig = (global as any).document.createElementNS;
   }
   return createElementNSOrig.apply(this, arguments);
 };
+
+window.scrollTo = jest.fn(); // not implemented by jsdom.
+
+configure({ adapter: new Adapter() });

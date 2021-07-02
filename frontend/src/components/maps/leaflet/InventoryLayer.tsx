@@ -178,13 +178,10 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       address: filter?.address,
       administrativeArea: filter?.administrativeArea,
       pid: filter?.pid,
-      projectNumber: filter?.projectNumber,
       agencies: filter?.agencies,
       classificationId: filter?.classificationId,
       minLandArea: filter?.minLandArea,
       maxLandArea: filter?.maxLandArea,
-      inSurplusPropertyProgram: filter?.inSurplusPropertyProgram,
-      inEnhancedReferralProcess: filter?.inEnhancedReferralProcess,
       floorCount: filter?.floorCount,
       predominateUseId: Number(filter?.predominateUseId),
       constructionTypeId: filter?.constructionTypeId,
@@ -210,7 +207,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
 
       const items = uniqBy(
         data,
-        point => `${point?.properties.id}-${point?.properties.propertyTypeId}`,
+        point => `${point?.properties?.id}-${point?.properties?.propertyTypeId}`,
       );
 
       /**
@@ -221,9 +218,9 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
 
       let results = items.filter(({ properties }: any) => {
         return (
-          properties.propertyTypeId === PropertyTypes.BUILDING ||
+          properties?.propertyTypeId === PropertyTypes.BUILDING ||
           !hasBuildings(properties) ||
-          (properties.propertyTypeId === PropertyTypes.SUBDIVISION &&
+          (properties?.propertyTypeId === PropertyTypes.SUBDIVISION &&
             keycloak.canUserEditProperty(properties))
         );
       }) as any;

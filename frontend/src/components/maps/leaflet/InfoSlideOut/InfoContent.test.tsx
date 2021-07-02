@@ -5,7 +5,6 @@ import { useKeycloak } from '@react-keycloak/web';
 import { render } from '@testing-library/react';
 import * as API from 'constants/API';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { Workflows } from 'constants/workflows';
 import { createMemoryHistory } from 'history';
 import { IBuilding, IParcel } from 'interfaces';
 import { mockBuilding } from 'mocks/filterDataMock';
@@ -69,7 +68,6 @@ export const mockParcel = {
   id: 1,
   pid: '000-000-000',
   pin: '',
-  projectNumber: '',
   zoning: '',
   zoningPotential: '',
   classificationId: 1,
@@ -114,9 +112,6 @@ export const mockParcel = {
   agencyFullName: 'Ministry of Advanced Education',
   subAgency: 'KPU',
   subAgencyFullName: 'Kwantlen Polytechnic University',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'In ERP',
-  projectWorkflow: Workflows.ERP,
 } as IParcel;
 
 const lCodes = {
@@ -210,30 +205,6 @@ describe('InfoContent View functionality', () => {
     expect(getByText('$10,000')).toBeVisible();
   });
 
-  it('Shows project status if can view and property is in project', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.PARCEL, true));
-    expect(getByText('Property is in Enhanced Referral Process')).toBeVisible();
-    expect(getByText('In ERP')).toBeVisible();
-  });
-
-  it('Does not show project status block if not in a project', () => {
-    const { queryByText } = render(ContentComponent(mockParcelNoSub, PropertyTypes.PARCEL, true));
-    expect(queryByText('Status: ')).toBeNull();
-  });
-
-  it('Shows limited parcel information when cannot view', () => {
-    const { getByText, queryByText } = render(
-      ContentComponent(mockParcel, PropertyTypes.PARCEL, false),
-    );
-    expect(queryByText('test name')).toBeNull();
-    expect(queryByText('Ministry of Advanced Education')).toBeNull();
-    expect(queryByText('Kwantlen Polytechnic University')).toBeNull();
-    //contact SRES block is shown
-    expect(getByText('For more information', { exact: false })).toBeVisible();
-    //project status is hidden
-    expect(queryByText('Status: ')).toBeNull();
-  });
-
   it('Correct label if no sub agency', () => {
     const { getByText } = render(ContentComponent(mockParcelNoSub, PropertyTypes.PARCEL, true));
     expect(getByText('Owning ministry')).toBeVisible();
@@ -254,24 +225,10 @@ describe('InfoContent View functionality', () => {
     //Building Attributes
     expect(getByText('University/College')).toBeVisible();
     expect(getByText('100%')).toBeVisible();
-    //Project status block
-    expect(getByText('Property is on the Surplus Properties List')).toBeVisible();
-    expect(getByText('On Market')).toBeVisible();
   });
 
   it('Building area formated correctly', () => {
     const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.BUILDING, true));
     expect(getByText('100 sq. metres')).toBeVisible();
-  });
-
-  it('Shows limited building information when cannot view', () => {
-    const { getByText, queryByText } = render(
-      ContentComponent(mockBuilding, PropertyTypes.BUILDING, false),
-    );
-    expect(queryByText('test name')).toBeNull();
-    expect(queryByText('Ministry of Advanced Education')).toBeNull();
-    expect(queryByText('Kwantlen Polytechnic University')).toBeNull();
-    //contact SRES block is shown
-    expect(getByText('For more information', { exact: false })).toBeVisible();
   });
 });

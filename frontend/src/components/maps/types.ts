@@ -14,7 +14,5 @@ export type PointFeature = Supercluster.PointFeature<{
   id: number;
   propertyTypeId: PropertyTypes;
   agencyId?: number;
-  projectStatus?: string;
   name?: string;
-  projectWorkflow?: string;
 }>;

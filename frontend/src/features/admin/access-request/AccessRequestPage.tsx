@@ -15,7 +15,7 @@ import { Alert, Button, ButtonToolbar, Col, Container, Row } from 'react-bootstr
 import { useAppSelector } from 'store/hooks';
 import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
-import { FeatureHidden, useTenant } from 'tenants';
+import { useTenant } from 'tenants';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
@@ -46,8 +46,7 @@ const AccessRequestPage = () => {
 
   const data = useAppSelector(state => state.accessRequests);
 
-  const { getByType, getPublicByType } = useLookupCodeHelpers();
-  const agencies = getByType(API.AGENCY_CODE_SET_NAME);
+  const { getPublicByType } = useLookupCodeHelpers();
   const roles = getPublicByType(API.ROLE_CODE_SET_NAME);
 
   const accessRequest = data?.accessRequest;
@@ -79,20 +78,7 @@ const AccessRequestPage = () => {
     initialValues.showAgency = false;
   }
 
-  const selectAgencies = agencies.map(c => mapLookupCode(c, initialValues.agency));
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues.role));
-
-  const checkAgencies = (
-    <FeatureHidden tenant="MOTI">
-      <Select
-        label="Agency"
-        field="agency"
-        required={true}
-        options={selectAgencies}
-        placeholder={initialValues?.agencies?.length > 0 ? undefined : 'Please Select'}
-      />
-    </FeatureHidden>
-  );
 
   const checkRoles = (
     <Form.Group className="check-roles">
@@ -197,8 +183,6 @@ const AccessRequestPage = () => {
                   readOnly={true}
                   type="email"
                 />
-
-                {checkAgencies}
 
                 <Input
                   label="Position"

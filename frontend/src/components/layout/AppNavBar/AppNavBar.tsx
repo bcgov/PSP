@@ -9,7 +9,6 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { FaHome } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { FeatureHidden, FeatureVisible } from 'tenants';
 
 /**
  * Nav bar with role-based functionality.
@@ -22,17 +21,8 @@ function AppNavBar() {
         <Nav>
           <HomeButton />
           <AdminDropdown />
-          <FeatureHidden tenant="MOTI">
-            <SubmitProperty />
-          </FeatureHidden>
-          <FeatureVisible tenant="MOTI">
-            <AddProperty />
-          </FeatureVisible>
+          <AddProperty />
           <ViewInventory />
-          <FeatureHidden tenant="MOTI">
-            <DisposeProjectsDropdown />
-          </FeatureHidden>
-          <ReportsDropdown />
         </Nav>
       </Navbar.Collapse>
       <HelpContainer />
@@ -51,42 +41,6 @@ function HomeButton() {
       <FaHome size={20} />
     </Nav.Item>
   );
-}
-
-/**
- * Submit Property navigation dropdown item.
- */
-function SubmitProperty() {
-  const keycloak = useKeycloakWrapper();
-  const history = useHistory();
-  return keycloak.hasClaim(Claims.PROPERTY_ADD) ? (
-    <Nav.Link
-      className={
-        history.location.pathname.includes('mapview') &&
-        queryString.parse(history.location.search).sidebar === 'true'
-          ? 'active'
-          : 'idle'
-      }
-      onClick={() =>
-        history.push({
-          pathname: '/mapview',
-          search: queryString.stringify({
-            ...queryString.parse(history.location.search),
-            sidebar: true,
-            disabled: false,
-            loadDraft: false,
-            parcelId: undefined,
-            buildingId: undefined,
-            new: true,
-            sidebarContext: SidebarContextType.ADD_PROPERTY_TYPE_SELECTOR,
-            sidebarSize: 'narrow',
-          }),
-        })
-      }
-    >
-      Submit Property
-    </Nav.Link>
-  ) : null;
 }
 
 /**
@@ -158,67 +112,6 @@ function AdminDropdown() {
         Access Requests
       </NavDropdown.Item>
       <NavDropdown.Item onClick={() => history.push('/admin/agencies')}>Agencies</NavDropdown.Item>
-    </NavDropdown>
-  ) : null;
-}
-
-/**
- * Disposal Projects navigation dropdown menu.
- */
-function DisposeProjectsDropdown() {
-  const history = useHistory();
-  const keycloak = useKeycloakWrapper();
-  return keycloak.hasClaim(Claims.PROJECT_VIEW) ||
-    keycloak.hasClaim(Claims.DISPOSE_APPROVE) ||
-    keycloak.hasClaim(Claims.ADMIN_PROJECTS) ? (
-    <NavDropdown
-      className={
-        history.location.pathname.includes('dispose') ||
-        history.location.pathname.includes('projects')
-          ? 'active'
-          : 'idle'
-      }
-      title="Disposal Projects"
-      id="dispose"
-    >
-      {(keycloak.hasClaim(Claims.PROJECT_ADD) || keycloak.hasClaim(Claims.ADMIN_PROJECTS)) && (
-        <NavDropdown.Item onClick={() => history.push('/dispose')}>
-          Create Disposal Project
-        </NavDropdown.Item>
-      )}
-      {(keycloak.hasClaim(Claims.PROJECT_VIEW) || keycloak.hasClaim(Claims.ADMIN_PROJECTS)) && (
-        <NavDropdown.Item onClick={() => history.push('/projects/list')}>
-          View Projects
-        </NavDropdown.Item>
-      )}
-      {keycloak.hasClaim(Claims.DISPOSE_APPROVE) && (
-        <NavDropdown.Item onClick={() => history.push('/projects/approval/requests')}>
-          Approval Requests
-        </NavDropdown.Item>
-      )}
-    </NavDropdown>
-  ) : null;
-}
-
-/**
- * Reports navigation dropdown menu.
- */
-function ReportsDropdown() {
-  const history = useHistory();
-  const keycloak = useKeycloakWrapper();
-  return keycloak.hasClaim(Claims.REPORTS_VIEW) ? (
-    <NavDropdown
-      className={history.location.pathname.includes('reports') ? 'active' : 'idle'}
-      title="Reports"
-      id="reports"
-    >
-      {keycloak.hasClaim(Claims.REPORTS_SPL) && (
-        <FeatureHidden tenant="MOTI">
-          <NavDropdown.Item onClick={() => history.push('/reports/spl')}>
-            SPL Report
-          </NavDropdown.Item>
-        </FeatureHidden>
-      )}
     </NavDropdown>
   ) : null;
 }

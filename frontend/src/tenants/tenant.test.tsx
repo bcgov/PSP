@@ -1,4 +1,4 @@
-import renderer, { act } from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import { defaultTenant, TenantConsumer, TenantProvider } from '.';
 
@@ -24,7 +24,7 @@ describe('Tenant configuration', () => {
       ...OLD_ENV,
       REACT_APP_TENANT: undefined,
     };
-    global.fetch = mockFetch;
+    global.fetch = mockFetch as any;
   });
 
   afterAll(() => {
@@ -33,34 +33,23 @@ describe('Tenant configuration', () => {
     jest.restoreAllMocks();
   });
 
-  it('Tenant returns correct default configuration', () => {
-    act(() => {
-      const json = renderer.create(renderTenant()).toJSON();
-      expect(json).toMatchSnapshot();
-    });
+  it('Tenant returns correct default configuration', async () => {
+    const { container, findByText } = render(renderTenant());
+    await findByText(/Default Tenant Name/);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('Tenant returns correct non-existing configuration', () => {
-    act(() => {
-      process.env.REACT_APP_TENANT = 'FAKE';
-      const json = renderer.create(renderTenant()).toJSON();
-      expect(json).toMatchSnapshot();
-    });
+  it('Tenant returns correct non-existing configuration', async () => {
+    process.env.REACT_APP_TENANT = 'FAKE';
+    const { container, findByText } = render(renderTenant());
+    await findByText(/Default Tenant Name/);
+    expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('Tenant returns correct MOTI configuration', () => {
-    act(() => {
-      process.env.REACT_APP_TENANT = 'MOTI';
-      const json = renderer.create(renderTenant()).toJSON();
-      expect(json).toMatchSnapshot();
-    });
-  });
-
-  it('Tenant returns correct CITZ configuration', () => {
-    act(() => {
-      process.env.REACT_APP_TENANT = 'CITZ';
-      const json = renderer.create(renderTenant()).toJSON();
-      expect(json).toMatchSnapshot();
-    });
+  it('Tenant returns correct MOTI configuration', async () => {
+    process.env.REACT_APP_TENANT = 'MOTI';
+    const { container, findByText } = render(renderTenant());
+    await findByText(/Property Information Management System/);
+    expect(container.firstChild).toMatchSnapshot();
   });
 });
