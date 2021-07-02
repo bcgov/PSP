@@ -83,6 +83,44 @@ namespace Pims.Api.Areas.Tools.Controllers
             var result = await _geocoderService.GetPids(siteId);
             return new JsonResult(_mapper.Map<Model.SitePidsResponseModel>(result));
         }
+
+        /// <summary>
+        /// Make a request to Data BC Geocoder for the property that is the closest to the given lat/lng point.
+        /// </summary>
+        /// <param name="point">The lat/lng of the desired property.</param>
+        /// <returns>A single address match.</returns>
+        [HttpGet("nearest")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Model.AddressModel), 200)]
+        [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "tools-geocoder" })]
+        [HasPermission(Permissions.PropertyEdit)]
+        public async Task<IActionResult> FindNearestAddressAsync(string point)
+        {
+            var parameters = this.Request.QueryString.ParseQueryString<NearestParameters>();
+            parameters.Point = point;
+            var result = await _geocoderService.GetNearestSiteAsync(parameters);
+            return new JsonResult(_mapper.Map<Model.AddressModel>(result));
+        }
+
+        /// <summary>
+        /// Make a request to Data BC Geocoder for the properties that are the closest to the given lat/lng point.
+        /// </summary>
+        /// <param name="point">The lat/lng of the desired property.</param>
+        /// <returns>An array of address matches.</returns>
+        [HttpGet("near")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Model.AddressModel>), 200)]
+        [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
+        [SwaggerOperation(Tags = new[] { "tools-geocoder" })]
+        [HasPermission(Permissions.PropertyEdit)]
+        public async Task<IActionResult> FindNearAddressesAsync(string point)
+        {
+            var parameters = this.Request.QueryString.ParseQueryString<NearParameters>();
+            parameters.Point = point;
+            var result = await _geocoderService.GetNearSitesAsync(parameters);
+            return new JsonResult(_mapper.Map<Model.AddressModel[]>(result.Features));
+        }
         #endregion
     }
 }

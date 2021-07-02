@@ -3,6 +3,7 @@ import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
 import { IApiProperty } from 'features/projects/common';
 import { IBuilding, IParcel } from 'interfaces';
+import { LatLngLiteral } from 'leaflet';
 import * as _ from 'lodash';
 import queryString from 'query-string';
 import { useCallback } from 'react';
@@ -37,6 +38,8 @@ export interface PimsAPI {
   ) => Promise<{ available: boolean }>;
   searchAddress: (text: string) => Promise<IGeocoderResponse[]>;
   getSitePids: (siteId: string) => Promise<IGeocoderPidsResponse>;
+  getNearAddresses: (latLng: LatLngLiteral) => Promise<IGeocoderResponse[]>;
+  getNearestAddress: (latLng: LatLngLiteral) => Promise<IGeocoderResponse>;
   loadProperties: (params?: IGeoSearchParams) => Promise<any[]>;
   getBuilding: (id: number) => Promise<IBuilding>;
   getParcel: (id: number) => Promise<IParcel>;
@@ -121,6 +124,34 @@ export const useApi = (): PimsAPI => {
     async (siteId: string): Promise<IGeocoderPidsResponse> => {
       const { data } = await getAxios().get<IGeocoderPidsResponse>(
         `${ENVIRONMENT.apiUrl}/tools/geocoder/parcels/pids/${siteId}`,
+      );
+      return data;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  /**
+   * Get the nearest geocoded address to the given lat/lng point.
+   */
+  const getNearestAddress = useCallback(
+    async (latLng: LatLngLiteral): Promise<IGeocoderResponse> => {
+      const { data } = await getAxios().get<IGeocoderResponse>(
+        `${ENVIRONMENT.apiUrl}/tools/geocoder/nearest?point=${latLng.lng},${latLng.lat}`,
+      );
+      return data;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  /**
+   * Get the 5 nearest geocoded addresses to the given lat/lng point.
+   */
+  const getNearAddresses = useCallback(
+    async (latLng: LatLngLiteral): Promise<IGeocoderResponse[]> => {
+      const { data } = await getAxios().get<IGeocoderResponse[]>(
+        `${ENVIRONMENT.apiUrl}/tools/geocoder/near?point=${latLng.lng},${latLng.lat}`,
       );
       return data;
     },
@@ -227,5 +258,7 @@ export const useApi = (): PimsAPI => {
     searchAddress,
     isPinAvailable,
     isPidAvailable,
+    getNearestAddress,
+    getNearAddresses,
   };
 };
