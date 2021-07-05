@@ -1,22 +1,39 @@
-# pims-logging-sidecar
+# pims-logging
 
 The pims-logging can run as a sidecar or as a standalone container/pod - It will collect oc logs from the pims frontend and backend api every sleep_time and submit a zip to an azure blob container using curl
 
-will require that your namespace default service account has view permission, so it can get read other pod's logs.
+- Collect logs of PIMS-APP and PIMS-API every SLEEP_TIME (--since=1hr,2hr etc.)
+- Archive all collected to logs after an EXPORT_TIME
+- Send archieved logs to Azure blob container using curl
+- Sleep and repeat.
 
-build dockerfile and push to openshift imagestream registar
-docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image-registry  
-Go to -  /opnenshift/4.0/template/Logging
+Will require that your namespace default service account has view permission, so it can get read other pod's logs.
+
+## Build dockerfile and push to openshift image registar
+
+```bash
+$ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image-registry
+```
+
+Go to - `/opnenshift/4.0/template/Logging`
+
+```bash
 $ docker build -t pims-sidecar:latest .
-$ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest  
+$ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest
 $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest
+```
 
-create service account and role-binding
+### create service account and role-binding to read pod's logs
 
+```bash
 oc -apply -f role-binding.yaml
+```
 
 create oc deployment config
+
+```bash
 oc process -f .\logging_dc.yaml | oc create -f -
+```
 
 need to pass in AP_NAME, API_NAME, and AP_LOG_SERVER_URI (endpoint that accepts binary upload) as env vars to the sidecar. Below is a snippet from a Deployment Config to give you an idea of configuring alongside your app container, and how best to get the pod name.
 
