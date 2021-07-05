@@ -1,0 +1,39 @@
+version: "3.5"
+
+services:
+
+   logging:
+     restart: on-failure:1
+     container_name: pims-logging
+     build:
+       context: .
+     image: pims-sidecar:latest
+     environment:
+       SLEEP_TIME: 60
+       AZ_BLOB_URL: "https://pimsapp.blob.core.windows.net"
+       AZ_BLOB_CONTAINER: "pims"
+       AZ_SAS_TOKEN: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt2VJSO3XDzp8SUoLVqtNqZc7LDQdjeoXM%3D"
+       FRONTEND_APP_NAME: "pims-app"
+       API_NAME: "pims-api"
+       PROJECT_NAMESPACE: "3cd915-dev"
+       EXPORT_TIME: 45
+       OC_TOKEN: "sha256~lZve8NBpzf6RXiWoBvml99ZNYG23fMr7viVhGjhWSkg"
+       OC_SERVER: "https://api.silver.devops.gov.bc.ca:6443"
+     volumes:
+       - logging-data:/tmp
+     networks:
+       - pims-logging
+
+####################### Networks Definition #######################
+networks:
+  pims-logging:
+    name: pims-logging-net
+    driver: bridge
+
+####################### Volumes Definition #######################
+volumes:
+  logging-data:
+    name: pims-logging-data
+
+
+       

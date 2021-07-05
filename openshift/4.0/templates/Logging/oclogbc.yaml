@@ -14,7 +14,7 @@ parameters:
     displayName: "App Name"
     description: "The name of the application (grouped)."
     required: true
-    value: "pims-app-log"
+    value: "pims-logging"
   - name: ROLE_NAME
     displayName: "Component Role Name"
     description: "The name of the application component"
@@ -50,7 +50,7 @@ parameters:
   - name: DOCKERFILE_PATH
     displayName: Path to Dockerfile
     description: Path for alternate Dockerfile to use for build
-    value: "Dockerfile.ocp"
+    value: "Dockerfile"
 
   - name: OUTPUT_IMAGE_TAG
     displayName: "Output Image Tag"
