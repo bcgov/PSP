@@ -15,7 +15,7 @@ namespace Pims.Ltsa.Models
     /// A Title Order
     /// </summary>
     [DataContract]
-    public partial class TitleOrder : OrderParent
+    public partial class TitleOrder : OrderParent<Title>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TitleOrder" /> class.
@@ -40,6 +40,6 @@ namespace Pims.Ltsa.Models
         /// Gets or Sets OrderedProduct
         /// </summary>
         [DataMember(Name = "orderedProduct", EmitDefaultValue = false)]
-        public OrderedProduct<Title> OrderedProduct { get; set; }
+        public override OrderedProduct<Title> OrderedProduct { get; set; }
     }
 }

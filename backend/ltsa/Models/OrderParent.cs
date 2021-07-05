@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// OrderParent
     /// </summary>
     [DataContract]
-    public partial class OrderParent
+    public partial class OrderParent<T> where T : IFieldedData
     {
         /// <summary>
         /// Indicate the type of the search product requested for an order
@@ -91,6 +91,7 @@ namespace Pims.Ltsa.Models
         /// <value>Indicate the status for the order # One of:  1. Processing - Order has been created and is being processed.  Both the fielded data (JSON) and the PDF are not yet available. 1. Fulfilled - Order has been partially fulfilled.  Fielded data (JSON) is available, but PDF is not yet available. 1. Completed - Order has been fully completed.  PDF is available.  Fielded data (JSON) is available (as applicable for the product type). 1. Cancelled - Order has been cancelled. The ordered product is not available for a cancelled order.  Third party software may cancel an outstanding order by changing this status to “Cancelled” via the Put Order service. </value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public StatusEnum? Status { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OrderParent" /> class.
         /// </summary>
@@ -99,6 +100,7 @@ namespace Pims.Ltsa.Models
         /// <param name="orderId">System generated unique identifier assigned to the order Read-only for third party software.</param>
         /// <param name="status">Indicate the status for the order # One of:  1. Processing - Order has been created and is being processed.  Both the fielded data (JSON) and the PDF are not yet available. 1. Fulfilled - Order has been partially fulfilled.  Fielded data (JSON) is available, but PDF is not yet available. 1. Completed - Order has been fully completed.  PDF is available.  Fielded data (JSON) is available (as applicable for the product type). 1. Cancelled - Order has been cancelled. The ordered product is not available for a cancelled order.  Third party software may cancel an outstanding order by changing this status to “Cancelled” via the Put Order service. .</param>
         /// <param name="billingInfo">billingInfo.</param>
+        [JsonConstructor]
         public OrderParent(ProductTypeEnum productType = default, string fileReference = default, string orderId = default, StatusEnum? status = default, BillingInfo billingInfo = default)
         {
             this.ProductType = productType;
@@ -107,6 +109,7 @@ namespace Pims.Ltsa.Models
             this.Status = status;
             this.BillingInfo = billingInfo;
         }
+        public OrderParent() { }
 
 
         /// <summary>
@@ -129,5 +132,7 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "billingInfo", EmitDefaultValue = false)]
         public BillingInfo BillingInfo { get; set; }
+
+        public virtual OrderedProduct<T> OrderedProduct { get; set; }
     }
 }

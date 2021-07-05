@@ -5,7 +5,7 @@ import MapSideBarContainer from './MapSideBarContainer';
 
 const renderContainer = () =>
   render(
-    <TestCommonWrapper>
+    <TestCommonWrapper agencies={[1] as any} store={{ lookupCode: { lookupCodes: [] } }}>
       <MapSideBarContainer />
     </TestCommonWrapper>,
   );
@@ -22,6 +22,6 @@ describe('MapSideBarContainer functionality', () => {
   });
   it('Displays MOTI sidebar data if MOTI is the tenant', () => {
     const { getByText } = renderContainer();
-    expect(getByText('Add to Inventory')).toBeInTheDocument();
+    expect(getByText('Add Titled Property to Inventory')).toBeInTheDocument();
   });
 });

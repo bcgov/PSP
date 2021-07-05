@@ -28,6 +28,7 @@ exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
             for="input-user.username"
           >
             IDIR/BCeID
+             
           </label>
           <input
             class="form-control"
@@ -52,6 +53,7 @@ exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
                 for="input-user.firstName"
               >
                 First Name
+                 
               </label>
               <input
                 class="form-control"
@@ -74,6 +76,7 @@ exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
                 for="input-user.lastName"
               >
                 Last Name
+                 
               </label>
               <input
                 class="form-control"
@@ -94,6 +97,7 @@ exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
             for="input-user.email"
           >
             Email
+             
           </label>
           <input
             class="form-control"
@@ -140,6 +144,7 @@ exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
             for="input-user.position"
           >
             Position
+             
           </label>
           <input
             class="form-control"
@@ -197,6 +202,7 @@ exports[`[ CITZ ] AccessRequestPage renders correctly 1`] = `
             for="input-note"
           >
             Notes
+             
           </label>
           <textarea
             class="form-control"

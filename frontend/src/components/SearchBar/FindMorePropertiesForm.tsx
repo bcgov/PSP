@@ -86,7 +86,7 @@ const FindMorePropertiesForm = (props: any) => {
     .getByType(API.PREDOMINATE_USE_CODE_SET_NAME)
     .map(mapLookupCode);
   const adminAreas = lookupCodes
-    .getByType(API.AMINISTRATIVE_AREA_CODE_SET_NAME)
+    .getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME)
     .map((c: ILookupCode) => mapLookupCode(c, null));
 
   /** attempt submission of search, display errors if present */

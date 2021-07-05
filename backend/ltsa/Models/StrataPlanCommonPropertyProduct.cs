@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// StrataPlanCommonPropertyProduct
     /// </summary>
     [DataContract]
-    public partial class StrataPlanCommonPropertyProduct : ProductParent
+    public partial class StrataPlanCommonPropertyProduct : ProductParent<StrataPlanCommonProperty>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StrataPlanCommonPropertyProduct" /> class.
@@ -32,5 +32,6 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "strataPlanCommonProperty", EmitDefaultValue = false)]
         public StrataPlanCommonProperty StrataPlanCommonProperty { get; set; }
+        public override StrataPlanCommonProperty FieldedData { get; set; }
     }
 }

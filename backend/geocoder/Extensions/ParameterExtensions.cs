@@ -68,7 +68,7 @@ namespace Pims.Geocoder.Extensions
                     {
                         props[key].SetValue(result, Boolean.Parse(p.Value));
                     }
-                    else if (props[key].PropertyType == typeof(double))
+                    else if (props[key].PropertyType == typeof(double) || props[key].PropertyType == typeof(double?))
                     {
                         props[key].SetValue(result, Double.Parse(p.Value));
                     }
