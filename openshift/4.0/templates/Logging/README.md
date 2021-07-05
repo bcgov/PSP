@@ -1,40 +1,68 @@
-# oclogs-sidecar
-openshift sidecar - will collect oc logs and submit a zip to an endpoint
+# pims-logging-sidecar
 
-will require that your namespace default service account has view permission, so it can get read other pod's logs.  
+The pims-logging can run as a sidecar or as a standalone container/pod - It will collect oc logs from the pims frontend and backend api every sleep_time and submit a zip to an azure blob container using curl
 
-need to pass in POD_NAME, CONTAINER_NAME, and LOG_SERVER_URI (endpoint that accepts binary upload) as env vars to the sidecar.  Below is a snippet from a Deployment Config to give you an idea of configuring alongside your app container, and how best to get the pod name.
+will require that your namespace default service account has view permission, so it can get read other pod's logs.
+
+build dockerfile and push to openshift imagestream registar
+docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image-registry  
+Go to -  /opnenshift/4.0/template/Logging
+$ docker build -t pims-sidecar:latest .
+$ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest  
+$ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest
+
+create service account and role-binding
+
+oc -apply -f role-binding.yaml
+
+create oc deployment config
+oc process -f .\logging_dc.yaml | oc create -f -
+
+need to pass in AP_NAME, API_NAME, and AP_LOG_SERVER_URI (endpoint that accepts binary upload) as env vars to the sidecar. Below is a snippet from a Deployment Config to give you an idea of configuring alongside your app container, and how best to get the pod name.
 
 ```
-        spec:
+spec:
+          volumes:
+            # This volume will need to be created by the database deployment configuration.
+            - name: ${APP_NAME}-${ROLE_NAME}
+              persistentVolumeClaim:
+                claimName: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}-root
+              persistentVolumeClaim:
+                claimName: ${APP_NAME}-${ROLE_NAME}-root
           containers:
- ...
-            - image: docker-registry.default.svc:5000/${NAMESPACE}/${whatever you named the oclogs-sidecar image}
-              imagePullPolicy: IfNotPresent
-              name: "${name your oclogs-sidecar pod}"
-              livenessProbe:
-                exec:
-                  command:
-                    - cat
-                    - /opt/app/liveness
-                initialDelaySeconds: 5
-                periodSeconds: 5
-              readinessProbe:
-                exec:
-                  command:
-                    - cat
-                    - /opt/app/readiness
-                initialDelaySeconds: 10
-                periodSeconds: 10
-                successThreshold: 1
-                timeoutSeconds: 1
+            - name: ${APP_NAME}-${ROLE_NAME}
+              image: ""
+              ports:
+                - containerPort: ${{APP_PORT}}
+                  protocol: TCP
               env:
-                - name: POD_NAME
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.name
-                - name: CONTAINER_NAME
-                  value: "${name of your oclogs-sidecar container}"
-                - name: LOG_SERVER_URI
-                  value: "https://blahblah/api/upload"
+                - name: SLEEP_TIME
+                  value: ${SLEEP_TIME}
+                - name: AZ_BLOB_URL
+                  value: ${AZ_BLOB_URL}
+                - name: AZ_BLOB_CONTAINER
+                  value: ${AZ_BLOB_CONTAINER}
+                - name: AZ_SAS_TOKEN
+                  value: ${AZ_SAS_TOKEN}
+                - name: FRONTEND_APP_NAME
+                  value: ${FRONTEND_APP_NAME}
+                - name: API_NAME
+                  value: ${API_NAME}
+                - name: PROJECT_NAMESPACE
+                  value: ${PROJECT_NAMESPACE}
+                - name: EXPORT_TIME
+                  value: ${EXPORT_TIME}
+              resources:
+                requests:
+                  cpu: ${CPU_REQUEST}
+                  memory: ${MEMORY_REQUEST}
+                limits:
+                  cpu: ${CPU_LIMIT}
+                  memory: ${MEMORY_LIMIT}
+              volumeMounts:
+                - name: ${APP_NAME}-${ROLE_NAME}
+                  mountPath: ${LOGGING_VOLUME_MOUNT_PATH}
+                - name: ${APP_NAME}-${ROLE_NAME}-root
+                  mountPath: ${APP_VOLUME_MOUNT_PATH}
 ```
