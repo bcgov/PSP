@@ -29,7 +29,7 @@ $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-side
 oc -apply -f role-binding.yaml
 ```
 
-create oc deployment config
+#### create pims-logging deployment config
 
 ```bash
 oc process -f .\logging_dc.yaml | oc create -f -
