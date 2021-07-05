@@ -16,7 +16,7 @@ namespace Pims.Ltsa.Models
     /// DocOrPlanOrder
     /// </summary>
     [DataContract]
-    public partial class DocOrPlanOrder : OrderParent
+    public partial class DocOrPlanOrder : OrderParent<IFieldedData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DocOrPlanOrder" /> class.
@@ -32,5 +32,6 @@ namespace Pims.Ltsa.Models
         /// </summary>
         [DataMember(Name = "productOrderParameters", EmitDefaultValue = false)]
         public DocumentOrPlanOrderParameters ProductOrderParameters { get; set; }
+        public override OrderedProduct<IFieldedData> OrderedProduct { get; set; }
     }
 }

@@ -44,7 +44,7 @@ parameters:
   - name: RUNTIMEIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."
-    value: "latest"
+    value: "dev"
 
   - name: GIT_URL
     displayName: "GIT Source Repo URL"

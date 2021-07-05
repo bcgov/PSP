@@ -80,6 +80,32 @@ namespace Pims.Geocoder
         }
 
         /// <summary>
+        /// Sends an HTTP request to Geocoder for addresses that provides the closest match for the specified lat/lng.
+        /// </summary>
+        /// <param name="parameters">The nearest search paramenters</param>
+        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <returns></returns>
+        public async Task<FeatureModel> GetNearestSiteAsync(NearestParameters parameters, string outputFormat = "json")
+        {
+            var uri = new Uri(GenerateUrl(this.Options.Sites.NearestUrl, outputFormat));
+            var url = QueryHelpers.AddQueryString(uri.AbsoluteUri, parameters.ToQueryStringDictionary());
+            return await this.Client.GetAsync<FeatureModel>(url);
+        }
+
+        /// <summary>
+        /// Sends an HTTP request to Geocoder for x addresses that are the closest matches for the specified lat/lng.
+        /// </summary>
+        /// <param name="parameters">The near search paramenters</param>
+        /// <param name="outputFormat">The output format. Defaults to "json"</param>
+        /// <returns></returns>
+        public async Task<FeatureCollectionModel> GetNearSitesAsync(NearParameters parameters, string outputFormat = "json")
+        {
+            var uri = new Uri(GenerateUrl(this.Options.Sites.NearUrl, outputFormat));
+            var url = QueryHelpers.AddQueryString(uri.AbsoluteUri, parameters.ToQueryStringDictionary());
+            return await this.Client.GetAsync<FeatureCollectionModel>(url);
+        }
+
+        /// <summary>
         /// Sends an HTTP request to Geocoder for all parcel identifiers (PIDs) associated with an individual site.
         /// A 'siteId' is a unique identifier assigned to every site in B.C.
         /// Valid 'siteId' values for an address are returned by GetSiteAddressesAsync.

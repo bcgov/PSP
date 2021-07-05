@@ -1,11 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import { layerData } from 'constants/toasts';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { geoJSON, LatLng } from 'leaflet';
+import { geoJSON, LatLngLiteral } from 'leaflet';
+import { useMemo } from 'react';
 import { Dispatch, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import * as rax from 'retry-axios';
-import { useAppSelector } from 'store/hooks';
 import { logError } from 'store/slices/network/networkSlice';
 import parcelLayerDataSlice, {
   saveParcelLayerData,
@@ -16,7 +16,7 @@ export interface IUserLayerQuery {
    * function to find GeoJSON shape containing a point (x, y)
    * @param latlng = {lat, lng}
    */
-  findOneWhereContains: (latlng: LatLng) => Promise<FeatureCollection>;
+  findOneWhereContains: (latlng: LatLngLiteral) => Promise<FeatureCollection>;
   /**
    * function to find GeoJSON shape matching the passed non-zero padded pid.
    * @param pid
@@ -40,7 +40,7 @@ export interface IUserLayerQuery {
   handleParcelDataLayerResponse: (
     response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
     dispatch: Dispatch<any>,
-    latLng?: LatLng,
+    latLng?: LatLngLiteral,
   ) => Promise<void>;
 }
 
@@ -52,7 +52,7 @@ export interface IUserLayerQuery {
 export const saveParcelDataLayerResponse = (
   resp: FeatureCollection<Geometry, GeoJsonProperties>,
   dispatch: Dispatch<any>,
-  latLng?: LatLng,
+  latLng?: LatLngLiteral,
 ) => {
   if (resp?.features?.length > 0) {
     //save with a synthetic event to timestamp the relevance of this data.
@@ -82,7 +82,7 @@ export const saveParcelDataLayerResponse = (
 export const handleParcelDataLayerResponse = (
   response: Promise<FeatureCollection<Geometry, GeoJsonProperties>>,
   dispatch: Dispatch<any>,
-  latLng?: LatLng,
+  latLng?: LatLngLiteral,
 ) => {
   return response
     .then((resp: FeatureCollection<Geometry, GeoJsonProperties>) => {
@@ -128,11 +128,10 @@ const wfsAxios = () => {
  * @param geometry the name of the geometry in the feature collection
  */
 export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUserLayerQuery => {
-  const parcelLayerData = useAppSelector(state => state.parcelLayerData?.parcelLayerData);
   const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
 
   const findOneWhereContains = useCallback(
-    async (latlng: LatLng): Promise<FeatureCollection> => {
+    async (latlng: LatLngLiteral): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios().get(
           `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=4326;POINT ( ${latlng.lng} ${latlng.lat}))`,
@@ -168,33 +167,32 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
     async (pid: string): Promise<FeatureCollection> => {
       //Do not make a request if we our currently cached response matches the requested pid.
       const formattedPid = pid.replace(/-/g, '');
-      const data: FeatureCollection =
-        parcelLayerData?.data?.PID === formattedPid ||
-        parcelLayerData?.data?.PID_NUMBER.toString() === formattedPid
-          ? undefined
-          : (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)).data;
+      const data: FeatureCollection = (
+        await wfsAxios().get(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)
+      ).data;
       return data;
     },
-    [baseUrl, parcelLayerData],
+    [baseUrl],
   );
 
   const findByPin = useCallback(
     async (pin: string): Promise<FeatureCollection> => {
       //Do not make a request if we our currently cached response matches the requested pid.
-      const data: FeatureCollection =
-        parcelLayerData?.data?.PIN === pin
-          ? undefined
-          : (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PIN=${pin}`)).data;
+      const data: FeatureCollection = (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PIN=${pin}`))
+        .data;
       return data;
     },
-    [baseUrl, parcelLayerData],
+    [baseUrl],
   );
 
-  return {
-    findOneWhereContains,
-    findByPid,
-    findByPin,
-    findByAdministrative,
-    handleParcelDataLayerResponse,
-  };
+  return useMemo(
+    () => ({
+      findOneWhereContains,
+      findByPid,
+      findByPin,
+      findByAdministrative,
+      handleParcelDataLayerResponse,
+    }),
+    [findByAdministrative, findByPid, findByPin, findOneWhereContains],
+  );
 };

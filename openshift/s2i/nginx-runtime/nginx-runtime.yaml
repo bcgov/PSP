@@ -16,7 +16,7 @@ parameters:
       The URL to your GIT repo, don't use the this default unless your just
       experimenting.
     required: true
-    value: https://github.com/bcgov/PIMS.git
+    value: https://github.com/bcgov/PSP.git
   - name: GIT_REF
     displayName: Git Reference
     description: The git reference or branch.
@@ -26,12 +26,22 @@ parameters:
     displayName: Source Context Directory
     description: The source context directory.
     required: true
-    value: openshift/4.0/templates/base-images/nginx-runtime/
+    value: openshift/s2i/nginx-runtime/
   - name: OUTPUT_IMAGE_TAG
     displayName: Output Image Tag
     description: The tag given to the built image.
     required: true
-    value: latest
+    value: dev
+  - name: NGINXBASE_IMAGE
+    displayName: NGINX Base Image Name
+    description: The nginx base image [e.g nginx-base].
+    required: true
+    value: nginx-base
+  - name: NGINXBASE_TAG
+    displayName: NGINX Base Tag
+    description: The tag of the nginx base image [e.g "mainline" or "latest"].
+    required: true
+    value: mainline
 objects:
   - kind: ImageStream
     apiVersion: v1
@@ -40,12 +50,9 @@ objects:
   - kind: BuildConfig
     apiVersion: v1
     metadata:
-      name: ${NAME}
+      name: ${NAME}.${GIT_REF}
       labels:
         app: ${NAME}
-    strategy:
-      dockerStrategy:
-        forcePull: true
     spec:
       runPolicy: Serial
       source:
@@ -56,6 +63,11 @@ objects:
         contextDir: ${SOURCE_CONTEXT_DIR}
       strategy:
         type: Docker
+        dockerStrategy:
+          forcePull: true
+          from:
+            kind: ImageStreamTag
+            name: ${NGINXBASE_IMAGE}:${NGINXBASE_TAG}
       output:
         to:
           kind: ImageStreamTag

@@ -46,7 +46,7 @@ const FilterBar = <T extends object = {}>(props: PropsWithChildren<IProps<T>>) =
       }}
     >
       {({ isSubmitting, handleReset, setFieldValue }) => (
-        <Form>
+        <Form autoComplete="off">
           <Form.Row className="search-bar">
             <h3 className="filterBarHeading">{props.filterBarHeading}</h3>
             {props.children}

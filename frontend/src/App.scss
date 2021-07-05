@@ -23,6 +23,10 @@ ul.pagination li {
   max-width: 400px;
 }
 
+.Toastify__toast .Toastify__toast-body {
+  word-break: break-word;
+}
+
 .Toastify__toast.Toastify__toast--dark {
   color: #fff;
   background-color: $secondary-variant-color;

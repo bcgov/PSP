@@ -15,7 +15,7 @@ namespace Pims.Ltsa.Models
     /// An Order
     /// </summary>
     [DataContract]
-    public partial class OrderWrapper<T> where T : OrderParent
+    public partial class OrderWrapper<T>
     {
 
         public OrderWrapper(T order)

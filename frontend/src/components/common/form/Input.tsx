@@ -97,7 +97,11 @@ export const Input: React.FC<InputProps> = ({
       controlId={`input-${field}`}
       className={classNames(!!required ? 'required' : '', outerClassName)}
     >
-      {!!label && <Form.Label>{label}</Form.Label>}
+      {!!label && (
+        <Form.Label>
+          {label} {!!tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+        </Form.Label>
+      )}
       {!!tooltip && !label && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
 
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>

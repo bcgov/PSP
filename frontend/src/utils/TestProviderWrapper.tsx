@@ -14,7 +14,7 @@ const TestProviderWrapper: React.FunctionComponent<TestProviderWrapperParams> = 
   store,
 }) => {
   const mockStore = configureMockStore([thunk]);
-  const getStore = () => mockStore(store ?? {});
+  const getStore = () => (!!store?.getState ? store : mockStore(store ?? {}));
 
   return <Provider store={getStore()}>{children}</Provider>;
 };

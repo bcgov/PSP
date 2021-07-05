@@ -19,7 +19,7 @@ namespace Pims.Ltsa.Models
     /// Title
     /// </summary>
     [DataContract]
-    public partial class Title
+    public partial class Title : IFieldedData
     {
         /// <summary>
         /// Indicates the state with respect to Title lifecycle.

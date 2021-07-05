@@ -9,9 +9,8 @@ import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
+import { InventoryPolicy } from '../../../components/common/InventoryPolicy';
 import { SidebarContextType, SidebarSize } from '../hooks/useQueryParamSideBar';
-import { InventoryPolicy } from './InventoryPolicy';
-
 interface IMapSideBarLayoutProps {
   show: boolean;
   setShowSideBar: (
@@ -26,7 +25,6 @@ interface IMapSideBarLayoutProps {
   /** property name for title */
   propertyName?: string;
 }
-
 const HeaderRow = styled.div`
   display: flex;
   align-items: center;
@@ -89,5 +87,4 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
     </div>
   );
 };
-
 export default MapSideBarLayout;
