@@ -43,10 +43,10 @@ parameters:
       This provides a way to setup an environment for other branches."
     value: "latest"
   - name: SLEEP_TIME
-    displayName: "Sleep time for log"
-    description: "Return logs newer than this duration or collect logs every sleep time."
+    displayName: "Sleep time for log in sec"
+    description: "Return logs newer than this duration or collect logs every sleep time (1hr = 3600s)."
     required: true
-    value: "60"
+    value: "3600"
   - name: AZ_BLOB_URL
     displayName: "Azur Blob URL"
     description: "URL for Azure blob container"
@@ -63,10 +63,10 @@ parameters:
     required: true
     value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt2VJSO3XDzp8SUoLVqtNqZc7LDQdjeoXM%3D"
   - name: EXPORT_TIME
-    displayName: "Wait time before export"
-    description: "Time to wait before exporting zip. Export time > sleep_time"
+    displayName: "Wait time before export in sec"
+    description: "Time to wait before exporting zip. Export time > sleep_time. Export log every 24hrs"
     required: true
-    value: "120"
+    value: "86400"
   - name: APP_PORT
     displayName: "Port"
     description: "Http port"
