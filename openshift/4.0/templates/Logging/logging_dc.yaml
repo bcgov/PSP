@@ -24,7 +24,7 @@ parameters:
     value: "pims-api"
   - name: ROLE_NAME
     displayName: "Component Role Name"
-    description: "The name of the application component role (e.g web, api, database)."
+    description: "The name of the application component role."
     required: true
     value: "logging"
   - name: PROJECT_NAMESPACE
@@ -34,7 +34,7 @@ parameters:
     value: "3cd915-dev"
   - name: TOOLS_NAMESPACE
     displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    description: "The namespace of the OpenShift tools containing the build images."
     required: true
     value: "3cd915-tools"
   - name: IMAGE_TAG
@@ -43,42 +43,42 @@ parameters:
       This provides a way to setup an environment for other branches."
     value: "latest"
   - name: SLEEP_TIME
-    displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    displayName: "Sleep time for log"
+    description: "Return logs newer than this duration or collect logs every sleep time."
     required: true
     value: "60"
   - name: AZ_BLOB_URL
-    displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    displayName: "Azur Blob URL"
+    description: "URL for Azure blob container"
     required: true
     value: "https://pimsapp.blob.core.windows.net"
   - name: AZ_BLOB_CONTAINER
-    displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    displayName: "Azure blob container name"
+    description: "Azure blob container name."
     required: true
     value: "pims"
   - name: AZ_SAS_TOKEN
-    displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    displayName: "Azure blob container token"
+    description: "Azure blob container token. start with ?"
     required: true
     value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt2VJSO3XDzp8SUoLVqtNqZc7LDQdjeoXM%3D"
   - name: EXPORT_TIME
-    displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    displayName: "Wait time before export"
+    description: "Time to wait before exporting zip. Export time > sleep_time"
     required: true
     value: "120"
   - name: APP_PORT
-    displayName: "OpenShift Project Namespace"
-    description: "The namespace of the OpenShift project containing the application."
+    displayName: "Port"
+    description: "Http port"
     required: true
-    value: "8080" 
+    value: "8080"
   - name: LOGGING_VOLUME_SIZE
-    displayName: Backup Volume Size
+    displayName: Log Volume Size
     description:
       The size of the persistent volume used for restoring and verifying
       backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.
     required: true
-    value: "1Gi"    
+    value: "1Gi"
   - name: LOGGING_VOLUME_CLASS
     displayName: Logging Volume Class
     description:
@@ -88,17 +88,15 @@ parameters:
     required: true
     value: "netapp-file-standard"
   - name: LOGGING_VOLUME_MOUNT_PATH
-    displayName: Verification Volume Mount Path
-    description:
-      The path on which to mount the logging volume. This part contains .LOG files
+    displayName: logging Volume Mount Path
+    description: The path on which to mount the logging volume. This part contains .LOG files
     required: true
-    value: "/tmp/"   
+    value: "/tmp/"
   - name: APP_VOLUME_MOUNT_PATH
-    displayName: Verification Volume Mount Path
-    description:
-      The path on which to mount the logging volume. This part contains zip log files to be send via curl
+    displayName: App Volume Mount Path
+    description: The path on which to mount the logging volume. This part contains zip log files to be send via curl
     required: true
-    value: "/logging/" 
+    value: "/logging/"
   - name: REPLICAS
     displayName: "Pod Replicas"
     description: "Number of pod replicas to run"
@@ -160,7 +158,7 @@ objects:
       resources:
         requests:
           storage: ${LOGGING_VOLUME_SIZE}
-          
+
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
@@ -230,7 +228,7 @@ objects:
                 claimName: ${APP_NAME}-${ROLE_NAME}
             - name: ${APP_NAME}-${ROLE_NAME}-root
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${ROLE_NAME}-root     
+                claimName: ${APP_NAME}-${ROLE_NAME}-root
           containers:
             - name: ${APP_NAME}-${ROLE_NAME}
               image: ""
