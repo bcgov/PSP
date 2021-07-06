@@ -4,7 +4,7 @@ The pims-logging can run as a sidecar or as a standalone container/pod - It will
 
 - Collect logs of PIMS-APP and PIMS-API every SLEEP_TIME (--since=1hr,2hr etc.)
 - Archive all collected to logs after an EXPORT_TIME
-- Send archieved logs to Azure blob container using curl
+- Send archieved logs to Azure blob or s3 container using curl
 - Sleep and repeat.
 
 Will require that your namespace default service account has view permission, so it can get read other pod's logs.
@@ -35,7 +35,7 @@ oc -apply -f role-binding.yaml
 oc process -f .\logging_dc.yaml | oc create -f -
 ```
 
-need to pass in AP_NAME, API_NAME, and AP_LOG_SERVER_URI (endpoint that accepts binary upload) as env vars to the sidecar. Below is a snippet from a Deployment Config to give you an idea of configuring alongside your app container, and how best to get the pod name.
+need to pass in AP_NAME, API_NAME, and AP_LOG_SERVER_URI (endpoint that accepts binary upload) as env vars to the sidecar. Below is a snippet from a Deployment Config to give you an idea of configuring when running as a sidecar or standalone pod container.
 
 ```
 spec:
