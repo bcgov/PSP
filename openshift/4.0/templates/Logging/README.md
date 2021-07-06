@@ -9,7 +9,7 @@ The pims-logging can run as a sidecar or as a standalone container/pod - It will
 
 Will require that your namespace default service account has view permission, so it can get read other pod's logs.
 
-## Build dockerfile and push to openshift image registar
+## Build dockerfile and push pims-logging image to openshift image registar
 
 ```bash
 $ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image-registry
@@ -18,9 +18,24 @@ $ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image
 Go to - `/opnenshift/4.0/template/Logging`
 
 ```bash
-$ docker build -t pims-sidecar:latest .
-$ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest
-$ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-sidecar:latest
+$ docker build -t pims-logging:latest .
+$ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-logging:latest
+$ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-logging:latest
+```
+
+### or Build create imagestream using base image and build config
+
+```bash
+$ docker pull frolvlad/alpine-glibc
+$ docker tag frolvlad/alpine-glibc:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/alpine-base:latest
+$ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image-registry
+$ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/alpine-base:latest
+```
+
+- use the alpine image as base image to create a build configuration
+
+```bash
+$ oc process -f .\oclogbc.yaml | oc create -f -
 ```
 
 ### create service account and role-binding to read pod's logs

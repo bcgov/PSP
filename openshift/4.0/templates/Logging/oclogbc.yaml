@@ -58,6 +58,18 @@ parameters:
     required: true
     value: "latest"
 
+  - name: BASE_IMAGE_TAG
+    displayName: "Base Image Tag"
+    description: "The tag given to the base image."
+    required: true
+    value: "latest"
+
+  - name: BASE_IMAGE
+    displayName: "Base Image"
+    description: "Build dockerfile from this base image."
+    required: true
+    value: "alpine-base"
+
   - name: CPU_LIMIT
     displayName: "Resources CPU Limit"
     description: "The resources CPU limit (in cores) for this build."
@@ -110,8 +122,8 @@ objects:
           dockerfilePath: "${DOCKERFILE_PATH}"
           from:
             kind: ImageStreamTag
-            namespace: 3cd915-tools
-            name: alpine-glibc:latest
+            namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+            name: ${BASE_IMAGE}:${BASE_IMAGE_TAG}
         type: Docker
       output:
         to:

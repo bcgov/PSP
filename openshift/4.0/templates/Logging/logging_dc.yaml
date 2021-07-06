@@ -208,7 +208,7 @@ objects:
             from:
               kind: ImageStreamTag
               namespace: "${TOOLS_NAMESPACE}"
-              name: "${APP_NAME}-sidecar:${IMAGE_TAG}"
+              name: "${APP_NAME}-${ROLE_NAME}:${IMAGE_TAG}"
       replicas: ${{REPLICAS}}
       selector:
         app: ${APP_NAME}
