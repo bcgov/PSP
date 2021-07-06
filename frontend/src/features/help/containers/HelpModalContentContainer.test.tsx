@@ -20,7 +20,7 @@ it('HelpContainer renders correctly...', () => {
   process.env.REACT_APP_TENANT = 'MOTI';
   const tree = renderer
     .create(
-      <TestCommonWrapper store={store}>
+      <TestCommonWrapper store={store} roles={[{ id: '1', name: 'test' }]}>
         <HelpModalContentContainer setMailto={jest.fn()} />
       </TestCommonWrapper>,
     )

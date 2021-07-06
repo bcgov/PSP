@@ -116,6 +116,7 @@ Array [
             htmlFor="input-user"
           >
             User
+             
           </label>
           <input
             className="form-control"
@@ -137,6 +138,7 @@ Array [
             htmlFor="input-email"
           >
             Email
+             
           </label>
           <input
             className="form-control"
@@ -158,6 +160,7 @@ Array [
             htmlFor="input-page"
           >
             Page
+             
           </label>
           <input
             className="form-control"
@@ -179,6 +182,7 @@ Array [
             htmlFor="input-question"
           >
             Question
+             
           </label>
           <textarea
             className="form-control"
