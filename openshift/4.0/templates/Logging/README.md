@@ -19,7 +19,7 @@ Go to - `/opnenshift/4.0/template/Logging`
 
 ```bash
 $ docker build -t pims-logging:latest .
-$ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-logging:latest
+$ docker tag pims-logging:latest image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-logging:latest
 $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-logging:latest
 ```
 
