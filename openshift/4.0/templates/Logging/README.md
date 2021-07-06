@@ -37,6 +37,7 @@ Create a build configuration file here - `build.dev.env Update` the configuratio
 ### Example
 
 ```bash
+GIT_URL=https://github.com/PSP.git
 GIT_REF=dev
 OUTPUT_IMAGE_TAG=latest
 DOCKERFILE_PATH=Dockerfile
