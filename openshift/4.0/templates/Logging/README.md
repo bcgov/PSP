@@ -93,7 +93,6 @@ need to pass in AP_NAME, API_NAME, and AP_LOG_SERVER_URI (endpoint that accepts 
 ```
 spec:
           volumes:
-            # This volume will need to be created by the database deployment configuration.
             - name: ${APP_NAME}-${ROLE_NAME}
               persistentVolumeClaim:
                 claimName: ${APP_NAME}-${ROLE_NAME}
