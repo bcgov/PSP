@@ -61,7 +61,7 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt2VJSO3XDzp8SUoLVqtNqZc7LDQdjeoXM%3D"
+    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt244reewtNqZc7LDQdjeoXM%3D"
   - name: EXPORT_TIME
     displayName: "Wait time before export in sec"
     description: "Time to wait before exporting zip. Export time > sleep_time. Export log every 24hrs"
@@ -141,8 +141,23 @@ objects:
         role: ${ROLE_NAME}
       type: ClusterIP
       sessionAffinity: None
-
-  # Storage for verification of backup.
+  # S3 or Azure blob token secret
+    - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}
+      namespace: ${PROJECT_NAMESPACE}
+      annotations:
+        description: "Azure blob or S3 token secrets"
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+    type: Opaque
+    stringData:
+      AZ_SAS_TOKEN: ${AZ_SAS_TOKEN}
+      
+  # Storage for pims-logging.
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
@@ -243,7 +258,10 @@ objects:
                 - name: AZ_BLOB_CONTAINER
                   value: ${AZ_BLOB_CONTAINER}
                 - name: AZ_SAS_TOKEN
-                  value: ${AZ_SAS_TOKEN}
+                  valueFrom:
+                    secretKeyRef: 
+                      name: ${APP_NAME}-${ROLE_NAME}
+                      key: AZ_SAS_TOKEN
                 - name: FRONTEND_APP_NAME
                   value: ${FRONTEND_APP_NAME}
                 - name: API_NAME
