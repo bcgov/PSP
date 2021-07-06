@@ -32,10 +32,22 @@ $ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image
 $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/alpine-base:latest
 ```
 
-- use the alpine image as base image to create a build configuration
+Create a build configuration file here - `build.dev.env Update` the configuration file and required parameters.
+
+### Example
 
 ```bash
-$ oc process -f .\oclogbc.yaml | oc create -f -
+GIT_REF=dev
+OUTPUT_IMAGE_TAG=latest
+DOCKERFILE_PATH=Dockerfile
+CPU_LIMIT=4000m
+MEMORY_LIMIT=1Gi
+```
+
+- use the alpine image as base image to create pims-logging build configuration
+
+```bash
+$ oc process -f .\oclogbc.yaml --param-file=build.dev.env | oc create -f -
 ```
 
 ### create service account and role-binding to read pod's logs
