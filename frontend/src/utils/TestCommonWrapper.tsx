@@ -1,4 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter/types';
 import { MemoryHistory } from 'history';
 import { IRole } from 'interfaces';
 import { IAgency } from 'interfaces/agency';
@@ -31,17 +33,20 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
   agencies,
   history,
 }) => {
-  if (!!roles || !!agencies) {
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: {
-        userInfo: {
-          agencies: agencies ?? [1],
-          roles: roles ?? [],
-        },
-        subject: 'test',
+  (useKeycloak as jest.Mock).mockReturnValue({
+    keycloak: {
+      userInfo: {
+        agencies: agencies ?? [1],
+        roles: roles ?? [],
+        email: 'test@test.com',
+        name: 'Chester Tester',
       },
-    });
-  }
+      subject: 'test',
+      authenticated: true,
+    },
+  });
+  const mockAxios = new MockAdapter(axios);
+  mockAxios.onAny().reply(200);
   return (
     <TenantProvider>
       <TenantConsumer>
