@@ -4,7 +4,7 @@ metadata:
   name: pods-reader
   annotations:
     openshift.io/display-name: Pod reader rolebinding
-    description: Allow user to read pod's log.
+    description: Allow default user to read pod's log.
     tags: pims-logging
 parameters:
   - name: NAMESPACE

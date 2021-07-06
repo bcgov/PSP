@@ -32,7 +32,7 @@ $ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image
 $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/alpine-base:latest
 ```
 
-Create a build configuration file here - `build.dev.env Update` the configuration file and required parameters.
+Create a build configuration file here - `build.dev.env Update` the configuration file and required parameters. When build for uat and prod, change GIT_REF=`master`
 
 ### Example
 
@@ -50,16 +50,41 @@ MEMORY_LIMIT=1Gi
 $ oc process -f .\oclogbc.yaml --param-file=build.dev.env | oc create -f -
 ```
 
+Tag image to dev env
+
+```bash
+oc image tag pims-logging:latest pims-logging:dev
+```
+
 ### create service account and role-binding to read pod's logs
 
 ```bash
-oc -apply -f role-binding.yaml
+oc process -f .\role-binding.yaml -p NAMESPACE=3cd915-dev | oc apply -f -
 ```
 
 ### create pims-logging deployment config
 
+create a deploy config env file here in the base dir `deploy.dev.env` with a valid `AZ_SAS_TOKEN`
+
+### Example
+
 ```bash
-oc process -f .\logging_dc.yaml | oc create -f -
+      ENV_NAME=dev
+      IMAGE_TAG=dev
+      SLEEP_TIME=60
+      AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
+      AZ_BLOB_CONTAINER=pims
+      AZ_SAS_TOKEN=?{TOKEN SECRET}
+      FRONTEND_APP_NAME=pims-app
+      API_NAME=pims-api
+      PROJECT_NAMESPACE=3cd915-dev
+      EXPORT_TIME=360
+```
+
+Create the logging deployment
+
+```bash
+oc process -f .\logging_dc.yaml --param-file=deploy.dev.env | oc create -f -
 ```
 
 need to pass in AP_NAME, API_NAME, and AP_LOG_SERVER_URI (endpoint that accepts binary upload) as env vars to the sidecar. Below is a snippet from a Deployment Config to give you an idea of configuring when running as a sidecar or standalone pod container.
@@ -114,6 +139,7 @@ spec:
 ## Run Locally
 
 Go to - `/opnenshift/4.0/template/Logging` for Logging **_Dockerfile_** and **_Docker-compose.yml_**
+Update the AZ_SAS_TOKEN and OC_TOKEN to a valid TOKEN
 
 Build pims-logging Docker image
 
