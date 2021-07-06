@@ -190,7 +190,7 @@ objects:
         requests:
           storage: ${LOGGING_VOLUME_SIZE}
 
-  # Deployment configuration to deploy the API.
+  # Deployment configuration to deploy the PIMS-LOGGING.
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
@@ -237,7 +237,6 @@ objects:
             role: ${ROLE_NAME}
         spec:
           volumes:
-            # This volume will need to be created by the database deployment configuration.
             - name: ${APP_NAME}-${ROLE_NAME}
               persistentVolumeClaim:
                 claimName: ${APP_NAME}-${ROLE_NAME}
