@@ -12,7 +12,7 @@ import { PimsAPI, useApi } from 'hooks/useApi';
 import { IParcel, IProperty } from 'interfaces';
 import { Map as LeafletMap } from 'leaflet';
 import React, { createRef } from 'react';
-import { Map as ReactLeafletMap, MapProps as LeafletMapProps, Marker } from 'react-leaflet';
+import { MapContainer as ReactLeafletMap, Marker } from 'react-leaflet';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -153,7 +153,6 @@ describe('MapProperties View', () => {
   });
 
   const getMap = (
-    mapRef: React.RefObject<ReactLeafletMap<LeafletMapProps, LeafletMap>>,
     properties: IProperty[],
     selectedProperty: any,
     disableMapFilterBar: boolean = false,
@@ -167,7 +166,6 @@ describe('MapProperties View', () => {
           properties={properties}
           selectedProperty={selectedProperty}
           agencies={[]}
-          mapRef={mapRef}
           administrativeAreas={[]}
           disableMapFilterBar={disableMapFilterBar}
         />
@@ -176,8 +174,7 @@ describe('MapProperties View', () => {
   };
 
   it('Opens the slide out when clicked', async () => {
-    const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
-    const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
+    const component = mount(getMap(mockParcels, mockDetails, true));
     await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     const infoButton = component.find('#slideOutInfoButton').first();
     infoButton.simulate('click');

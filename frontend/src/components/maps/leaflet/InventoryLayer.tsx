@@ -8,7 +8,7 @@ import { IBuilding, IParcel } from 'interfaces';
 import { GeoJSON, LatLngBounds } from 'leaflet';
 import { flatten, uniqBy } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLeaflet } from 'react-leaflet';
+import { useMap } from 'react-leaflet';
 import { toast } from 'react-toastify';
 import { useAppSelector } from 'store/hooks';
 import { IPropertyDetail } from 'store/slices/properties';
@@ -143,7 +143,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   onRequestData,
 }) => {
   const keycloak = useKeycloakWrapper();
-  const { map } = useLeaflet();
+  const mapInstance = useMap();
   const [features, setFeatures] = useState<PointFeature[]>([]);
   const [loadingTiles, setLoadingTiles] = useState(false);
   const { loadProperties } = useApi();
@@ -152,7 +152,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
 
   const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
 
-  if (!map) {
+  if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
   }
 
@@ -160,12 +160,12 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   useEffect(() => {
     const fit = async () => {
       if (filterChanged) {
-        map.fitBounds(defaultBounds, { maxZoom: 5 });
+        mapInstance.fitBounds(defaultBounds, { maxZoom: 5 });
       }
     };
 
     fit();
-  }, [map, filter, filterChanged]);
+  }, [mapInstance, filter, filterChanged]);
 
   minZoom = minZoom ?? 0;
   maxZoom = maxZoom ?? 18;
@@ -225,12 +225,13 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
         );
       }) as any;
 
+      // Fit to municipality bounds
       const administrativeArea = filter?.administrativeArea;
       if (results.length === 0 && !!administrativeArea) {
         const municipality = await municipalitiesService.findByAdministrative(administrativeArea);
         if (municipality) {
-          // Fit to municipality bounds
-          map.fitBounds((GeoJSON.geometryToLayer(municipality) as any)._bounds, { maxZoom: 11 });
+          const bounds = (GeoJSON.geometryToLayer(municipality) as any)._bounds;
+          mapInstance.fitBounds(bounds, { maxZoom: 11 });
         }
       }
       setFeatures(results);

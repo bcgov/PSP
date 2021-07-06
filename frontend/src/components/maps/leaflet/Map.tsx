@@ -15,16 +15,11 @@ import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } f
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import {
-  Map as ReactLeafletMap,
-  MapProps as LeafletMapProps,
-  Popup,
-  TileLayer,
-} from 'react-leaflet';
+import { MapContainer as ReactLeafletMap, Popup, TileLayer } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
@@ -56,6 +51,7 @@ import {
 } from './LayerPopup/LayerPopupContent';
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
+import { MapEvents } from './MapEvents/MapEvents';
 import { ZoomOutButton } from './ZoomOut/ZoomOutButton';
 
 export type MapViewportChangeEvent = {
@@ -70,7 +66,6 @@ export type MapProps = {
   properties: IProperty[];
   agencies: ILookupCode[];
   administrativeAreas: ILookupCode[];
-  mapRef: React.RefObject<ReactLeafletMap<LeafletMapProps, LeafletMap>>;
   selectedProperty?: IPropertyDetail | null;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
   onMapClick?: (e: LeafletMouseEvent) => void;
@@ -78,6 +73,8 @@ export type MapProps = {
   interactive?: boolean;
   showParcelBoundaries?: boolean;
   sidebarSize?: SidebarSize;
+  whenCreated?: (map: LeafletMap) => void;
+  whenReady?: () => void;
 };
 
 export type LayerPopupInformation = PopupContentConfig & {
@@ -161,7 +158,6 @@ const Map: React.FC<MapProps> = ({
   selectedProperty,
   onMapClick,
   disableMapFilterBar,
-  mapRef,
   sidebarSize,
 }) => {
   const keycloak = useKeycloakWrapper();
@@ -179,10 +175,16 @@ const Map: React.FC<MapProps> = ({
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
+
+  // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
+  const mapRef = useRef<LeafletMap | null>(null);
+
   if (mapRef.current && !selectedProperty?.parcelDetail) {
-    lat = (mapRef.current.props.center as Array<number>)[0];
-    lng = (mapRef.current.props.center as Array<number>)[1];
+    const center = mapRef.current.getCenter();
+    lat = center.lat;
+    lng = center.lng;
   }
+
   const parcelLayerFeature = useAppSelector(state => state.parcelLayerData?.parcelLayerFeature);
   useActiveFeatureLayer({
     selectedProperty,
@@ -205,7 +207,7 @@ const Map: React.FC<MapProps> = ({
 
   const { width, ref: resizeRef } = useResizeDetector();
   useEffect(() => {
-    mapRef.current?.leafletElement.invalidateSize();
+    mapRef.current?.invalidateSize();
   }, [mapRef, width]);
 
   const handleMapFilterChange = async (filter: IPropertyFilter) => {
@@ -239,7 +241,7 @@ const Map: React.FC<MapProps> = ({
 
   const fitMapBounds = () => {
     if (mapRef.current) {
-      mapRef.current.leafletElement.fitBounds([
+      mapRef.current.fitBounds([
         [60.09114547, -119.49609429],
         [48.78370426, -139.35937554],
       ]);
@@ -330,18 +332,18 @@ const Map: React.FC<MapProps> = ({
           )}
           <PropertyPopUpContextProvider>
             <ReactLeafletMap
-              ref={mapRef}
               center={[lat, lng]}
               zoom={lastZoom}
               maxZoom={MAP_MAX_ZOOM}
-              whenReady={() => {
-                fitMapBounds();
-              }}
-              onclick={showLocationDetails}
               closePopupOnClick={true}
-              onzoomend={e => setZoom(e.sourceTarget.getZoom())}
-              onmoveend={handleBounds}
+              whenCreated={mapInstance => (mapRef.current = mapInstance)}
+              whenReady={() => fitMapBounds()}
             >
+              <MapEvents
+                click={showLocationDetails}
+                zoomend={e => setZoom(e.sourceTarget.getZoom())}
+                moveend={handleBounds}
+              />
               {activeBasemap && (
                 <TileLayer
                   attribution={activeBasemap.attribution}
@@ -381,7 +383,7 @@ const Map: React.FC<MapProps> = ({
                 </Popup>
               )}
               <LegendControl />
-              <ZoomOutButton map={mapRef} bounds={defaultBounds} />
+              <ZoomOutButton bounds={defaultBounds} />
               <LayersControl
                 open={layersOpen}
                 setOpen={() => {
