@@ -133,7 +133,14 @@ namespace Pims.Ltsa
             Error error = null;
             if (ex?.Response?.Content != null)
             {
-                error = JsonSerializer.Deserialize<Error>(await ex.Response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
+                var errorContent = await ex.Response.Content.ReadAsStringAsync();
+                try
+                {
+                    error = JsonSerializer.Deserialize<Error>(errorContent, _jsonSerializerOptions);
+                } catch (JsonException)
+                {
+                    error = new Error(new List<String>() { ex.Message });
+                }
                 _logger.LogError(ex, $"Failed to send/receive request: ${url}");
             }
             return error;

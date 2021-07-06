@@ -4,6 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
+import { Claims } from 'constants/index';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
@@ -17,6 +18,7 @@ import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
+import { mockKeycloak } from 'utils/testUtils';
 
 import MapView from './MapView';
 
@@ -90,7 +92,6 @@ const mockDetails: IPropertyDetail = {
     encumbranceReason: '',
     assessedBuilding: 0,
     assessedLand: 0,
-    projectNumbers: [],
     classificationId: 0,
     zoning: '',
     zoningPotential: '',
@@ -132,14 +133,15 @@ const store = mockStore({
 let history = createMemoryHistory();
 describe('MapView', () => {
   const onMarkerClick = jest.fn();
-  (useKeycloak as jest.Mock).mockReturnValue({
-    keycloak: {
-      userInfo: {
-        agencies: [0],
-      },
-    },
-  });
+
   beforeEach(() => {
+    (useKeycloak as jest.Mock).mockReturnValue({
+      keycloak: {
+        userInfo: {
+          agencies: [0],
+        },
+      },
+    });
     ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
       loadProperties: jest.fn(async () => {
         return createPoints(mockParcels);
@@ -162,13 +164,13 @@ describe('MapView', () => {
     history = createMemoryHistory();
   });
 
-  const getMap = () => {
+  const getMap = (disabled: boolean = false) => {
     process.env.REACT_APP_TENANT = 'MOTI';
     return (
       <TestCommonWrapper store={store} history={history}>
         <MapView
           disableMapFilterBar={false}
-          disabled={false}
+          disabled={disabled}
           showParcelBoundaries={true}
           onMarkerPopupClosed={noop}
         />
@@ -183,6 +185,38 @@ describe('MapView', () => {
       expect(container.querySelector('.leaflet-container')).toBeVisible();
     });
   });
+  it('Can toggle the base map', async () => {
+    let map: any;
+    mockAxios.reset();
+    mockAxios.onGet('/basemaps.json').reply(200, {
+      basemaps: [
+        {
+          name: 'BC Roads',
+          url:
+            'https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}',
+          attribution: '&copy; Government of British Columbia, DataBC, GeoBC',
+          thumbnail: '/streets.jpg',
+        },
+        {
+          name: 'Satellite',
+          url:
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          attribution:
+            'Tiles &copy; Esri &mdash; Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
+          thumbnail: '/satellite.jpg',
+        },
+      ],
+    });
+    mockAxios.onAny().reply(200, {});
+    await act(async () => {
+      map = render(getMap());
+    });
+    const basemapButton = map.container.querySelector(
+      '.basemap-item.basemap-item-button.secondary',
+    );
+    fireEvent.click(basemapButton);
+    expect(basemapButton).not.toHaveClass('.secondary');
+  });
 
   it('Renders markers when provided', async () => {
     let map: any;
@@ -192,6 +226,20 @@ describe('MapView', () => {
     expect(map.container.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
   it('Rendered markers can be clicked', async () => {
+    let map: any;
+    await act(async () => {
+      map = render(getMap());
+    });
+    const cluster = map.container.querySelector('.leaflet-marker-icon');
+    fireEvent.click(cluster!);
+    const marker = map.container.querySelector('img.leaflet-marker-icon');
+    fireEvent.click(marker!);
+    const text = await screen.findByText('Property Info');
+    expect(text).toBeVisible();
+  });
+
+  it('Rendered markers can be clicked and displayed with permissions', async () => {
+    mockKeycloak([Claims.ADMIN_PROPERTIES], []);
     let map: any;
     await act(async () => {
       map = render(getMap());
@@ -298,7 +346,7 @@ describe('MapView', () => {
     expect(layerPopup).not.toBeInTheDocument();
   });
 
-  it('the map cannot be clicked if not interactive', async () => {
+  it('the map can be clicked if interactive', async () => {
     await wait(() => {
       findOneWhereContains.mockResolvedValue({
         features: [

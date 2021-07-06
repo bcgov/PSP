@@ -12,12 +12,6 @@ import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import { PropertyTypes } from 'constants/index';
 import { Roles } from 'constants/roles';
-import { IApiProperty } from 'features/projects/common';
-import {
-  getCurrentFiscal,
-  getCurrentYearEvaluation,
-  toApiProperty,
-} from 'features/projects/common/projectConverter';
 import { Form, Formik, FormikProps, getIn, useFormikContext } from 'formik';
 import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
@@ -33,15 +27,21 @@ import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { decimalOrUndefined, mapLookupCode } from 'utils';
+import {
+  decimalOrUndefined,
+  getCurrentFiscal,
+  getCurrentYearEvaluation,
+  mapLookupCode,
+} from 'utils';
 import download from 'utils/download';
+import { toApiProperty } from 'utils/propertyUtils';
 import * as Yup from 'yup';
 
 import { PropertyTypeNames } from '../../../constants/propertyTypeNames';
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import service from '../service';
-import { IProperty, IPropertyQueryParams } from '.';
+import { IApiProperty, IProperty, IPropertyQueryParams } from '.';
 import { Buildings } from './buildings';
 import { buildingColumns as buildingCols, columns as cols } from './columns';
 
@@ -83,7 +83,6 @@ const defaultFilterValues: IPropertyFilter = {
   address: '',
   administrativeArea: '',
   name: '',
-  projectNumber: '',
   agencies: '',
   classificationId: '',
   minLotSize: '',
@@ -93,9 +92,6 @@ const defaultFilterValues: IPropertyFilter = {
   maxAssessedValue: '',
   maxNetBookValue: '',
   maxMarketValue: '',
-  inSurplusPropertyProgram: false,
-  inEnhancedReferralProcess: false,
-  surplusFilter: false,
 };
 
 export const flattenProperty = (apiProperty: IApiProperty): IProperty => {
@@ -164,10 +160,7 @@ const getServerQuery = (state: {
       pid,
       address,
       administrativeArea,
-      projectNumber,
       classificationId,
-      inSurplusPropertyProgram,
-      inEnhancedReferralProcess,
       bareLandOnly,
       name,
       agencies,
@@ -196,13 +189,10 @@ const getServerQuery = (state: {
     address,
     pid,
     administrativeArea,
-    projectNumber,
     classificationId: decimalOrUndefined(classificationId),
     agencies: parsedAgencies,
     minLandArea: decimalOrUndefined(minLotSize),
     maxLandArea: decimalOrUndefined(maxLotSize),
-    inSurplusPropertyProgram: inSurplusPropertyProgram,
-    inEnhancedReferralProcess: inEnhancedReferralProcess,
     bareLandOnly: bareLandOnly,
     page: pageIndex + 1,
     quantity: pageSize,
