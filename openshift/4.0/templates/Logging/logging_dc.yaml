@@ -141,6 +141,7 @@ objects:
         role: ${ROLE_NAME}
       type: ClusterIP
       sessionAffinity: None
+      
   # S3 or Azure blob token secret
     - kind: Secret
     apiVersion: v1
