@@ -6,9 +6,9 @@ services:
     container_name: pims-logging
     build:
       context: .
-    image: pims-sidecar:latest
+    image: pims-logging:latest
     environment:
-      SLEEP_TIME: 120
+      SLEEP_TIME: 60
       AZ_BLOB_URL: "https://pimsapp.blob.core.windows.net"
       AZ_BLOB_CONTAINER: "pims"
       AZ_SAS_TOKEN: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt2VJSO3XDzp8SUoLVqtNqZc7LDQdjeoXM%3D"

@@ -98,3 +98,19 @@ spec:
                 - name: ${APP_NAME}-${ROLE_NAME}-root
                   mountPath: ${APP_VOLUME_MOUNT_PATH}
 ```
+
+## Run Locally
+
+Go to - `/opnenshift/4.0/template/Logging` for Logging **_Dockerfile_** and **_Docker-compose.yml_**
+
+Build pims-logging Docker image
+
+```bash
+$ docker-compose build logging
+```
+
+Build and Run locally pims-logging imgage and run as container
+
+```bash
+$ docker-compose up logging
+```
