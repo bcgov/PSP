@@ -1,4 +1,17 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { fireEvent, wait } from '@testing-library/react';
+
+export const mockKeycloak = (claims: string[], agencies: number[]) => {
+  (useKeycloak as jest.Mock).mockReturnValue({
+    keycloak: {
+      userInfo: {
+        agencies: agencies,
+        roles: claims,
+      },
+      subject: 'test',
+    },
+  });
+};
 
 export const fillInput = async (
   container: HTMLElement,
@@ -58,3 +71,5 @@ export const fillInput = async (
   });
   return { input };
 };
+
+export const flushPromises = () => new Promise(setImmediate);

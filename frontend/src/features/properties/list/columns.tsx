@@ -4,9 +4,8 @@ import { ColumnWithProps } from 'components/Table';
 import { AsterixMoneyCell, EditableMoneyCell, MoneyCell } from 'components/Table/MoneyCell';
 import { PropertyTypeCell } from 'components/Table/PropertyTypeCell';
 import { PropertyTypes } from 'constants/index';
-import _, { isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
@@ -37,19 +36,6 @@ const spacing = {
   large: unit * 2,
   xlarge: unit * 4,
   xxlarge: unit * 8,
-};
-
-const getProjectLinkNoDrafts = (namespace: string = 'properties') => (cellInfo: any) => {
-  const projectNumbers = _.filter(cellInfo.value, (p: string) => !p.includes('DRAFT'));
-  return (
-    <ColumnDiv>
-      {projectNumbers?.map((projectNumber: string) => (
-        <React.Fragment key={projectNumber}>
-          <Link to={`/projects?projectNumber=${projectNumber}`}>{projectNumber}</Link>
-        </React.Fragment>
-      ))}
-    </ColumnDiv>
-  );
 };
 
 export const columns = (
@@ -324,15 +310,6 @@ export const columns = (
       },
     },
   },
-  {
-    Header: 'Project #',
-    width: spacing.xsmall,
-    minWidth: 60,
-    accessor: 'projectNumbers',
-    clickable: false,
-    align: 'right',
-    Cell: getProjectLinkNoDrafts(),
-  },
 ];
 
 export const buildingColumns = (
@@ -558,14 +535,5 @@ export const buildingColumns = (
         type: 'number',
       },
     },
-  },
-  {
-    Header: 'Project #',
-    width: spacing.xsmall,
-    minWidth: 60,
-    accessor: 'projectNumbers',
-    clickable: false,
-    align: 'right',
-    Cell: getProjectLinkNoDrafts(),
   },
 ];

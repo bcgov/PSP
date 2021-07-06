@@ -18,14 +18,6 @@ export const Legend = () => {
         pin: require('assets/images/pins/subdiv-reg.png').default,
         label: 'Proposed Subdivision',
       },
-      {
-        pin: require('assets/images/pins/marker-red.png').default,
-        label: 'Enhanced Referral Process',
-      },
-      {
-        pin: require('assets/images/pins/marker-purple.png').default,
-        label: 'Surplus Properties List',
-      },
     ];
   }, []);
 

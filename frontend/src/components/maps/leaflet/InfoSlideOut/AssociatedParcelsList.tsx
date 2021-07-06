@@ -1,9 +1,7 @@
 import { Label } from 'components/common/Label';
 import { IParcel } from 'interfaces';
-import queryString from 'query-string';
 import * as React from 'react';
 import { ListGroup } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
 
 interface IAssociatedParcels {
   /** the list of parcels */
@@ -16,32 +14,16 @@ interface IAssociatedParcels {
  * @param parcels the list of parcels from the  building
  */
 export const AssociatedParcelsList: React.FC<IAssociatedParcels> = ({ parcels }) => {
-  const location = useLocation();
   return (
     <>
       <ListGroup>
         <Label className="header" style={{ margin: '5px 0px' }}>
           Associated Land
         </Label>
-        <ListGroup.Item>Click a parcel's PID/PIN to view its details</ListGroup.Item>
         {parcels.length ? (
           parcels.map((parcel, parcelId) => (
             <ListGroup.Item key={parcelId}>
-              <Link
-                className="styled-link"
-                to={{
-                  pathname: `/mapview`,
-                  search: queryString.stringify({
-                    ...queryString.parse(location.search),
-                    sidebar: true,
-                    disabled: true,
-                    loadDraft: false,
-                    parcelId: parcel.id,
-                  }),
-                }}
-              >
-                {parcel.pid ? parcel.pid : parcel.pin}
-              </Link>
+              <p>{parcel.pid ? parcel.pid : parcel.pin}</p>
             </ListGroup.Item>
           ))
         ) : (

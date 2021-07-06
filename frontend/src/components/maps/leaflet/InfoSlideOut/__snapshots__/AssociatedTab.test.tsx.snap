@@ -13,11 +13,6 @@ exports[`Associated Buildings/Parcels view Associated buildings list renders cor
   <div
     class="list-group-item"
   >
-    Click a building name to view its details
-  </div>
-  <div
-    class="list-group-item"
-  >
     This parcel has no associated buildings
   </div>
 </div>
@@ -36,17 +31,9 @@ exports[`Associated Buildings/Parcels view Associated parcels list renders corre
   <div
     class="list-group-item"
   >
-    Click a parcel's PID/PIN to view its details
-  </div>
-  <div
-    class="list-group-item"
-  >
-    <a
-      class="styled-link"
-      href="/mapview?disabled=true&loadDraft=false&parcelId=1&sidebar=true"
-    >
+    <p>
       000-000-000
-    </a>
+    </p>
   </div>
 </div>
 `;
