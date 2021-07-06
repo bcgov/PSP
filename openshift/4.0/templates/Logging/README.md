@@ -23,7 +23,7 @@ $ docker tag pims-sidecar:latest image-registry.apps.silver.devops.gov.bc.ca/3cd
 $ docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/pims-logging:latest
 ```
 
-### or Build create imagestream using base image and build config
+### or create pims-logging imagestream using the alpine base image and build config
 
 ```bash
 $ docker pull frolvlad/alpine-glibc
