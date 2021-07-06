@@ -141,9 +141,9 @@ objects:
         role: ${ROLE_NAME}
       type: ClusterIP
       sessionAffinity: None
-      
+
   # S3 or Azure blob token secret
-    - kind: Secret
+  - kind: Secret
     apiVersion: v1
     metadata:
       name: ${APP_NAME}-${ROLE_NAME}
@@ -157,7 +157,7 @@ objects:
     type: Opaque
     stringData:
       AZ_SAS_TOKEN: ${AZ_SAS_TOKEN}
-      
+
   # Storage for pims-logging.
   - kind: PersistentVolumeClaim
     apiVersion: v1
@@ -259,7 +259,7 @@ objects:
                   value: ${AZ_BLOB_CONTAINER}
                 - name: AZ_SAS_TOKEN
                   valueFrom:
-                    secretKeyRef: 
+                    secretKeyRef:
                       name: ${APP_NAME}-${ROLE_NAME}
                       key: AZ_SAS_TOKEN
                 - name: FRONTEND_APP_NAME
