@@ -1,35 +1,21 @@
-import { Classifications, PropertyTypes } from 'constants/index';
+import { PropertyTypes } from 'constants/index';
 import { IProperty } from 'interfaces';
 import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 
 import { ICluster, PointFeature } from '../types';
 import {
   asProperty,
-  buildingErpIcon,
-  buildingErpIconSelect,
   buildingIcon,
   buildingIconSelect,
-  buildingSppIcon,
-  buildingSppIconSelect,
   createClusterMarker,
   createPoints,
   draftBuildingIcon,
   draftParcelIcon,
   generateKey,
   getMarkerIcon,
-  landErpIcon,
-  landErpIconSelect,
-  landSppIcon,
-  landSppIconSelect,
-  parcelIcon,
   parcelIconSelect,
   pointToLayer,
-  subdivisionErpIcon,
-  subdivisionErpIconSelect,
-  subdivisionIcon,
   subdivisionIconSelect,
-  subdivisionSppIcon,
-  subdivisionSppIconSelect,
 } from './mapUtils';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
@@ -107,73 +93,6 @@ describe('mapUtils tests', () => {
         getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DRAFT_BUILDING } }),
       ).toEqual(draftBuildingIcon);
     });
-    it('returns a erp subdivision icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.SUBDIVISION, projectWorkflow: 'ERP' },
-          },
-          true,
-        ),
-      ).toEqual(subdivisionErpIconSelect);
-    });
-    it('returns a selected erp building icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.BUILDING, projectWorkflow: 'ERP' },
-          },
-          true,
-        ),
-      ).toEqual(buildingErpIconSelect);
-    });
-    it('returns a selected erp parcel icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.PARCEL, projectWorkflow: 'ERP' },
-          },
-          true,
-        ),
-      ).toEqual(landErpIconSelect);
-    });
-
-    it('returns a selected spl subdivision icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.SUBDIVISION, projectWorkflow: 'SPL' },
-          },
-          true,
-        ),
-      ).toEqual(subdivisionSppIconSelect);
-    });
-    it('returns a selected spl building icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.BUILDING, projectWorkflow: 'SPL' },
-          },
-          true,
-        ),
-      ).toEqual(buildingSppIconSelect);
-    });
-    it('returns a selected spl parcel icon', () => {
-      expect(
-        getMarkerIcon(
-          {
-            ...feature,
-            properties: { propertyTypeId: PropertyTypes.PARCEL, projectWorkflow: 'SPL' },
-          },
-          true,
-        ),
-      ).toEqual(landSppIconSelect);
-    });
 
     it('returns a selected default subdivision icon', () => {
       expect(
@@ -208,165 +127,81 @@ describe('mapUtils tests', () => {
         ),
       ).toEqual(parcelIconSelect);
     });
-    it('returns a erp subdivision icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: { propertyTypeId: PropertyTypes.SUBDIVISION, projectWorkflow: 'ERP' },
-        }),
-      ).toEqual(subdivisionErpIcon);
-    });
-    it('returns a erp building icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: { propertyTypeId: PropertyTypes.BUILDING, projectWorkflow: 'ERP' },
-        }),
-      ).toEqual(buildingErpIcon);
-    });
-    it('returns a erp parcel icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: { propertyTypeId: PropertyTypes.PARCEL, projectWorkflow: 'ERP' },
-        }),
-      ).toEqual(landErpIcon);
-    });
-    it('returns a spl subdivision icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: {
-            propertyTypeId: PropertyTypes.SUBDIVISION,
-            projectWorkflow: 'SPL',
-            classificationId: Classifications.SurplusActive,
-          },
-        }),
-      ).toEqual(subdivisionSppIcon);
-    });
-    it('returns a spl building icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: {
-            propertyTypeId: PropertyTypes.BUILDING,
-            projectWorkflow: 'SPL',
-            classificationId: Classifications.SurplusActive,
-          },
-        }),
-      ).toEqual(buildingSppIcon);
-    });
-    it('returns a spl parcel icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: {
-            propertyTypeId: PropertyTypes.PARCEL,
-            projectWorkflow: 'SPL',
-            classificationId: Classifications.SurplusActive,
-          },
-        }),
-      ).toEqual(landSppIcon);
-    });
-    it('returns a spl subdivision icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: { propertyTypeId: PropertyTypes.SUBDIVISION },
-        }),
-      ).toEqual(subdivisionIcon);
-    });
-    it('returns a spl building icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: { propertyTypeId: PropertyTypes.BUILDING },
-        }),
-      ).toEqual(buildingIcon);
-    });
-    it('returns a spl parcel icon', () => {
-      expect(
-        getMarkerIcon({
-          ...feature,
-          properties: { propertyTypeId: PropertyTypes.PARCEL },
-        }),
-      ).toEqual(parcelIcon);
-    });
-  });
-  describe('convert feature to property', () => {
-    const property: IProperty = {
-      id: 1,
-      agency: 'test agency',
-      agencyId: 1,
-      latitude: 1,
-      longitude: 2,
-      isSensitive: false,
-    };
-    it('generates building keys', () => {
-      const building: IProperty = { ...property, propertyTypeId: 1 };
-      expect(generateKey(building)).toEqual('building-1');
-    });
-    it('generates parcel keys', () => {
-      const parcel: IProperty = { ...property, propertyTypeId: 0 };
-      expect(generateKey(parcel)).toEqual('parcel-1');
-    });
-  });
-
-  describe('convert feature to property', () => {
-    const property: PointFeature = {
-      type: 'Feature',
-      geometry: { coordinates: [1, 2] } as any,
-      properties: { id: 1, propertyTypeId: 0, name: 'name' },
-    };
-    it('does the conversion', () => {
-      expect(asProperty(property)).toEqual({
+    describe('convert feature to property', () => {
+      const property: IProperty = {
         id: 1,
-        latitude: 2,
-        longitude: 1,
-        name: 'name',
-        propertyTypeId: 0,
+        agency: 'test agency',
+        agencyId: 1,
+        latitude: 1,
+        longitude: 2,
+        isSensitive: false,
+      };
+      it('generates building keys', () => {
+        const building: IProperty = { ...property, propertyTypeId: 1 };
+        expect(generateKey(building)).toEqual('building-1');
+      });
+      it('generates parcel keys', () => {
+        const parcel: IProperty = { ...property, propertyTypeId: 0 };
+        expect(generateKey(parcel)).toEqual('parcel-1');
       });
     });
-  });
 
-  describe('create points function', () => {
-    const property: IProperty = {
-      id: 1,
-      agency: 'test agency',
-      agencyId: 1,
-      latitude: 1,
-      longitude: 2,
-      isSensitive: false,
-    };
-    it('converts properties to point features', () => {
-      expect(createPoints([property, property])).toEqual([
-        {
-          geometry: { coordinates: [2, 1], type: 'Point' },
-          properties: {
-            agency: 'test agency',
-            agencyId: 1,
-            cluster: false,
-            id: 1,
-            isSensitive: false,
-            latitude: 1,
-            longitude: 2,
+    describe('convert feature to property', () => {
+      const property: PointFeature = {
+        type: 'Feature',
+        geometry: { coordinates: [1, 2] } as any,
+        properties: { id: 1, propertyTypeId: 0, name: 'name' },
+      };
+      it('does the conversion', () => {
+        expect(asProperty(property)).toEqual({
+          id: 1,
+          latitude: 2,
+          longitude: 1,
+          name: 'name',
+          propertyTypeId: 0,
+        });
+      });
+    });
+
+    describe('create points function', () => {
+      const property: IProperty = {
+        id: 1,
+        agency: 'test agency',
+        agencyId: 1,
+        latitude: 1,
+        longitude: 2,
+        isSensitive: false,
+      };
+      it('converts properties to point features', () => {
+        expect(createPoints([property, property])).toEqual([
+          {
+            geometry: { coordinates: [2, 1], type: 'Point' },
+            properties: {
+              agency: 'test agency',
+              agencyId: 1,
+              cluster: false,
+              id: 1,
+              isSensitive: false,
+              latitude: 1,
+              longitude: 2,
+            },
+            type: 'Feature',
           },
-          type: 'Feature',
-        },
-        {
-          geometry: { coordinates: [2, 1], type: 'Point' },
-          properties: {
-            agency: 'test agency',
-            agencyId: 1,
-            cluster: false,
-            id: 1,
-            isSensitive: false,
-            latitude: 1,
-            longitude: 2,
+          {
+            geometry: { coordinates: [2, 1], type: 'Point' },
+            properties: {
+              agency: 'test agency',
+              agencyId: 1,
+              cluster: false,
+              id: 1,
+              isSensitive: false,
+              latitude: 1,
+              longitude: 2,
+            },
+            type: 'Feature',
           },
-          type: 'Feature',
-        },
-      ]);
+        ]);
+      });
     });
   });
 });

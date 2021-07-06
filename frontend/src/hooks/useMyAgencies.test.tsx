@@ -1,6 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, render } from '@testing-library/react';
-import Claims from 'constants/claims';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
@@ -43,28 +42,6 @@ const MyAgencies = () => {
 describe('UseMyAgencies', () => {
   afterEach(() => {
     cleanup();
-  });
-
-  it('Is SRES user, should return all agencies', () => {
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: {
-        userInfo: {
-          agencies: ['1'],
-          roles: [Claims.PROJECT_VIEW, Claims.ADMIN_PROJECTS],
-        },
-        subject: 'test',
-      },
-    });
-
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <MyAgencies />
-      </Provider>,
-    );
-
-    expect(getByTestId('agency-1')).toBeDefined();
-    expect(getByTestId('agency-8')).toBeDefined();
-    expect(getByTestId('agency-41')).toBeDefined();
   });
 
   it('Belongs to Sub Agency, should return one agencies', () => {

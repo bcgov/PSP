@@ -3,7 +3,6 @@ import { Claims } from 'constants/claims';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { Roles } from 'constants/roles';
 import { IProperty } from 'interfaces';
-import _ from 'lodash';
 
 /**
  * IUserInfo interface, represents the userinfo provided by keycloak.
@@ -142,8 +141,7 @@ export function useKeycloakWrapper(): IKeycloak {
    */
   const canUserEditProperty = (property: IProperty | null): boolean => {
     const ownsProperty = !!property?.agencyId && hasAgency(property.agencyId);
-    const notInProject = !_.some(property?.projectNumbers ?? '', _.method('includes', 'SPP'));
-    return !!property && (isAdmin || (canEdit && ownsProperty && notInProject));
+    return !!property && (isAdmin || (canEdit && ownsProperty));
   };
 
   /**
@@ -152,13 +150,10 @@ export function useKeycloakWrapper(): IKeycloak {
    */
   const canUserDeleteProperty = (property: IProperty | null): boolean => {
     const ownsProperty = !!property?.agencyId && hasAgency(property.agencyId);
-    const notInProject = !_.some(property?.projectNumbers ?? '', _.method('includes', 'SPP'));
     const isSubdivision = property?.propertyTypeId === PropertyTypes.SUBDIVISION;
     return (
       !!property &&
-      (isAdmin ||
-        (canDelete && ownsProperty && notInProject) ||
-        (isSubdivision && canEdit && ownsProperty && notInProject))
+      (isAdmin || (canDelete && ownsProperty) || (isSubdivision && canEdit && ownsProperty))
     );
   };
 

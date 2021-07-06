@@ -11,7 +11,6 @@ import {
 import { Claims } from 'constants/index';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { mockKeycloak } from 'features/projects/dispose/testUtils';
 import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { Map as LeafletMap } from 'leaflet';
@@ -23,6 +22,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mockKeycloak } from 'utils/testUtils';
 
 import InfoSlideOut from './InfoSlideOut';
 

@@ -235,26 +235,6 @@ describe('Property list view', () => {
     });
   });
 
-  it('Disables property rows that are in an active project', async () => {
-    setupTests([{ ...mockFlatProperty, projectNumbers: ['SPP-10000'] }]);
-
-    await act(async () => {
-      const { container, getByTestId } = renderPage();
-      expect(getByTestId('edit-icon')).toBeInTheDocument();
-      fireEvent(
-        getByTestId('edit-icon'),
-        new MouseEvent('click', { bubbles: true, cancelable: true }),
-      );
-      await wait(
-        () => {
-          expect(getByTestId('save-changes')).toBeInTheDocument();
-          expect(container.querySelector(`input[name="properties.0.market"]`)).toBeNull();
-        },
-        { timeout: 500 },
-      );
-    });
-  });
-
   it('rows act as clickable links to the property details page.', async () => {
     setupTests([mockFlatProperty]);
 

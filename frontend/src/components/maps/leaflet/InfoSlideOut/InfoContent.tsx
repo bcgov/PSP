@@ -1,20 +1,16 @@
 import './InfoSlideOut.scss';
 
-import variables from '_variables.module.scss';
 import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
 import { Label } from 'components/common/Label';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { Workflows } from 'constants/workflows';
 import { IBuilding, IParcel } from 'interfaces';
 import * as React from 'react';
-import { useState } from 'react';
 import { ListGroup, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import BuildingAttributes from './BuildingAttributes';
 import ParcelAttributes from './ParcelAttributes';
 import { ParcelPIDPIN } from './ParcelPIDPIN';
-import { ProjectNumberLink } from './ProjectNumberLink';
 import { ThreeColumnItem } from './ThreeColumnItem';
 
 /**
@@ -46,32 +42,6 @@ export const OuterRow = styled(Row)`
   margin: 0px 0px 10px 0px;
 `;
 
-const ContactSres = styled(Row)`
-  background-color: #deefff;
-  padding: 5px 15px;
-  margin: 0px 1px 5px 1px;
-
-  em {
-    color: ${variables.darkVariantColor};
-  }
-
-  a {
-    color: ${variables.slideOutBlue};
-  }
-`;
-
-const ProjectStatus = styled.div`
-  background-color: #fff1cc;
-  text-align: center;
-  color: ${variables.textColor};
-  font-family: 'BCSans', Fallback, sans-serif;
-  padding: 5px;
-
-  p {
-    margin-bottom: 0;
-  }
-`;
-
 const getHeading = (propertyTypeId: PropertyTypes | null) => {
   switch (propertyTypeId) {
     case PropertyTypes.SUBDIVISION:
@@ -98,23 +68,6 @@ const getHeading = (propertyTypeId: PropertyTypes | null) => {
   }
 };
 
-const displayProjectStatus = (workflowCode: string) => {
-  switch (workflowCode) {
-    case Workflows.ERP:
-      return 'Property is in Enhanced Referral Process';
-    case Workflows.SPL:
-      return 'Property is on the Surplus Properties List';
-    case Workflows.ASSESS_EX_DISPOSAL:
-      return 'Property has been approved for ERP exemption';
-    case Workflows.ASSESS_EXEMPTION:
-      return 'Property has been submitted to be exempt from ERP';
-    case Workflows.SUBMIT_DISPOSAL:
-      return 'Property is in a draft project';
-    default:
-      return 'Project is in Surplus Property Program';
-  }
-};
-
 /**
  * Component that displays the appropriate information about the selected property
  * in the property info slideout
@@ -130,8 +83,6 @@ export const InfoContent: React.FC<IInfoContent> = ({
   const isParcel =
     propertyTypeId !== null &&
     [PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(propertyTypeId);
-
-  const [privateProject, setPrivateProject] = useState<boolean>(false);
   return (
     <>
       <ListGroup>
@@ -166,45 +117,8 @@ export const InfoContent: React.FC<IInfoContent> = ({
             leftSideLabel={'Classification'}
             rightSideItem={propertyInfo?.classification}
           />
-          {!!propertyInfo?.projectNumbers?.length && (
-            <ThreeColumnItem
-              leftSideLabel={`Project Number${propertyInfo.projectNumbers.length > 1 ? 's' : ''}`}
-              rightSideItem={propertyInfo.projectNumbers.map((projectNum: string) => (
-                <ProjectNumberLink
-                  key={projectNum}
-                  setPrivateProject={setPrivateProject}
-                  privateProject={privateProject}
-                  agencyId={propertyInfo.agencyId}
-                  projectNumber={projectNum}
-                  breakLine
-                />
-              ))}
-            />
-          )}
         </OuterRow>
-        {(!canViewDetails || privateProject) && (
-          <ContactSres>
-            <em>
-              For more information on this property, contact{' '}
-              <a href="mailto:RealPropertyDivision.Disposals@gov.bc.ca">
-                Strategic Real Estate Services (SRES)
-              </a>
-            </em>
-          </ContactSres>
-        )}
       </ListGroup>
-      {propertyInfo?.projectWorkflow && (
-        <ListGroup>
-          <ProjectStatus>
-            <em>{displayProjectStatus(propertyInfo?.projectWorkflow)}</em>
-            {canViewDetails && (
-              <p>
-                Status: <strong>{propertyInfo?.projectStatus}</strong>
-              </p>
-            )}
-          </ProjectStatus>
-        </ListGroup>
-      )}
       <ListGroup>
         <Label className="header">Location data</Label>
         <OuterRow>

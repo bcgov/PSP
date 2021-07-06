@@ -61,7 +61,6 @@ const mockDetails: IPropertyDetail = {
     encumbranceReason: '',
     assessedBuilding: 0,
     assessedLand: 0,
-    projectNumbers: [],
     classificationId: 0,
     zoning: '',
     zoningPotential: '',

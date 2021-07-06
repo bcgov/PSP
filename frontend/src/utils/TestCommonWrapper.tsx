@@ -13,7 +13,7 @@ import TestRouterWrapper from './TestRouterWrapper';
 jest.mock('@react-keycloak/web');
 
 interface TestProviderWrapperParams {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   store?: any;
   agencies?: IAgency[];
   roles?: IRole[];

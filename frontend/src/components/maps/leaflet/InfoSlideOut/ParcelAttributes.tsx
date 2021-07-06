@@ -2,10 +2,10 @@ import './InfoSlideOut.scss';
 
 import { Label } from 'components/common/Label';
 import { EvaluationKeys } from 'constants/evaluationKeys';
-import { getCurrentYearEvaluation } from 'features/projects/common/projectConverter';
 import { IParcel } from 'interfaces';
 import * as React from 'react';
 import { ListGroup } from 'react-bootstrap';
+import { getCurrentYearEvaluation } from 'utils';
 import { formatMoney } from 'utils/numberFormatUtils';
 
 import { OuterRow } from './InfoContent';

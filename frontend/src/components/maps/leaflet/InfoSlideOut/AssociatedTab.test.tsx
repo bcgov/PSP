@@ -2,12 +2,10 @@ import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { render } from '@testing-library/react';
-import { Label } from 'components/common/Label';
 import { createMemoryHistory } from 'history';
 import { IParcel } from 'interfaces';
 import { mockBuilding, mockParcel } from 'mocks/filterDataMock';
 import * as React from 'react';
-import { FaPlusSquare } from 'react-icons/fa';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
@@ -19,13 +17,6 @@ import AssociatedParcelsList from './AssociatedParcelsList';
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
-
-const addAssociatedBuildingLink = (
-  <>
-    <FaPlusSquare color="#1a5a96" className="mr-1" />
-    <Label>Add a new Building</Label>
-  </>
-);
 
 const AsscParcelsTab = (parcels: IParcel[]) => {
   return (
@@ -41,11 +32,7 @@ const AsscBuildingsTab = (propertyInfo: IParcel | null, canEditProperty: boolean
   return (
     <Provider store={store}>
       <Router history={history}>
-        <AssociatedBuildingsList
-          propertyInfo={propertyInfo}
-          canEditDetails={canEditProperty}
-          addAssociatedBuildingLink={addAssociatedBuildingLink}
-        />
+        <AssociatedBuildingsList propertyInfo={propertyInfo} canEditDetails={canEditProperty} />
       </Router>
     </Provider>
   );

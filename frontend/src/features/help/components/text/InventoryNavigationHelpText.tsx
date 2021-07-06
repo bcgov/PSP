@@ -16,8 +16,6 @@ const InventoryNavigationHelpText = () => {
       <br />
       <strong>View Property Inventory:</strong> View properties in a table format.
       <br />
-      <strong>Disposal Projects:</strong> Submit properties to Surplus Property Program.
-      <br />
       <strong>Reports:</strong> Create and export reports. (SRES users only)
     </p>
   );
