@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelpContainer renders correctly... 1`] = `
+Array [
+  <div
+    className="Toastify"
+  />,
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+}
+
+<div
+    className="c0 help-box"
+  >
+    <div
+      className="col-md-4 btn-group-vertical"
+      role="group"
+    />
+    <span
+      className="col-md-8"
+    />
+  </div>,
+  <hr />,
+  <h5>
+    Submit
+  </h5>,
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div
+    className="c0 help-submit-box"
+  >
+    <span
+      className="col-md-4"
+    >
+      <div
+        className="form-check"
+      >
+        <input
+          checked={true}
+          className="form-check-input"
+          disabled={false}
+          id="ticket-Question"
+          onChange={[Function]}
+          type="radio"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="ticket-Question"
+          title=""
+        >
+          Question
+        </label>
+      </div>
+      <div
+        className="form-check"
+      >
+        <input
+          checked={false}
+          className="form-check-input"
+          disabled={false}
+          id="ticket-Bug"
+          onChange={[Function]}
+          type="radio"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="ticket-Bug"
+          title=""
+        >
+          Bug
+        </label>
+      </div>
+      <div
+        className="form-check"
+      >
+        <input
+          checked={false}
+          className="form-check-input"
+          disabled={false}
+          id="ticket-Feature Request"
+          onChange={[Function]}
+          type="radio"
+        />
+        <label
+          className="form-check-label"
+          htmlFor="ticket-Feature Request"
+          title=""
+        >
+          Feature Request
+        </label>
+      </div>
+    </span>
+    <span
+      className="col-md-8"
+    >
+      <form
+        className=""
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="input-user"
+          >
+            User
+             
+          </label>
+          <input
+            className="form-control"
+            id="input-user"
+            name="user"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            value="Chester Tester"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="input-email"
+          >
+            Email
+             
+          </label>
+          <input
+            className="form-control"
+            id="input-email"
+            name="email"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            value="test@test.com"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="input-page"
+          >
+            Page
+             
+          </label>
+          <input
+            className="form-control"
+            id="input-page"
+            name="page"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            value="/"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="input-question"
+          >
+            Question
+             
+          </label>
+          <textarea
+            className="form-control"
+            id="input-question"
+            name="question"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+            value=""
+          />
+        </div>
+      </form>
+    </span>
+  </div>,
+]
+`;
