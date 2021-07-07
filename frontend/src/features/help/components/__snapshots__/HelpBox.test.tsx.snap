@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Help box tests... renders correctly.. 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+}
+
+.c1 {
+  max-height: 40px;
+  background-color: white;
+}
+
+<div>
+  <div
+    class="c0 help-box"
+  >
+    <div
+      class="col-md-4 btn-group-vertical"
+      role="group"
+    >
+      <button
+        class="c1 link active link-primary"
+        type="button"
+      >
+        Map
+      </button>
+      <button
+        class="c1 link link-primary"
+        type="button"
+      >
+        Test Section
+      </button>
+    </div>
+    <span
+      class="col-md-8"
+    />
+  </div>
+</div>
+`;
