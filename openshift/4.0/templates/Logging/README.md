@@ -79,6 +79,7 @@ create a deploy config env file here in the base dir `deploy.dev.env` with a val
       FRONTEND_APP_NAME=pims-app
       API_NAME=pims-api
       PROJECT_NAMESPACE=3cd915-dev
+      TOOLS_NAMESPACE=3cd915-tools
       EXPORT_TIME=360
 ```
 
@@ -113,7 +114,10 @@ spec:
                 - name: AZ_BLOB_CONTAINER
                   value: ${AZ_BLOB_CONTAINER}
                 - name: AZ_SAS_TOKEN
-                  value: ${AZ_SAS_TOKEN}
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}
+                      key: AZ_SAS_TOKEN
                 - name: FRONTEND_APP_NAME
                   value: ${FRONTEND_APP_NAME}
                 - name: API_NAME
