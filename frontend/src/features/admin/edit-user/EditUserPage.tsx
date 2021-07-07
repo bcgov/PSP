@@ -91,20 +91,20 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    displayName: user.displayName,
-    isDisabled: !!user.isDisabled,
-    rowVersion: user.rowVersion,
+    username: user.username ?? '',
+    firstName: user.firstName ?? '',
+    lastName: user.lastName ?? '',
+    email: user.email ?? '',
+    displayName: user.displayName ?? '',
+    isDisabled: !!user.isDisabled ?? '',
+    rowVersion: user.rowVersion ?? '',
     emailVerified: false,
-    agencies: user.agencies,
+    agencies: user.agencies ?? [],
     roles: user?.roles?.map(x => x.id) ?? [],
-    note: user.note,
+    note: user.note ?? '',
     agency: user.agencies && user.agencies.length !== 0 ? user.agencies[0].id : '',
     role: user.roles && user.roles.length !== 0 ? user.roles[0].id : '',
-    position: user.position,
+    position: user.position ?? '',
     lastLogin: formatApiDateTime(user.lastLogin),
   };
 
