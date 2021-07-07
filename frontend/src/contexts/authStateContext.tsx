@@ -17,16 +17,16 @@ export const AuthStateContextProvider = (props: { children?: any }) => {
 
   React.useEffect(() => {
     const loadUserInfo = async () => {
-      const user = await keycloak.obj?.loadUserInfo();
-      setUserInfo(user);
+      try {
+        const user = await keycloak.obj?.loadUserInfo();
+        setUserInfo(user);
+      } catch (err) {
+        // this error isn't recoverable, so just log it for debugging purposes.
+        console.error(err);
+      }
     };
 
-    try {
-      if (keycloak.obj.authenticated) loadUserInfo();
-    } catch (err) {
-      // this error isn't recoverable, so just log it for debugging purposes.
-      console.error(err);
-    }
+    if (keycloak.obj.authenticated) loadUserInfo();
   }, [keycloak.obj]);
 
   return (
