@@ -4,6 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
+import { MAP_MAX_ZOOM } from 'constants/strings';
 import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
@@ -328,6 +329,7 @@ const Map: React.FC<MapProps> = ({
               ref={mapRef}
               center={[lat, lng]}
               zoom={lastZoom}
+              maxZoom={MAP_MAX_ZOOM}
               whenReady={() => {
                 fitMapBounds();
               }}
