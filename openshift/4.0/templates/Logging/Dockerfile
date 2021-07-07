@@ -19,4 +19,6 @@ RUN chmod a+rx ${APP_ROOT}/sidecar-logging.sh
 RUN mkdir -p ${APP_LOG}
 RUN chmod 777 ${APP_LOG}
 
+USER 1001
+
 ENTRYPOINT ["/opt/app/sidecar-logging.sh"]
