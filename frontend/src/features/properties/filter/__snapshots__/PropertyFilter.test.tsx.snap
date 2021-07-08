@@ -225,13 +225,13 @@ exports[`MapFilterBar renders correctly 1`] = `
           </option>
           <option
             class="option"
-            value="0"
+            value="1"
           >
             Core Operational
           </option>
           <option
             class="option"
-            value="1"
+            value="2"
           >
             Core Strategic
           </option>

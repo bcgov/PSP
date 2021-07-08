@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
-import { Claims } from 'constants/index';
+import { Claims, Classifications, PropertyTypes } from 'constants/index';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
@@ -49,30 +49,30 @@ const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
 }));
 
 const largeMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 3, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 4, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 5, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 6, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 7, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 8, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 9, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 10, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 11, latitude: 53.918165, longitude: -122.749772, propertyTypeId: 0 },
+  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 3, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 4, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 5, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 6, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 7, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 8, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 9, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 10, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 11, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Parcel },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const smallMockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: 0 },
+  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Parcel },
 ] as IProperty[];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 1 },
-  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: 0 },
+  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Parcel },
 ] as IProperty[];
 
 let findOneWhereContains = jest.fn();
@@ -83,7 +83,7 @@ let findOneWhereContains = jest.fn();
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails: IPropertyDetail = {
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   parcelDetail: {
     id: 1,
     name: 'test name',
@@ -92,7 +92,7 @@ const mockDetails: IPropertyDetail = {
     encumbranceReason: '',
     assessedBuilding: 0,
     assessedLand: 0,
-    classificationId: 0,
+    classificationId: Classifications.CoreStrategic,
     zoning: '',
     zoningPotential: '',
     agencyId: 0,
@@ -170,7 +170,6 @@ describe('MapView', () => {
       <TestCommonWrapper store={store} history={history}>
         <MapView
           disableMapFilterBar={false}
-          disabled={disabled}
           showParcelBoundaries={true}
           onMarkerPopupClosed={noop}
         />
@@ -325,7 +324,7 @@ describe('MapView', () => {
           type: 'Feature',
           geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
           properties: {
-            propertyTypeId: 0,
+            propertyTypeId: PropertyTypes.Parcel,
           },
         },
       ],

@@ -12,7 +12,7 @@ export const toApiProperty = (
     id: property.id,
     propertyTypeId: property.propertyTypeId,
     parcelId: isParcelOrSubdivision(property) ? property.id : undefined,
-    buildingId: property.propertyTypeId === PropertyTypes.BUILDING ? property.id : undefined,
+    buildingId: property.propertyTypeId === PropertyTypes.Building ? property.id : undefined,
     pid: property.pid,
     pin: Number(property.pin),
     projectNumbers: property.projectNumbers ?? [],
@@ -45,7 +45,7 @@ export const toApiProperty = (
 };
 
 const isParcelOrSubdivision = (property: IProperty) =>
-  [PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(property?.propertyTypeId);
+  [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(property?.propertyTypeId);
 
 const getApiEvaluations = (property: IProperty): IEvaluation[] => {
   const evaluations: IEvaluation[] = [];
@@ -92,7 +92,7 @@ const getApiFiscals = (property: IProperty, useCurrentFiscal: boolean): IFiscal[
   if (property.netBook !== '' && property.netBook !== undefined) {
     fiscals.push({
       parcelId: isParcelOrSubdivision(property) ? property.id : undefined,
-      buildingId: property.propertyTypeId === PropertyTypes.BUILDING ? property.id : undefined,
+      buildingId: property.propertyTypeId === PropertyTypes.Building ? property.id : undefined,
       value: property.netBook,
       fiscalYear: !useCurrentFiscal
         ? property.netBookFiscalYear ?? getCurrentFiscalYear()
@@ -104,7 +104,7 @@ const getApiFiscals = (property: IProperty, useCurrentFiscal: boolean): IFiscal[
   if (property.market !== '' && property.market !== undefined) {
     fiscals.push({
       parcelId: isParcelOrSubdivision(property) ? property.id : undefined,
-      buildingId: property.propertyTypeId === PropertyTypes.BUILDING ? property.id : undefined,
+      buildingId: property.propertyTypeId === PropertyTypes.Building ? property.id : undefined,
       value: property.market,
       fiscalYear: !useCurrentFiscal
         ? property.marketFiscalYear ?? getCurrentFiscalYear()

@@ -215,7 +215,7 @@ export const columns = (
     Header: 'Assessed Building(s)',
     accessor: 'assessedBuilding',
     Cell: !editable
-      ? propertyType === PropertyTypes.BUILDING
+      ? propertyType === PropertyTypes.Building
         ? AsterixMoneyCell
         : MoneyCell
       : (props: any) => <EditableMoneyCell {...props} suppressValidation />,

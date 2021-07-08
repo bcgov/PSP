@@ -284,7 +284,7 @@ const PropertyListView: React.FC = () => {
         subAgencies,
         municipalities,
         propertyClassifications,
-        PropertyTypes.PARCEL,
+        PropertyTypes.Parcel,
         editable,
       ),
     [agenciesList, subAgencies, municipalities, propertyClassifications, editable],
@@ -297,7 +297,7 @@ const PropertyListView: React.FC = () => {
         subAgencies,
         municipalities,
         propertyClassifications,
-        PropertyTypes.BUILDING,
+        PropertyTypes.Building,
         false,
       ),
     [agenciesList, subAgencies, municipalities, propertyClassifications],
@@ -310,7 +310,7 @@ const PropertyListView: React.FC = () => {
         subAgencies,
         municipalities,
         propertyClassifications,
-        PropertyTypes.BUILDING,
+        PropertyTypes.Building,
         editable,
       ),
     [agenciesList, subAgencies, municipalities, propertyClassifications, editable],
@@ -434,7 +434,7 @@ const PropertyListView: React.FC = () => {
     if (expandedRows.length > 0) {
       await Promise.all(
         expandedRows.map(async property => {
-          if (property.propertyTypeId === 0) {
+          if (property.propertyTypeId === PropertyTypes.Parcel) {
             if (expandData[property.id] === undefined) {
               setExpandData({
                 ...expandData,
@@ -472,10 +472,10 @@ const PropertyListView: React.FC = () => {
         sidebar: true,
         disabled: true,
         loadDraft: false,
-        parcelId: [PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(row.propertyTypeId)
+        parcelId: [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(row.propertyTypeId)
           ? row.id
           : undefined,
-        buildingId: row.propertyTypeId === PropertyTypes.BUILDING ? row.id : undefined,
+        buildingId: row.propertyTypeId === PropertyTypes.Building ? row.id : undefined,
       })}`,
       '_blank',
     );
@@ -706,13 +706,7 @@ const PropertyListView: React.FC = () => {
               setSorting(data);
             }
           }}
-          canRowExpand={(val: any) => {
-            if (val.values.propertyTypeId === 0) {
-              return true;
-            } else {
-              return false;
-            }
-          }}
+          canRowExpand={(val: any) => val.values.propertyTypeId === PropertyTypes.Parcel}
           detailsPanel={{
             render: val => {
               if (expandData[val.id]) {

@@ -5,8 +5,8 @@ import React from 'react';
 export interface IPopUpContext {
   propertyInfo: IParcel | IBuilding | null;
   setPropertyInfo: (propertyInfo: IParcel | IBuilding | null) => void;
-  propertyTypeID: number | null;
-  setPropertyTypeID: (propertyTypeID: number) => void;
+  propertyTypeId: number | null;
+  setPropertyTypeId: (propertyTypeId: number) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
 }
@@ -14,8 +14,8 @@ export interface IPopUpContext {
 export const PropertyPopUpContext = React.createContext<IPopUpContext>({
   propertyInfo: null,
   setPropertyInfo: noop,
-  propertyTypeID: null,
-  setPropertyTypeID: noop,
+  propertyTypeId: null,
+  setPropertyTypeId: noop,
   loading: false,
   setLoading: noop,
 });
@@ -35,8 +35,8 @@ export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
   const [propertyInfo, setPropertyInfo] = React.useState<IParcel | IBuilding | null>(
     values?.propertyInfo ?? null,
   );
-  const [propertyTypeID, setPropertyTypeID] = React.useState<number | null>(
-    values?.propertyTypeID ?? null,
+  const [propertyTypeId, setPropertyTypeId] = React.useState<number | null>(
+    values?.propertyTypeId ?? null,
   );
   const [loading, setLoading] = React.useState<boolean>(values?.loading ?? false);
   return (
@@ -44,8 +44,8 @@ export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
       value={{
         propertyInfo,
         setPropertyInfo,
-        propertyTypeID,
-        setPropertyTypeID,
+        propertyTypeId,
+        setPropertyTypeId,
         loading,
         setLoading,
       }}

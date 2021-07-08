@@ -150,7 +150,7 @@ export function useKeycloakWrapper(): IKeycloak {
    */
   const canUserDeleteProperty = (property: IProperty | null): boolean => {
     const ownsProperty = !!property?.agencyId && hasAgency(property.agencyId);
-    const isSubdivision = property?.propertyTypeId === PropertyTypes.SUBDIVISION;
+    const isSubdivision = property?.propertyTypeId === PropertyTypes.Subdivision;
     return (
       !!property &&
       (isAdmin || (canDelete && ownsProperty) || (isSubdivision && canEdit && ownsProperty))

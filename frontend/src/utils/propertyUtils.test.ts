@@ -1,3 +1,4 @@
+import { Classifications } from 'constants/classifications';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { FiscalKeys } from 'constants/fiscalKeys';
 import { PropertyTypes } from 'constants/propertyTypes';
@@ -269,7 +270,7 @@ export const mockApiProjectParcel = {
   projectId: '1007',
   propertyType: 'Land',
   parcelId: 87,
-  propertyTypeId: PropertyTypes.PARCEL,
+  propertyTypeId: PropertyTypes.Parcel,
   parcel: {
     pid: '000-359-173',
     landArea: 34.74,
@@ -321,7 +322,7 @@ export const mockApiProjectParcel = {
     id: 87,
     projectNumber: 'SPP-10006',
     description: 'Nanaimo Main Campus except Wakesiah Ave \u0026 Res.',
-    classificationId: 4,
+    classificationId: Classifications.Disposed,
     classification: 'Disposed',
     agencyId: 0,
     address: {
@@ -351,7 +352,7 @@ export const mockApiProjectBuilding = {
   id: 1007,
   projectId: '1007',
   propertyType: 'Building',
-  propertyTypeId: PropertyTypes.BUILDING,
+  propertyTypeId: PropertyTypes.Building,
   buildingId: 87,
   building: {
     pid: '000-359-173',
@@ -404,7 +405,7 @@ export const mockApiProjectBuilding = {
     id: 87,
     projectNumber: 'SPP-10006',
     description: 'Nanaimo Main Campus except Wakesiah Ave \u0026 Res.',
-    classificationId: 4,
+    classificationId: Classifications.Disposed,
     classification: 'Disposed',
     agencyId: 0,
     address: {

@@ -272,22 +272,22 @@ export const pointToLayer = (feature: ICluster, latlng: LatLngExpression): Layer
  */
 export const getMarkerIcon = (feature: ICluster, selected?: boolean) => {
   const { propertyTypeId } = feature?.properties;
-  if (propertyTypeId === PropertyTypes.DRAFT_PARCEL) {
+  if (propertyTypeId === PropertyTypes.DraftParcel) {
     return draftParcelIcon;
-  } else if (propertyTypeId === PropertyTypes.DRAFT_BUILDING) {
+  } else if (propertyTypeId === PropertyTypes.DraftBuilding) {
     return draftBuildingIcon;
   } else if (selected) {
-    if (propertyTypeId === PropertyTypes.PARCEL) {
+    if (propertyTypeId === PropertyTypes.Parcel) {
       return parcelIconSelect;
-    } else if (propertyTypeId === PropertyTypes.SUBDIVISION) {
+    } else if (propertyTypeId === PropertyTypes.Subdivision) {
       return subdivisionIconSelect;
     } else {
       return buildingIconSelect;
     }
   } else {
-    if (propertyTypeId === PropertyTypes.PARCEL) {
+    if (propertyTypeId === PropertyTypes.Parcel) {
       return parcelIcon;
-    } else if (propertyTypeId === PropertyTypes.SUBDIVISION) {
+    } else if (propertyTypeId === PropertyTypes.Subdivision) {
       return subdivisionIcon;
     } else {
       return buildingIcon;
@@ -348,7 +348,7 @@ export const zoomToCluster = (cluster: ICluster, expansionZoom: number, map: Map
 // we need to namespace the keys as IDs are not enough here.
 // the same ID could be found on both the parcel collection and building collection
 export const generateKey = (p: IProperty) =>
-  `${p.propertyTypeId === 0 ? 'parcel' : 'building'}-${p.id}`;
+  `${p.propertyTypeId === PropertyTypes.Parcel ? 'parcel' : 'building'}-${p.id}`;
 
 /** Creates a IProperty object from a GeoJSON point */
 export const asProperty = (point: PointFeature): IProperty => {

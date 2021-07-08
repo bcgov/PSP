@@ -1,4 +1,6 @@
 import { AccessRequestStatus } from 'constants/accessStatus';
+import { Classifications } from 'constants/classifications';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { IAccessRequest, IBuilding, IParcel, IProperty, IUserDetails } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -134,7 +136,7 @@ export const mockParcel = {
   pin: '',
   zoning: '',
   zoningPotential: '',
-  classificationId: 1,
+  classificationId: Classifications.SurplusActive,
   encumbranceReason: '',
   agencyId: '',
   isSensitive: false,
@@ -195,7 +197,7 @@ export const mockBuilding = {
   longitude: 123,
   buildingConstructionTypeId: 0,
   buildingConstructionType: 'Concrete',
-  classificationId: 1,
+  classificationId: Classifications.SurplusActive,
   classification: 'Core Operational',
   assessedLand: 10000,
   assessedBuilding: 10000,
@@ -234,7 +236,7 @@ export const mockBuilding = {
 
 export const mockProperty: IProperty = {
   id: 0,
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   latitude: 23,
   longitude: 23,
   description: 'test',
@@ -244,12 +246,12 @@ export const mockProperty: IProperty = {
 };
 
 export const mockBuildingDetail: IPropertyDetail = {
-  propertyTypeId: 1,
+  propertyTypeId: PropertyTypes.Building,
   parcelDetail: mockBuilding,
 };
 
 export const mockParcelDetail: IPropertyDetail = {
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   parcelDetail: {
     id: 3,
     longitude: 1,
@@ -298,7 +300,7 @@ export const mockDetails = [
     pin: '',
     zoning: '',
     zoningPotential: '',
-    classificationId: 1,
+    classificationId: Classifications.SurplusActive,
     encumbranceReason: '',
     agencyId: 1,
     isSensitive: false,
@@ -338,7 +340,7 @@ export const mockDetails = [
     buildings: [],
     parcels: [],
     agency: 'MOTI',
-    propertyTypeId: 0,
+    propertyTypeId: PropertyTypes.Parcel,
   },
   {
     id: 2,
@@ -346,7 +348,7 @@ export const mockDetails = [
     pin: '',
     zoning: '',
     zoningPotential: '',
-    classificationId: 1,
+    classificationId: Classifications.SurplusActive,
     encumbranceReason: '',
     agencyId: 2,
     isSensitive: false,
@@ -479,10 +481,10 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
           evaluations: [],
           fiscals: [],
           id: 1640,
-          propertyTypeId: 0,
+          propertyTypeId: PropertyTypes.Building,
           name: '',
           description: '',
-          classificationId: 0,
+          classificationId: Classifications.CoreStrategic,
           classification: 'Core Operational',
           agencyId: 11,
           agency: 'MAG',
@@ -501,10 +503,10 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
       ],
       parcels: [],
       id: 2,
-      propertyTypeId: 0,
+      propertyTypeId: PropertyTypes.Parcel,
       name: 'Traditional site',
       description: 'Traditional site',
-      classificationId: 0,
+      classificationId: Classifications.CoreStrategic,
       classification: 'Core Operational',
       agencyId: 41,
       address: {
@@ -557,10 +559,10 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
     },
   ],
   id: 1,
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   name: '',
   description: '',
-  classificationId: 0,
+  classificationId: Classifications.CoreStrategic,
   classification: 'Core Operational',
   encumbranceReason: '',
   agencyId: 11,
@@ -581,12 +583,12 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
 export const mockFlatProperty: IFlatProperty = {
   name: 'Test Property',
   id: 0,
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   propertyType: 'Land',
   latitude: 23,
   longitude: 23,
   pid: '123-123-123',
-  classificationId: 2,
+  classificationId: Classifications.SurplusEncumbered,
   classification: 'Surplus Active',
   description: 'test',
   isSensitive: false,
@@ -610,7 +612,7 @@ export const mockFlatProperty: IFlatProperty = {
 export const mockFlatBuildingProperty: IFlatProperty = {
   address: '6460 Applecross Road',
   propertyType: 'Building',
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Building,
   city: 'Victoria',
   addressId: 267,
   netBook: 223,
@@ -620,7 +622,7 @@ export const mockFlatBuildingProperty: IFlatProperty = {
   agencyCode: 'TRAN',
   agencyId: 250,
   classification: 'Core Operational',
-  classificationId: 0,
+  classificationId: Classifications.CoreStrategic,
   constructionType: 'Concrete',
   constructionTypeId: 0,
   description: 'Claims Centre',
@@ -652,7 +654,7 @@ export const ACTIVE = {
   pin: '',
   zoning: '',
   zoningPotential: '',
-  classificationId: 1,
+  classificationId: Classifications.SurplusActive,
   encumbranceReason: '',
   agencyId: '',
   isSensitive: false,
