@@ -18,8 +18,7 @@
         "BearerOnly": true,
         "AuthorizationServicesEnabled": false,
         "RedirectUris": [
-          "https://pims-test.pathfinder.gov.bc.ca/api/*",
-          "https://pims-test.apps.silver.devops.gov.bc.ca/*"
+          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "WebOrigins": ["*"],
         "Attributes": {
@@ -40,15 +39,14 @@
         "ImplicitFlowEnabled": false,
         "DirectAccessGrantsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims-test.apps.silver.devops.gov.bc.ca",
+        "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca",
         "RedirectUris": [
-          "https://pims-test.pathfinder.gov.bc.ca/*",
-          "https://pims-test.apps.silver.devops.gov.bc.ca/*"
+          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": [
-          "https://pims-test.pathfinder.gov.bc.ca",
-          "https://pims-test.apps.silver.devops.gov.bc.ca"
+          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca",
+          "*"
         ],
         "ProtocolMappers": [
           {
@@ -236,10 +234,9 @@
         "DirectAccessGrantsEnabled": true,
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims-test.apps.silver.devops.gov.bc.ca/api",
+        "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api",
         "RedirectUris": [
-          "https://pims-test.pathfinder.gov.bc.ca/api/*",
-          "https://pims-test.apps.silver.devops.gov.bc.ca/api/*"
+          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": ["*"],
@@ -271,10 +268,9 @@
         "DirectAccessGrantsEnabled": true,
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": true,
-        "RootUrl": "https://pims-test.apps.silver.devops.gov.bc.ca/api",
+        "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api",
         "RedirectUris": [
-          "https://pims-test.pathfinder.gov.bc.ca/api/*",
-          "https://pims-test.apps.silver.devops.gov.bc.ca/api/*"
+          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": ["*"],

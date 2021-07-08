@@ -247,7 +247,6 @@ namespace Pims.Tools.Keycloak.Sync
         /// <returns></returns>
         private async Task<KModel.GroupModel> UpdateGroupInKeycloak(KModel.GroupModel group, PModel.RoleModel role)
         {
-
             // Update the group in keycloak.
             var response = await _client.SendJsonAsync($"{_options.Auth.Keycloak.Admin.Authority}/groups/{group.Id}", HttpMethod.Put, group);
             if (response.IsSuccessStatusCode)

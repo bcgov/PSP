@@ -54,4 +54,4 @@ parameters:
     displayName: Keycloak SSO realm
     description: Keycloak SSO realm, used by the frontend login.
     required: true
-    value: xz0xtue5
+    value: 72x8v9rw
