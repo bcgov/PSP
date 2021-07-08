@@ -135,7 +135,6 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 }
 
 .c0 .unauth .pims-logo {
-  margin-left: -300px;
   margin-bottom: 10px;
 }
 
@@ -333,7 +332,6 @@ exports[`Empty Header MOTI Login Loading 1`] = `
 }
 
 .c0 .unauth .pims-logo {
-  margin-left: -300px;
   margin-bottom: 10px;
 }
 
