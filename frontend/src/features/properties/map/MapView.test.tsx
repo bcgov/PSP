@@ -5,8 +5,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
 import { Claims, Classifications, PropertyTypes } from 'constants/index';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
@@ -24,7 +22,6 @@ import MapView from './MapView';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-Enzyme.configure({ adapter: new Adapter() });
 const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');

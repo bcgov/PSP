@@ -1,13 +1,9 @@
 import { render } from '@testing-library/react';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Form, Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
 import { FastCurrencyInput } from './FastCurrencyInput';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('FastCurrencyInput', () => {
   it('fast currency input renders correctly', () => {

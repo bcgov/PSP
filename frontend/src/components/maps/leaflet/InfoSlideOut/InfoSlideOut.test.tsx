@@ -9,8 +9,7 @@ import {
   PropertyPopUpContextProvider,
 } from 'components/maps/providers/PropertyPopUpProvider';
 import { Claims, PropertyTypes } from 'constants/index';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { Map as LeafletMap } from 'leaflet';
@@ -37,7 +36,6 @@ jest.mock('@react-keycloak/web');
   },
 });
 
-Enzyme.configure({ adapter: new Adapter() });
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
