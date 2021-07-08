@@ -60,7 +60,7 @@ namespace Pims.Dal.Helpers.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            migrationBuilder.Sql($"PRINT 'Up Scripts'");
+            migrationBuilder.Sql($"PRINT N'Up Scripts'");
 
             ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, "Up"));
         }
@@ -69,10 +69,10 @@ namespace Pims.Dal.Helpers.Migrations
         /// Execute any scripts in the migration \Up\PreUp\ folder.
         /// </summary>
         /// <param name="migrationBuilder"></param>
-        protected void PreUp(MigrationBuilder migrationBuilder)
+        protected virtual void PreUp(MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            migrationBuilder.Sql($"PRINT 'PreUp Scripts'");
+            migrationBuilder.Sql($"PRINT N'PreUp Scripts'");
 
             ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, Path.Combine("Up", "PreUp")));
         }
@@ -81,10 +81,10 @@ namespace Pims.Dal.Helpers.Migrations
         /// Execute any scripts in the migration \Up\PostUp\ folder.
         /// </summary>
         /// <param name="migrationBuilder"></param>
-        protected void PostUp(MigrationBuilder migrationBuilder)
+        protected virtual void PostUp(MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            migrationBuilder.Sql($"PRINT 'PostUp Scripts'");
+            migrationBuilder.Sql($"PRINT N'PostUp Scripts'");
 
             ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, Path.Combine("Up", "PostUp")));
         }
@@ -96,7 +96,7 @@ namespace Pims.Dal.Helpers.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            migrationBuilder.Sql($"PRINT 'Down Scripts'");
+            migrationBuilder.Sql($"PRINT N'Down Scripts'");
 
             ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, "Down"));
         }
@@ -105,10 +105,10 @@ namespace Pims.Dal.Helpers.Migrations
         /// Execute any scripts in the migration \Up\PreDown\ folder.
         /// </summary>
         /// <param name="migrationBuilder"></param>
-        protected void PreDown(MigrationBuilder migrationBuilder)
+        protected virtual void PreDown(MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            migrationBuilder.Sql($"PRINT 'PreDown Scripts'");
+            migrationBuilder.Sql($"PRINT N'PreDown Scripts'");
 
             ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, Path.Combine("Down", "PreDown")));
         }
@@ -117,10 +117,10 @@ namespace Pims.Dal.Helpers.Migrations
         /// Execute any scripts in the migration \Down\PostDown\ folder.
         /// </summary>
         /// <param name="migrationBuilder"></param>
-        protected void PostDown(MigrationBuilder migrationBuilder)
+        protected virtual void PostDown(MigrationBuilder migrationBuilder)
         {
             if (migrationBuilder == null) throw new ArgumentNullException(nameof(migrationBuilder));
-            migrationBuilder.Sql($"PRINT 'PostDown Scripts'");
+            migrationBuilder.Sql($"PRINT N'PostDown Scripts'");
 
             ScriptDeploy(migrationBuilder, Path.Combine(this.DefaultMigrationsPath, this.Version, Path.Combine("Down", "PostDown")));
         }
@@ -137,7 +137,7 @@ namespace Pims.Dal.Helpers.Migrations
 
             if (!Directory.Exists(path) && !File.Exists(path))
             {
-                migrationBuilder.Sql($"PRINT 'Script does not exist {path}.'");
+                migrationBuilder.Sql($"PRINT N'Script does not exist {path}.'");
                 return;
             }
 
@@ -163,7 +163,7 @@ namespace Pims.Dal.Helpers.Migrations
         /// <param name="path"></param>
         private void ExecuteScript(MigrationBuilder migrationBuilder, string path)
         {
-            migrationBuilder.Sql($"PRINT '---------------> {path}'");
+            migrationBuilder.Sql($"PRINT N'---------------> {path}'");
             var sql = File.ReadAllText(path).Trim();
 
             if (!String.IsNullOrEmpty(sql))

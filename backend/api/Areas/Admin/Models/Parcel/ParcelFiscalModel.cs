@@ -1,11 +1,11 @@
 namespace Pims.Api.Areas.Admin.Models.Parcel
 {
-    public class ParcelFiscalModel : Api.Models.BaseModel
+    public class ParcelFiscalModel : Api.Models.BaseAppModel
     {
         #region Properties
-        public int ParcelId { get; set; }
+        public long ParcelId { get; set; }
 
-        public int FiscalYear { get; set; }
+        public long FiscalYear { get; set; }
 
         public string Key { get; set; }
 

@@ -46,7 +46,7 @@ describe('useApiUsers api hook', () => {
       mockAxios.onGet(`/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f`).reply(200, mockUser);
 
       const api = useApiUsers();
-      const response = await api.getUser(mockUser.id!);
+      const response = await api.getUser(mockUser.key!);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual(mockUser);

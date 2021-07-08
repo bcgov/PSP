@@ -29,8 +29,6 @@ namespace Pims.Api.Test.Controllers
         {
             new object [] { new NotificationQueueFilter() { AgencyId = 1 } },
             new object [] { new NotificationQueueFilter() { Status = Entity.NotificationStatus.Accepted } },
-            new object [] { new NotificationQueueFilter() { ProjectId = 1 } },
-            new object [] { new NotificationQueueFilter() { ProjectNumber = "test" } },
             new object [] { new NotificationQueueFilter() { To = "test" } },
             new object [] { new NotificationQueueFilter() { Subject = "test" } },
             new object [] { new NotificationQueueFilter() { Body = "test" } },
@@ -38,7 +36,6 @@ namespace Pims.Api.Test.Controllers
             new object [] { new NotificationQueueFilter() { Key = Guid.NewGuid() } },
             new object [] { new NotificationQueueFilter() { MinSendOn = DateTime.MinValue } },
             new object [] { new NotificationQueueFilter() { MaxSendOn = DateTime.MaxValue } },
-            new object [] { new NotificationQueueFilter() { ProjectNumber = "test" } },
         };
 
         public static IEnumerable<object[]> NotificationQueryFilters = new List<object[]>()
@@ -170,7 +167,7 @@ namespace Pims.Api.Test.Controllers
             var mapper = helper.GetService<IMapper>();
             var template = EntityHelper.CreateNotificationTemplate(1, "test");
             var notification = EntityHelper.CreateNotificationQueue(1, template);
-            service.Setup(m => m.NotificationQueue.Get(It.IsAny<int>())).Returns(notification);
+            service.Setup(m => m.NotificationQueue.Get(It.IsAny<long>())).Returns(notification);
 
             // Act
             var result = controller.GetNotificationQueue(notification.Id);
@@ -188,14 +185,14 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<QueueController>(Permissions.ProjectView);
+            var controller = helper.CreateController<QueueController>(Permissions.AdminProjects);
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var template = EntityHelper.CreateNotificationTemplate(1, "test");
             var notification = EntityHelper.CreateNotificationQueue(1, template);
 
-            service.Setup(m => m.NotificationQueue.Get(It.IsAny<int>())).Returns(notification);
+            service.Setup(m => m.NotificationQueue.Get(It.IsAny<long>())).Returns(notification);
 
             // Act
             var result = controller.GetNotificationQueue(notification.Id);
@@ -220,7 +217,6 @@ namespace Pims.Api.Test.Controllers
             Assert.Equal(notification.CreatedOn, actualResult.CreatedOn);
             Assert.Equal(notification.UpdatedOn, actualResult.UpdatedOn);
             Assert.Equal(notification.ToAgencyId, actualResult.ToAgencyId);
-            Assert.Equal(notification.ProjectId, actualResult.ProjectId);
         }
         #endregion
 
@@ -237,7 +233,7 @@ namespace Pims.Api.Test.Controllers
             var template = EntityHelper.CreateNotificationTemplate(1, "test");
             var notification = EntityHelper.CreateNotificationQueue(1, template);
             notification.ChesMessageId = Guid.NewGuid();
-            service.Setup(m => m.NotificationQueue.Get(It.IsAny<int>())).Returns(notification);
+            service.Setup(m => m.NotificationQueue.Get(It.IsAny<long>())).Returns(notification);
             service.Setup(m => m.NotificationQueue.Update(It.IsAny<Entity.NotificationQueue>()));
             var notifyService = helper.GetService<Mock<Pims.Notifications.INotificationService>>();
             notifyService.Setup(m => m.GetStatusAsync(It.IsAny<Guid>())).ReturnsAsync(new Pims.Notifications.Models.StatusResponse() { Status = "Completed" });
@@ -260,14 +256,14 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<QueueController>(Permissions.ProjectView);
+            var controller = helper.CreateController<QueueController>(Permissions.AdminProjects);
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var template = EntityHelper.CreateNotificationTemplate(1, "test");
             var notification = EntityHelper.CreateNotificationQueue(1, template);
             notification.ChesMessageId = Guid.NewGuid();
-            service.Setup(m => m.NotificationQueue.Get(It.IsAny<int>())).Returns(notification);
+            service.Setup(m => m.NotificationQueue.Get(It.IsAny<long>())).Returns(notification);
             service.Setup(m => m.NotificationQueue.Update(It.IsAny<Entity.NotificationQueue>()));
             var notifyService = helper.GetService<Mock<Pims.Notifications.INotificationService>>();
             notifyService.Setup(m => m.GetStatusAsync(It.IsAny<Guid>())).ReturnsAsync(new Pims.Notifications.Models.StatusResponse() { Status = "Completed" });
@@ -295,7 +291,6 @@ namespace Pims.Api.Test.Controllers
             Assert.Equal(notification.CreatedOn, actualResult.CreatedOn);
             Assert.Equal(notification.UpdatedOn, actualResult.UpdatedOn);
             Assert.Equal(notification.ToAgencyId, actualResult.ToAgencyId);
-            Assert.Equal(notification.ProjectId, actualResult.ProjectId);
         }
         #endregion
         #endregion

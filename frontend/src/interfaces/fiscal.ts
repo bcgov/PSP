@@ -4,5 +4,5 @@ export interface IFiscal {
   fiscalYear?: number | '';
   key: string;
   value: number | '';
-  rowVersion?: string;
+  rowVersion?: number;
 }

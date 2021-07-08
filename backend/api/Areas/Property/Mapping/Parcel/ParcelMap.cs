@@ -34,8 +34,6 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .EnableNonPublicMembers(true)
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeId)
-                .Map(dest => dest.ProjectWorkflow, src => src.GetLatestWorkflowCode())
-                .Map(dest => dest.ProjectStatus, src => src.GetLatestProjectStatus())
                 .Map(dest => dest.PID, src => src.ParcelIdentity)
                 .Map(dest => dest.PIN, src => src.PIN)
                 .Map(dest => dest.ProjectNumbers, src => JsonSerializer.Deserialize<IEnumerable<string>>(src.ProjectNumbers ?? "[]", _serializerOptions))
@@ -63,7 +61,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
                 .Map(dest => dest.Parcels, src => src.Parcels)
                 .Map(dest => dest.Subdivisions, src => src.Subdivisions)
-                .Inherits<Entity.BaseEntity, BModel.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, BModel.BaseAppModel>();
 
             config.NewConfig<Model.ParcelModel, Entity.Parcel>()
                 .EnableNonPublicMembers(true)
@@ -90,7 +88,7 @@ namespace Pims.Api.Areas.Property.Mapping.Parcel
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
                 .Map(dest => dest.Parcels, src => src.Parcels)
                 .Map(dest => dest.Subdivisions, src => src.Subdivisions)
-                .Inherits<BModel.BaseModel, Entity.BaseEntity>();
+                .Inherits<BModel.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Model.ParcelModel, NetTopologySuite.Geometries.Point>()
                 .ConstructUsing(src => Dal.Helpers.GeometryHelper.CreatePoint(src.Longitude, src.Latitude));

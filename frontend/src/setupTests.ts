@@ -47,3 +47,4 @@ var createElementNSOrig = (global as any).document.createElementNS;
 window.scrollTo = jest.fn(); // not implemented by jsdom.
 
 configure({ adapter: new Adapter() });
+jest.setTimeout(10000);

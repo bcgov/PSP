@@ -52,16 +52,16 @@ namespace Pims.Dal.Services.Admin
         }
 
         /// <summary>
-        /// Get the user with the specified 'id'.
+        /// Get the claim with the specified 'key'.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Claim Get(Guid id)
+        public Claim Get(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            return this.Context.Claims.AsNoTracking().FirstOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+            return this.Context.Claims.AsNoTracking().FirstOrDefault(c => c.Key == key) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Pims.Dal.Services.Admin
         /// <returns></returns>
         public Claim GetByName(string name)
         {
-            return this.Context.Claims.AsNoTracking().FirstOrDefault(r => r.Name == name) ?? throw new KeyNotFoundException();
+            return this.Context.Claims.AsNoTracking().FirstOrDefault(c => c.Name == name) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Pims.Dal.Services.Admin
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
             var claims = this.Context.Claims
                 .Include(r => r.Roles)
-                .Where(r => !exclude.Contains(r.Id));
+                .Where(r => !exclude.Contains(r.Key));
             claims.ForEach(r =>
             {
                 r.Roles.Clear();

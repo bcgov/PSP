@@ -41,15 +41,15 @@ namespace Pims.Dal.Services
 
         #region Methods
         /// <summary>
-        /// Determine if the user for the specified 'id' exists in the datasource.
+        /// Determine if the user for the specified 'key' exists in the datasource.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public bool UserExists(Guid id)
+        public bool UserExists(Guid key)
         {
             this.User.ThrowIfNotAuthorized();
 
-            return this.Context.Users.Any(u => u.Id == id);
+            return this.Context.Users.Any(u => u.Key == key);
         }
 
         /// <summary>
@@ -61,9 +61,8 @@ namespace Pims.Dal.Services
         {
             this.User.ThrowIfNotAuthorized();
 
-            var id = this.User.GetUserId();
-
-            var user = this.Context.Users.Find(id);
+            var key = this.User.GetUserKey();
+            var user = this.Context.Users.FirstOrDefault(u => u.Key == key);
             var exists = user != null;
             if (!exists)
             {
@@ -76,9 +75,9 @@ namespace Pims.Dal.Services
                 var email = this.User.GetEmail() ?? _options.ServiceAccount?.Email ??
                     throw new ConfigurationException($"Configuration 'Pims:ServiceAccount:Email' is invalid or missing.");
 
-                this.Logger.LogInformation($"User Activation: id:{id}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
+                this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
-                user = new User(id, username, email, givenName, surname);
+                user = new User(key, username, email, givenName, surname);
                 this.Context.Users.Add(user);
             }
             else
@@ -88,7 +87,7 @@ namespace Pims.Dal.Services
             }
 
             this.Context.CommitTransaction();
-            if (!exists) this.Logger.LogInformation($"User Activated: '{id}' - '{user.Username}'.");
+            if (!exists) this.Logger.LogInformation($"User Activated: '{key}' - '{user.Username}'.");
             return user;
         }
 
@@ -99,16 +98,16 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public AccessRequest GetAccessRequest()
         {
-            var userId = this.User.GetUserId();
+            var key = this.User.GetUserKey();
             var accessRequest = this.Context.AccessRequests
-                .Include(a => a.Agencies)
+                .Include(a => a.AgenciesManyToMany)
                 .ThenInclude(a => a.Agency)
-                .Include(a => a.Roles)
-                .ThenInclude(r => r.Role)
+                .Include(a => a.RolesManyToMany)
+                .ThenInclude(a => a.Role)
                 .Include(a => a.User)
                 .AsNoTracking()
                 .OrderByDescending(a => a.CreatedOn)
-                .FirstOrDefault(a => a.UserId == userId && a.Status == AccessRequestStatus.OnHold);
+                .FirstOrDefault(a => a.User.Key == key && a.Status == AccessRequestStatus.OnHold);
             return accessRequest;
         }
 
@@ -117,18 +116,18 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public AccessRequest GetAccessRequest(int id)
+        public AccessRequest GetAccessRequest(long id)
         {
             var accessRequest = this.Context.AccessRequests
-                .Include(a => a.Agencies)
+                .Include(a => a.AgenciesManyToMany)
                 .ThenInclude(a => a.Agency)
-                .Include(a => a.Roles)
-                .ThenInclude(r => r.Role)
+                .Include(a => a.RolesManyToMany)
+                .ThenInclude(a => a.Role)
                 .Include(a => a.User)
                 .AsNoTracking()
                 .FirstOrDefault(a => a.Id == id) ?? throw new KeyNotFoundException();
-            var userId = this.User.GetUserId();
-            if (accessRequest.UserId != userId) throw new NotAuthorizedException();
+            var key = this.User.GetUserKey();
+            if (accessRequest.User.Key != key) throw new NotAuthorizedException();
             return accessRequest;
         }
         /// <summary>
@@ -139,13 +138,13 @@ namespace Pims.Dal.Services
         public AccessRequest DeleteAccessRequest(AccessRequest accessRequest)
         {
             var entity = Context.AccessRequests
-                             .Include(a => a.Agencies)
-                             .ThenInclude(a => a.Agency)
-                             .Include(a => a.Roles)
-                             .ThenInclude(r => r.Role)
-                             .Include(a => a.User)
-                             .AsNoTracking()
-                             .FirstOrDefault(a => a.Id == accessRequest.Id) ?? throw new KeyNotFoundException();
+                .Include(a => a.AgenciesManyToMany)
+                .ThenInclude(a => a.Agency)
+                .Include(a => a.RolesManyToMany)
+                .ThenInclude(a => a.Role)
+                .Include(a => a.User)
+                .AsNoTracking()
+                .FirstOrDefault(a => a.Id == accessRequest.Id) ?? throw new KeyNotFoundException();
             Context.AccessRequests.Remove(entity);
             Context.CommitTransaction();
 
@@ -160,20 +159,20 @@ namespace Pims.Dal.Services
         public AccessRequest AddAccessRequest(AccessRequest request)
         {
             if (request == null || request.Agencies == null || request.Roles == null) throw new ArgumentNullException(nameof(request));
-            var userId = this.User.GetUserId();
+            var key = this.User.GetUserKey();
             var position = request.User.Position;
-            request.User = this.Context.Users.Find(userId) ??
+            request.User = this.Context.Users.FirstOrDefault(u => u.Key == key) ??
                 throw new KeyNotFoundException("Your account has not been activated.");
 
-            request.UserId = userId;
+            request.UserId = request.User.Id;
             request.User.Position = position;
             this.Context.Entry(request.User).State = EntityState.Modified;
 
-            request.Agencies.ForEach((accessRequestAgency) =>
+            request.AgenciesManyToMany.ForEach((accessRequestAgency) =>
             {
                 accessRequestAgency.Agency = this.Context.Agencies.Find(accessRequestAgency.AgencyId);
             });
-            request.Roles.ForEach((accessRequestRole) =>
+            request.RolesManyToMany.ForEach((accessRequestRole) =>
             {
                 accessRequestRole.Role = this.Context.Roles.Find(accessRequestRole.RoleId);
             });
@@ -190,19 +189,18 @@ namespace Pims.Dal.Services
         public AccessRequest UpdateAccessRequest(AccessRequest request)
         {
             if (request == null || request.Agencies == null || request.Roles == null) throw new ArgumentNullException(nameof(request));
-            var userId = this.User.GetUserId();
+            var key = this.User.GetUserKey();
             var position = request.User.Position;
-            request.User = this.Context.Users.Find(userId) ??
+            request.User = this.Context.Users.FirstOrDefault(u => u.Key == key) ??
                 throw new KeyNotFoundException("Your account has not been activated.");
-
-            if (request.UserId != userId) throw new NotAuthorizedException(); // Not allowed to update someone elses request.
+            if (request.User.Key != key) throw new NotAuthorizedException(); // Not allowed to update someone elses request.
 
             // fetch the existing request from the datasource.
             var entity = this.Context.AccessRequests
-                .Include(a => a.Agencies)
+                .Include(a => a.AgenciesManyToMany)
                 .ThenInclude(a => a.Agency)
-                .Include(a => a.Roles)
-                .ThenInclude(r => r.Role)
+                .Include(a => a.RolesManyToMany)
+                .ThenInclude(a => a.Role)
                 .Include(a => a.User)
                 .FirstOrDefault(a => a.Id == request.Id) ?? throw new KeyNotFoundException();
 
@@ -213,20 +211,21 @@ namespace Pims.Dal.Services
             }
 
             // Remove agencies and roles if required.
-            var removeAgencies = entity.Agencies.Except(request.Agencies, new AccessRequestAgencyAgencyIdComparer());
-            if (removeAgencies.Any()) entity.Agencies.RemoveAll(a => removeAgencies.Any(r => r.AgencyId == a.AgencyId));
+            var removeAgencies = entity.AgenciesManyToMany.Except(request.AgenciesManyToMany, new AccessRequestAgencyAgencyIdComparer());
+            if (removeAgencies.Any()) entity.AgenciesManyToMany.RemoveAll(a => removeAgencies.Any(r => r.AgencyId == a.AgencyId));
 
-            var removeRoles = entity.Roles.Except(request.Roles, new AccessRequestRoleRoleIdComparer());
-            if (removeRoles.Any()) entity.Roles.RemoveAll(a => removeRoles.Any(r => r.RoleId == a.RoleId));
+            var removeRoles = entity.RolesManyToMany.Except(request.RolesManyToMany, new AccessRequestRoleRoleIdComparer());
+            if (removeRoles.Any()) entity.RolesManyToMany.RemoveAll(a => removeRoles.Any(r => r.RoleId == a.RoleId));
 
             // Add agencies and roles if required.
-            var addAgencies = request.Agencies.Except(entity.Agencies, new AccessRequestAgencyAgencyIdComparer());
-            addAgencies.ForEach(a => entity.Agencies.Add(a));
+            var addAgencies = request.AgenciesManyToMany.Except(entity.AgenciesManyToMany, new AccessRequestAgencyAgencyIdComparer());
+            addAgencies.ForEach(a => entity.AgenciesManyToMany.Add(a));
 
-            var addRoles = request.Roles.Except(entity.Roles, new AccessRequestRoleRoleIdComparer());
-            addRoles.ForEach(r => entity.Roles.Add(r));
+            var addRoles = request.RolesManyToMany.Except(entity.RolesManyToMany, new AccessRequestRoleRoleIdComparer());
+            addRoles.ForEach(r => entity.RolesManyToMany.Add(r));
 
             // Copy values into entity.
+            request.UserId = entity.UserId;
             this.Context.Entry(entity).CurrentValues.SetValues(request);
             this.Context.SetOriginalRowVersion(entity);
 
@@ -243,15 +242,14 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<int> GetAgencies(Guid userId)
+        public IEnumerable<long> GetAgencies(Guid userId)
         {
             var user = this.Context.Users
                 .Include(u => u.Agencies)
-                .ThenInclude(a => a.Agency)
                 .ThenInclude(a => a.Children)
-                .Single(u => u.Id == userId) ?? throw new KeyNotFoundException();
-            var agencies = user.Agencies.Select(a => a.AgencyId).ToList();
-            agencies.AddRange(user.Agencies.SelectMany(a => a.Agency?.Children.Where(ac => !ac.IsDisabled)).Select(a => a.Id));
+                .Single(u => u.Key == userId) ?? throw new KeyNotFoundException();
+            var agencies = user.Agencies.Select(a => a.Id).ToList();
+            agencies.AddRange(user.Agencies.SelectMany(a => a.Children.Where(ac => !ac.IsDisabled)).Select(a => a.Id));
 
             return agencies.ToArray();
         }
@@ -261,14 +259,14 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="agencies"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetAdmininstrators(params int[] agencies)
+        public IEnumerable<User> GetAdmininstrators(params long[] agencies)
         {
             if (agencies == null) throw new ArgumentNullException(nameof(agencies));
 
             return this.Context.Users
                 .AsNoTracking()
-                .Where(u => u.Roles.Any(r => r.Role.Claims.Any(c => c.Claim.Name == Permissions.SystemAdmin.GetName()))
-                    || (u.Agencies.Any(a => agencies.Contains(a.AgencyId)) && u.Roles.Any(r => r.Role.Claims.Any(c => c.Claim.Name == Permissions.AgencyAdmin.GetName())))
+                .Where(u => u.Roles.Any(r => r.Claims.Any(c => c.Name == Permissions.SystemAdmin.GetName()))
+                    || (u.Agencies.Any(a => agencies.Contains(a.Id)) && u.Roles.Any(r => r.Claims.Any(c => c.Name == Permissions.AgencyAdmin.GetName())))
                 );
         }
         #endregion

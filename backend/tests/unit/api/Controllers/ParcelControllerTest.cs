@@ -29,7 +29,7 @@ namespace Pims.Api.Test.Controllers
             {
                 new object[] { new ParcelFilter(50, 25, 50, 20) },
                 new object[] { new ParcelFilter(50, 25, 50, 25) },
-                new object[] { new ParcelFilter() { Agencies = new int[] { 3 } } },
+                new object[] { new ParcelFilter() { Agencies = new long[] { 3 } } },
                 new object[] { new ParcelFilter() { ClassificationId = 2 } },
                 new object[] { new ParcelFilter() { Description = "test" } },
                 new object[] { new ParcelFilter() { AdministrativeArea = "test" } },
@@ -71,7 +71,7 @@ namespace Pims.Api.Test.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var expectedTestParcel = new Entity.Parcel(1, 45, 45);
-            service.Setup(m => m.Parcel.Get(It.IsAny<int>())).Returns(expectedTestParcel);
+            service.Setup(m => m.Parcel.Get(It.IsAny<long>())).Returns(expectedTestParcel);
             int expectedParcelId = 1;
 
             // Act
@@ -102,7 +102,7 @@ namespace Pims.Api.Test.Controllers
             parcel.Zoning = "Zoning";
             parcel.ZoningPotential = "ZoningPotential";
             parcel.IsSensitive = false;
-            service.Setup(m => m.Parcel.Get(It.IsAny<int>())).Returns(parcel);
+            service.Setup(m => m.Parcel.Get(It.IsAny<long>())).Returns(parcel);
             int expectedParcelId = 1;
 
             // Act
@@ -217,7 +217,7 @@ namespace Pims.Api.Test.Controllers
 
             var service = helper.GetService<Mock<IPimsService>>();
             var expectedResults = new Model.CheckPidAvailabilityResponseModel { Available = true };
-            service.Setup(m => m.Parcel.IsPidAvailable(It.IsAny<int>(), It.IsAny<int>()))
+            service.Setup(m => m.Parcel.IsPidAvailable(It.IsAny<long>(), It.IsAny<int>()))
                 .Returns(true);
 
             // Act
@@ -242,7 +242,7 @@ namespace Pims.Api.Test.Controllers
 
             var service = helper.GetService<Mock<IPimsService>>();
             var expectedResults = new Model.CheckPidAvailabilityResponseModel { Available = true };
-            service.Setup(m => m.Parcel.IsPinAvailable(It.IsAny<int>(), It.IsAny<int>()))
+            service.Setup(m => m.Parcel.IsPinAvailable(It.IsAny<long>(), It.IsAny<int>()))
                 .Returns(true);
 
             // Act

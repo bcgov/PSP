@@ -324,7 +324,7 @@ namespace Pims.Dal.Test.Libraries.Notifications
             var service = helper.Create<NotificationService>();
 
             var template = EntityHelper.CreateNotificationTemplate(1, "template", "subject", "body");
-            template.RowVersion = EntityHelper.GenerateRowVersion("anonymous-test");
+            template.RowVersion = 1;
             var notification = EntityHelper.CreateNotificationQueue(1, template);
 
             var model = new { Id = 1, Name = "Name" };
@@ -346,8 +346,8 @@ namespace Pims.Dal.Test.Libraries.Notifications
             var helper = new TestHelper();
             var service = helper.Create<NotificationService>();
 
-            var template = EntityHelper.CreateNotificationTemplate(1, "template", "subject @Model.Id @Model.Name", "body @Model.Id @Model.Name");
-            template.RowVersion = EntityHelper.GenerateRowVersion("model-test");
+            var template = EntityHelper.CreateNotificationTemplate(2, "template", "subject @Model.Id @Model.Name", "body @Model.Id @Model.Name");
+            template.RowVersion = 1;
             var notification = EntityHelper.CreateNotificationQueue(1, template);
 
             var model = new { Id = 1, Name = "Name" };
@@ -426,12 +426,13 @@ namespace Pims.Dal.Test.Libraries.Notifications
             var key = "type-template";
             var template = new EmailTemplate()
             {
-                Subject = "subject @Model.Id @Model.Username",
-                Body = "body @Model.Id @Model.Username"
+                Subject = "subject @Model.Id @Model.Key @Model.Username",
+                Body = "body @Model.Id @Model.Key @Model.Username"
             };
             var model = new User()
             {
-                Id = guid,
+                Id = 1,
+                Key = guid,
                 Username = "username"
             };
 
@@ -440,9 +441,9 @@ namespace Pims.Dal.Test.Libraries.Notifications
 
             // Assert
             template.Subject.Should().NotBeNull();
-            template.Subject.Should().Be($"subject {guid} username");
+            template.Subject.Should().Be($"subject 1 {guid} username");
             template.Body.Should().NotBeNull();
-            template.Body.Should().Be($"body {guid} username");
+            template.Body.Should().Be($"body 1 {guid} username");
         }
         #endregion
         #endregion

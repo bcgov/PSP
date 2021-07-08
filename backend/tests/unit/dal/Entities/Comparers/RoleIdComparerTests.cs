@@ -16,14 +16,13 @@ namespace Pims.Dal.Test.Entities
     public class RoleIdComparerTest
     {
         #region Variables
-        static Guid roleId = Guid.NewGuid();
         public static IEnumerable<object[]> Roles =>
             new List<object[]>
             {
                 new object[] { new Role(), new Role(), true },
                 new object[] { new Role(Guid.Empty, "name"), new Role(Guid.Empty, "name"), true },
-                new object[] { new Role() { Id = roleId }, new Role() { Id = roleId }, true },
-                new object[] { new Role() { Id = Guid.NewGuid() }, new Role() { Id = Guid.NewGuid() }, false },
+                new object[] { new Role() { Id = 1 }, new Role() { Id = 1 }, true },
+                new object[] { new Role() { Id = 1 }, new Role() { Id = 2 }, false },
                 new object[] { null, new Role(), false },
                 new object[] { new Role(), null, false },
                 new object[] { null, null, false },

@@ -43,7 +43,7 @@ namespace Pims.Api.Test.Controllers.Property
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Parcel.Get(It.IsAny<int>())).Returns(parcel);
+            service.Setup(m => m.Parcel.Get(It.IsAny<long>())).Returns(parcel);
 
             // Act
             var result = controller.GetParcel(1);
@@ -53,7 +53,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<SModel.ParcelModel>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.ParcelModel>(parcel);
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Parcel.Get(It.IsAny<int>()), Times.Once());
+            service.Verify(m => m.Parcel.Get(It.IsAny<long>()), Times.Once());
         }
         #endregion
 
@@ -122,7 +122,7 @@ namespace Pims.Api.Test.Controllers.Property
             var controller = helper.CreateController<ParcelController>(Permissions.PropertyView);
             var service = helper.GetService<Mock<IPimsService>>();
 
-            service.Setup(m => m.Parcel.IsPidAvailable(It.IsAny<int>(), It.IsAny<int>())).Returns(true);
+            service.Setup(m => m.Parcel.IsPidAvailable(It.IsAny<long>(), It.IsAny<int>())).Returns(true);
 
             // Act
             var result = controller.IsPidAvailable(1, 1);
@@ -132,7 +132,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<SModel.CheckPidAvailabilityResponseModel>(actionResult.Value);
             var expectedResult = new SModel.CheckPidAvailabilityResponseModel() { Available = true };
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Parcel.IsPidAvailable(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
+            service.Verify(m => m.Parcel.IsPidAvailable(It.IsAny<long>(), It.IsAny<int>()), Times.Once());
         }
         #endregion
 
@@ -145,7 +145,7 @@ namespace Pims.Api.Test.Controllers.Property
             var controller = helper.CreateController<ParcelController>(Permissions.PropertyView);
             var service = helper.GetService<Mock<IPimsService>>();
 
-            service.Setup(m => m.Parcel.IsPinAvailable(It.IsAny<int>(), It.IsAny<int>())).Returns(true);
+            service.Setup(m => m.Parcel.IsPinAvailable(It.IsAny<long>(), It.IsAny<int>())).Returns(true);
 
             // Act
             var result = controller.IsPinAvailable(1, 1);
@@ -155,7 +155,7 @@ namespace Pims.Api.Test.Controllers.Property
             var actualResult = Assert.IsType<SModel.CheckPidAvailabilityResponseModel>(actionResult.Value);
             var expectedResult = new SModel.CheckPidAvailabilityResponseModel() { Available = true };
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Parcel.IsPinAvailable(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
+            service.Verify(m => m.Parcel.IsPinAvailable(It.IsAny<long>(), It.IsAny<int>()), Times.Once());
         }
         #endregion
 

@@ -10,7 +10,7 @@ namespace Pims.Api.Areas.Tools.Models.Geocoder
         public string ProvinceCode { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public int Score { get; set; }
+        public long Score { get; set; }
         #endregion
     }
 }

@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Building class, provides an entity for the datamodel to manage buildings.
     /// </summary>
+    [MotiTable("PIMS_BUILDING", "BUILDG")]
     public class Building : Property
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify building.
+        /// </summary>
+        [Column("BUILDING_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The foreign key to the property building construction type.
         /// </summary>
-        public int BuildingConstructionTypeId { get; set; }
+        [Column("BUILDING_CONSTRUCTION_TYPE_ID")]
+        public long BuildingConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - The building construction type for this property.
@@ -22,12 +31,14 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The number of floors in the building.
         /// </summary>
+        [Column("BUILDING_FLOOR_COUNT")]
         public int BuildingFloorCount { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the building predominant use.
         /// </summary>
-        public int BuildingPredominateUseId { get; set; }
+        [Column("BUILDING_PREDOMINATE_USE_ID")]
+        public long BuildingPredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - The building predominant use for this building.
@@ -37,27 +48,32 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The type of tenancy for this building.
         /// </summary>
+        [Column("BUILDING_TENANCY")]
         public string BuildingTenancy { get; set; }
 
         /// <summary>
         /// get/set - The date the building tenancy was last updated.
         /// </summary>
+        [Column("BUILDING_TENANCY_UPDATED_ON")]
         public DateTime? BuildingTenancyUpdatedOn { get; set; }
 
         /// <summary>
         /// get/set - The building rentable area.
         /// </summary>
+        [Column("RENTABLE_AREA")]
         public float RentableArea { get; set; }
 
         /// <summary>
         /// get/set - The building total area.
         /// </summary>
+        [Column("TOTAL_AREA")]
         public float TotalArea { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the building occupant type.
         /// </summary>
-        public int BuildingOccupantTypeId { get; set; }
+        [Column("BUILDING_OCCUPANT_TYPE_ID")]
+        public long BuildingOccupantTypeId { get; set; }
 
         /// <summary>
         /// get/set - The type of occupant for this building.
@@ -67,27 +83,36 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The expiry date of the currently active lease
         /// </summary>
+        [Column("LEASE_EXPIRY")]
         public DateTime? LeaseExpiry { get; set; }
 
         /// <summary>
         /// get/set - The name of the occupant/organization
         /// </summary>
+        [Column("OCCUPANT_NAME")]
         public string OccupantName { get; set; }
 
         /// <summary>
         /// get/set - Whether the lease on this building would be transferred if the building is sold.
         /// </summary>
+        [Column("TRANSFER_LEASE_ON_SALE")]
         public bool TransferLeaseOnSale { get; set; } = false;
 
         /// <summary>
         /// get/set - Metadata related to the buildings leased status.
         /// </summary>
+        [Column("LEASED_LAND_METADATA")]
         public string LeasedLandMetadata { get; set; }
 
         /// <summary>
         /// get - A collection of parcels this building is located on.
         /// </summary>
-        public ICollection<ParcelBuilding> Parcels { get; } = new List<ParcelBuilding>();
+        public ICollection<Parcel> Parcels { get; } = new List<Parcel>();
+
+        /// <summary>
+        /// get - Collection of many-to-many relational entities to support the relationship to users.
+        /// </summary>
+        public ICollection<ParcelBuilding> ParcelsManyToMany { get; } = new List<ParcelBuilding>();
 
         /// <summary>
         /// get - A collection of evaluations for this building.
@@ -100,18 +125,19 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <typeparam name="BuildingFiscals"></typeparam>
         public ICollection<BuildingFiscal> Fiscals { get; } = new List<BuildingFiscal>();
-
-        /// <summary>
-        /// get - A collection of projects this building is assocated to.
-        /// </summary>
-        public ICollection<ProjectProperty> Projects { get; } = new List<ProjectProperty>();
         #endregion
 
         #region Constructors
         /// <summary>
         /// Create a new instance of a Building class.
         /// </summary>
-        public Building() { }
+        public Building()
+        {
+            this.PropertyTypeId = (long)PropertyTypes.Building;
+            this.BuildingOccupantTypeId = 1L;
+            this.BuildingConstructionTypeId = 1L;
+            this.BuildingPredominateUseId = 1L;
+        }
 
         /// <summary>
         /// Create a new instance of a Building class.
@@ -123,9 +149,13 @@ namespace Pims.Dal.Entities
         {
             if (parcel != null)
             {
-                var pb = new ParcelBuilding(parcel, this);
-                this.Parcels.Add(pb);
+                this.Parcels.Add(parcel);
             }
+            this.PropertyTypeId = (long)PropertyTypes.Building;
+            this.BuildingOccupantTypeId = 1L;
+            this.BuildingConstructionTypeId = 1L;
+            this.BuildingPredominateUseId = 1L;
+
         }
         #endregion
     }

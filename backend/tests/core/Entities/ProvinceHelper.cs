@@ -12,11 +12,12 @@ namespace Pims.Core.Test
         /// Create a new instance of a Province.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="code"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static Entity.Province CreateProvince(string id, string name)
+        public static Entity.Province CreateProvince(long id, string code, string name)
         {
-            return new Entity.Province(id, name) { RowVersion = new byte[] { 12, 13, 14 } };
+            return new Entity.Province(code, name) { Id = id, RowVersion = 1 };
         }
 
         /// <summary>
@@ -27,8 +28,8 @@ namespace Pims.Core.Test
         {
             return new List<Entity.Province>()
             {
-                new Entity.Province("ON", "Ontario") { RowVersion = new byte[] { 12, 13, 14 } },
-                new Entity.Province("BC", "British Columbia") { RowVersion = new byte[] { 12, 13, 14 } },
+                new Entity.Province("ON", "Ontario") { Id = 1, RowVersion = 1 },
+                new Entity.Province("BC", "British Columbia") { Id = 2,  RowVersion = 1 },
             };
         }
     }

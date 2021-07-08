@@ -33,9 +33,9 @@ namespace Pims.Dal.Test.Entities
             var roleClaim = new RoleClaim();
 
             // Assert
-            roleClaim.RoleId.Should().BeEmpty();
+            roleClaim.RoleId.Should().Be(0);
             roleClaim.Role.Should().BeNull();
-            roleClaim.ClaimId.Should().BeEmpty();
+            roleClaim.ClaimId.Should().Be(0);
             roleClaim.Claim.Should().BeNull();
         }
 
@@ -43,16 +43,13 @@ namespace Pims.Dal.Test.Entities
         public void RoleClaim_Constructor_01()
         {
             // Arrange
-            var rid = Guid.NewGuid();
-            var cid = Guid.NewGuid();
-
             // Act
-            var roleClaim = new RoleClaim(rid, cid);
+            var roleClaim = new RoleClaim(1, 2);
 
             // Assert
-            roleClaim.RoleId.Should().Be(rid);
+            roleClaim.RoleId.Should().Be(1);
             roleClaim.Role.Should().BeNull();
-            roleClaim.ClaimId.Should().Be(cid);
+            roleClaim.ClaimId.Should().Be(2);
             roleClaim.Claim.Should().BeNull();
         }
 

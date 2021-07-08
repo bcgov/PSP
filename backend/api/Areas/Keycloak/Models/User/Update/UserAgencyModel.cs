@@ -10,7 +10,7 @@ namespace Pims.Api.Areas.Keycloak.Models.User.Update
         /// get/set - The unique identify for the agency.
         /// </summary>
         /// <value></value>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The unique name to identify the agency.

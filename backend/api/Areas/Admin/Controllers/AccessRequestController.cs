@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using EModel = Pims.Dal.Entities.Models;
 using Entity = Pims.Dal.Entities;
 using IUserService = Pims.Dal.Services.IUserService;
-using Model = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Areas.Admin.Models.AccessRequest;
 using PModel = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Admin.Controllers
@@ -90,7 +90,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-access-requests" })]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes ({id})")]
-        public IActionResult Delete(int id, [FromBody] Model.AccessRequestModel accessRequestModel)
+        public IActionResult Delete(long id, [FromBody] Model.AccessRequestModel accessRequestModel)
         {
             var entity = _mapper.Map<Entity.AccessRequest>(accessRequestModel);
             _userService.DeleteAccessRequest(entity);

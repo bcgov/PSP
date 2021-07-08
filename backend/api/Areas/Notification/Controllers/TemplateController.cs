@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationTemplateModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public IActionResult GetNotificationTemplate(int id)
+        public IActionResult GetNotificationTemplate(long id)
         {
             var template = _pimsService.NotificationTemplate.Get(id);
             return new JsonResult(_mapper.Map<NotificationTemplateModel>(template));
@@ -129,31 +129,6 @@ namespace Pims.Api.Areas.Notification.Controllers
         {
             _pimsService.NotificationTemplate.Remove(_mapper.Map<Entity.NotificationTemplate>(model));
             return new JsonResult(model);
-        }
-
-        /// <summary>
-        /// Send an email for the specified notification template 'templateId' to the specified list of email addresses in 'to'.
-        /// </summary>
-        /// <param name="templateId"></param>
-        /// <param name="to"></param>
-        /// <param name="cc"></param>
-        /// <param name="bcc"></param>
-        /// <param name="projectId"></param>
-        /// <returns></returns>
-        [HttpPost("{templateId}/projects/{projectId}")]
-        [HasPermission(Permissions.SystemAdmin)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Queue.NotificationQueueModel), 201)]
-        [ProducesResponseType(typeof(ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "notification" })]
-        public async Task<IActionResult> SendProjectNotificationAsync(int templateId, string to, string cc, string bcc, int projectId)
-        {
-            var project = _pimsService.Project.Get(projectId);
-            var env = new Entity.Models.EnvironmentModel(_options.Environment.Uri, _options.Environment.Name, _options.Environment.Title);
-            var model = new Entity.Models.ProjectNotificationModel(Guid.NewGuid(), env, project, project.Agency);
-            var notification = await _pimsService.NotificationTemplate.SendNotificationAsync(templateId, to, cc, bcc, model);
-
-            return CreatedAtAction(nameof(QueueController.GetNotificationQueue), new { controller = "queue", id = notification.Id }, _mapper.Map<Models.Queue.NotificationQueueModel>(notification));
         }
         #endregion
     }

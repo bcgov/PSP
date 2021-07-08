@@ -65,18 +65,18 @@ namespace Pims.Api.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// GET - Returns a claim for the specified 'id' from the datasource.
+        /// GET - Returns a claim for the specified 'key' from the datasource.
         /// </summary>
-        /// <param name="id">The unique 'id' for the claim to return.</param>
+        /// <param name="key">The unique 'key' for the claim to return.</param>
         /// <returns>The claim requested.</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.ClaimModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        public IActionResult GetClaim(Guid id)
+        public IActionResult GetClaim(Guid key)
         {
-            var entity = _pimsAdminService.Claim.Get(id);
+            var entity = _pimsAdminService.Claim.Get(key);
             var claim = _mapper.Map<Model.ClaimModel>(entity);
             return new JsonResult(claim);
         }
@@ -103,16 +103,16 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// PUT - Update the claim in the datasource.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <param name="model">The claim model.</param>
         /// <returns>The claim updated.</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.ClaimModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is required for route.")]
-        public IActionResult UpdateClaim(Guid id, [FromBody] Model.ClaimModel model)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        public IActionResult UpdateClaim(Guid key, [FromBody] Model.ClaimModel model)
         {
             var entity = _mapper.Map<Claim>(model);
             _pimsAdminService.Claim.Update(entity);
@@ -124,16 +124,16 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// DELETE - Delete the claim from the datasource.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <param name="model">The claim model.</param>
         /// <returns>The claim who was deleted.</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{key}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.ClaimModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is required for route.")]
-        public IActionResult DeleteClaim(Guid id, [FromBody] Model.ClaimModel model)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        public IActionResult DeleteClaim(Guid key, [FromBody] Model.ClaimModel model)
         {
             var entity = _mapper.Map<Claim>(model);
             _pimsAdminService.Claim.Remove(entity);

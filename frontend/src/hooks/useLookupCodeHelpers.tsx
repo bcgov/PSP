@@ -15,9 +15,9 @@ import { useKeycloakWrapper } from './useKeycloakWrapper';
 export function useLookupCodeHelpers() {
   const keycloak = useKeycloakWrapper();
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
-  const getCodeById = (type: string, id: string): string | undefined => {
+  const getCodeById = (type: string, id: number): string | undefined => {
     return lookupCodes
-      .filter((code: { type: string; id: string }) => code.type === type && code.id === id)
+      .filter((code: { type: string; id: number }) => code.type === type && code.id === id)
       ?.find((x: any) => x)?.code;
   };
 

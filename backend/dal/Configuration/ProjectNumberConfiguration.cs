@@ -7,18 +7,13 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// ProjectNumberConfiguration class, provides a way to configure project numbers in the database.
     ///</summary>
-    public class ProjectNumberConfiguration : BaseEntityConfiguration<ProjectNumber>
+    public class ProjectNumberConfiguration : IEntityTypeConfiguration<ProjectNumber>
     {
         #region Methods
-        public override void Configure(EntityTypeBuilder<ProjectNumber> builder)
+        public void Configure(EntityTypeBuilder<ProjectNumber> builder)
         {
-            builder.ToTable("ProjectNumbers");
-
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).IsRequired();
-            builder.Property(m => m.Id).ValueGeneratedOnAdd();
-
-            base.Configure(builder);
+            builder.HasNoKey().ToView(null)
+                .ToSqlQuery("SELECT NEXT VALUE FOR dbo.[PIMS_PROJECT_NUMBER_SEQ]");
         }
         #endregion
     }

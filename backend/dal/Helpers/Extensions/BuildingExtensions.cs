@@ -28,7 +28,7 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 return;
             }
-            var parcelBuildings = context.Parcels.Where(p => p.Id == parcel.Id).SelectMany(p => p.Buildings).Where(b => b.BuildingId != building.Id).Select(b => b.Building.Name).Distinct().ToArray();
+            var parcelBuildings = context.Parcels.Where(p => p.Id == parcel.Id).SelectMany(p => p.Buildings).Where(b => b.Id != building.Id).Select(b => b.Name).Distinct().ToArray();
             var alreadyExists = parcelBuildings.Contains(building.Name);
             if (alreadyExists) throw new DbUpdateException("A building name must be unique on the parcel.");
         }
@@ -70,8 +70,8 @@ namespace Pims.Dal.Helpers.Extensions
             if (filter.Agencies?.Any() == true)
             {
                 // Get list of sub-agencies for any agency selected in the filter.
-                var filterAgencies = filter.Agencies.Select(a => (int?)a);
-                var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (int?)ac.Id)).ToArray()).Distinct();
+                var filterAgencies = filter.Agencies.Select(a => (long?)a);
+                var agencies = filterAgencies.Concat(context.Agencies.AsNoTracking().Where(a => filterAgencies.Contains(a.Id)).SelectMany(a => a.Children.Select(ac => (long?)ac.Id)).ToArray()).Distinct();
                 query = query.Where(p => agencies.Contains(p.AgencyId));
             }
             if (filter.ClassificationId.HasValue)
@@ -90,11 +90,11 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(b => EF.Functions.Like(b.BuildingTenancy, $"%{filter.Tenancy}%"));
 
             if (!String.IsNullOrWhiteSpace(filter.AdministrativeArea))
-                query = query.Where(b => b.Parcels.Any(p => EF.Functions.Like(p.Parcel.Address.AdministrativeArea, $"%{filter.AdministrativeArea}%")));
+                query = query.Where(b => b.Parcels.Any(p => EF.Functions.Like(p.Address.AdministrativeArea, $"%{filter.AdministrativeArea}%")));
             if (!String.IsNullOrWhiteSpace(filter.Zoning))
-                query = query.Where(b => b.Parcels.Any(p => EF.Functions.Like(p.Parcel.Zoning, $"%{filter.Zoning}%")));
+                query = query.Where(b => b.Parcels.Any(p => EF.Functions.Like(p.Zoning, $"%{filter.Zoning}%")));
             if (!String.IsNullOrWhiteSpace(filter.ZoningPotential))
-                query = query.Where(b => b.Parcels.Any(p => EF.Functions.Like(p.Parcel.ZoningPotential, $"%{filter.ZoningPotential}%")));
+                query = query.Where(b => b.Parcels.Any(p => EF.Functions.Like(p.ZoningPotential, $"%{filter.ZoningPotential}%")));
 
             if (!String.IsNullOrWhiteSpace(filter.Address)) // TODO: Parse the address information by City, Postal, etc.
                 query = query.Where(b => EF.Functions.Like(b.Address.Address1, $"%{filter.Address}%") || EF.Functions.Like(b.Address.AdministrativeArea, $"%{filter.Address}%"));
@@ -151,7 +151,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string[] GetZoning(this Entity.Building building)
         {
-            return building.Parcels.Select(p => p.Parcel.Zoning).Where(s => !String.IsNullOrWhiteSpace(s)).ToArray();
+            return building.Parcels.Select(p => p.Zoning).Where(s => !String.IsNullOrWhiteSpace(s)).ToArray();
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string[] GetZoningPotential(this Entity.Building building)
         {
-            return building.Parcels.Select(p => p.Parcel.ZoningPotential).Where(s => !String.IsNullOrWhiteSpace(s)).ToArray();
+            return building.Parcels.Select(p => p.ZoningPotential).Where(s => !String.IsNullOrWhiteSpace(s)).ToArray();
         }
 
         /// <summary>
@@ -199,9 +199,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="building"></param>
         /// <returns></returns>
-        public static int? GetParcelId(this Entity.Building building)
+        public static long? GetParcelId(this Entity.Building building)
         {
-            return building.Parcels.FirstOrDefault()?.ParcelId;
+            return building.Parcels.FirstOrDefault()?.Id;
         }
 
         /// <summary>
@@ -217,17 +217,18 @@ namespace Pims.Dal.Helpers.Extensions
 
             foreach (var buildingEvaluation in buildingEvaluations)
             {
-                var existingEvaluation = building.Evaluations
+                var originalEvaluation = building.Evaluations
                     .FirstOrDefault(e => e.Date == buildingEvaluation.Date && e.Key == buildingEvaluation.Key);
-                var updateEvaluation = existingEvaluation?.Value != buildingEvaluation.Value;
+                var updateEvaluation = originalEvaluation?.Value != buildingEvaluation.Value;
 
-                if (existingEvaluation == null)
+                if (originalEvaluation == null)
                 {
                     building.Evaluations.Add(buildingEvaluation);
                 }
                 else if (updateEvaluation)
                 {
-                    context.Entry(existingEvaluation).CurrentValues.SetValues(buildingEvaluation);
+                    originalEvaluation.Value = buildingEvaluation.Value;
+                    originalEvaluation.Note = buildingEvaluation.Note;
                 }
             }
             foreach (var buildingFiscal in buildingFiscals)
@@ -242,7 +243,9 @@ namespace Pims.Dal.Helpers.Extensions
                 }
                 else if (updateFiscal)
                 {
-                    context.Entry(originalBuildingFiscal).CurrentValues.SetValues(buildingFiscal);
+                    originalBuildingFiscal.Value = buildingFiscal.Value;
+                    originalBuildingFiscal.Note = buildingFiscal.Note;
+                    originalBuildingFiscal.EffectiveDate = buildingFiscal.EffectiveDate;
                 }
             }
         }

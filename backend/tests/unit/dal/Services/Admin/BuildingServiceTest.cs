@@ -61,7 +61,7 @@ namespace Pims.Dal.Test.Services.Admin
             var buildings = init.CreateBuildings(parcel, 1, 20);
             buildings.Next(0).Location.Y = 50;
             buildings.Next(0).Location.X = 25;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";

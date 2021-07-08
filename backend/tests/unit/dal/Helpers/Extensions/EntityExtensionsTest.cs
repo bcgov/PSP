@@ -26,7 +26,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             parcel.ThrowIfNotAllowedToEdit("paramName", user, "role");
@@ -42,25 +42,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
             Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Parcel)null, "paramName", user, "role"));
-        }
-
-        [Fact]
-        public void ThrowIfNotAllowedToEdit_Role_RowVersionMissingException()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = helper.CreateForRole("role");
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = null;
-
-            // Act
-            // Assert
-            Assert.Throws<RowVersionMissingException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, "role"));
         }
 
         [Fact]
@@ -70,7 +56,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
@@ -86,7 +72,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.PropertyEdit);
@@ -102,25 +88,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
             Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Parcel)null, "paramName", user, Permissions.PropertyEdit));
-        }
-
-        [Fact]
-        public void ThrowIfNotAllowedToEdit_Permission_RowVersionMissingException()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = null;
-
-            // Act
-            // Assert
-            Assert.Throws<RowVersionMissingException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.PropertyEdit));
         }
 
         [Fact]
@@ -130,11 +102,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.ProjectEdit));
+            Assert.Throws<NotAuthorizedException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, Permissions.AdminProjects));
         }
         #endregion
 
@@ -146,7 +118,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             parcel.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd });
@@ -162,25 +134,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
             Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Parcel)null, "paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }));
-        }
-
-        [Fact]
-        public void ThrowIfNotAllowedToEdit_Permissions_RowVersionMissingException()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = helper.CreateForPermission(Permissions.PropertyEdit);
-            var parcel = EntityHelper.CreateParcel(123);
-            parcel.RowVersion = null;
-
-            // Act
-            // Assert
-            Assert.Throws<RowVersionMissingException>(() => parcel.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }));
         }
 
         [Fact]
@@ -190,7 +148,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
@@ -204,7 +162,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var parcel = EntityHelper.CreateParcel(123);
-            parcel.SetRowVersion("value");
+            parcel.RowVersion = 1;
 
             // Act
             // Assert
@@ -222,7 +180,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var context = helper.InitializeDatabase(user);
             var parcel = context.CreateParcel(123);
             context.SaveChanges();
-            parcel.SetRowVersion("test");
+            parcel.RowVersion = 2;
 
             // Act
             parcel.SetOriginalRowVersion(context);

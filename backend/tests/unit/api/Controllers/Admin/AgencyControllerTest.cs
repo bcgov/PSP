@@ -89,7 +89,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsAdminService>>();
             var agency = EntityHelper.CreateAgency(1, "agency1");
-            service.Setup(m => m.Agency.Get(It.IsAny<int>())).Returns(agency);
+            service.Setup(m => m.Agency.Get(It.IsAny<long>())).Returns(agency);
 
             // Act
             var result = controller.GetAgency(agency.Id);

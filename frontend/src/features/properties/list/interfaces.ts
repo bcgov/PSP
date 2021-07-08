@@ -126,19 +126,19 @@ export interface IFlatProperty {
   // Financial Values
   market: number | '';
   marketFiscalYear?: number;
-  marketRowVersion?: string;
+  marketRowVersion?: number;
   netBook: number | '';
   netBookFiscalYear?: number;
-  netBookRowVersion?: string;
+  netBookRowVersion?: number;
 
   assessedLand?: number | '';
   assessedLandDate?: Date | string;
   assessedLandFirm?: string;
-  assessedLandRowVersion?: string;
+  assessedLandRowVersion?: number;
   assessedBuilding?: number | '';
   assessedBuildingDate?: Date | string;
   assessedBuildingFirm?: string;
-  assessedBuildingRowVersion?: string;
+  assessedBuildingRowVersion?: number;
 
   // Parcel Properties
   landArea: number;
@@ -161,7 +161,7 @@ export interface IFlatProperty {
   leaseExpiry?: Date | string;
   transferLeaseOnSale?: boolean;
   rentableArea?: number;
-  rowVersion?: string;
+  rowVersion?: number;
 }
 
 export interface IApiProperty {
@@ -190,6 +190,6 @@ export interface IApiProperty {
   buildings: IBuilding[];
   evaluations: IEvaluation[];
   fiscals: IFiscal[];
-  rowVersion?: string;
   parcels?: IParentParcel[];
+  rowVersion?: number;
 }

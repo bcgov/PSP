@@ -30,7 +30,7 @@ namespace Pims.Dal.Services
         /// <param name="service"></param>
         /// <param name="notifyService"></param>
         /// <param name="logger"></param>
-        public NotificationTemplateService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, INotificationService notifyService, ILogger<TaskService> logger) : base(dbContext, user, service, logger)
+        public NotificationTemplateService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, INotificationService notifyService, ILogger<NotificationTemplateService> logger) : base(dbContext, user, service, logger)
         {
             _notifyService = notifyService;
         }
@@ -47,7 +47,6 @@ namespace Pims.Dal.Services
 
             return this.Context.NotificationTemplates
                 .AsNoTracking()
-                .Include(t => t.Status)
                 .OrderBy(t => t.Name)
                 .ToArray();
         }
@@ -58,15 +57,11 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception cref="KeyNotFoundException">The notification template does not exist for the specified 'id'.</exception>
         /// <returns></returns>
-        public NotificationTemplate Get(int id)
+        public NotificationTemplate Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
             return this.Context.NotificationTemplates
-                .Include(t => t.Status)
-                .ThenInclude(s => s.FromStatus)
-                .Include(t => t.Status)
-                .ThenInclude(s => s.ToStatus)
                 .FirstOrDefault(t => t.Id == id) ?? throw new KeyNotFoundException();
         }
 
@@ -79,10 +74,6 @@ namespace Pims.Dal.Services
         public NotificationTemplate Get(string name)
         {
             return this.Context.NotificationTemplates
-                .Include(t => t.Status)
-                .ThenInclude(s => s.FromStatus)
-                .Include(t => t.Status)
-                .ThenInclude(s => s.ToStatus)
                 .FirstOrDefault(t => t.Name == name) ?? throw new KeyNotFoundException();
         }
 
@@ -112,7 +103,6 @@ namespace Pims.Dal.Services
             template.ThrowIfNotAllowedToEdit(nameof(template), this.User, new[] { Permissions.SystemAdmin });
 
             var etemplate = this.Context.NotificationTemplates
-                .Include(t => t.Status)
                 .FirstOrDefault(t => t.Id == template.Id) ?? throw new KeyNotFoundException();
 
             this.Context.Entry(etemplate).CurrentValues.SetValues(template); // TODO: Need to handle removing project status notifications.
@@ -133,16 +123,13 @@ namespace Pims.Dal.Services
             template.ThrowIfNotAllowedToEdit(nameof(template), this.User, new[] { Permissions.SystemAdmin });
 
             var etemplate = this.Context.NotificationTemplates
-                .Include(t => t.Status)
                 .FirstOrDefault(t => t.Id == template.Id) ?? throw new KeyNotFoundException();
-
-            etemplate.Status.Clear();
 
             this.Context.NotificationTemplates.Remove(etemplate);
             this.Context.CommitTransaction();
         }
 
-        public async Task<NotificationQueue> SendNotificationAsync(int templateId, string to)
+        public async Task<NotificationQueue> SendNotificationAsync(long templateId, string to)
         {
             return await SendNotificationAsync<object>(templateId, to, null);
 
@@ -154,7 +141,7 @@ namespace Pims.Dal.Services
         /// <param name="templateId"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public async Task<NotificationQueue> SendNotificationAsync<T>(int templateId, string to, T model) where T : class // TODO: Allow for a way to pass a model to this function.
+        public async Task<NotificationQueue> SendNotificationAsync<T>(long templateId, string to, T model) where T : class // TODO: Allow for a way to pass a model to this function.
         {
             return await SendNotificationAsync<T>(templateId, to, null, null, model);
         }
@@ -167,7 +154,7 @@ namespace Pims.Dal.Services
         /// <param name="cc"></param>
         /// <param name="bcc"></param>
         /// <returns></returns>
-        public async Task<NotificationQueue> SendNotificationAsync<T>(int templateId, string to, string cc, string bcc, T model) where T : class // TODO: Allow for a way to pass a model to this function.
+        public async Task<NotificationQueue> SendNotificationAsync<T>(long templateId, string to, string cc, string bcc, T model) where T : class // TODO: Allow for a way to pass a model to this function.
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 

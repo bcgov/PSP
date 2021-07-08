@@ -68,7 +68,7 @@ namespace Pims.Api.Test.Helpers
         {
             // Arrange
             var o1 = EntityHelper.CreatePropertyClassification("test");
-            var o2 = new { Id = 1, Name = "test", IsDisabled = false, SortOrder = 0, o1.CreatedById, o1.CreatedOn, o1.UpdatedById, o1.UpdatedOn, o1.RowVersion };
+            var o2 = new { Id = 1, Name = "test", IsDisabled = false, SortOrder = 0, o1.RowVersion };
 
             var comparer = new DeepPropertyCompare<Entity.Parcel>();
 
@@ -136,11 +136,13 @@ namespace Pims.Api.Test.Helpers
             var date = DateTime.UtcNow;
             var o1 = new Entity.Parcel(1, 1, 1)
             {
-                CreatedOn = date
+                CreatedOn = date,
+                UpdatedOn = date
             };
             var o2 = new Entity.Parcel(1, 1, 1)
             {
-                CreatedOn = date
+                CreatedOn = date,
+                UpdatedOn = date
             };
 
             var comparer = new DeepPropertyCompare<Entity.Parcel>();

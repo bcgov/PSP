@@ -21,12 +21,12 @@ namespace Pims.Api.Areas.Reports.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => String.Join(",", src.Agencies.Select(a => a.Agency.Name)))
-                .Map(dest => dest.Roles, src => String.Join(",", src.Roles.Select(a => a.Role.Name)))
+                .Map(dest => dest.Agencies, src => String.Join(",", src.Agencies.Select(a => a.Name)))
+                .Map(dest => dest.Roles, src => String.Join(",", src.Roles.Select(a => a.Name)))
                 .Map(dest => dest.LastLogin, src => src.LastLogin)
                 .Map(dest => dest.ApprovedBy, src => src.ApprovedBy != null ? src.ApprovedBy.DisplayName : null)
                 .Map(dest => dest.ApprovedOn, src => src.ApprovedOn)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
         }
     }
 }

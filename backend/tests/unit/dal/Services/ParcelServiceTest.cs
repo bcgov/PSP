@@ -29,7 +29,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new ParcelFilter(48.571155, -123.657596, 48.492947, -123.731803), new[] { 1, 3 }, 1 },
                 new object[] { new ParcelFilter(48.821333, -123.795017, 48.763431, -123.959783), new[] { 1, 3 }, 0 },
-                new object[] { new ParcelFilter() { Agencies = new int[] { 3 } }, new[] { 1, 3 }, 1 },
+                new object[] { new ParcelFilter() { Agencies = new long[] { 3 } }, new[] { 1, 3 }, 1 },
                 new object[] { new ParcelFilter() { ClassificationId = 2 }, new[] { 1, 3 }, 1 },
                 new object[] { new ParcelFilter() { Description = "DescriptionTest" }, new[] { 1, 3 }, 1 },
                 new object[] { new ParcelFilter() { AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 1 },
@@ -92,7 +92,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -123,7 +123,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -157,7 +157,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -189,7 +189,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -259,7 +259,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -290,7 +290,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -324,7 +324,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -355,7 +355,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -557,7 +557,7 @@ namespace Pims.Dal.Test.Services
             Assert.Equal(parcel, result, new ShallowPropertyCompare());
             Assert.Single(result.Buildings);
             Assert.False(result.IsSensitive);
-            Assert.False(result.Buildings.First().Building.IsSensitive);
+            Assert.False(result.Buildings.First().IsSensitive);
         }
 
         /// <summary>
@@ -597,13 +597,13 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.SensitiveView).AddAgency(1);
 
             using var init = helper.InitializeDatabase(user);
-            var agency = init.Agencies.Find(1);
+            var agency = init.Agencies.Find(1L);
             var parcel = init.CreateParcel(1, agency);
             parcel.IsSensitive = true;
             init.CreateBuilding(parcel, 2);
             var building1 = init.CreateBuilding(parcel, 3);
             building1.IsSensitive = true;
-            var building2 = init.CreateBuilding(parcel, 4, "13", "l4", 1, 1, init.Agencies.Find(2));
+            var building2 = init.CreateBuilding(parcel, 4, "13", "l4", 1, 1, init.Agencies.Find(2L));
             building2.IsSensitive = true;
             init.SaveChanges();
 
@@ -619,7 +619,7 @@ namespace Pims.Dal.Test.Services
             Assert.Equal(parcel, result, new ShallowPropertyCompare());
             Assert.Equal(2, result.Buildings.Count());
             Assert.True(result.IsSensitive);
-            Assert.Equal(1, result.Buildings.Count(b => b.Building.IsSensitive));
+            Assert.Equal(1, result.Buildings.Count(b => b.IsSensitive));
         }
 
         /// <summary>
@@ -761,26 +761,6 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
-        public void Add_Parcel_LinkedToProject()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyAdd).AddAgency(10);
-            var init = helper.InitializeDatabase(user);
-            var project = init.CreateProject(1);
-            project.ReportedFiscalYear = 2020;
-            init.SaveChanges();
-            var parcel = EntityHelper.CreateParcel(1);
-
-            var options = ControllerHelper.CreateDefaultPimsOptions();
-            var service = helper.CreateService<ParcelService>(user, options);
-
-            // Act
-            // Assert, parcels linked to projects can now be updated as multiple associations are allowed.
-            service.Add(parcel);
-        }
-
-        [Fact]
         public void Add_Subdivision_ParcelAndSubdivisionError()
         {
             // Arrange
@@ -791,8 +771,8 @@ namespace Pims.Dal.Test.Services
             init.SaveChanges();
             var parcel = EntityHelper.CreateParcel(2);
             var subdivision = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2 };
-            parcel.Parcels.Add(subdivision);
-            parcel.Subdivisions.Add(subdivision);
+            parcel.ParcelsManyToMany.Add(subdivision);
+            parcel.SubdivisionsManyToMany.Add(subdivision);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
@@ -802,6 +782,9 @@ namespace Pims.Dal.Test.Services
                 service.Add(parcel));
         }
 
+        /// <summary>
+        /// Add parcel to a subdivision.
+        /// </summary>
         [Fact]
         public void Add_Subdivision_Parcel()
         {
@@ -809,24 +792,27 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyAdd).AddAgency(10);
             var init = helper.InitializeDatabase(user);
-            var originalParcel = init.CreateParcel(1);
+            init.CreateParcel(1);
             init.SaveChanges();
-            var parcel = EntityHelper.CreateParcel(2);
-            var subdivision = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Parcel = originalParcel };
-            parcel.Parcels.Add(subdivision);
+            var subdivision = EntityHelper.CreateParcel(2);
+            var parcelDivision = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2 };
+            subdivision.ParcelsManyToMany.Add(parcelDivision);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
 
             // Act
-            var result = service.Add(parcel);
+            var result = service.Add(subdivision);
 
             // Assert
             Assert.NotNull(result);
-            result.Parcels.FirstOrDefault().Should().Be(subdivision);
+            result.Parcels.FirstOrDefault().Id.Should().Be(1);
             result.Subdivisions.Should().BeEmpty();
         }
 
+        /// <summary>
+        /// Add a subdivision to a parcel.
+        /// </summary>
         [Fact]
         public void Add_Parcel_Subdivision()
         {
@@ -834,22 +820,22 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyAdd).AddAgency(10);
             var init = helper.InitializeDatabase(user);
-            init.CreateParcel(1);
+            var parcel = init.CreateParcel(1);
             init.SaveChanges();
-            var parcel = EntityHelper.CreateParcel(2);
-            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1 };
-            parcel.Subdivisions.Add(dividedParcel);
+            var subdivision = EntityHelper.CreateParcel(2);
+            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2 };
+            parcel.SubdivisionsManyToMany.Add(dividedParcel);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
 
             // Act
-            var result = service.Add(parcel);
+            var result = service.Add(subdivision);
 
             // Assert
             Assert.NotNull(result);
-            result.Subdivisions.FirstOrDefault().Should().Be(dividedParcel);
-            result.Parcels.Should().BeEmpty();
+            result.Parcels.FirstOrDefault().Id.Should().Be(1);
+            result.Subdivisions.Should().BeEmpty();
         }
 
         [Fact]
@@ -863,8 +849,8 @@ namespace Pims.Dal.Test.Services
             init.SaveChanges();
             var parcel = EntityHelper.CreateParcel(2);
             parcel.PID = 1; //set to the same pid as the existing parcel
-            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1, Parcel = originalParcel };
-            parcel.Parcels.Add(dividedParcel);
+            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Parcel = originalParcel };
+            parcel.ParcelsManyToMany.Add(dividedParcel);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
@@ -889,8 +875,8 @@ namespace Pims.Dal.Test.Services
             init.SaveChanges();
             var parcel = EntityHelper.CreateParcel(2);
             parcel.PID = 1; //set to the same pid as the existing parcel
-            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1, Parcel = originalParcel };
-            parcel.Parcels.Add(dividedParcel);
+            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Parcel = originalParcel };
+            parcel.ParcelsManyToMany.Add(dividedParcel);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
@@ -913,15 +899,15 @@ namespace Pims.Dal.Test.Services
             var originalParcel = init.CreateParcel(1);
             originalParcel.PIN = 1;
             init.SaveChanges();
-            var parcel = EntityHelper.CreateParcel(2);
-            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1, Parcel = originalParcel };
-            parcel.Parcels.Add(dividedParcel);
+            var subdivision = EntityHelper.CreateParcel(2);
+            var dividedParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Parcel = originalParcel };
+            subdivision.ParcelsManyToMany.Add(dividedParcel);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
 
             // Act
-            var result = service.Add(parcel);
+            var result = service.Add(subdivision);
 
             // Assert
             Assert.NotNull(result);
@@ -1099,28 +1085,6 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
-        public void Update_Parcel_LinkedToProject_NotAllowed()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView, Permissions.PropertyEdit).AddAgency(1);
-            var init = helper.InitializeDatabase(user);
-            var project = init.CreateProject(1);
-            project.ReportedFiscalYear = 2020;
-            var parcel = init.CreateParcel(1);
-            project.AddProperty(parcel);
-            init.SaveChanges();
-
-            var options = ControllerHelper.CreateDefaultPimsOptions();
-            var service = helper.CreateService<ParcelService>(user, options);
-
-            // Act
-            // Assert, parcels linked to projects cannot be updated
-            Assert.Throws<NotAuthorizedException>(() =>
-                service.Update(parcel));
-        }
-
-        [Fact]
         public void Update_Parcel_ParcelAndSubdivisionError()
         {
             // Arrange
@@ -1137,14 +1101,17 @@ namespace Pims.Dal.Test.Services
             // Act
             var parcelToUpdate = service.Get(1);
             var divideParcel = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1 };
-            parcelToUpdate.Parcels.Add(divideParcel);
-            parcelToUpdate.Subdivisions.Add(divideParcel);
+            parcelToUpdate.ParcelsManyToMany.Add(divideParcel);
+            parcelToUpdate.SubdivisionsManyToMany.Add(divideParcel);
 
             // Assert
             Assert.Throws<InvalidOperationException>(() =>
                 service.Update(parcelToUpdate));
         }
 
+        /// <summary>
+        /// Add a subdivision to a parcel.
+        /// </summary>
         [Fact]
         public void Update_Subdivision_Parcel()
         {
@@ -1161,17 +1128,19 @@ namespace Pims.Dal.Test.Services
 
             // Act
             var parcelToUpdate = service.Get(1);
-            var divideParcel = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1, Parcel = originalParcel };
-            parcelToUpdate.Parcels.Add(divideParcel);
+            var divideParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Parcel = originalParcel };
+            parcelToUpdate.SubdivisionsManyToMany.Add(divideParcel);
             var result = service.Update(parcelToUpdate);
 
             // Assert
             Assert.NotNull(result);
-            result.Parcels.FirstOrDefault().ParcelId.Should().Be(2);
-            result.Parcels.FirstOrDefault().SubdivisionId.Should().Be(1);
-            result.Subdivisions.Should().BeEmpty();
+            result.Subdivisions.FirstOrDefault().Id.Should().Be(2);
+            result.Parcels.Should().BeEmpty();
         }
 
+        /// <summary>
+        /// Remove a subdivision from a parcel.
+        /// </summary>
         [Fact]
         public void Update_Subdivision_Parcel_Remove()
         {
@@ -1181,19 +1150,19 @@ namespace Pims.Dal.Test.Services
             var init = helper.InitializeDatabase(user);
             var parcel = EntityHelper.CreateParcel(1);
 
-            var originalParcel = init.CreateParcel(2);
+            var subdivision = init.CreateParcel(2);
             init.SaveChanges();
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
 
             // Act
-            var subdivision = new Entity.ParcelParcel() { ParcelId = 2, SubdivisionId = 1, Parcel = originalParcel };
-            parcel.Parcels.Add(subdivision);
+            var subdivisionParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2 };
+            subdivision.ParcelsManyToMany.Add(subdivisionParcel);
             service.Add(parcel);
 
             var parcelToUpdate = service.Get(1);
-            parcelToUpdate.Parcels.Clear();
+            parcelToUpdate.Subdivisions.Clear();
             var result = service.Update(parcelToUpdate);
 
             // Assert
@@ -1219,7 +1188,7 @@ namespace Pims.Dal.Test.Services
 
             // Act
             var subdivision = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2 };
-            parcel.Subdivisions.Add(subdivision);
+            parcel.SubdivisionsManyToMany.Add(subdivision);
             service.Add(parcel);
 
             var parcelToUpdate = service.Get(1);
@@ -1245,7 +1214,7 @@ namespace Pims.Dal.Test.Services
             init.SaveChanges();
             var parcel = EntityHelper.CreateParcel(2);
             var dividedParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Parcel = originalParcel };
-            parcel.Parcels.Add(dividedParcel);
+            parcel.ParcelsManyToMany.Add(dividedParcel);
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
@@ -1257,7 +1226,7 @@ namespace Pims.Dal.Test.Services
             var parcelToUpdate = service.Get(2);
             parcelToUpdate.Parcels.Clear();
             dividedParcel = new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 3, Parcel = updatedParcel };
-            parcelToUpdate.Parcels.Add(dividedParcel);
+            parcelToUpdate.ParcelsManyToMany.Add(dividedParcel);
             var result = service.Update(parcelToUpdate);
 
             // Assert
@@ -1476,13 +1445,14 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyDelete, Permissions.PropertyAdd, Permissions.PropertyView).AddAgency(1);
             var init = helper.InitializeDatabase(user);
             var parcel = init.CreateParcel(1);
-            var subdivision = EntityHelper.CreateParcel(2);
-            parcel.Subdivisions.Add(new Entity.ParcelParcel() { ParcelId = 1, SubdivisionId = 2, Subdivision = subdivision });
+            init.SaveChanges();
+            var subdivision = init.CreateParcel(2);
+            parcel.Subdivisions.Add(subdivision);
+            init.SaveChanges();
 
             var options = ControllerHelper.CreateDefaultPimsOptions();
             var service = helper.CreateService<ParcelService>(user, options);
             var context = helper.GetService<PimsContext>();
-            service.Add(parcel);
 
             // Act
             service.Remove(parcel);

@@ -49,14 +49,15 @@ namespace Pims.Core.Test
                 AgencyId = agency.Id,
                 Address = address,
                 AddressId = address.Id,
+                PropertyTypeId = (long)Entity.PropertyTypes.Land,
                 Classification = classification,
                 ClassificationId = classification.Id,
                 Description = $"description-{pid}",
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 
@@ -112,12 +113,13 @@ namespace Pims.Core.Test
                 AddressId = address.Id,
                 Classification = classification,
                 ClassificationId = classification.Id,
+                PropertyTypeId = (long)Entity.PropertyTypes.Land,
                 Description = $"description-{pid}",
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
             context.Parcels.Add(parcel);
             return parcel;

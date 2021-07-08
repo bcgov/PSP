@@ -8,13 +8,16 @@ namespace Pims.Api.Areas.Admin.Models.Claim
         /// <summary>
         /// get/set - The primary key IDENTITY.
         /// </summary>
-        /// <value></value>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - A unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - The claims display name.
         /// </summary>
-        /// <value></value>
         public string Name { get; set; }
 
         /// <summary>
@@ -25,13 +28,11 @@ namespace Pims.Api.Areas.Admin.Models.Claim
         /// <summary>
         /// get/set - The claims first name.
         /// </summary>
-        /// <value></value>
         public string Description { get; set; }
 
         /// <summary>
         /// get/set - Whether the user is disabled.
         /// </summary>
-        /// <value></value>
         public bool IsDisabled { get; set; }
         #endregion
     }

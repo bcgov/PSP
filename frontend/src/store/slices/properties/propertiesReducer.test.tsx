@@ -1,4 +1,5 @@
 import { PointFeature } from 'components/maps/types';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { mockBuildingDetail, mockParcelDetail, mockProperty } from 'mocks/filterDataMock';
 
 import { initialState, propertiesSlice } from './propertiesSlice';
@@ -6,7 +7,7 @@ import { initialState, propertiesSlice } from './propertiesSlice';
 const pointFeature: PointFeature = {
   type: 'Feature',
   geometry: { coordinates: [1, 2] } as any,
-  properties: { id: 1, propertyTypeId: 0, name: 'name' },
+  properties: { id: 1, propertyTypeId: PropertyTypes.Parcel, name: 'name' },
 };
 
 describe('property slice reducer functionality', () => {
@@ -28,7 +29,11 @@ describe('property slice reducer functionality', () => {
     });
     expect(result).toEqual({
       ...initialState,
-      propertyDetail: { parcelDetail: mockParcelDetail, position: undefined, propertyTypeId: 0 },
+      propertyDetail: {
+        parcelDetail: mockParcelDetail,
+        position: undefined,
+        propertyTypeId: PropertyTypes.Parcel,
+      },
     });
   });
   it('stores the parcel from the map', () => {
@@ -61,7 +66,11 @@ describe('property slice reducer functionality', () => {
     });
     expect(result).toEqual({
       ...initialState,
-      propertyDetail: { parcelDetail: mockBuildingDetail, position: undefined, propertyTypeId: 1 },
+      propertyDetail: {
+        parcelDetail: mockBuildingDetail,
+        position: undefined,
+        propertyTypeId: PropertyTypes.Building,
+      },
     });
   });
 });

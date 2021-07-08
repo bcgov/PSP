@@ -37,7 +37,8 @@ namespace Pims.Dal.Test.Entities
             var claim = new Claim(uid, name);
 
             // Assert
-            claim.Id.Should().Be(uid);
+            claim.Id.Should().Be(0);
+            claim.Key.Should().Be(uid);
             claim.Name.Should().Be(name);
             claim.Roles.Should().BeEmpty();
         }
