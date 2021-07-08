@@ -142,8 +142,21 @@ spec:
 
 ## Run Locally
 
-Go to - `/opnenshift/4.0/template/Logging` for Logging **_Dockerfile_** and **_Docker-compose.yml_**
-Update the AZ_SAS_TOKEN and OC_TOKEN to a valid TOKEN
+Go to - `/opnenshift/4.0/template/Logging` for Logging **_Dockerfile_** and **_Docker-compose.yml_**\
+Create .env file with the required environment variables e.g.
+
+```bash
+SLEEP_TIME=30
+AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
+AZ_BLOB_CONTAINER=pims
+AZ_SAS_TOKEN=?XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+FRONTEND_APP_NAME=pims-app
+API_NAME=pims-api
+PROJECT_NAMESPACE=3cd915-dev
+EXPORT_TIME=120
+OC_TOKEN=sha256~XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+OC_SERVER=https://api.silver.devops.gov.bc.ca:6443
+```
 
 Build pims-logging Docker image
 
