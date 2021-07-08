@@ -8,16 +8,16 @@ services:
       context: .
     image: pims-logging:latest
     environment:
-      SLEEP_TIME: 30
-      AZ_BLOB_URL: "https://pimsapp.blob.core.windows.net"
-      AZ_BLOB_CONTAINER: "pims"
-      AZ_SAS_TOKEN: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt2VJSO3XDzp8SUoLVqtNqZc7LDQdjeoXM%3D"
-      FRONTEND_APP_NAME: "pims-app"
-      API_NAME: "pims-api"
-      PROJECT_NAMESPACE: "3cd915-dev"
-      EXPORT_TIME: 120
-      OC_TOKEN: "sha256~ekU0UVfNwgxye1XdZqhMaop5C4WIa7y-a1O_ahhi-_w"
-      OC_SERVER: "https://api.silver.devops.gov.bc.ca:6443"
+      SLEEP_TIME: ${SLEEP_TIME}
+      AZ_BLOB_URL: "${AZ_BLOB_URL}"
+      AZ_BLOB_CONTAINER: "${AZ_BLOB_CONTAINER}"
+      AZ_SAS_TOKEN: "${AZ_SAS_TOKEN}"
+      FRONTEND_APP_NAME: "${FRONTEND_APP_NAME}"
+      API_NAME: "${API_NAME}"
+      PROJECT_NAMESPACE: "${PROJECT_NAMESPACE}"
+      EXPORT_TIME: ${EXPORT_TIME}
+      OC_TOKEN: "${OC_TOKEN}"
+      OC_SERVER: "${OC_SERVER}"
     volumes:
       - logging-data:/tmp
     networks:
