@@ -3,8 +3,6 @@ import { cleanup, fireEvent, render, wait } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mount } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { PropertyFilter } from 'features/properties/filter';
 import { createMemoryHistory } from 'history';
@@ -26,7 +24,6 @@ import SelectedPropertyMarker from './SelectedPropertyMarker/SelectedPropertyMar
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
-Enzyme.configure({ adapter: new Adapter() });
 const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
 
