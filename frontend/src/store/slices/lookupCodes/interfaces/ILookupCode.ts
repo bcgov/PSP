@@ -1,6 +1,6 @@
 export interface ILookupCode {
   id: number;
-  code: string;
+  code?: string;
   name: string;
   isDisabled: boolean;
   isPublic?: boolean;

@@ -2,7 +2,7 @@ import { AccessRequestStatus } from 'constants/accessStatus';
 import { Classifications } from 'constants/classifications';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { IProperty as IFlatProperty } from 'features/properties/list';
-import { IBuilding, IParcel, IProperty, IUserDetails } from 'interfaces';
+import { IAccessRequest, IBuilding, IParcel, IProperty, IUserDetails } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { IPropertyDetail } from 'store/slices/properties';
 
@@ -31,7 +31,7 @@ export const DISABLED = [
 export const CLASSIFICATIONS = [
   {
     name: 'Core Operational',
-    id: '0',
+    id: 0,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 1,
@@ -39,7 +39,7 @@ export const CLASSIFICATIONS = [
   },
   {
     name: 'Core Strategic',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 2,
@@ -47,7 +47,7 @@ export const CLASSIFICATIONS = [
   },
   {
     name: 'Disposed',
-    id: '4',
+    id: 4,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 5,
@@ -59,14 +59,14 @@ export const ADMINISTRATIVEAREAS = [
   {
     code: '0',
     name: 'Victoria',
-    id: '0',
+    id: 0,
     isDisabled: false,
     type: 'AdministrativeArea',
   },
   {
     code: '1',
     name: 'Royal Oak',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'AdministrativeArea',
   },
@@ -111,7 +111,7 @@ export const AGENCIES = [
 ];
 
 export const mockUser: IUserDetails = {
-  id: '1',
+  id: 1,
   key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   username: 'admin',
   email: 'admin@pims.gov.bc.ca',
@@ -122,7 +122,7 @@ export const mockUser: IUserDetails = {
   agencies: [],
   roles: [],
   createdOn: '2021-05-04T19:07:09.6920606',
-  rowVersion: '1',
+  rowVersion: 1,
 };
 
 export const PARCELS = [
