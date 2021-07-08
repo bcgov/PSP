@@ -98,7 +98,6 @@ export const LoginStyled = styled(Container)`
       color: ${props => props.theme.css.textColor} !important;
     }
     .pims-logo {
-      margin-left: -300px;
       margin-bottom: 10px;
     }
   }
