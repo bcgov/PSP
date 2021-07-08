@@ -75,11 +75,7 @@ export const useAgencies = () => {
       const axiosPromise = putAgency(updatedAgency).then((response: AxiosResponse) => {
         return Promise.resolve(response);
       });
-      return handleAxiosResponse(
-        dispatch,
-        actionTypes.PUT_AGENCY_DETAILS,
-        axiosPromise,
-      ).catch(() => {});
+      return handleAxiosResponse(dispatch, actionTypes.PUT_AGENCY_DETAILS, axiosPromise);
     },
     [dispatch, putAgency],
   );
