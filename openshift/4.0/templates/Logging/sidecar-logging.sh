@@ -8,14 +8,14 @@ set -euo pipefail
 : "${TERM_EXIT:=false}"
 : "${SLEEP_TIME:=60}"
 : "${EXPORT_TIME:=120}"
-: "${GRACEFUL_EXIT_TIME:=55}"
+: "${GRACEFUL_EXIT_TIME:=120}"
 : "${HOSTNAME:=}"
 : "${STARTUP_TIME:=0}"
 declare -i elapse=0
 
 
 DATE_NOW=$(date +"%Y%m%d")
-AZ_VERSION="2018-03-28"
+AZ_VERSION="2020-04-08"
 AZ_BLOB_TARGET="${AZ_BLOB_URL}/${AZ_BLOB_CONTAINER}/"
 
 #login
@@ -74,21 +74,23 @@ _send() {
 	(app_hasLogs=$(eval $app_oc_logs | grep '.') && [ ! -z "$app_hasLogs" ] && echo "$app_hasLogs" > $app_file) & (api_hasLogs=$(eval $api_oc_logs | grep '.') && [ ! -z "$api_hasLogs" ] && echo "$api_hasLogs" > $api_file)
 
   #run proess for X# of seconds, check if logs was extracted then upload to server
-	if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" != "0" ]]
+	if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]
 	then
         APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
         API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-		(eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+		    (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+        #clear elapse time
    elif [[ "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" == "0" ]]
    then
       echo "nothing to zip, logs are empty"
-   elif [[ "x${TERM_EXIT}" = xtrue ]] #check for extracted logs and send before pod scaled to zero
+   elif [[ "${TERM_EXIT}" == true ]] #check for extracted logs and send before pod scaled to zero
    then
-		APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-        API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-		(eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+		  APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+      API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+		  (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+      echo "Logs sent on sigterm request"
     else 
-        echo "waiting for export time to elapse"
+        echo "waiting for export time to elapse (""$((EXPORT_TIME-elapse))"'s'") remaining"
 	fi
   ) 200>/tmp/.data.lock
 
@@ -103,16 +105,17 @@ sendLogs() {
   # get the datetime for log retrieval. take account of previous duration and sleep
   # format since to be parseable by oc logs - use UTC and no additional timezone info (ex 2020-02-24T18:41:41Z)
   logdate=$(date +"%Y%m%dT%H%M%SZ")
-
   # debug
   echo "${HOSTNAME}: $(date +'%Y-%m-%d %H:%M:%S' | sed 's/\(:[0-9][0-9]\)[0-9]*$/\1/') duration: $duration"
   # use openshift client to get logs, gzip them and use curl to send to REST endpoint
   _send
   # this is equivalent to backgrouding our sleep, so we can interrupt when container halted
-  coproc sleep ${SLEEP_TIME}
-  wait
+  sleep ${SLEEP_TIME} &
+  wait 
   # calculate total processing duration
   duration=$((${SECONDS} - $start));
+  #reset elapse time after export time
+  [ $elapse -ge $EXPORT_TIME ] && elapse=0
   elapse=$elapse+$duration
 };
 
@@ -121,8 +124,8 @@ sendLogs() {
 _term() {
   echo "Caught SIGTERM signal! Waiting ${GRACEFUL_EXIT_TIME} seconds before sending"
   TERM_EXIT=true
-  sleep ${GRACEFUL_EXIT_TIME}
-  sendLogs ${GRACEFUL_EXIT_TIME}
+  #sleep ${GRACEFUL_EXIT_TIME} 
+  sendLogs ${GRACEFUL_EXIT_TIME} && echo "Logs sent on sigterm request"
   # exit gracefully
   exit 0
 }
@@ -130,7 +133,8 @@ trap _term SIGTERM
 
 # initial startup delay for container we a getting logs for and ourselves
 duration=${STARTUP_TIME};
-elapse=$elapse+$duration
+#elapse=$elapse+$duration
+
 
 # set variables to send logs
 while [[ "${APP_POD_NAME}" && "${API_POD_NAME}" && "${APP_LOG_SERVER_URI}" ]];
