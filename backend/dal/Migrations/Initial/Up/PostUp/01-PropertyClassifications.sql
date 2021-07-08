@@ -36,6 +36,18 @@ INSERT INTO dbo.[PIMS_PROPERTY_CLASSIFICATION] (
     , 0
     , 0
     , 5
+), (
+    6
+    , 'Demolished'
+    , 0
+    , 0
+    , 6
+), (
+    7
+    , 'Subdivided'
+    , 0
+    , 0
+    , 7
 )
 
 -- Update sequence so that it works with the latest data.
