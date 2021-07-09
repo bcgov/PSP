@@ -25,7 +25,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new AllPropertyFilter(48.571155, -123.657596, 48.492947, -123.731803) { PropertyType = Entity.PropertyTypes.Land }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter(48.821333, -123.795017, 48.763431, -123.959783) { PropertyType = Entity.PropertyTypes.Land }, new[] { 1, 3 }, 0, 0 },
-                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, Agencies = new int[] { 3 } }, new[] { 1, 3 }, 1, 1 },
+                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, Agencies = new long[] { 3 } }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, ClassificationId = 2 }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, Description = "DescriptionTest" }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Land, AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 1, 1 },
@@ -39,7 +39,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new AllPropertyFilter(48.571155, -123.657596, 48.492947, -123.731803) { PropertyType = Entity.PropertyTypes.Building }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter(48.821333, -123.795017, 48.763431, -123.959783) { PropertyType = Entity.PropertyTypes.Building }, new[] { 1, 3 }, 0, 0 },
-                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, Agencies = new int[] { 3 } }, new[] { 1, 3 }, 6, 6 },
+                new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, Agencies = new long[] { 3 } }, new[] { 1, 3 }, 6, 6 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, ClassificationId = 2 }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, Description = "DescriptionTest" }, new[] { 1, 3 }, 1, 1 },
                 new object[] { new AllPropertyFilter() { PropertyType = Entity.PropertyTypes.Building, AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 10, 10 },
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new AllPropertyFilter(48.571155, -123.657596, 48.492947, -123.731803), new[] { 1, 3 }, 2, 2 },
                 new object[] { new AllPropertyFilter(48.821333, -123.795017, 48.763431, -123.959783), new[] { 1, 3 }, 0, 0 },
-                new object[] { new AllPropertyFilter() { Agencies = new int[] { 3 } }, new[] { 1, 3 }, 7, 7 },
+                new object[] { new AllPropertyFilter() { Agencies = new long[] { 3 } }, new[] { 1, 3 }, 7, 7 },
                 new object[] { new AllPropertyFilter() { ClassificationId = 2 }, new[] { 1, 3 }, 2, 2 },
                 new object[] { new AllPropertyFilter() { Page = 1, Quantity = 10, Description = "DescriptionTest" }, new[] { 1, 3 }, 2, 2 },
                 new object[] { new AllPropertyFilter() { AdministrativeArea = "AdministrativeArea" }, new[] { 1, 3 }, 11, 10 },
@@ -130,7 +130,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -141,7 +141,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcels.First(), 50, 5);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -183,7 +183,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -194,7 +194,7 @@ namespace Pims.Dal.Test.Services
             var buildings = init.CreateBuildings(parcels.First(), 50, 5);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -236,7 +236,7 @@ namespace Pims.Dal.Test.Services
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";
@@ -245,14 +245,14 @@ namespace Pims.Dal.Test.Services
             parcels.Next(6).ZoningPotential = "-ZoningPotential-";
             parcels.Next(7).LandArea = 5500.55f;
 
-            var classification = init.PropertyClassifications.Find(3);
+            var classification = init.PropertyClassifications.Find(3L);
             parcels.Next(8).Classification = classification;
             parcels.Next(8).ClassificationId = classification.Id;
 
             var buildings = init.CreateBuildings(parcels.First(), 50, 5);
             buildings.Next(0).Location.X = -123.720810;
             buildings.Next(0).Location.Y = 48.529338;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";

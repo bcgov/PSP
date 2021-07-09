@@ -15,16 +15,14 @@ import { Alert, Button, ButtonToolbar, Col, Container, Row } from 'react-bootstr
 import { useAppSelector } from 'store/hooks';
 import { toAccessRequest } from 'store/slices/accessRequests/accessRequestsSlice';
 import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests';
-import { FeatureHidden, useTenant } from 'tenants';
 import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
 import { Form, Input, Select, TextArea } from '../../../components/common/form';
 
 interface IAccessRequestForm extends IAccessRequest {
-  showAgency: boolean;
   agency?: number;
-  role: string;
+  role?: number;
 }
 
 /**
@@ -46,16 +44,17 @@ const AccessRequestPage = () => {
 
   const data = useAppSelector(state => state.accessRequests);
 
-  const { getByType, getPublicByType } = useLookupCodeHelpers();
-  const agencies = getByType(API.AGENCY_CODE_SET_NAME);
+  const { getPublicByType } = useLookupCodeHelpers();
   const roles = getPublicByType(API.ROLE_CODE_SET_NAME);
+  const agencies = getPublicByType(API.AGENCY_CODE_SET_NAME);
 
   const accessRequest = data?.accessRequest;
   const initialValues: IAccessRequestForm = {
     id: accessRequest?.id ?? 0,
-    userId: userInfo?.sub,
+    userId: userInfo?.id,
     user: {
-      id: userInfo?.sub,
+      id: userInfo?.id,
+      key: userInfo?.key,
       username: userInfo?.username,
       displayName: userInfo?.name,
       firstName: userInfo?.firstName,
@@ -67,32 +66,12 @@ const AccessRequestPage = () => {
     status: accessRequest?.status || AccessRequestStatus.OnHold,
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
-    showAgency: true,
-    agency: accessRequest?.agencies?.find((agency: any) => agency).id,
-    role: accessRequest?.roles?.find(role => role).id,
+    agency: agencies?.find(a => a.code === 'TRAN')?.id, // Select TRAN as the default agency for all access requests.
+    role: accessRequest?.roles?.find(role => role)?.id,
     rowVersion: accessRequest?.rowVersion,
   };
 
-  // PSP-722 Disable agency dropdown from Access Request Form (only for MOTI)
-  const tenant = useTenant();
-  if (tenant?.id === 'MOTI') {
-    initialValues.showAgency = false;
-  }
-
-  const selectAgencies = agencies.map(c => mapLookupCode(c, initialValues.agency));
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues.role));
-
-  const checkAgencies = (
-    <FeatureHidden tenant="MOTI">
-      <Select
-        label="Agency"
-        field="agency"
-        required={true}
-        options={selectAgencies}
-        placeholder={initialValues?.agencies?.length > 0 ? undefined : 'Please Select'}
-      />
-    </FeatureHidden>
-  );
 
   const checkRoles = (
     <Form.Group className="check-roles">
@@ -197,8 +176,6 @@ const AccessRequestPage = () => {
                   readOnly={true}
                   type="email"
                 />
-
-                {checkAgencies}
 
                 <Input
                   label="Position"

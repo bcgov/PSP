@@ -30,16 +30,6 @@
         "Composite": false
       },
       {
-        "Name": "dispose-approve",
-        "Description": "Ability to approve disposal of a properties.",
-        "Composite": false
-      },
-      {
-        "Name": "dispose-request",
-        "Description": "Ability to request to dispose properties.",
-        "Composite": false
-      },
-      {
         "Name": "property-add",
         "Description": "Ability to add properties.",
         "Composite": false
@@ -65,41 +55,6 @@
         "Composite": false
       },
       {
-        "Name": "project-add",
-        "Description": "Ability to add projects.",
-        "Composite": false
-      },
-      {
-        "Name": "project-delete",
-        "Description": "Ability to delete projects.",
-        "Composite": false
-      },
-      {
-        "Name": "project-edit",
-        "Description": "Ability to edit projects.",
-        "Composite": false
-      },
-      {
-        "Name": "project-view",
-        "Description": "Ability to view projects.",
-        "Composite": false
-      },
-      {
-        "Name": "reports-view",
-        "Description": "Ability to view reports.",
-        "Composite": false
-      },
-      {
-        "Name": "reports-spl",
-        "Description": "Ability to view, create, and modify SPL non-final reports.",
-        "Composite": false
-      },
-      {
-        "Name": "reports-spl-admin",
-        "Description": "Ability to view, create, and delete Final reports.",
-        "Composite": false
-      },
-      {
         "Name": "agency-administrator",
         "Description": "Agency Administrator of the users agency.",
         "Composite": true,
@@ -108,10 +63,7 @@
           "property-add",
           "property-edit",
           "property-view",
-          "sensitive-view",
-          "project-add",
-          "project-edit",
-          "project-view"
+          "sensitive-view"
         ]
       },
       {
@@ -124,54 +76,14 @@
           "admin-agencies",
           "admin-properties",
           "admin-projects",
-          "property-delete",
-          "project-delete"
+          "property-delete"
         ]
       }
     ],
     "Groups": [
       {
         "Name": "Agency Administrator",
-        "RealmRoles": [ "agency-administrator" ]
-      },
-      {
-        "Name": "Assistant Deputy Minister",
-        "RealmRoles": [
-          "property-add",
-          "property-edit",
-          "property-view",
-          "sensitive-view",
-          "project-add",
-          "project-edit",
-          "project-view",
-          "property-delete"
-        ]
-      },
-      {
-        "Name": "Assistant Deputy Minister Assistant",
-        "RealmRoles": [
-          "property-add",
-          "property-edit",
-          "property-view",
-          "sensitive-view",
-          "project-add",
-          "project-edit",
-          "project-view",
-          "property-delete"
-        ]
-      },
-      {
-        "Name": "Executive Director",
-        "RealmRoles": [
-          "property-add",
-          "property-edit",
-          "property-view",
-          "sensitive-view",
-          "project-add",
-          "project-edit",
-          "project-view",
-          "property-delete"
-        ]
+        "RealmRoles": ["agency-administrator"]
       },
       {
         "Name": "Real Estate Analyst",
@@ -179,49 +91,24 @@
           "property-add",
           "property-edit",
           "property-view",
-          "sensitive-view",
-          "project-add",
-          "project-edit",
-          "project-view",
-          "property-delete"
+          "property-delete",
+          "sensitive-view"
         ]
       },
       {
         "Name": "Real Estate Manager",
         "RealmRoles": [
-          "dispose-request",
           "property-add",
           "property-add",
           "property-edit",
           "property-view",
-          "sensitive-view",
-          "project-add",
-          "project-edit",
-          "project-view",
-          "property-delete"
+          "property-delete",
+          "sensitive-view"
         ]
       },
       {
         "Name": "System Administrator",
-        "RealmRoles": [ "system-administrator" ]
-      },
-      {
-        "Name": "SRES",
-        "RealmRoles": [
-          "admin-properties",
-          "admin-projects",
-          "property-delete",
-          "project-delete",
-          "dispose-approve"
-        ]
-      },
-      {
-        "Name": "SRES Financial Manager",
-        "RealmRoles": [ "reports-view", "reports-spl", "reports-spl-admin" ]
-      },
-      {
-        "Name": "SRES Financial Reporter",
-        "RealmRoles": [ "reports-view", "reports-spl" ]
+        "RealmRoles": ["system-administrator"]
       }
     ],
     "Clients": [
@@ -238,11 +125,11 @@
         "Protocol": "openid-connect",
         "BearerOnly": true,
         "AuthorizationServicesEnabled": false,
-        "RedirectUris": [ 
-			"https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*",
-			"https://pims.th.gov.bc.ca/api/*"
-			],
-        "WebOrigins": [ "*" ],
+        "RedirectUris": [
+          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*",
+          "https://pims.th.gov.bc.ca/api/*"
+        ],
+        "WebOrigins": ["*"],
         "Attributes": {
           "login_theme": "bcgov-v2"
         }
@@ -262,15 +149,15 @@
         "DirectAccessGrantsEnabled": true,
         "AuthorizationServicesEnabled": false,
         "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
-        "RedirectUris": [ 
-			"https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/*",
-			"https://pims.th.gov.bc.ca/*"
-			],
+        "RedirectUris": [
+          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/*",
+          "https://pims.th.gov.bc.ca/*"
+        ],
         "BaseUrl": "/",
-        "WebOrigins": [ 
-			"https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
-			"https://pims.th.gov.bc.ca"
-			],
+        "WebOrigins": [
+          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
+          "https://pims.th.gov.bc.ca"
+        ],
         "ProtocolMappers": [
           {
             "Name": "agencies",
@@ -458,19 +345,17 @@
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": false,
         "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api",
-        "RedirectUris": [ "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*" ],
+        "RedirectUris": [
+          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*"
+        ],
         "BaseUrl": "/",
-        "WebOrigins": [ "*" ],
+        "WebOrigins": ["*"],
         "ServiceAccount": {
-          "RealmRoles": [
-            "system-administrator",
-            "reports-spl",
-            "reports-spl-admin"
-          ],
+          "RealmRoles": ["system-administrator"],
           "ClientRoles": [
             {
               "ClientId": "realm-management",
-              "ClientRoles": [ "realm-admin" ]
+              "ClientRoles": ["realm-admin"]
             }
           ]
         },
@@ -494,9 +379,9 @@
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": true,
         "RootUrl": "https://pims.gov.bc.ca/api",
-        "RedirectUris": [ "https://pims.gov.bc.ca/api/*" ],
+        "RedirectUris": ["https://pims.gov.bc.ca/api/*"],
         "BaseUrl": "/",
-        "WebOrigins": [ "*" ],
+        "WebOrigins": ["*"],
         "ProtocolMappers": [
           {
             "Name": "agencies",

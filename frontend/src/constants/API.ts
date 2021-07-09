@@ -40,14 +40,11 @@ export interface IPropertySearchParams {
   swLongitude: number;
   address?: string;
   administrativeArea?: string;
-  projectNumber?: string;
   /** comma-separated list of agencies to filter by */
   agencies?: string;
   classificationId?: number;
   minLandArea?: number;
   maxLandArea?: number;
-  inSurplusPropertyProgram?: boolean;
-  inEnhancedReferralProcess?: boolean;
 }
 export const PROPERTIES = (params: IPropertySearchParams | null) =>
   `/properties/search?${params ? queryString.stringify(params) : ''}`; // get filtered properties or all if not specified.
@@ -57,13 +54,10 @@ export interface IGeoSearchParams {
   address?: string;
   administrativeArea?: string;
   pid?: string;
-  projectNumber?: string;
   agencies?: string; // TODO: Switch to number[]
   classificationId?: number;
   minLandArea?: number;
   maxLandArea?: number;
-  inSurplusPropertyProgram?: boolean;
-  inEnhancedReferralProcess?: boolean;
   name?: string;
   bareLandOnly?: boolean;
   constructionTypeId?: number;
@@ -111,12 +105,3 @@ export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties 
 
 // User Service
 export const POST_USERS = () => `/admin/users/my/agency`; // get paged list of users
-
-// Projects
-export const PROJECT_DISPOSE_ROOT = '/projects/disposal/';
-export const PROJECT_DISPOSE_WORKFLOW = (code: string) => `/projects/workflows/${code}/status`;
-export const PROJECT_DISPOSE_TASKS = (code: string | number) => `/projects/status/${code}/tasks`;
-export const PROJECT_STATUSES = '/projects/status';
-export const PROJECT_WORKFLOW_TASKS = (code: string) => `/projects/workflows/${code}/tasks`;
-export const PROJECT_UPDATE_WORKFLOW_STATUS = (workflowCode: string, statusCode: string) =>
-  `${PROJECT_DISPOSE_ROOT}workflows/${workflowCode}/${statusCode}`;

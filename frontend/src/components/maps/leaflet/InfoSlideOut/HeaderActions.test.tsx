@@ -55,32 +55,12 @@ const HeaderComponent = (
 
 describe('HeaderActions View', () => {
   it('HeaderActions renders correctly', () => {
-    const { container } = render(HeaderComponent(mockParcel, PropertyTypes.PARCEL, true, true));
+    const { container } = render(HeaderComponent(mockParcel, PropertyTypes.Parcel, true, true));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('Shows all three actions when user has all permissions', () => {
-    const { getByText } = render(HeaderComponent(mockParcel, PropertyTypes.PARCEL, true, true));
-    expect(getByText('View details')).toBeVisible();
-    expect(getByText('Update')).toBeVisible();
-    expect(getByText('Zoom map')).toBeVisible();
-  });
-
-  it('Shows Zoom and View when user has view permissions', () => {
-    const { getByText, queryByText } = render(
-      HeaderComponent(mockParcel, PropertyTypes.PARCEL, true, false),
-    );
-    expect(getByText('View details')).toBeVisible();
-    expect(queryByText('Update')).toBeNull();
-    expect(getByText('Zoom map')).toBeVisible();
-  });
-
-  it('Shows Zoom only when user no permissions', () => {
-    const { getByText, queryByText } = render(
-      HeaderComponent(mockParcel, PropertyTypes.PARCEL, false, false),
-    );
-    expect(queryByText('View details')).toBeNull();
-    expect(queryByText('Update')).toBeNull();
+    const { getByText } = render(HeaderComponent(mockParcel, PropertyTypes.Parcel, true, true));
     expect(getByText('Zoom map')).toBeVisible();
   });
 });

@@ -9,15 +9,18 @@ namespace Pims.Api.Areas.Keycloak.Models.User.Update
     {
         #region Properties
         /// <summary>
-        /// get/set - The unique identify for the user role.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        /// <value></value>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - A unique name that identifies the user role.
         /// </summary>
-        /// <value></value>
         public string Name { get; set; }
         #endregion
     }

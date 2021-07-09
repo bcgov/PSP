@@ -4,14 +4,14 @@ using Model = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Admin.Models.Parcel
 {
-    public class ParcelBuildingModel : Model.BaseModel
+    public class ParcelBuildingModel : Model.BaseAppModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int ParcelId { get; set; }
+        public long ParcelId { get; set; }
 
-        public int AgencyId { get; set; }
+        public long AgencyId { get; set; }
 
         public string Agency { get; set; }
 
@@ -27,17 +27,17 @@ namespace Pims.Api.Areas.Admin.Models.Parcel
 
         public double Longitude { get; set; }
 
-        public int BuildingConstructionTypeId { get; set; }
+        public long BuildingConstructionTypeId { get; set; }
 
         public string BuildingConstructionType { get; set; }
 
         public int BuildingFloorCount { get; set; }
 
-        public int BuildingPredominateUseId { get; set; }
+        public long BuildingPredominateUseId { get; set; }
 
         public string BuildingPredominateUse { get; set; }
 
-        public int BuildingOccupantTypeId { get; set; }
+        public long BuildingOccupantTypeId { get; set; }
 
         public string BuildingOccupantType { get; set; }
 

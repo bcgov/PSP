@@ -17,5 +17,5 @@ export interface IParcel extends IProperty {
   assessedBuilding: number | '';
   evaluations: IEvaluation[];
   fiscals: IFiscal[];
-  rowVersion?: string;
+  rowVersion?: number;
 }

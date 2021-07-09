@@ -2,7 +2,8 @@ import { IAgency } from './agency';
 import { IRole } from './role';
 
 export interface IUser {
-  id: string;
+  id: number;
+  key: string;
   displayName?: string;
   position?: string;
   note?: string;
@@ -16,4 +17,5 @@ export interface IUser {
   isDisabled?: boolean;
   lastLogin?: string;
   createdOn?: string;
+  rowVersion: number;
 }

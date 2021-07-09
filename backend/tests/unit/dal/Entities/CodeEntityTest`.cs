@@ -41,15 +41,13 @@ namespace Pims.Dal.Test.Entities
         public void CodeEntity_Constructor_01()
         {
             // Arrange
-            var uid = 1;
             string code = "code";
             var name = "name";
 
             // Act
-            var result = new TestClass(uid, code, name);
+            var result = new TestClass(code, name);
 
             // Assert
-            result.Id.Should().Be(uid);
             result.Code.Should().Be(code);
             result.Name.Should().Be(name);
         }
@@ -60,20 +58,19 @@ namespace Pims.Dal.Test.Entities
         public void CodeEntity_Constructor_01_ArgumentException(string code)
         {
             // Arrange
-            var uid = 1;
             var name = "name";
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new TestClass(uid, code, name));
+            Assert.Throws<ArgumentException>(() => new TestClass(code, name));
         }
         #endregion
 
         #region Test Classes
-        class TestClass : CodeEntity<int>
+        class TestClass : CodeEntity
         {
             public TestClass() : base() { }
-            public TestClass(int id, string code, string name) : base(id, code, name) { }
+            public TestClass(string code, string name) : base(code, name) { }
         }
         #endregion
     }

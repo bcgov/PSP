@@ -6,13 +6,18 @@ namespace Pims.Api.Areas.Admin.Models.User
     /// <summary>
     /// UserModel class, provides a model that represents a user.
     /// </summary>
-    public class UserModel : Pims.Api.Models.BaseModel
+    public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify the user.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The user's unique identifier.
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - The user's unique identity.

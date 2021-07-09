@@ -372,16 +372,20 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderHeaderCell = (column: ColumnInstanceWithProps<T>) => {
     return (
       <div className="sortable-column">
-        <ColumnFilter
-          onFilter={values => {
-            if (filterFormRef.current?.dirty) {
-              filterFormRef.current.submitForm();
-            }
-          }}
-          column={column}
-        >
-          {column.render('Header')}
-        </ColumnFilter>
+        {filterable ? (
+          <ColumnFilter
+            onFilter={values => {
+              if (filterFormRef.current?.dirty) {
+                filterFormRef.current.submitForm();
+              }
+            }}
+            column={column}
+          >
+            {column.render('Header')}
+          </ColumnFilter>
+        ) : (
+          column.render('Header')
+        )}
         <span style={{ flex: '1 1 auto' }} />
         <ColumnSort
           onSort={() => {

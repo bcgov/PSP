@@ -31,7 +31,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var type = new PropertyType(1, "name");
+            var type = new PropertyType("name") { Id = 1 };
 
             // Assert
             type.Id.Should().Be(1);

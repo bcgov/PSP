@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { find } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
 import {
@@ -198,7 +199,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .fetchPropertyDetail(1, 0, undefined)
+            .fetchPropertyDetail(1, PropertyTypes.Parcel, undefined)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -222,7 +223,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .fetchPropertyDetail(mockBuilding.id as number, 1, undefined)
+            .fetchPropertyDetail(+mockBuilding.id, PropertyTypes.Building, undefined)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

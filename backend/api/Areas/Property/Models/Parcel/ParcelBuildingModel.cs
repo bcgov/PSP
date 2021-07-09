@@ -6,19 +6,19 @@ namespace Pims.Api.Areas.Property.Models.Parcel
     public class ParcelBuildingModel : PropertyModel
     {
         #region Properties
-        public int ParcelId { get; set; }
+        public long ParcelId { get; set; }
 
-        public int BuildingConstructionTypeId { get; set; }
+        public long BuildingConstructionTypeId { get; set; }
 
         public string BuildingConstructionType { get; set; }
 
         public int BuildingFloorCount { get; set; }
 
-        public int BuildingPredominateUseId { get; set; }
+        public long BuildingPredominateUseId { get; set; }
 
         public string BuildingPredominateUse { get; set; }
 
-        public int BuildingOccupantTypeId { get; set; }
+        public long BuildingOccupantTypeId { get; set; }
 
         public string BuildingOccupantType { get; set; }
 

@@ -1,17 +1,26 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ParcelBuilding class, provides the many-to-many relationship between parcels and buildings.
     /// </summary>
-    public class ParcelBuilding : BaseEntity
+    [MotiTable("PIMS_PARCEL_BUILDING", "PRCLBL")]
+    public class ParcelBuilding : BaseAppEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key to identify the parcel building.
+        /// </summary>
+        [Column("PARCEL_BUILDING_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - Primary key: The foreign key to the parcel.
         /// </summary>
-        public int ParcelId { get; set; }
+        [Column("PARCEL_ID")]
+        public long ParcelId { get; set; }
 
         /// <summary>
         /// get/set - The parcel that the building is located on.
@@ -21,7 +30,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Primary key: The foreign key to the building.
         /// </summary>
-        public int BuildingId { get; set; }
+        [Column("BUILDING_ID")]
+        public long BuildingId { get; set; }
 
         /// <summary>
         /// get/set - The building located on the parcel.

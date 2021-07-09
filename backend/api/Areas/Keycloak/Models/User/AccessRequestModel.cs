@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Keycloak.Models.User
 {
-    public class AccessRequestModel : Api.Models.BaseModel
+    public class AccessRequestModel : Api.Models.BaseAppModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
         public AccessRequestStatus? Status { get; set; }
         public string Note { get; set; }
         public AccessRequestUserModel User { get; set; }

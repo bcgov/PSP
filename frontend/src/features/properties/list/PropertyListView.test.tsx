@@ -34,10 +34,10 @@ window.open = jest.fn();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'agencyVal', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
     {
+      id: 1,
       name: 'classificationVal',
-      id: '1',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },
@@ -220,26 +220,6 @@ describe('Property list view', () => {
 
     await act(async () => {
       const { getByTestId, container } = renderPage();
-      expect(getByTestId('edit-icon')).toBeInTheDocument();
-      fireEvent(
-        getByTestId('edit-icon'),
-        new MouseEvent('click', { bubbles: true, cancelable: true }),
-      );
-      await wait(
-        () => {
-          expect(getByTestId('save-changes')).toBeInTheDocument();
-          expect(container.querySelector(`input[name="properties.0.market"]`)).toBeNull();
-        },
-        { timeout: 500 },
-      );
-    });
-  });
-
-  it('Disables property rows that are in an active project', async () => {
-    setupTests([{ ...mockFlatProperty, projectNumbers: ['SPP-10000'] }]);
-
-    await act(async () => {
-      const { container, getByTestId } = renderPage();
       expect(getByTestId('edit-icon')).toBeInTheDocument();
       fireEvent(
         getByTestId('edit-icon'),

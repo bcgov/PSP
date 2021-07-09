@@ -2,6 +2,8 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, wait } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { Classifications } from 'constants/classifications';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { mount } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -38,8 +40,8 @@ const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
-  { id: 1, latitude: 48.455059, longitude: -123.496452, propertyTypeId: 1 },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: 0 },
+  { id: 1, latitude: 48.455059, longitude: -123.496452, propertyTypeId: PropertyTypes.Parcel },
+  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
 ] as IProperty[];
 ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
   loadProperties: jest.fn(async () => {
@@ -52,7 +54,7 @@ const mockParcels = [
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails: IPropertyDetail = {
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   parcelDetail: {
     id: 1,
     name: 'test name',
@@ -61,8 +63,7 @@ const mockDetails: IPropertyDetail = {
     encumbranceReason: '',
     assessedBuilding: 0,
     assessedLand: 0,
-    projectNumbers: [],
-    classificationId: 0,
+    classificationId: Classifications.CoreStrategic,
     zoning: '',
     zoningPotential: '',
     agencyId: 0,
@@ -169,8 +170,6 @@ describe('MapProperties View', () => {
           properties={properties}
           selectedProperty={selectedProperty}
           agencies={[]}
-          lotSizes={[]}
-          onMarkerClick={jest.fn()}
           mapRef={mapRef}
           administrativeAreas={[]}
           disableMapFilterBar={disableMapFilterBar}

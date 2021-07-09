@@ -47,7 +47,6 @@ namespace Pims.Dal.Test.Entities
             template.Body.Should().BeNull();
             template.IsDisabled.Should().BeFalse();
             template.Tag.Should().BeNull();
-            template.Status.Should().BeEmpty();
             template.Notifications.Should().BeEmpty();
         }
 

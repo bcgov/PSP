@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The primary key to identify the property within PIMS.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The type of property [Land|Building]
@@ -36,7 +36,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - Foreign key to the property classification [Core Active|Core Strategic|Surplus Active|Surplus Encumbered|Disposed]
         /// </summary>
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - The classification name of the property [Core Active|Core Strategic|Surplus Active|Surplus Encumbered|Disposed]
@@ -73,7 +73,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The foreign key to the owning agency.
         /// </summary>
-        public int? AgencyId { get; set; }
+        public long? AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The agency or ministry name that owns the property.
@@ -103,7 +103,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The foreign key to the address of the property.
         /// </summary>
-        public int AddressId { get; set; }
+        public long AddressId { get; set; }
 
         /// <summary>
         /// get/set - The address of the property.

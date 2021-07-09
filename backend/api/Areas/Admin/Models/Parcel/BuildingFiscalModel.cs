@@ -1,9 +1,9 @@
 namespace Pims.Api.Areas.Admin.Models.Parcel
 {
-    public class BuildingFiscalModel : Api.Models.BaseModel
+    public class BuildingFiscalModel : Api.Models.BaseAppModel
     {
         #region Properties
-        public int BuildingId { get; set; }
+        public long BuildingId { get; set; }
 
         public int FiscalYear { get; set; }
 

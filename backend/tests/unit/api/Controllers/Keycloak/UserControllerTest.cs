@@ -48,7 +48,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             service.Setup(m => m.SyncUserAsync(It.IsAny<Guid>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await controller.SyncUserAsync(user.Id);
+            var result = await controller.SyncUserAsync(user.Key);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -99,7 +99,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             service.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await controller.GetUserAsync(user.Id);
+            var result = await controller.GetUserAsync(user.Key);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -125,7 +125,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var model = mapper.Map<AdminModels.UserModel>(user);
 
             // Act
-            var result = await controller.UpdateUserAsync(user.Id, model);
+            var result = await controller.UpdateUserAsync(user.Key, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

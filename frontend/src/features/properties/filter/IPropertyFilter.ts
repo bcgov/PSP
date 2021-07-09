@@ -2,7 +2,7 @@
  * Property filter options used by Formik.
  */
 export interface IPropertyFilter {
-  /** Select one of the search options [address, pid, projectNumber, location]. */
+  /** Select one of the search options [address, pid, location]. */
   searchBy: string;
   /** The page number. */
   page?: string;
@@ -14,8 +14,6 @@ export interface IPropertyFilter {
   address: string;
   /** The location of the property. */
   administrativeArea: string;
-  /** The project number the property is part of. */
-  projectNumber: string;
   /** comma-separated list of agencies to filter by */
   agencies: string;
   /** The classification of the property. */
@@ -24,10 +22,6 @@ export interface IPropertyFilter {
   minLotSize: string;
   /** The maxium lot size of the property. */
   maxLotSize: string;
-  /** Whether the property is in SPP. */
-  inSurplusPropertyProgram?: boolean;
-  /** Whether the property is in ERP. */
-  inEnhancedReferralProcess?: boolean;
   /** Select on of the property types [Land, Building]. */
   propertyType?: string;
   /** The name of desired target */
@@ -50,6 +44,4 @@ export interface IPropertyFilter {
   maxMarketValue?: '';
   /** Whether to return properties owned by other agencies. */
   includeAllProperties?: boolean;
-  /** when the surplus properties filter is open */
-  surplusFilter?: boolean;
 }

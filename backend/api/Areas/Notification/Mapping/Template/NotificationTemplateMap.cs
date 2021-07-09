@@ -13,7 +13,6 @@ namespace Pims.Api.Areas.Project.Mapping.Template
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Status, src => src.Status)
                 .Map(dest => dest.Audience, src => src.Audience)
                 .Map(dest => dest.To, src => src.To)
                 .Map(dest => dest.Cc, src => src.Cc)
@@ -24,15 +23,13 @@ namespace Pims.Api.Areas.Project.Mapping.Template
                 .Map(dest => dest.Body, src => src.Body)
                 .Map(dest => dest.BodyType, src => src.BodyType)
                 .Map(dest => dest.Tag, src => src.Tag)
-                .Map(dest => dest.Status, src => src.Status)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.NotificationTemplateModel, Entity.NotificationTemplate>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Status, src => src.Status)
                 .Map(dest => dest.Audience, src => src.Audience)
                 .Map(dest => dest.To, src => src.To)
                 .Map(dest => dest.Cc, src => src.Cc)
@@ -43,8 +40,7 @@ namespace Pims.Api.Areas.Project.Mapping.Template
                 .Map(dest => dest.Body, src => src.Body)
                 .Map(dest => dest.BodyType, src => src.BodyType)
                 .Map(dest => dest.Tag, src => src.Tag)
-                .Map(dest => dest.Status, src => src.Status)
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

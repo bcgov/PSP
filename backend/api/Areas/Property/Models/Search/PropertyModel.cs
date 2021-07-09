@@ -13,23 +13,23 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The primary key to identify the property.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
         /// <value></value>
-        public string RowVersion { get; set; }
+        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the property type [Land, Building].
         /// </summary>
-        public int PropertyTypeId { get; set; }
+        public long PropertyTypeId { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the property status.
         /// </summary>
-        public int StatusId { get; set; }
+        public long StatusId { get; set; }
 
         /// <summary>
         /// get/set - The status of the property.
@@ -39,7 +39,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The foreign key to the property classification.
         /// </summary>
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - The classification of the property.
@@ -72,16 +72,6 @@ namespace Pims.Api.Areas.Property.Models.Search
         public IEnumerable<string> ProjectNumbers { get; set; }
 
         /// <summary>
-        /// get/set - The property project status.
-        /// </summary>
-        public string ProjectStatus { get; set; }
-
-        /// <summary>
-        /// get/set - The workflow code of this project, if in a project.
-        /// </summary>
-        public string ProjectWorkflow { get; set; }
-
-        /// <summary>
         /// get/set - Whether the property is sensitive data.
         /// </summary>
         public bool IsSensitive { get; set; }
@@ -91,7 +81,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The foreign key to the owning agency.
         /// </summary>
-        public int? AgencyId { get; set; }
+        public long? AgencyId { get; set; }
 
         /// <summary>
         /// get/set - The owning agency name.
@@ -118,7 +108,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The foreign key to the address.
         /// </summary>
-        public int AddressId { get; set; }
+        public long AddressId { get; set; }
 
         /// <summary>
         /// get/set - The address of the property.
@@ -177,7 +167,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - Foreign key to the construction type.
         /// </summary>
-        public int? ConstructionTypeId { get; set; }
+        public long? ConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - The construction type name.
@@ -187,7 +177,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The foreign key to the predominate use.
         /// </summary>
-        public int? PredominateUseId { get; set; }
+        public long? PredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - The predominate use name.
@@ -197,7 +187,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The foreign key to the occupant type.
         /// </summary>
-        public int? OccupantTypeId { get; set; }
+        public long? OccupantTypeId { get; set; }
 
         /// <summary>
         /// get/set - The occupant type name.

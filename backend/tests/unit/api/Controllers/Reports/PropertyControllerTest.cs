@@ -33,7 +33,7 @@ namespace Pims.Api.Test.Controllers.Reports
             new object [] { new PropertyFilterModel(0, 0, 10, 0) },
             new object [] { new PropertyFilterModel(0, 0, 0, 10) },
             new object [] { new PropertyFilterModel(0, 0, 0, 10) { Address = "Address" } },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { Agencies = new [] { 1 } } },
+            new object [] { new PropertyFilterModel(0, 0, 0, 10) { Agencies = new long[] { 1 } } },
             new object [] { new PropertyFilterModel(0, 0, 0, 10) { StatusId = 1 } },
             new object [] { new PropertyFilterModel(0, 0, 0, 10) { ClassificationId = 1 } },
             new object [] { new PropertyFilterModel(0, 0, 0, 10) { ProjectNumber = "ProjectNumber" } },

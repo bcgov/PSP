@@ -1,5 +1,6 @@
 import { AccessRequestStatus } from 'constants/accessStatus';
-import { Workflows } from 'constants/index';
+import { Classifications } from 'constants/classifications';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { IProperty as IFlatProperty } from 'features/properties/list';
 import { IAccessRequest, IBuilding, IParcel, IProperty, IUserDetails } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -30,7 +31,7 @@ export const DISABLED = [
 export const CLASSIFICATIONS = [
   {
     name: 'Core Operational',
-    id: '0',
+    id: 0,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 1,
@@ -38,31 +39,15 @@ export const CLASSIFICATIONS = [
   },
   {
     name: 'Core Strategic',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 2,
     isVisible: true,
   },
   {
-    name: 'Surplus Active',
-    id: '2',
-    isDisabled: false,
-    type: 'Classification',
-    sortOrder: 3,
-    isVisible: true,
-  },
-  {
-    name: 'Surplus Encumbered',
-    id: '3',
-    isDisabled: false,
-    type: 'Classification',
-    sortOrder: 4,
-    isVisible: true,
-  },
-  {
     name: 'Disposed',
-    id: '4',
+    id: 4,
     isDisabled: false,
     type: 'Classification',
     sortOrder: 5,
@@ -74,14 +59,14 @@ export const ADMINISTRATIVEAREAS = [
   {
     code: '0',
     name: 'Victoria',
-    id: '0',
+    id: 0,
     isDisabled: false,
     type: 'AdministrativeArea',
   },
   {
     code: '1',
     name: 'Royal Oak',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'AdministrativeArea',
   },
@@ -91,51 +76,53 @@ export const AGENCIES = [
   {
     code: 'AEST',
     name: 'AEST',
-    id: '1',
+    id: 1,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'HTLH',
     name: 'HTLH',
-    id: '2',
+    id: 2,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'MOTI',
     name: 'MOTI',
-    id: '3',
+    id: 3,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'FLNR',
     name: 'FLNR',
-    id: '4',
+    id: 4,
     isDisabled: false,
     type: 'Agency',
   },
   {
     code: 'MAH',
     name: 'MAH',
-    id: '5',
+    id: 5,
     isDisabled: false,
     type: 'Agency',
   },
 ];
 
 export const mockUser: IUserDetails = {
-  id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  id: 1,
+  key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  username: 'admin',
+  email: 'admin@pims.gov.bc.ca',
   displayName: 'User, Admin',
   firstName: 'Admin',
   lastName: 'User',
-  email: 'admin@pims.gov.bc.ca',
-  username: 'admin',
   position: '',
-  createdOn: '2021-05-04T19:07:09.6920606',
   agencies: [],
   roles: [],
+  createdOn: '2021-05-04T19:07:09.6920606',
+  rowVersion: 1,
 };
 
 export const PARCELS = [
@@ -147,10 +134,9 @@ export const mockParcel = {
   id: 1,
   pid: '000-000-000',
   pin: '',
-  projectNumber: '',
   zoning: '',
   zoningPotential: '',
-  classificationId: 1,
+  classificationId: Classifications.CoreOperational,
   encumbranceReason: '',
   agencyId: '',
   isSensitive: false,
@@ -192,9 +178,6 @@ export const mockParcel = {
   agencyFullName: 'Ministry of Advanced Education',
   subAgency: 'KPU',
   subAgencyFullName: 'Kwantlen Polytechnic University',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'In ERP',
-  projectWorkflow: Workflows.ERP,
 } as IParcel;
 
 export const mockBuilding = {
@@ -214,7 +197,7 @@ export const mockBuilding = {
   longitude: 123,
   buildingConstructionTypeId: 0,
   buildingConstructionType: 'Concrete',
-  classificationId: 1,
+  classificationId: Classifications.CoreOperational,
   classification: 'Core Operational',
   assessedLand: 10000,
   assessedBuilding: 10000,
@@ -249,14 +232,11 @@ export const mockBuilding = {
   occupantName: 'test',
   parcels: [mockParcel],
   buildingTenancy: '100%',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'On Market',
-  projectWorkflow: Workflows.SPL,
 } as IBuilding;
 
 export const mockProperty: IProperty = {
   id: 0,
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   latitude: 23,
   longitude: 23,
   description: 'test',
@@ -266,12 +246,12 @@ export const mockProperty: IProperty = {
 };
 
 export const mockBuildingDetail: IPropertyDetail = {
-  propertyTypeId: 1,
+  propertyTypeId: PropertyTypes.Building,
   parcelDetail: mockBuilding,
 };
 
 export const mockParcelDetail: IPropertyDetail = {
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   parcelDetail: {
     id: 3,
     longitude: 1,
@@ -299,7 +279,6 @@ export const mockParcelDetail: IPropertyDetail = {
     zoning: '20',
     zoningPotential: '21',
     agencyId: 22,
-    projectNumbers: ['24'],
     assessedLand: 25,
     assessedBuilding: 26,
     encumbranceReason: '27',
@@ -319,10 +298,9 @@ export const mockDetails = [
     id: 1,
     pid: '000-000-000',
     pin: '',
-    projectNumber: '',
     zoning: '',
     zoningPotential: '',
-    classificationId: 1,
+    classificationId: Classifications.CoreOperational,
     encumbranceReason: '',
     agencyId: 1,
     isSensitive: false,
@@ -362,7 +340,7 @@ export const mockDetails = [
     buildings: [],
     parcels: [],
     agency: 'MOTI',
-    propertyTypeId: 0,
+    propertyTypeId: PropertyTypes.Parcel,
   },
   {
     id: 2,
@@ -370,7 +348,7 @@ export const mockDetails = [
     pin: '',
     zoning: '',
     zoningPotential: '',
-    classificationId: 1,
+    classificationId: Classifications.CoreOperational,
     encumbranceReason: '',
     agencyId: 2,
     isSensitive: false,
@@ -503,11 +481,10 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
           evaluations: [],
           fiscals: [],
           id: 1640,
-          propertyTypeId: 0,
-          projectNumbers: ['DRAFT-00031'],
+          propertyTypeId: PropertyTypes.Building,
           name: '',
           description: '',
-          classificationId: 0,
+          classificationId: Classifications.CoreStrategic,
           classification: 'Core Operational',
           agencyId: 11,
           agency: 'MAG',
@@ -526,11 +503,10 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
       ],
       parcels: [],
       id: 2,
-      propertyTypeId: 0,
-      projectNumbers: [],
+      propertyTypeId: PropertyTypes.Parcel,
       name: 'Traditional site',
       description: 'Traditional site',
-      classificationId: 0,
+      classificationId: Classifications.CoreStrategic,
       classification: 'Core Operational',
       agencyId: 41,
       address: {
@@ -583,11 +559,10 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
     },
   ],
   id: 1,
-  propertyTypeId: 0,
-  projectNumbers: ['DRAFT-00031'],
+  propertyTypeId: PropertyTypes.Parcel,
   name: '',
   description: '',
-  classificationId: 0,
+  classificationId: Classifications.CoreStrategic,
   classification: 'Core Operational',
   encumbranceReason: '',
   agencyId: 11,
@@ -608,12 +583,12 @@ export const mockBuildingWithAssociatedLand: IBuilding = {
 export const mockFlatProperty: IFlatProperty = {
   name: 'Test Property',
   id: 0,
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Parcel,
   propertyType: 'Land',
   latitude: 23,
   longitude: 23,
   pid: '123-123-123',
-  classificationId: 2,
+  classificationId: Classifications.CoreOperational,
   classification: 'Surplus Active',
   description: 'test',
   isSensitive: false,
@@ -637,7 +612,7 @@ export const mockFlatProperty: IFlatProperty = {
 export const mockFlatBuildingProperty: IFlatProperty = {
   address: '6460 Applecross Road',
   propertyType: 'Building',
-  propertyTypeId: 0,
+  propertyTypeId: PropertyTypes.Building,
   city: 'Victoria',
   addressId: 267,
   netBook: 223,
@@ -647,7 +622,7 @@ export const mockFlatBuildingProperty: IFlatProperty = {
   agencyCode: 'TRAN',
   agencyId: 250,
   classification: 'Core Operational',
-  classificationId: 0,
+  classificationId: Classifications.CoreStrategic,
   constructionType: 'Concrete',
   constructionTypeId: 0,
   description: 'Claims Centre',
@@ -665,7 +640,6 @@ export const mockFlatBuildingProperty: IFlatProperty = {
   postal: '',
   predominateUse: 'Commercial',
   predominateUseId: 26,
-  projectNumbers: [],
   province: 'British Columbia',
   rentableArea: 0,
   subAgency: 'Insurance Corporation of BC',
@@ -678,10 +652,9 @@ export const ACTIVE = {
   id: 1,
   pid: '000-000-000',
   pin: '',
-  projectNumber: '',
   zoning: '',
   zoningPotential: '',
-  classificationId: 1,
+  classificationId: Classifications.CoreOperational,
   encumbranceReason: '',
   agencyId: '',
   isSensitive: false,
@@ -724,11 +697,12 @@ export const ACTIVE = {
 
 export const mockAccessRequest: IAccessRequest = {
   id: 2,
-  userId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  userId: 1,
   status: AccessRequestStatus.OnHold,
   note: '',
   user: {
-    id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    id: 1,
+    key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     displayName: 'User, Admin',
     firstName: 'Admin',
     lastName: 'User',
@@ -739,10 +713,10 @@ export const mockAccessRequest: IAccessRequest = {
   },
   agencies: [
     {
-      description: '',
-      code: 'AG',
       id: 251,
+      code: 'AG',
       name: 'Attorney General',
+      description: '',
       isDisabled: false,
       sortOrder: 0,
       createdOn: '2021-05-07T00:37:06.2457312',
@@ -750,15 +724,15 @@ export const mockAccessRequest: IAccessRequest = {
   ],
   roles: [
     {
-      description: 'Real Estate Manager can manage properties within their agencies.',
-      id: 'aad8c03d-892c-4cc3-b992-5b41c4f2392c',
+      id: 1,
       name: 'Real Estate Manager',
+      description: 'Real Estate Manager can manage properties within their agencies.',
       isDisabled: false,
       sortOrder: 0,
       createdOn: '2021-05-07T00:37:06.2457315',
       updatedByName: 'unknown',
       updatedByEmail: 'unknown',
-      rowVersion: 'AAAAAAAAJyM=',
+      rowVersion: 1,
     },
   ],
   createdOn: '2021-05-07T00:37:06.2457303',

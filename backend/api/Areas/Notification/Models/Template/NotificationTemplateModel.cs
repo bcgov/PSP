@@ -1,18 +1,17 @@
 using Pims.Api.Models;
 using Pims.Core.Converters;
 using Pims.Dal.Entities;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Pims.Api.Areas.Notification.Models.Template
 {
-    public class NotificationTemplateModel : BaseModel
+    public class NotificationTemplateModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key unique identity for notification template.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - A unique name to identify the template.
@@ -81,11 +80,6 @@ namespace Pims.Api.Areas.Notification.Models.Template
         /// get/set - A way to group notifications within CHES.
         /// </summary>
         public string Tag { get; set; }
-
-        /// <summary>
-        /// get - A collection of project status that reference this template.
-        /// </summary>
-        public IEnumerable<ProjectStatusNotificationModel> Status { get; set; } = new List<ProjectStatusNotificationModel>();
         #endregion
     }
 }

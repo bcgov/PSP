@@ -16,7 +16,7 @@ namespace Pims.Core.Extensions
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public static Guid GetUserId(this ClaimsPrincipal user)
+        public static Guid GetUserKey(this ClaimsPrincipal user)
         {
             var value = user?.FindFirstValue(ClaimTypes.NameIdentifier);
             return String.IsNullOrWhiteSpace(value) ? Guid.Empty : new Guid(value);
@@ -29,15 +29,15 @@ namespace Pims.Core.Extensions
         /// <param name="user"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static int[] GetAgencies(this ClaimsPrincipal user, string delimiter = ",")
+        public static long[] GetAgencies(this ClaimsPrincipal user, string delimiter = ",")
         {
             var agencies = user?.FindAll("agencies");
-            var results = new List<int>();
+            var results = new List<long>();
 
             agencies?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
-                results.AddRange(split.Select(v => Int32.TryParse(v, out int value) ? value : (int?)null).NotNull().Select(v => (int)v));
+                results.AddRange(split.Select(v => long.TryParse(v, out long value) ? value : (long?)null).NotNull().Select(v => (long)v));
             });
 
             return results.ToArray();
@@ -50,15 +50,15 @@ namespace Pims.Core.Extensions
         /// <param name="user"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static int?[] GetAgenciesAsNullable(this ClaimsPrincipal user, string delimiter = ",")
+        public static long?[] GetAgenciesAsNullable(this ClaimsPrincipal user, string delimiter = ",")
         {
             var agencies = user?.FindAll("agencies");
-            var results = new List<int?>();
+            var results = new List<long?>();
 
             agencies?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
-                results.AddRange(split.Select(v => Int32.TryParse(v, out int value) ? value : (int?)null));
+                results.AddRange(split.Select(v => long.TryParse(v, out long value) ? value : (long?)null));
             });
 
             return results.ToArray();
@@ -66,13 +66,26 @@ namespace Pims.Core.Extensions
 
         /// <summary>
         /// Get the user's username.
+        /// Extracts the username from the Keycloak value (username@idir).
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
         public static string GetUsername(this ClaimsPrincipal user)
         {
             var value = user?.FindFirstValue("username");
-            return value;
+            return value?.Split("@").First();
+        }
+
+        /// <summary>
+        /// Get the user's directory.
+        /// Extracts the user directory from the Keycloak value (username@idir).
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static string GetUserDirectory(this ClaimsPrincipal user)
+        {
+            var value = user?.FindFirstValue("username");
+            return value?.Contains("@") == true ? value.Split("@").Last() : null;
         }
 
         /// <summary>

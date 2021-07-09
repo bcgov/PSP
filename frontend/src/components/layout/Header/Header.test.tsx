@@ -1,7 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import * as API from 'constants/API';
-import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -24,8 +23,8 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: '1', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'roleVal', id: 2, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
 };
 
@@ -102,7 +101,7 @@ describe('Header tests', () => {
         subject: 'test',
         authenticated: true,
         userInfo: {
-          roles: [Claims.PROJECT_ADD],
+          roles: [],
         },
       },
     });
@@ -129,7 +128,7 @@ describe('Header tests', () => {
           userInfo: {
             name: 'display name',
             firstName: 'name',
-            roles: [Claims.PROJECT_ADD],
+            roles: [],
           },
         },
       });
@@ -153,7 +152,7 @@ describe('Header tests', () => {
           subject: 'test',
           authenticated: true,
           userInfo: {
-            roles: [Claims.PROJECT_ADD],
+            roles: [],
             firstName: 'firstName',
             lastName: 'lastName',
           },

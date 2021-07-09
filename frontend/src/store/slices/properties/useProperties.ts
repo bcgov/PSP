@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
+import { PropertyTypes } from 'constants/propertyTypes';
 import { useApiProperties } from 'hooks/pims-api/useApiProperties';
 import { IBuilding, IParcel } from 'interfaces';
 import _ from 'lodash';
@@ -162,8 +163,12 @@ export const useProperties = () => {
    * @param position optional override for the lat/lng of the returned property.
    */
   const fetchPropertyDetail = useCallback(
-    async (id: number, propertyTypeId: 0 | 1, position?: [number, number]) => {
-      return propertyTypeId === 0
+    async (
+      id: number,
+      propertyTypeId: PropertyTypes.Parcel | PropertyTypes.Building,
+      position?: [number, number],
+    ) => {
+      return propertyTypeId === PropertyTypes.Parcel
         ? fetchParcelDetail(id, position)
         : fetchBuildingDetail(id, position);
     },

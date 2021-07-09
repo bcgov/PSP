@@ -15,7 +15,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Parcel
                 .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Value, src => src.Value)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
 
             config.NewConfig<Model.ParcelEvaluationModel, Entity.ParcelEvaluation>()
@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Parcel
                 .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Value, src => src.Value)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

@@ -13,6 +13,7 @@ using Pims.Dal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -142,7 +143,7 @@ namespace PimsApi.Test.Controllers
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest();
-            service.Setup(m => m.User.GetAccessRequest(It.IsAny<int>())).Returns(accessRequest);
+            service.Setup(m => m.User.GetAccessRequest(It.IsAny<long>())).Returns(accessRequest);
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
             // Act
@@ -182,8 +183,8 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Agencies, actualResult.Agencies, new DeepPropertyCompare());
-            Assert.Equal(model.Roles, actualResult.Roles, new DeepPropertyCompare());
+            Assert.Equal(model.Agencies.First().Id, actualResult.Agencies.First().Id);
+            Assert.Equal(model.Roles.First().Id, actualResult.Roles.First().Id);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.User.AddAccessRequest(It.IsAny<Entity.AccessRequest>()), Times.Once());
         }
@@ -330,8 +331,8 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Agencies, actualResult.Agencies, new DeepPropertyCompare());
-            Assert.Equal(model.Roles, actualResult.Roles, new DeepPropertyCompare());
+            Assert.Equal(model.Agencies.First().Id, actualResult.Agencies.First().Id);
+            Assert.Equal(model.Roles.First().Id, actualResult.Roles.First().Id);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.User.UpdateAccessRequest(It.IsAny<Entity.AccessRequest>()), Times.Once());
         }

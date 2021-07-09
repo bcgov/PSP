@@ -16,8 +16,6 @@ const LandingFilterHelpText = () => {
       <br />
       <strong>PID/PIN:</strong> The property has the specified PID or PIN.
       <br />
-      <strong>SPP No.:</strong> The project containing the value.
-      <br />
       <strong>Agency:</strong> The property belongs to the specified agency.
       <br />
       <strong>Classification:</strong> The property has the specified classification.
@@ -25,10 +23,6 @@ const LandingFilterHelpText = () => {
       <strong>Min Lot Size:</strong> The property is greater than or equal to the value.
       <br />
       <strong>Max Lot Size:</strong> The property is less than or equal to the value.
-      <br />
-      <strong>Enhanced Referral Process:</strong> The property is in the ERP.
-      <br />
-      <strong>Surplus Properties List:</strong> The property is on the SPL.
       <br />
     </p>
   );

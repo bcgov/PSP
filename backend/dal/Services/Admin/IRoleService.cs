@@ -10,9 +10,9 @@ namespace Pims.Dal.Services.Admin
     public interface IRoleService : IBaseService<Role>
     {
         Paged<Role> Get(int page, int quantity, string name = null);
-        Role Get(Guid id);
+        Role Get(Guid key);
         Role GetByName(string name);
-        Role GetByKeycloakId(Guid id);
+        Role GetByKeycloakId(Guid key);
         int RemoveAll(Guid[] exclude);
     }
 }

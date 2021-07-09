@@ -266,6 +266,22 @@ objects:
     stringData:
       CHES_USERNAME: ${CHES_USERNAME}
       CHES_PASSWORD: ${CHES_PASSWORD}
+
+    # LTSA configuration secrets.
+    - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      annotations:
+        description: "LTSA client secrets"
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
+    type: Opaque
+    stringData:
       MY_LTSA_USERNAME: ${MY_LTSA_USERNAME}
       MY_LTSA_PASSWORD: ${MY_LTSA_PASSWORD}
       INTEGRATOR_USERNAME: ${INTEGRATOR_USERNAME}

@@ -45,63 +45,9 @@
   "roles": {
     "realm": [
       {
-        "id": "ceedef87-b0f9-4e0f-b53a-d85bfa4a9995",
-        "name": "project-delete",
-        "description": "Ability to delete projects.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "7f838b04-477d-4a6a-a3f7-dc77e33f24fc",
-        "name": "admin-users",
-        "description": "Ability to administrate users.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "c86e3b86-3009-4f7e-a150-71772551c6c3",
-        "name": "dispose-request",
-        "description": "Ability to request to dispose properties.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "8a2e57be-b95f-439c-bbaa-64c689e67c1a",
-        "name": "property-edit",
-        "description": "Ability to edit properties.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "32a519ae-54ac-41af-9430-fa64a5e96980",
-        "name": "sensitive-view",
-        "description": "Ability to view sensitive properties.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
         "id": "55c46e64-4daf-4a23-8487-487f1e7d1e49",
         "name": "offline_access",
         "description": "${role_offline-access}",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "b38298ee-799e-4dd4-bebf-98c4cb3750db",
-        "name": "property-view",
-        "description": "Ability to view properties.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
@@ -117,36 +63,54 @@
         "attributes": {}
       },
       {
-        "id": "1623bb22-98eb-4903-81fb-5b76ffeebc15",
-        "name": "project-add",
-        "description": "Ability to add projects.",
+        "id": "7f838b04-477d-4a6a-a3f7-dc77e33f24fc",
+        "name": "admin-users",
+        "description": "Ability to administrate users.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
         "attributes": {}
       },
       {
-        "id": "2f7215ba-8a03-4372-a503-8e0d40a61f8e",
-        "name": "admin-projects",
-        "description": "Ability to administrate projects.",
+        "id": "b38298ee-799e-4dd4-bebf-98c4cb3750db",
+        "name": "property-view",
+        "description": "Ability to view properties.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
         "attributes": {}
       },
       {
-        "id": "d9d272c5-d988-4d69-8d28-395cf173a510",
-        "name": "admin-properties",
-        "description": "Ability to administrate properties.",
+        "id": "8a2e57be-b95f-439c-bbaa-64c689e67c1a",
+        "name": "property-edit",
+        "description": "Ability to edit properties.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
         "attributes": {}
       },
       {
-        "id": "9825d799-3fdf-4fe4-9876-401264310aaf",
-        "name": "project-edit",
-        "description": "Ability to edit projects.",
+        "id": "5d5da9b7-6641-4aa3-9a02-98515d6c991a",
+        "name": "property-add",
+        "description": "Ability to add properties.",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "pims",
+        "attributes": {}
+      },
+      {
+        "id": "0421b289-c70b-418c-9378-c0f1f2335f89",
+        "name": "property-delete",
+        "description": "Ability to delete properties.",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "pims",
+        "attributes": {}
+      },
+      {
+        "id": "32a519ae-54ac-41af-9430-fa64a5e96980",
+        "name": "sensitive-view",
+        "description": "Ability to view sensitive properties.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
@@ -171,38 +135,17 @@
         "attributes": {}
       },
       {
-        "id": "5d5da9b7-6641-4aa3-9a02-98515d6c991a",
-        "name": "property-add",
-        "description": "Ability to add properties.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "0421b289-c70b-418c-9378-c0f1f2335f89",
-        "name": "property-delete",
-        "description": "Ability to delete properties.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
         "id": "84b2f2b5-2d67-4ff8-b408-6611ed502736",
         "name": "agency-administrator",
         "description": "Agency Administrator of the users agency.",
         "composite": true,
         "composites": {
           "realm": [
+            "property-add",
             "property-view",
             "property-edit",
-            "project-add",
             "sensitive-view",
-            "project-edit",
-            "project-view",
-            "admin-users",
-            "property-add"
+            "admin-users"
           ]
         },
         "clientRole": false,
@@ -228,45 +171,18 @@
         "attributes": {}
       },
       {
-        "id": "eb87ebc3-77dc-45bd-b458-8d64ff5b3c5f",
-        "name": "dispose-approve",
-        "description": "Ability to approve disposal of a properties.",
+        "id": "2f7215ba-8a03-4372-a503-8e0d40a61f8e",
+        "name": "admin-projects",
+        "description": "Ability to administrate projects.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
         "attributes": {}
       },
       {
-        "id": "e340eeb3-fb2a-4e44-aad7-408d98b7ba2e",
-        "name": "project-view",
-        "description": "Ability to view projects.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "090bc341-af0f-45c9-8e0a-6d99024b52c1",
-        "name": "reports-view",
-        "description": "Ability to view reports.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "e3394f24-d457-4b3b-9036-2f8e5dda4123",
-        "name": "reports-spl",
-        "description": "Ability to view, create and modify non-final SPL reports.",
-        "composite": false,
-        "clientRole": false,
-        "containerId": "pims",
-        "attributes": {}
-      },
-      {
-        "id": "81ded21c-ed32-4694-8f33-79ef17833f2b",
-        "name": "reports-spl-admin",
-        "description": "Ability to view, create, modify and delete SPL reports.",
+        "id": "d9d272c5-d988-4d69-8d28-395cf173a510",
+        "name": "admin-properties",
+        "description": "Ability to administrate properties.",
         "composite": false,
         "clientRole": false,
         "containerId": "pims",
@@ -582,60 +498,7 @@
       "name": "Agency Administrator",
       "path": "/Agency Administrator",
       "attributes": {},
-      "realmRoles": ["project-delete", "agency-administrator"],
-      "clientRoles": {},
-      "subGroups": []
-    },
-    {
-      "id": "1eebfb3a-dd41-4298-b812-51bf1d1f0cde",
-      "name": "Assistant Deputy Minister",
-      "path": "/Assistant Deputy Minister",
-      "attributes": {},
-      "realmRoles": [
-        "project-delete",
-        "property-edit",
-        "sensitive-view",
-        "project-edit",
-        "property-add",
-        "property-view",
-        "project-add",
-        "project-view"
-      ],
-      "clientRoles": {},
-      "subGroups": []
-    },
-    {
-      "id": "3d766460-f8b6-44d2-adbc-6abe03e3345e",
-      "name": "Assistant Deputy Minister Assistant",
-      "path": "/Assistant Deputy Minister Assistant",
-      "attributes": {},
-      "realmRoles": [
-        "property-edit",
-        "sensitive-view",
-        "project-edit",
-        "property-add",
-        "property-view",
-        "project-add",
-        "project-view"
-      ],
-      "clientRoles": {},
-      "subGroups": []
-    },
-    {
-      "id": "bb79128b-d5ca-42a6-b92f-12402e79ffba",
-      "name": "Executive Director",
-      "path": "/Executive Director",
-      "attributes": {},
-      "realmRoles": [
-        "project-delete",
-        "property-edit",
-        "sensitive-view",
-        "project-edit",
-        "property-add",
-        "property-view",
-        "project-add",
-        "project-view"
-      ],
+      "realmRoles": ["agency-administrator"],
       "clientRoles": {},
       "subGroups": []
     },
@@ -645,13 +508,10 @@
       "path": "/Real Estate Analyst",
       "attributes": {},
       "realmRoles": [
-        "property-edit",
         "sensitive-view",
-        "project-edit",
+        "property-edit",
         "property-add",
-        "property-view",
-        "project-add",
-        "project-view"
+        "property-view"
       ],
       "clientRoles": {},
       "subGroups": []
@@ -662,49 +522,11 @@
       "path": "/Real Estate Manager",
       "attributes": {},
       "realmRoles": [
-        "project-delete",
-        "dispose-request",
-        "property-edit",
         "sensitive-view",
-        "project-edit",
+        "property-edit",
         "property-add",
-        "property-view",
-        "project-add",
-        "project-view"
+        "property-view"
       ],
-      "clientRoles": {},
-      "subGroups": []
-    },
-    {
-      "id": "b4232719-bdc4-4b68-bc29-c459e1e3c408",
-      "name": "SRES",
-      "path": "/SRES",
-      "attributes": {},
-      "realmRoles": [
-        "admin-properties",
-        "property-delete",
-        "admin-projects",
-        "project-delete",
-        "dispose-approve"
-      ],
-      "clientRoles": {},
-      "subGroups": []
-    },
-    {
-      "id": "6238c23d-933e-4c4a-954e-48bae3ce2080",
-      "name": "SRES Financial Manager",
-      "path": "/SRES Financial Manager",
-      "attributes": {},
-      "realmRoles": ["reports-view", "reports-spl", "reports-spl-admin"],
-      "clientRoles": {},
-      "subGroups": []
-    },
-    {
-      "id": "5c6cea5b-9b7c-47e8-852c-693e90ed815e",
-      "name": "SRES Financial Reporter",
-      "path": "/SRES Financial Reporter",
-      "attributes": {},
-      "realmRoles": ["reports-view", "reports-spl"],
       "clientRoles": {},
       "subGroups": []
     },
@@ -760,7 +582,7 @@
       "email": "admin@pims.gov.bc.ca",
       "attributes": {
         "displayName": ["User, Admin"],
-        "agencies": ["110"]
+        "agencies": ["1", "2", "3"]
       },
       "credentials": [
         {
@@ -792,7 +614,7 @@
       "email": "rem@pims.gov.bc.ca",
       "attributes": {
         "displayName": ["Manager, Real Estate"],
-        "agencies": ["9", "130", "131"]
+        "agencies": ["1", "2", "3"]
       },
       "credentials": [
         {
@@ -862,16 +684,16 @@
     {
       "id": "d64886c0-72d7-48b9-ba4e-ef1506f93308",
       "createdTimestamp": 1600787542788,
-      "username": "sres",
+      "username": "rea",
       "enabled": true,
       "totp": false,
       "emailVerified": false,
-      "firstName": "SRES",
-      "lastName": "User",
-      "email": "sres@test.com",
+      "firstName": "Real Estate",
+      "lastName": "Analyst",
+      "email": "rea@test.com",
       "attributes": {
-        "displayName": ["User, SRES"],
-        "agencies": ["110"]
+        "displayName": ["Analyst, Real Estate"],
+        "agencies": ["1", "2", "3"]
       },
       "credentials": [
         {
@@ -889,39 +711,7 @@
         "account": ["view-profile", "manage-account"]
       },
       "notBefore": 0,
-      "groups": ["/Real Estate Manager", "/SRES"]
-    },
-    {
-      "id": "6c384423-c113-46c5-b23a-14680f4e7b78",
-      "createdTimestamp": 1600787542788,
-      "username": "sresfm",
-      "enabled": true,
-      "totp": false,
-      "emailVerified": false,
-      "firstName": "SRES",
-      "lastName": "Financial Manager",
-      "email": "sresfm@test.com",
-      "attributes": {
-        "displayName": ["Financial Manager, SRES"],
-        "agencies": ["110"]
-      },
-      "credentials": [
-        {
-          "id": "3bd2277a-2c1d-4300-8b8c-a3b4c06d57a3",
-          "type": "password",
-          "createdDate": 1600787563095,
-          "secretData": "{\"value\":\"02MdIh5KlDbjtWM/1gOpdPTsjRVapPr0pJg7Gpkz+vRdQ36fglxnXSwjjoYw2uEExCS9PuD0HP3XI58lcp3vdQ==\",\"salt\":\"JnhiXLXTXG260+B4RUQbcQ==\"}",
-          "credentialData": "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
-        }
-      ],
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": ["offline_access", "uma_authorization"],
-      "clientRoles": {
-        "account": ["view-profile", "manage-account"]
-      },
-      "notBefore": 0,
-      "groups": ["/Real Estate Manager", "/SRES", "/SRES Financial Manager"]
+      "groups": ["/Real Estate Analyst"]
     }
   ],
   "scopeMappings": [

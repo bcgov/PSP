@@ -8,10 +8,9 @@ import {
   IPopUpContext,
   PropertyPopUpContextProvider,
 } from 'components/maps/providers/PropertyPopUpProvider';
-import { Claims } from 'constants/index';
+import { Claims, PropertyTypes } from 'constants/index';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { mockKeycloak } from 'features/projects/dispose/testUtils';
 import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { Map as LeafletMap } from 'leaflet';
@@ -23,6 +22,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mockKeycloak } from 'utils';
 
 import InfoSlideOut from './InfoSlideOut';
 
@@ -99,7 +99,9 @@ describe('InfoSlideOut View', () => {
 
   it('Clicking the button should open the parcel details within the info component', async () => {
     const { container } = render(
-      <MapComponent context={{ propertyTypeID: 0, propertyInfo: { id: 1 } as any }} />,
+      <MapComponent
+        context={{ propertyTypeId: PropertyTypes.Parcel, propertyInfo: { id: 1 } as any }}
+      />,
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
@@ -114,7 +116,9 @@ describe('InfoSlideOut View', () => {
   it('Clicking the button should open the viewable parcel details within the info component if the user has permissions', async () => {
     mockKeycloak([Claims.ADMIN_PROPERTIES], [1]);
     const { container } = render(
-      <MapComponent context={{ propertyTypeID: 0, propertyInfo: { id: 1 } as any }} />,
+      <MapComponent
+        context={{ propertyTypeId: PropertyTypes.Parcel, propertyInfo: { id: 1 } as any }}
+      />,
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
@@ -131,7 +135,9 @@ describe('InfoSlideOut View', () => {
 
   it('Clicking the button should open the building details within the info component', async () => {
     const { container } = render(
-      <MapComponent context={{ propertyTypeID: 1, propertyInfo: { id: 1 } as any }} />,
+      <MapComponent
+        context={{ propertyTypeId: PropertyTypes.Building, propertyInfo: { id: 1 } as any }}
+      />,
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
@@ -146,7 +152,9 @@ describe('InfoSlideOut View', () => {
   it('Clicking the button should open the viewable building details within the info component if the user has permissions', async () => {
     mockKeycloak([Claims.ADMIN_PROPERTIES], [1]);
     const { container } = render(
-      <MapComponent context={{ propertyTypeID: 1, propertyInfo: { id: 1 } as any }} />,
+      <MapComponent
+        context={{ propertyTypeId: PropertyTypes.Building, propertyInfo: { id: 1 } as any }}
+      />,
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);

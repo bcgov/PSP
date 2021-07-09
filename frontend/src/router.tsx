@@ -19,19 +19,6 @@ const MapView = lazy(() => import('./features/properties/map/MapView'));
 const AccessRequestPage = lazy(() => import('./features/admin/access-request/AccessRequestPage'));
 const EditUserPage = lazy(() => import('./features/admin/edit-user/EditUserPage'));
 const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAccessRequests'));
-const ProjectDisposalSubmitted = lazy(() =>
-  import('features/projects/dispose/ProjectDisposalSubmitted'),
-);
-const ProjectDisposalExemptionSubmitted = lazy(() =>
-  import('features/projects/dispose/ProjectDisposalExemptionSubmitted'),
-);
-const ProjectListView = lazy(() => import('features/projects/list/ProjectListView'));
-const ProjectApprovalRequestListView = lazy(() =>
-  import('features/projects/list/ProjectApprovalRequestListView'),
-);
-const ProjectRouter = lazy(() => import('features/projects/common/ProjectRouter'));
-const ProjectDisposeView = lazy(() => import('features/projects/dispose/ProjectDisposeView'));
-const SplReportContainer = lazy(() => import('features/splReports/containers/SplReportContainer'));
 const ManageAgencies = lazy(() => import('features/admin/agencies/ManageAgencies'));
 const EditAgencyPage = lazy(() => import('features/admin/agencies/EditAgencyPage'));
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
@@ -136,55 +123,7 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
-          path="/dispose"
-          component={ProjectDisposeView}
-          layout={AuthLayout}
-          claim={Claims.PROJECT_ADD}
-          title={getTitle('Dispose Property')}
-        />
-        <AppRoute
-          protected
-          path="/projects/list"
-          component={ProjectListView}
-          layout={AuthLayout}
-          claim={Claims.PROJECT_VIEW}
-          title={getTitle('View Projects')}
-        />
-        <AppRoute
-          protected
-          path="/projects/approval/requests"
-          component={ProjectApprovalRequestListView}
-          layout={AuthLayout}
-          claim={Claims.DISPOSE_APPROVE}
-          title={getTitle('Surplus Property Program Projects - Approval Requests')}
-        />
-        <AppRoute
-          protected
-          path="/projects"
-          component={ProjectRouter}
-          layout={AuthLayout}
-          claim={Claims.PROJECT_ADD}
-          title={getTitle('Dispose Property')}
-        />
-        <AppRoute
-          protected
-          path="/project/submitted"
-          component={ProjectDisposalSubmitted}
-          layout={AuthLayout}
-          claim={Claims.PROJECT_VIEW}
-          title={getTitle('Dispose Property Submitted')}
-        />
-        <AppRoute
-          protected
-          path="/project/exemption/submitted"
-          component={ProjectDisposalExemptionSubmitted}
-          layout={AuthLayout}
-          claim={Claims.PROJECT_VIEW}
-          title={getTitle('Dispose Property Submitted')}
-        />
-        <AppRoute
-          protected
-          path="/admin/user/:id?"
+          path="/admin/user/:key?"
           component={EditUserPage}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
@@ -213,14 +152,6 @@ const AppRouter: React.FC = () => {
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
           title={getTitle('Edit Agency')}
-        />
-        <AppRoute
-          protected
-          path="/reports/spl"
-          component={SplReportContainer}
-          layout={AuthLayout}
-          claim={Claims.REPORTS_SPL}
-          title={getTitle('SPL Reports')}
         />
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
       </Switch>

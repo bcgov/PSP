@@ -1,10 +1,3 @@
-import projectSlice from 'features/projects/common/slices/projectSlice';
-import projectStatusesSlice from 'features/projects/common/slices/projectStatusesSlice';
-import projectTasksSlice from 'features/projects/common/slices/projectTasksSlice';
-import projectWorkflowSlice from 'features/projects/common/slices/projectWorkflowSlice';
-import ProjectWorkflowTasksSlice from 'features/projects/common/slices/projectWorkflowTasksSlice';
-import erpTabSlice from 'features/projects/erp/slices/erpTabSlice';
-import splTabSlice from 'features/projects/spl/slices/splTabSlice';
 import propertyNameSlice from 'features/properties/common/slices/propertyNameSlice';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
@@ -34,13 +27,6 @@ export const reducer = {
   [parcelLayerDataSlice.name]: parcelLayerDataSlice.reducer,
   [jwtSlice.name]: jwtSlice.reducer,
   [filterSlice.name]: filterSlice.reducer,
-  [projectWorkflowSlice.name]: projectWorkflowSlice.reducer,
-  [ProjectWorkflowTasksSlice.name]: ProjectWorkflowTasksSlice.reducer,
-  [projectTasksSlice.name]: projectTasksSlice.reducer,
-  [projectStatusesSlice.name]: projectStatusesSlice.reducer,
-  [projectSlice.name]: projectSlice.reducer,
-  [erpTabSlice.name]: erpTabSlice.reducer,
-  [splTabSlice.name]: splTabSlice.reducer,
   [keycloakReadySlice.name]: keycloakReadySlice.reducer,
   [mapViewZoomSlice.name]: mapViewZoomSlice.reducer,
   [propertyNameSlice.name]: propertyNameSlice.reducer,

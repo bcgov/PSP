@@ -13,7 +13,7 @@ describe('Access request details', () => {
     const request: IAccessRequestModel = {
       id: 1,
       username: 'idir/bceid',
-      userId: '2',
+      userId: 2,
       firstName: 'firstName',
       lastName: 'lastName',
       email: 'user@email.com',

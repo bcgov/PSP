@@ -2,7 +2,6 @@ import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import Claims from 'constants/claims';
 import { Classifications } from 'constants/classifications';
-import _ from 'lodash';
 import { useCallback } from 'react';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -16,9 +15,9 @@ import { useKeycloakWrapper } from './useKeycloakWrapper';
 export function useLookupCodeHelpers() {
   const keycloak = useKeycloakWrapper();
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
-  const getCodeById = (type: string, id: string): string | undefined => {
+  const getCodeById = (type: string, id: number): string | undefined => {
     return lookupCodes
-      .filter((code: { type: string; id: string }) => code.type === type && code.id === id)
+      .filter((code: { type: string; id: number }) => code.type === type && code.id === id)
       ?.find((x: any) => x)?.code;
   };
 
@@ -39,24 +38,6 @@ export function useLookupCodeHelpers() {
       ),
     [lookupCodes],
   );
-
-  /**
-   * filter the passed list of agencies. If the passed agency is a parent agency, include all child agencies. Otherwise just return the filter agency.
-   * @param codes
-   * @param lookupCodeId
-   */
-  const filterByParent = (codes: ILookupCode[], lookupCodeId: number): ILookupCode[] => {
-    const filterByCode = _.find(codes, { id: lookupCodeId }) as ILookupCode;
-    if (filterByCode?.parentId !== undefined) {
-      return [filterByCode];
-    }
-    if (filterByCode === undefined) {
-      return [];
-    }
-    const filteredAgencies = _.filter(codes, { parentId: filterByCode?.id });
-    filteredAgencies.unshift(filterByCode);
-    return filteredAgencies as ILookupCode[];
-  };
 
   const getOptionsByType = (type: string) => getByType(type).map(mapLookupCode);
 
@@ -83,27 +64,12 @@ export function useLookupCodeHelpers() {
       : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
   };
 
-  /**
-   * Returns the full name of an agency or the short code if
-   * the full name is not found
-   * @param agencyCode the short code for the agency
-   */
-  const getAgencyFullName = (agencyCode?: string) => {
-    const agencies = getByType(API.AGENCY_CODE_SET_NAME);
-    const agencyItem = agencies.find(
-      (listItem: { code: string | undefined }) => listItem.code === agencyCode,
-    );
-    return agencyItem ? agencyItem.name : agencyCode;
-  };
-
   return {
     getOptionsByType,
     getPropertyClassificationOptions,
     getCodeById,
     getByType,
     getPublicByType,
-    filterByParent,
-    getAgencyFullName,
     lookupCodes,
   };
 }

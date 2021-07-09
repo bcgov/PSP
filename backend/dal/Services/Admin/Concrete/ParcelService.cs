@@ -40,8 +40,8 @@ namespace Pims.Dal.Services.Admin
             filter.ThrowIfNull(nameof(filter));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
 
-            if (filter.Page < 1) throw new ArgumentException("Argument must be greater than or equal to 1.", nameof(filter.Page));
-            if (filter.Quantity < 1) throw new ArgumentException("Argument must be greater than or equal to 1.", nameof(filter.Quantity));
+            if (filter.Page < 1) throw new ArgumentException("Argument 'filter.Page' must be greater than or equal to 1.", nameof(filter));
+            if (filter.Quantity < 1) throw new ArgumentException("Argument 'filter.Quantity' must be greater than or equal to 1.", nameof(filter));
 
             // Check if user has the ability to view sensitive properties.
             var userAgencies = this.User.GetAgenciesAsNullable();
@@ -58,7 +58,7 @@ namespace Pims.Dal.Services.Admin
 
             if (filter.Agencies?.Any() == true)
             {
-                var filterAgencies = filter.Agencies.Select(a => (int?)a);
+                var filterAgencies = filter.Agencies.Select(a => (long?)a);
                 query = query.Where(p => filterAgencies.Contains(p.AgencyId));
             }
             if (filter.ClassificationId.HasValue)
@@ -128,7 +128,7 @@ namespace Pims.Dal.Services.Admin
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Parcel Get(int id)
+        public Parcel Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin, Permissions.AgencyAdmin);
 
@@ -138,11 +138,11 @@ namespace Pims.Dal.Services.Admin
                 .Include(p => p.Agency).ThenInclude(a => a.Parent)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingPredominateUse)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingOccupantType)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address.Province)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingConstructionType)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingPredominateUse)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingOccupantType)
                 .AsNoTracking().SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
         }
 
@@ -163,11 +163,11 @@ namespace Pims.Dal.Services.Admin
                 .Include(p => p.Agency.Parent)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingPredominateUse)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingOccupantType)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address.Province)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingConstructionType)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingPredominateUse)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingOccupantType)
                 .Where(p => p.PID == pid);
 
             if (!parcels.Any()) throw new KeyNotFoundException();
@@ -192,11 +192,11 @@ namespace Pims.Dal.Services.Admin
                 .Include(p => p.Agency.Parent)
                 .Include(p => p.Evaluations)
                 .Include(p => p.Fiscals)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.Address.Province)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingConstructionType)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingPredominateUse)
-                .Include(p => p.Buildings).ThenInclude(pb => pb.Building).ThenInclude(b => b.BuildingOccupantType)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address)
+                .Include(p => p.Buildings).ThenInclude(b => b.Address.Province)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingConstructionType)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingPredominateUse)
+                .Include(p => p.Buildings).ThenInclude(b => b.BuildingOccupantType)
                 .AsNoTracking().Where(p => p.PID == pid);
 
             if (!parcels.Any()) throw new KeyNotFoundException();
@@ -220,14 +220,12 @@ namespace Pims.Dal.Services.Admin
             if (parcel.Classification != null && !this.Context.PropertyClassifications.Local.Any(a => a.Id == parcel.ClassificationId))
                 this.Context.Entry(parcel.Classification).State = EntityState.Unchanged;
 
-            parcel.PropertyTypeId = (int)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
+            parcel.PropertyTypeId = (long)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
             parcel.Agency = this.Context.Agencies.Local.FirstOrDefault(a => a.Id == parcel.AgencyId);
             parcel.Classification = this.Context.PropertyClassifications.Local.FirstOrDefault(a => a.Id == parcel.ClassificationId);
 
-            parcel.Buildings.ForEach(pb =>
+            parcel.Buildings.ForEach(building =>
             {
-                pb.Parcel = parcel;
-                var building = pb.Building;
                 this.Context.Buildings.Add(building);
                 if (building.Agency != null && !this.Context.Agencies.Local.Any(a => a.Id == building.AgencyId))
                     this.Context.Entry(building.Agency).State = EntityState.Unchanged;
@@ -279,7 +277,7 @@ namespace Pims.Dal.Services.Admin
 
             parcels.ForEach(parcel =>
             {
-                parcel.PropertyTypeId = (int)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
+                parcel.PropertyTypeId = (long)(parcel.Parcels.Count > 0 ? PropertyTypes.Subdivision : PropertyTypes.Land);
                 if (parcel == null) throw new ArgumentNullException();
 
                 if (parcel.AgencyId != 0 && !this.Context.Agencies.Local.Any(a => a.Id == parcel.AgencyId))
@@ -290,10 +288,8 @@ namespace Pims.Dal.Services.Admin
                 parcel.Agency = this.Context.Agencies.Local.FirstOrDefault(a => a.Id == parcel.AgencyId);
                 parcel.Classification = this.Context.PropertyClassifications.Local.FirstOrDefault(a => a.Id == parcel.ClassificationId);
 
-                parcel.Buildings.ForEach(pb =>
+                parcel.Buildings.ForEach(building =>
                 {
-                    pb.Parcel = parcel;
-                    var building = pb.Building;
                     this.Context.Buildings.Add(building);
                     if (building.Agency != null && !this.Context.Agencies.Local.Any(a => a.Id == building.AgencyId))
                         this.Context.Entry(building.Agency).State = EntityState.Unchanged;
@@ -444,13 +440,11 @@ namespace Pims.Dal.Services.Admin
             this.Context.Entry(originalParcel).Collection(p => p.Buildings).Load();
             this.Context.Entry(originalParcel).Collection(p => p.Evaluations).Load();
             this.Context.Entry(originalParcel).Collection(p => p.Fiscals).Load();
-            this.Context.Entry(originalParcel).Collection(p => p.Projects).Load();
 
             this.Context.Entry(originalParcel).CurrentValues.SetValues(parcel);
             originalParcel.Buildings.Clear();
             originalParcel.Evaluations.Clear();
             originalParcel.Fiscals.Clear();
-            originalParcel.Projects.Clear();
             base.Remove(originalParcel);
         }
         #endregion

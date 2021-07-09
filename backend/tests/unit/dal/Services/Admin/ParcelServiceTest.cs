@@ -29,7 +29,7 @@ namespace Pims.Dal.Test.Services.Admin
             {
                 new object[] { new ParcelFilter(48.571155, -123.657596, 48.492947, -123.731803), 1 },
                 new object[] { new ParcelFilter(48.821333, -123.795017, 48.763431, -123.959783), 0 },
-                new object[] { new ParcelFilter() { Agencies = new int[] { 3 } }, 1 },
+                new object[] { new ParcelFilter() { Agencies = new long[] { 3 } }, 1 },
                 new object[] { new ParcelFilter() { ClassificationId = 2 }, 1 },
                 new object[] { new ParcelFilter() { Description = "DescriptionTest" }, 1 },
                 new object[] { new ParcelFilter() { AdministrativeArea = "AdministrativeArea" }, 1 },
@@ -93,7 +93,7 @@ namespace Pims.Dal.Test.Services.Admin
             var parcels = init.CreateParcels(1, 20);
             parcels.Next(0).Location.X = -123.720810;
             parcels.Next(0).Location.Y = 48.529338;
-            parcels.Next(1).Agency = init.Agencies.Find(3);
+            parcels.Next(1).Agency = init.Agencies.Find(3L);
             parcels.Next(1).AgencyId = 3;
             parcels.Next(2).ClassificationId = 2;
             parcels.Next(3).Description = "-DescriptionTest-";

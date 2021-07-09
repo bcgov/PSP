@@ -31,12 +31,8 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(p => p.Key == filter.Key);
             if (filter.Status.HasValue)
                 query = query.Where(p => p.Status == filter.Status);
-            if (filter.ProjectId.HasValue)
-                query = query.Where(p => p.ProjectId == filter.ProjectId);
             if (filter.AgencyId.HasValue)
                 query = query.Where(p => p.ToAgencyId == filter.AgencyId);
-            if (!String.IsNullOrWhiteSpace(filter.ProjectNumber))
-                query = query.Where(p => p.Project.ProjectNumber == filter.ProjectNumber);
             if (!String.IsNullOrWhiteSpace(filter.To))
                 query = query.Where(p => EF.Functions.Like(p.To, $"%{filter.To}%"));
             if (!String.IsNullOrWhiteSpace(filter.Subject))

@@ -15,7 +15,7 @@ namespace Pims.Api.Mapping.Building
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Latitude, src => src.Location.Y)
                 .Map(dest => dest.Longitude, src => src.Location.X)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
         }
     }
 }
