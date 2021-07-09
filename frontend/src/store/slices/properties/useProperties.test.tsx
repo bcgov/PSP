@@ -223,7 +223,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .fetchPropertyDetail(mockBuilding.id as number, PropertyTypes.Building, undefined)
+            .fetchPropertyDetail(+mockBuilding.id, PropertyTypes.Building, undefined)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

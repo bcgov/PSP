@@ -100,10 +100,10 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
             enableReinitialize
             initialValues={newAgency ? newValues : initialValues}
             validationSchema={AgencyEditSchema}
-            onSubmit={async (values, { setSubmitting, setStatus }) => {
+            onSubmit={async (values, { setSubmitting, setStatus, setValues }) => {
               try {
                 if (!newAgency) {
-                  updateAgency({
+                  const data = await updateAgency({
                     id: agency.id,
                     name: values.name,
                     code: values.code,
@@ -115,6 +115,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
                     description: values.description,
                     rowVersion: values.rowVersion,
                   });
+                  setValues(data);
                 } else {
                   const data = await addAgency({
                     name: values.name,
@@ -126,6 +127,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
                     parentId: Number(values.parentId),
                     description: values.description,
                   });
+                  setValues(data);
                   history.replace(`/admin/agency/${data.id}`);
                 }
               } catch (error) {
