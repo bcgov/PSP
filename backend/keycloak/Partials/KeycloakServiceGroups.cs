@@ -68,16 +68,16 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Create a sub-group to the parent group specified for the 'parentId'.
+        /// Create a sub-group to the parent group specified for the 'parentKey'.
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="parentKey"></param>
         /// <param name="group"></param>
         /// <returns></returns>
-        public async Task<Models.GroupModel> CreateSubGroupAsync(Guid parentId, Models.GroupModel group)
+        public async Task<Models.GroupModel> CreateSubGroupAsync(Guid parentKey, Models.GroupModel group)
         {
             var json = group.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/groups/{parentId}/children", content);
+            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/groups/{parentKey}/children", content);
 
             return await response.HandleResponseAsync<Models.GroupModel>();
         }

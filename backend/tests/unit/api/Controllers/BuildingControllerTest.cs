@@ -27,7 +27,7 @@ namespace Pims.Api.Test.Controllers
         {
             new [] { new BuildingFilter(50, 25, 50, 20)  },
             new [] { new BuildingFilter(0, 25, 50, 25)  },
-            new [] { new BuildingFilter() { Agencies = new int[] { 3 } } },
+            new [] { new BuildingFilter() { Agencies = new long[] { 3 } } },
             new [] { new BuildingFilter() { PredominateUseId = 2 } },
             new [] { new BuildingFilter() { ConstructionTypeId = 3 } },
             new [] { new BuildingFilter() { Tenancy = "test" } },
@@ -64,7 +64,7 @@ namespace Pims.Api.Test.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var expectedTestBuilding = new Entity.Building();
-            service.Setup(m => m.Building.Get(It.IsAny<int>())).Returns(expectedTestBuilding);
+            service.Setup(m => m.Building.Get(It.IsAny<long>())).Returns(expectedTestBuilding);
             int expectedBuildingId = 1;
 
             // Act

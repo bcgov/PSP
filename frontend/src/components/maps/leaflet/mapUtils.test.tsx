@@ -80,17 +80,17 @@ describe('mapUtils tests', () => {
       properties: {
         cluster: false,
         point_count_abbreviated: 100,
-        propertyTypeId: PropertyTypes.DRAFT_PARCEL,
+        propertyTypeId: PropertyTypes.DraftParcel,
       },
     };
     it('returns a draft parcel icon', () => {
       expect(
-        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DRAFT_PARCEL } }),
+        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DraftParcel } }),
       ).toEqual(draftParcelIcon);
     });
     it('returns a draft building icon', () => {
       expect(
-        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DRAFT_BUILDING } }),
+        getMarkerIcon({ ...feature, properties: { propertyTypeId: PropertyTypes.DraftBuilding } }),
       ).toEqual(draftBuildingIcon);
     });
 
@@ -99,7 +99,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { propertyTypeId: PropertyTypes.SUBDIVISION },
+            properties: { propertyTypeId: PropertyTypes.Subdivision },
           },
           true,
         ),
@@ -110,7 +110,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { propertyTypeId: PropertyTypes.BUILDING },
+            properties: { propertyTypeId: PropertyTypes.Building },
           },
           true,
         ),
@@ -121,7 +121,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { propertyTypeId: PropertyTypes.PARCEL },
+            properties: { propertyTypeId: PropertyTypes.Parcel },
           },
           true,
         ),
@@ -137,11 +137,11 @@ describe('mapUtils tests', () => {
         isSensitive: false,
       };
       it('generates building keys', () => {
-        const building: IProperty = { ...property, propertyTypeId: 1 };
+        const building: IProperty = { ...property, propertyTypeId: PropertyTypes.Building };
         expect(generateKey(building)).toEqual('building-1');
       });
       it('generates parcel keys', () => {
-        const parcel: IProperty = { ...property, propertyTypeId: 0 };
+        const parcel: IProperty = { ...property, propertyTypeId: PropertyTypes.Parcel };
         expect(generateKey(parcel)).toEqual('parcel-1');
       });
     });
@@ -150,7 +150,7 @@ describe('mapUtils tests', () => {
       const property: PointFeature = {
         type: 'Feature',
         geometry: { coordinates: [1, 2] } as any,
-        properties: { id: 1, propertyTypeId: 0, name: 'name' },
+        properties: { id: 1, propertyTypeId: PropertyTypes.Parcel, name: 'name' },
       };
       it('does the conversion', () => {
         expect(asProperty(property)).toEqual({
@@ -158,7 +158,7 @@ describe('mapUtils tests', () => {
           latitude: 2,
           longitude: 1,
           name: 'name',
-          propertyTypeId: 0,
+          propertyTypeId: PropertyTypes.Parcel,
         });
       });
     });

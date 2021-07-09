@@ -1,3 +1,4 @@
+import { Classifications } from 'constants/classifications';
 import { mount } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -12,7 +13,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 (useFormikContext as jest.Mock).mockReturnValue({
   values: {
-    classificationId: 0,
+    classificationId: Classifications.CoreOperational,
     classification: 'zero',
   },
   registerField: jest.fn(),

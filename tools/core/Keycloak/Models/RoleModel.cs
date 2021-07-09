@@ -10,7 +10,7 @@ namespace Pims.Tools.Core.Keycloak.Models
     {
         #region Properties
         /// <summary>
-        /// get/set - A primary key for the role.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
         public Guid Id { get; set; }
 

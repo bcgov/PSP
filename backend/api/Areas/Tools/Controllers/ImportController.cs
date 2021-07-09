@@ -62,6 +62,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// This will also add new lookup items to the following; cities, agencies, building construction types, building predominate uses.
         /// </summary>
         /// <param name="models">An array of property models.</param>
+        /// <param name="addToAgency">Whether to override the owning agency with the specified agency.</param>
         /// <returns>The properties added.</returns>
         [HttpPost("properties")]
         [Produces("application/json")]
@@ -69,12 +70,12 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-import" })]
         [HasPermission(Permissions.SystemAdmin)]
-        public IActionResult ImportProperties([FromBody] Model.ImportPropertyModel[] models)
+        public IActionResult ImportProperties([FromBody] Model.ImportPropertyModel[] models, [FromQuery] string addToAgency = null)
         {
-            if (models.Count() > 100) return BadRequest("Must not submit more than 100 properties in a single request.");
+            if (models.Length > 100) return BadRequest("Must not submit more than 100 properties in a single request.");
 
             var helper = new ImportPropertiesHelper(_pimsAdminService, _logger);
-            var entities = helper.AddUpdateProperties(models);
+            var entities = helper.AddUpdateProperties(models, addToAgency);
             var parcels = _mapper.Map<Model.ParcelModel[]>(entities);
 
             return new JsonResult(parcels);
@@ -95,7 +96,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.SystemAdmin)]
         public IActionResult ImportPropertyFinancials([FromBody] Model.ImportPropertyModel[] models)
         {
-            if (models.Count() > 100) return BadRequest("Must not submit more than 100 properties in a single request.");
+            if (models.Length > 100) return BadRequest("Must not submit more than 100 properties in a single request.");
 
             var helper = new ImportPropertiesHelper(_pimsAdminService, _logger);
             var entities = helper.UpdatePropertyFinancials(models);
@@ -125,35 +126,6 @@ namespace Pims.Api.Areas.Tools.Controllers
             var parcels = _mapper.Map<Model.PropertyModel[]>(entities);
 
             return new JsonResult(parcels);
-        }
-        #endregion
-
-        #region Projects
-        /// <summary>
-        /// POST - Add an array of new properties to the datasource.
-        /// Determines if the property is a parcel or a building and then adds or updates appropriately.
-        /// This will also add new lookup items to the following; cities, agencies, building construction types, building predominate uses.
-        /// </summary>
-        /// <param name="models">An array of property models.</param>
-        /// <param name="stopOnError">Whether to throw an error if a failture occurs.</param>
-        /// <param name="fromSnapshot">The date and time an SPL report should be generated from.</param>
-        /// <param name="defaults">A semi-colon separated list of key=value pairs of default values for properties if they are null or not provided.</param>
-        /// <returns>The properties added.</returns>
-        [HttpPost("projects")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.ProjectModel>), 200)]
-        [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "tools-import" })]
-        [HasPermission(Permissions.SystemAdmin)]
-        public IActionResult ImportProjects([FromBody] Model.ImportProjectModel[] models, bool stopOnError = true, DateTime? fromSnapshot = null, string defaults = null)
-        {
-            if (models.Count() > 100) return BadRequest("Must not submit more than 100 projects in a single request.");
-
-            var helper = new ImportProjectsHelper(_pimsService, _pimsAdminService, _serializerOptions, _logger);
-            var entities = helper.AddUpdateProjects(models, stopOnError, fromSnapshot, defaults?.Split(";"));
-            var projects = _mapper.Map<Model.ProjectModel[]>(entities);
-
-            return new JsonResult(projects);
         }
         #endregion
         #endregion

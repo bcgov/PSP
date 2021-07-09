@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using Moq;
+using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -140,8 +142,6 @@ namespace Pims.Core.Test
             context.AddRange(EntityHelper.CreateDefaultBuildingConstructionTypes());
             context.AddRange(EntityHelper.CreateDefaultBuildingOccupantTypes());
             context.AddRange(EntityHelper.CreateDefaultAgencies());
-            context.AddRange(EntityHelper.CreateDefaultTierLevels());
-            context.AddRange(EntityHelper.CreateDefaultProjectRisks());
             context.SaveChanges();
             return context;
         }

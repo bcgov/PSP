@@ -57,22 +57,10 @@ namespace Pims.Dal.Entities.Models
         public string Body { get; set; }
 
         /// <summary>
-        /// get/set - The project associated with the notification.
-        /// </summary>
-        /// <value></value>
-        public int? ProjectId { get; set; }
-
-        /// <summary>
-        /// get/set - The project number associated with the notification.
-        /// </summary>
-        /// <value></value>
-        public string ProjectNumber { get; set; }
-
-        /// <summary>
         /// get/set - The agency the notification was sent to.
         /// </summary>
         /// <value></value>
-        public int? AgencyId { get; set; }
+        public long? AgencyId { get; set; }
         #endregion
 
         #region Constructors
@@ -90,13 +78,11 @@ namespace Pims.Dal.Entities.Models
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
-            this.ProjectNumber = filter.GetStringValue(nameof(this.ProjectNumber));
             this.To = filter.GetStringValue(nameof(this.To));
             this.Tag = filter.GetStringValue(nameof(this.Tag));
             this.Subject = filter.GetStringValue(nameof(this.Subject));
             this.Body = filter.GetStringValue(nameof(this.Body));
-            this.ProjectId = filter.GetIntNullValue(nameof(this.ProjectId));
-            this.AgencyId = filter.GetIntNullValue(nameof(this.AgencyId));
+            this.AgencyId = filter.GetLongNullValue(nameof(this.AgencyId));
             this.Key = filter.GetGuidNullValue(nameof(this.Key));
             this.MinSendOn = filter.GetDateTimeNullValue(nameof(this.MinSendOn));
             this.MaxSendOn = filter.GetDateTimeNullValue(nameof(this.MaxSendOn));
@@ -112,12 +98,10 @@ namespace Pims.Dal.Entities.Models
         public override bool IsValid()
         {
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.ProjectNumber)
                 || !String.IsNullOrWhiteSpace(this.To)
                 || !String.IsNullOrWhiteSpace(this.Tag)
                 || !String.IsNullOrWhiteSpace(this.Subject)
                 || !String.IsNullOrWhiteSpace(this.Body)
-                || this.ProjectId.HasValue
                 || this.AgencyId.HasValue
                 || this.Key.HasValue
                 || this.MinSendOn.HasValue

@@ -99,7 +99,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationQueueModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public IActionResult GetNotificationQueue(int id)
+        public IActionResult GetNotificationQueue(long id)
         {
             var notification = _pimsService.NotificationQueue.Get(id);
             return new JsonResult(_mapper.Map<NotificationQueueModel>(notification));
@@ -116,7 +116,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationQueueModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public async Task<IActionResult> UpdateNotificationStatusAsync(int id)
+        public async Task<IActionResult> UpdateNotificationStatusAsync(long id)
         {
             var notification = _pimsService.NotificationQueue.Get(id);
             if (!notification.ChesMessageId.HasValue) throw new InvalidOperationException("Notification does not exist in CHES.");
@@ -137,7 +137,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationQueueModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public async Task<IActionResult> ResendNotificationAsync(int id)
+        public async Task<IActionResult> ResendNotificationAsync(long id)
         {
             var notification = _pimsService.NotificationQueue.Get(id);
             await _pimsService.NotificationQueue.SendNotificationsAsync(new[] { notification });
@@ -155,7 +155,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationQueueModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "notification" })]
-        public async Task<IActionResult> CancelNotificationAsync(int id)
+        public async Task<IActionResult> CancelNotificationAsync(long id)
         {
             var notification = await _pimsService.NotificationQueue.CancelNotificationAsync(id);
             return new JsonResult(_mapper.Map<NotificationQueueModel>(notification));

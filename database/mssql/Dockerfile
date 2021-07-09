@@ -10,4 +10,4 @@ COPY . /usr/config
 ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 1433
-VOLUME ["/var/opt/mssql"]
+VOLUME ["/var/opt/data"]

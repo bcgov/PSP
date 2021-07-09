@@ -17,7 +17,6 @@ import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { TenantProvider } from 'tenants';
 import { fillInput } from 'utils/testUtils';
 
 import * as actionTypes from '../../../constants/actionTypes';
@@ -44,14 +43,15 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const lCodes = {
   lookupCodes: [
-    { name: 'One', id: '1', isDisabled: false, type: 'core operational' },
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'disabledAgency', id: '2', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: '1', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { name: 'disabledRole', id: '2', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { id: 1, name: 'One', code: '', isDisabled: false, type: 'core operational' },
+    { id: 1, name: 'agencyVal', code: '', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { id: 2, name: 'disabledAgency', code: '', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
     {
+      id: 3,
       name: 'privateRole',
-      id: '2',
+      code: '',
       isDisabled: false,
       isPublic: false,
       type: API.ROLE_CODE_SET_NAME,
@@ -88,21 +88,15 @@ const store = mockStore({
 // Render component under test
 const testRender = () =>
   render(
-    <TenantProvider>
-      <Provider store={successStore}>
-        <Router history={history}>
-          <AccessRequestPage />
-        </Router>
-      </Provider>
-    </TenantProvider>,
+    <Provider store={successStore}>
+      <Router history={history}>
+        <AccessRequestPage />
+      </Router>
+    </Provider>,
   );
 
 describe('AccessRequestPage', () => {
-  beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
-  });
   afterEach(() => {
-    delete process.env.REACT_APP_TENANT;
     cleanup();
   });
   afterAll(() => {
@@ -113,13 +107,11 @@ describe('AccessRequestPage', () => {
   describe('component functionality when requestAccess status is 200 and fetching is false', () => {
     it('initializes form with null for agencies and roles', () => {
       const componentRender = mount(
-        <TenantProvider>
-          <Provider store={successStore}>
-            <Router history={history}>
-              <AccessRequestPage />
-            </Router>
-          </Provider>
-        </TenantProvider>,
+        <Provider store={successStore}>
+          <Router history={history}>
+            <AccessRequestPage />
+          </Router>
+        </Provider>,
       );
       expect(
         componentRender
@@ -128,7 +120,6 @@ describe('AccessRequestPage', () => {
           .prop('initialValues'),
       ).toEqual({
         agencies: [],
-        showAgency: false,
         agency: undefined,
         id: 0,
         status: 'OnHold',
@@ -164,12 +155,6 @@ describe('AccessRequestPage', () => {
   it('renders correctly', () => {
     const { container } = testRender();
     expect(container.firstChild).toMatchSnapshot();
-  });
-
-  it(`should not show agencies for MOTI`, () => {
-    const { container } = testRender();
-    const dropdown = container.querySelector(`select[name="agency"]`);
-    expect(dropdown).toBeNull();
   });
 
   it('renders dropdown for roles', () => {

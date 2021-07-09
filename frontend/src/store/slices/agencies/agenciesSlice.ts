@@ -20,7 +20,7 @@ export const initialState: IAgenciesState = {
     addressTo: '',
     isDisabled: false,
     sendEmail: false,
-    rowVersion: '',
+    rowVersion: 1,
   },
 };
 /**

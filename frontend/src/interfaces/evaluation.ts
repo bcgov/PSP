@@ -5,5 +5,5 @@ export interface IEvaluation {
   key: string;
   firm?: string;
   value: number | '';
-  rowVersion?: string;
+  rowVersion?: number;
 }

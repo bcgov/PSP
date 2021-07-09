@@ -10,10 +10,14 @@ namespace Pims.Api.Models.Auth
     {
         #region Properties
         /// <summary>
-        /// get/set - The user id.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        /// <value></value>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
         #endregion
 
         #region Constructors
@@ -26,9 +30,11 @@ namespace Pims.Api.Models.Auth
         /// Creates a new instance of a UserModel object, initializes it with specified arguments.
         /// </summary>
         /// <param name="id"></param>
-        public UserModel(Guid id)
+        /// <param name="key"></param>
+        public UserModel(long id, Guid key)
         {
             this.Id = id;
+            this.Key = key;
         }
 
         /// <summary>
@@ -38,6 +44,7 @@ namespace Pims.Api.Models.Auth
         public UserModel(Entity.User user)
         {
             this.Id = user.Id;
+            this.Key = user.Key;
         }
         #endregion
     }

@@ -10,7 +10,7 @@ using Pims.Dal.Security;
 using Pims.Dal.Services.Admin;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Areas.Admin.Models.AccessRequest;
 
 namespace PimsApi.Test.Admin.Controllers
 {

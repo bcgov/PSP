@@ -14,13 +14,13 @@ namespace Pims.Dal.Entities.Models
         /// get/set - Building construction type Id.
         /// </summary>
         /// <value></value>
-        public int? ConstructionTypeId { get; set; }
+        public long? ConstructionTypeId { get; set; }
 
         /// <summary>
         /// get/set - Building predominant use Id.
         /// </summary>
         /// <value></value>
-        public int? PredominateUseId { get; set; }
+        public long? PredominateUseId { get; set; }
 
         /// <summary>
         /// get/set - Building floor count Id.
@@ -81,7 +81,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="maxAssessedValue"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public BuildingFilter(string address, int? agencyId, int? constructionTypeId, int? predominateUseId, int? floorCount, string tenancy, float? minRentableArea, float? maxRentableArea, decimal? minMarketValue, decimal? maxMarketValue, decimal? minAssessedValue, decimal? maxAssessedValue, string[] sort)
+        public BuildingFilter(string address, long? agencyId, long? constructionTypeId, long? predominateUseId, int? floorCount, string tenancy, float? minRentableArea, float? maxRentableArea, decimal? minMarketValue, decimal? maxMarketValue, decimal? minAssessedValue, decimal? maxAssessedValue, string[] sort)
         {
             this.Address = address;
             this.ConstructionTypeId = constructionTypeId;
@@ -108,8 +108,8 @@ namespace Pims.Dal.Entities.Models
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
-            this.ConstructionTypeId = filter.GetIntNullValue(nameof(this.ConstructionTypeId));
-            this.PredominateUseId = filter.GetIntNullValue(nameof(this.PredominateUseId));
+            this.ConstructionTypeId = filter.GetLongNullValue(nameof(this.ConstructionTypeId));
+            this.PredominateUseId = filter.GetLongNullValue(nameof(this.PredominateUseId));
             this.FloorCount = filter.GetIntNullValue(nameof(this.FloorCount));
             this.Tenancy = filter.GetStringValue(nameof(this.Tenancy));
             this.MinRentableArea = filter.GetFloatNullValue(nameof(this.MinRentableArea));

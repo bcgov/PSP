@@ -19,14 +19,10 @@ namespace Pims.Dal.Services.Admin
         IProvinceService Province { get; }
         IAdministrativeAreaService AdministrativeArea { get; }
         IBuildingConstructionTypeService BuildingConstructionType { get; }
+        IBuildingOccupantTypeService BuildingOccupantType { get; }
         IBuildingPredominateUseService BuildingPredominateUse { get; }
         IPropertyClassificationService PropertyClassification { get; }
         IPropertyTypeService PropertyType { get; }
-        IProjectService Project { get; }
-        IProjectStatusService ProjectStatus { get; }
-        IProjectRiskService ProjectRisk { get; }
-        ITierLevelService TierLevel { get; }
-        IWorkflowService Workflow { get; }
         #endregion
 
         #region Methods

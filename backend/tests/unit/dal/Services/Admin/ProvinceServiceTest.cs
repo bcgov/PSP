@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Services.Admin
 {
@@ -49,12 +48,12 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
-            var province = EntityHelper.CreateProvince("TP", "Test Province");
+            var province = EntityHelper.CreateProvince(1, "TP", "Test Province");
             helper.CreatePimsContext(user, true).AddAndSaveChanges(province);
 
             var service = helper.CreateService<ProvinceService>(user);
 
-            var updateProvince = EntityHelper.CreateProvince("TP", "Test Province");
+            var updateProvince = EntityHelper.CreateProvince(1, "TP", "Test Province");
 
             var newName = "Updated Province";
             updateProvince.Name = newName;
@@ -86,7 +85,7 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var province = EntityHelper.CreateProvince("TP", "Test Province");
+            var province = EntityHelper.CreateProvince(1, "TP", "Test Province");
 
             helper.CreatePimsContext(user, true);
 
@@ -106,7 +105,7 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin, Permissions.AdminRoles);
-            var province = EntityHelper.CreateProvince("TP", "Test Province");
+            var province = EntityHelper.CreateProvince(1, "TP", "Test Province");
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(province);
 
@@ -126,7 +125,7 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var province = EntityHelper.CreateProvince("TP", "Test Province");
+            var province = EntityHelper.CreateProvince(1, "TP", "Test Province");
 
             helper.CreatePimsContext(user, true);
 

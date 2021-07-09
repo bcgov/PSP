@@ -3,20 +3,38 @@ namespace Pims.Api.Models
     /// <summary>
     /// CodeModel class, provides a model that represents a code code item.
     /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    public class CodeModel<TKey> : LookupModel<TKey>
+    public class CodeModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - The item's unique code.
         /// </summary>
-        /// <value></value>
         public string Code { get; set; }
 
         /// <summary>
         /// get/set - The parent id of this item.
         /// </summary>
-        public int? ParentId { get; set; } // TODO: this isn't ideal as it will only currently be used by agency.
+        public long? ParentId { get; set; } // TODO: this isn't ideal as it will only currently be used by agency.
+
+        /// <summary>
+        /// get/set - The name of the code.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this code is disabled.
+        /// </summary>
+        public bool IsDisabled { get; set; }
+
+        /// <summary>
+        /// get/set - The sort order of the lookup item.
+        /// </summary>
+        public int SortOrder { get; set; }
+
+        /// <summary>
+        /// get/set - The item's type.
+        /// </summary>
+        public string Type { get; set; }
         #endregion
     }
 }

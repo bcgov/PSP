@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Dal.Entities;
+using Pims.Dal.Extensions;
 
 namespace Pims.Dal.Configuration
 {
@@ -12,19 +13,28 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<Claim> builder)
         {
-            builder.ToTable("Claims");
+            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
 
-            builder.HasKey(m => m.Id);
-            builder.Property(m => m.Id).IsRequired();
-            builder.Property(m => m.Id).ValueGeneratedNever();
+            builder.HasMotiKey(m => m.Id);
+            builder.HasMotiSequence(m => m.Id)
+                .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Name).IsRequired();
-            builder.Property(m => m.Name).HasMaxLength(100);
+            builder.Property(m => m.Key)
+                .HasComment("A unique key to identify the record");
+            builder.Property(m => m.KeycloakRoleId)
+                .HasComment("A unique key to identify the associated role in keycloak");
 
-            builder.Property(m => m.Description).HasMaxLength(500);
+            builder.Property(m => m.Name).HasMaxLength(100).IsRequired()
+                .HasComment("A unique name to identify this record");
 
-            builder.HasIndex(m => new { m.Name }).IsUnique();
-            builder.HasIndex(m => new { m.IsDisabled, m.Name });
+            builder.Property(m => m.Description).HasMaxLength(500)
+                .HasComment("A description of the claim");
+            builder.Property(m => m.IsDisabled)
+                .HasComment("Whether this claim is disabled");
+
+            builder.HasIndex(m => new { m.Key }, "CLAIM_CLAIM_UID_TUC").IsUnique();
+            builder.HasIndex(m => new { m.Name }, "CLAIM_NAME_TUC").IsUnique();
+            builder.HasIndex(m => new { m.IsDisabled }, "CLAIM_IS_DISABLED_IDX");
 
             base.Configure(builder);
         }

@@ -10,7 +10,7 @@ namespace Pims.Dal.Services.Admin
     public interface IBuildingService : IBaseService<Building>
     {
         Paged<Building> Get(int page, int quantity, string sort);
-        Building Get(int id);
+        Building Get(long id);
         IEnumerable<Building> GetByPid(int pid, string name = null);
         IEnumerable<Building> GetByPidWithoutTracking(int pid, string name = null);
         IEnumerable<Building> GetByName(string name);

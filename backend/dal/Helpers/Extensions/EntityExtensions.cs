@@ -27,7 +27,6 @@ namespace Pims.Dal.Helpers.Extensions
         public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, string role, string message = null) where T : BaseEntity
         {
             entity.ThrowIfNull(paramName);
-            entity.ThrowIfRowVersionNull(paramName);
             user.ThrowIfNotAuthorized(role, message);
 
             return entity;
@@ -49,7 +48,6 @@ namespace Pims.Dal.Helpers.Extensions
         public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions permission, string message = null) where T : BaseEntity
         {
             entity.ThrowIfNull(paramName);
-            entity.ThrowIfRowVersionNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
 
             return entity;
@@ -72,7 +70,6 @@ namespace Pims.Dal.Helpers.Extensions
         public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null) where T : BaseEntity
         {
             entity.ThrowIfNull(paramName);
-            entity.ThrowIfRowVersionNull(paramName);
             if (requireAll) user.ThrowIfNotAllAuthorized(permission);
             else user.ThrowIfNotAuthorized(permission, message);
 

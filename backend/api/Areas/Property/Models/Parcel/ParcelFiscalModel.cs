@@ -3,10 +3,10 @@ using Model = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Models.Parcel
 {
-    public class ParcelFiscalModel : Model.BaseModel
+    public class ParcelFiscalModel : Model.BaseAppModel
     {
         #region Properties
-        public int ParcelId { get; set; }
+        public long ParcelId { get; set; }
 
         public int FiscalYear { get; set; }
 

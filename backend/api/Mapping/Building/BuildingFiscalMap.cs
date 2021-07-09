@@ -15,7 +15,7 @@ namespace Pims.Api.Mapping.Building
                 .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Value, src => src.Value)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
 
 
             config.NewConfig<Model.BuildingFiscalModel, Entity.BuildingFiscal>()
@@ -25,7 +25,7 @@ namespace Pims.Api.Mapping.Building
                 .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.Value, src => src.Value)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

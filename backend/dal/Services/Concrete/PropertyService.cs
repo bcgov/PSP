@@ -1,14 +1,13 @@
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Entities.Views;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.Json;
+using View = Pims.Dal.Entities.Views;
 
 namespace Pims.Dal.Services
 {
@@ -45,7 +44,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<ProjectProperty> Get(AllPropertyFilter filter)
+        public IEnumerable<View.Property> Get(AllPropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -64,21 +63,7 @@ namespace Pims.Dal.Services
             }
 
             var query = this.Context.GenerateQuery(this.User, filter);
-            var properties = query.Select(x => new ProjectProperty(x)).ToArray();
-
-            var projectNumbers = properties.SelectMany(p => JsonSerializer.Deserialize<IEnumerable<string>>(p.ProjectNumbers ?? "[]")).Distinct().ToArray();
-            var statuses = from p in this.Context.ProjectProperties
-                           where projectNumbers.Contains(p.Project.ProjectNumber)
-                           select new { p.Project.ProjectNumber, p.Project.Status, WorkflowCode = p.Project.Workflow.Code };
-
-            foreach (var status in statuses)
-            {
-                foreach (var projectProperty in properties.Where(property => property.ProjectNumbers.Contains(status.ProjectNumber)))
-                {
-                    projectProperty.ProjectStatus = status.Status.Code;
-                    projectProperty.ProjectWorkflow = status.WorkflowCode;
-                }
-            }
+            var properties = query.ToArray();
 
             // TODO: Add optional paging ability to query.
 
@@ -144,19 +129,6 @@ namespace Pims.Dal.Services
             var query = this.Context.GenerateAllPropertyQuery(this.User, filter);
             var properties = query.Select(p => new[] { Entities.PropertyTypes.Land, Entities.PropertyTypes.Subdivision }.Contains(p.PropertyTypeId) ? new ParcelModel(p, this.User) as PropertyModel : new BuildingModel(p, this.User)).ToArray();
 
-            var projectNumbers = properties.SelectMany(p => JsonSerializer.Deserialize<IEnumerable<string>>(p.ProjectNumbers ?? "[]")).Distinct().ToArray();
-            var statuses = from p in this.Context.ProjectProperties
-                           where projectNumbers.Contains(p.Project.ProjectNumber)
-                           select new { p.Project.ProjectNumber, p.Project.Status, WorkflowCode = p.Project.Workflow.Code, p.Project.Status.IsTerminal };
-
-            foreach (var status in statuses.Where(s => !s.IsTerminal))
-            {
-                foreach (var property in properties.Where(property => property?.ProjectNumbers?.Contains(status.ProjectNumber) == true))
-                {
-                    property.ProjectWorkflow = status.WorkflowCode;
-                }
-            }
-
             // TODO: Add optional paging ability to query.
 
             return properties;
@@ -169,7 +141,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<Property> GetPage(AllPropertyFilter filter)
+        public Paged<View.Property> GetPage(AllPropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -194,7 +166,7 @@ namespace Pims.Dal.Services
                 .Take(filter.Quantity)
                 .ToArray();
 
-            return new Paged<Property>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<View.Property>(items, filter.Page, filter.Quantity, query.Count());
         }
         #endregion
     }

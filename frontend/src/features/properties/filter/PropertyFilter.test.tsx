@@ -2,6 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, wait } from '@testing-library/react';
 import axios from 'axios';
 import * as API from 'constants/API';
+import { Classifications } from 'constants/classifications';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import * as MOCK from 'mocks/filterDataMock';
@@ -48,37 +49,37 @@ let history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'disabledAgency', id: '2', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: '1', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { name: 'disabledRole', id: '2', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { id: 1, name: 'agencyVal', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { id: 2, name: 'disabledAgency', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'roleVal', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { id: 2, name: 'disabledRole', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
     {
+      id: 1,
       name: 'Core Operational',
-      id: '0',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },
     {
+      id: 2,
       name: 'Core Strategic',
-      id: '1',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },
     {
+      id: 5,
       name: 'Disposed',
-      id: '4',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },
     {
+      id: 6,
       name: 'Demolished',
-      id: '5',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },
     {
+      id: 7,
       name: 'Subdivided',
-      id: '6',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },
@@ -165,7 +166,7 @@ describe('MapFilterBar', () => {
     await wait(() => {
       fireEvent.change(classificationId!, {
         target: {
-          value: '0',
+          value: `${Classifications.CoreOperational}`,
         },
       });
     });
@@ -180,7 +181,7 @@ describe('MapFilterBar', () => {
       address: '',
       administrativeArea: 'Victoria',
       agencies: '',
-      classificationId: '0',
+      classificationId: `${Classifications.CoreOperational}`,
       minLotSize: '',
       maxLotSize: '',
       name: '',
@@ -197,7 +198,7 @@ describe('MapFilterBar', () => {
       address: 'mockaddress',
       administrativeArea: 'mockAdministrativeArea',
       agencies: '2',
-      classificationId: '0',
+      classificationId: `${Classifications.CoreStrategic}`,
       minLotSize: '10',
       maxLotSize: '20',
       rentableArea: '0',
@@ -214,7 +215,7 @@ describe('MapFilterBar', () => {
       address: 'mockaddress',
       administrativeArea: 'mockAdministrativeArea',
       agencies: ['2'] as any,
-      classificationId: '0',
+      classificationId: `${Classifications.CoreStrategic}`,
       minLotSize: '10',
       maxLotSize: '20',
       rentableArea: '0',
@@ -230,7 +231,7 @@ describe('MapFilterBar', () => {
       address: 'mockaddress',
       administrativeArea: 'mockAdministrativeArea',
       agencies: [] as any,
-      classificationId: '0',
+      classificationId: `${Classifications.CoreStrategic}`,
       minLotSize: '10',
       maxLotSize: '20',
       rentableArea: '0',

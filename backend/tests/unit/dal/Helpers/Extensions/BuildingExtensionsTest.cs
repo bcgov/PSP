@@ -67,8 +67,8 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var parcel = context.CreateParcel(123);
             var building1 = context.CreateBuilding(1, null, "building 1");
             var building2 = context.CreateBuilding(2, null, "building 2");
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building1));
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building2));
+            parcel.Buildings.Add(building1);
+            parcel.Buildings.Add(building2);
             context.SaveChanges();
 
             var building3 = context.CreateBuilding(3, null, "building 3");
@@ -107,8 +107,8 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var parcel = context.CreateParcel(123);
             var building1 = context.CreateBuilding(1, null, null);
             var building2 = context.CreateBuilding(2, null, null);
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building1));
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building2));
+            parcel.Buildings.Add(building1);
+            parcel.Buildings.Add(building2);
             context.SaveChanges();
 
             var building3 = context.CreateBuilding(3, null, null);
@@ -130,8 +130,8 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var parcel = context.CreateParcel(123);
             var building1 = context.CreateBuilding(1, null, null);
             var building2 = context.CreateBuilding(2, null, null);
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building1));
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building2));
+            parcel.Buildings.Add(building1);
+            parcel.Buildings.Add(building2);
             context.SaveChanges();
 
             var building3 = context.CreateBuilding(3, null, "");
@@ -153,8 +153,8 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var parcel = context.CreateParcel(123);
             var building1 = context.CreateBuilding(1, null, "building 1");
             var building2 = context.CreateBuilding(2, null, null);
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building1));
-            parcel.Buildings.Add(new ParcelBuilding(parcel, building2));
+            parcel.Buildings.Add(building1);
+            parcel.Buildings.Add(building2);
             context.SaveChanges();
 
             var building3 = context.CreateBuilding(3, null, "building 1");
@@ -185,7 +185,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
                 var buildings = context.CreateBuildings(null, 1, 10);
                 buildings.Next(0).ProjectNumbers = "4444,1234";
                 buildings.Next(1).BuildingFloorCount = 1;
-                buildings.Next(2).Parcels.Add(new ParcelBuilding(parcel, buildings.Next(2)));
+                buildings.Next(2).Parcels.Add(parcel);
                 buildings.Next(3).Address.Address1 = "1243 St";
                 context.SaveChanges();
             }
@@ -211,7 +211,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
                 Zoning = zone
             };
             var building = new Building();
-            building.Parcels.Add(new ParcelBuilding(parcel, building));
+            building.Parcels.Add(parcel);
 
             // Act
             var zoning = building.GetZoning();
@@ -248,7 +248,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
                 ZoningPotential = zonePotential
             };
             var building = new Building();
-            building.Parcels.Add(new ParcelBuilding(parcel, building));
+            building.Parcels.Add(parcel);
 
             // Act
             var zoningPotential = building.GetZoningPotential();

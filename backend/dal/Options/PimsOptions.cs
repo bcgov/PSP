@@ -38,6 +38,11 @@ namespace Pims.Dal
         /// get/set - The tenant code to identify the environmental configuration settings.
         /// </summary>
         public string Tenant { get; set; }
+
+        /// <summary>
+        /// get/set - The email address for the help desk.
+        /// </summary>
+        public string HelpDeskEmail { get; set; }
         #endregion
     }
 }
