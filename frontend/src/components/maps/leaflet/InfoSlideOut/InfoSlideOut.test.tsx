@@ -100,7 +100,7 @@ describe('InfoSlideOut View', () => {
   it('Clicking the button should open the parcel details within the info component', async () => {
     const { container } = render(
       <MapComponent
-        context={{ propertyTypeID: PropertyTypes.Parcel, propertyInfo: { id: 1 } as any }}
+        context={{ propertyTypeId: PropertyTypes.Parcel, propertyInfo: { id: 1 } as any }}
       />,
     );
     const infoButton = container.querySelector('#slideOutInfoButton');

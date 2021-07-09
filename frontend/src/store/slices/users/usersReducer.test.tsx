@@ -2,7 +2,9 @@ import { initialState, usersSlice } from './usersSlice';
 describe('users slice reducer functionality', () => {
   const userReducer = usersSlice.reducer;
   const mockUser = {
-    id: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    id: 1,
+    key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+    rowVersion: 1,
     displayName: 'User, Admin',
     firstName: 'Admin',
     lastName: 'User',
