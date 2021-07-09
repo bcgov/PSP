@@ -58,7 +58,7 @@ parameters:
     displayName: "Keycloak SSO realm"
     description: "Keycloak SSO realm, used by the frontend login."
     required: true
-    value: xz0xtue5
+    value: 72x8v9rw
   - name: KEYCLOAK_CONFIG_FILE_NAME
     displayName: "keycloak.json Config File Name"
     description: "The name of the configuration file to be used for keycloak.json."
