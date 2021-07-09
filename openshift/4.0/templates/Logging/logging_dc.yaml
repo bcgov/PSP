@@ -1,0 +1,283 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: pims-logging-deploy
+  annotations:
+    openshift.io/display-name: PIMS Logs Collector
+    description: Collect logs from PIMS Frontend and backend API.
+    tags: pims-api,pims-app
+parameters:
+  - name: APP_NAME
+    displayName: "APP Name"
+    description: "The name of the application (grouped)."
+    required: true
+    value: "pims"
+  - name: FRONTEND_APP_NAME
+    displayName: "Frontend Name"
+    description: "The name of the application (grouped)."
+    required: true
+    value: "pims-app"
+  - name: API_NAME
+    displayName: "Backend API Name"
+    description: "The name of the backend API (grouped)."
+    required: true
+    value: "pims-api"
+  - name: ROLE_NAME
+    displayName: "Component Role Name"
+    description: "The name of the application component role."
+    required: true
+    value: "logging"
+  - name: PROJECT_NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift project containing the application."
+    required: true
+    value: "3cd915-dev"
+  - name: TOOLS_NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift tools containing the build images."
+    required: true
+    value: "3cd915-tools"
+  - name: IMAGE_TAG
+    displayName: "Image Tag Name"
+    description: "The image tag that will be used for this deployment.
+      This provides a way to setup an environment for other branches."
+    value: "latest"
+  - name: SLEEP_TIME
+    displayName: "Sleep time for log in sec"
+    description: "Return logs newer than this duration or collect logs every sleep time (1hr = 3600s)."
+    required: true
+    value: "3600"
+  - name: AZ_BLOB_URL
+    displayName: "Azur Blob URL"
+    description: "URL for Azure blob container"
+    required: true
+    value: "https://pimsapp.blob.core.windows.net"
+  - name: AZ_BLOB_CONTAINER
+    displayName: "Azure blob container name"
+    description: "Azure blob container name."
+    required: true
+    value: "pims"
+  - name: AZ_SAS_TOKEN
+    displayName: "Azure blob container token"
+    description: "Azure blob container token. start with ?"
+    required: true
+    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-0reewtNqZc7LDQdjeoXM%3D"
+  - name: EXPORT_TIME
+    displayName: "Wait time before export in sec"
+    description: "Time to wait before exporting zip. Export time > sleep_time. Export log every 24hrs"
+    required: true
+    value: "86400"
+  - name: APP_PORT
+    displayName: "Port"
+    description: "Http port"
+    required: true
+    value: "8080"
+  - name: LOGGING_VOLUME_SIZE
+    displayName: Log Volume Size
+    description:
+      The size of the persistent volume used for restoring and verifying
+      backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.
+    required: true
+    value: "1Gi"
+  - name: LOGGING_VOLUME_CLASS
+    displayName: Logging Volume Class
+    description:
+      The class of the persistent volume used for restoring LOG files before upload to https server
+    required: true
+    value: "netapp-file-standard"
+  - name: LOGGING_VOLUME_MOUNT_PATH
+    displayName: logging volume Mount Path
+    description: The path on which to mount the logging volume. This part contains .LOG files
+    required: true
+    value: "/tmp/"
+  - name: APP_VOLUME_MOUNT_PATH
+    displayName: App Volume Mount Path
+    description: The path on which to mount the logging volume. This part contains zip log files to be send via curl
+    required: true
+    value: "/logging/"
+  - name: REPLICAS
+    displayName: "Pod Replicas"
+    description: "Number of pod replicas to run"
+    value: "1"
+
+  - name: CPU_REQUEST
+    displayName: "CPU Request"
+    description: "Starting amount of CPU the container can use."
+    value: "100m"
+  - name: CPU_LIMIT
+    displayName: "CPU Limit"
+    description: "Maximum amount of CPU the container can use."
+    value: "1"
+  - name: MEMORY_REQUEST
+    displayName: "Memory Request"
+    description: "Starting amount of memory the container can use."
+    value: "100Mi"
+  - name: MEMORY_LIMIT
+    displayName: "Memory Limit"
+    description: "Maximum amount of memory the container can use."
+    value: "1Gi"
+objects:
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}
+      namespace: ${PROJECT_NAMESPACE}
+      annotations:
+        description: Exposes and load balances the application pods.
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+    spec:
+      ports:
+        - name: ${APP_PORT}-tcp
+          protocol: TCP
+          port: ${{APP_PORT}}
+          targetPort: ${{APP_PORT}}
+      selector:
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+      type: ClusterIP
+      sessionAffinity: None
+
+  # S3 or Azure blob token secret
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}
+      namespace: ${PROJECT_NAMESPACE}
+      annotations:
+        description: "Azure blob or S3 token secrets"
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+    type: Opaque
+    stringData:
+      AZ_SAS_TOKEN: ${AZ_SAS_TOKEN}
+
+  # Storage for pims-logging.
+  - kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}
+      namespace: ${PROJECT_NAMESPACE}
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        role: ${ROLE_NAME}
+    spec:
+      storageClassName: ${LOGGING_VOLUME_CLASS}
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: ${LOGGING_VOLUME_SIZE}
+
+  - kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}-root
+      namespace: ${PROJECT_NAMESPACE}
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        role: ${ROLE_NAME}
+    spec:
+      storageClassName: ${LOGGING_VOLUME_CLASS}
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: ${LOGGING_VOLUME_SIZE}
+
+  # Deployment configuration to deploy the PIMS-LOGGING.
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}
+      namespace: ${PROJECT_NAMESPACE}
+      annotations:
+        description: "Defines how to deploy ${APP_NAME}-${ROLE_NAME}"
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+    spec:
+      strategy:
+        type: Rolling
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+          serviceAccount: pims-logging
+          serviceAccountName: pims-logging
+      triggers:
+        - type: ConfigChange
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${APP_NAME}-${ROLE_NAME}
+            from:
+              kind: ImageStreamTag
+              namespace: "${TOOLS_NAMESPACE}"
+              name: "${APP_NAME}-${ROLE_NAME}:${IMAGE_TAG}"
+      replicas: ${{REPLICAS}}
+      selector:
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+      template:
+        metadata:
+          name: ${APP_NAME}-${ROLE_NAME}
+          labels:
+            name: ${APP_NAME}-${ROLE_NAME}
+            app: ${APP_NAME}
+            role: ${ROLE_NAME}
+        spec:
+          volumes:
+            - name: ${APP_NAME}-${ROLE_NAME}
+              persistentVolumeClaim:
+                claimName: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}-root
+              persistentVolumeClaim:
+                claimName: ${APP_NAME}-${ROLE_NAME}-root
+          terminationGracePeriodSeconds: 120
+          containers:
+            - name: ${APP_NAME}-${ROLE_NAME}
+              image: ""
+              ports:
+                - containerPort: ${{APP_PORT}}
+                  protocol: TCP
+              env:
+                - name: SLEEP_TIME
+                  value: ${SLEEP_TIME}
+                - name: AZ_BLOB_URL
+                  value: ${AZ_BLOB_URL}
+                - name: AZ_BLOB_CONTAINER
+                  value: ${AZ_BLOB_CONTAINER}
+                - name: AZ_SAS_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}
+                      key: AZ_SAS_TOKEN
+                - name: FRONTEND_APP_NAME
+                  value: ${FRONTEND_APP_NAME}
+                - name: API_NAME
+                  value: ${API_NAME}
+                - name: PROJECT_NAMESPACE
+                  value: ${PROJECT_NAMESPACE}
+                - name: EXPORT_TIME
+                  value: ${EXPORT_TIME}
+              resources:
+                requests:
+                  cpu: ${CPU_REQUEST}
+                  memory: ${MEMORY_REQUEST}
+                limits:
+                  cpu: ${CPU_LIMIT}
+                  memory: ${MEMORY_LIMIT}
+              volumeMounts:
+                - name: ${APP_NAME}-${ROLE_NAME}
+                  mountPath: ${LOGGING_VOLUME_MOUNT_PATH}
+                - name: ${APP_NAME}-${ROLE_NAME}-root
+                  mountPath: ${APP_VOLUME_MOUNT_PATH}
