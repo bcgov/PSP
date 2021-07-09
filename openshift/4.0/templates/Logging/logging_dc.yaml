@@ -251,7 +251,7 @@ objects:
                   protocol: TCP
               env:
                 - name: TZ
-                  value: America/Vancouver
+                  value: America/Los_Angeles
                 - name: SLEEP_TIME
                   value: ${SLEEP_TIME}
                 - name: AZ_BLOB_URL
