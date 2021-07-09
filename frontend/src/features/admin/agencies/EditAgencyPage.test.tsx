@@ -32,7 +32,7 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'Test Agency', id: '111', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'Test Agency', id: 111, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
   ] as ILookupCode[],
 };
 

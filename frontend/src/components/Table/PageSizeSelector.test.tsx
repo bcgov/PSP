@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const componentRender = () => {
   let component = create(
     <div>
-      <TablePageSizeSelector value={1} options={[1, 2, 3, 4, 5]} onChange={() => {}} />
+      <TablePageSizeSelector alignTop value={1} options={[1, 2, 3, 4, 5]} onChange={() => {}} />
     </div>,
   );
   return component;

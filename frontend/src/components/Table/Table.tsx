@@ -380,7 +380,9 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
               }
             }}
             column={column}
-          ></ColumnFilter>
+          >
+            {column.render('Header')}
+          </ColumnFilter>
         ) : (
           column.render('Header')
         )}
