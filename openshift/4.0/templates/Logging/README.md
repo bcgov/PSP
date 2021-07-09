@@ -15,7 +15,7 @@ Will require that your namespace default service account has view permission, so
 $ docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.openshift-image-registry
 ```
 
-Go to - `/opnenshift/4.0/template/Logging`
+Go to - `/openshift/4.0/template/Logging`
 
 ```bash
 $ docker build -t pims-logging:latest .
@@ -41,7 +41,7 @@ GIT_URL=https://github.com/PSP.git
 GIT_REF=dev
 OUTPUT_IMAGE_TAG=latest
 DOCKERFILE_PATH=Dockerfile
-CPU_LIMIT=4000m
+CPU_LIMIT=400m
 MEMORY_LIMIT=1Gi
 ```
 
@@ -54,33 +54,32 @@ $ oc process -f .\oclogbc.yaml --param-file=build.dev.env | oc create -f -
 Tag image to dev env
 
 ```bash
-oc image tag pims-logging:latest pims-logging:dev
+$ oc tag pims-logging:latest pims-logging:dev
 ```
 
-### create service account and role-binding to read pod's logs
+### Create service account and role-binding to read pod's logs
 
 ```bash
 oc process -f .\role-binding.yaml -p NAMESPACE=3cd915-dev | oc apply -f -
 ```
 
-### create pims-logging deployment config
+### Create pims-logging deployment config
 
-create a deploy config env file here in the base dir `deploy.dev.env` with a valid `AZ_SAS_TOKEN`
+Create a deploy config env file here in the base dir `deploy.dev.env` with a valid `AZ_SAS_TOKEN`
 
 ### Example
 
 ```bash
-      ENV_NAME=dev
-      IMAGE_TAG=dev
-      SLEEP_TIME=60
-      AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
-      AZ_BLOB_CONTAINER=pims
-      AZ_SAS_TOKEN=?{TOKEN SECRET}
-      FRONTEND_APP_NAME=pims-app
-      API_NAME=pims-api
-      PROJECT_NAMESPACE=3cd915-dev
-      TOOLS_NAMESPACE=3cd915-tools
-      EXPORT_TIME=360
+IMAGE_TAG=dev
+SLEEP_TIME=60
+AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
+AZ_BLOB_CONTAINER=pims
+AZ_SAS_TOKEN=?{TOKEN SECRET}
+FRONTEND_APP_NAME=pims-app
+API_NAME=pims-api
+PROJECT_NAMESPACE=3cd915-dev
+TOOLS_NAMESPACE=3cd915-tools
+EXPORT_TIME=360
 ```
 
 Create the logging deployment
@@ -142,7 +141,7 @@ spec:
 
 ## Run Locally
 
-Go to - `/opnenshift/4.0/template/Logging` for Logging **_Dockerfile_** and **_Docker-compose.yml_**\
+Go to - `/openshift/4.0/template/Logging` for Logging **_Dockerfile_** and **_Docker-compose.yml_**\
 Create .env file with the required environment variables e.g.
 
 ```bash

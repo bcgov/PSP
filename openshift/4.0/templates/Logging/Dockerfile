@@ -6,7 +6,6 @@ ARG RUN_DEPS='bash curl ca-certificates gettext'
 
 ARG APP_ROOT=/opt/app
 ARG APP_LOG=/logging/
-ARG USER=default
 
 RUN apk update && apk upgrade && apk add openssh && apk add zip && apk --no-cache add $BUILD_DEPS $RUN_DEPS && \
     curl -sLo /tmp/oc.tar.gz https://mirror.openshift.com/pub/openshift-v$(echo $OC_VERSION | cut -d'.' -f 1)/clients/$OC_VERSION/linux/oc.tar.gz && \

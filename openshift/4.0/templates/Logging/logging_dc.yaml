@@ -61,7 +61,7 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-02-10&sr=c&sig=PRs%2FYfsUnAt244reewtNqZc7LDQdjeoXM%3D"
+    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-0reewtNqZc7LDQdjeoXM%3D"
   - name: EXPORT_TIME
     displayName: "Wait time before export in sec"
     description: "Time to wait before exporting zip. Export time > sleep_time. Export log every 24hrs"
@@ -78,17 +78,15 @@ parameters:
       The size of the persistent volume used for restoring and verifying
       backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.
     required: true
-    value: "2Gi"
+    value: "1Gi"
   - name: LOGGING_VOLUME_CLASS
     displayName: Logging Volume Class
     description:
-      The class of the persistent volume used for restoring and verifying
-      backups; should be one of netapp-block-standard or netapp-file-standard.  netapp-block-standard
-      performs better.
+      The class of the persistent volume used for restoring LOG files before upload to https server
     required: true
     value: "netapp-file-standard"
   - name: LOGGING_VOLUME_MOUNT_PATH
-    displayName: logging Volume Mount Path
+    displayName: logging volume Mount Path
     description: The path on which to mount the logging volume. This part contains .LOG files
     required: true
     value: "/tmp/"
