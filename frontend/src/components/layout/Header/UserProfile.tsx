@@ -15,7 +15,7 @@ const StyleDropDown = styled(NavDropdown)`
   font-size: 14px;
   .dropdown-menu {
     width: 300px;
-    height: 150px;
+    padding: 0px;
   }
   .nav-link {
     color: #fff;
@@ -68,7 +68,7 @@ export const UserProfile: React.FC = () => {
   return (
     <>
       <ProfileAvatar src={profileUrl} rounded />
-      <StyleDropDown className="px-0" title={displayName} id="user-dropdown">
+      <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight flip>
         <p style={{ margin: 5 }}>
           <b>
             {
@@ -78,15 +78,17 @@ export const UserProfile: React.FC = () => {
             }
           </b>
         </p>
-        <RolesBox>
-          <p style={{ margin: 5 }}>
-            <b>
-              System Role(s):
-              <br />
-            </b>
-            {roles}
-          </p>
-        </RolesBox>
+        {!!keycloak.roles.length && (
+          <RolesBox>
+            <p style={{ margin: 5 }}>
+              <b>
+                System Role(s):
+                <br />
+              </b>
+              {roles}
+            </p>
+          </RolesBox>
+        )}
         <NavDropdown.Item
           onClick={() => {
             keycloak.obj!.logout({ redirectUri: `${configuration.baseUrl}/logout` });
