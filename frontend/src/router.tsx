@@ -123,7 +123,7 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
-          path="/admin/user/:id?"
+          path="/admin/user/:key?"
           component={EditUserPage}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}

@@ -5,13 +5,18 @@ namespace Pims.Api.Areas.Reports.Models.User
     /// <summary>
     /// UserModel class, provides a model that represents a user.
     /// </summary>
-    public class UserModel : Pims.Api.Models.BaseModel
+    public class UserModel : Pims.Api.Models.BaseAppModel
     {
         #region Properties
         /// <summary>
-        /// get/set - The user's unique identifier.
+        /// get/set - The primary key IDENTITY.
         /// </summary>
-        public Guid Id { get; set; }
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - Unique key to identify the claim.
+        /// </summary>
+        public Guid Key { get; set; }
 
         /// <summary>
         /// get/set - The user's unique identity.

@@ -83,12 +83,12 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id">The unique 'id' for the agency to return.</param>
         /// <returns>The agency requested.</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.AgencyModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-agency" })]
-        public IActionResult GetAgency(int id)
+        public IActionResult GetAgency(long id)
         {
             var agency = _pimsAdminService.Agency.Get(id);
             return new JsonResult(_mapper.Map<Model.AgencyModel>(agency));
@@ -112,7 +112,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.Users.ForEachAsync(async u =>
             {
-                var user = _pimsAdminService.User.Get(u.UserId);
+                var user = _pimsAdminService.User.Get(u.Key);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 
@@ -139,7 +139,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.Users.ForEachAsync(async u =>
             {
-                var user = _pimsAdminService.User.Get(u.UserId);
+                var user = _pimsAdminService.User.Get(u.Key);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 
@@ -165,7 +165,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.Users.ForEachAsync(async u =>
             {
-                var user = _pimsAdminService.User.Get(u.UserId);
+                var user = _pimsAdminService.User.Get(u.Key);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 

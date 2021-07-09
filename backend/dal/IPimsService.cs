@@ -25,15 +25,6 @@ namespace Pims.Dal
         INotificationQueueService NotificationQueue { get; }
         #endregion
 
-        #region Projects
-        IProjectService Project { get; }
-        IProjectReportService ProjectReport { get; }
-        IProjectNotificationService ProjectNotification { get; }
-        IProjectStatusService ProjectStatus { get; }
-        ITaskService Task { get; }
-        IWorkflowService Workflow { get; }
-        #endregion
-
         #region Configuration
         ITenantService Tenant { get; }
         #endregion

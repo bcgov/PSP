@@ -27,9 +27,9 @@ namespace Pims.Core.Test
                 FiscalYear = fiscalYear,
                 Key = key,
                 Value = value,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 

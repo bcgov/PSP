@@ -104,7 +104,7 @@ namespace Pims.Dal.Entities.Helpers.Extensions
         /// <returns></returns>
         public static int? GetPID(this Building building)
         {
-            return building.Parcels.FirstOrDefault()?.Parcel?.PID;
+            return building.Parcels.FirstOrDefault()?.PID;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Pims.Dal.Entities.Helpers.Extensions
         /// <returns></returns>
         public static string GetParcelIdentity(this Building building)
         {
-            return building.Parcels.FirstOrDefault()?.Parcel?.ParcelIdentity;
+            return building.Parcels.FirstOrDefault()?.ParcelIdentity;
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Pims.Dal.Entities.Helpers.Extensions
         /// <returns></returns>
         public static int? GetPIN(this Building building)
         {
-            return building.Parcels.FirstOrDefault()?.Parcel?.PIN;
+            return building.Parcels.FirstOrDefault()?.PIN;
         }
     }
 }

@@ -1,9 +1,7 @@
 import { AxiosError } from 'axios';
 import { SelectOption } from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
-import { EvaluationKeys, FiscalKeys } from 'constants/index';
 import { FormikProps, getIn } from 'formik';
-import { IEvaluation, IFiscal } from 'interfaces';
 import _ from 'lodash';
 import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
 import moment from 'moment-timezone';
@@ -247,63 +245,4 @@ export const getAdminAreaFromLayerData = (
       return match;
     }
   }
-};
-
-export const getCurrentFiscal = (fiscals: IFiscal[], key: FiscalKeys) => {
-  const currentFiscal = getCurrentFiscalYear();
-  return _.find(fiscals, { fiscalYear: currentFiscal, key: key });
-};
-
-const currentYear = moment().year();
-
-/**
- * Get the most recent evaluation matching the current year and passed evaluation type.
- * @param evaluations a list of evaluations belonging to this property
- * @param key only return evaluations matching this key
- */
-export const getCurrentYearEvaluation = (
-  evaluations: IEvaluation[],
-  key: EvaluationKeys,
-): IEvaluation | undefined => {
-  const currentYearEvaluations = (evaluations ?? []).filter(
-    (evaluation: IEvaluation) => moment(evaluation.date, 'YYYY-MM-DD').year() === currentYear,
-  );
-  return getMostRecentEvaluation(currentYearEvaluations, key);
-};
-
-/**
- * Get the most recent evaluation matching the passed evaluation type.
- * @param evaluations a list of evaluations belonging to this property
- * @param key only return evaluations matching this key
- */
-export const getMostRecentEvaluation = (
-  evaluations: IEvaluation[],
-  key: EvaluationKeys,
-): IEvaluation | undefined => {
-  const mostRecentEvaluation = _.find(_.orderBy(evaluations ?? [], 'date', 'desc'), { key: key });
-  return mostRecentEvaluation;
-};
-
-/**
- * Get the most recent appraisal, restricted to within one year of either the current year or the year the property was disposed on.
- * @param evaluations all evaluations for the property.
- * @param disposedOn the date the property was disposed on, may be undefined.
- */
-export const getMostRecentAppraisal = (
-  evaluations: IEvaluation[],
-  disposedOn?: Date | string,
-): IEvaluation | undefined => {
-  let targetDate = moment();
-  if (disposedOn) {
-    targetDate = moment(disposedOn, 'YYYY-MM-DD');
-  }
-  const evaluationsForYear = _.filter(evaluations ?? [], evaluation => {
-    return (
-      moment
-        .duration(moment(evaluation.date, 'YYYY-MM-DD').diff(targetDate))
-        .abs()
-        .asYears() < 1
-    );
-  });
-  return getMostRecentEvaluation(evaluationsForYear, EvaluationKeys.Appraised);
 };

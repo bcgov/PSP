@@ -76,10 +76,10 @@ export const useUsers = () => {
    * @return the detailed user.
    */
   const fetchDetail = useCallback(
-    async (id: string): Promise<IUserDetails> => {
+    async (key: string): Promise<IUserDetails> => {
       dispatch(logRequest(actionTypes.GET_USER_DETAIL));
       dispatch(showLoading());
-      return getUser(id)
+      return getUser(key)
         .then((response: AxiosResponse) => {
           dispatch(logSuccess({ name: actionTypes.GET_USER_DETAIL }));
           dispatch(storeUserDetails(response.data));

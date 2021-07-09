@@ -19,7 +19,7 @@ export interface IAgencyDetail {
   sendEmail: boolean;
   addressTo: string;
   code: string;
-  rowVersion?: string;
+  rowVersion?: number;
   parent?: string;
 }
 

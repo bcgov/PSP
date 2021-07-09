@@ -32,10 +32,10 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'disabledAgency', id: '2', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: '1', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { name: 'disabledRole', id: '2', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'disabledAgency', id: 2, isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { name: 'disabledRole', id: 2, isDisabled: true, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
 };
 
@@ -47,8 +47,8 @@ const selectedUser = {
   isDisabled: false,
   emailVerified: false,
   agencies: [],
-  roles: [{ id: '2' }],
-  rowVersion: 'AAAAAAAAB9E=',
+  roles: [{ id: 2 }],
+  rowVersion: 1,
   note: 'test note',
   lastLogin: '2020-10-14T17:45:39.7381599',
 };
@@ -69,7 +69,7 @@ const testRender = () =>
   render(
     <Provider store={store}>
       <Router history={history}>
-        <EditUserPage id="TEST-ID" />,
+        <EditUserPage key="TEST-ID" />,
       </Router>
     </Provider>,
   );
@@ -86,7 +86,7 @@ const renderEditUserPage = () =>
           rtl={false}
           pauseOnFocusLoss={false}
         />
-        <EditUserPage id="TEST-ID" />,
+        <EditUserPage key="TEST-ID" />,
       </Router>
     </Provider>,
   );
@@ -103,7 +103,7 @@ describe('Edit user page', () => {
     const { container } = render(
       <Provider store={noDateStore}>
         <Router history={history}>
-          <EditUserPage id="TEST-ID" />,
+          <EditUserPage key="TEST-ID" />,
         </Router>
       </Provider>,
     );

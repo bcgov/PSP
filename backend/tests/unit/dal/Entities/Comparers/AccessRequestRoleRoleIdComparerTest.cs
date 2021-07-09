@@ -16,16 +16,16 @@ namespace Pims.Dal.Test.Entities
     public class AccessRequestRoleRoleIdComparerTest
     {
         #region Variables
-        static Guid roleId = Guid.NewGuid();
+        static Guid roleKey = Guid.NewGuid();
         public static IEnumerable<object[]> AccessRequestRoles =>
             new List<object[]>
             {
                 new object[] { new AccessRequestRole(), new AccessRequestRole(), true },
-                new object[] { new AccessRequestRole(1, roleId), new AccessRequestRole(1, roleId), true },
-                new object[] { new AccessRequestRole(1, Guid.Empty), new AccessRequestRole(1, Guid.Empty), true },
-                new object[] { new AccessRequestRole(1, Guid.NewGuid()), new AccessRequestRole(1, Guid.NewGuid()), false },
-                new object[] { null, new AccessRequestRole(1, Guid.Empty), false },
-                new object[] { new AccessRequestRole(1, Guid.Empty), null, false },
+                new object[] { new AccessRequestRole(1, 1), new AccessRequestRole(1, 1), true },
+                new object[] { new AccessRequestRole(1, 2), new AccessRequestRole(1, 2), true },
+                new object[] { new AccessRequestRole(1, 1), new AccessRequestRole(1, 3), false },
+                new object[] { null, new AccessRequestRole(1, 0), false },
+                new object[] { new AccessRequestRole(1, 0), null, false },
                 new object[] { null, null, false },
             };
         #endregion

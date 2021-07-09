@@ -38,10 +38,10 @@ const mockStore = configureMockStore([thunk]);
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'disabledAgency', id: '2', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: '1', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { name: 'disabledRole', id: '2', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { id: 1, name: 'agencyVal', code: '', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { id: 2, name: 'disabledAgency', code: '', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
 };
 const mockAxios = new MockAdapter(axios);
@@ -59,25 +59,25 @@ const getStore = (includeDate?: boolean) =>
         quantity: 2,
         items: [
           {
-            id: '1',
+            id: 1,
             username: 'testername1',
             firstName: 'testUserFirst1',
             lastName: 'testUserLast1',
             isDisabled: false,
             position: 'tester position',
-            agencies: [{ id: '1', name: 'HLTH' }],
-            roles: [{ id: '1', name: 'admin' }],
+            agencies: [{ id: 1, name: 'HLTH' }],
+            roles: [{ id: 1, name: 'admin' }],
             lastLogin: includeDate ? '2020-10-14T17:45:39.7381599' : null,
           },
           {
-            id: '2',
+            id: 2,
             username: 'testername2',
             firstName: 'testUser',
             lastName: 'testUser',
             isDisabled: true,
             position: 'tester',
-            agencies: [{ id: '1', name: 'HLTH' }],
-            roles: [{ id: '1', name: 'admin' }],
+            agencies: [{ id: 1, name: 'HLTH' }],
+            roles: [{ id: 1, name: 'admin' }],
             lastLogin: includeDate ? '2020-10-14T17:46:39.7381599' : null,
           },
         ],

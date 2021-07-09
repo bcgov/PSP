@@ -55,12 +55,12 @@ const HeaderComponent = (
 
 describe('HeaderActions View', () => {
   it('HeaderActions renders correctly', () => {
-    const { container } = render(HeaderComponent(mockParcel, PropertyTypes.PARCEL, true, true));
+    const { container } = render(HeaderComponent(mockParcel, PropertyTypes.Parcel, true, true));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('Shows all three actions when user has all permissions', () => {
-    const { getByText } = render(HeaderComponent(mockParcel, PropertyTypes.PARCEL, true, true));
+    const { getByText } = render(HeaderComponent(mockParcel, PropertyTypes.Parcel, true, true));
     expect(getByText('Zoom map')).toBeVisible();
   });
 });

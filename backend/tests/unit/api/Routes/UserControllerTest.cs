@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Routes
         public void GetAccessRequest_Route()
         {
             // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.GetAccessRequest), typeof(int));
+            var endpoint = typeof(UserController).FindMethod(nameof(UserController.GetAccessRequest), typeof(long));
 
             // Act
             // Assert
@@ -91,7 +91,7 @@ namespace Pims.Api.Test.Routes
         public void UpdateAccessRequest_Route()
         {
             // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.UpdateAccessRequest), typeof(int), typeof(Model.AccessRequestModel));
+            var endpoint = typeof(UserController).FindMethod(nameof(UserController.UpdateAccessRequest), typeof(long), typeof(Model.AccessRequestModel));
 
             // Act
             // Assert

@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Moq;
+using Pims.Dal;
 using Pims.Dal.Configuration.Generators;
 using System;
 using System.Collections.Generic;
@@ -44,13 +45,20 @@ namespace Pims.Core.Test
 
             // TODO: Use Singleton pattern to speed up initialization of this.
             var serializerOptions = Options.Create(new JsonSerializerOptions());
+            var pimsOptions = Options.Create(new PimsOptions());
             var registers = assemblies.Select(assembly => assembly.GetTypes()
                 .Where(x => typeof(IRegister).GetTypeInfo().IsAssignableFrom(x.GetTypeInfo()) && x.GetTypeInfo().IsClass && !x.GetTypeInfo().IsAbstract))
                 .SelectMany(registerTypes =>
                     registerTypes.Select(registerType =>
-                        registerType.GetConstructor(Type.EmptyTypes) == null
-                        ? (IRegister)Activator.CreateInstance(registerType, new[] { serializerOptions })
-                        : (IRegister)Activator.CreateInstance(registerType))).ToList();
+                    {
+                        var constructor = registerType.GetConstructor(Type.EmptyTypes);
+                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType);
+                        constructor = registerType.GetConstructor(new[] { typeof(IOptions<JsonSerializerOptions>), typeof(IOptions<PimsOptions>) });
+                        if (constructor != null) return (IRegister)Activator.CreateInstance(registerType, new object[] { serializerOptions, pimsOptions });
+                        // Default to providing serializer options.
+                        return (IRegister)Activator.CreateInstance(registerType, new[] { serializerOptions });
+                    }
+                        )).ToList();
 
             config.Apply(registers);
 

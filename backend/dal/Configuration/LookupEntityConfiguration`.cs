@@ -7,14 +7,16 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// BaseEntityConfiguration class, provides a way to configure base entity in the database.
     ///</summary>
-    public abstract class LookupEntityConfiguration<TBase, TKey> : BaseEntityConfiguration<TBase>
-        where TBase : LookupEntity<TKey>
+    public abstract class LookupEntityConfiguration<TBase> : BaseEntityConfiguration<TBase>
+        where TBase : LookupEntity
     {
         #region Methods
         protected void LookupConfigure(EntityTypeBuilder<TBase> builder)
         {
-            builder.Property(m => m.SortOrder).HasDefaultValue(0);
-            builder.Property(m => m.IsDisabled).HasDefaultValue(false);
+            builder.Property(m => m.SortOrder).HasDefaultValue(0)
+                .HasComment("Sorting order of record");
+            builder.Property(m => m.IsDisabled).HasDefaultValue(false)
+                .HasComment("Whether this record is disabled");
 
             base.Configure(builder);
         }

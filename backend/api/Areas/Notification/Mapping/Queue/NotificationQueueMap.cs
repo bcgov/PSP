@@ -22,11 +22,10 @@ namespace Pims.Api.Areas.Project.Mapping.Queue
                 .Map(dest => dest.BodyType, src => src.BodyType)
                 .Map(dest => dest.Tag, src => src.Tag)
                 .Map(dest => dest.SendOn, src => src.SendOn)
-                .Map(dest => dest.ProjectId, src => src.ProjectId)
                 .Map(dest => dest.ToAgencyId, src => src.ToAgencyId)
                 .Map(dest => dest.ChesTransactionId, src => src.ChesTransactionId)
                 .Map(dest => dest.ChesMessageId, src => src.ChesMessageId)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
         }
     }
 }

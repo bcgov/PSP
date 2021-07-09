@@ -118,29 +118,29 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Add the user to the group for the specified 'userId' and 'groupId'.
+        /// Add the user to the group for the specified 'userKey' and 'groupKey'.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="groupId"></param>
+        /// <param name="userKey"></param>
+        /// <param name="groupKey"></param>
         /// <returns></returns>
-        public async Task<Guid> AddGroupToUserAsync(Guid userId, Guid groupId)
+        public async Task<Guid> AddGroupToUserAsync(Guid userKey, Guid groupKey)
         {
-            var response = await _client.PutAsync($"{this.Options.Admin.Authority}/users/{userId}/groups/{groupId}");
+            var response = await _client.PutAsync($"{this.Options.Admin.Authority}/users/{userKey}/groups/{groupKey}");
 
-            return response.HandleResponse(userId);
+            return response.HandleResponse(userKey);
         }
 
         /// <summary>
-        /// Remove the user from the group for the specified 'userId' and 'groupId'.
+        /// Remove the user from the group for the specified 'userKey' and 'groupKey'.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="groupId"></param>
+        /// <param name="userKey"></param>
+        /// <param name="groupKey"></param>
         /// <returns></returns>
-        public async Task<Guid> RemoveGroupFromUserAsync(Guid userId, Guid groupId)
+        public async Task<Guid> RemoveGroupFromUserAsync(Guid userKey, Guid groupKey)
         {
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/users/{userId}/groups/{groupId}");
+            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/users/{userKey}/groups/{groupKey}");
 
-            return response.HandleResponse(userId);
+            return response.HandleResponse(userKey);
         }
         #endregion
     }

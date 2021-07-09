@@ -2,10 +2,10 @@ using System;
 
 namespace Pims.Api.Models.Parcel
 {
-    public class ParcelEvaluationModel : BaseModel
+    public class ParcelEvaluationModel : BaseAppModel
     {
         #region Properties
-        public int ParcelId { get; set; }
+        public long ParcelId { get; set; }
 
         public DateTime Date { get; set; }
 

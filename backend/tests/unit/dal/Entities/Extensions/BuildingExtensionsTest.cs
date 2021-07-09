@@ -417,8 +417,8 @@ namespace Pims.Dal.Test.Entities
             var building = EntityHelper.CreateBuilding(1);
             var parcel1 = EntityHelper.CreateParcel(1233);
             var parcel2 = EntityHelper.CreateParcel(5555);
-            building.Parcels.Add(new ParcelBuilding(parcel1, building));
-            building.Parcels.Add(new ParcelBuilding(parcel2, building));
+            building.Parcels.Add(parcel1);
+            building.Parcels.Add(parcel2);
 
             // Act
             var result = building.GetPID();
@@ -449,8 +449,8 @@ namespace Pims.Dal.Test.Entities
             var building = EntityHelper.CreateBuilding(1);
             var parcel1 = EntityHelper.CreateParcel(1233);
             var parcel2 = EntityHelper.CreateParcel(5555);
-            building.Parcels.Add(new ParcelBuilding(parcel1, building));
-            building.Parcels.Add(new ParcelBuilding(parcel2, building));
+            building.Parcels.Add(parcel1);
+            building.Parcels.Add(parcel2);
 
             // Act
             var result = building.GetParcelIdentity();
@@ -483,8 +483,8 @@ namespace Pims.Dal.Test.Entities
             parcel1.PIN = 1234;
             var parcel2 = EntityHelper.CreateParcel(5555);
             parcel2.PIN = 4321;
-            building.Parcels.Add(new ParcelBuilding(parcel1, building));
-            building.Parcels.Add(new ParcelBuilding(parcel2, building));
+            building.Parcels.Add(parcel1);
+            building.Parcels.Add(parcel2);
 
             // Act
             var result = building.GetPIN();

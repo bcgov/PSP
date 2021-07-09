@@ -1,8 +1,7 @@
 import { IGeoSearchParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
-import { IApiProperty } from 'features/properties/list';
-import { IBuilding, IParcel } from 'interfaces';
+import { IApiProperty, IBuilding, IParcel } from 'interfaces';
 import { LatLngLiteral } from 'leaflet';
 import * as _ from 'lodash';
 import queryString from 'query-string';

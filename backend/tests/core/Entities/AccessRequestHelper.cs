@@ -43,25 +43,20 @@ namespace Pims.Core.Test
                 User = user
             };
 
-            accessRequest.Agencies.Add(new Entity.AccessRequestAgency()
+            accessRequest.AgenciesManyToMany.Add(new Entity.AccessRequestAgency()
             {
-                AgencyId = 1,
-                Agency = new Entity.Agency()
-                {
-                    Id = 1
-                },
-                AccessRequestId = id
+                AccessRequestId = id,
+                AccessRequest = accessRequest,
+                AgencyId = 99,
+                Agency = EntityHelper.CreateAgency(99, "TEST", "access request test agency")
             });
 
-            var roleId = Guid.NewGuid();
-            accessRequest.Roles.Add(new Entity.AccessRequestRole()
+            accessRequest.RolesManyToMany.Add(new Entity.AccessRequestRole()
             {
-                RoleId = roleId,
-                Role = new Entity.Role()
-                {
-                    Id = roleId
-                },
-                AccessRequestId = id
+                AccessRequestId = id,
+                AccessRequest = accessRequest,
+                RoleId = 99,
+                Role = EntityHelper.CreateRole(99, "access request test role")
             });
 
             return accessRequest;

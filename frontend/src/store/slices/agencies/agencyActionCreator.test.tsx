@@ -247,7 +247,7 @@ describe('agencies async actions', () => {
       email: 'mail',
       sendEmail: true,
       addressTo: '',
-      rowVersion: '',
+      rowVersion: 1,
     };
     it('calls the api with the expected url', () => {
       mockAxios.onGet(url).reply(200, mockResponse);

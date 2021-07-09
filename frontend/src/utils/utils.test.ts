@@ -9,7 +9,7 @@ import {
   getMostRecentAppraisal,
   getMostRecentEvaluation,
   isPositiveNumberOrZero,
-} from './utils';
+} from '.';
 
 describe('Is Positive or Zero', () => {
   it('Should return false, undefined', () => {

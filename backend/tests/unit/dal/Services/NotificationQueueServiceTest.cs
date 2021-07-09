@@ -24,9 +24,6 @@ namespace Pims.Dal.Test.Services
             {
                 new object[] { new Entity.Models.NotificationQueueFilter() { To = "1@1" }, 1, 1 },
                 new object[] { new Entity.Models.NotificationQueueFilter() { AgencyId = 1 }, 1, 1 },
-                new object[] { new Entity.Models.NotificationQueueFilter() { ProjectId = 1 }, 2, 2 },
-                new object[] { new Entity.Models.NotificationQueueFilter() { ProjectNumber = "test" }, 0, 0 },
-                new object[] { new Entity.Models.NotificationQueueFilter() { ProjectNumber = "test-pass" }, 2, 2 },
                 new object[] { new Entity.Models.NotificationQueueFilter() { Status = Entity.NotificationStatus.Failed }, 1, 1 },
                 new object[] { new Entity.Models.NotificationQueueFilter() { Key = new Guid("8d1a35b3-6280-4103-93f5-792f8954bef8") }, 1, 1 },
                 new object[] { new Entity.Models.NotificationQueueFilter() { Subject = "find" }, 1, 1 },
@@ -39,9 +36,6 @@ namespace Pims.Dal.Test.Services
                 new object[] { new Entity.Models.NotificationQueueFilter() { Status = Entity.NotificationStatus.Pending, Sort = new[] { "UpdatedOn desc" } }, 10, 19 },
                 new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("to", "1@1") })), 1, 1 },
                 new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("agencyId", "1") })), 1, 1 },
-                new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("projectId", "1") })), 2, 2 },
-                new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("projectNumber", "test") })), 0, 0 },
-                new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("projectNumber", "test-pass") })), 2, 2 },
                 new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("status", "failed") })), 1, 1 },
                 new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("key", "8d1a35b3-6280-4103-93f5-792f8954bef8") })), 1, 1 },
                 new object[] { new Entity.Models.NotificationQueueFilter(new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(new[] { new KeyValuePair<string, Microsoft.Extensions.Primitives.StringValues>("subject", "find") })), 1, 1 },
@@ -71,11 +65,8 @@ namespace Pims.Dal.Test.Services
             var init = helper.CreatePimsContext(user, true);
             var template = init.CreateNotificationTemplate(1, "test");
             var notifications = init.CreateNotificationQueues(1, 20, template);
-            var project = init.CreateProject(1);
-            project.ProjectNumber = "test-pass";
             notifications.ForEach(n => n.SendOn = DateTime.MinValue);
             notifications.Next(0).ToAgencyId = 1;
-            notifications.Next(1).ProjectId = 1;
             notifications.Next(2).Status = Entity.NotificationStatus.Failed;
             notifications.Next(3).To = "1@1.com";
             notifications.Next(4).Key = new Guid("8d1a35b3-6280-4103-93f5-792f8954bef8");
@@ -84,7 +75,6 @@ namespace Pims.Dal.Test.Services
             notifications.Next(6).Tag = "-find-";
             notifications.Next(7).SendOn = new DateTime(2020, 1, 1);
             notifications.Next(8).SendOn = new DateTime(2020, 1, 2);
-            notifications.Next(9).Project = project;
             notifications.Next(10).UpdatedOn = DateTime.UtcNow.AddDays(-1);
             notifications.Next(11).UpdatedOn = DateTime.UtcNow.AddDays(1);
             init.AddAndSaveRange(notifications);

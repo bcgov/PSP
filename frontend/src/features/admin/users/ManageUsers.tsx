@@ -113,6 +113,7 @@ export const ManageUsers = () => {
   let userList = pagedUsers.items.map(
     (u: IUser): IUserRecord => ({
       id: u.id,
+      key: u.key,
       email: u.email,
       username: u.username,
       firstName: u.firstName,
@@ -123,6 +124,7 @@ export const ManageUsers = () => {
       position: u.position ?? '',
       lastLogin: formatApiDateTime(u.lastLogin),
       createdOn: formatApiDateTime(u.createdOn),
+      rowVersion: u.rowVersion,
     }),
   );
 

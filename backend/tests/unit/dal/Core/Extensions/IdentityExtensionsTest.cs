@@ -16,9 +16,9 @@ namespace Pims.Api.Test.Core.Extensions
     public class IdentityExtensionsTest
     {
         #region Tests
-        #region GetUserId
+        #region GetUserKey
         [Fact]
-        public void GetUserId()
+        public void GetUserKey()
         {
             // Arrange
             var id = Guid.NewGuid();
@@ -29,27 +29,27 @@ namespace Pims.Api.Test.Core.Extensions
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var userId = principal.GetUserId();
+            var key = principal.GetUserKey();
 
             // Assert
-            userId.Should().Be(id);
+            key.Should().Be(id);
         }
 
         [Fact]
-        public void GetUserId_NoIdentity()
+        public void GetUserKey_NoIdentity()
         {
             // Arrange
             var principal = new ClaimsPrincipal();
 
             // Act
-            var userId = principal.GetUserId();
+            var key = principal.GetUserKey();
 
             // Assert
-            userId.Should().BeEmpty();
+            key.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetUserId_Empty()
+        public void GetUserKey_Empty()
         {
             // Arrange
             var claims = new List<Claim>()
@@ -59,14 +59,14 @@ namespace Pims.Api.Test.Core.Extensions
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var userId = principal.GetUserId();
+            var key = principal.GetUserKey();
 
             // Assert
-            userId.Should().BeEmpty();
+            key.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetUserId_Whitespace()
+        public void GetUserKey_Whitespace()
         {
             // Arrange
             var claims = new List<Claim>()
@@ -76,10 +76,10 @@ namespace Pims.Api.Test.Core.Extensions
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var userId = principal.GetUserId();
+            var key = principal.GetUserKey();
 
             // Assert
-            userId.Should().BeEmpty();
+            key.Should().BeEmpty();
         }
         #endregion
 

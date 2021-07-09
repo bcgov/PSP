@@ -34,10 +34,10 @@ window.open = jest.fn();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'agencyVal', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
     {
+      id: 1,
       name: 'classificationVal',
-      id: '1',
       isDisabled: false,
       type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
     },

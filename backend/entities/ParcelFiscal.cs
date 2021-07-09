@@ -1,53 +1,60 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ParcelFiscal class, provides an entity to map values to a fiscal year.
     /// </summary>
-    public class ParcelFiscal : BaseEntity
+    [MotiTable("PIMS_PARCEL_FISCAL", "PRFSCL")]
+    public class ParcelFiscal : BaseAppEntity
     {
         #region Properties
         /// <summary>
+        /// get/set - Primary key of the parcel fiscal.
+        /// </summary>
+        [Column("PARCEL_FISCAL_ID")]
+        public long Id { get; set; }
+
+        /// <summary>
         /// get/set - The primary key and the foreign key to the parcel.
         /// </summary>
-        /// <value></value>
-        public int ParcelId { get; set; }
+        [Column("PARCEL_ID")]
+        public long ParcelId { get; set; }
 
         /// <summary>
         /// get/set - The parcel.
         /// </summary>
-        /// <value></value>
         public Parcel Parcel { get; set; }
 
         /// <summary>
         /// get/set - The primary key and the fiscal year the evaluation is for.
         /// </summary>
-        /// <value></value>
+        [Column("FISCAL_YEAR")]
         public int FiscalYear { get; set; }
 
         /// <summary>
         /// get/set - The effective date of this fiscal value
         /// </summary>
-        /// <value></value>
+        [Column("EFFECTIVE_DATE")]
         public DateTime? EffectiveDate { get; set; }
 
         /// <summary>
         /// get/set - The key for this fiscal value.
         /// </summary>
-        /// <value></value>
+        [Column("KEY")]
         public FiscalKeys Key { get; set; }
 
         /// <summary>
         /// get/set - The value of the fiscal key for this parcel.
         /// </summary>
-        /// <value></value>
+        [Column("VALUE")]
         public decimal Value { get; set; }
 
         /// <summary>
         /// get/set - A note related to this fiscal value.
         /// </summary>
-        /// <value></value>
+        [Column("NOTE")]
         public string Note { get; set; }
         #endregion
 

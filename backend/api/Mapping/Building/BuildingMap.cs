@@ -58,7 +58,7 @@ namespace Pims.Api.Mapping.Building
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
 
             config.NewConfig<Model.BuildingModel, Entity.Building>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -84,7 +84,7 @@ namespace Pims.Api.Mapping.Building
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Model.BuildingModel, NetTopologySuite.Geometries.Point>()
                 .ConstructUsing(src => Dal.Helpers.GeometryHelper.CreatePoint(src.Longitude, src.Latitude));

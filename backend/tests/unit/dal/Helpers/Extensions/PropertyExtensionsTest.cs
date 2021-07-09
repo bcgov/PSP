@@ -23,7 +23,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView, Permissions.ProjectEdit).AddAgency(1);
+            var user = PrincipalHelper.CreateForPermission(Permissions.AdminProjects).AddAgency(1);
 
             var context = helper.InitializeDatabase(user);
             var parcel = context.CreateParcel(1);
@@ -72,7 +72,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView, Permissions.ProjectEdit).AddAgency(1);
+            var user = PrincipalHelper.CreateForPermission(Permissions.AdminProjects).AddAgency(1);
 
             var context = helper.InitializeDatabase(user);
             var parcel = context.CreateParcel(1);

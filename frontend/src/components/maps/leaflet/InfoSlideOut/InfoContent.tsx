@@ -44,14 +44,14 @@ export const OuterRow = styled(Row)`
 
 const getHeading = (propertyTypeId: PropertyTypes | null) => {
   switch (propertyTypeId) {
-    case PropertyTypes.SUBDIVISION:
+    case PropertyTypes.Subdivision:
       return (
         <Label className="header">
           <SubdivisionSvg className="svg" style={{ height: 25, width: 25, marginRight: 5 }} />
           Potential Subdivision
         </Label>
       );
-    case PropertyTypes.BUILDING:
+    case PropertyTypes.Building:
       return (
         <Label className="header">
           <BuildingSvg className="svg" style={{ height: 25, width: 25, marginRight: 5 }} />
@@ -82,7 +82,7 @@ export const InfoContent: React.FC<IInfoContent> = ({
 }) => {
   const isParcel =
     propertyTypeId !== null &&
-    [PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(propertyTypeId);
+    [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(propertyTypeId);
   return (
     <>
       <ListGroup>
@@ -139,7 +139,7 @@ export const InfoContent: React.FC<IInfoContent> = ({
       {isParcel && (
         <ParcelAttributes parcelInfo={propertyInfo as IParcel} canViewDetails={canViewDetails} />
       )}
-      {propertyTypeId === PropertyTypes.BUILDING && (
+      {propertyTypeId === PropertyTypes.Building && (
         <BuildingAttributes
           buildingInfo={propertyInfo as IBuilding}
           canViewDetails={canViewDetails}

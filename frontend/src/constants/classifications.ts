@@ -3,13 +3,17 @@
  */
 export enum Classifications {
   /** The property is currently being used. */
-  CoreOperational = 0,
+  CoreOperational = 1,
   /** The property is not currently being used but has a strategic purpose. */
-  CoreStrategic = 1,
+  CoreStrategic = 2,
+  /** The property is available for disposal. */
+  SurplusActive = 3,
+  /** The property is available for disposal but is encumbered. */
+  SurplusEncumbered = 4,
   /** The property has been disposed. */
-  Disposed = 4,
+  Disposed = 5,
   /** The property has been demolished */
-  Demolished = 5,
+  Demolished = 6,
   /** The property has been subdivided */
-  Subdivided = 6,
+  Subdivided = 7,
 }
