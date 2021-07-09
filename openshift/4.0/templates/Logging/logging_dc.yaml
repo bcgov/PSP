@@ -250,6 +250,8 @@ objects:
                 - containerPort: ${{APP_PORT}}
                   protocol: TCP
               env:
+                - name: TZ
+                  value: America/Vancouver
                 - name: SLEEP_TIME
                   value: ${SLEEP_TIME}
                 - name: AZ_BLOB_URL
@@ -281,3 +283,4 @@ objects:
                   mountPath: ${LOGGING_VOLUME_MOUNT_PATH}
                 - name: ${APP_NAME}-${ROLE_NAME}-root
                   mountPath: ${APP_VOLUME_MOUNT_PATH}
+                

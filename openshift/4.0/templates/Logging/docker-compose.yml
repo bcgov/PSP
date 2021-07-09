@@ -10,6 +10,7 @@ services:
     environment:
       SLEEP_TIME: ${SLEEP_TIME}
       AZ_BLOB_URL: "${AZ_BLOB_URL}"
+      TZ: "${TZ}"
       AZ_BLOB_CONTAINER: "${AZ_BLOB_CONTAINER}"
       AZ_SAS_TOKEN: "${AZ_SAS_TOKEN}"
       FRONTEND_APP_NAME: "${FRONTEND_APP_NAME}"
