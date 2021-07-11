@@ -80,7 +80,7 @@ API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS
 	then
         #APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
         #API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-		    (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+		    (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
         #clear elapse time
    elif [[ "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" == "0" ]]
    then
