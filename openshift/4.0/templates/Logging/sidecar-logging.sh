@@ -10,7 +10,7 @@ set -euo pipefail
 : "${EXPORT_TIME:=120}"
 : "${GRACEFUL_EXIT_TIME:=120}"
 : "${HOSTNAME:=}"
-: "${STARTUP_TIME:=0}"
+: "${STARTUP_TIME:=30}"
 declare -i elapse=0
 
 
@@ -31,6 +31,24 @@ if [ $EXPORT_TIME -lt $SLEEP_TIME ]; then
 	exit 0
 fi
 
+
+# get openshift logs for container with timestamp for a set sleep time/period
+app_oc_logs='oc -n $PROJECT_NAMESPACE logs --timestamps --since=$SLEEP_TIME"s" ${APP_POD_NAME} -c ${APP_CONTAINER_NAME}'
+api_oc_logs='oc -n $PROJECT_NAMESPACE logs --timestamps --since=$SLEEP_TIME"s" ${API_POD_NAME} -c ${API_CONTAINER_NAME}'
+
+# send zipped to endpoint 
+app_gzip_curl='zip /logging/${APP_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$FRONTEND_APP_NAME*'
+api_gzip_curl='zip /logging/${API_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$API_NAME*'
+app_send_zip='curl -v -X PUT  -H "Content-Type: application/zip" -H "Compression:Gzip" -H "x-ms-date: ${DATE_NOW}" -H "x-ms-version: ${AZ_VERSION}" -H "x-ms-blob-type: BlockBlob" --data-binary "@/logging/${APP_CONTAINER_NAME}_${DATE_NOW}.gz" ${APP_LOG_SERVER_URI}'
+api_send_zip='curl -v -X PUT  -H "Content-Type: application/zip" -H "Compression:Gzip" -H "x-ms-date: ${DATE_NOW}" -H "x-ms-version: ${AZ_VERSION}" -H "x-ms-blob-type: BlockBlob" --data-binary "@/logging/${API_CONTAINER_NAME}_${DATE_NOW}.gz" ${API_LOG_SERVER_URI}'
+
+
+
+
+_send() {
+
+#initialize container variables 
+
 # get app pod and container name
 APP_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o   jsonpath="{.items[*].metadata.name}")
 APP_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o jsonpath={.items[*].spec.containers[*].name})
@@ -40,24 +58,8 @@ API_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o 
 API_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o jsonpath={.items[*].spec.containers[*].name})
 
 # set log server URL
-APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${DATE_NOW}.gz${AZ_SAS_TOKEN}"
-API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${DATE_NOW}.gz${AZ_SAS_TOKEN}"
-
-
-# get openshift logs for container with timestamp for a set sleep time/period
-app_oc_logs='oc -n $PROJECT_NAMESPACE logs --timestamps --since=$SLEEP_TIME"s" ${APP_POD_NAME} -c ${APP_CONTAINER_NAME}'
-api_oc_logs='oc -n $PROJECT_NAMESPACE logs --timestamps --since=$SLEEP_TIME"s" ${API_POD_NAME} -c ${API_CONTAINER_NAME}'
-
-# send zipped to endpoint 
-app_gzip_curl='zip /logging/${APP_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$APP_POD_NAME*'
-api_gzip_curl='zip /logging/${API_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$API_POD_NAME*'
-app_send_zip='curl -v -X PUT  -H "Content-Type: application/zip" -H "Compression:Gzip" -H "x-ms-date: ${DATE_NOW}" -H "x-ms-version: ${AZ_VERSION}" -H "x-ms-blob-type: BlockBlob" --data-binary "@/logging/${APP_CONTAINER_NAME}_${DATE_NOW}.gz" ${APP_LOG_SERVER_URI}'
-api_send_zip='curl -v -X PUT  -H "Content-Type: application/zip" -H "Compression:Gzip" -H "x-ms-date: ${DATE_NOW}" -H "x-ms-version: ${AZ_VERSION}" -H "x-ms-blob-type: BlockBlob" --data-binary "@/logging/${API_CONTAINER_NAME}_${DATE_NOW}.gz" ${API_LOG_SERVER_URI}'
-
-
-
-
-_send() {
+APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
 
 
   # removes duplicates
@@ -76,8 +78,8 @@ _send() {
   #run proess for X# of seconds, check if logs was extracted then upload to server
 	if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]
 	then
-        APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-        API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+        #APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+        #API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
 		    (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
         #clear elapse time
    elif [[ "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" == "0" ]]
@@ -85,8 +87,8 @@ _send() {
       echo "nothing to zip, logs are empty"
    elif [[ "${TERM_EXIT}" == true ]] #check for extracted logs and send before pod scaled to zero
    then
-		  APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-      API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+		  #APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+      #API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
 		  (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
       echo "Logs sent on sigterm request"
     else 
@@ -137,7 +139,7 @@ duration=${STARTUP_TIME};
 
 
 # set variables to send logs
-while [[ "${APP_POD_NAME}" && "${API_POD_NAME}" && "${APP_LOG_SERVER_URI}" ]];
+while [[ "${API_NAME}" && "${FRONTEND_APP_NAME}" && "${AZ_BLOB_URL}" ]];
   do sendLogs 0
 done
 # sidecar does nothing if a header is empty
