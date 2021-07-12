@@ -143,6 +143,7 @@ namespace Pims.Dal.Services.Admin
                 .ThenInclude(u => u.Role)
                 .Include(u => u.AgenciesManyToMany)
                 .ThenInclude(u => u.Agency)
+                .ThenInclude(a => a.Parent)
                 .AsNoTracking()
                 .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
         }

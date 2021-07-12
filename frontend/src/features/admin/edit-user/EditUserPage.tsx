@@ -119,19 +119,19 @@ const EditUserPage = (props: IEditUserPageProps) => {
             enableReinitialize
             initialValues={initialValues}
             validationSchema={UserUpdateSchema}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={async (values, { setSubmitting, setValues }) => {
               if (values.agency !== '') {
                 agenciesToUpdate = [{ id: Number(values.agency) }];
               } else {
                 agenciesToUpdate = user.agencies ?? [];
               }
-
               if (values.roles) {
                 rolesToUpdate = values.roles.map(r => ({ id: r }));
               } else {
                 rolesToUpdate = user.roles ?? [];
               }
-              updateUser({
+
+              await updateUser({
                 id: user.id,
                 key: user.key,
                 username: user.username,

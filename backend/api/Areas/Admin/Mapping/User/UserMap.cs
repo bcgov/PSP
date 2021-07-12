@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Admin.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany)
+                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany.OrderBy(a => a.Agency.ParentId))
                 .Map(dest => dest.Roles, src => src.RolesManyToMany)
                 .Map(dest => dest.LastLogin, src => src.LastLogin)
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();

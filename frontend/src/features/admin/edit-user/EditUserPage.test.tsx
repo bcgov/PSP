@@ -40,16 +40,16 @@ const lCodes = {
 };
 
 const selectedUser = {
-  username: 'test.user',
-  firstName: 'Test',
+  createdOn: '2021-05-04T19:07:09.6920606',
+  displayName: 'User, Admin',
+  email: 'admin@pims.gov.bc.ca',
+  firstName: 'George',
+  id: 1,
+  key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   lastName: 'User',
-  email: 'test@user.com',
-  isDisabled: false,
-  emailVerified: false,
-  agencies: [],
-  roles: [{ id: 2 }],
+  position: '',
   rowVersion: 1,
-  note: 'test note',
+  username: 'admin',
   lastLogin: '2020-10-14T17:45:39.7381599',
 };
 
@@ -141,9 +141,9 @@ describe('Edit user page', () => {
   describe('appropriate fields are autofilled', () => {
     it('autofills  email, username, first and last name', () => {
       const { getByTestId } = renderEditUserPage();
-      expect(getByTestId('email').getAttribute('value')).toEqual('test@user.com');
-      expect(getByTestId('username').getAttribute('value')).toEqual('test.user');
-      expect(getByTestId('firstName').getAttribute('value')).toEqual('Test');
+      expect(getByTestId('email').getAttribute('value')).toEqual('admin@pims.gov.bc.ca');
+      expect(getByTestId('username').getAttribute('value')).toEqual('admin');
+      expect(getByTestId('firstName').getAttribute('value')).toEqual('George');
       expect(getByTestId('lastName').getAttribute('value')).toEqual('User');
       expect(getByTestId('lastName').getAttribute('value')).toEqual('User');
     });

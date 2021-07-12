@@ -105,7 +105,7 @@ export const useUsers = () => {
    * @return the updated user.
    */
   const update = useCallback(
-    async (updatedUser: IUserDetails): Promise<AxiosResponse<IUserDetails>> => {
+    async (updatedUser: IUserDetails): Promise<IUserDetails> => {
       const axiosPromise = putUser(updatedUser).then((response: AxiosResponse) => {
         dispatch(updateUser(response.data));
         return Promise.resolve(response);

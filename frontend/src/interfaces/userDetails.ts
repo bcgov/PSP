@@ -2,9 +2,9 @@ import { IAgency } from './agency';
 import { IRole } from './role';
 
 export interface IUserDetails {
-  id: number;
+  id?: number;
   username?: string;
-  key: string;
+  key?: string;
   email?: string;
   displayName?: string;
   firstName?: string;

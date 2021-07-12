@@ -37,7 +37,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             name="username"
             readonly=""
             type="text"
-            value="test.user"
+            value="admin"
           />
         </div>
         <p
@@ -77,9 +77,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
                 data-testid="firstName"
                 id="input-firstName"
                 name="firstName"
-                placeholder="Test"
+                placeholder="George"
                 type="text"
-                value="Test"
+                value="George"
               />
             </div>
           </div>
@@ -119,9 +119,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
             data-testid="email"
             id="input-email"
             name="email"
-            placeholder="test@user.com"
+            placeholder="admin@pims.gov.bc.ca"
             type="email"
-            value="test@user.com"
+            value="admin@pims.gov.bc.ca"
           />
         </div>
         <div
@@ -199,6 +199,11 @@ exports[`Edit user page EditUserPage renders 1`] = `
               required=""
             >
               <option
+                value=""
+              >
+                Please Select
+              </option>
+              <option
                 class="option"
                 value="1"
               >
@@ -222,9 +227,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             name="note"
             placeholder="A note about this user"
             type="text"
-          >
-            test note
-          </textarea>
+          />
         </div>
         <div
           class="is-disabled form-group"

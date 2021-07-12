@@ -50,6 +50,7 @@ describe('users slice reducer functionality', () => {
     const result = userReducer(
       {
         ...initialState,
+        userDetail: { ...mockUser },
         pagedUsers: {
           page: 1,
           pageIndex: 0,
@@ -65,6 +66,7 @@ describe('users slice reducer functionality', () => {
     );
     expect(result).toEqual({
       ...initialState,
+      userDetail: { ...mockUser, firstName: 'George' },
       pagedUsers: {
         page: 1,
         pageIndex: 0,

@@ -47,6 +47,7 @@ export const usersSlice = createSlice({
         ),
       ];
       state.pagedUsers.items = items;
+      state.userDetail = action.payload;
     },
     setUsersFilter(state: IUsersState, action: PayloadAction<IUsersFilter>) {
       state.filter = action.payload;
