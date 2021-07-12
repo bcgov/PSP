@@ -1,5 +1,4 @@
 using Mapster;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.User;
 
@@ -12,7 +11,7 @@ namespace Pims.Api.Mapping.User
             config.NewConfig<Entity.AccessRequest, Model.AccessRequestModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Status, src => src.Status)
-                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany.OrderBy(a => a.Agency.ParentId))
+                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany)
                 .Map(dest => dest.Roles, src => src.RolesManyToMany)
                 .Map(dest => dest.UserId, src => src.UserId)
                 .Map(dest => dest.User, src => src.User)
