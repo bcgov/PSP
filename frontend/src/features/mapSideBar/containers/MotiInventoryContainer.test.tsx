@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, wait } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { createMemoryHistory } from 'history';
@@ -131,7 +131,7 @@ describe('MotiInventoryContainer functionality', () => {
     const { getByTitle, container } = renderContainer({});
     const closeTitleButton = getByTitle('close');
     fireEvent.click(closeTitleButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(container.querySelector('.map-side-drawer')).toHaveClass('close');
     });
   });
@@ -175,7 +175,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       const searchButton = await findByTestId('pid-search-button');
       fireEvent.click(searchButton);
-      await wait(() => {
+      await waitFor(() => {
         expect(findByPid).not.toHaveBeenCalled();
         expect(getParcelInfo).not.toHaveBeenCalled();
         expect(getNearestAddress).not.toHaveBeenCalled();
@@ -293,13 +293,13 @@ describe('MotiInventoryContainer functionality', () => {
       act(() => {
         suggestion.click();
       });
-      await wait(() => {
+      await waitFor(() => {
         const addressSearchButton = getByTestId('address-search-button');
         expect(addressSearchButton).not.toHaveAttribute('disabled');
         addressSearchButton.click();
       });
 
-      await wait(() => {
+      await waitFor(() => {
         expect(findOneWhereContains).toHaveBeenCalledWith({ lat: 1, lng: 2 });
         expect(getParcelInfo).toHaveBeenCalledWith('987-654-321');
         expect(getNearestAddress).not.toHaveBeenCalled();
@@ -320,7 +320,7 @@ describe('MotiInventoryContainer functionality', () => {
       act(() => {
         suggestion.click();
       });
-      await wait(() => {
+      await waitFor(() => {
         const addressSearchButton = getByTestId('address-search-button');
         expect(addressSearchButton).not.toHaveAttribute('disabled');
         addressSearchButton.click();
@@ -345,7 +345,7 @@ describe('MotiInventoryContainer functionality', () => {
       act(() => {
         suggestion.click();
       });
-      await wait(() => {
+      await waitFor(() => {
         const addressSearchButton = getByTestId('address-search-button');
         expect(addressSearchButton).not.toHaveAttribute('disabled');
         addressSearchButton.click();
@@ -383,7 +383,7 @@ describe('MotiInventoryContainer functionality', () => {
       const landSearchMarker = await screen.findByTestId('land-search-marker');
       fireEvent.click(landSearchMarker);
 
-      await wait(() => {
+      await waitFor(() => {
         expect(findOneWhereContains).toHaveBeenCalledWith({ lat: 1, lng: 2 });
         expect(getParcelInfo).toHaveBeenCalledWith('987-654-321');
         expect(getNearestAddress).toHaveBeenCalledWith({ lat: 1, lng: 2 });

@@ -2,8 +2,7 @@ import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { useKeycloak } from '@react-keycloak/web';
-import { fireEvent, waitFor } from '@testing-library/dom';
-import { cleanup, render, screen, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import {
   IPopUpContext,
   PropertyPopUpContextProvider,
@@ -103,7 +102,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -120,7 +119,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -139,7 +138,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -156,7 +155,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });

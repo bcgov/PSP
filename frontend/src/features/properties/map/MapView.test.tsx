@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { act, cleanup, fireEvent, render, screen, wait } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
@@ -175,7 +175,7 @@ describe('MapView', () => {
   };
 
   it('Renders the map', async () => {
-    await wait(() => {
+    await waitFor(() => {
       const { container } = render(getMap());
       expect(container.firstChild).toMatchSnapshot();
       expect(container.querySelector('.leaflet-container')).toBeVisible();
@@ -260,7 +260,7 @@ describe('MapView', () => {
 
     const { container } = render(getMap());
 
-    await wait(() => {
+    await waitFor(() => {
       const icon = container.querySelector('.leaflet-control-zoom-in');
       fireEvent.click(icon!);
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -270,7 +270,7 @@ describe('MapView', () => {
 
   it('the map can zoom out until the markers are clustered', async () => {
     const { container } = render(getMap());
-    await wait(() => {
+    await waitFor(() => {
       const icon = container.querySelector('.leaflet-control-zoom-out');
       fireEvent.click(icon!);
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -280,14 +280,14 @@ describe('MapView', () => {
 
   it('clusters can be clicked to zoom and spiderfy', async () => {
     const { container } = render(getMap());
-    await wait(() => {
+    await waitFor(() => {
       const icon = container.querySelector('.leaflet-control-zoom-out');
       fireEvent.click(icon!);
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
       expect(cluster).toBeVisible();
       fireEvent.click(cluster!);
     });
-    await wait(() => {
+    await waitFor(() => {
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
       expect(cluster).toBeVisible();
       fireEvent.click(cluster!);
@@ -297,7 +297,7 @@ describe('MapView', () => {
   });
 
   it('the map can be clicked', async () => {
-    await wait(() => {
+    await waitFor(() => {
       findOneWhereContains.mockResolvedValue({
         features: [
           { type: 'Feature', geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] } },
@@ -327,7 +327,7 @@ describe('MapView', () => {
       ],
     });
     const { container } = render(getMap());
-    await wait(() => {
+    await waitFor(() => {
       const map = container.querySelector('.leaflet-container');
       expect(map).toBeVisible();
       fireEvent.click(map!);
@@ -343,7 +343,7 @@ describe('MapView', () => {
   });
 
   it('the map can be clicked if interactive', async () => {
-    await wait(() => {
+    await waitFor(() => {
       findOneWhereContains.mockResolvedValue({
         features: [
           { type: 'Feature', geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] } },
@@ -370,14 +370,14 @@ describe('MapView', () => {
       },
     });
     const { container } = render(getMap());
-    await wait(() => {
+    await waitFor(() => {
       const icon = container.querySelector('.leaflet-control-zoom-out');
       fireEvent.click(icon!);
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
       expect(cluster).toBeVisible();
       fireEvent.click(cluster!);
     });
-    await wait(() => {
+    await waitFor(() => {
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
       expect(cluster).toBeVisible();
       fireEvent.click(cluster!);

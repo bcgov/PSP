@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Classifications } from 'constants/classifications';
@@ -178,7 +178,7 @@ describe('MapProperties View', () => {
   it('Opens the slide out when clicked', async () => {
     const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
     const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
-    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     const infoButton = component.find('#slideOutInfoButton').first();
     infoButton.simulate('click');
     const emptySlideOut = component.find('p#emptySlideOut');
@@ -188,7 +188,7 @@ describe('MapProperties View', () => {
   it('opens the layers control when clicked', async () => {
     const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
     const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
-    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     let layersControlButton = component.find('#layersControlButton').first();
     layersControlButton.simulate('click');
     layersControlButton = component.find('#layersControlButton').first();
@@ -198,7 +198,7 @@ describe('MapProperties View', () => {
   it('Renders the map with the filter bar disabled', async () => {
     const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
     const component = mount(getMap(mapRef, mockParcels, mockDetails, true));
-    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     const propertyFilter = component.find(PropertyFilter);
     expect(propertyFilter).toEqual({});
   });
@@ -206,7 +206,7 @@ describe('MapProperties View', () => {
   it('Renders the marker in correct position', async () => {
     const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
     const component = mount(getMap(mapRef, mockParcels, mockDetails));
-    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     const selectedMarkers = component.find(SelectedPropertyMarker);
     expect(selectedMarkers.length).toEqual(1);
     const markerProps = selectedMarkers.first().props();
@@ -216,7 +216,7 @@ describe('MapProperties View', () => {
   it('Should render 0 markers when there are no parcels', async () => {
     const mapRef = createRef<ReactLeafletMap<LeafletMapProps, LeafletMap>>();
     const component = mount(getMap(mapRef, noParcels, emptyDetails));
-    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     const marker = component.find(Marker);
     expect(marker.length).toBe(0);
     const selectedMarker = component.find(SelectedPropertyMarker);
@@ -228,11 +228,11 @@ describe('MapProperties View', () => {
 
     const component = mount(getMap(mapRef, mockParcels, mockDetails));
 
-    await wait(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
+    await waitFor(() => expect(mapRef.current).toBeDefined(), { timeout: 500 });
     const marker = component.find(Marker);
     const selectedMarker = component.find(SelectedPropertyMarker).first();
     expect(selectedMarker).toBeDefined();
-    await wait(
+    await waitFor(
       () => {
         expect(marker.length).toBe(1);
       },
@@ -258,7 +258,7 @@ describe('MapProperties View', () => {
       '-123.75,-112.5,48.922499263758255,55.77657301866769',
       '-123.75,-112.5,40.97989806962013,48.922499263758255',
     ]; //given our map dimensions and center point, this array should never change.
-    await wait(() => expect(loadProperties).toHaveBeenCalledTimes(9), { timeout: 500 });
+    await waitFor(() => expect(loadProperties).toHaveBeenCalledTimes(9), { timeout: 500 });
     expect(bbox).toEqual(expectedBbox);
   });
 
@@ -277,7 +277,7 @@ describe('MapProperties View', () => {
     fireEvent.click(searchButton!);
 
     const { loadProperties } = useApi();
-    await wait(() => expect(loadProperties).toHaveBeenCalledTimes(18), { timeout: 500 });
+    await waitFor(() => expect(loadProperties).toHaveBeenCalledTimes(18), { timeout: 500 });
     expect((loadProperties as jest.Mock).mock.calls[9][0].name).toBe('testname');
   });
 
@@ -289,7 +289,7 @@ describe('MapProperties View', () => {
     fireEvent.click(searchButton!);
 
     const { loadProperties } = useApi();
-    await wait(() => expect(loadProperties).toHaveBeenCalledTimes(18), { timeout: 500 });
+    await waitFor(() => expect(loadProperties).toHaveBeenCalledTimes(18), { timeout: 500 });
   });
 
   it('makes the correct calls to load the map data when the reset filter is clicked', async () => {
@@ -298,7 +298,7 @@ describe('MapProperties View', () => {
     const { container } = render(getMap(mapRef, noParcels, emptyDetails));
     const { loadProperties } = useApi();
 
-    await wait(() => expect(loadProperties).toHaveBeenCalledTimes(9), { timeout: 500 });
+    await waitFor(() => expect(loadProperties).toHaveBeenCalledTimes(9), { timeout: 500 });
 
     const nameInput = container.querySelector('#name-field');
     fireEvent.change(nameInput!, {
@@ -310,10 +310,10 @@ describe('MapProperties View', () => {
 
     const searchButton = container.querySelector('#search-button');
     fireEvent.click(searchButton!);
-    await wait(() => expect(loadProperties).toHaveBeenCalledTimes(18), { timeout: 500 });
+    await waitFor(() => expect(loadProperties).toHaveBeenCalledTimes(18), { timeout: 500 });
     const resetButton = container.querySelector('#reset-button');
     fireEvent.click(resetButton!);
-    await wait(() => expect(loadProperties).toHaveBeenCalledTimes(27), { timeout: 500 });
+    await waitFor(() => expect(loadProperties).toHaveBeenCalledTimes(27), { timeout: 500 });
 
     expect((loadProperties as jest.Mock).mock.calls[18][0].name).toBe('');
   });

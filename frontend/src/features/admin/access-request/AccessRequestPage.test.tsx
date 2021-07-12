@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
@@ -181,7 +181,7 @@ describe('AccessRequestPage', () => {
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);
-    await wait(() => expect(addAccessRequest).toBeCalled());
+    await waitFor(() => expect(addAccessRequest).toBeCalled());
     expect(getByText('Your request has been submitted.')).toBeVisible();
   });
 
@@ -193,7 +193,7 @@ describe('AccessRequestPage', () => {
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);
-    await wait(() => expect(addAccessRequest).toBeCalled());
+    await waitFor(() => expect(addAccessRequest).toBeCalled());
     expect(getByText('Failed to submit your access request.')).toBeVisible();
   });
 });
