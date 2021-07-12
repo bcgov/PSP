@@ -141,16 +141,15 @@ exports[`Edit user page EditUserPage renders 1`] = `
             required=""
           >
             <option
+              value=""
+            >
+              Please Select
+            </option>
+            <option
               class="option"
               value="1"
             >
               agencyVal
-            </option>
-            <option
-              class="option"
-              value="2"
-            >
-              agencyVal2
             </option>
           </select>
         </div>
