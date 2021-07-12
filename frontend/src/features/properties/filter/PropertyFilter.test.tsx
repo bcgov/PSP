@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import * as API from 'constants/API';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
@@ -162,7 +162,7 @@ describe('MapFilterBar', () => {
     // Enter values on the form fields, then click the Search button
     await fillInput(container, 'administrativeArea', 'Victoria', 'typeahead');
 
-    await wait(() => {
+    await waitFor(() => {
       fireEvent.change(classificationId!, {
         target: {
           value: '0',
@@ -170,7 +170,7 @@ describe('MapFilterBar', () => {
       });
     });
 
-    await wait(() => {
+    await waitFor(() => {
       fireEvent.click(submit!);
     });
 
@@ -248,14 +248,14 @@ describe('MapFilterBar', () => {
     // Enter values on the form fields, then click the Search button
     await fillInput(container, 'administrativeArea', 'Victoria', 'typeahead');
 
-    await wait(() => {
+    await waitFor(() => {
       fireEvent.change(classificationId!, {
         target: {
           value: '1',
         },
       });
     });
-    await wait(() => {
+    await waitFor(() => {
       fireEvent.click(getByTestId('reset-button'));
     });
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
@@ -281,7 +281,7 @@ describe('MapFilterBar', () => {
         value: 'test',
       },
     });
-    await wait(() => {
+    await waitFor(() => {
       expect(fetchPropertyNames).toHaveBeenCalled();
     });
   });

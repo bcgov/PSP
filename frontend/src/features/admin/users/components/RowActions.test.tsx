@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -68,7 +68,7 @@ describe('rowAction functions', () => {
     fireEvent.click(container);
     const enableButton = getByText('Enable');
     fireEvent.click(enableButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
       expect(mockAxios.history.put[0].url).toBe('/keycloak/users/1');
     });
@@ -81,7 +81,7 @@ describe('rowAction functions', () => {
     fireEvent.click(container);
     const disableButton = getByText('Disable');
     fireEvent.click(disableButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
       expect(mockAxios.history.put[0].url).toBe('/keycloak/users/1');
     });
@@ -92,7 +92,7 @@ describe('rowAction functions', () => {
     fireEvent.click(container);
     const openButton = getByText('Open');
     fireEvent.click(openButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(history.location.pathname).toBe('/admin/user/1');
     });
   });

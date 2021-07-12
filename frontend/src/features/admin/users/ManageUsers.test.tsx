@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
@@ -127,7 +127,7 @@ describe('Manage Users Component', () => {
     const { getByRole, container } = testRender(getStore());
     const agency = container.querySelector('input[name="agency"]');
 
-    await wait(() => {
+    await waitFor(() => {
       fireEvent.change(agency!, {
         target: {
           value: 'age',
@@ -164,7 +164,7 @@ describe('Manage Users Component', () => {
     act(() => {
       fireEvent.click(excelIcon);
     });
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.get.length).toBe(1);
     });
   });
@@ -177,7 +177,7 @@ describe('Manage Users Component', () => {
     act(() => {
       fireEvent.click(searchButton!);
     });
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.post.length).toBe(1);
     });
   });

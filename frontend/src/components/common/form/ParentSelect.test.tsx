@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
@@ -36,7 +36,7 @@ it('groups correctly', async () => {
     </Formik>,
   );
   const test = container.querySelector('input[name="test"]');
-  await wait(() => {
+  await waitFor(() => {
     fireEvent.change(test!, {
       target: {
         value: 'parent',
@@ -58,7 +58,7 @@ it('changes to corresponding child value on click', async () => {
     </Formik>,
   );
   const test = container.querySelector('input[name="test"]');
-  await wait(() => {
+  await waitFor(() => {
     fireEvent.change(test!, {
       target: {
         value: 'parent',
@@ -66,7 +66,7 @@ it('changes to corresponding child value on click', async () => {
     });
   });
   const childElement = getByRole('option');
-  await wait(() => {
+  await waitFor(() => {
     fireEvent.click(childElement);
   });
   expect(test).toHaveValue('child');
@@ -79,7 +79,7 @@ it('changes to corresponding parent value on click', async () => {
     </Formik>,
   );
   const test = container.querySelector('input[name="test"]');
-  await wait(() => {
+  await waitFor(() => {
     fireEvent.change(test!, {
       target: {
         value: 'parent',
@@ -87,7 +87,7 @@ it('changes to corresponding parent value on click', async () => {
     });
   });
   const parentElement = getByRole('combobox');
-  await wait(() => {
+  await waitFor(() => {
     fireEvent.click(parentElement);
   });
   expect(test).toHaveValue('parent');

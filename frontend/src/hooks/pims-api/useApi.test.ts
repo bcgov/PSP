@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -30,7 +30,7 @@ describe('useApi testing suite', () => {
       api = useApi();
     });
 
-    await wait(async () => {
+    await waitFor(async () => {
       const response = await api.get('success');
 
       expect(response.status).toBe(200);

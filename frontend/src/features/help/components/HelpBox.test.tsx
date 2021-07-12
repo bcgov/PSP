@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 
 import { IHelpPage, Topics } from '../interfaces';
 import HelpBox from './HelpBox';
@@ -37,7 +37,7 @@ describe('Help box tests...', () => {
 
   it('calls setActiveTopic on click of item', async () => {
     const { getByText } = renderHelpBox();
-    await wait(() => {
+    await waitFor(() => {
       fireEvent.click(getByText('Test Section'));
     });
     expect(setActiceTopic).toBeCalledTimes(1);

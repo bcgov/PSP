@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Footer, Header } from 'components/layout';
@@ -164,7 +164,7 @@ describe('PSP routing', () => {
     it('displays the mapview on the home page', async () => {
       const wrapper = mount(getRouter('/mapView'));
 
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(Map)).toHaveLength(1);
       });
@@ -172,7 +172,7 @@ describe('PSP routing', () => {
 
     it('displays the admin users page at the expected route', async () => {
       const wrapper = mount(getRouter('/admin/users'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(ManageUsers)).toHaveLength(1);
       });
@@ -180,7 +180,7 @@ describe('PSP routing', () => {
 
     it('displays the admin access requests page at the expected route', async () => {
       const wrapper = mount(getRouter('/admin/access/requests'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(ManageAccessRequests)).toHaveLength(1);
       });
@@ -188,7 +188,7 @@ describe('PSP routing', () => {
 
     it('displays the access request page at the expected route', async () => {
       const wrapper = mount(getRouter('/access/request'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(AccessRequestPage)).toHaveLength(1);
       });
@@ -196,7 +196,7 @@ describe('PSP routing', () => {
 
     it('displays the property list view at the expected route', async () => {
       const wrapper = mount(getRouter('/properties/list'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(PropertyListView)).toHaveLength(1);
       });
@@ -204,7 +204,7 @@ describe('PSP routing', () => {
 
     it('displays the edit user page at the expected route', async () => {
       const wrapper = mount(getRouter('/admin/user/1'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(EditUserPage)).toHaveLength(1);
       });
@@ -212,7 +212,7 @@ describe('PSP routing', () => {
 
     it('displays the admin agencies page at the expected route', async () => {
       const wrapper = mount(getRouter('/admin/agencies'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(ManageAgencies)).toHaveLength(1);
       });
@@ -220,7 +220,7 @@ describe('PSP routing', () => {
 
     it('displays the edit agencies page at the expected route', async () => {
       const wrapper = mount(getRouter('/admin/agency/1'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(EditAgencyPage)).toHaveLength(1);
       });
@@ -228,7 +228,7 @@ describe('PSP routing', () => {
 
     it('displays the add agencies page at the expected route', async () => {
       const wrapper = mount(getRouter('/admin/agency/new'));
-      await wait(async () => {
+      await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(EditAgencyPage)).toHaveLength(1);
       });

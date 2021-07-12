@@ -1,4 +1,4 @@
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createMemoryHistory } from 'history';
@@ -75,7 +75,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await wait(() => {
+    await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
     });
   });
@@ -96,7 +96,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await wait(() => {
+    await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });
   });
@@ -119,7 +119,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await wait(() => {
+    await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
     });
   });
@@ -142,7 +142,7 @@ describe('useActiveFeatureLayer hook tests', () => {
     );
     expect(clearLayers).toHaveBeenCalled();
     expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await wait(() => {
+    await waitFor(() => {
       expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
     });
   });

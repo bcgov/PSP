@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { act, cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
@@ -124,7 +124,7 @@ describe('Property list view', () => {
     await act(async () => {
       const { container } = renderPage();
       expect(container.firstChild).toMatchSnapshot();
-      await wait(async () => {
+      await waitFor(async () => {
         expect(container.querySelector('span[class="spinner-border"]')).not.toBeInTheDocument();
       });
     });
@@ -176,7 +176,9 @@ describe('Property list view', () => {
         getByTestId('edit-icon'),
         new MouseEvent('click', { bubbles: true, cancelable: true }),
       );
-      await wait(() => expect(getByTestId('save-changes')).toBeInTheDocument(), { timeout: 500 });
+      await waitFor(() => expect(getByTestId('save-changes')).toBeInTheDocument(), {
+        timeout: 500,
+      });
     });
   });
 
@@ -190,7 +192,9 @@ describe('Property list view', () => {
         getByTestId('edit-icon'),
         new MouseEvent('click', { bubbles: true, cancelable: true }),
       );
-      await wait(() => expect(getByTestId('save-changes')).toBeInTheDocument(), { timeout: 500 });
+      await waitFor(() => expect(getByTestId('save-changes')).toBeInTheDocument(), {
+        timeout: 500,
+      });
     });
   });
 
@@ -204,7 +208,7 @@ describe('Property list view', () => {
         getByTestId('edit-icon'),
         new MouseEvent('click', { bubbles: true, cancelable: true }),
       );
-      await wait(
+      await waitFor(
         () => {
           expect(getByTestId('save-changes')).toBeInTheDocument();
           expect(getByTestId('cancel-changes')).toBeInTheDocument();
@@ -225,7 +229,7 @@ describe('Property list view', () => {
         getByTestId('edit-icon'),
         new MouseEvent('click', { bubbles: true, cancelable: true }),
       );
-      await wait(
+      await waitFor(
         () => {
           expect(getByTestId('save-changes')).toBeInTheDocument();
           expect(container.querySelector(`input[name="properties.0.market"]`)).toBeNull();
@@ -240,10 +244,10 @@ describe('Property list view', () => {
 
     const { container } = renderPage();
 
-    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const cells = container.querySelectorAll('.td.clickable');
     fireEvent.click(cells[0]);
-    await wait(async () => expect(window.open).toHaveBeenCalled());
+    await waitFor(async () => expect(window.open).toHaveBeenCalled());
   });
 
   it('rows can be edited by clicking the edit button', async () => {
@@ -251,10 +255,10 @@ describe('Property list view', () => {
 
     const { container, getByTestId } = renderPage();
 
-    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
     fireEvent.click(editButton);
-    await wait(async () =>
+    await waitFor(async () =>
       expect(container.querySelector(`input[name="properties.0.assessedLand"]`)).toBeVisible(),
     );
   });
@@ -264,15 +268,15 @@ describe('Property list view', () => {
 
     const { container, getByTestId, getByText, queryByTestId, queryByText } = renderPage();
 
-    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
     fireEvent.click(editButton);
-    await wait(async () => {
+    await waitFor(async () => {
       expect(queryByTestId('edit-icon')).toBeNull();
       expect(getByText('Cancel')).toBeVisible();
     });
     fireEvent.click(getByText('Cancel'));
-    await wait(async () => {
+    await waitFor(async () => {
       expect(queryByTestId('edit-icon')).toBeVisible();
       expect(queryByText('Cancel')).toBeNull();
     });
@@ -283,15 +287,15 @@ describe('Property list view', () => {
 
     const { container, getByTestId, getByText } = renderPage();
 
-    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
     fireEvent.click(editButton);
-    await wait(async () => expect(getByText('Save edits')).toBeVisible());
+    await waitFor(async () => expect(getByText('Save edits')).toBeVisible());
     await fillInput(container, 'properties.0.assessedLand', '12345');
 
     (useApi().updateParcel as jest.MockedFunction<any>).mockResolvedValueOnce(mockParcel);
     fireEvent.click(getByText('Save edits'));
-    await wait(() => expect(useApi().updateParcel).toHaveBeenCalled());
+    await waitFor(() => expect(useApi().updateParcel).toHaveBeenCalled());
   });
 
   it('updates to financials made in edit mode that throw errors are handled', async () => {
@@ -299,16 +303,16 @@ describe('Property list view', () => {
 
     const { container, getByTestId, getByText } = renderPage();
 
-    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const editButton = getByTestId('edit-icon');
     fireEvent.click(editButton);
-    await wait(async () => expect(getByText('Save edits')).toBeVisible());
+    await waitFor(async () => expect(getByText('Save edits')).toBeVisible());
     await fillInput(container, 'properties.0.assessedLand', '12345');
     (useApi().updateParcel as jest.MockedFunction<any>).mockImplementationOnce(() => {
       throw Error;
     });
     fireEvent.click(getByText('Save edits'));
-    await wait(async () => {
+    await waitFor(async () => {
       expect(container.querySelector('.Toastify__toast-body')).toHaveTextContent(
         'Failed to save changes for Test Property. undefined',
       );
@@ -320,9 +324,9 @@ describe('Property list view', () => {
 
     const { container, getByText } = renderPage();
 
-    await wait(async () => expect(container.querySelector('.spinner-border')).toBeNull());
+    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
     const cells = container.querySelectorAll('.td.expander');
     fireEvent.click(cells[0]);
-    await wait(async () => expect(getByText('6460 Applecross Road')).toBeVisible());
+    await waitFor(async () => expect(getByText('6460 Applecross Road')).toBeVisible());
   });
 });
