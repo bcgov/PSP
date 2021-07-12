@@ -25,6 +25,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
             config.NewConfig<Entity.UserAgency, Model.AgencyModel>()
                 .IgnoreNonMapped(true)
                 .Map(dest => dest.Id, src => src.AgencyId)
+                .Map(dest => dest.ParentId, src => src.Agency.ParentId)
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
 
