@@ -29,6 +29,7 @@ namespace Pims.Api.Areas.Admin.Mapping.User
             config.NewConfig<Entity.UserRole, Model.RoleModel>()
                 .Map(dest => dest.Id, src => src.RoleId)
                 .Map(dest => dest.Key, src => src.Role.Key)
+                .Map(dest => dest.KeycloakGroupId, src => src.Role.KeycloakGroupId)
                 .Map(dest => dest.Name, src => src.Role.Name);
 
             config.NewConfig<Model.RoleModel, Entity.UserRole>()
