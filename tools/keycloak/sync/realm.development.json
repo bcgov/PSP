@@ -45,7 +45,7 @@
         "BaseUrl": "/",
         "WebOrigins": [
           "https://dev-pims.th.gov.bc.ca",
-          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/*"
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca"
         ],
         "ProtocolMappers": [
           {
