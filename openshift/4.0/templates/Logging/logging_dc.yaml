@@ -168,7 +168,7 @@ objects:
     spec:
       storageClassName: ${LOGGING_VOLUME_CLASS}
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: ${LOGGING_VOLUME_SIZE}
@@ -184,7 +184,7 @@ objects:
     spec:
       storageClassName: ${LOGGING_VOLUME_CLASS}
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: ${LOGGING_VOLUME_SIZE}
