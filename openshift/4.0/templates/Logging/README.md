@@ -71,7 +71,7 @@ Create a deploy config env file here in the base dir `deploy.dev.env` with a val
 
 ```bash
 IMAGE_TAG=dev
-SLEEP_TIME=60
+SLEEP_TIME=3600
 AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
 AZ_BLOB_CONTAINER=pims
 AZ_SAS_TOKEN=?{TOKEN SECRET}
@@ -79,7 +79,7 @@ FRONTEND_APP_NAME=pims-app
 API_NAME=pims-api
 PROJECT_NAMESPACE=3cd915-dev
 TOOLS_NAMESPACE=3cd915-tools
-EXPORT_TIME=360
+EXPORT_TIME=43200
 ```
 
 Create the logging deployment
