@@ -36,6 +36,10 @@ parameters:
     displayName: "Unique Identifier"
     description: "A unique identifier to allow for multiple instances (i.e. '-01')."
     value: ""
+  - name: TIME_ZONE
+    displayName: "Time Zone"
+    description: "The time zone of the pod."
+    value: "America/Los_Angeles"
 
   - name: IMAGE_TAG
     displayName: "Image Tag Name"
@@ -300,6 +304,8 @@ objects:
                   value: ${API_PATH}
                 - name: RealIpFrom
                   value: ${REAL_IP_FROM}
+                - name: TZ
+                  value: ${TIME_ZONE}
               resources:
                 requests:
                   cpu: ${CPU_REQUEST}
