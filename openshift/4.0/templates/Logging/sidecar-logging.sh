@@ -10,7 +10,7 @@ set -euo pipefail
 : "${EXPORT_TIME:=120}"
 : "${GRACEFUL_EXIT_TIME:=120}"
 : "${HOSTNAME:=}"
-: "${STARTUP_TIME:=30}"
+: "${STARTUP_TIME:=0}"
 declare -i elapse=0
 
 
@@ -76,13 +76,13 @@ API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS
 	(app_hasLogs=$(eval $app_oc_logs | grep '.') && [ ! -z "$app_hasLogs" ] && echo "$app_hasLogs" > $app_file) & (api_hasLogs=$(eval $api_oc_logs | grep '.') && [ ! -z "$api_hasLogs" ] && echo "$api_hasLogs" > $api_file)
 
   #run proess for X# of seconds, check if logs was extracted then upload to server
-	if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]
+	if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]
 	then
         #APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
         #API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
 		    (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
         #clear elapse time
-   elif [[ "$(ls -A /tmp/*$DATE_NOW* 2>/dev/null | wc -l)" == "0" ]]
+   elif [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" == "0" ]]
    then
       echo "nothing to zip, logs are empty"
    elif [[ "${TERM_EXIT}" == true ]] #check for extracted logs and send before pod scaled to zero
