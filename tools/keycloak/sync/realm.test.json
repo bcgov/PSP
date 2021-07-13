@@ -41,11 +41,13 @@
         "AuthorizationServicesEnabled": false,
         "RootUrl": "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca",
         "RedirectUris": [
-          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/*"
+          "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca/*",
+          "https://tst-pims.th.gov.bc.ca/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": [
           "https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca",
+          "https://tst-pims.th.gov.bc.ca/*",
           "*"
         ],
         "ProtocolMappers": [
