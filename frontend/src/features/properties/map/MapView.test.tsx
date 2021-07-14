@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
@@ -157,11 +157,12 @@ describe('MapView', () => {
     mockAxios.reset();
     jest.clearAllMocks();
     mockAxios.onAny().reply(200);
-    cleanup();
     history = createMemoryHistory();
   });
 
-  const getMap = (disabled: boolean = false) => {
+  afterEach(cleanup);
+
+  const getMap = () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     return (
       <TestCommonWrapper store={store} history={history}>
@@ -176,13 +177,13 @@ describe('MapView', () => {
 
   it('Renders the map', async () => {
     await waitFor(() => {
-      const { container } = render(getMap());
-      expect(container.firstChild).toMatchSnapshot();
-      expect(container.querySelector('.leaflet-container')).toBeVisible();
+      const { asFragment } = render(getMap());
+      expect(asFragment()).toMatchSnapshot();
     });
+    expect(document.querySelector('.leaflet-container')).toBeVisible();
   });
+
   it('Can toggle the base map', async () => {
-    let map: any;
     mockAxios.reset();
     mockAxios.onGet('/basemaps.json').reply(200, {
       basemaps: [
@@ -204,31 +205,29 @@ describe('MapView', () => {
       ],
     });
     mockAxios.onAny().reply(200, {});
-    await act(async () => {
-      map = render(getMap());
-    });
-    const basemapButton = map.container.querySelector(
-      '.basemap-item.basemap-item-button.secondary',
-    );
-    fireEvent.click(basemapButton);
-    expect(basemapButton).not.toHaveClass('.secondary');
+    await waitFor(() => render(getMap()));
+    // find basemap toggle button
+    const basemapButton = document.querySelector<HTMLElement>('.basemap-item-button.secondary');
+    expect(basemapButton).not.toBeNull();
+    const { getByAltText } = within(basemapButton!);
+    const image = getByAltText('Map Thumbnail');
+    expect(image).toHaveAttribute('src', '/satellite.jpg');
+    // click it
+    fireEvent.click(basemapButton!);
+    // expect image to change
+    expect(image).toHaveAttribute('src', '/streets.jpg');
   });
 
   it('Renders markers when provided', async () => {
-    let map: any;
-    await act(async () => {
-      map = render(getMap());
-    });
-    expect(map.container.querySelector('.leaflet-marker-icon')).toBeVisible();
+    await waitFor(() => render(getMap()));
+    expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
+
   it('Rendered markers can be clicked', async () => {
-    let map: any;
-    await act(async () => {
-      map = render(getMap());
-    });
-    const cluster = map.container.querySelector('.leaflet-marker-icon');
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
     fireEvent.click(cluster!);
-    const marker = map.container.querySelector('img.leaflet-marker-icon');
+    const marker = document.querySelector('img.leaflet-marker-icon');
     fireEvent.click(marker!);
     const text = await screen.findByText('Property Info');
     expect(text).toBeVisible();
@@ -236,13 +235,10 @@ describe('MapView', () => {
 
   it('Rendered markers can be clicked and displayed with permissions', async () => {
     mockKeycloak([Claims.ADMIN_PROPERTIES], []);
-    let map: any;
-    await act(async () => {
-      map = render(getMap());
-    });
-    const cluster = map.container.querySelector('.leaflet-marker-icon');
+    await waitFor(() => render(getMap()));
+    const cluster = document.querySelector('.leaflet-marker-icon');
     fireEvent.click(cluster!);
-    const marker = map.container.querySelector('img.leaflet-marker-icon');
+    const marker = document.querySelector('img.leaflet-marker-icon');
     fireEvent.click(marker!);
     const text = await screen.findByText('Property Info');
     expect(text).toBeVisible();
@@ -297,13 +293,19 @@ describe('MapView', () => {
   });
 
   it('the map can be clicked', async () => {
+    findOneWhereContains.mockResolvedValue({
+      features: [
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] },
+          properties: {
+            propertyTypeId: PropertyTypes.Parcel,
+          },
+        },
+      ],
+    });
+    const { container } = render(getMap());
     await waitFor(() => {
-      findOneWhereContains.mockResolvedValue({
-        features: [
-          { type: 'Feature', geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] } },
-        ],
-      });
-      const { container } = render(getMap());
       const map = container.querySelector('.leaflet-container');
       expect(map).toBeVisible();
       fireEvent.click(map!);
@@ -340,24 +342,6 @@ describe('MapView', () => {
     fireEvent.click(closeButton!);
     const layerPopup = container.querySelector('.leaflet-popup');
     expect(layerPopup).not.toBeInTheDocument();
-  });
-
-  it('the map can be clicked if interactive', async () => {
-    await waitFor(() => {
-      findOneWhereContains.mockResolvedValue({
-        features: [
-          { type: 'Feature', geometry: { type: 'Point', coordinates: [-1.133005, 52.629835] } },
-        ],
-      });
-      const { container } = render(getMap());
-      const map = container.querySelector('.leaflet-container');
-      expect(map).toBeVisible();
-      fireEvent.click(map!);
-    });
-    expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 54.97761367069628,
-      lng: -129.37500000000003,
-    });
   });
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
