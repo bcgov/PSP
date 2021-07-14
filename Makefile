@@ -68,8 +68,8 @@ rebuild: ## Build the local contains (n=service name) and then start them after 
 clean: ## Removes all local containers, images, volumes, etc
 	@echo "$(P) Removing all containers, images, volumes for solution."
 	@docker-compose rm -f -v -s
-	@docker volume rm -f pims-frontend-node-cache
-	@docker volume rm -f pims-api-db-data
+	@docker volume rm -f psp-frontend-node-cache
+	@docker volume rm -f psp-api-db-data
 
 logs: ## Shows logs for running containers (n=service name)
 	@docker-compose logs -f $(n)
