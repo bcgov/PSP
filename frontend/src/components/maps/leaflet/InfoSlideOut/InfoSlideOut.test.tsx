@@ -78,17 +78,17 @@ describe('InfoSlideOut View', () => {
     cleanup();
   });
 
-  it('Should render the slide out button', () => {
+  it('Should render the slide out button', async () => {
     const component = mount(<MapComponent />);
-    waitFor(() => expect(mapRef?.current).toBeTruthy(), { timeout: 500 });
+    await waitFor(() => expect(mapRef?.current).toBeTruthy());
     const infoButton = component.find(Button).first();
     expect(infoButton).toBeDefined();
     expect(infoButton.props().id).toBe('slideOutInfoButton');
   });
 
-  it('Component should be closed by default', () => {
+  it('Component should be closed by default', async () => {
     const component = mount(<MapComponent />);
-    waitFor(() => expect(mapRef?.current).toBeTruthy(), { timeout: 500 });
+    await waitFor(() => expect(mapRef?.current).toBeTruthy());
     const infoContainer = component.find('#infoContainer').first();
     expect(infoContainer).toBeDefined();
     expect(infoContainer.props().className?.includes('closed')).toBeTruthy();
@@ -166,21 +166,23 @@ describe('InfoSlideOut View', () => {
     expect(screen.getByText('Associated Land')).toBeVisible();
   });
 
-  it('Clicking the button should close the info component', () => {
+  it('Clicking the button should close the info component', async () => {
     const component = mount(<MapComponent />);
-    waitFor(() => expect(mapRef?.current).toBeTruthy(), { timeout: 500 });
-    const infoContainer = component.find('#infoContainer').first();
+    await waitFor(() => expect(mapRef?.current).toBeTruthy());
+    let infoContainer = component.find('#infoContainer').first();
     const infoButton = component.find('#slideOutInfoButton').first();
     expect(infoContainer).toBeDefined();
     expect(infoButton).toBeDefined();
     expect(infoContainer.props().className?.includes('closed')).toBeTruthy();
     infoButton.simulate('click');
-    waitFor(() => expect(infoContainer.props().className?.includes('closed')).toBeFalsy(), {
-      timeout: 500,
+    await waitFor(() => {
+      infoContainer = component.find('#infoContainer').first();
+      expect(infoContainer.props().className?.includes('closed')).toBeFalsy();
     });
     infoButton.simulate('click');
-    waitFor(() => expect(infoContainer.props().className?.includes('closed')).toBeTruthy(), {
-      timeout: 500,
+    await waitFor(() => {
+      infoContainer = component.find('#infoContainer').first();
+      expect(infoContainer.props().className?.includes('closed')).toBeTruthy();
     });
   });
 });
