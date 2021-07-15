@@ -112,8 +112,8 @@ describe('MotiInventoryContainer functionality', () => {
   });
   it('displays as expected', () => {
     history.push('/mapview?sidebar=true');
-    const { container } = renderContainer({});
-    expect(container.firstChild).toMatchSnapshot();
+    const { asFragment } = renderContainer({});
+    expect(asFragment()).toMatchSnapshot();
   });
   it('does not display by default', () => {
     const { container } = renderContainer({});
@@ -396,11 +396,12 @@ describe('MotiInventoryContainer functionality', () => {
       isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
     });
+
     it('the cancel and submit buttons are disabled by default', async () => {
       const { findByText } = renderContainer({});
 
-      const cancelButton = await findByText('Cancel');
-      const submitButton = await findByText('Save');
+      const cancelButton = (await findByText('Cancel')).closest('button') as HTMLButtonElement;
+      const submitButton = (await findByText('Save')).closest('button') as HTMLButtonElement;
 
       expect(cancelButton).toBeDisabled();
       expect(submitButton).toBeDisabled();
@@ -413,8 +414,8 @@ describe('MotiInventoryContainer functionality', () => {
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      const cancelButton = await findByText('Cancel');
-      const submitButton = await findByText('Save');
+      const cancelButton = (await findByText('Cancel')).closest('button') as HTMLButtonElement;
+      const submitButton = (await findByText('Save')).closest('button') as HTMLButtonElement;
 
       expect(cancelButton).not.toBeDisabled();
       expect(submitButton).not.toBeDisabled();
@@ -427,7 +428,7 @@ describe('MotiInventoryContainer functionality', () => {
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      const submitButton = await findByText('Save');
+      const submitButton = (await findByText('Save')).closest('button') as HTMLButtonElement;
       expect(submitButton).not.toBeDisabled();
       fireEvent.click(submitButton);
 
