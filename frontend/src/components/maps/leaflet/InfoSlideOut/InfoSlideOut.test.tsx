@@ -2,15 +2,13 @@ import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { useKeycloak } from '@react-keycloak/web';
-import { fireEvent, waitFor } from '@testing-library/dom';
-import { cleanup, render, screen, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import {
   IPopUpContext,
   PropertyPopUpContextProvider,
 } from 'components/maps/providers/PropertyPopUpProvider';
 import { Claims, PropertyTypes } from 'constants/index';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import { PimsAPI, useApi } from 'hooks/useApi';
 import { Map as LeafletMap } from 'leaflet';
@@ -37,7 +35,6 @@ jest.mock('@react-keycloak/web');
   },
 });
 
-Enzyme.configure({ adapter: new Adapter() });
 const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
@@ -81,17 +78,17 @@ describe('InfoSlideOut View', () => {
     cleanup();
   });
 
-  it('Should render the slide out button', () => {
+  it('Should render the slide out button', async () => {
     const component = mount(<MapComponent />);
-    waitFor(() => expect(mapRef?.current).toBeTruthy(), { timeout: 500 });
+    await waitFor(() => expect(mapRef?.current).toBeTruthy());
     const infoButton = component.find(Button).first();
     expect(infoButton).toBeDefined();
     expect(infoButton.props().id).toBe('slideOutInfoButton');
   });
 
-  it('Component should be closed by default', () => {
+  it('Component should be closed by default', async () => {
     const component = mount(<MapComponent />);
-    waitFor(() => expect(mapRef?.current).toBeTruthy(), { timeout: 500 });
+    await waitFor(() => expect(mapRef?.current).toBeTruthy());
     const infoContainer = component.find('#infoContainer').first();
     expect(infoContainer).toBeDefined();
     expect(infoContainer.props().className?.includes('closed')).toBeTruthy();
@@ -105,7 +102,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -122,7 +119,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -141,7 +138,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -158,7 +155,7 @@ describe('InfoSlideOut View', () => {
     );
     const infoButton = container.querySelector('#slideOutInfoButton');
     fireEvent.click(infoButton!);
-    await wait(() => {
+    await waitFor(() => {
       const filterBackdrop = screen.queryByTestId('filter-backdrop-loading');
       expect(filterBackdrop).toBeNull();
     });
@@ -169,21 +166,23 @@ describe('InfoSlideOut View', () => {
     expect(screen.getByText('Associated Land')).toBeVisible();
   });
 
-  it('Clicking the button should close the info component', () => {
+  it('Clicking the button should close the info component', async () => {
     const component = mount(<MapComponent />);
-    waitFor(() => expect(mapRef?.current).toBeTruthy(), { timeout: 500 });
-    const infoContainer = component.find('#infoContainer').first();
+    await waitFor(() => expect(mapRef?.current).toBeTruthy());
+    let infoContainer = component.find('#infoContainer').first();
     const infoButton = component.find('#slideOutInfoButton').first();
     expect(infoContainer).toBeDefined();
     expect(infoButton).toBeDefined();
     expect(infoContainer.props().className?.includes('closed')).toBeTruthy();
     infoButton.simulate('click');
-    waitFor(() => expect(infoContainer.props().className?.includes('closed')).toBeFalsy(), {
-      timeout: 500,
+    await waitFor(() => {
+      infoContainer = component.find('#infoContainer').first();
+      expect(infoContainer.props().className?.includes('closed')).toBeFalsy();
     });
     infoButton.simulate('click');
-    waitFor(() => expect(infoContainer.props().className?.includes('closed')).toBeTruthy(), {
-      timeout: 500,
+    await waitFor(() => {
+      infoContainer = component.find('#infoContainer').first();
+      expect(infoContainer.props().className?.includes('closed')).toBeTruthy();
     });
   });
 });

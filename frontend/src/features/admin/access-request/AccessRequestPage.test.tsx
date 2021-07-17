@@ -1,11 +1,9 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
 import { mount } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import React from 'react';
@@ -38,8 +36,6 @@ jest.mock('store/slices/accessRequests/useAccessRequests');
   fetchCurrentAccessRequest: jest.fn(),
   addAccessRequest: jest.fn(),
 });
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const lCodes = {
   lookupCodes: [
@@ -185,7 +181,7 @@ describe('AccessRequestPage', () => {
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);
-    await wait(() => expect(addAccessRequest).toBeCalled());
+    await waitFor(() => expect(addAccessRequest).toBeCalled());
     expect(getByText('Your request has been submitted.')).toBeVisible();
   });
 
@@ -197,7 +193,7 @@ describe('AccessRequestPage', () => {
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);
-    await wait(() => expect(addAccessRequest).toBeCalled());
+    await waitFor(() => expect(addAccessRequest).toBeCalled());
     expect(getByText('Failed to submit your access request.')).toBeVisible();
   });
 });

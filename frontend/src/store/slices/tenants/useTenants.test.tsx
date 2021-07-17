@@ -3,13 +3,17 @@ import { AxiosResponse } from 'axios';
 import { ITenantConfig, useApiTenants } from 'hooks/pims-api';
 import React from 'react';
 import { Provider } from 'react-redux';
-import * as loadingBar from 'react-redux-loading-bar';
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { Action } from 'redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { networkSlice } from '../network/networkSlice';
+import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useTenants } from '.';
+
+const mockApiGetSettings = jest.fn<Promise<AxiosResponse<ITenantConfig>>, any>();
+jest.mock('hooks/pims-api/useApiTenants');
+(useApiTenants as jest.Mock).mockReturnValue({ getSettings: mockApiGetSettings });
 
 jest.mock('react-redux-loading-bar', () => {
   const original = jest.requireActual('react-redux-loading-bar');
@@ -19,12 +23,23 @@ jest.mock('react-redux-loading-bar', () => {
     hideLoading: jest.fn((scope?: string): Action<any> => ({ type: 'hide' })),
   };
 });
-const showSpy = jest.spyOn(loadingBar, 'showLoading');
-const hideSpy = jest.spyOn(loadingBar, 'hideLoading');
 
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const mockHideLoading = showLoading as jest.Mock;
+const mockShowLoading = hideLoading as jest.Mock;
+
+jest.mock('../network/networkSlice', () => {
+  const original = jest.requireActual('../network/networkSlice');
+  return {
+    ...original,
+    logError: jest.fn(() => ({ type: 'error' })),
+    logRequest: jest.fn(() => ({ type: 'request' })),
+    logSuccess: jest.fn(() => ({ type: 'success' })),
+  };
+});
+
+const mockLogRequest = (logRequest as unknown) as jest.Mock;
+const mockLogSuccess = (logSuccess as unknown) as jest.Mock;
+const mockLogError = (logError as unknown) as jest.Mock;
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
@@ -40,11 +55,12 @@ describe('useTenant slice hook', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    showSpy.mockClear();
-    requestSpy.mockClear();
-    successSpy.mockClear();
-    errorSpy.mockClear();
-    hideSpy.mockClear();
+    mockShowLoading.mockClear();
+    mockLogRequest.mockClear();
+    mockLogSuccess.mockClear();
+    mockLogError.mockClear();
+    mockHideLoading.mockClear();
+    mockApiGetSettings.mockClear();
   });
 
   afterAll(() => {
@@ -52,51 +68,37 @@ describe('useTenant slice hook', () => {
     jest.unmock('react-redux-loading-bar');
   });
 
-  it('getSettings reducer + api hook', () => {
-    renderHook(
-      async () => {
-        const getSettingsSpy = jest.spyOn(useApiTenants(), 'getSettings');
-        getSettingsSpy.mockImplementation(() =>
-          Promise.resolve(({ code: 'test' } as unknown) as AxiosResponse<ITenantConfig>),
-        );
-        const { getSettings } = useTenants();
-
-        const response = await getSettings();
-        expect(response?.data).toStrictEqual({ code: 'test' });
-        expect(getSettingsSpy).toBeCalledTimes(1);
-        expect(showSpy).toBeCalledTimes(1);
-        expect(requestSpy).toBeCalledTimes(1);
-        expect(successSpy).toBeCalledTimes(1);
-        expect(errorSpy).toBeCalledTimes(0);
-        expect(hideSpy).toBeCalledTimes(1);
-      },
-      {
-        wrapper: getWrapper(getStore()),
-      },
-    );
+  it('getSettings reducer + api hook', async () => {
+    // mock API calls
+    mockApiGetSettings.mockResolvedValue({ data: { code: 'test' } } as any);
+    const wrapper = getWrapper(getStore({}));
+    const { result } = renderHook(() => useTenants(), { wrapper });
+    // get results from hook
+    const response = await result.current.getSettings();
+    // assertions
+    expect(response?.data).toStrictEqual({ code: 'test' });
+    expect(mockApiGetSettings).toBeCalledTimes(1);
+    expect(mockShowLoading).toBeCalledTimes(1);
+    expect(mockLogRequest).toBeCalledTimes(1);
+    expect(mockLogSuccess).toBeCalledTimes(1);
+    expect(mockLogError).toBeCalledTimes(0);
+    expect(mockHideLoading).toBeCalledTimes(1);
   });
 
-  it('getSettings reducer + api hook error', () => {
-    renderHook(
-      async () => {
-        const getSettingsSpy = jest.spyOn(useApiTenants(), 'getSettings');
-        getSettingsSpy.mockImplementation(() =>
-          Promise.reject(({ code: 'test' } as unknown) as AxiosResponse<ITenantConfig>),
-        );
-        const { getSettings } = useTenants();
-
-        const response = await getSettings();
-        expect(response?.data).toStrictEqual({ code: 'test' });
-        expect(getSettingsSpy).toBeCalledTimes(1);
-        expect(showSpy).toBeCalledTimes(1);
-        expect(requestSpy).toBeCalledTimes(1);
-        expect(successSpy).toBeCalledTimes(0);
-        expect(errorSpy).toBeCalledTimes(1);
-        expect(hideSpy).toBeCalledTimes(1);
-      },
-      {
-        wrapper: getWrapper(getStore()),
-      },
-    );
+  it('getSettings reducer + api hook error', async () => {
+    // mock API calls
+    mockApiGetSettings.mockRejectedValue({ data: { code: 'test' } } as any);
+    const wrapper = getWrapper(getStore({}));
+    const { result } = renderHook(() => useTenants(), { wrapper });
+    // get results from hook
+    const response = await result.current.getSettings();
+    // assertions
+    expect(response?.data).toBeUndefined();
+    expect(mockApiGetSettings).toBeCalledTimes(1);
+    expect(mockShowLoading).toBeCalledTimes(1);
+    expect(mockLogRequest).toBeCalledTimes(1);
+    expect(mockLogSuccess).toBeCalledTimes(0);
+    expect(mockLogError).toBeCalledTimes(1);
+    expect(mockHideLoading).toBeCalledTimes(1);
   });
 });
