@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { enableFetchMocks } from 'jest-fetch-mock';
+import React, { createRef } from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
@@ -35,16 +36,18 @@ const defaultStore = mockStore({
   [propertiesSlice.name]: { parcels: [], draftParcels: [] },
 });
 describe('Property Form functionality', () => {
-  const renderContainer = ({ store }: any) =>
-    render(
+  const renderContainer = ({ store }: any) => {
+    const ref = createRef();
+    return render(
       <TestCommonWrapper store={store ?? defaultStore} agencies={[1 as any]}>
-        <PropertyForm formikRef={{} as any} />
+        <PropertyForm formikRef={ref} />
       </TestCommonWrapper>,
     );
+  };
   it('reformats postal code into expected format', async () => {
     fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
     const { container } = renderContainer({});
-    await fillInput(container, 'address.postal', 'V8V1V1');
-    expect(screen.getByDisplayValue('V8V 1V1')).toBeInTheDocument();
+    fillInput(container, 'address.postal', 'V8V1V1');
+    expect(await screen.findByDisplayValue('V8V 1V1')).toBeInTheDocument();
   });
 });

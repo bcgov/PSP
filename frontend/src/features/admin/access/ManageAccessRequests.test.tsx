@@ -2,8 +2,6 @@ import { useKeycloak } from '@react-keycloak/web';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -52,8 +50,6 @@ const accessRequests = {
     },
   ],
 };
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const history = createMemoryHistory();
 history.push('admin');
