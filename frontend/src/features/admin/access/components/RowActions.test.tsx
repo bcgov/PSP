@@ -1,4 +1,4 @@
-import { fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -68,7 +68,7 @@ describe('rowAction functions', () => {
     fireEvent.click(container);
     const approveButton = getByText('Approve');
     fireEvent.click(approveButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
       expect(mockAxios.history.put[0].url).toBe('/keycloak/users/access/request');
     });
@@ -81,7 +81,7 @@ describe('rowAction functions', () => {
     fireEvent.click(container);
     const holdButton = getByText('Hold');
     fireEvent.click(holdButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
       expect(mockAxios.history.put[0].url).toBe('/keycloak/users/access/request');
     });
@@ -92,7 +92,7 @@ describe('rowAction functions', () => {
     fireEvent.click(container);
     const declineButton = getByText('Decline');
     fireEvent.click(declineButton);
-    await wait(() => {
+    await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
       expect(mockAxios.history.put[0].url).toBe('/keycloak/users/access/request');
     });
