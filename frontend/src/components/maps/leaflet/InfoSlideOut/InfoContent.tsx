@@ -5,7 +5,8 @@ import { Label } from 'components/common/Label';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { IBuilding, IParcel } from 'interfaces';
 import * as React from 'react';
-import { ListGroup, Row } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 
 import BuildingAttributes from './BuildingAttributes';

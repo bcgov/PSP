@@ -5,7 +5,7 @@ import { waitFor } from '@testing-library/dom';
 import { mount } from 'enzyme';
 import { Map as LeafletMap } from 'leaflet';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Map as ReactLeafletMap, MapProps } from 'react-leaflet';
 
 import LayersControl from './LayersControl';

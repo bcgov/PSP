@@ -8,7 +8,9 @@ import { GeocoderAutoComplete } from 'features/properties/components/GeocoderAut
 import { Formik, getIn } from 'formik';
 import { IGeocoderResponse } from 'hooks/useApi';
 import { useState } from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import ClickAwayListener from 'react-click-away-listener';
 import styled from 'styled-components';
 import { pidFormatter } from 'utils/propertyUtils';

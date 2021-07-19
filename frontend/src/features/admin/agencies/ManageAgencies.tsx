@@ -6,7 +6,7 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IAgency, IAgencyFilter, IAgencyRecord } from 'interfaces';
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { useAgencies } from 'store/slices/agencies';

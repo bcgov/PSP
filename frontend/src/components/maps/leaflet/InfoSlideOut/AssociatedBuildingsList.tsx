@@ -1,7 +1,7 @@
 import { Label } from 'components/common/Label';
 import { IParcel } from 'interfaces';
 import * as React from 'react';
-import { ListGroup } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 interface IAssociatedBuildings {
   /** the selected property information */
