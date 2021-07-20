@@ -1,7 +1,7 @@
 import './HelpSubmitBox.scss';
 
 import * as React from 'react';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
 import { helpTickets, TicketTypes } from '../constants/HelpText';

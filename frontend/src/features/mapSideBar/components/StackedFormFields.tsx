@@ -1,4 +1,4 @@
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import styled from 'styled-components';
 
 /**

@@ -3,7 +3,7 @@ import './PublicLayout.scss';
 import ErrorModal from 'components/common/ErrorModal';
 import { Footer, Header } from 'components/layout';
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import { ErrorBoundary } from 'react-error-boundary';
 import LoadingBar from 'react-redux-loading-bar';
 

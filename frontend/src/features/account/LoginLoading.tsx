@@ -1,6 +1,9 @@
 import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import React from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import { Logo, useTenant } from 'tenants';
 
 import { LoginStyled } from './LoginStyled';

@@ -12,7 +12,7 @@ import { IBuilding, IParcel } from 'interfaces';
 import * as L from 'leaflet';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { FaInfo } from 'react-icons/fa';
 import { useLeaflet } from 'react-leaflet';
 import Control from 'react-leaflet-control';

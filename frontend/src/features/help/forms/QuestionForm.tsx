@@ -2,7 +2,7 @@ import { Input, TextArea } from 'components/common/form';
 import { Formik } from 'formik';
 import { noop } from 'lodash';
 import * as React from 'react';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 import { IHelpForm } from '../interfaces';
 

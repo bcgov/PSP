@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Alert, Toast } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
+import Toast from 'react-bootstrap/Toast';
 import styled from 'styled-components';
 
 const ToastContainer = styled(Toast)`
