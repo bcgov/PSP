@@ -14,7 +14,7 @@ import { PimsAPI, useApi } from 'hooks/useApi';
 import { Map as LeafletMap } from 'leaflet';
 import { mockBuildingWithAssociatedLand, mockParcel } from 'mocks/filterDataMock';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Map as ReactLeafletMap, MapProps } from 'react-leaflet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';

@@ -6,7 +6,9 @@ import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideB
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import queryString from 'query-string';
 import React from 'react';
-import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaHome } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 

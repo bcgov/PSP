@@ -4,7 +4,7 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as L from 'leaflet';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { FaLayerGroup } from 'react-icons/fa';
 import Control from 'react-leaflet-control';
 import styled from 'styled-components';

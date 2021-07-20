@@ -13,7 +13,7 @@ import useLookupCodes from 'hooks/useLookupCodeHelpers';
 import { useMyAgencies } from 'hooks/useMyAgencies';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useRef, useState } from 'react';
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';

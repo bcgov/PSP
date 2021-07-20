@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import { CellProps } from 'react-table';
 import { formatMoney } from 'utils';
 

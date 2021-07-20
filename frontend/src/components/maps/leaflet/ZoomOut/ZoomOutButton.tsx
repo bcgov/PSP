@@ -2,7 +2,7 @@ import variables from '_variables.module.scss';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { LatLngBounds, Map as LeafletMap } from 'leaflet';
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { Map as ReactLeafletMap, MapProps as LeafletMapProps } from 'react-leaflet';
 import Control from 'react-leaflet-control';

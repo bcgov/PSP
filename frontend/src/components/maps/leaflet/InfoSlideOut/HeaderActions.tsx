@@ -2,7 +2,7 @@ import variables from '_variables.module.scss';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { IBuilding, IParcel } from 'interfaces';
 import * as React from 'react';
-import { Row } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 

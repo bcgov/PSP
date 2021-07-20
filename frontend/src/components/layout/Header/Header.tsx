@@ -1,9 +1,10 @@
 import { BCGovLogo } from 'components/common/BCGovLogo';
 import { VerticalBar } from 'components/common/VerticalBar';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import _ from 'lodash';
+import values from 'lodash/values';
 import React from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import { FaBomb } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
@@ -31,8 +32,8 @@ export const Header = () => {
 
   const errors = useAppSelector(state => {
     const errors: IGenericNetworkAction[] = [];
-    _.values(state).forEach(reducer => {
-      _.values(reducer)
+    values(state).forEach(reducer => {
+      values(reducer)
         .filter(x => x instanceof Object)
         .forEach(action => {
           if (isNetworkError(action)) {

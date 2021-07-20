@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import { FormikProps, getIn } from 'formik';
 import React, { CSSProperties, memo, useEffect } from 'react';
-import { Col, Form, FormControlProps } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from 'react-bootstrap/FormControl';
 import { formikFieldMemo } from 'utils';
 
 import TooltipIcon from '../TooltipIcon';

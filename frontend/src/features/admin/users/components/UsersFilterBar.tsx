@@ -3,7 +3,7 @@ import { ParentSelect } from 'components/common/form/ParentSelect';
 import FilterBar from 'components/SearchBar/FilterBar';
 import { IUsersFilter } from 'interfaces';
 import * as React from 'react';
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { mapLookupCodeWithParentString } from 'utils';
 
