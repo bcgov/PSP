@@ -7,7 +7,7 @@ import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IAddress, IBuilding, IParcel, IProperty } from 'interfaces';
-import { DivIcon, FeatureGroup as LeafletFeatureGroup } from 'leaflet';
+import { DivIcon, FeatureGroup as LeafletFeatureGroup, LeafletMouseEvent } from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useLeaflet } from 'react-leaflet';
@@ -379,8 +379,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               //sets this pin as currently selected
               const convertedProperty = convertToProperty(
                 m.properties,
-                m.position.lat,
-                m.position.lng,
+                m.geometry.coordinates[1],
+                m.geometry.coordinates[0],
               );
               if (
                 m.properties.propertyTypeId === PropertyTypes.Parcel ||
