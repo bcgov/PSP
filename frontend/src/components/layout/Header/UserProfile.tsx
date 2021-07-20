@@ -69,7 +69,7 @@ export const UserProfile: React.FC = () => {
   return (
     <>
       <ProfileAvatar src={profileUrl} rounded />
-      <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight flip>
+      <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
         <p style={{ margin: 5 }}>
           <b>
             {

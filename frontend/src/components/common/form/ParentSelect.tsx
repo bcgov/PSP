@@ -189,10 +189,9 @@ export const ParentSelect: React.FC<IParentSelect> = ({
                 {sortBy(resultGroup[parentId], (x: SelectOption) => x.value).map((i, index) => {
                   if (i.parent) {
                     return (
-                      <StyledMenuItemsDiv>
+                      <StyledMenuItemsDiv key={index + 1}>
                         <MenuItem
                           className={i.parentId === CHILDLESS_PARENT_ID ? 'bold-item' : 'menu-item'}
-                          key={index + 1}
                           option={i}
                           position={index + 1}
                         >
