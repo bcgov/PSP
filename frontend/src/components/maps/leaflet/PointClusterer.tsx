@@ -7,7 +7,7 @@ import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IAddress, IBuilding, IParcel, IProperty } from 'interfaces';
-import { DivIcon, FeatureGroup as LeafletFeatureGroup, LeafletMouseEvent } from 'leaflet';
+import { DivIcon, FeatureGroup as LeafletFeatureGroup } from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useLeaflet } from 'react-leaflet';
