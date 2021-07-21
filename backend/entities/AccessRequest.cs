@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// AccessRequest class, provides an entity for the datamodel to manage submitted access request forms for unauthorized users.
     /// </summary>
-    [MotiTable("PIMS_ACCESS_REQUEST", "ACCRQT")]
+    [MotiTable("PIMS_ACCESS_REQUEST", "ACRQST")]
     public class AccessRequest : BaseAppEntity
     {
         #region Properties
@@ -25,40 +26,39 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - the user originating this request
         /// </summary>
-        /// <typeparam name="User"></typeparam>
         public User User { get; set; }
 
         /// <summary>
-        /// get - whether the request is approved, on hold or declined
+        /// get/set - Foreign key to role.
         /// </summary>
-        [Column("STATUS")]
-        public AccessRequestStatus Status { get; set; } = AccessRequestStatus.OnHold;
+        [Column("ROLE_ID")]
+        public long RoleId { get; set; }
 
         /// <summary>
-        /// get/set - A note related to the access request.
+        /// get/set - the role the user is requesting.
         /// </summary>
-        [Column("NOTE")]
-        public string Note { get; set; }
+        public Role Role { get; set; }
 
         /// <summary>
-        /// get - the list of agencies that the user is requesting to be added to.
+        /// get - Foreign key to the status.
         /// </summary>
-        public ICollection<Agency> Agencies { get; } = new List<Agency>();
+        [Column("ACCESS_REQUEST_STATUS_TYPE_CODE")]
+        public string StatusId { get; set; }
 
         /// <summary>
-        /// get - Collection of many-to-many relational entities to support the relationship to agencies.
+        /// get - The access request status.
         /// </summary>
-        public ICollection<AccessRequestAgency> AgenciesManyToMany { get; } = new List<AccessRequestAgency>();
+        public AccessRequestStatusType Status { get; set; }
 
         /// <summary>
-        /// get - the list of roles this user is requesting.
+        /// get - the list of organizations that the user is requesting to be added to.
         /// </summary>
-        public ICollection<Role> Roles { get; } = new List<Role>();
+        public ICollection<Organization> Organizations { get; } = new List<Organization>();
 
         /// <summary>
-        /// get - Collection of many-to-many relational entities to support the relationship to roles.
+        /// get - Collection of many-to-many relational entities to support the relationship to organizations.
         /// </summary>
-        public ICollection<AccessRequestRole> RolesManyToMany { get; } = new List<AccessRequestRole>();
+        public ICollection<AccessRequestOrganization> OrganizationsManyToMany { get; } = new List<AccessRequestOrganization>();
         #endregion
 
         #region Constructors
@@ -70,10 +70,17 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a AccessRequest class.
         /// </summary>
-        /// <param name="requestUser"></param>
-        public AccessRequest(User requestUser)
+        /// <param name="user"></param>
+        /// <param name="role"></param>
+        /// <param name="status"></param>
+        public AccessRequest(User user, Role role, AccessRequestStatusType status)
         {
-            this.User = requestUser;
+            this.User = user ?? throw new ArgumentNullException(nameof(user));
+            this.UserId = user.Id;
+            this.Role = role ?? throw new ArgumentNullException(nameof(role));
+            this.RoleId = role.Id;
+            this.Status = status ?? throw new ArgumentNullException(nameof(status));
+            this.StatusId = status.Id;
         }
         #endregion
     }

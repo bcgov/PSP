@@ -9,7 +9,7 @@ export interface IAccessRequestModel {
   email: string;
   position: string;
   status: AccessRequestStatus;
-  agency: string;
+  organization: string;
   role: string;
   note: string;
 }

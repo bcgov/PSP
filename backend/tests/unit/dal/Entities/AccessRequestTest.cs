@@ -21,9 +21,10 @@ namespace Pims.Dal.Test.Entities
             var accessRequest = new AccessRequest();
 
             // Assert
-            accessRequest.Agencies.Should().BeEmpty();
-            accessRequest.Roles.Should().BeEmpty();
-            accessRequest.Status.Should().Be(AccessRequestStatus.OnHold);
+            accessRequest.User.Should().BeNull();
+            accessRequest.Role.Should().BeNull();
+            accessRequest.Status.Should().BeNull();
+            accessRequest.Organizations.Should().BeEmpty();
         }
 
         [Fact]
@@ -31,15 +32,17 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             var user = new User();
+            var role = new Role();
+            var status = new AccessRequestStatusType();
 
             // Act
-            var accessRequest = new AccessRequest(user);
+            var accessRequest = new AccessRequest(user, role, status);
 
             // Assert
-            accessRequest.Agencies.Should().BeEmpty();
-            accessRequest.Roles.Should().BeEmpty();
-            accessRequest.Status.Should().Be(AccessRequestStatus.OnHold);
             accessRequest.User.Should().Be(user);
+            accessRequest.Role.Should().Be(role);
+            accessRequest.Status.Should().Be(status);
+            accessRequest.Organizations.Should().BeEmpty();
         }
         #endregion
     }

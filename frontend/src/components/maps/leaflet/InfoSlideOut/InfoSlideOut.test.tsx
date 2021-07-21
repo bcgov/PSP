@@ -127,7 +127,7 @@ describe('InfoSlideOut View', () => {
     const renderOptions: RenderOptions = {
       useMockAuthentication: true,
       roles: [Claims.ADMIN_PROPERTIES],
-      agencies: [1],
+      organizations: [1],
     };
 
     const context = createParcelContext();
@@ -181,7 +181,7 @@ describe('InfoSlideOut View', () => {
     const renderOptions: RenderOptions = {
       useMockAuthentication: true,
       roles: [Claims.ADMIN_PROPERTIES],
-      agencies: [1],
+      organizations: [1],
     };
 
     const context = createBuildingContext();

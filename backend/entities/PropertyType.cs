@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
@@ -7,14 +7,19 @@ namespace Pims.Dal.Entities
     /// PropertyType class, provides an entity for the datamodel to manage a list of property types.
     /// </summary>
     [MotiTable("PIMS_PROPERTY_TYPE", "PRPTYP")]
-    public class PropertyType : LookupEntity
+    public class PropertyType : TypeEntity<string>
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key to identify property type.
         /// </summary>
-        [Column("PROPERTY_TYPE_ID")]
-        public override long Id { get; set; }
+        [Column("PROPERTY_TYPE_CODE")]
+        public override string Id { get; set; }
+
+        /// <summary>
+        /// get - Collection of properties.
+        /// </summary>
+        public ICollection<Property> Properties { get; } = new List<Property>();
         #endregion
 
         #region Constructors
@@ -26,12 +31,10 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a PropertyType class.
         /// </summary>
-        /// <param name="name"></param>
-        public PropertyType(string name)
+        /// <param name="id"></param>
+        /// <param name="description"></param>
+        public PropertyType(string id, string description) : base(id, description)
         {
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' must have a valid value.", nameof(name));
-
-            this.Name = name;
         }
         #endregion
     }

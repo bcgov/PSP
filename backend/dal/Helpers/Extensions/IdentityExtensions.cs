@@ -183,27 +183,27 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// A user is supposed to only belong to one child agency or one parent agency.
-        /// While in Keycloak these rules can be broken, we have to assume the first parent agency, or the first child agency is the user's primary.
+        /// A user is supposed to only belong to one child organization or one parent organization.
+        /// While in Keycloak these rules can be broken, we have to assume the first parent organization, or the first child organization is the user's primary.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static Agency GetAgency(this ClaimsPrincipal user, PimsContext context)
+        public static Organization GetOrganization(this ClaimsPrincipal user, PimsContext context)
         {
-            var agencyIds = user.GetAgencies();
+            var organizationIds = user.GetOrganizations();
 
-            if (agencyIds == null || !agencyIds.Any()) return null;
+            if (organizationIds == null || !organizationIds.Any()) return null;
 
-            var agencies = context.Agencies.Where(a => agencyIds.Contains(a.Id)).OrderBy(a => a.ParentId);
+            var organizations = context.Organizations.Where(a => organizationIds.Contains(a.Id)).OrderBy(a => a.ParentId);
 
-            // If one of the agencies is a parent, return it.
-            var parentAgency = agencies.FirstOrDefault(a => a.ParentId == null);
-            if (parentAgency != null)
-                return parentAgency;
+            // If one of the organizations is a parent, return it.
+            var parentOrganization = organizations.FirstOrDefault(a => a.ParentId == null);
+            if (parentOrganization != null)
+                return parentOrganization;
 
-            // Assume the first agency is their primary
-            return agencies.FirstOrDefault();
+            // Assume the first organization is their primary
+            return organizations.FirstOrDefault();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<AccessRequest> builder)
         {
-            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
+            builder.ToMotiTable();
 
             builder.HasMotiKey(m => m.Id);
             builder.HasMotiSequence(m => m.Id)
@@ -21,17 +21,23 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.UserId)
                 .HasComment("Foreign key to the user who submitted the request");
+            builder.Property(m => m.RoleId)
+                .HasComment("Foreign key to the role");
+            builder.Property(m => m.StatusId)
+                .HasComment("foreign key to the access request status type");
 
-            builder.Property(m => m.Status)
-                .HasComment("The status of the request");
+            builder.HasOne(m => m.User).WithMany(u => u.AccessRequests).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_USER_PIM_ACRQST_FK");
+            builder.HasOne(m => m.Role).WithMany(u => u.AccessRequests).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_ROLE_PIM_ACRQST_FK");
+            builder.HasOne(m => m.Status).WithMany(u => u.AccessRequests).HasForeignKey(m => m.StatusId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_ARQSTT_PIM_ACRQST_FK");
 
-            builder.Property(m => m.Note).HasColumnType("NVARCHAR(MAX)")
-                .HasComment("A note about the request");
+            builder.HasMany(m => m.Organizations).WithMany(m => m.AccessRequests).UsingEntity<AccessRequestOrganization>(
+                m => m.HasOne(m => m.Organization).WithMany(m => m.AccessRequestsManyToMany).HasForeignKey(m => m.OrganizationId),
+                m => m.HasOne(m => m.AccessRequest).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.AccessRequestId)
+            );
 
-            builder.HasOne(m => m.User).WithMany(u => u.AccessRequests).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ACCRQT_USER_ID_IDX");
-
-            builder.HasIndex(m => new { m.Status }, "ACCRQT_STATUS_IDX");
-            builder.HasIndex(m => m.UserId, "ACCRQT_USER_ID_IDX");
+            builder.HasIndex(m => m.UserId).HasDatabaseName("ACCRQT_USER_ID_IDX");
+            builder.HasIndex(m => m.RoleId).HasDatabaseName("ACCRQT_ROLE_ID_IDX");
+            builder.HasIndex(m => m.StatusId).HasDatabaseName("ACCRQT_ACCESS_REQUEST_STATUS_TYPE_CODE_IDX");
 
             base.Configure(builder);
         }

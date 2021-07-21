@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Mapping.Converters;
+using Pims.Api.Helpers.Converters;
 using Pims.Api.Policies;
-using Pims.Core.Extensions;
 using Pims.Dal.Security;
 using Pims.Ltsa;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Model = Pims.Ltsa.Models;
-using System.Linq;
-using Pims.Ltsa.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Pims.Api.Areas.Tools.Controllers

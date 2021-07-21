@@ -74,9 +74,9 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
         public string Note { get; set; }
 
         /// <summary>
-        /// get/set - An array of agencies the user belongs to.
+        /// get/set - An array of organizations the user belongs to.
         /// </summary>
-        public IEnumerable<AgencyModel> Agencies { get; set; } = new List<AgencyModel>();
+        public IEnumerable<OrganizationModel> Organizations { get; set; } = new List<OrganizationModel>();
 
         /// <summary>
         /// get/set - An array of roles the user is a member of.
@@ -106,10 +106,10 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
             this.Email = user.Email;
             this.IsDisabled = !user.Enabled;
             this.EmailVerified = user.EmailVerified;
-            this.Agencies = user.Attributes?.ContainsKey("agencies") ?? false ? user.Attributes["agencies"].Select(a =>
+            this.Organizations = user.Attributes?.ContainsKey("organizations") ?? false ? user.Attributes["organizations"].Select(a =>
             {
                 if (long.TryParse(a, out long id))
-                    return new AgencyModel() { Id = id };
+                    return new OrganizationModel() { Id = id };
                 return null;
             }).Where(a => a != null).Distinct().ToList() : null;
         }

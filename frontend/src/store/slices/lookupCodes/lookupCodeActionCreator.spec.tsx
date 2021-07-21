@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { STORE_LOOKUP_CODE_RESULTS } from 'constants/actionTypes';
-import { AGENCY_CODE_SET_NAME } from 'constants/API';
+import { ORGANIZATION_CODE_SET_NAME } from 'constants/API';
 import { find } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
 import { Provider } from 'react-redux';
@@ -46,7 +46,7 @@ describe('getFetchLookupCodeAction action creator', () => {
         id: '1',
         isDisabled: false,
         name: 'Ministry of Advanced Education',
-        type: AGENCY_CODE_SET_NAME,
+        type: ORGANIZATION_CODE_SET_NAME,
       },
     ],
   };
@@ -95,7 +95,7 @@ describe('getFetchLookupCodeAction action creator', () => {
           id: '1',
           isDisabled: false,
           name: 'Ministry of Advanced Education',
-          type: AGENCY_CODE_SET_NAME,
+          type: ORGANIZATION_CODE_SET_NAME,
         },
       ],
     };

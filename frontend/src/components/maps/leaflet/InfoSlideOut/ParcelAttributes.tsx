@@ -14,7 +14,7 @@ import { ThreeColumnItem } from './ThreeColumnItem';
 interface IParcelAttributes {
   /** the selected parcel information */
   parcelInfo: IParcel;
-  /** whether the user has the correct agency/permissions to view all the details */
+  /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
 }
 

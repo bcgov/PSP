@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, wait, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
@@ -25,7 +25,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: [1],
+      organizations: [1],
       roles: [],
     },
     subject: 'test',
@@ -38,8 +38,20 @@ const mockStore = configureMockStore([thunk]);
 
 const lCodes = {
   lookupCodes: [
-    { id: 1, name: 'agencyVal', code: '', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { id: 2, name: 'disabledAgency', code: '', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    {
+      id: 1,
+      name: 'organizationVal',
+      code: '',
+      isDisabled: false,
+      type: API.ORGANIZATION_CODE_SET_NAME,
+    },
+    {
+      id: 2,
+      name: 'disabledOrganization',
+      code: '',
+      isDisabled: true,
+      type: API.ORGANIZATION_CODE_SET_NAME,
+    },
     { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
     { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
@@ -65,7 +77,7 @@ const getStore = (includeDate?: boolean) =>
             lastName: 'testUserLast1',
             isDisabled: false,
             position: 'tester position',
-            agencies: [{ id: 1, name: 'HLTH' }],
+            organizations: [{ id: 1, name: 'HLTH' }],
             roles: [{ id: 1, name: 'admin' }],
             lastLogin: includeDate ? '2020-10-14T17:45:39.7381599' : null,
           },
@@ -76,7 +88,7 @@ const getStore = (includeDate?: boolean) =>
             lastName: 'testUser',
             isDisabled: true,
             position: 'tester',
-            agencies: [{ id: 1, name: 'HLTH' }],
+            organizations: [{ id: 1, name: 'HLTH' }],
             roles: [{ id: 1, name: 'admin' }],
             lastLogin: includeDate ? '2020-10-14T17:46:39.7381599' : null,
           },
@@ -123,12 +135,12 @@ describe('Manage Users Component', () => {
     expect(rows.length).toBe(2);
   });
 
-  it('displays agencies dropdown', async () => {
+  it('displays organizations dropdown', async () => {
     const { getByRole, container } = testRender(getStore());
-    const agency = container.querySelector('input[name="agency"]');
+    const organization = container.querySelector('input[name="organization"]');
 
-    await waitFor(() => {
-      fireEvent.change(agency!, {
+    await wait(() => {
+      fireEvent.change(organization!, {
         target: {
           value: 'age',
         },

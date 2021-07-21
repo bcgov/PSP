@@ -10,20 +10,16 @@ namespace Pims.Api.Areas.Admin.Mapping.AccessRequest
         {
             config.NewConfig<Entity.AccessRequest, Model.AccessRequestModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Status, src => src.Status)
-                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany)
-                .Map(dest => dest.Roles, src => src.RolesManyToMany)
                 .Map(dest => dest.User, src => src.User)
-                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.Role, src => src.Role)
+                .Map(dest => dest.Organizations, src => src.Organizations)
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.AccessRequestModel, Entity.AccessRequest>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Status, src => src.Status)
-                .Map(dest => dest.AgenciesManyToMany, src => src.Agencies)
-                .Map(dest => dest.RolesManyToMany, src => src.Roles)
-                .Map(dest => dest.User, src => src.User)
-                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.UserId, src => src.User.Id)
+                .Map(dest => dest.RoleId, src => src.Role.Id)
+                .Map(dest => dest.OrganizationsManyToMany, src => src.Organizations)
                 .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }

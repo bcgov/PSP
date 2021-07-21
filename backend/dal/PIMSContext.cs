@@ -22,49 +22,73 @@ namespace Pims.Dal
         private readonly JsonSerializerOptions _serializerOptions;
         #endregion
 
-        #region Properties
         #region Tables
+        #region Access Requests
         public DbSet<AccessRequest> AccessRequests { get; set; }
-        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<AccessRequestStatusType> AccessRequestStatusTypes { get; set; }
+        #endregion
+
+        #region Organizations
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<OrganizationType> OrganizationTypes { get; set; }
+        public DbSet<OrganizationIdentifierType> OrganizationIdentifierTypes { get; set; }
+        #endregion
+
+        #region Account Management
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<ContactMethod> ContactMethods { get; set; }
+        public DbSet<ContactMethodType> ContactMethodTypes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Claim> Claims { get; set; }
+        #endregion
+
+        #region Addresses
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<AddressType> AddressTypes { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<District> Districts { get; set; }
+        #endregion
+
+        #region Property Service Files
+        public DbSet<PropertyServiceFile> PropertyServiceFiles { get; set; }
+        public DbSet<PropertyServiceFileType> PropertyServiceFileTypes { get; set; }
+        #endregion
 
         #region Properties
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Building> Buildings { get; set; }
-        public DbSet<BuildingEvaluation> BuildingEvaluations { get; set; }
-        public DbSet<BuildingFiscal> BuildingFiscals { get; set; }
-        public DbSet<BuildingConstructionType> BuildingConstructionTypes { get; set; }
-        public DbSet<BuildingPredominateUse> BuildingPredominateUses { get; set; }
-        public DbSet<BuildingOccupantType> BuildingOccupantTypes { get; set; }
-        public DbSet<Parcel> Parcels { get; set; }
-        public DbSet<ParcelParcel> ParcelParcels { get; set; }
-        public DbSet<ParcelEvaluation> ParcelEvaluations { get; set; }
-        public DbSet<ParcelFiscal> ParcelFiscals { get; set; }
-        public DbSet<PropertyClassification> PropertyClassifications { get; set; }
+        public DbSet<Property> Properties { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
-        public DbSet<Province> Provinces { get; set; }
-        public DbSet<AdministrativeArea> AdministrativeAreas { get; set; }
-        public DbSet<ParcelBuilding> ParcelBuildings { get; set; }
+        public DbSet<PropertyTenureType> PropertyTenureTypes { get; set; }
+        public DbSet<PropertyClassificationType> PropertyClassificationTypes { get; set; }
+        public DbSet<PropertyAreaUnitType> PropertyAreaUnitTypes { get; set; }
+        public DbSet<PropertyDataSourceType> PropertyDataSourceTypes { get; set; }
+        public DbSet<PropertyEvaluation> PropertyEvaluations { get; set; }
         #endregion
 
         #region Projects
-        public DbSet<ProjectNumber> ProjectNumbers { get; set; }
-
-        public DbSet<NotificationTemplate> NotificationTemplates { get; set; }
-
-        public DbSet<NotificationQueue> NotificationQueue { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectType> ProjectTypes { get; set; }
+        public DbSet<ProjectStatusType> ProjectStatusTypes { get; set; }
+        public DbSet<ProjectRiskType> ProjectRiskTypes { get; set; }
+        public DbSet<ProjectTierType> ProjectTierTypes { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskType> TaskTypes { get; set; }
+        public DbSet<ProjectActivity> ProjectActivities { get; set; }
+        public DbSet<ProjectActivityTask> ProjectActivityTasks { get; set; }
+        public DbSet<ProjectNote> ProjectNotes { get; set; }
+        public DbSet<Workflow> Workflows { get; set; }
+        public DbSet<WorkflowType> WorkflowTypes { get; set; }
         #endregion
         #endregion
 
         #region Views
-        public DbSet<Entities.Views.Property> Properties { get; set; }
         #endregion
 
         #region Configuration
         public DbSet<Tenant> Tenants { get; set; }
-        #endregion
         #endregion
 
         #region Constructors

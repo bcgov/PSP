@@ -4,8 +4,8 @@ using Moq;
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Admin;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -37,7 +37,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var roles = new Entity.Role[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.Role>(roles);
             service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
@@ -61,7 +61,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var roles = new Entity.Role[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.Role>(roles);
             service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
@@ -87,7 +87,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Get(It.IsAny<Guid>())).Returns(role);
 
@@ -112,7 +112,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Add(It.IsAny<Entity.Role>()));
             var model = mapper.Map<Model.RoleModel>(role);
@@ -138,7 +138,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Update(It.IsAny<Entity.Role>()));
             var model = mapper.Map<Model.RoleModel>(role);
@@ -164,9 +164,9 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Remove(It.IsAny<Entity.Role>()));
+            service.Setup(m => m.Role.Delete(It.IsAny<Entity.Role>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
@@ -177,7 +177,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Role.Remove(It.IsAny<Entity.Role>()), Times.Once());
+            service.Verify(m => m.Role.Delete(It.IsAny<Entity.Role>()), Times.Once());
         }
         #endregion
         #endregion

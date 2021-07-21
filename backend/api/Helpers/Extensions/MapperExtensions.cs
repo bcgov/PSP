@@ -10,73 +10,23 @@ namespace Pims.Api.Helpers.Extensions
     public static class MapperExtensions
     {
         /// <summary>
-        /// Get the agency code from the parent if there is a parent, or the current agency if there is no parent.
+        /// Get the organization name from the parent if there is a parent, or the current organization if there is no parent.
         /// </summary>
-        /// <param name="agency"></param>
+        /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetAgencyCode(this Agency agency)
+        public static string GetOrganizationName(this Organization organization)
         {
-            return agency?.ParentId.HasValue ?? false ? agency?.Parent?.Code : agency?.Code;
+            return organization?.ParentId.HasValue ?? false ? organization?.Parent?.Name : organization?.Name;
         }
 
         /// <summary>
-        /// Get the agency name from the parent if there is a parent, or the current agency if there is no parent.
+        /// Get the sub organization name if there is a parent, otherwise return null.
         /// </summary>
-        /// <param name="agency"></param>
+        /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetAgencyName(this Agency agency)
+        public static string GetSubOrganizationName(this Organization organization)
         {
-            return agency?.ParentId.HasValue ?? false ? agency?.Parent?.Name : agency?.Name;
-        }
-
-        /// <summary>
-        /// Get the sub agency code if there is no parent, otherwise return null.
-        /// </summary>
-        /// <param name="agency"></param>
-        /// <returns></returns>
-        public static string GetSubAgencyCode(this Agency agency)
-        {
-            return agency?.ParentId.HasValue ?? false ? agency?.Code : null;
-        }
-
-        /// <summary>
-        /// Get the sub agency name if there is a parent, otherwise return null.
-        /// </summary>
-        /// <param name="agency"></param>
-        /// <returns></returns>
-        public static string GetSubAgencyName(this Agency agency)
-        {
-            return agency?.ParentId.HasValue ?? false ? agency?.Name : null;
-        }
-
-        /// <summary>
-        /// Get the land area of the first parcel;
-        /// </summary>
-        /// <param name="parcels"></param>
-        /// <returns></returns>
-        public static double GetLandArea(this IEnumerable<ParcelBuilding> parcels)
-        {
-            return parcels.FirstOrDefault()?.Parcel.LandArea ?? 0;
-        }
-
-        /// <summary>
-        /// Get the zoning of the first parcel.
-        /// </summary>
-        /// <param name="parcels"></param>
-        /// <returns></returns>
-        public static string GetZoning(this IEnumerable<ParcelBuilding> parcels)
-        {
-            return parcels.FirstOrDefault()?.Parcel.Zoning ?? "";
-        }
-
-        /// <summary>
-        /// Get the zoning potential of the first parcel.
-        /// </summary>
-        /// <param name="parcels"></param>
-        /// <returns></returns>
-        public static string GetZoningPotential(this IEnumerable<ParcelBuilding> parcels)
-        {
-            return parcels.FirstOrDefault()?.Parcel.ZoningPotential ?? "";
+            return organization?.ParentId.HasValue ?? false ? organization?.Name : null;
         }
     }
 }

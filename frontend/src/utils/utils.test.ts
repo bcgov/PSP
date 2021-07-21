@@ -58,8 +58,8 @@ describe('Is Positive or Zero', () => {
 
   it('Should resolve sort fields', () => {
     // setup
-    const input = ['Name asc', 'Agency desc'];
-    const expectedOutput = { name: 'asc', agency: 'desc' };
+    const input = ['Name asc', 'Organization desc'];
+    const expectedOutput = { name: 'asc', organization: 'desc' };
 
     // act
     const output = resolveSortCriteriaFromUrl(input);
@@ -70,8 +70,8 @@ describe('Is Positive or Zero', () => {
 
   it('Should generate sort query', () => {
     // setup
-    const input: any = { name: 'asc', agency: 'desc' };
-    const expectedOutput = ['Name asc', 'Agency desc'];
+    const input: any = { name: 'asc', organization: 'desc' };
+    const expectedOutput = ['Name asc', 'Organization desc'];
 
     // act
     const output = generateMultiSortCriteria(input);

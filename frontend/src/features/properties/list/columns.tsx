@@ -39,16 +39,16 @@ const spacing = {
 };
 
 export const columns = (
-  agencyOptions: SelectOption[],
-  subAgencies: SelectOption[],
+  organizationOptions: SelectOption[],
+  subOrganizations: SelectOption[],
   municipalities: ILookupCode[],
   propertyClassifications: SelectOption[],
   propertyType: number,
   editable?: boolean,
 ): ColumnWithProps<IProperty>[] => [
   {
-    Header: 'Agency',
-    accessor: 'agencyCode', // accessor is the "key" in the data
+    Header: 'Organization',
+    accessor: 'organizationCode', // accessor is the "key" in the data
     align: 'left',
     responsive: true,
     width: spacing.xsmall,
@@ -59,23 +59,23 @@ export const columns = (
     filter: {
       component: TypeaheadField,
       props: {
-        className: 'agency-search',
-        name: 'agencies[0]',
-        options: agencyOptions.map(a => ({ ...a, parentId: a.value })),
+        className: 'organization-search',
+        name: 'organizations[0]',
+        options: organizationOptions.map(a => ({ ...a, parentId: a.value })),
         inputSize: 'large',
-        placeholder: 'Filter by agency',
+        placeholder: 'Filter by organization',
         filterBy: ['code'],
         hideParent: true,
         clearButton: true,
         getOptionByValue: (value: number | string) => {
-          return agencyOptions.filter(a => Number(a.value) === Number(value));
+          return organizationOptions.filter(a => Number(a.value) === Number(value));
         },
       },
     },
   },
   {
-    Header: 'Sub Agency',
-    accessor: 'subAgency',
+    Header: 'Sub Organization',
+    accessor: 'subOrganization',
     align: 'left',
     responsive: true,
     width: spacing.medium,
@@ -86,16 +86,16 @@ export const columns = (
     filter: {
       component: TypeaheadField,
       props: {
-        name: 'agencies[1]',
-        placeholder: 'Filter by sub agency',
-        className: 'agency-search',
-        options: subAgencies,
+        name: 'organizations[1]',
+        placeholder: 'Filter by sub organization',
+        className: 'organization-search',
+        options: subOrganizations,
         clearButton: true,
         labelKey: (option: SelectOption) => {
           return `${option.label}`;
         },
         getOptionByValue: (value: number | string) => {
-          return subAgencies.filter(a => Number(a.value) === Number(value));
+          return subOrganizations.filter(a => Number(a.value) === Number(value));
         },
       },
     },
@@ -313,16 +313,16 @@ export const columns = (
 ];
 
 export const buildingColumns = (
-  agencyOptions: SelectOption[],
-  subAgencies: SelectOption[],
+  organizationOptions: SelectOption[],
+  subOrganizations: SelectOption[],
   municipalities: ILookupCode[],
   propertyClassifications: SelectOption[],
   propertyType: number,
   editable?: boolean,
 ): ColumnWithProps<IProperty>[] => [
   {
-    Header: 'Agency',
-    accessor: 'agencyCode', // accessor is the "key" in the data
+    Header: 'Organization',
+    accessor: 'organizationCode', // accessor is the "key" in the data
     align: 'left',
     responsive: true,
     width: spacing.xsmall,
@@ -333,11 +333,11 @@ export const buildingColumns = (
     filter: {
       component: TypeaheadField,
       props: {
-        className: 'agency-search',
-        name: 'agencies[0]',
-        options: agencyOptions.map(a => ({ ...a, parentId: a.value })),
+        className: 'organization-search',
+        name: 'organizations[0]',
+        options: organizationOptions.map(a => ({ ...a, parentId: a.value })),
         inputSize: 'large',
-        placeholder: 'Filter by agency',
+        placeholder: 'Filter by organization',
         filterBy: ['code'],
         hideParent: true,
         clearButton: true,
@@ -345,8 +345,8 @@ export const buildingColumns = (
     },
   },
   {
-    Header: 'Sub Agency',
-    accessor: 'subAgency',
+    Header: 'Sub Organization',
+    accessor: 'subOrganization',
     align: 'left',
     responsive: true,
     width: spacing.medium,
@@ -357,10 +357,10 @@ export const buildingColumns = (
     filter: {
       component: TypeaheadField,
       props: {
-        name: 'agencies[1]',
-        placeholder: 'Filter by sub agency',
-        className: 'agency-search',
-        options: subAgencies,
+        name: 'organizations[1]',
+        placeholder: 'Filter by sub organization',
+        className: 'organization-search',
+        options: subOrganizations,
         labelKey: (option: SelectOption) => {
           return `${option.label}`;
         },

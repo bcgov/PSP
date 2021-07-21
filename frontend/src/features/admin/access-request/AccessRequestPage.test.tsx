@@ -24,7 +24,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: [1],
+      organizations: [1],
       roles: [],
     },
     subject: 'test',
@@ -40,8 +40,20 @@ jest.mock('store/slices/accessRequests/useAccessRequests');
 const lCodes = {
   lookupCodes: [
     { id: 1, name: 'One', code: '', isDisabled: false, type: 'core operational' },
-    { id: 1, name: 'agencyVal', code: '', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { id: 2, name: 'disabledAgency', code: '', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    {
+      id: 1,
+      name: 'organizationVal',
+      code: '',
+      isDisabled: false,
+      type: API.ORGANIZATION_CODE_SET_NAME,
+    },
+    {
+      id: 2,
+      name: 'disabledOrganization',
+      code: '',
+      isDisabled: true,
+      type: API.ORGANIZATION_CODE_SET_NAME,
+    },
     { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
     { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
     {
@@ -101,7 +113,7 @@ describe('AccessRequestPage', () => {
 
   // Enzyme tests
   describe('component functionality when requestAccess status is 200 and fetching is false', () => {
-    it('initializes form with null for agencies and roles', () => {
+    it('initializes form with null for organizations and roles', () => {
       const componentRender = mount(
         <Provider store={successStore}>
           <Router history={history}>
@@ -115,8 +127,8 @@ describe('AccessRequestPage', () => {
           .first()
           .prop('initialValues'),
       ).toEqual({
-        agencies: [],
-        agency: undefined,
+        organizations: [],
+        organization: undefined,
         id: 0,
         status: 'OnHold',
         note: '',
