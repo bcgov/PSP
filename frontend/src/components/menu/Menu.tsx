@@ -2,7 +2,8 @@ import './Menu.scss';
 
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
-import { Form, ListGroup } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
 import ClickAwayListener from 'react-click-away-listener';
 
 export interface IMenuItemProps {

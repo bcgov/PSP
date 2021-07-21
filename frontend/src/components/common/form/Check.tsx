@@ -3,7 +3,8 @@ import './Check.scss';
 import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
-import { Form, FormCheckProps } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { FormCheckProps } from 'react-bootstrap/FormCheck';
 
 import TooltipIcon from '../TooltipIcon';
 import { DisplayError } from './DisplayError';

@@ -3,7 +3,8 @@ import './Select.scss';
 import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
-import { Form, FormControlProps } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from 'react-bootstrap/FormControl';
 
 import { DisplayError } from './DisplayError';
 

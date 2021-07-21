@@ -5,7 +5,8 @@ import { useConfiguration } from 'hooks/useConfiguration';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
-import { Image, NavDropdown } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
@@ -68,7 +69,7 @@ export const UserProfile: React.FC = () => {
   return (
     <>
       <ProfileAvatar src={profileUrl} rounded />
-      <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight flip>
+      <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
         <p style={{ margin: 5 }}>
           <b>
             {

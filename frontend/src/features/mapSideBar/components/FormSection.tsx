@@ -1,4 +1,4 @@
-import { Row } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 
 /**

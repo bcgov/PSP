@@ -9,7 +9,7 @@ import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import PublicLayout from 'layouts/PublicLayout';
 import OnLoadActions from 'OnLoadActions';
 import React, { useEffect } from 'react';
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
 import AppRouter from 'router';
 import { useLookupCodes } from 'store/slices/lookupCodes';

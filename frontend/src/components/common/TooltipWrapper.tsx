@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { OverlayTrigger, OverlayTriggerProps, Tooltip } from 'react-bootstrap';
+import OverlayTrigger, { OverlayTriggerProps } from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 /**
  * TooltipWrapper properties.

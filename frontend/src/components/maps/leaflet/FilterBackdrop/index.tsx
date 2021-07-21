@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Spinner } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
 
 export interface FilterBackdropProps {

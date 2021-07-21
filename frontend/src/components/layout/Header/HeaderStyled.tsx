@@ -1,4 +1,4 @@
-import { Navbar } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
 import styled from 'styled-components';
 
 /**

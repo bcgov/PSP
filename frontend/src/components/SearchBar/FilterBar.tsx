@@ -6,7 +6,7 @@ import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
 import { Formik } from 'formik';
 import React, { PropsWithChildren } from 'react';
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 
 interface IProps<T extends object = {}> {
   initialValues: T;
