@@ -4,7 +4,7 @@ import { Label } from 'components/common/Label';
 import { EvaluationKeys } from 'constants/evaluationKeys';
 import { IParcel } from 'interfaces';
 import * as React from 'react';
-import { ListGroup } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
 import { getCurrentYearEvaluation } from 'utils';
 import { formatMoney } from 'utils/numberFormatUtils';
 

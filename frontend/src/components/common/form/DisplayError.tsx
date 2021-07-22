@@ -1,6 +1,6 @@
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 type DisplayErrorProps = {
   /** The form field to show errors for */

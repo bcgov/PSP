@@ -1,3 +1,4 @@
+export { AccessRequestStatus } from './accessStatus';
 export { Claims } from './claims';
 export { Classifications } from './classifications';
 export { EvaluationKeys } from './evaluationKeys';

@@ -2,8 +2,6 @@ import { useKeycloak } from '@react-keycloak/web';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -53,16 +51,14 @@ const accessRequests = {
   ],
 };
 
-Enzyme.configure({ adapter: new Adapter() });
-
 const history = createMemoryHistory();
 history.push('admin');
 const mockStore = configureMockStore([thunk]);
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: '1', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'roleVal', id: '1', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
+    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
 };
 

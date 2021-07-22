@@ -8,7 +8,11 @@ import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IAgencyDetail } from 'interfaces';
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonToolbar, Container, Navbar, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Row from 'react-bootstrap/Row';
 import { FaArrowAltCircleLeft } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -100,10 +104,10 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
             enableReinitialize
             initialValues={newAgency ? newValues : initialValues}
             validationSchema={AgencyEditSchema}
-            onSubmit={async (values, { setSubmitting, setStatus }) => {
+            onSubmit={async (values, { setSubmitting, setStatus, setValues }) => {
               try {
                 if (!newAgency) {
-                  updateAgency({
+                  const data = await updateAgency({
                     id: agency.id,
                     name: values.name,
                     code: values.code,
@@ -115,6 +119,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
                     description: values.description,
                     rowVersion: values.rowVersion,
                   });
+                  setValues(data);
                 } else {
                   const data = await addAgency({
                     name: values.name,
@@ -126,6 +131,7 @@ const EditAgencyPage = (props: IEditAgencyPageProps) => {
                     parentId: Number(values.parentId),
                     description: values.description,
                   });
+                  setValues(data);
                   history.replace(`/admin/agency/${data.id}`);
                 }
               } catch (error) {

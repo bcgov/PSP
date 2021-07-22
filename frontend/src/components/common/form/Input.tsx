@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Form, FormControlProps } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from 'react-bootstrap/FormControl';
 import { CSSProperties } from 'styled-components';
 
 import TooltipIcon from '../TooltipIcon';

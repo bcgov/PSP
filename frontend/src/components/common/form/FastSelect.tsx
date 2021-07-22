@@ -2,7 +2,8 @@ import classNames from 'classnames';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { FormikProps, getIn } from 'formik';
 import React, { CSSProperties, memo, useEffect } from 'react';
-import { Form, FormControlProps } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from 'react-bootstrap/FormControl';
 import { formikFieldMemo } from 'utils';
 
 import TooltipWrapper from '../TooltipWrapper';

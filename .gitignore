@@ -1,12 +1,17 @@
 **/sh.exe.stackdump
+**/tmpnodejsnpm-cache
+**/PAIMS_PIMS/obj
 bash.exe.stackdump
 *.env
-.vs
 *.orig
 *.param
+*.ispac
+.vs
 .scannerwork/
 .sonarqube/
+.DS_Store
 auth/keycloak/config/hsperfdata_jboss/
 auth/keycloak/config/*.log
-.DS_Store
+
+
 

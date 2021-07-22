@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { act, cleanup, render, screen, wait } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
@@ -32,7 +32,7 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'Test Agency', id: '111', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'Test Agency', id: 111, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
   ] as ILookupCode[],
 };
 
@@ -177,7 +177,7 @@ describe('Edit agency page', () => {
       act(() => {
         deleteConfirm.click();
       });
-      await wait(async () => {
+      await waitFor(async () => {
         expect(mockAxios.history.delete).toHaveLength(1);
       });
     });

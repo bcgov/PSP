@@ -12,9 +12,13 @@ import { Feature } from 'geojson';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
-import { isEmpty, isEqual, isEqualWith } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import isEqualWith from 'lodash/isEqualWith';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import {
   Map as ReactLeafletMap,
   MapProps as LeafletMapProps,

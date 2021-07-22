@@ -1,7 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, render } from '@testing-library/react';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
@@ -11,7 +9,6 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { useMyAgencies } from './useMyAgencies';
 
 jest.mock('@react-keycloak/web');
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockStore = configureMockStore([thunk]);
 
