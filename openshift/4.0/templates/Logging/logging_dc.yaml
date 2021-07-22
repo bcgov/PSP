@@ -47,6 +47,11 @@ parameters:
     description: "Return logs newer than this duration or collect logs every sleep time (1hr = 3600s)."
     required: true
     value: "3600"
+  - name: STORAGE_TYPE
+    displayName: "Optical storage type e.g Amazon_S3 or Azure_Blob"
+    description: "Choose storage type to use between amazon or azure"
+    required: true
+    value: "Amazon_S3"
   - name: AZ_BLOB_URL
     displayName: "Azur Blob URL"
     description: "URL for Azure blob container"
@@ -61,7 +66,35 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-0reewtNqZc7LDQdjeoXM%3D"
+    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-%3D"
+
+  #Amazon s3 Variables 
+  - name: AWS_HOST
+    displayName: "AWS Host name"
+    description: "AWS REST host name"
+    required: true
+    value: "moti-int.objectstore.gov.bc.ca"
+  - name: AWS_REGION
+    displayName: "AWS S3 Region"
+    description: "AWS S3 Region"
+    required: true
+    value: "us-east-1"
+  - name: AWS_ACCESS_KEY_ID
+    displayName: "S3 Acccess Key ID"
+    description: "AWS S3 Access key ID"
+    required: true
+    value: "tran_api_psp_logfiles_dev"
+  - name: AWS_BUCKET_NAME
+    displayName: "S3 bucket name"
+    description: "AWS S3 bucket name"
+    required: true
+    value: "tran_api_psp_logfiles_dev"
+  - name: AWS_SECRET_ACCESS_KEY
+    displayName: "S3 secret Access key"
+    description: "AWS S3 secret Access ke"
+    required: true
+    value: "FljS6LdqF9NMpR28VjFvC"
+
   - name: EXPORT_TIME
     displayName: "Wait time before export in sec"
     description: "Time to wait before exporting zip. Export time > sleep_time. Export log every 24hrs"
@@ -155,6 +188,7 @@ objects:
     type: Opaque
     stringData:
       AZ_SAS_TOKEN: ${AZ_SAS_TOKEN}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
 
   # Storage for pims-logging.
   - kind: PersistentVolumeClaim
@@ -242,7 +276,7 @@ objects:
             - name: ${APP_NAME}-${ROLE_NAME}-root
               persistentVolumeClaim:
                 claimName: ${APP_NAME}-${ROLE_NAME}-root
-          terminationGracePeriodSeconds: 120
+          terminationGracePeriodSeconds: 60
           containers:
             - name: ${APP_NAME}-${ROLE_NAME}
               image: ""
@@ -263,6 +297,11 @@ objects:
                     secretKeyRef:
                       name: ${APP_NAME}-${ROLE_NAME}
                       key: AZ_SAS_TOKEN
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}
+                      key: AWS_SECRET_ACCESS_KEY
                 - name: FRONTEND_APP_NAME
                   value: ${FRONTEND_APP_NAME}
                 - name: API_NAME
