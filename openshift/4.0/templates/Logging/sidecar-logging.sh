@@ -26,7 +26,6 @@ declare -i elapse=0
 # Includes
 source ${PROJECT_PATH}/lib/s3-common.sh
 
-
 DATE_NOW=$(date +"%Y%m%d")
 AZ_VERSION="2020-04-08"
 AZ_BLOB_TARGET="${AZ_BLOB_URL}/${AZ_BLOB_CONTAINER}/"
@@ -66,11 +65,10 @@ printUsageAndExitWith() {
 parseCommandLine() {
   # Init globals
   AWS_HOST=${AWS_HOST:-""}
-   AWS_REGION=${AWS_REGION:-"us-east-1"}
+  AWS_REGION=${AWS_REGION:-"us-east-1"}
   AWS_HOST=${AWS_HOST:-""}
   AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-""}
   AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-""}
-
 
   # Parse options
   local remaining=
@@ -78,13 +76,27 @@ parseCommandLine() {
   while [[ $# > 0 ]]; do
     local key="$1"
     case $key in
-      -h|--help)       printUsageAndExitWith 0;;
-      -r|--region)     assertArgument $@; AWS_REGION=$2; shift;;
-      -k|--key)        assertArgument $@; AWS_ACCESS_KEY_ID=$2; shift;;
-      -s|--secret)     assertArgument $@; secretKeyFile=$2; shift;;
-      -*)              err "Unknown option $1"
-                       printUsageAndExitWith $INVALID_USAGE_EXIT_CODE;;
-      *)               remaining="$remaining \"$key\"";;
+    -h | --help) printUsageAndExitWith 0 ;;
+    -r | --region)
+      assertArgument $@
+      AWS_REGION=$2
+      shift
+      ;;
+    -k | --key)
+      assertArgument $@
+      AWS_ACCESS_KEY_ID=$2
+      shift
+      ;;
+    -s | --secret)
+      assertArgument $@
+      secretKeyFile=$2
+      shift
+      ;;
+    -*)
+      err "Unknown option $1"
+      printUsageAndExitWith $INVALID_USAGE_EXIT_CODE
+      ;;
+    *) remaining="$remaining \"$key\"" ;;
     esac
     shift
   done
@@ -94,7 +106,7 @@ parseCommandLine() {
 
   # Read secret file if set
   if ! [[ -z "$secretKeyFile" ]]; then
-   AWS_SECRET_ACCESS_KEY=$(processAWSSecretFile "$secretKeyFile")
+    AWS_SECRET_ACCESS_KEY=$(processAWSSecretFile "$secretKeyFile")
   fi
 
   RESOURCE_PATH="/${AWS_BUCKET_NAME}/pims-app_${DATE_NOW}.gz"
@@ -106,7 +118,6 @@ parseCommandLine() {
 
   assertResourcePath $RESOURCE_PATH
   #RESOURCE_PATH="$1"
-  
 
   # Freeze globals
   readonly AWS_REGION
@@ -148,7 +159,7 @@ main() {
 #   oc logs
 ##
 
-has_log(){
+has_log() {
   #echo $1
   if eval "$1"; then
     local logs=$(eval "$1" | grep '.')
@@ -159,75 +170,67 @@ has_log(){
   fi
 }
 
-
-
 #login
 oc_login='oc login --token=$OC_TOKEN --server=$OC_SERVER'
 
-  if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
-    eval $oc_login; 
-  fi
+if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
+  eval $oc_login
+fi
 #export time must be greater than delayed or sleep time
 if [ $EXPORT_TIME -lt $SLEEP_TIME ]; then
-	err "EXPORT_TIME must be greater than SLEEP_TIME. pims-logging will gracefully exit after 10s"
-	sleep 10
-	exit 1
+  err "EXPORT_TIME must be greater than SLEEP_TIME. pims-logging will gracefully exit after 10s"
+  sleep 10
+  exit 1
 fi
-
 
 # get openshift logs for container with timestamp for a set sleep time/period
 app_oc_logs='oc -n $PROJECT_NAMESPACE logs --timestamps --since=$SLEEP_TIME"s" ${APP_POD_NAME} -c ${APP_CONTAINER_NAME}'
 api_oc_logs='oc -n $PROJECT_NAMESPACE logs --timestamps --since=$SLEEP_TIME"s" ${API_POD_NAME} -c ${API_CONTAINER_NAME}'
 
+if [[ $STORAGE_TYPE =~ "Amazon" ]]; then
+  app_gzip_curl='zip /logging/${APP_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$FRONTEND_APP_NAME*'
+  api_gzip_curl='zip /logging/${API_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$API_NAME*'
 
-if [[ $STORAGE_TYPE =~ "Amazon" ]]
-then
-    app_gzip_curl='zip /logging/${APP_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$FRONTEND_APP_NAME*'
-    api_gzip_curl='zip /logging/${API_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$API_NAME*'
+  #echo "Upload file to $RESOURCE_PATH"
+  app_send_zip='${put} -T "/logging/${APP_CONTAINER_NAME}_${DATE_NOW}.gz" ${APP_LOG_SERVER_URI}'
+  api_send_zip='${put} -T "/logging/${API_CONTAINER_NAME}_${DATE_NOW}.gz" ${API_LOG_SERVER_URI}'
 
-    #echo "Upload file to $RESOURCE_PATH"
-    app_send_zip='${put} -T "/logging/${APP_CONTAINER_NAME}_${DATE_NOW}.gz" ${APP_LOG_SERVER_URI}'
-    api_send_zip='${put} -T "/logging/${API_CONTAINER_NAME}_${DATE_NOW}.gz" ${API_LOG_SERVER_URI}'
-   
-    main $@
-elif [[ $STORAGE_TYPE =~ "Azure" ]]
-then
-    # send zipped to endpoint 
+  main $@
+elif [[ $STORAGE_TYPE =~ "Azure" ]]; then
+  # send zipped to endpoint
   app_gzip_curl='zip /logging/${APP_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$FRONTEND_APP_NAME*'
   api_gzip_curl='zip /logging/${API_CONTAINER_NAME}_$DATE_NOW.gz /tmp/$API_NAME*'
 
   app_send_zip='curl --write-out "%{http_code}\n" -f -X PUT  -H "Content-Type: application/zip" -H "Compression:Gzip" -H "x-ms-date: ${DATE_NOW}" -H "x-ms-version: ${AZ_VERSION}" -H "x-ms-blob-type: BlockBlob" --data-binary "@/logging/${APP_CONTAINER_NAME}_${DATE_NOW}.gz" ${APP_LOG_SERVER_URI}'
   api_send_zip='curl --write-out "%{http_code}\n" -f -X PUT  -H "Content-Type: application/zip" -H "Compression:Gzip" -H "x-ms-date: ${DATE_NOW}" -H "x-ms-version: ${AZ_VERSION}" -H "x-ms-blob-type: BlockBlob" --data-binary "@/logging/${API_CONTAINER_NAME}_${DATE_NOW}.gz" ${API_LOG_SERVER_URI}'
 
-else 
-    echo "Invalid storage type " ; exit 1
+else
+  echo "Invalid storage type "
+  exit 1
 fi
-
-
 
 _send() {
 
-#initialize container variables 
+  #initialize container variables
 
-# get app pod and container name
-APP_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o   jsonpath="{.items[*].metadata.name}")
-APP_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o jsonpath={.items[*].spec.containers[*].name})
+  # get app pod and container name
+  APP_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o jsonpath="{.items[*].metadata.name}")
+  APP_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o jsonpath={.items[*].spec.containers[*].name})
 
-# get api pod and container name
-API_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o   jsonpath="{.items[*].metadata.name}")
-API_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o jsonpath={.items[*].spec.containers[*].name})
+  # get api pod and container name
+  API_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o jsonpath="{.items[*].metadata.name}")
+  API_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o jsonpath={.items[*].spec.containers[*].name})
 
-# set log server URL
-if [[ $STORAGE_TYPE =~ "Azure" ]]
-then
-   APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-   API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
-   host_url=$AZ_BLOB_TARGET
-else 
+  # set log server URL
+  if [[ $STORAGE_TYPE =~ "Azure" ]]; then
+    APP_LOG_SERVER_URI="${AZ_BLOB_TARGET}${APP_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+    API_LOG_SERVER_URI="${AZ_BLOB_TARGET}${API_CONTAINER_NAME}_${logdate}.gz${AZ_SAS_TOKEN}"
+    host_url=$AZ_BLOB_TARGET
+  else
     APP_LOG_SERVER_URI="/${AWS_BUCKET_NAME}/${APP_CONTAINER_NAME}_${logdate}.gz"
     API_LOG_SERVER_URI="/${AWS_BUCKET_NAME}/${API_CONTAINER_NAME}_${logdate}.gz"
     host_url="https://"$AWS_HOST/${AWS_BUCKET_NAME}
-fi
+  fi
 
   # removes duplicates
   (
@@ -235,34 +238,34 @@ fi
     flock -x 200
 
     # stores logs temporarily in file
-    app_file=/tmp/$APP_POD_NAME'-'$logdate.LOG ; api_file=/tmp/$API_POD_NAME'-'$logdate.LOG
+    app_file=/tmp/$APP_POD_NAME'-'$logdate.LOG
+    api_file=/tmp/$API_POD_NAME'-'$logdate.LOG
 
-    # grep (-v) select non-matching lines, (-x) that match whole lines, (-f) get patterns from files 
-	#if log is not empty output to file
-  local app_hasLogs=$(has_log "${app_oc_logs}") && [ ! -z "$app_hasLogs" ] && echo "$app_hasLogs" > $app_file
-  local api_hasLogs=$(has_log "${api_oc_logs}") && [ ! -z "$api_hasLogs" ] && echo "$api_hasLogs" > $api_file
+    # grep (-v) select non-matching lines, (-x) that match whole lines, (-f) get patterns from files
+    #if log is not empty output to file
+    local app_hasLogs=$(has_log "${app_oc_logs}") && [ ! -z "$app_hasLogs" ] && echo "$app_hasLogs" >$app_file
+    local api_hasLogs=$(has_log "${api_oc_logs}") && [ ! -z "$api_hasLogs" ] && echo "$api_hasLogs" >$api_file
 
-  #run proess for X# of seconds, check if logs was extracted then upload to server
-	if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]
-	then
-      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
-      [ "$?" -eq 0 ] &&  info "Logs sent to " $host_url
-      [ "$?" -ne 0 ] &&  err "Error sending logs to " $host_url 
-  elif [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" == "0" ]]
-  then
+    #run proess for X# of seconds, check if logs was extracted then upload to server
+    if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]; then
+      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
+      (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+      [ "$?" -eq 0 ] && info "Logs sent to " $host_url
+      [ "$?" -ne 0 ] && err "Error sending logs to " $host_url
+    elif [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" == "0" ]]; then
       echo "nothing to zip, logs are empty"
-  elif [[ "${TERM_EXIT}" == true ]] #check for extracted logs and send before pod scaled to zero
-  then
-		  (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) & (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+    elif [[ "${TERM_EXIT}" == true ]]; then #check for extracted logs and send before pod scaled to zero
+      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
+      (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
       #echo $api_send_zip
-      [ "$?" -eq 0 ] &&  info "Logs sent to " $host_url "via sigterm request"
-      [ "$?" -ne 0 ] &&  err "Error sending logs to " $host_url "via sigterm request"    
-  else 
-      echo "waiting for export time to elapse (""$((EXPORT_TIME-elapse))"'s'") remaining"
-	fi
+      [ "$?" -eq 0 ] && info "Logs sent to " $host_url "via sigterm request"
+      [ "$?" -ne 0 ] && err "Error sending logs to " $host_url "via sigterm request"
+    else
+      echo "waiting for export time to elapse (""$((EXPORT_TIME - elapse))"'s'") remaining"
+    fi
   ) 200>/tmp/.data.lock
 
-};
+}
 
 # sends our logs using curl
 sendLogs() {
@@ -276,38 +279,38 @@ sendLogs() {
   # debug
   echo "${HOSTNAME}: $(date +'%Y-%m-%d %H:%M:%S') duration: $duration"
   # use openshift client to get logs, gzip them and use curl to send to REST endpoint
-  
+
   _send
   # this is equivalent to backgrouding our sleep, so we can interrupt when container halted
   sleep ${SLEEP_TIME} &
-  wait 
+  wait
   # calculate total processing duration
-  duration=$((${SECONDS} - $start));
+  duration=$((${SECONDS} - $start))
   #reset elapse time after export time
   [ $elapse -ge $EXPORT_TIME ] && elapse=0
   elapse=$elapse+$duration
-};
+}
 
 # sig handler for TERM sent by openshift when pod is stopped or deleted
 # need to adjust for graceful termination of the container we are getting logs for
 _term() {
   echo "Caught SIGTERM signal! Waiting ${GRACEFUL_EXIT_TIME} seconds before sending"
   TERM_EXIT=true
-  sleep ${GRACEFUL_EXIT_TIME} 
-  sendLogs ${GRACEFUL_EXIT_TIME} && 
-  # exit gracefully
-  exit 0
+  sleep ${GRACEFUL_EXIT_TIME}
+  sendLogs ${GRACEFUL_EXIT_TIME} &&
+    # exit gracefully
+    exit 0
 }
 trap _term SIGTERM
 trap _term SIGINT
 
 # initial startup delay for container we a getting logs for and ourselves
-duration=${STARTUP_TIME};
+duration=${STARTUP_TIME}
 #elapse=$elapse+$duration
 
 # set variables to send logs
-while [[ "${API_NAME}" && "${FRONTEND_APP_NAME}" ]]; 
-  do sendLogs 0
+while [[ "${API_NAME}" && "${FRONTEND_APP_NAME}" ]]; do
+  sendLogs 0
 done
 # sidecar does nothing if a header is empty
 sleep infinity
