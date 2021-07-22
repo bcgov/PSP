@@ -7,10 +7,10 @@ import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IAddress, IBuilding, IParcel, IProperty } from 'interfaces';
-import { DivIcon, FeatureGroup as LeafletFeatureGroup } from 'leaflet';
+import L from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FeatureGroup, Marker, Polyline, useLeaflet } from 'react-leaflet';
+import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -107,8 +107,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
 }) => {
   // state and refs
   const spiderfierRef = useRef<Spiderfier>();
-  const featureGroupRef = useRef<any>();
-  const draftFeatureGroupRef = useRef<any>();
+  const featureGroupRef = useRef<L.FeatureGroup>(null);
+  const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
   const location = useLocation();
   const { parcelId, buildingId } = queryString.parse(location.search);
@@ -118,15 +118,15 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
     ICluster<any, Supercluster.AnyProps> | undefined
   >(undefined);
 
-  const leaflet = useLeaflet();
-  const [spider, setSpider] = useState<any>({});
-  if (!leaflet || !leaflet.map) {
+  const mapInstance: L.Map = useMap();
+  if (!mapInstance) {
     throw new Error('<PointClusterer /> must be used under a <Map> leaflet component');
   }
 
-  const map = leaflet.map;
   minZoom = minZoom ?? 0;
   maxZoom = maxZoom ?? 18;
+
+  const [spider, setSpider] = useState<any>({});
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -155,9 +155,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
     if (!currentClusterIds.includes(+(selected?.parcelDetail?.id ?? 0))) {
       setCurrentSelected(selected);
       if (!!parcelId && !!selected?.parcelDetail) {
-        map.setView(
+        mapInstance.setView(
           [selected?.parcelDetail?.latitude as number, selected?.parcelDetail?.longitude as number],
-          Math.max(MAX_ZOOM, map.getZoom()),
+          Math.max(MAX_ZOOM, mapInstance.getZoom()),
         );
       }
     } else {
@@ -168,7 +168,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   // Register event handlers to shrink and expand clusters when map is interacted with
   const componentDidMount = useCallback(() => {
     if (!spiderfierRef.current) {
-      spiderfierRef.current = new Spiderfier(map, {
+      spiderfierRef.current = new Spiderfier(mapInstance, {
         getClusterId: cluster => cluster?.properties?.cluster_id as number,
         getClusterPoints: clusterId => supercluster?.getLeaves(clusterId, Infinity) ?? [],
         pointToLayer: pointToLayer,
@@ -177,18 +177,18 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
 
     const spiderfier = spiderfierRef.current;
 
-    map.on('click', spiderfier.unspiderfy, spiderfier);
-    map.on('zoomstart', spiderfier.unspiderfy, spiderfier);
-    map.on('clear', spiderfier.unspiderfy, spiderfier);
+    mapInstance.on('click', spiderfier.unspiderfy, spiderfier);
+    mapInstance.on('zoomstart', spiderfier.unspiderfy, spiderfier);
+    mapInstance.on('clear', spiderfier.unspiderfy, spiderfier);
 
     // cleanup function
     return function componentWillUnmount() {
-      map.off('click', spiderfier.unspiderfy, spiderfier);
-      map.off('zoomstart', spiderfier.unspiderfy, spiderfier);
-      map.off('clear', spiderfier.unspiderfy, spiderfier);
+      mapInstance.off('click', spiderfier.unspiderfy, spiderfier);
+      mapInstance.off('zoomstart', spiderfier.unspiderfy, spiderfier);
+      mapInstance.off('clear', spiderfier.unspiderfy, spiderfier);
       spiderfierRef.current = undefined;
     };
-  }, [map, supercluster]);
+  }, [mapInstance, supercluster]);
 
   useEffect(componentDidMount, [componentDidMount]);
 
@@ -214,10 +214,10 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
           setCurrentCluster(cluster);
         }
       } else if (zoomToBoundsOnClick) {
-        zoomToCluster(cluster, expansionZoom, map);
+        zoomToCluster(cluster, expansionZoom, mapInstance);
       }
     },
-    [spiderfierRef, map, maxZoom, spiderfyOnMaxZoom, supercluster, zoomToBoundsOnClick],
+    [spiderfierRef, mapInstance, maxZoom, spiderfyOnMaxZoom, supercluster, zoomToBoundsOnClick],
   );
 
   /**
@@ -226,34 +226,34 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   useDeepCompareEffect(() => {
     const isDraft = draftPoints.length > 0;
     if (draftFeatureGroupRef.current && isDraft) {
-      const group: LeafletFeatureGroup = draftFeatureGroupRef.current.leafletElement;
+      const group: L.FeatureGroup = draftFeatureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && group.getBounds().isValid() && isDraft) {
+      if (groupBounds.isValid() && isDraft) {
         filterState.setChanged(false);
-        map.fitBounds(group.getBounds(), { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
+        mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
     }
-  }, [draftFeatureGroupRef, map, draftPoints]);
+  }, [draftFeatureGroupRef, mapInstance, draftPoints]);
 
   /**
    * Update the map bounds and zoom to make all property clusters visible.
    */
   useDeepCompareEffect(() => {
     if (featureGroupRef.current) {
-      const group: LeafletFeatureGroup = featureGroupRef.current.leafletElement;
+      const group: L.FeatureGroup = featureGroupRef.current;
       const groupBounds = group.getBounds();
 
       if (groupBounds.isValid() && filterState.changed && !selected?.parcelDetail && tilesLoaded) {
         filterState.setChanged(false);
-        map.fitBounds(group.getBounds(), { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
+        mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
 
       setSpider({});
       spiderfierRef.current?.unspiderfy();
       setCurrentCluster(undefined);
     }
-  }, [featureGroupRef, map, clusters, tilesLoaded]);
+  }, [featureGroupRef, mapInstance, clusters, tilesLoaded]);
 
   const popUpContext = React.useContext(PropertyPopUpContext);
 
@@ -297,6 +297,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   return (
     <>
       <FeatureGroup ref={featureGroupRef}>
+        {/**
+         * Render all visible clusters
+         */}
         {clusters.map((cluster, index) => {
           // every cluster point has coordinates
           const [longitude, latitude] = cluster.geometry.coordinates;
@@ -314,12 +317,14 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               <Marker
                 key={index}
                 position={[latitude, longitude]}
-                onclick={(e: any) => {
-                  zoomOrSpiderfy(cluster);
-                  e.target.closePopup();
+                eventHandlers={{
+                  click: e => {
+                    zoomOrSpiderfy(cluster);
+                    e.target.closePopup();
+                  },
                 }}
                 icon={
-                  new DivIcon({
+                  new L.DivIcon({
                     html: `<div><span>${point_count_abbreviated}</span></div>`,
                     className: `marker-cluster marker-cluster-${size}`,
                     iconSize: [40, 40],
@@ -336,28 +341,30 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               key={index}
               position={[latitude, longitude]}
               icon={getMarkerIcon(cluster)}
-              onclick={() => {
-                const convertedProperty = convertToProperty(
-                  cluster.properties,
-                  latitude,
-                  longitude,
-                );
-                //sets this pin as currently selected
-                if (
-                  cluster.properties.propertyTypeId === PropertyTypes.Parcel ||
-                  cluster.properties.propertyTypeId === PropertyTypes.Subdivision
-                ) {
-                  dispatch(storeParcelDetail(convertedProperty as IParcel));
-                } else {
-                  dispatch(storeBuildingDetail(convertedProperty as IBuilding));
-                }
-                onMarkerClick(); //open information slideout
-                if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
-                  fetchProperty(cluster.properties.propertyTypeId, cluster.properties.id);
-                } else {
-                  popUpContext.setPropertyInfo(convertedProperty);
-                }
-                popUpContext.setPropertyTypeId(cluster.properties.propertyTypeId);
+              eventHandlers={{
+                click: () => {
+                  const convertedProperty = convertToProperty(
+                    cluster.properties,
+                    latitude,
+                    longitude,
+                  );
+                  //sets this pin as currently selected
+                  if (
+                    cluster.properties.propertyTypeId === PropertyTypes.Parcel ||
+                    cluster.properties.propertyTypeId === PropertyTypes.Subdivision
+                  ) {
+                    dispatch(storeParcelDetail(convertedProperty as IParcel));
+                  } else {
+                    dispatch(storeBuildingDetail(convertedProperty as IBuilding));
+                  }
+                  onMarkerClick(); //open information slideout
+                  if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
+                    fetchProperty(cluster.properties.propertyTypeId, cluster.properties.id);
+                  } else {
+                    popUpContext.setPropertyInfo(convertedProperty);
+                  }
+                  popUpContext.setPropertyTypeId(cluster.properties.propertyTypeId);
+                },
               }}
             />
           );
@@ -375,30 +382,31 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               m,
               (m.properties.id as number) === (selected?.parcelDetail?.id as number),
             )}
-            onclick={() => {
-              //sets this pin as currently selected
-              const convertedProperty = convertToProperty(
-                m.properties,
-                m.geometry.coordinates[1],
-                m.geometry.coordinates[0],
-              );
-              if (
-                m.properties.propertyTypeId === PropertyTypes.Parcel ||
-                m.properties.propertyTypeId === PropertyTypes.Subdivision
-              ) {
-                dispatch(storeParcelDetail(convertedProperty));
-              } else {
-                dispatch(storeBuildingDetail(convertedProperty));
-              }
-              onMarkerClick(); //open information slideout
-              if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                fetchProperty(m.properties.propertyTypeId, m.properties.id);
-              } else {
-                popUpContext.setPropertyInfo(
-                  convertToProperty(m.properties, m.position.lat, m.position.lng),
-                );
-              }
-              popUpContext.setPropertyTypeId(m.properties.propertyTypeId);
+            eventHandlers={{
+              click: () => {
+                //sets this pin as currently selected
+                const convertedProperty = convertToProperty(
+                  m.properties,
+                  m.geometry.coordinates[1],
+                  m.geometry.coordinates[0],                );
+                if (
+                  m.properties.propertyTypeId === PropertyTypes.Parcel ||
+                  m.properties.propertyTypeId === PropertyTypes.Subdivision
+                ) {
+                  dispatch(storeParcelDetail(convertedProperty));
+                } else {
+                  dispatch(storeBuildingDetail(convertedProperty));
+                }
+                onMarkerClick(); //open information slideout
+                if (keycloak.canUserViewProperty(m.properties as IProperty)) {
+                  fetchProperty(m.properties.propertyTypeId, m.properties.id);
+                } else {
+                  popUpContext.setPropertyInfo(
+                    convertToProperty(m.properties, m.position.lat, m.position.lng),
+                  );
+                }
+                popUpContext.setPropertyTypeId(m.properties.propertyTypeId);
+              },
             }}
           />
         ))}
@@ -426,11 +434,13 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 selected.parcelDetail!.latitude as number,
                 selected.parcelDetail!.longitude as number,
               ]}
-              map={leaflet.map}
-              onclick={() => {
-                popUpContext.setPropertyInfo(selected.parcelDetail);
-                popUpContext.setPropertyTypeId(selected.propertyTypeId ?? 0);
-                onMarkerClick();
+              map={mapInstance}
+              eventHandlers={{
+                click: () => {
+                  popUpContext.setPropertyInfo(selected.parcelDetail);
+                  popUpContext.setPropertyTypeId(selected.propertyTypeId ?? 0);
+                  onMarkerClick();
+                },
               }}
             />
           )}
