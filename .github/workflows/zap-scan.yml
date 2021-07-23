@@ -1,6 +1,8 @@
 name: Zap Scan
 
-on: push
+on:
+  push:
+    branches: [dev]
 
 jobs:
   zap_scan:
