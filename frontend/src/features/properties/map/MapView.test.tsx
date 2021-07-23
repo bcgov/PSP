@@ -15,8 +15,8 @@ import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
+import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
-import { mockKeycloak } from 'utils/testUtils';
 
 import MapView from './MapView';
 

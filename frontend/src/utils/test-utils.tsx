@@ -1,5 +1,9 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { fireEvent } from '@testing-library/react';
+import { createMemoryHistory, MemoryHistory } from 'history';
+import noop from 'lodash/noop';
+import React, { FC, PropsWithChildren } from 'react';
+import { Router } from 'react-router-dom';
 
 export const mockKeycloak = (claims: string[], agencies: number[]) => {
   (useKeycloak as jest.Mock).mockReturnValue({
@@ -76,3 +80,21 @@ export const fillInput = async (
 };
 
 export const flushPromises = () => new Promise(setImmediate);
+
+export const deferred = () => {
+  let resolve: (value?: unknown) => void = noop;
+  const promise = new Promise(_resolve => {
+    resolve = _resolve;
+  });
+  return {
+    resolve,
+    promise,
+  };
+};
+
+export const makeRouterProvider = (history?: MemoryHistory) => ({ children }: any) => {
+  const defaultHistory = createMemoryHistory({
+    getUserConfirmation: (message, callback) => callback(true),
+  });
+  return <Router history={history ?? defaultHistory}>{children}</Router>;
+};
