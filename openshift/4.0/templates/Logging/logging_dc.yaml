@@ -66,7 +66,7 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-%3D"
+    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2020-%3D"
 
   #Amazon s3 Variables 
   - name: AWS_HOST
@@ -292,6 +292,16 @@ objects:
                   value: ${AZ_BLOB_URL}
                 - name: AZ_BLOB_CONTAINER
                   value: ${AZ_BLOB_CONTAINER}
+                - name: STORAGE_TYPE
+                  value: ${STORAGE_TYPE}
+                - name: AWS_HOST
+                  value: ${AWS_HOST}
+                - name: AWS_REGION
+                  value: ${AWS_REGION}
+                - name: AWS_ACCESS_KEY_ID
+                  value: ${AWS_ACCESS_KEY_ID}
+                - name: AWS_BUCKET_NAME
+                  value: ${AWS_BUCKET_NAME}
                 - name: AZ_SAS_TOKEN
                   valueFrom:
                     secretKeyRef:
