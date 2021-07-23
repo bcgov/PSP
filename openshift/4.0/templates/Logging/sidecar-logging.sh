@@ -296,7 +296,7 @@ sendLogs() {
 _term() {
   echo "Caught SIGTERM signal! Waiting ${GRACEFUL_EXIT_TIME} seconds before sending"
   TERM_EXIT=true
-  sleep ${GRACEFUL_EXIT_TIME}
+  #sleep ${GRACEFUL_EXIT_TIME}
   sendLogs ${GRACEFUL_EXIT_TIME} &&
     # exit gracefully
     exit 0

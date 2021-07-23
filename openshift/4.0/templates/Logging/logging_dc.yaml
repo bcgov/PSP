@@ -276,7 +276,7 @@ objects:
             - name: ${APP_NAME}-${ROLE_NAME}-root
               persistentVolumeClaim:
                 claimName: ${APP_NAME}-${ROLE_NAME}-root
-          terminationGracePeriodSeconds: 60
+          terminationGracePeriodSeconds: 120
           containers:
             - name: ${APP_NAME}-${ROLE_NAME}
               image: ""
