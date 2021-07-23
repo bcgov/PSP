@@ -255,8 +255,8 @@ _send() {
     elif [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" == "0" ]]; then
       echo "nothing to zip, logs are empty"
     elif [[ "${TERM_EXIT}" == true ]]; then #check for extracted logs and send before pod scaled to zero
-      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$APP_POD_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
-      (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_POD_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
+      (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
       #echo $api_send_zip
       [ "$?" -eq 0 ] && info "Logs sent to " $host_url "via sigterm request"
       [ "$?" -ne 0 ] && err "Error sending logs to " $host_url "via sigterm request"
@@ -296,7 +296,7 @@ sendLogs() {
 _term() {
   echo "Caught SIGTERM signal! Waiting ${GRACEFUL_EXIT_TIME} seconds before sending"
   TERM_EXIT=true
-  #sleep ${GRACEFUL_EXIT_TIME}
+  sleep 30
   sendLogs ${GRACEFUL_EXIT_TIME} &&
     # exit gracefully
     exit 0
