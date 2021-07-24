@@ -35,7 +35,7 @@ parameters:
     displayName: "Git Repository URL"
     description: "The URL of the repository with your application source code."
     required: true
-    value: "https://github.com/sookeke/PSP.git"
+    value: "https://github.com/bcgov/PSP.git"
   - name: GIT_REF
     displayName: "Git Reference"
     description:
