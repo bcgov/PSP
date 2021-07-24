@@ -16,8 +16,7 @@ RUN mkdir -p ${APP_ROOT} && touch ${APP_ROOT}/liveness && chmod a+r ${APP_ROOT}/
 
 COPY . ${APP_ROOT}
 
-RUN rm -Rf ${APP_ROOT}/*.yaml && rm -Rf ${APP_ROOT}/*.env 
-RUN chmod a+rx ${APP_ROOT}/sidecar-logging.sh && chmod a+rx ${APP_ROOT}/bin/s3-put && chmod a+rx ${APP_ROOT}/lib/s3-common.sh
+RUN chmod a+rx ${APP_ROOT}/sidecar-logging.sh
 
 RUN mkdir -p ${APP_LOG}
 RUN chmod 777 ${APP_LOG}
