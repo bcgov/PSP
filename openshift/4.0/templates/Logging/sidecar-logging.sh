@@ -3,9 +3,9 @@
 # debug on fail
 set -euo pipefail
 #source ./filebash
-
+#set -x
 readonly PROJECT_PATH="/opt/app" #from docker container directory, see dockerfile
-#eadonly PROJECT_PATH="$(pwd)"
+#readonly PROJECT_PATH="$(pwd)"
 readonly SCRIPT_NAME="$(basename $0)"
 
 # sensible defaults if not set
@@ -250,8 +250,7 @@ _send() {
     if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]; then
       (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
       (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
-      [ "$?" -eq 0 ] && info "Logs sent to " $host_url
-      [ "$?" -ne 0 ] && err "Error sending logs to " $host_url
+      if [ "$?" -eq 0 ]; then info "Logs sent to " $host_url; else err "Error sending logs to " $host_url; fi
     elif [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" == "0" ]]; then
       echo "nothing to zip, logs are empty"
     elif [[ "${TERM_EXIT}" == true ]]; then #check for extracted logs and send before pod scaled to zero
