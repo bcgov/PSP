@@ -92,7 +92,7 @@ export const deferred = () => {
   };
 };
 
-export const makeRouterProvider = (history?: MemoryHistory) => ({ children }: any) => {
+export const createRouteProvider = (history?: MemoryHistory) => ({ children }: any) => {
   const defaultHistory = createMemoryHistory({
     getUserConfirmation: (message, callback) => callback(true),
   });
