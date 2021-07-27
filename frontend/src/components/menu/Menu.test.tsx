@@ -7,7 +7,7 @@ const mockFunction = jest.fn();
 const mockOptions: IMenuItemProps[] = [
   {
     label: 'Option 1',
-    onClick: mockFunction(),
+    onClick: mockFunction,
   },
   { label: 'Option 2' },
 ];
@@ -16,7 +16,7 @@ it('renders correctly', () => {
   expect(asFragment()).toMatchSnapshot();
 });
 
-xit('calls appropriate function on click', () => {
+it('calls appropriate function on click', () => {
   const { getByText } = render(<Menu options={mockOptions} />);
   fireEvent.click(getByText('Option 1'));
   expect(mockFunction).toHaveBeenCalledTimes(1);
