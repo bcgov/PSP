@@ -2,7 +2,8 @@ import { useKeycloak } from '@react-keycloak/web';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import noop from 'lodash/noop';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { ReactNode } from 'react';
+import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
 
 export const mockKeycloak = (claims: string[], agencies: number[]) => {
@@ -92,9 +93,47 @@ export const deferred = () => {
   };
 };
 
-export const createRouteProvider = (history?: MemoryHistory) => ({ children }: any) => {
-  const defaultHistory = createMemoryHistory({
-    getUserConfirmation: (message, callback) => callback(true),
-  });
-  return <Router history={history ?? defaultHistory}>{children}</Router>;
-};
+/**
+ * Utility type for generic props of component testing
+ */
+export interface PropsWithChildren {
+  children?: ReactNode;
+}
+
+const defaultHistory = createMemoryHistory({
+  getUserConfirmation: (message, callback) => callback(true),
+});
+
+/**
+ * Creates a in-memory router for unit testing
+ * @param history (optional) a memory history to use instead of default
+ * @returns The route provider
+ */
+export function createRouteProvider(history?: MemoryHistory) {
+  return function Wrapper({ children }: PropsWithChildren) {
+    return <Router history={history ?? defaultHistory}>{children}</Router>;
+  };
+}
+
+/**
+ * Creates a Map wrapper for unit testing
+ * @param done A callback that will be called when the map has finished rendering
+ * @returns The map container instance
+ *
+ * @example
+ *    const { promise, resolve } = deferred();
+ *    render(<TestComponent/>, { wrapper: createMapContainer(resolve) })
+ *    await waitFor(() => promise)
+ *    // the map is fully initialized here...
+ */
+export function createMapContainer(done: () => void = noop) {
+  return function Container({ children }: PropsWithChildren) {
+    return (
+      <div id="mapid" style={{ width: 500, height: 500 }}>
+        <MapContainer center={[48.43, -123.37]} zoom={14} whenReady={done}>
+          {children}
+        </MapContainer>
+      </div>
+    );
+  };
+}

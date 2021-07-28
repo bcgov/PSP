@@ -5,8 +5,9 @@ import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
-import Control from 'react-leaflet-control';
 import styled from 'styled-components';
+
+import Control from '../Control/Control';
 
 const ZoomButton = styled(Button)`
   background-color: #ffffff !important;

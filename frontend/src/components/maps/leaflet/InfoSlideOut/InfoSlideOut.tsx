@@ -14,12 +14,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaInfo } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
-import Control from 'react-leaflet-control';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { storeBuildingDetail } from 'store/slices/properties';
 import styled from 'styled-components';
 
+import Control from '../Control/Control';
 import FilterBackdrop from '../FilterBackdrop';
 import { AssociatedBuildingsList } from './AssociatedBuildingsList';
 import AssociatedParcelsList from './AssociatedParcelsList';
