@@ -7,7 +7,12 @@ import { AUTHORIZATION_URL } from 'constants/strings';
 import { Field, Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useEffect } from 'react';
-import { Button, ButtonToolbar, Col, Container, Navbar, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -119,19 +124,19 @@ const EditUserPage = (props: IEditUserPageProps) => {
             enableReinitialize
             initialValues={initialValues}
             validationSchema={UserUpdateSchema}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={async (values, { setSubmitting, setValues }) => {
               if (values.agency !== '') {
                 agenciesToUpdate = [{ id: Number(values.agency) }];
               } else {
                 agenciesToUpdate = user.agencies ?? [];
               }
-
               if (values.roles) {
                 rolesToUpdate = values.roles.map(r => ({ id: r }));
               } else {
                 rolesToUpdate = user.roles ?? [];
               }
-              updateUser({
+
+              await updateUser({
                 id: user.id,
                 key: user.key,
                 username: user.username,

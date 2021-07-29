@@ -1,17 +1,13 @@
 import { render } from '@testing-library/react';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { Form, Formik } from 'formik';
 import { noop } from 'lodash';
 import React from 'react';
 
 import { FastCurrencyInput } from './FastCurrencyInput';
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('FastCurrencyInput', () => {
   it('fast currency input renders correctly', () => {
-    const { container } = render(
+    const { asFragment } = render(
       <Formik initialValues={{ assessedLand: '' }} onSubmit={noop}>
         {props => (
           <Form>
@@ -20,7 +16,7 @@ describe('FastCurrencyInput', () => {
         )}
       </Formik>,
     );
-    expect(container.firstChild).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('fast currency input should not show tooltip', () => {
@@ -34,7 +30,7 @@ describe('FastCurrencyInput', () => {
       </Formik>,
     );
 
-    expect(container.querySelector('svg[className="tooltip-icon"]')).toBeFalsy();
+    expect(container.querySelector('svg[class="tooltip-icon"]')).toBeFalsy();
   });
 
   it('fast currency input should show tooltip', () => {
@@ -47,12 +43,11 @@ describe('FastCurrencyInput', () => {
         )}
       </Formik>,
     );
-
-    expect(container.querySelector('svg[className="tooltip-icon"]'));
+    expect(container.querySelector('svg[class="tooltip-icon"]')).toBeInTheDocument();
   });
 
-  it('fast currency input custom placeholder', () => {
-    const component = render(
+  it('fast currency input custom placeholder', async () => {
+    const { findByPlaceholderText } = render(
       <Formik initialValues={{ assessedLand: '' }} onSubmit={noop}>
         {props => (
           <Form>
@@ -66,7 +61,6 @@ describe('FastCurrencyInput', () => {
         )}
       </Formik>,
     );
-
-    expect(component.findByPlaceholderText('custom placeholder'));
+    expect(await findByPlaceholderText('custom placeholder')).toBeInTheDocument();
   });
 });

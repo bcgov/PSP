@@ -8,7 +8,8 @@ import { useFormikContext } from 'formik';
 import { IGeocoderResponse, useApi } from 'hooks/useApi';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
-import { Form, FormControlProps } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from 'react-bootstrap/FormControl';
 import ClickAwayListener from 'react-click-away-listener';
 
 interface IGeocoderAutoCompleteProps {

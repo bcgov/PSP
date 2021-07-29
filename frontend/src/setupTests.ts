@@ -5,8 +5,12 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 
+// Unofficial adapter for React 17 for Enzyme.
+// See https://github.com/enzymejs/enzyme/issues/2429 for details
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter() });
 
 var localStorageMock = (function() {
   var store: any = {};
@@ -46,5 +50,4 @@ var createElementNSOrig = (global as any).document.createElementNS;
 
 window.scrollTo = jest.fn(); // not implemented by jsdom.
 
-configure({ adapter: new Adapter() });
 jest.setTimeout(10000);

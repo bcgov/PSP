@@ -9,9 +9,15 @@ services:
     image: pims-logging:latest
     environment:
       SLEEP_TIME: ${SLEEP_TIME}
+      STORAGE_TYPE: ${STORAGE_TYPE} #Amazon_S3 or Azure_Blob
       AZ_BLOB_URL: "${AZ_BLOB_URL}"
       AZ_BLOB_CONTAINER: "${AZ_BLOB_CONTAINER}"
       AZ_SAS_TOKEN: "${AZ_SAS_TOKEN}"
+      AWS_HOST: "${AWS_HOST}"
+      AWS_REGION: "${AWS_REGION}"
+      AWS_BUCKET_NAME: "${AWS_BUCKET_NAME}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
       FRONTEND_APP_NAME: "${FRONTEND_APP_NAME}"
       API_NAME: "${API_NAME}"
       PROJECT_NAMESPACE: "${PROJECT_NAMESPACE}"

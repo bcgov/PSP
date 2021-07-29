@@ -379,8 +379,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               //sets this pin as currently selected
               const convertedProperty = convertToProperty(
                 m.properties,
-                m.position.lat,
-                m.position.lng,
+                m.geometry.coordinates[1],
+                m.geometry.coordinates[0],
               );
               if (
                 m.properties.propertyTypeId === PropertyTypes.Parcel ||

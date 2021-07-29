@@ -3,7 +3,7 @@ import { tabErrorWarning } from 'constants/strings';
 import { useFormikContext } from 'formik';
 import * as React from 'react';
 import { useState } from 'react';
-import { Tabs } from 'react-bootstrap';
+import Tabs from 'react-bootstrap/Tabs';
 
 interface IErrorTabsProps {
   /** The currently displayed tab */

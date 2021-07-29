@@ -31,7 +31,7 @@ parameters:
   - name: BUILDIMAGE_NAME
     displayName: "Source Image Name"
     description: "The image to use as the Builder Image."
-    value: "nodejs-10-rhel7"
+    value: "nodejs-14-ubi8"
   - name: BUILDIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."

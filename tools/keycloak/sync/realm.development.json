@@ -38,9 +38,15 @@
         "DirectAccessGrantsEnabled": true,
         "AuthorizationServicesEnabled": false,
         "RootUrl": "https://dev-pims.th.gov.bc.ca",
-        "RedirectUris": ["https://dev-pims.th.gov.bc.ca/*"],
+        "RedirectUris": [
+          "https://dev-pims.th.gov.bc.ca/*",
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/*"
+        ],
         "BaseUrl": "/",
-        "WebOrigins": ["https://dev-pims.th.gov.bc.ca"],
+        "WebOrigins": [
+          "https://dev-pims.th.gov.bc.ca",
+          "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca"
+        ],
         "ProtocolMappers": [
           {
             "Name": "agencies",

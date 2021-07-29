@@ -2,7 +2,7 @@ import './PublicLayout.scss';
 
 import { EmptyHeader, Footer } from 'components/layout';
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';

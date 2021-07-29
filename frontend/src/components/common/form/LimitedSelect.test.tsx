@@ -1,7 +1,5 @@
 import { Classifications } from 'constants/classifications';
 import { mount } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 import renderer from 'react-test-renderer';
@@ -9,7 +7,6 @@ import renderer from 'react-test-renderer';
 import { FastSelect } from './FastSelect';
 
 jest.mock('formik');
-Enzyme.configure({ adapter: new Adapter() });
 
 (useFormikContext as jest.Mock).mockReturnValue({
   values: {

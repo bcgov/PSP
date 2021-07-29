@@ -6,7 +6,7 @@ import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { IAccessRequest } from 'interfaces';
 import * as React from 'react';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/hooks';
 import {

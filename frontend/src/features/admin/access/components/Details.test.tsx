@@ -1,12 +1,9 @@
 import { AccessRequestStatus } from 'constants/accessStatus';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import React from 'react';
 
 import { IAccessRequestModel } from '../interfaces';
 import { AccessRequestDetails } from './Details';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Access request details', () => {
   it('Snapshot matches', () => {
