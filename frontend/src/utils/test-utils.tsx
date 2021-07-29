@@ -126,11 +126,19 @@ export function createRouteProvider(history?: MemoryHistory) {
  *    await waitFor(() => promise)
  *    // the map is fully initialized here...
  */
-export function createMapContainer(done: () => void = noop) {
+export function createMapContainer(
+  done: () => void = noop,
+  whenCreated: (map: L.Map) => void = noop,
+) {
   return function Container({ children }: PropsWithChildren) {
     return (
       <div id="mapid" style={{ width: 500, height: 500 }}>
-        <MapContainer center={[48.43, -123.37]} zoom={14} whenReady={done}>
+        <MapContainer
+          center={[48.43, -123.37]}
+          zoom={14}
+          whenReady={done}
+          whenCreated={whenCreated}
+        >
           {children}
         </MapContainer>
       </div>

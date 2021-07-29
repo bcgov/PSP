@@ -1,7 +1,7 @@
 import variables from '_variables.module.scss';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { LatLngBounds } from 'leaflet';
-import * as React from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaExpandArrowsAlt } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';

@@ -1,68 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Map Legend View Legend renders correctly 1`] = `
-<div
-  className="legend-control card"
->
+exports[`Map Legend View renders correctly 1`] = `
+<DocumentFragment>
   <div
-    className="card-header"
-  >
-    Marker Legend
-  </div>
-  <div
-    className="card-body"
+    class="legend-control card"
   >
     <div
-      className="row"
+      class="card-header"
     >
-      <div
-        className="col-2"
-      >
-        <img
-          className=""
-          height={25}
-        />
-      </div>
-      <div
-        className="label col"
-      >
-        Parcel
-      </div>
+      Marker Legend
     </div>
     <div
-      className="row"
+      class="card-body"
     >
       <div
-        className="col-2"
+        class="row"
       >
-        <img
-          className=""
-          height={25}
-        />
+        <div
+          class="col-2"
+        >
+          <img
+            class=""
+            height="25"
+          />
+        </div>
+        <div
+          class="label col"
+        >
+          Parcel
+        </div>
       </div>
       <div
-        className="label col"
+        class="row"
       >
-        Building
+        <div
+          class="col-2"
+        >
+          <img
+            class=""
+            height="25"
+          />
+        </div>
+        <div
+          class="label col"
+        >
+          Building
+        </div>
       </div>
-    </div>
-    <div
-      className="row"
-    >
       <div
-        className="col-2"
+        class="row"
       >
-        <img
-          className=""
-          height={25}
-        />
-      </div>
-      <div
-        className="label col"
-      >
-        Proposed Subdivision
+        <div
+          class="col-2"
+        >
+          <img
+            class=""
+            height="25"
+          />
+        </div>
+        <div
+          class="label col"
+        >
+          Proposed Subdivision
+        </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
