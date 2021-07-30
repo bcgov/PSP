@@ -1,0 +1,38 @@
+name: PIMS Logging CI
+
+on:
+  push:
+    branches: [master, dev, test]
+  pull_request:
+    branches: [master, dev, test]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      SLEEP_TIME: 60
+      STORAGE_TYPE: Amazon_S3
+      AWS_HOST: moti-int.objectstore.gov.bc.ca
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_BUCKET_NAME: tran_api_psp_logfiles_dev
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      FRONTEND_APP_NAME: pims-app
+      API_NAME: pims-api
+      PROJECT_NAMESPACE: 3cd915-dev
+      EXPORT_TIME: 180
+      OC_TOKEN: ${{ secrets.OC_TOKEN }}
+      OC_SERVER: https://api.silver.devops.gov.bc.ca:6443
+      working-directory: ./openshift/4.0/templates/Logging
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the docker-compose stack
+      run: docker-compose -f docker-compose.yml up -d
+      working-directory: ${{env.working-directory}}
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check pims-logging logs
+      run: docker logs logging
