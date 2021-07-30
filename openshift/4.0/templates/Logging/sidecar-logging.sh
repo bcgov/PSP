@@ -175,6 +175,7 @@ oc_login='oc login --token=$OC_TOKEN --server=$OC_SERVER'
 oc_login_sa='oc login --token=$OC_SA_TOKEN'
 
 if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
+echo $OC_SA_TOKEN ; echo $OC_TOKEN
   eval $oc_login || eval $oc_login_sa
 fi
 #export time must be greater than delayed or sleep time
