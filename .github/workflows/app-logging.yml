@@ -35,4 +35,8 @@ jobs:
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
-      run: docker logs logging
+      run: docker logs pims-logging
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
+      working-directory: ${{env.working-directory}}
