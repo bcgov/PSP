@@ -22,7 +22,7 @@ jobs:
       FRONTEND_APP_NAME: pims-app
       API_NAME: pims-api
       PROJECT_NAMESPACE: 3cd915-dev
-      EXPORT_TIME: 180
+      EXPORT_TIME: 120
       OC_TOKEN: ${{ secrets.OC_TOKEN }}
       OC_SERVER: https://api.silver.devops.gov.bc.ca:6443
       working-directory: ./openshift/4.0/templates/Logging
@@ -32,6 +32,10 @@ jobs:
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose.yml up
       working-directory: ${{env.working-directory}}
+    - name: Sleep for 120 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '120s'
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
