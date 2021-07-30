@@ -110,7 +110,6 @@ exports[`login login renders correctly 1`] = `
 }
 
 .c0 .unauth .pims-logo {
-  margin-left: -300px;
   margin-bottom: 10px;
 }
 

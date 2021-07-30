@@ -50,7 +50,7 @@ exports[`Page size selector Snapshot matches 1`] = `
         </div>
       </div>
       <div
-        className="Menu-items"
+        className="Menu-items top"
         style={
           Object {
             "width": "60px",

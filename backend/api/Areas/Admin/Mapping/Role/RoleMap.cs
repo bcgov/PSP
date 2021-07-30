@@ -1,6 +1,4 @@
 using Mapster;
-using System;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Admin.Models.Role;
 
@@ -12,19 +10,23 @@ namespace Pims.Api.Areas.Admin.Mapping.Role
         {
             config.NewConfig<Entity.Role, Model.RoleModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
-                .Map(dest => dest.Claims, src => src.Claims.Select(c => c.Claim))
-                .Inherits<Entity.LookupEntity<Guid>, Api.Models.LookupModel<Guid>>();
+                .Map(dest => dest.Claims, src => src.ClaimsManyToMany)
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
-                .Map(dest => dest.Claims, src => src.Claims)
-                .Inherits<Api.Models.LookupModel<Guid>, Entity.LookupEntity<Guid>>();
+                .Map(dest => dest.ClaimsManyToMany, src => src.Claims)
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

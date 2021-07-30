@@ -4,6 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
+import { MAP_MAX_ZOOM } from 'constants/strings';
 import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
@@ -11,9 +12,13 @@ import { Feature } from 'geojson';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
 import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
-import { isEmpty, isEqual, isEqualWith } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import isEqualWith from 'lodash/isEqualWith';
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import {
   Map as ReactLeafletMap,
   MapProps as LeafletMapProps,
@@ -65,10 +70,8 @@ export type MapProps = {
   properties: IProperty[];
   agencies: ILookupCode[];
   administrativeAreas: ILookupCode[];
-  lotSizes: number[];
   mapRef: React.RefObject<ReactLeafletMap<LeafletMapProps, LeafletMap>>;
   selectedProperty?: IPropertyDetail | null;
-  onMarkerClick?: (obj: IProperty, position?: [number, number]) => void;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
   onMapClick?: (e: LeafletMouseEvent) => void;
   disableMapFilterBar?: boolean;
@@ -91,7 +94,6 @@ const defaultFilterValues: IPropertyFilter = {
   address: '',
   administrativeArea: '',
   propertyType: '',
-  projectNumber: '',
   agencies: '',
   classificationId: '',
   minLotSize: '',
@@ -101,24 +103,18 @@ const defaultFilterValues: IPropertyFilter = {
   maxAssessedValue: '',
   maxMarketValue: '',
   maxNetBookValue: '',
-  inEnhancedReferralProcess: false,
-  inSurplusPropertyProgram: false,
   includeAllProperties: false,
-  surplusFilter: false,
 };
 
 const whitelistedFilterKeys = [
   'pid',
   'address',
   'administrativeArea',
-  'projectNumber',
   'classificationId',
   'agencies',
   'minLandArea',
   'maxLandArea',
   'rentableArea',
-  'inSurplusPropertyProgram',
-  'inEnhancedReferralProcess',
   'name',
   'predominateUseId',
   'constructionTypeId',
@@ -136,14 +132,11 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     pid: filter.pid,
     address: filter.address,
     administrativeArea: filter.administrativeArea,
-    projectNumber: filter.projectNumber,
     classificationId: decimalOrUndefined(filter.classificationId),
     agencies: filter.agencies,
     minLandArea: floatOrUndefined(filter.minLotSize),
     maxLandArea: floatOrUndefined(filter.maxLotSize),
     rentableArea: floatOrUndefined(filter.rentableArea),
-    inSurplusPropertyProgram: filter.inSurplusPropertyProgram,
-    inEnhancedReferralProcess: filter.inEnhancedReferralProcess,
     name: filter.name,
     predominateUseId: parseInt(filter.predominateUseId!),
     constructionTypeId: parseInt(filter.constructionTypeId!),
@@ -165,12 +158,9 @@ const Map: React.FC<MapProps> = ({
   zoom: zoomProp,
   agencies,
   administrativeAreas,
-  lotSizes,
   selectedProperty,
-  onMarkerClick,
   onMapClick,
   disableMapFilterBar,
-  interactive = true,
   mapRef,
   sidebarSize,
 }) => {
@@ -217,24 +207,6 @@ const Map: React.FC<MapProps> = ({
   useEffect(() => {
     mapRef.current?.leafletElement.invalidateSize();
   }, [mapRef, width]);
-
-  // TODO: refactor various zoom settings
-  useEffect(() => {
-    if (!interactive) {
-      const map = mapRef.current?.leafletElement;
-      if (map) {
-        map.dragging.disable();
-        map.touchZoom.disable();
-        map.doubleClickZoom.disable();
-        map.scrollWheelZoom.disable();
-        map.boxZoom.disable();
-        map.keyboard.disable();
-        if (map.tap) {
-          map.tap.disable();
-        }
-      }
-    }
-  }, [interactive, mapRef]);
 
   const handleMapFilterChange = async (filter: IPropertyFilter) => {
     const compareValues = (objValue: any, othValue: any) => {
@@ -361,11 +333,12 @@ const Map: React.FC<MapProps> = ({
               ref={mapRef}
               center={[lat, lng]}
               zoom={lastZoom}
+              maxZoom={MAP_MAX_ZOOM}
               whenReady={() => {
                 fitMapBounds();
               }}
               onclick={showLocationDetails}
-              closePopupOnClick={interactive}
+              closePopupOnClick={true}
               onzoomend={e => setZoom(e.sourceTarget.getZoom())}
               onmoveend={handleBounds}
             >
@@ -384,7 +357,7 @@ const Map: React.FC<MapProps> = ({
                     setLayerPopup(undefined);
                     dispatch(storeParcelDetail(null));
                   }}
-                  closeButton={interactive}
+                  closeButton={true}
                   autoPan={false}
                 >
                   <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
@@ -392,8 +365,16 @@ const Map: React.FC<MapProps> = ({
                     data={layerPopup.data as any}
                     config={layerPopup.config as any}
                     center={layerPopup.center}
-                    onAddToParcel={(e: MouseEvent, data: { [key: string]: string }) => {
-                      dispatch(saveParcelLayerData({ e, data }));
+                    onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
+                      dispatch(
+                        saveParcelLayerData({
+                          e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
+                          data: {
+                            ...data,
+                            CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
+                          },
+                        }),
+                      );
                     }}
                     bounds={layerPopup.bounds}
                   />

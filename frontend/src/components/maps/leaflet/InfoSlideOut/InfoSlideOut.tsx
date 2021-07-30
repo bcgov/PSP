@@ -10,15 +10,13 @@ import { useApi } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IBuilding, IParcel } from 'interfaces';
 import * as L from 'leaflet';
-import queryString from 'query-string';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Button } from 'react-bootstrap';
-import { FaInfo, FaPlusSquare } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
+import { FaInfo } from 'react-icons/fa';
 import { useLeaflet } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { storeBuildingDetail } from 'store/slices/properties';
 import styled from 'styled-components';
@@ -142,7 +140,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   const { getParcel, getBuilding } = useApi();
   const leaflet = useLeaflet();
   const { propertyInfo } = popUpContext;
-  const location = useLocation();
   const jumpToView = () =>
     leaflet.map?.setView(
       [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
@@ -165,30 +162,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   //whether the general info is open
   const [generalInfoOpen, setGeneralInfoOpen] = React.useState<boolean>(true);
 
-  const isBuilding = popUpContext.propertyTypeID === PropertyTypes.BUILDING;
-
-  const addAssociatedBuildingLink = (
-    <>
-      <FaPlusSquare color="#1a5a96" className="mr-1" />
-      <Link
-        style={{ color: variables.slideOutBlue }}
-        to={{
-          pathname: `/mapview`,
-          search: queryString.stringify({
-            ...queryString.parse(location.search),
-            sidebar: true,
-            disabled: true,
-            loadDraft: false,
-            buildingId: 0,
-            associatedParcelId: propertyInfo?.id,
-            parcelId: undefined,
-          }),
-        }}
-      >
-        Add a new Building
-      </Link>
-    </>
-  );
+  const isBuilding = popUpContext.propertyTypeId === PropertyTypes.Building;
 
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
@@ -203,7 +177,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
             <FilterBackdrop show={open && popUpContext.loading}></FilterBackdrop>
             <HeaderActions
               propertyInfo={popUpContext.propertyInfo}
-              propertyTypeId={popUpContext.propertyTypeID}
+              propertyTypeId={popUpContext.propertyTypeId}
               onLinkClick={onHeaderActionClick}
               jumpToView={jumpToView}
               zoomToView={zoomToView}
@@ -212,7 +186,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
             />
             <InfoContent
               propertyInfo={popUpContext.propertyInfo}
-              propertyTypeId={popUpContext.propertyTypeID}
+              propertyTypeId={popUpContext.propertyTypeId}
               canViewDetails={canViewProperty}
             />
           </>
@@ -226,7 +200,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
           return (
             <AssociatedBuildingsList
               propertyInfo={popUpContext.propertyInfo as IParcel}
-              addAssociatedBuildingLink={addAssociatedBuildingLink}
               canEditDetails={canEditProperty}
             />
           );
@@ -250,11 +223,11 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
             id="slideOutInfoButton"
             variant="outline-secondary"
             onClick={() => {
-              const propertyTypeId = popUpContext.propertyTypeID;
+              const propertyTypeId = popUpContext.propertyTypeId;
               const id = popUpContext.propertyInfo?.id;
               if (typeof propertyTypeId === 'number' && propertyTypeId >= 0 && !!id && !open) {
                 popUpContext.setLoading(true);
-                if ([PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(propertyTypeId)) {
+                if ([PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(propertyTypeId)) {
                   getParcel(id as number)
                     .then((parcel: IParcel) => {
                       popUpContext.setPropertyInfo(parcel);
@@ -267,7 +240,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
                     .finally(() => {
                       popUpContext.setLoading(false);
                     });
-                } else if (propertyTypeId === PropertyTypes.BUILDING) {
+                } else if (propertyTypeId === PropertyTypes.Building) {
                   getBuilding(id as number)
                     .then((building: IBuilding) => {
                       popUpContext.setPropertyInfo(building);

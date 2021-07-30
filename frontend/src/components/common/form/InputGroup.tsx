@@ -3,7 +3,8 @@ import './InputGroup.scss';
 import classNames from 'classnames';
 import { FormikProps } from 'formik';
 import React, { CSSProperties } from 'react';
-import { FormControlProps, InputGroup as BootstrapInputGroup } from 'react-bootstrap';
+import { FormControlProps } from 'react-bootstrap/FormControl';
+import BootstrapInputGroup from 'react-bootstrap/InputGroup';
 
 import { Label } from '../Label';
 import { FastInput } from './FastInput';

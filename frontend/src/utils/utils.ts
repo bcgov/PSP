@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 import { SelectOption } from 'components/common/form';
-import { SortDirection, TableSort } from 'components/Table/TableSort';
-import { IStatus } from 'features/projects/common';
+import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
 import _ from 'lodash';
 import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
@@ -56,22 +55,6 @@ export const mapLookupCodeWithParentString = (
   parent: options.find((a: ILookupCode) => a.id.toString() === code.parentId?.toString())?.name,
 });
 
-const createParentWorkflow = (code: string) => {
-  if (/^DR/.test(code)) {
-    return { name: 'Draft Statuses', id: 1 };
-  } else if (/EXE/.test(code)) {
-    return { name: 'Exemption Statuses', id: 2 };
-  } else if (/^AS/.test(code)) {
-    return { name: 'Assessment Statuses', id: 3 };
-  } else if (/^ERP/.test(code) || /^AP-ERP$/.test(code)) {
-    return { name: 'ERP Statuses', id: 4 };
-  } else if (/^SPL/.test(code) || /^AP-SPL$/.test(code)) {
-    return { name: 'SPL Statuses', id: 5 };
-  } else {
-    return { name: 'General Statuses', id: 6 };
-  }
-};
-
 /** used for inputs that need to display the string value of a parent agency agency */
 export const mapSelectOptionWithParent = (
   code: SelectOption,
@@ -84,13 +67,6 @@ export const mapSelectOptionWithParent = (
   parentId: code.parentId,
   parent: options.find((a: SelectOption) => a.value.toString() === code.parentId?.toString())
     ?.label,
-});
-
-export const mapStatuses = (status: IStatus): SelectOption => ({
-  label: status.name,
-  value: status.id.toString(),
-  parent: createParentWorkflow(status.code).name,
-  parentId: createParentWorkflow(status.code).id,
 });
 
 type FormikMemoProps = {
@@ -161,24 +137,6 @@ export const handleAxiosResponse = (
     });
 };
 
-export const validateFormikWithCallback = (formikProps: FormikProps<any>, callback: Function) => {
-  formikProps.validateForm().then((errors: any) => {
-    if (errors !== undefined && Object.keys(errors).length === 0) {
-      callback();
-    } else {
-      //force formik to display the validation errors.
-      formikProps.submitForm();
-    }
-  });
-};
-export const generateSortCriteria = (column: string, direction: SortDirection) => {
-  if (!column || !direction) {
-    return '';
-  }
-
-  return `${startCase(column).replace(' ', '')} ${direction}`;
-};
-
 /**
  * convert table sort config to api sort query
  * {name: 'desc} = ['Name desc']
@@ -218,26 +176,10 @@ export const getCurrentFiscalYear = (): number => {
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
-export const getFiscalYear = (date?: Date | string): number => {
-  let momentDate = undefined;
-  if (typeof date === 'string' || date instanceof String) {
-    momentDate = moment(date, 'YYYY-MM-DD');
-  } else {
-    momentDate = moment(date);
-  }
-  return momentDate.month() >= 4 ? momentDate.add(1, 'years').year() : momentDate.year();
-};
-
 export const formatDate = (date?: string | Date) => {
   return !!date ? moment(date).format('YYYY-MM-DD') : '';
 };
 
-export const formatFiscalYear = (year: string | number | undefined): string => {
-  if (year === undefined) return '';
-  const fiscalYear = +year;
-  const previousFiscalYear = fiscalYear - 1;
-  return `${previousFiscalYear.toString().slice(-2)}/${fiscalYear.toString().slice(-2)}`;
-};
 /**
  * Format the passed string date assuming the date was recorded in UTC (as is the case with the pims API server).
  * Returns a date formatted for display in the current time zone of the user.
@@ -249,14 +191,6 @@ export const formatApiDateTime = (date: string | undefined) => {
         .utc(date)
         .local()
         .format('YYYY-MM-DD hh:mm a')
-    : '';
-};
-
-export const formatDateFiscal = (date: string | undefined) => {
-  return !!date
-    ? `${moment(date)
-        .subtract(1, 'years')
-        .format('YYYY')}/${moment(date).format('YYYY')}`
     : '';
 };
 
@@ -273,31 +207,6 @@ export const generateUtcNowDateTime = () =>
  */
 export const isMouseEventRecent = (timeStamp?: number) =>
   !!timeStamp && timeStamp >= (document?.timeline?.currentTime ?? 0) - 500;
-
-/**
- * Convert the passed square meter value to hectares.
- * @param squareMeters
- */
-export const squareMetersToHectares = (squareMeters: number) => (squareMeters / 10000).toFixed(2);
-
-export function stringToNull(value: any) {
-  return emptyStringToNull(value, value);
-}
-
-export function emptyStringToNull(value: any, originalValue: any) {
-  if (typeof originalValue === 'string' && originalValue === '') {
-    return undefined;
-  }
-  return value;
-}
-
-/**
- * Determine if the specified project status code requires a clearance notification sent on value.
- * @param statusCode The project status code.
- */
-export const clearanceNotificationSentOnRequired = (statusCode: string) => {
-  return ['ERP-ON', 'ERP-OH'].includes(statusCode);
-};
 
 /**
  * postalCodeFormatter takes the specified postal code and formats it with a space in the middle

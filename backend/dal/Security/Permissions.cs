@@ -46,33 +46,6 @@ namespace Pims.Dal.Security
         PropertyDelete = 13,
 
         [Display(GroupName = "property", Name = "sensitive-view", Description = "Can view sensitive properties in inventory.")]
-        SensitiveView = 14,
-
-        [Display(GroupName = "dispose", Name = "dispose-request", Description = "Can request to dispose properties in inventory.")]
-        DisposeRequest = 20,
-
-        [Display(GroupName = "dispose", Name = "dispose-approve", Description = "Can approve requests to dispose properties in inventory.")]
-        DisposeApprove = 21,
-
-        [Display(GroupName = "project", Name = "project-view", Description = "Can view projects.")]
-        ProjectView = 30,
-
-        [Display(GroupName = "project", Name = "project-add", Description = "Can add new projects.")]
-        ProjectAdd = 31,
-
-        [Display(GroupName = "project", Name = "project-edit", Description = "Can edit projects.")]
-        ProjectEdit = 32,
-
-        [Display(GroupName = "project", Name = "project-delete", Description = "Can delete projects.")]
-        ProjectDelete = 33,
-
-        [Display(GroupName = "project", Name = "reports-view", Description = "Can view project reports.")]
-        ReportsView = 34,
-
-        [Display(GroupName = "project", Name = "reports-spl", Description = "Can view, create and modify non-final SPL reports.")]
-        ReportsSpl = 35,
-
-        [Display(GroupName = "project", Name = "reports-spl-admin", Description = "Can view, create, modify and delete all SPL reports.")]
-        ReportsSplAdmin = 36
+        SensitiveView = 14
     }
 }

@@ -41,6 +41,7 @@ namespace Pims.Core.Test
                 AddressId = address.Id,
                 Address = address,
                 Location = new Point(lng, lat) { SRID = 4326 },
+                PropertyTypeId = (long)Entity.PropertyTypes.Building,
                 Classification = classification,
                 ClassificationId = classification.Id,
                 Description = $"description-{id}",
@@ -50,12 +51,11 @@ namespace Pims.Core.Test
                 BuildingConstructionTypeId = constructionType.Id,
                 BuildingOccupantType = occupantType,
                 BuildingOccupantTypeId = occupantType.Id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 },
-                PropertyTypeId = 1,
+                RowVersion = 1,
             };
         }
 
@@ -70,7 +70,7 @@ namespace Pims.Core.Test
         /// <param name="lng"></param>
         /// <param name="agency"></param>
         /// <returns></returns>
-        public static Entity.Building CreateBuilding(Entity.Parcel parcel, int id, string projectNumber = null, string name = null, int lat = 0, int lng = 0, Entity.Agency agency = null)
+        public static Entity.Building CreateBuilding(Entity.Parcel parcel, long id, string projectNumber = null, string name = null, int lat = 0, int lng = 0, Entity.Agency agency = null)
         {
             projectNumber ??= $"p{id}";
             agency ??= parcel?.Agency ?? EntityHelper.CreateAgency(id);
@@ -90,6 +90,7 @@ namespace Pims.Core.Test
                 Name = name,
                 AddressId = address.Id,
                 Address = address,
+                PropertyTypeId = (long)Entity.PropertyTypes.Building,
                 Classification = classification,
                 ClassificationId = classification.Id,
                 Description = $"description-{id}",
@@ -99,12 +100,11 @@ namespace Pims.Core.Test
                 BuildingConstructionTypeId = constructionType.Id,
                 BuildingOccupantType = occupantType,
                 BuildingOccupantTypeId = occupantType.Id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 },
-                PropertyTypeId = 1,
+                RowVersion = 1,
             };
         }
 
@@ -121,9 +121,9 @@ namespace Pims.Core.Test
             for (var i = startId; i < (startId + count); i++)
             {
                 var building = CreateBuilding(parcel, i);
-                parcel.Buildings.Add(new Entity.ParcelBuilding(parcel, building));
+                parcel.Buildings.Add(building);
             }
-            return parcel.Buildings.Select(pb => pb.Building).ToList();
+            return parcel.Buildings.ToList();
         }
 
         /// <summary>
@@ -172,6 +172,7 @@ namespace Pims.Core.Test
                 Agency = agency,
                 AddressId = address.Id,
                 Address = address,
+                PropertyTypeId = (long)Entity.PropertyTypes.Building,
                 Classification = classification,
                 ClassificationId = classification.Id,
                 Description = $"description-{id}",
@@ -181,11 +182,11 @@ namespace Pims.Core.Test
                 BuildingConstructionTypeId = constructionType.Id,
                 BuildingOccupantType = occupantType,
                 BuildingOccupantTypeId = occupantType.Id,
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                UpdatedById = Guid.NewGuid(),
+                UpdatedBy = "jon@idir",
                 UpdatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
             if (parcel != null)
             {

@@ -1,9 +1,11 @@
 import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { LatLngBounds } from 'leaflet';
-import { keys } from 'lodash';
+import keys from 'lodash/keys';
 import queryString from 'query-string';
 import * as React from 'react';
-import { Col, ListGroup, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import { LatLng, useLeaflet } from 'react-leaflet';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';

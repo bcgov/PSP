@@ -130,7 +130,7 @@ namespace Pims.Notifications
                 BodyType = (Model.EmailBodyTypes)Enum.Parse(typeof(Model.EmailBodyTypes), notification.Template.BodyType.ToString()),
                 Body = notification.Template.Body,
             };
-            Build($"{notification.TemplateId}-{notification.Template.RowVersion.ConvertRowVersion()}", email, model);
+            Build($"{notification.TemplateId}-{notification.Template.RowVersion}", email, model);
             notification.Subject = email.Subject;
             notification.Body = email.Body;
         }

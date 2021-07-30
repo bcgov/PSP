@@ -36,7 +36,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
         public void FormatAddress(string address1, string address2, string expectedResult)
         {
             // Arrange
-            var address = new Address(address1, address2, "Victoria", "BC", "postal");
+            var address = new Address(address1, address2, "Victoria", 1, "postal");
 
             // Act
             var result = address.FormatAddress();

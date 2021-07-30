@@ -1,54 +1,60 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ParcelEvaluation class, provides an entity to map parcel evaluation values to a date.
     /// </summary>
-    public class ParcelEvaluation : BaseEntity
+    [MotiTable("PIMS_PARCEL_EVALUATION", "PREVAL")]
+    public class ParcelEvaluation : BaseAppEntity
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify parcel evaluation.
+        /// </summary>
+        [Column("PARCEL_EVALUATION_ID")]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The primary key and the foreign key to the parcel.
         /// </summary>
-        /// <value></value>
-        public int ParcelId { get; set; }
+        [Column("PARCEL_ID")]
+        public long ParcelId { get; set; }
 
         /// <summary>
         /// get/set - The parcel.
         /// </summary>
-        /// <value></value>
         public Parcel Parcel { get; set; }
 
         /// <summary>
         /// get/set - The primary key and the date the evaluation is for.
         /// </summary>
-        /// <value></value>
+        [Column("DATE")]
         public DateTime Date { get; set; }
 
         /// <summary>
         /// get/set - the firm that performed this evaluation.
         /// </summary>
-        /// <value></value>
+        [Column("FIRM")]
         public string Firm { get; set; }
 
         /// <summary>
         /// get/set - The key for this fiscal value.
         /// </summary>
-        /// <value></value>
+        [Column("KEY")]
         public EvaluationKeys Key { get; set; }
 
         /// <summary>
         /// get/set - The value of the fiscal key for this parcel.
         /// </summary>
-        /// <value></value>
+        [Column("VALUE")]
         public decimal Value { get; set; }
 
         /// <summary>
         /// get/set - A note related to this fiscal value.
         /// </summary>
-        /// <value></value>
+        [Column("NOTE")]
         public string Note { get; set; }
         #endregion
 

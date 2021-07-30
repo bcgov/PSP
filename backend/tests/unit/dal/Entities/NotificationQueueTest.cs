@@ -65,15 +65,12 @@ namespace Pims.Dal.Test.Entities
             queue.Bcc.Should().BeNull();
             queue.Cc.Should().BeNull();
             queue.Tag.Should().BeNull();
-            queue.ProjectId.Should().BeNull();
-            queue.Project.Should().BeNull();
             queue.ToAgencyId.Should().BeNull();
             queue.ToAgency.Should().BeNull();
             queue.TemplateId.Should().BeNull();
             queue.Template.Should().BeNull();
             queue.ChesMessageId.Should().BeNull();
             queue.ChesTransactionId.Should().BeNull();
-            queue.Responses.Should().BeEmpty();
         }
 
         [Fact]
@@ -88,10 +85,9 @@ namespace Pims.Dal.Test.Entities
                 Encoding = NotificationEncodings.Base64,
                 Tag = "tag"
             };
-            var project = EntityHelper.CreateProject(1, 1);
 
             // Act
-            var queue = new NotificationQueue(template, project, "to", "subject", "body");
+            var queue = new NotificationQueue(template, "to", "subject", "body");
 
             // Assert
             queue.Id.Should().Be(0);
@@ -104,22 +100,8 @@ namespace Pims.Dal.Test.Entities
             queue.Priority.Should().Be(template.Priority);
             queue.Encoding.Should().Be(template.Encoding);
             queue.Tag.Should().Be(template.Tag);
-            queue.ProjectId.Should().Be(project.Id);
-            queue.Project.Should().Be(project);
             queue.To.Should().Be("to");
             queue.SendOn.Should().BeOnOrAfter(date);
-        }
-
-        [Theory]
-        [MemberData(nameof(Constructor_01))]
-        public void NotificationQueue_Constructor_01_ArgumentException(string to, string subject, string body, NotificationTemplate template, Type throws)
-        {
-            // Arrange
-            var project = EntityHelper.CreateProject(1, 1);
-
-            // Act
-            // Assert
-            Assert.Throws(throws, () => new NotificationQueue(template, project, to, subject, body));
         }
 
         [Fact]
@@ -136,10 +118,9 @@ namespace Pims.Dal.Test.Entities
             };
             var agency = EntityHelper.CreateAgency(2);
             agency.Email = "test@test.com";
-            var project = EntityHelper.CreateProject(1, agency);
 
             // Act
-            var queue = new NotificationQueue(template, project, agency, "subject", "body");
+            var queue = new NotificationQueue(template, agency, "subject", "body");
 
             // Assert
             queue.Id.Should().Be(0);
@@ -152,8 +133,6 @@ namespace Pims.Dal.Test.Entities
             queue.Priority.Should().Be(template.Priority);
             queue.Encoding.Should().Be(template.Encoding);
             queue.Tag.Should().Be(template.Tag);
-            queue.ProjectId.Should().Be(project.Id);
-            queue.Project.Should().Be(project);
             queue.ToAgencyId.Should().Be(agency.Id);
             queue.ToAgency.Should().Be(agency);
             queue.To.Should().Be(agency.Email);
@@ -167,11 +146,10 @@ namespace Pims.Dal.Test.Entities
             // Arrange
             var agency = EntityHelper.CreateAgency(2);
             agency.Email = "test@test.com";
-            var project = EntityHelper.CreateProject(1, agency);
 
             // Act
             // Assert
-            Assert.Throws(throws, () => new NotificationQueue(template, project, agency, subject, body));
+            Assert.Throws(throws, () => new NotificationQueue(template, agency, subject, body));
         }
 
 

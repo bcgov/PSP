@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Routes.Keycloak
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasGet("{id}");
+            endpoint.HasGet("{key}");
             endpoint.HasPermissions(Permissions.AdminRoles);
         }
 
@@ -91,7 +91,7 @@ namespace Pims.Api.Test.Routes.Keycloak
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPut("{id}");
+            endpoint.HasPut("{key}");
             endpoint.HasPermissions(Permissions.AdminRoles);
         }
         #endregion

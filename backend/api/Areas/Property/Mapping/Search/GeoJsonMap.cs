@@ -42,7 +42,6 @@ namespace Pims.Api.Areas.Property.Mapping.Search
                 .Map(dest => dest.ProjectNumbers, src => JsonSerializer.Deserialize<IEnumerable<string>>(src.ProjectNumbers ?? "[]", _serializerOptions))
                 .Map(dest => dest.AddressId, src => src.AddressId)
                 .Map(dest => dest.Address, src => src.Address)
-                .Map(dest => dest.ProjectWorkflow, src => src.ProjectWorkflow)
                 .Map(dest => dest.AdministrativeArea, src => src.AdministrativeArea)
                 .Map(dest => dest.Classification, src => src.Classification)
                 .Map(dest => dest.ClassificationId, src => src.ClassificationId)
@@ -93,7 +92,7 @@ namespace Pims.Api.Areas.Property.Mapping.Search
                 .Map(dest => dest.AssessedBuilding, src => src.Assessed)
                 .Map(dest => dest.AssessedBuildingDate, src => src.AssessedDate);
 
-            config.NewConfig<Entity.Models.ProjectProperty, Model.GeoJson<Model.PropertyModel>>()
+            config.NewConfig<Entity.Views.Property, Model.GeoJson<Model.PropertyModel>>()
                 .Map(dest => dest.Type, src => "Feature")
                 .Map(dest => dest.Geometry.Type, src => src.Location.GeometryType)
                 .Map(dest => dest.Geometry.Coordinates, src => src.Location)

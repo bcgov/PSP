@@ -1,6 +1,6 @@
-import { pidFormatter } from 'features/properties/components/forms/subforms/PidPinForm';
 import { IParcel } from 'interfaces';
 import * as React from 'react';
+import { pidFormatter } from 'utils/propertyUtils';
 
 import { OuterRow } from './InfoContent';
 import { ThreeColumnItem } from './ThreeColumnItem';

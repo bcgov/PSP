@@ -7,7 +7,12 @@ import { AUTHORIZATION_URL } from 'constants/strings';
 import { Field, Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useEffect } from 'react';
-import { Button, ButtonToolbar, Col, Container, Navbar, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -18,12 +23,12 @@ import { UserUpdateSchema } from 'utils/YupSchema';
 import { Form, Input, Select, SelectOption } from '../../../components/common/form';
 
 interface IEditUserPageProps {
-  id: string;
+  key: string;
   match?: any;
 }
 
 const EditUserPage = (props: IEditUserPageProps) => {
-  const userId = props?.match?.params?.id || props.id;
+  const userId = props?.match?.params?.key || props.key;
   const history = useHistory();
   const { updateUser, fetchUserDetail } = useUsers();
 
@@ -38,7 +43,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   const user = useAppSelector(state => state.users.userDetail);
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
     label: code.name,
-    value: code.id.toString(),
+    value: code.id,
     selected: !!user?.roles?.find(x => x.id === code.id.toString()) ?? [],
   });
 
@@ -91,20 +96,20 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    displayName: user.displayName,
-    isDisabled: !!user.isDisabled,
-    rowVersion: user.rowVersion,
+    username: user.username ?? '',
+    firstName: user.firstName ?? '',
+    lastName: user.lastName ?? '',
+    email: user.email ?? '',
+    displayName: user.displayName ?? '',
+    isDisabled: !!user.isDisabled ?? '',
+    rowVersion: user.rowVersion ?? '',
     emailVerified: false,
-    agencies: user.agencies,
+    agencies: user.agencies ?? [],
     roles: user?.roles?.map(x => x.id) ?? [],
-    note: user.note,
+    note: user.note ?? '',
     agency: user.agencies && user.agencies.length !== 0 ? user.agencies[0].id : '',
     role: user.roles && user.roles.length !== 0 ? user.roles[0].id : '',
-    position: user.position,
+    position: user.position ?? '',
     lastLogin: formatApiDateTime(user.lastLogin),
   };
 
@@ -119,20 +124,21 @@ const EditUserPage = (props: IEditUserPageProps) => {
             enableReinitialize
             initialValues={initialValues}
             validationSchema={UserUpdateSchema}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={async (values, { setSubmitting, setValues }) => {
               if (values.agency !== '') {
                 agenciesToUpdate = [{ id: Number(values.agency) }];
               } else {
                 agenciesToUpdate = user.agencies ?? [];
               }
-
               if (values.roles) {
                 rolesToUpdate = values.roles.map(r => ({ id: r }));
               } else {
                 rolesToUpdate = user.roles ?? [];
               }
-              updateUser({
+
+              await updateUser({
                 id: user.id,
+                key: user.key,
                 username: user.username,
                 displayName: values.displayName,
                 firstName: values.firstName,

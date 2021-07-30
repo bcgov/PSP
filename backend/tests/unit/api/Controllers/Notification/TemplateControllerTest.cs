@@ -68,7 +68,7 @@ namespace Pims.Api.Test.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var template = EntityHelper.CreateNotificationTemplate(1, "test");
-            service.Setup(m => m.NotificationTemplate.Get(It.IsAny<int>())).Returns(template);
+            service.Setup(m => m.NotificationTemplate.Get(It.IsAny<long>())).Returns(template);
 
             // Act
             var result = controller.GetNotificationTemplate(template.Id);
@@ -86,13 +86,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var helper = new TestHelper();
-            var controller = helper.CreateController<TemplateController>(Permissions.ProjectView);
+            var controller = helper.CreateController<TemplateController>(Permissions.AdminProjects);
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var template = EntityHelper.CreateNotificationTemplate(1, "test");
 
-            service.Setup(m => m.NotificationTemplate.Get(It.IsAny<int>())).Returns(template);
+            service.Setup(m => m.NotificationTemplate.Get(It.IsAny<long>())).Returns(template);
 
             // Act
             var result = controller.GetNotificationTemplate(template.Id);
@@ -115,7 +115,6 @@ namespace Pims.Api.Test.Controllers
             Assert.Equal(template.IsDisabled, actualResult.IsDisabled);
             Assert.Equal(template.CreatedOn, actualResult.CreatedOn);
             Assert.Equal(template.UpdatedOn, actualResult.UpdatedOn);
-            Assert.Equal(template.Status.Count(), actualResult.Status.Count());
         }
         #endregion
 
@@ -191,36 +190,6 @@ namespace Pims.Api.Test.Controllers
             Assert.Null(actionResult.StatusCode);
             Assert.Equal(mapper.Map<Model.NotificationTemplateModel>(template), actualResult, new DeepPropertyCompare());
             service.Verify(m => m.NotificationTemplate.Remove(It.IsAny<Entity.NotificationTemplate>()), Times.Once());
-        }
-        #endregion
-
-        #region SendNotificationAsync
-        [Fact]
-        public async void SendNotificationAsync_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var options = helper.CreateDefaultPimsOptions();
-            var controller = helper.CreateController<TemplateController>(Permissions.SystemAdmin, options);
-
-            var service = helper.GetService<Mock<IPimsService>>();
-            var mapper = helper.GetService<IMapper>();
-            var template = EntityHelper.CreateNotificationTemplate(1, "test");
-            var notification = EntityHelper.CreateNotificationQueue(1, template);
-            var project = EntityHelper.CreateProject(1);
-            service.Setup(m => m.NotificationTemplate.SendNotificationAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>())).ReturnsAsync(notification);
-            service.Setup(m => m.Project.Get(It.IsAny<int>())).Returns(project);
-
-            // Act
-            var result = await controller.SendProjectNotificationAsync(template.Id, "test@test.com", null, null, project.Id);
-
-            // Assert
-            var actionResult = Assert.IsType<CreatedAtActionResult>(result);
-            var actualResult = Assert.IsType<Areas.Notification.Models.Queue.NotificationQueueModel>(actionResult.Value);
-            Assert.Equal(201, actionResult.StatusCode);
-            Assert.Equal(mapper.Map<Areas.Notification.Models.Queue.NotificationQueueModel>(notification), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.NotificationTemplate.SendNotificationAsync<object>(template.Id, "test@test.com", null), Times.Never());
-            service.Verify(m => m.Project.Get(project.Id), Times.Once());
         }
         #endregion
         #endregion

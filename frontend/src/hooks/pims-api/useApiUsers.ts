@@ -24,10 +24,11 @@ export const useApiUsers = () => {
   return React.useMemo(
     () => ({
       activateUser: () => api.post('/auth/activate'),
-      getUser: (id: string) => api.get<IUserDetails>(`/admin/users/${id}`),
+      getUser: (key: string) => api.get<IUserDetails>(`/admin/users/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
         api.post<IPagedItems<IUser>>(`/admin/users/my/agency`, params),
-      putUser: (user: IUserDetails) => apiWithToasts.put<IUser>(`/keycloak/users/${user.id}`, user),
+      putUser: (user: IUserDetails) =>
+        apiWithToasts.put<IUser>(`/keycloak/users/${user.key}`, user),
     }),
     [api, apiWithToasts],
   );

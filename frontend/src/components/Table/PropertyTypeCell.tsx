@@ -12,10 +12,10 @@ import { CellProps } from 'react-table';
  */
 export const PropertyTypeCell = ({ cell: { value } }: CellProps<IProperty, number>) => {
   switch (value) {
-    case PropertyTypes.SUBDIVISION:
+    case PropertyTypes.Subdivision:
       return <SubdivisionSvg className="svg" />;
 
-    case PropertyTypes.BUILDING:
+    case PropertyTypes.Building:
       return <BuildingSvg className="svg" />;
     default:
       return <LandSvg className="svg" />;

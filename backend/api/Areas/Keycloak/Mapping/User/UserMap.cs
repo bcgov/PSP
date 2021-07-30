@@ -13,6 +13,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
         {
             config.NewConfig<Entity.User, Model.UserModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.Position, src => src.Position)
@@ -22,12 +23,13 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => src.Agencies)
-                .Map(dest => dest.Roles, src => src.Roles.Select(r => r.Role))
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Map(dest => dest.Agencies, src => src.AgenciesManyToMany.OrderBy(a => a.Agency.ParentId))
+                .Map(dest => dest.Roles, src => src.RolesManyToMany)
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.UserModel, Entity.User>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.Position, src => src.Position)
@@ -37,22 +39,23 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => src.Agencies)
-                .Map(dest => dest.Roles, src => src.Roles)
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Map(dest => dest.AgenciesManyToMany, src => src.Agencies)
+                .Map(dest => dest.RolesManyToMany, src => src.Roles)
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
 
 
             config.NewConfig<Entity.User, KModel.UserModel>()
-                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Id, src => src.Key)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Enabled, src => !src.IsDisabled)
-                .Inherits<Entity.BaseEntity, Object>();
+                .Inherits<Entity.BaseAppEntity, Object>();
 
             config.NewConfig<Entity.User, Entity.User>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Key, src => src.Key)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Username, src => src.Username)
                 .Map(dest => dest.Position, src => src.Position)
@@ -62,7 +65,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.LastName, src => src.LastName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Entity.BaseEntity, Entity.BaseEntity>();
+                .Inherits<Entity.BaseAppEntity, Entity.BaseAppEntity>();
         }
     }
 }

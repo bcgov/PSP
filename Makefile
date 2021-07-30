@@ -68,8 +68,8 @@ rebuild: ## Build the local contains (n=service name) and then start them after 
 clean: ## Removes all local containers, images, volumes, etc
 	@echo "$(P) Removing all containers, images, volumes for solution."
 	@docker-compose rm -f -v -s
-	@docker volume rm -f pims-frontend-node-cache
-	@docker volume rm -f pims-api-db-data
+	@docker volume rm -f psp-frontend-node-cache
+	@docker volume rm -f psp-api-db-data
 
 logs: ## Shows logs for running containers (n=service name)
 	@docker-compose logs -f $(n)
@@ -137,6 +137,10 @@ db-seed: ## Imports a JSON file of properties into PIMS
 	@echo "$(P) Seeding docker database..."
 	@cd tools/import; dotnet build; dotnet run;
 
+db-script: ## Export an SQL script from the migration (from=0 to=Initial).
+	@echo "$(P) Exporting script to 'db-migration.sql'"
+	@cd backend/dal; dotnet ef migrations script ${from} ${to} --output ../../db-migration.sql
+
 keycloak-sync: ## Syncs accounts with Keycloak and PIMS
 	@echo "$(P) Syncing keycloak with PIMS..."
 	@cd tools/keycloak/sync; dotnet build; dotnet run;
@@ -166,5 +170,5 @@ frontend-coverage: ## Generate coverage report for frontend
 	@echo "$(P) Generate coverage report for frontend"
 	@cd frontend; npm run coverage;
 
-.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
+.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh db-script npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
 

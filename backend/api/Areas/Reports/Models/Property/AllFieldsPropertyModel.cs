@@ -221,7 +221,7 @@ namespace Pims.Api.Areas.Reports.Models.AllPropertyFields
         /// </summary>
         [DisplayName("Parcel Id")]
         [CsvHelper.Configuration.Attributes.Name("Parcel Id")]
-        public int? ParcelId { get; set; }
+        public long? ParcelId { get; set; }
 
         /// <summary>
         /// get/set - The building predominate use.

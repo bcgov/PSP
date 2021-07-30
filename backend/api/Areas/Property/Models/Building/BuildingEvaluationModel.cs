@@ -3,10 +3,10 @@ using Model = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Models.Building
 {
-    public class BuildingEvaluationModel : Model.BaseModel
+    public class BuildingEvaluationModel : Model.BaseAppModel
     {
         #region Properties
-        public int BuildingId { get; set; }
+        public long BuildingId { get; set; }
 
         public DateTime Date { get; set; }
 

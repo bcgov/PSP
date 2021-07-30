@@ -1,0 +1,25 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: nodejs-image-stream
+  annotations:
+    openshift.io/display-name: NodeJS 14 Redhat Image
+    description: ImageStream definitions for NodeJS 14 on RHEL
+parameters:
+  - name: IMAGE_NAME
+    displayName: "The name of this image"
+    required: true
+    value: "nodejs-14-ubi8"
+objects:
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: ${IMAGE_NAME}
+    spec:
+      tags:
+        - name: "1-35"
+          from:
+            kind: DockerImage
+            name: "registry.access.redhat.com/ubi8/nodejs-14:1-35"
+          referencePolicy:
+            type: Local

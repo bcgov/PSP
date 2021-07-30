@@ -1,7 +1,10 @@
 import variables from '_variables.module.scss';
 import TooltipIcon from 'components/common/TooltipIcon';
 import React, { FunctionComponent } from 'react';
-import { Button, Container, Modal, ModalDialog } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Modal from 'react-bootstrap/Modal';
+import ModalDialog from 'react-bootstrap/ModalDialog';
 import Draggable from 'react-draggable';
 import { useAppSelector } from 'store/hooks';
 import { useTenants } from 'store/slices/tenants';

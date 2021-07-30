@@ -13,43 +13,36 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The page number.
         /// </summary>
-        /// <value></value>
         public int Page { get; set; } = 1;
 
         /// <summary>
         /// get/set - The quantity to return in each page.
         /// </summary>
-        /// <value></value>
         public int Quantity { get; set; } = 10;
 
         /// <summary>
         /// get/set - The name of the agency.
         /// </summary>
-        /// <value></value>
         public string Name { get; set; }
 
         /// <summary>
         /// get/set - The parent id of given agency.
         /// </summary>
-        /// <value></value>
-        public int ParentId { get; set; }
+        public long ParentId { get; set; }
 
         /// <summary>
         /// get/set - account status
         /// </summary>
-        /// <value></value>
         public bool? IsDisabled { get; set; }
 
         /// <summary>
         /// get/set - The agency ID
         /// </summary>
-        /// <value></value>
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         /// <summary>
         /// get/set - An array of sorting conditions (i.e. FirstName desc, LastName asc)
         /// </summary>
-        /// <value></value>
         public string[] Sort { get; set; }
         #endregion
 
@@ -80,7 +73,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="isDisabled"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public AgencyFilter(int page, int quantity, int id, string name, int parentId, bool? isDisabled, string[] sort) : this(page, quantity)
+        public AgencyFilter(int page, int quantity, long id, string name, long parentId, bool? isDisabled, string[] sort) : this(page, quantity)
         {
             this.Name = name;
             this.ParentId = parentId;
@@ -101,9 +94,9 @@ namespace Pims.Dal.Entities.Models
             this.Page = filter.GetIntValue(nameof(this.Page), 1);
             this.Quantity = filter.GetIntValue(nameof(this.Quantity), 10);
             this.Name = filter.GetStringValue(nameof(this.Name));
-            this.ParentId = filter.GetIntValue(nameof(this.ParentId));
+            this.ParentId = filter.GetLongValue(nameof(this.ParentId));
             this.IsDisabled = filter.GetValue<bool?>(nameof(this.IsDisabled));
-            this.Id = filter.GetIntValue(nameof(this.Id));
+            this.Id = filter.GetLongValue(nameof(this.Id));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion

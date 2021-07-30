@@ -8,8 +8,8 @@ import { useFormikContext } from 'formik';
 import { IGeocoderResponse, useApi } from 'hooks/useApi';
 import debounce from 'lodash/debounce';
 import * as React from 'react';
-import { useCallback } from 'react';
-import { Form, FormControlProps } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { FormControlProps } from 'react-bootstrap/FormControl';
 import ClickAwayListener from 'react-click-away-listener';
 
 interface IGeocoderAutoCompleteProps {
@@ -52,30 +52,32 @@ export const GeocoderAutoComplete: React.FC<IGeocoderAutoCompleteProps> = ({
   const { handleBlur } = useFormikContext<any>();
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
 
-  const search = useCallback(
-    (val: string, abort: boolean) =>
-      debounce(async (val: string, abort: boolean) => {
+  const debouncedSearch = React.useRef(
+    debounce(
+      async (val: string, abort: boolean) => {
         if (!abort) {
           const data = await api.searchAddress(val);
           setOptions(data);
         }
-      }, debounceTimeout || 500)(val, abort),
-    [api, debounceTimeout],
-  );
+      },
+      debounceTimeout || 500,
+      { trailing: true },
+    ),
+  ).current;
 
   const onTextChanged = async (val?: string) => {
     onTextChange && onTextChange(val);
     if (val && val.length >= 5 && val !== value) {
-      await search(val, false);
+      debouncedSearch(val, false);
     } else {
       setOptions([]);
     }
   };
   React.useEffect(() => {
     return () => {
-      search('', true);
+      debouncedSearch('', true);
     };
-  }, [search]);
+  }, [debouncedSearch]);
 
   const suggestionSelected = (val: IGeocoderResponse) => {
     setOptions([]);

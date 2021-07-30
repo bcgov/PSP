@@ -122,18 +122,18 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
-            var id = Guid.NewGuid();
-            var euser = EntityHelper.CreateUser(id, "ttester", "Tester", "McTest");
+            var key = Guid.NewGuid();
+            var euser = EntityHelper.CreateUser(1, key, "ttester", "Tester", "McTest");
             helper.CreatePimsContext(user, true).AddAndSaveChanges(euser);
 
             var service = helper.CreateService<UserService>(user);
 
             // Act
-            var result = service.Get(id);
+            var result = service.Get(key);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(id, result.Id);
+            Assert.Equal(key, result.Key);
         }
         #endregion
         #region Add
@@ -143,14 +143,14 @@ namespace Pims.Dal.Test.Services.Admin
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers, Permissions.SystemAdmin);
-            var euser = EntityHelper.CreateUser(Guid.NewGuid(), "ttester", "Tester", "McTest");
+            var euser = EntityHelper.CreateUser(1, Guid.NewGuid(), "ttester", "Tester", "McTest");
             helper.CreatePimsContext(user, true);
 
             var service = helper.CreateService<UserService>(user);
 
             // Act
             service.Add(euser);
-            var result = service.Get(euser.Id);
+            var result = service.Get(euser.Key);
 
             // Assert
             Assert.NotNull(result);

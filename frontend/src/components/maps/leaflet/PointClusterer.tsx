@@ -51,7 +51,7 @@ export const convertToProperty = (
   latitude?: number,
   longitude?: number,
 ): IParcel | IBuilding | null => {
-  if ([PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(property.propertyTypeId)) {
+  if ([PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(property.propertyTypeId)) {
     return {
       ...property,
       evaluations: property.evaluations ?? [],
@@ -65,7 +65,7 @@ export const convertToProperty = (
         postal: property.postal,
       } as IAddress,
     } as IParcel;
-  } else if (property.propertyTypeId === PropertyTypes.BUILDING) {
+  } else if (property.propertyTypeId === PropertyTypes.Building) {
     return {
       ...property,
       totalArea: property.totalArea ?? 0,
@@ -81,7 +81,7 @@ export const convertToProperty = (
       } as IAddress,
     } as IBuilding;
   } else if (
-    [PropertyTypes.DRAFT_BUILDING, PropertyTypes.DRAFT_PARCEL].includes(property.propertyTypeId)
+    [PropertyTypes.DraftBuilding, PropertyTypes.DraftParcel].includes(property.propertyTypeId)
   ) {
     return property;
   }
@@ -262,7 +262,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const fetchProperty = React.useCallback(
     (propertyTypeId: number, id: number) => {
       popUpContext.setLoading(true);
-      if ([PropertyTypes.PARCEL, PropertyTypes.SUBDIVISION].includes(propertyTypeId)) {
+      if ([PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(propertyTypeId)) {
         getParcel(id as number)
           .then(parcel => {
             popUpContext.setPropertyInfo(parcel);
@@ -273,7 +273,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
           .finally(() => {
             popUpContext.setLoading(false);
           });
-      } else if (propertyTypeId === PropertyTypes.BUILDING) {
+      } else if (propertyTypeId === PropertyTypes.Building) {
         getBuilding(id as number)
           .then(building => {
             popUpContext.setPropertyInfo(building);
@@ -344,8 +344,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 );
                 //sets this pin as currently selected
                 if (
-                  cluster.properties.propertyTypeId === PropertyTypes.PARCEL ||
-                  cluster.properties.propertyTypeId === PropertyTypes.SUBDIVISION
+                  cluster.properties.propertyTypeId === PropertyTypes.Parcel ||
+                  cluster.properties.propertyTypeId === PropertyTypes.Subdivision
                 ) {
                   dispatch(storeParcelDetail(convertedProperty as IParcel));
                 } else {
@@ -357,7 +357,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 } else {
                   popUpContext.setPropertyInfo(convertedProperty);
                 }
-                popUpContext.setPropertyTypeID(cluster.properties.propertyTypeId);
+                popUpContext.setPropertyTypeId(cluster.properties.propertyTypeId);
               }}
             />
           );
@@ -379,12 +379,12 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               //sets this pin as currently selected
               const convertedProperty = convertToProperty(
                 m.properties,
-                m.position.lat,
-                m.position.lng,
+                m.geometry.coordinates[1],
+                m.geometry.coordinates[0],
               );
               if (
-                m.properties.propertyTypeId === PropertyTypes.PARCEL ||
-                m.properties.propertyTypeId === PropertyTypes.SUBDIVISION
+                m.properties.propertyTypeId === PropertyTypes.Parcel ||
+                m.properties.propertyTypeId === PropertyTypes.Subdivision
               ) {
                 dispatch(storeParcelDetail(convertedProperty));
               } else {
@@ -398,7 +398,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   convertToProperty(m.properties, m.position.lat, m.position.lng),
                 );
               }
-              popUpContext.setPropertyTypeID(m.properties.propertyTypeId);
+              popUpContext.setPropertyTypeId(m.properties.propertyTypeId);
             }}
           />
         ))}
@@ -429,7 +429,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
               map={leaflet.map}
               onclick={() => {
                 popUpContext.setPropertyInfo(selected.parcelDetail);
-                popUpContext.setPropertyTypeID(selected.propertyTypeId ?? 0);
+                popUpContext.setPropertyTypeId(selected.propertyTypeId ?? 0);
                 onMarkerClick();
               }}
             />

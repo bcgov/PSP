@@ -24,9 +24,9 @@ namespace Pims.Core.Test
             {
                 Id = id,
                 Description = $"description-{id}",
-                CreatedById = Guid.NewGuid(),
+                CreatedBy = "jon@idir",
                 CreatedOn = DateTime.UtcNow,
-                RowVersion = new byte[] { 12, 13, 14 }
+                RowVersion = 1
             };
         }
 

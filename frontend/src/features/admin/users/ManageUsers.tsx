@@ -7,11 +7,12 @@ import { IPaginateParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IUser, IUsersFilter } from 'interfaces';
-import { isEmpty } from 'lodash';
-import _ from 'lodash';
+import find from 'lodash/find';
+import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { useCallback, useEffect, useMemo } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/hooks';
@@ -113,6 +114,7 @@ export const ManageUsers = () => {
   let userList = pagedUsers.items.map(
     (u: IUser): IUserRecord => ({
       id: u.id,
+      key: u.key,
       email: u.email,
       username: u.username,
       firstName: u.firstName,
@@ -123,6 +125,7 @@ export const ManageUsers = () => {
       position: u.position ?? '',
       lastLogin: formatApiDateTime(u.lastLogin),
       createdOn: formatApiDateTime(u.createdOn),
+      rowVersion: u.rowVersion,
     }),
   );
 
@@ -159,7 +162,7 @@ export const ManageUsers = () => {
             ? dispatch(
                 setUsersFilter({
                   ...value,
-                  agency: (_.find(agencies, { id: +(value as any)?.agency }) as any)?.name,
+                  agency: (find(agencies, { id: +(value as any)?.agency }) as any)?.name,
                 }),
               )
             : dispatch(setUsersFilter({ ...value, agency: '' }));

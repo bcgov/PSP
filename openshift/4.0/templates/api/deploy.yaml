@@ -40,6 +40,10 @@ parameters:
     description: "The image tag that will be used for this deployment.
       This provides a way to setup an environment for other branches."
     value: "dev"
+  - name: TIME_ZONE
+    displayName: "Time Zone"
+    description: "The time zone of the pod."
+    value: "America/Los_Angeles"
 
   - name: APP_DOMAIN
     displayName: "Application Hostname"
@@ -266,6 +270,22 @@ objects:
     stringData:
       CHES_USERNAME: ${CHES_USERNAME}
       CHES_PASSWORD: ${CHES_PASSWORD}
+
+    # LTSA configuration secrets.
+    - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      annotations:
+        description: "LTSA client secrets"
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}-ltsa${INSTANCE}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
+    type: Opaque
+    stringData:
       MY_LTSA_USERNAME: ${MY_LTSA_USERNAME}
       MY_LTSA_PASSWORD: ${MY_LTSA_PASSWORD}
       INTEGRATOR_USERNAME: ${INTEGRATOR_USERNAME}
@@ -384,6 +404,8 @@ objects:
                   value: ${LIVENESS_PATH}
                 - name: HealthChecks__ReadyPath
                   value: ${READINESS_PATH}
+                - name: TZ
+                  value: ${TIME_ZONE}
                 - name: ConnectionStrings__PIMS
                   valueFrom:
                     configMapKeyRef:

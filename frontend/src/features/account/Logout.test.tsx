@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, render, wait } from '@testing-library/react';
+import { cleanup, render, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { useConfiguration } from 'hooks/useConfiguration';
 import React from 'react';
@@ -49,6 +49,6 @@ describe('logout', () => {
       </Router>,
     );
 
-    await wait(() => expect(window.location.replace).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(window.location.replace).toHaveBeenCalledTimes(1));
   });
 });

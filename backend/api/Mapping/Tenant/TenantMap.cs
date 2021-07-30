@@ -1,5 +1,6 @@
 using Mapster;
 using Microsoft.Extensions.Options;
+using Pims.Dal;
 using System.Text.Json;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Models.Tenant;
@@ -10,6 +11,7 @@ namespace Pims.Api.Mapping.Tenant
     {
         #region Variables
         private readonly JsonSerializerOptions _serializerOptions;
+        private readonly PimsOptions _pimsOptions;
         #endregion
 
         #region Constructors
@@ -17,9 +19,11 @@ namespace Pims.Api.Mapping.Tenant
         /// Creates a new instance of a TenantMap, initializes with specified arguments.
         /// </summary>
         /// <param name="serializerOptions"></param>
-        public TenantMap(IOptions<JsonSerializerOptions> serializerOptions)
+        /// <param name="pimsOptions"></param>
+        public TenantMap(IOptions<JsonSerializerOptions> serializerOptions, IOptions<PimsOptions> pimsOptions)
         {
             _serializerOptions = serializerOptions.Value;
+            _pimsOptions = pimsOptions.Value;
         }
         #endregion
 
@@ -32,6 +36,8 @@ namespace Pims.Api.Mapping.Tenant
                 .AfterMapping((src, dest) =>
                 {
                     dest.Settings = JsonSerializer.Deserialize<Model.TenantSettingsModel>(src.Settings ?? "{}", _serializerOptions);
+                    // Override if in environmental configuration.
+                    dest.Settings.HelpDeskEmail = _pimsOptions.HelpDeskEmail ?? dest.Settings.HelpDeskEmail;
                 })
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 

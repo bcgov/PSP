@@ -1,9 +1,11 @@
+using Pims.Api.Models;
+
 namespace Pims.Api.Areas.Keycloak.Models.User.Update
 {
     /// <summary>
     /// RoleModel class, provides a model that represents a role.
     /// </summary>
-    public class RoleModel : BaseModel
+    public class RoleModel : BaseAppModel
     {
         #region Properties
         /// <summary>

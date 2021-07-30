@@ -61,7 +61,7 @@ namespace Pims.Dal.Test.Services.Admin
             var buildings = init.CreateBuildings(parcel, 1, 20);
             buildings.Next(0).Location.Y = 50;
             buildings.Next(0).Location.X = 25;
-            buildings.Next(1).Agency = init.Agencies.Find(3);
+            buildings.Next(1).Agency = init.Agencies.Find(3L);
             buildings.Next(1).AgencyId = 3;
             buildings.Next(2).ClassificationId = 2;
             buildings.Next(3).Description = "-DescriptionTest-";
@@ -180,6 +180,51 @@ namespace Pims.Dal.Test.Services.Admin
             Assert.Equal(building, result, new ShallowPropertyCompare());
             Assert.True(result.IsSensitive);
         }
+
+        [Fact]
+        public void Get_BuildingByPid_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            using var init = helper.InitializeDatabase(user);
+            var parcel = init.CreateParcel(1);
+            parcel.PID = 111111111;
+            var building = init.CreateBuilding(parcel, 2);
+            init.AddAndSaveChanges(building);
+
+            var service = helper.CreateService<BuildingService>(user);
+
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() =>
+                service.GetByPid(111111111));
+        }
+
+        [Fact]
+        public void Get_BuildingByPid_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
+
+            using var init = helper.InitializeDatabase(user);
+            var parcel = init.CreateParcel(1);
+            parcel.PID = 111111111;
+            var building = init.CreateBuilding(parcel, 2);
+            init.AddAndSaveChanges(building);
+
+            var service = helper.CreateService<BuildingService>(user);
+
+            // Act
+            var result = service.GetByPid(111111111);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(building, result.First(), new ShallowPropertyCompare());
+        }
+
+
         #endregion
 
         #region Delete Building

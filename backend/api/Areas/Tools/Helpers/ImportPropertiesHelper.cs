@@ -22,6 +22,7 @@ namespace Pims.Api.Areas.Tools.Helpers
         private readonly IList<Entity.BuildingPredominateUse> _buildingPredominateUses;
         private readonly IList<Entity.PropertyClassification> _propertyClassifications;
         private readonly IList<Entity.Agency> _agencies;
+        private readonly IList<Entity.Province> _provinces;
         private readonly Dictionary<string, string> _agencyCodeCorrections = new Dictionary<string, string>() { { "BT", "BCT" }, { "ICOB", "ICBC" } }; // TODO: Move logic to converter tool
         #endregion
 
@@ -41,6 +42,7 @@ namespace Pims.Api.Areas.Tools.Helpers
             _buildingPredominateUses = _pimsAdminService.BuildingPredominateUse.GetAll().ToList();
             _propertyClassifications = _pimsAdminService.PropertyClassification.GetAll().ToList();
             _agencies = _pimsAdminService.Agency.GetAll().ToList();
+            _provinces = _pimsAdminService.Province.GetAll().ToList();
         }
         #endregion
 
@@ -84,7 +86,7 @@ namespace Pims.Api.Areas.Tools.Helpers
                     case "land":
                         var parcel = ExceptionHelper.HandleKeyNotFound(() => _pimsAdminService.Parcel.GetByPid(pid));
                         // Only delete the parcel if it exists in inventory.
-                        if (parcel != null && (updatedBefore == null || parcel.UpdatedOn == null || parcel.UpdatedOn < updatedBefore))
+                        if (parcel != null && (updatedBefore == null || parcel.UpdatedOn < updatedBefore))
                         {
                             _pimsAdminService.Parcel.Remove(parcel);
                             results.Add(parcel);
@@ -103,11 +105,11 @@ namespace Pims.Api.Areas.Tools.Helpers
                             // Only delete the building if it exists in inventory
                             // If it hasn't been updated after the 'updatedBefore' date
                             // If the building exists on the specified 'pid' or the building address matches
-                            if ((updatedBefore == null || building.UpdatedOn == null || building.UpdatedOn < updatedBefore)
+                            if ((updatedBefore == null || building.UpdatedOn < updatedBefore)
                                 && ((!building.Parcels.Any()
                                     && building.Address.Address1 == property.CivicAddress
                                     && building.Address.AdministrativeArea == property.City)
-                                || building.Parcels.Any(p => p.Parcel.PID == pid)))
+                                || building.Parcels.Any(p => p.PID == pid)))
                             {
                                 _pimsAdminService.Building.Remove(building);
                                 results.Add(building);
@@ -222,8 +224,9 @@ namespace Pims.Api.Areas.Tools.Helpers
         /// Massages some of the data to align with expected values.
         /// </summary>
         /// <param name="properties"></param>
+        /// <param name="addToAgency">Whether to override the owning agency with the specified agency.</param>
         /// <returns></returns>
-        public IEnumerable<Entity.Parcel> AddUpdateProperties(IEnumerable<Model.ImportPropertyModel> properties)
+        public IEnumerable<Entity.Parcel> AddUpdateProperties(IEnumerable<Model.ImportPropertyModel> properties, string addToAgency = null)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
@@ -239,7 +242,7 @@ namespace Pims.Api.Areas.Tools.Helpers
                 // Fix postal.
                 property.Postal = new string(property.Postal?.Replace(" ", "").Take(6).ToArray());
 
-                var agency = GetOrCreateAgency(property);
+                var agency = String.IsNullOrWhiteSpace(addToAgency) ? GetOrCreateAgency(property) : _agencies.FirstOrDefault(a => a.Code == addToAgency) ?? throw new KeyNotFoundException($"Agency does not exist '{property.AgencyCode}'");
 
                 if (String.Compare(property.PropertyType, "Land") == 0)
                 {
@@ -314,7 +317,7 @@ namespace Pims.Api.Areas.Tools.Helpers
         private Entity.Parcel AddUpdateParcel(Model.ImportPropertyModel property, int pid, Entity.Agency agency)
         {
             var p_e = ExceptionHelper.HandleKeyNotFoundWithDefault(() => _pimsAdminService.Parcel.GetByPidWithoutTracking(pid));
-            p_e.PropertyTypeId = (int)Entity.PropertyTypes.Land;
+            p_e.PropertyTypeId = (long)Entity.PropertyTypes.Land;
             var fiscalYear = property.FiscalYear;
             var evaluationDate = new DateTime(fiscalYear, 1, 1); // Defaulting to Jan 1st because SIS data doesn't have the actual date.
 
@@ -354,13 +357,14 @@ namespace Pims.Api.Areas.Tools.Helpers
 
                 // TODO: Handle this issue more gracefully.
                 var city = _pimsAdminService.AdministrativeArea.Get(property.City.ConvertToUTF8()) ?? throw new InvalidOperationException($"Administrative area '{property.City}' does not exist in the datasource.");
+                var province = _provinces.First(p => p.Code == "BC");
 
                 // Add/Update the address.
                 if (p_e.AddressId == 0)
                 {
                     _logger.LogDebug($"Adding address for parcel '{property.PID}'.");
 
-                    var address = new Entity.Address(property.CivicAddress.ConvertToUTF8(), null, city.Name, "BC", property.Postal.ConvertToUTF8());
+                    var address = new Entity.Address(property.CivicAddress.ConvertToUTF8(), null, city.Name, province.Id, property.Postal.ConvertToUTF8());
                     p_e.Address = address;
                 }
                 else
@@ -430,11 +434,11 @@ namespace Pims.Api.Areas.Tools.Helpers
             if (b_e.Id == 0 || fiscalNetBook == null || evaluationAssessed == null)
             {
                 // Copy properties over to entity.
-                b_e.PropertyTypeId = (int)Entity.PropertyTypes.Building;
+                b_e.PropertyTypeId = (long)Entity.PropertyTypes.Building;
                 b_e.AgencyId = agency?.Id ?? throw new KeyNotFoundException($"Agency '{property.Agency}' does not exist.");
                 b_e.Agency = agency;
-                if (!b_e.Parcels.Any(pb => pb.ParcelId == parcel.Id))
-                    b_e.Parcels.Add(new Entity.ParcelBuilding(parcel, b_e) { Parcel = null, Building = null });
+                if (!b_e.Parcels.Any(pb => pb.Id == parcel.Id))
+                    b_e.ParcelsManyToMany.Add(new Entity.ParcelBuilding() { ParcelId = parcel.Id, Building = b_e });
                 b_e.Name = name;
                 b_e.Description = property.Description.ConvertToUTF8(false);
                 var lng = property.Longitude != 0 ? property.Longitude : b_e.Location?.X ?? 0; // This is to stop data from some imports resulting in removing the lat/long.
@@ -467,7 +471,7 @@ namespace Pims.Api.Areas.Tools.Helpers
                 if (build_type == null)
                 {
                     var max_id = _buildingConstructionTypes.Max(pc => pc.Id) + 1;
-                    build_type = new Entity.BuildingConstructionType(max_id, property.BuildingConstructionType);
+                    build_type = new Entity.BuildingConstructionType(property.BuildingConstructionType) { Id = max_id };
                     _pimsAdminService.BuildingConstructionType.Add(build_type);
                     _buildingConstructionTypes.Add(build_type);
                 }
@@ -476,26 +480,25 @@ namespace Pims.Api.Areas.Tools.Helpers
                 if (build_use == null)
                 {
                     var max_id = _buildingPredominateUses.Max(pc => pc.Id) + 1;
-                    build_use = new Entity.BuildingPredominateUse(max_id, property.BuildingPredominateUse);
+                    build_use = new Entity.BuildingPredominateUse(property.BuildingPredominateUse) { Id = max_id };
                     _pimsAdminService.BuildingPredominateUse.Add(build_use);
                     _buildingPredominateUses.Add(build_use);
                 }
 
                 b_e.BuildingConstructionTypeId = build_type.Id;
-                b_e.BuildingConstructionType = build_type;
+                b_e.BuildingOccupantTypeId = 1;
                 b_e.BuildingPredominateUseId = build_use.Id;
-                b_e.BuildingPredominateUse = build_use;
-
 
                 // TODO: Handle this issue more gracefully.
                 var city = _pimsAdminService.AdministrativeArea.Get(property.City.ConvertToUTF8()) ?? throw new InvalidOperationException($"Administrative area '{property.City}' does not exist in the datasource.");
+                var province = _provinces.First(p => p.Code == "BC");
 
                 // Add/Update the address.
                 if (b_e.AddressId == 0)
                 {
                     _logger.LogDebug($"Adding address for building '{property.PID}'-''{property.LocalId}'.");
 
-                    var address = new Entity.Address(property.CivicAddress.ConvertToUTF8(), null, city.Name, "BC", property.Postal.ConvertToUTF8());
+                    var address = new Entity.Address(property.CivicAddress.ConvertToUTF8(), null, city.Name, province.Id, property.Postal.ConvertToUTF8());
                     b_e.Address = address;
                 }
                 else

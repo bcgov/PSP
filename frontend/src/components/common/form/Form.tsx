@@ -2,19 +2,20 @@ import './Form.scss';
 
 import { useFormikContext } from 'formik';
 import React from 'react';
-import { Form as FormBase } from 'react-bootstrap';
+import FormBase from 'react-bootstrap/Form';
 
 type FormProps = {
   /** Adds a custom class to the <Form> component */
   className?: string;
   children?: React.ReactNode;
+  autoComplete?: string;
 };
 
 /**
  * Formik-connected form control that provides thin wrappers for React-Bootstrap form controls;
  * e.g. <Form.Row>, <Form.Group>, <Form.Control>, etc.
  */
-const Form = ({ className, children, ...rest }: FormProps) => {
+const Form = ({ className, children, autoComplete, ...rest }: FormProps) => {
   const { handleSubmit } = useFormikContext();
   return (
     <FormBase noValidate className={className} onSubmit={handleSubmit} {...(rest as any)}>

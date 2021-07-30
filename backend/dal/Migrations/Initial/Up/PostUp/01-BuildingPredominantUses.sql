@@ -1,36 +1,32 @@
-PRINT 'Adding BuildingPredominateUses'
+PRINT N'Adding [PIMS_BUILDING_PREDOMINATE_USE]'
 
-INSERT INTO dbo.[BuildingPredominateUses] (
-    [Id]
-    , [Name]
-    , [IsDisabled]
+INSERT INTO dbo.[PIMS_BUILDING_PREDOMINATE_USE] (
+    [BUILDING_PREDOMINATE_USE_ID]
+    , [NAME]
+    , [IS_DISABLED]
 ) VALUES (
-    0
+    1
     , 'Religious'
     , 0
 ), (
-    1
+    2
     , 'Research & Development Facility'
     , 0
 ), (
-    2
+    3
     , 'Residential Detached'
     , 0
 ), (
-    3
+    4
     , 'Residential Multi'
     , 0
 ), (
-    4
+    5
     , 'Retail'
     , 0
 ), (
-    5
-    , 'Senior Housing (Assisted Living / Skilled Nursing)'
-    , 0
-), (
     6
-    , 'Shelters / Orphanages / Children’s Homes / Halfway Homes'
+    , 'Shelters / Orphanages / Children''s Homes / Halfway Homes'
     , 0
 ), (
     7
@@ -54,22 +50,37 @@ INSERT INTO dbo.[BuildingPredominateUses] (
     , 0
 ), (
     12
-    , 'Training Center'
+    , 'University / College'
     , 0
 ), (
     13
-    , 'Transportation (Airport / Rail / Bus station)'
-    , 0
-), (
-    14
-    , 'University / Collect'
-    , 0
-), (
-    15
     , 'Warehouse'
     , 0
 ), (
-    16
+    14
     , 'Weigh Station'
     , 0
+), (
+    15
+    , 'Marina'
+    , 0
+), (
+    16
+    , 'Jail / Prison'
+    , 0
+), (
+    17
+    , 'Community / Recreation Centre'
+    , 0
+), (
+    18
+    , 'Dormitory / Residence Halls'
+    , 0
 )
+
+-- Update sequence so that it works with the latest data.
+ALTER SEQUENCE dbo.[PIMS_BUILDING_PREDOMINATE_USE_ID_SEQ]
+RESTART WITH 19
+
+
+

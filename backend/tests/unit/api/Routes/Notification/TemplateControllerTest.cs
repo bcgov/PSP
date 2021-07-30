@@ -107,19 +107,6 @@ namespace Pims.Api.Test.Routes.Project
             endpoint.HasDelete("{id}");
             endpoint.HasPermissions(Permissions.SystemAdmin);
         }
-
-        [Fact]
-        public void SendNotificationAsync_Route()
-        {
-            // Arrange
-            var endpoint = typeof(TemplateController).FindMethod(nameof(TemplateController.SendProjectNotificationAsync), typeof(int), typeof(string), typeof(string), typeof(string), typeof(int));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost("{templateId}/projects/{projectId}");
-            endpoint.HasPermissions(Permissions.SystemAdmin);
-        }
         #endregion
     }
 }

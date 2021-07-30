@@ -10,7 +10,7 @@ namespace Pims.Dal.Services.Admin
     public interface IParcelService : IBaseService<Parcel>
     {
         Paged<Parcel> Get(ParcelFilter filter);
-        Parcel Get(int id);
+        Parcel Get(long id);
         Parcel GetByPid(int pid);
         Parcel GetByPidWithoutTracking(int pid);
         IEnumerable<Parcel> Add(IEnumerable<Parcel> parcels);

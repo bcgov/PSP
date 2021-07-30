@@ -76,10 +76,10 @@ export const useUsers = () => {
    * @return the detailed user.
    */
   const fetchDetail = useCallback(
-    async (id: string): Promise<IUserDetails> => {
+    async (key: string): Promise<IUserDetails> => {
       dispatch(logRequest(actionTypes.GET_USER_DETAIL));
       dispatch(showLoading());
-      return getUser(id)
+      return getUser(key)
         .then((response: AxiosResponse) => {
           dispatch(logSuccess({ name: actionTypes.GET_USER_DETAIL }));
           dispatch(storeUserDetails(response.data));
@@ -105,7 +105,7 @@ export const useUsers = () => {
    * @return the updated user.
    */
   const update = useCallback(
-    async (updatedUser: IUserDetails): Promise<AxiosResponse<IUserDetails>> => {
+    async (updatedUser: IUserDetails): Promise<IUserDetails> => {
       const axiosPromise = putUser(updatedUser).then((response: AxiosResponse) => {
         dispatch(updateUser(response.data));
         return Promise.resolve(response);

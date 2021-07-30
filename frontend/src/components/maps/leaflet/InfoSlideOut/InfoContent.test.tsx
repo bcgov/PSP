@@ -4,8 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import { useKeycloak } from '@react-keycloak/web';
 import { render } from '@testing-library/react';
 import * as API from 'constants/API';
+import { Classifications } from 'constants/classifications';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { Workflows } from 'constants/workflows';
 import { createMemoryHistory } from 'history';
 import { IBuilding, IParcel } from 'interfaces';
 import { mockBuilding } from 'mocks/filterDataMock';
@@ -25,7 +25,7 @@ const mockParcelNoSub = {
   pid: '000-000-000',
   zoning: '',
   zoningPotential: '',
-  classificationId: 1,
+  classificationId: Classifications.SurplusActive,
   encumbranceReason: '',
   agencyId: '',
   isSensitive: false,
@@ -69,10 +69,9 @@ export const mockParcel = {
   id: 1,
   pid: '000-000-000',
   pin: '',
-  projectNumber: '',
   zoning: '',
   zoningPotential: '',
-  classificationId: 1,
+  classificationId: Classifications.SurplusActive,
   encumbranceReason: '',
   agencyId: '',
   isSensitive: false,
@@ -114,9 +113,6 @@ export const mockParcel = {
   agencyFullName: 'Ministry of Advanced Education',
   subAgency: 'KPU',
   subAgencyFullName: 'Kwantlen Polytechnic University',
-  projectNumbers: ['SPP-00001'],
-  projectStatus: 'In ERP',
-  projectWorkflow: Workflows.ERP,
 } as IParcel;
 
 const lCodes = {
@@ -179,12 +175,12 @@ describe('InfoContent View functionality', () => {
     });
   });
   it('InfoContent renders correctly', () => {
-    const { container } = render(ContentComponent(mockParcel, PropertyTypes.PARCEL, true));
+    const { container } = render(ContentComponent(mockParcel, PropertyTypes.Parcel, true));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('Shows all parcel information when can view', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.PARCEL, true));
+    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Parcel, true));
     expect(getByText('Parcel Identification')).toBeVisible();
     //Identification information
     expect(getByText('000-000-000')).toBeVisible();
@@ -201,46 +197,22 @@ describe('InfoContent View functionality', () => {
   });
 
   it('Lot size formats correctly', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.PARCEL, true));
+    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Parcel, true));
     expect(getByText('123 hectares')).toBeVisible();
   });
 
   it('Assessed value formats correctly', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.PARCEL, true));
+    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Parcel, true));
     expect(getByText('$10,000')).toBeVisible();
   });
 
-  it('Shows project status if can view and property is in project', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.PARCEL, true));
-    expect(getByText('Property is in Enhanced Referral Process')).toBeVisible();
-    expect(getByText('In ERP')).toBeVisible();
-  });
-
-  it('Does not show project status block if not in a project', () => {
-    const { queryByText } = render(ContentComponent(mockParcelNoSub, PropertyTypes.PARCEL, true));
-    expect(queryByText('Status: ')).toBeNull();
-  });
-
-  it('Shows limited parcel information when cannot view', () => {
-    const { getByText, queryByText } = render(
-      ContentComponent(mockParcel, PropertyTypes.PARCEL, false),
-    );
-    expect(queryByText('test name')).toBeNull();
-    expect(queryByText('Ministry of Advanced Education')).toBeNull();
-    expect(queryByText('Kwantlen Polytechnic University')).toBeNull();
-    //contact SRES block is shown
-    expect(getByText('For more information', { exact: false })).toBeVisible();
-    //project status is hidden
-    expect(queryByText('Status: ')).toBeNull();
-  });
-
   it('Correct label if no sub agency', () => {
-    const { getByText } = render(ContentComponent(mockParcelNoSub, PropertyTypes.PARCEL, true));
+    const { getByText } = render(ContentComponent(mockParcelNoSub, PropertyTypes.Parcel, true));
     expect(getByText('Owning ministry')).toBeVisible();
   });
 
   it('Shows all building information when can view', () => {
-    const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.BUILDING, true));
+    const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.Building, true));
     expect(getByText('Building Identification')).toBeVisible();
     //Identification information
     expect(getByText('test name')).toBeVisible();
@@ -254,24 +226,10 @@ describe('InfoContent View functionality', () => {
     //Building Attributes
     expect(getByText('University/College')).toBeVisible();
     expect(getByText('100%')).toBeVisible();
-    //Project status block
-    expect(getByText('Property is on the Surplus Properties List')).toBeVisible();
-    expect(getByText('On Market')).toBeVisible();
   });
 
   it('Building area formated correctly', () => {
-    const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.BUILDING, true));
+    const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.Building, true));
     expect(getByText('100 sq. metres')).toBeVisible();
-  });
-
-  it('Shows limited building information when cannot view', () => {
-    const { getByText, queryByText } = render(
-      ContentComponent(mockBuilding, PropertyTypes.BUILDING, false),
-    );
-    expect(queryByText('test name')).toBeNull();
-    expect(queryByText('Ministry of Advanced Education')).toBeNull();
-    expect(queryByText('Kwantlen Polytechnic University')).toBeNull();
-    //contact SRES block is shown
-    expect(getByText('For more information', { exact: false })).toBeVisible();
   });
 });

@@ -13,7 +13,7 @@ global.fetch = jest.fn(
     Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
       Response
     >,
-);
+) as any;
 
 const testRender = () =>
   render(

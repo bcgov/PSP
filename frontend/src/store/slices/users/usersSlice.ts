@@ -13,7 +13,8 @@ export const initialState: IUsersState = {
   sort: { username: 'asc' },
   pageIndex: 0,
   userDetail: {
-    id: '',
+    id: 0,
+    key: '',
     username: '',
     displayName: '',
     firstName: '',
@@ -23,7 +24,7 @@ export const initialState: IUsersState = {
     agencies: [],
     roles: [],
     createdOn: '',
-    rowVersion: '',
+    rowVersion: 1,
   },
 };
 /**
@@ -46,6 +47,7 @@ export const usersSlice = createSlice({
         ),
       ];
       state.pagedUsers.items = items;
+      state.userDetail = action.payload;
     },
     setUsersFilter(state: IUsersState, action: PayloadAction<IUsersFilter>) {
       state.filter = action.payload;

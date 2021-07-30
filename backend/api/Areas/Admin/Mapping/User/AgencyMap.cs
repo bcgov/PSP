@@ -9,18 +9,22 @@ namespace Pims.Api.Areas.Admin.Mapping.User
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.Agency, Model.AgencyModel>()
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.ParentId, src => src.ParentId)
-                .Inherits<Entity.CodeEntity<int>, Api.Models.CodeModel<int>>();
+                .Inherits<Entity.CodeEntity, Api.Models.CodeModel>();
 
             config.NewConfig<Model.AgencyModel, Entity.Agency>()
+                .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.ParentId, src => src.ParentId)
-                .Inherits<Api.Models.CodeModel<int>, Entity.CodeEntity<int>>();
+                .Inherits<Api.Models.CodeModel, Entity.CodeEntity>();
 
 
             config.NewConfig<Entity.UserAgency, Model.AgencyModel>()
-                .Map(dest => dest.Id, src => src.AgencyId);
+                .Map(dest => dest.Id, src => src.AgencyId)
+                .Map(dest => dest.ParentId, src => src.Agency.ParentId)
+                .Map(dest => dest.Name, src => src.Agency.Name);
 
             config.NewConfig<Model.AgencyModel, Entity.UserAgency>()
                 .Map(dest => dest.AgencyId, src => src.Id);

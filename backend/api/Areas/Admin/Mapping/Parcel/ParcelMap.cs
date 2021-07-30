@@ -33,7 +33,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Parcel
                 .Map(dest => dest.Buildings, src => src.Buildings)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
 
             config.NewConfig<Model.ParcelModel, Entity.Parcel>()
@@ -56,7 +56,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Parcel
                 .Map(dest => dest.Buildings, src => src.Buildings)
                 .Map(dest => dest.Evaluations, src => src.Evaluations)
                 .Map(dest => dest.Fiscals, src => src.Fiscals)
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
 
             config.NewConfig<Model.ParcelModel, NetTopologySuite.Geometries.Point>()
                 .ConstructUsing(src => Dal.Helpers.GeometryHelper.CreatePoint(src.Longitude, src.Latitude));

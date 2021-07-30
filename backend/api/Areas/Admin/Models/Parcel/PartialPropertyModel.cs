@@ -2,14 +2,14 @@ using Model = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Admin.Models.Parcel
 {
-    public class PartialPropertyModel : Model.BaseModel
+    public class PartialPropertyModel : Model.BaseAppModel
     {
         #region Properties
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int StatusId { get; set; }
+        public long StatusId { get; set; }
 
-        public int ClassificationId { get; set; }
+        public long ClassificationId { get; set; }
 
         public double Latitude { get; set; }
 

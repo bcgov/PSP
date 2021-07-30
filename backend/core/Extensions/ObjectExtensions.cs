@@ -62,5 +62,17 @@ namespace Pims.Core.Extensions
 
             return destination;
         }
+
+        /// <summary>
+        /// Checks if the 'value' is in the specified 'set'.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="set"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static bool IsIn<T>(this T value, params T[] set)
+        {
+            return set.Contains(value);
+        }
     }
 }

@@ -1,33 +1,15 @@
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// ProjectNumber class, provides an entity for the datamodel to manage project numbers.
+    /// ProjectNumber class, provides an entity for the datamodel to fetch project number sequence values.
     /// </summary>
-    public class ProjectNumber : BaseEntity
+    public class ProjectNumber
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key provides a unique identity for the project.
+        /// get/set - The Value of the next number in the sequence.
         /// </summary>
-        public int Id { get; set; }
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// Create a new instance of a ProjectNumber class.
-        /// </summary>
-        public ProjectNumber() { }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// Returns the `Id` property to identify this project number.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return this.Id.ToString();
-        }
+        public int Value { get; set; }
         #endregion
     }
 }

@@ -47,7 +47,6 @@ const defaultFilter = {
   minLotSize: '',
   name: '',
   pid: '',
-  projectNumber: '',
   propertyType: '',
   rentableArea: '',
   searchBy: 'address',

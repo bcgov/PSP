@@ -10,10 +10,10 @@ Update the configuration file and set the appropriate parameters.
 **Example**
 
 ```conf
-BUILDIMAGE_NAME=nodejs-10-rhel7
-BUILDIMAGE_TAG=1-30
+BUILDIMAGE_NAME=nodejs-14-ubi8
+BUILDIMAGE_TAG=1-35
 RUNTIMEIMAGE_NAME=nginx-runtime
-RUNTIMEIMAGE_TAG=latest
+RUNTIMEIMAGE_TAG=dev
 GIT_URL=https://github.com/bcgov/PSP.git
 GIT_REF=dev
 SOURCE_CONTEXT_DIR=frontend
@@ -21,6 +21,18 @@ OUTPUT_IMAGE_TAG=latest
 CPU_LIMIT=1
 MEMORY_LIMIT=6Gi
 ```
+
+:warning: **IMPORTANT -** The RUNTIMEIMAGE_TAG parameter **must match** the nginx-runtime image for the environment you are setting up (DEV, TEST or UAT)
+
+```conf
+# build.test.env
+RUNTIMEIMAGE_TAG=test
+
+# build.uat.env
+RUNTIMEIMAGE_TAG=uat
+```
+
+> Note that we don't have a `build.prod.env` here. That's because the PROD environment gets updated by tagging a properly tested and vetted UAT image instead of re-building from source code.
 
 Create the React frontend build and save the template.
 

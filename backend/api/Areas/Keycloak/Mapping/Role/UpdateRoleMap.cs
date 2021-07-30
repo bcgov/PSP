@@ -1,5 +1,5 @@
 using Mapster;
-using System;
+using Pims.Api.Models;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Keycloak.Models.Role;
 
@@ -13,20 +13,16 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.BaseEntity, Model.Update.BaseModel>();
+                .Inherits<Entity.BaseAppEntity, BaseAppModel>();
 
             config.NewConfig<Model.Update.RoleModel, Entity.Role>()
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Model.Update.BaseModel, Entity.BaseEntity>();
+                .Inherits<BaseAppModel, Entity.BaseAppEntity>();
 
-
-            config.NewConfig<Entity.BaseEntity, Model.Update.BaseModel>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion == null ? null : Convert.ToBase64String(src.RowVersion));
-
-            config.NewConfig<Model.Update.BaseModel, Entity.BaseEntity>()
-                .Map(dest => dest.RowVersion, src => src.RowVersion == null ? null : Convert.FromBase64String(src.RowVersion));
+            config.NewConfig<Entity.BaseAppEntity, BaseAppModel>()
+                .Map(dest => dest.RowVersion, src => src.RowVersion);
         }
     }
 }

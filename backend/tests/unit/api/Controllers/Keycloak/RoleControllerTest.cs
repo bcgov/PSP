@@ -99,7 +99,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             service.Setup(m => m.GetRoleAsync(It.IsAny<Guid>())).Returns(Task.FromResult(erole));
 
             // Act
-            var result = await controller.GetRoleAsync(erole.Id);
+            var result = await controller.GetRoleAsync(erole.Key);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -125,7 +125,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var model = mapper.Map<Model.Update.RoleModel>(erole);
 
             // Act
-            var result = await controller.UpdateRoleAsync(erole.Id, model);
+            var result = await controller.UpdateRoleAsync(erole.Key, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);

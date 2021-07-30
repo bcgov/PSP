@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Pims.Api.Helpers;
 using Pims.Api.Helpers.Authorization;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Logging;
@@ -90,15 +91,9 @@ namespace Pims.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSerilogging(this.Configuration);
-            var jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                IgnoreNullValues = !String.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:IgnoreNullValues"]) && Boolean.Parse(this.Configuration["Serialization:Json:IgnoreNullValues"]),
-                PropertyNameCaseInsensitive = !String.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:PropertyNameCaseInsensitive"]) && Boolean.Parse(this.Configuration["Serialization:Json:PropertyNameCaseInsensitive"]),
-                PropertyNamingPolicy = this.Configuration["Serialization:Json:PropertyNamingPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null,
-                WriteIndented = !string.IsNullOrWhiteSpace(this.Configuration["Serialization:Json:WriteIndented"]) && Boolean.Parse(this.Configuration["Serialization:Json:WriteIndented"]),
-                Converters = { new JsonStringEnumMemberConverter(JsonNamingPolicy.CamelCase) }
-            };
-            services.AddMapster(jsonSerializerOptions, options =>
+            var jsonSerializerOptions = this.Configuration.GenerateJsonSerializerOptions();
+            var pimsOptions = this.Configuration.GeneratePimsOptions();
+            services.AddMapster(jsonSerializerOptions, pimsOptions, options =>
             {
                 options.Default.IgnoreNonMapped(true);
                 options.Default.IgnoreNullValues(true);

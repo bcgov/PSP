@@ -1,5 +1,6 @@
 export interface IUserInfo {
-  sub: string;
+  id: number;
+  key: string;
   username: string;
   name: string;
   email: string;

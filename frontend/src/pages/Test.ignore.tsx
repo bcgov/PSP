@@ -1,6 +1,8 @@
 import { ENVIRONMENT } from 'constants/environment';
 import * as React from 'react';
-import { Button, ButtonGroup, Container } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Container from 'react-bootstrap/Container';
 import { useDispatch } from 'react-redux';
 
 import download from '../utils/download';

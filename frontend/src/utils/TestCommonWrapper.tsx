@@ -13,7 +13,7 @@ import TestRouterWrapper from './TestRouterWrapper';
 jest.mock('@react-keycloak/web');
 
 interface TestProviderWrapperParams {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   store?: any;
   agencies?: IAgency[];
   roles?: IRole[];
@@ -37,11 +37,15 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
         userInfo: {
           agencies: agencies ?? [1],
           roles: roles ?? [],
+          email: 'test@test.com',
+          name: 'Chester Tester',
         },
         subject: 'test',
+        authenticated: true,
       },
     });
   }
+
   return (
     <TenantProvider>
       <TenantConsumer>

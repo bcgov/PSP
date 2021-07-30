@@ -231,4 +231,25 @@ export const layersTree: ILayerItem[] = [
       },
     ],
   },
+  {
+    key: 'electoral',
+    label: 'Electoral',
+    on: false,
+    nodes: [
+      {
+        key: 'currentElectoralDistricts',
+        label: 'Current Provincial Electoral Districts of British Columbia',
+        on: false,
+        layers: 'pub:WHSE_ADMIN_BOUNDARIES.EBC_PROV_ELECTORAL_DIST_SVW',
+        url:
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_PROV_ELECTORAL_DIST_SVW/ows?',
+        transparent: true,
+        format: 'image/png',
+        zIndex: 4,
+        id: 'currentElectoralDistricts',
+        opacity: 0.5,
+        color: '#da2223',
+      },
+    ],
+  },
 ];

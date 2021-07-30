@@ -6,21 +6,33 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
 {
     public class AgencyMap : IRegister
     {
-
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.Agency, Model.AgencyModel>()
                 .IgnoreNonMapped(true)
-                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.ParentId, src => src.ParentId)
-                .Inherits<Entity.CodeEntity<int>, Api.Models.CodeModel<int>>();
-
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.AgencyModel, Entity.Agency>()
                 .IgnoreNonMapped(true)
-                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.ParentId, src => src.ParentId)
-                .Inherits<Api.Models.CodeModel<int>, Entity.CodeEntity<int>>();
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+
+            config.NewConfig<Entity.UserAgency, Model.AgencyModel>()
+                .IgnoreNonMapped(true)
+                .Map(dest => dest.Id, src => src.AgencyId)
+                .Map(dest => dest.ParentId, src => src.Agency.ParentId)
+                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+
+
+            config.NewConfig<Model.AgencyModel, Entity.UserAgency>()
+                .IgnoreNonMapped(true)
+                .Map(dest => dest.AgencyId, src => src.Id)
+                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }
 }

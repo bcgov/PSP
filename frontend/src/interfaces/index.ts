@@ -1,4 +1,3 @@
-export * from './accessRequests';
 export * from './address';
 export * from './agency';
 export * from './associatedLand';
@@ -7,6 +6,9 @@ export * from './evaluation';
 export * from './fiscal';
 export * from './flatBuilding';
 export * from './flatParcel';
+export * from './IAccessRequest';
+export * from './IApiProperty';
+export * from './IParentParcel';
 export * from './IUsersFilter';
 export * from './leasedLand';
 export * from './leasedLandTypes';

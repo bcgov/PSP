@@ -1,11 +1,19 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// BuildingOccupantType class, provides an entity for the datamodel to manage a list of building occupant types.
     /// </summary>
-    public class BuildingOccupantType : LookupEntity<int>
+    [MotiTable("PIMS_BUILDING_OCCUPANT_TYPE", "BLOCCT")]
+    public class BuildingOccupantType : LookupEntity
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify building occupant type.
+        /// </summary>
+        [Column("BUILDING_OCCUPANT_TYPE_ID")]
+        public override long Id { get; set; }
         #endregion
 
         #region Constructors
@@ -17,9 +25,8 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a BuildingOccupantType class.
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="name"></param>
-        public BuildingOccupantType(int id, string name) : base(id, name)
+        public BuildingOccupantType(string name) : base(name)
         {
         }
         #endregion

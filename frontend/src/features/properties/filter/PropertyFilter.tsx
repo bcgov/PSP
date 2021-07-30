@@ -4,7 +4,6 @@ import { ParentSelect } from 'components/common/form/ParentSelect';
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
 import { TypeaheadField } from 'components/common/form/Typeahead';
-import { FindMorePropertiesButton } from 'components/maps/FindMorePropertiesButton';
 import { TableSort } from 'components/Table/TableSort';
 import { Claims } from 'constants/claims';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
@@ -14,11 +13,10 @@ import useLookupCodes from 'hooks/useLookupCodeHelpers';
 import { useMyAgencies } from 'hooks/useMyAgencies';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useRef, useState } from 'react';
-import { Col } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
-import { FeatureHidden } from 'tenants';
 import { mapLookupCode, mapLookupCodeWithParentString } from 'utils';
 import { mapSelectOptionWithParent } from 'utils';
 import { FilterBarSchema } from 'utils/YupSchema';
@@ -135,7 +133,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     setClear(true);
   };
 
-  const [findMoreOpen, setFindMoreOpen] = useState<boolean>(false);
+  const [findMoreOpen] = useState<boolean>(false);
   const ref = useRef<any>();
 
   return (
@@ -152,23 +150,6 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
       {({ isSubmitting, setFieldValue, values }) => (
         <Form>
           <Form.Row className="map-filter-bar">
-            <FeatureHidden tenant="MOTI">
-              <FindMorePropertiesButton
-                buttonText="Find available surplus properties"
-                onEnter={() => {
-                  setFindMoreOpen(true);
-                  setFieldValue('surplusFilter', true);
-                  setFieldValue('includeAllProperties', true);
-                  !keycloak.hasClaim(Claims.ADMIN_PROPERTIES) &&
-                    setFieldValue('agencies', undefined);
-                }}
-                onExit={() => {
-                  setFindMoreOpen(false);
-                  setFieldValue('surplusFilter', false);
-                }}
-              />
-              <div className="vl"></div>
-            </FeatureHidden>
             <AgencyCol>
               {showAllAgencySelect ? (
                 <PropertyFilterAgencyOptions disabled={findMoreOpen} agencies={agencies} />

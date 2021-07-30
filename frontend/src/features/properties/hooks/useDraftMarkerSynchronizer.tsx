@@ -38,7 +38,7 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
         id: 0,
         name: values.name?.length ? values.name : 'New Parcel',
         propertyTypeId:
-          values.parcelId !== undefined ? PropertyTypes.DRAFT_BUILDING : PropertyTypes.DRAFT_PARCEL,
+          values.parcelId !== undefined ? PropertyTypes.DraftBuilding : PropertyTypes.DraftParcel,
       },
     },
   ];
@@ -57,7 +57,7 @@ const useDraftMarkerSynchronizer = (nameSpace: string) => {
       properties.filter(
         (property: PointFeature) =>
           property.properties.propertyTypeId !== undefined &&
-          [PropertyTypes.BUILDING, PropertyTypes.PARCEL].includes(
+          [PropertyTypes.Building, PropertyTypes.Parcel].includes(
             property.properties.propertyTypeId,
           ),
       ),

@@ -64,11 +64,15 @@ namespace Pims.Geocoder.Extensions
                     {
                         props[key].SetValue(result, Int32.Parse(p.Value));
                     }
+                    else if (props[key].PropertyType == typeof(long))
+                    {
+                        props[key].SetValue(result, long.Parse(p.Value));
+                    }
                     else if (props[key].PropertyType == typeof(bool))
                     {
                         props[key].SetValue(result, Boolean.Parse(p.Value));
                     }
-                    else if (props[key].PropertyType == typeof(double))
+                    else if (props[key].PropertyType == typeof(double) || props[key].PropertyType == typeof(double?))
                     {
                         props[key].SetValue(result, Double.Parse(p.Value));
                     }

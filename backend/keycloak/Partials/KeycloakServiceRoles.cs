@@ -16,13 +16,13 @@ namespace Pims.Keycloak
         #region Methods
         #region By ID
         /// <summary>
-        /// Get the role for the specified 'id'.
+        /// Get the role for the specified 'key'.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel> GetRoleAsync(Guid id)
+        public async Task<Models.RoleModel> GetRoleAsync(Guid key)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{id}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{key}");
 
             return await response.HandleResponseAsync<Models.RoleModel>();
         }
@@ -44,78 +44,78 @@ namespace Pims.Keycloak
         /// <summary>
         /// Delete the specified role.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public async Task<Guid> DeleteRoleAsync(Guid id)
+        public async Task<Guid> DeleteRoleAsync(Guid key)
         {
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/roles-by-id/{id}");
+            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/roles-by-id/{key}");
 
-            return response.HandleResponse(id);
+            return response.HandleResponse(key);
         }
 
         /// <summary>
         /// Create a new composite role.
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="parentKey"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> CreateCompositeRolesAsync(Guid parentId, Models.RoleModel[] roles)
+        public async Task<Models.RoleModel[]> CreateCompositeRolesAsync(Guid parentKey, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentId}/composites", content);
+            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites", content);
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Get an array of composite roles for the parent role with the specified 'parentId'.
+        /// Get an array of composite roles for the parent role with the specified 'parentKey'.
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="parentKey"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetCompositeRolesAsync(Guid parentId)
+        public async Task<Models.RoleModel[]> GetCompositeRolesAsync(Guid parentKey)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentId}/composites");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Delete the composite roles for the parent role with the specified 'parentId'.
+        /// Delete the composite roles for the parent role with the specified 'parentKey'.
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="parentKey"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> DeleteCompositeRolesAsync(Guid parentId, Models.RoleModel[] roles)
+        public async Task<Models.RoleModel[]> DeleteCompositeRolesAsync(Guid parentKey, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentId}/composites", content);
+            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites", content);
 
             return response.HandleResponse(roles);
         }
 
         /// <summary>
-        /// Get an array of composite roles for the parent with the specified 'parentId' within the client for the specified 'clientName'.
+        /// Get an array of composite roles for the parent with the specified 'parentKey' within the client for the specified 'clientName'.
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="parentKey"></param>
         /// <param name="clientName"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetClientCompositeRolesAsync(Guid parentId, string clientName)
+        public async Task<Models.RoleModel[]> GetClientCompositeRolesAsync(Guid parentKey, string clientName)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentId}/composites/clients/{clientName}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites/clients/{clientName}");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Get an array of composite roles for the parent with the specified 'parentId' within the realm.
+        /// Get an array of composite roles for the parent with the specified 'parentKey' within the realm.
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="parentKey"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetRealmCompositeRolesAsync(Guid parentId)
+        public async Task<Models.RoleModel[]> GetRealmCompositeRolesAsync(Guid parentKey)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentId}/composites/realm");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles-by-id/{parentKey}/composites/realm");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
@@ -271,85 +271,85 @@ namespace Pims.Keycloak
 
         #region Client
         /// <summary>
-        /// Get an array of roles for the client specified by the 'clientId'.
+        /// Get an array of roles for the client specified by the 'clientKey'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetRolesAsync(Guid clientId)
+        public async Task<Models.RoleModel[]> GetRolesAsync(Guid clientKey)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Get the role specified by the 'name', within the client specified by the 'clientId'
+        /// Get the role specified by the 'name', within the client specified by the 'clientKey'
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel> GetRoleAsync(Guid clientId, string name)
+        public async Task<Models.RoleModel> GetRoleAsync(Guid clientKey, string name)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{name}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{name}");
 
             return await response.HandleResponseAsync<Models.RoleModel>();
         }
 
         /// <summary>
-        /// Create a new role within the client specified by the 'clientId'.
+        /// Create a new role within the client specified by the 'clientKey'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel> CreateRoleAsync(Guid clientId, Models.RoleModel role)
+        public async Task<Models.RoleModel> CreateRoleAsync(Guid clientKey, Models.RoleModel role)
         {
             var json = role.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles", content);
+            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles", content);
 
             return await response.HandleResponseAsync<Models.RoleModel>();
         }
 
         /// <summary>
-        /// Update the role within the client specified by the 'clientId'.
+        /// Update the role within the client specified by the 'clientKey'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel> UpdateRoleAsync(Guid clientId, Models.RoleModel role)
+        public async Task<Models.RoleModel> UpdateRoleAsync(Guid clientKey, Models.RoleModel role)
         {
             var json = role.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PutAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{role.Name}", content);
+            var response = await _client.PutAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{role.Name}", content);
 
             return response.HandleResponse(role);
         }
 
         /// <summary>
-        /// Delete the role specified by the 'name' within the client specified by the 'clientId'.
+        /// Delete the role specified by the 'name' within the client specified by the 'clientKey'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public async Task<string> DeleteRoleAsync(Guid clientId, string name)
+        public async Task<string> DeleteRoleAsync(Guid clientKey, string name)
         {
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{name}");
+            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{name}");
 
             return response.HandleResponse(name);
         }
 
         /// <summary>
-        /// Create a new composite role within the client specified by the 'clientId', the belongs to the role specified by the 'parentName'.
+        /// Create a new composite role within the client specified by the 'clientKey', the belongs to the role specified by the 'parentName'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel> CreateCompositeRoleAsync(Guid clientId, string parentName, Models.RoleModel role)
+        public async Task<Models.RoleModel> CreateCompositeRoleAsync(Guid clientKey, string parentName, Models.RoleModel role)
         {
             var json = role.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{parentName}/composites", content);
+            var response = await _client.PostAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites", content);
 
             return await response.HandleResponseAsync<Models.RoleModel>();
         }
@@ -357,70 +357,70 @@ namespace Pims.Keycloak
         /// <summary>
         /// Get an array of composite roles
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetCompositeRolesAsync(Guid clientId, string parentName)
+        public async Task<Models.RoleModel[]> GetCompositeRolesAsync(Guid clientKey, string parentName)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{parentName}/composites");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Delete composite roles within the client specified by the 'clientId', that belong to the parent role specified by the 'parentName'.
+        /// Delete composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
         /// <param name="roles"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> DeleteCompositeRoleAsync(Guid clientId, string parentName, Models.RoleModel[] roles)
+        public async Task<Models.RoleModel[]> DeleteCompositeRoleAsync(Guid clientKey, string parentName, Models.RoleModel[] roles)
         {
             var json = roles.Serialize();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{parentName}/composites", content);
+            var response = await _client.DeleteAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites", content);
 
             return response.HandleResponse(roles);
         }
 
         /// <summary>
-        /// Get an array of composite roles within the client specified by the 'clientId', that belong to the parent role specified by the 'parentName'
+        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
         /// <param name="clientName"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetClientCompositeRolesAsync(Guid clientId, string parentName, string clientName)
+        public async Task<Models.RoleModel[]> GetClientCompositeRolesAsync(Guid clientKey, string parentName, string clientName)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{parentName}/composites/clients/{clientName}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites/clients/{clientName}");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Get an array of composite roles within the client specified by the 'clientId', that belong to the parent role specified by the 'parentName'
+        /// Get an array of composite roles within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
         /// <returns></returns>
-        public async Task<Models.RoleModel[]> GetRealmCompositeRolesAsync(Guid clientId, string parentName)
+        public async Task<Models.RoleModel[]> GetRealmCompositeRolesAsync(Guid clientKey, string parentName)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{parentName}/composites/realm");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/composites/realm");
 
             return await response.HandleResponseAsync<Models.RoleModel[]>();
         }
 
         /// <summary>
-        /// Get an array of users who are within the client specified by the 'clientId', that belong to the parent role specified by the 'parentName'.
+        /// Get an array of users who are within the client specified by the 'clientKey', that belong to the parent role specified by the 'parentName'.
         /// </summary>
-        /// <param name="clientId"></param>
+        /// <param name="clientKey"></param>
         /// <param name="parentName"></param>
         /// <param name="first"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public async Task<Models.UserModel[]> GetRoleMembersAsync(Guid clientId, string parentName, int first = 0, int max = 10)
+        public async Task<Models.UserModel[]> GetRoleMembersAsync(Guid clientKey, string parentName, int first = 0, int max = 10)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientId}/roles/{parentName}/users?first={first}&max={max}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/clients/{clientKey}/roles/{parentName}/users?first={first}&max={max}");
 
             return await response.HandleResponseAsync<Models.UserModel[]>();
         }

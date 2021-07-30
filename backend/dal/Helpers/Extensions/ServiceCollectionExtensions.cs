@@ -38,14 +38,8 @@ namespace Pims.Dal
             services.AddScoped<Services.ILookupService, Services.LookupService>();
             services.AddScoped<Services.IBuildingService, Services.BuildingService>();
             services.AddScoped<Services.IParcelService, Services.ParcelService>();
-            services.AddScoped<Services.IProjectService, Services.ProjectService>();
-            services.AddScoped<Services.IProjectReportService, Services.ProjectReportService>();
             services.AddScoped<Services.IUserService, Services.UserService>();
-            services.AddScoped<Services.ITaskService, Services.TaskService>();
-            services.AddScoped<Services.IWorkflowService, Services.WorkflowService>();
             services.AddScoped<Services.INotificationTemplateService, Services.NotificationTemplateService>();
-            services.AddScoped<Services.IProjectNotificationService, Services.ProjectNotificationService>();
-            services.AddScoped<Services.IProjectStatusService, Services.ProjectStatusService>();
             services.AddScoped<Services.INotificationQueueService, Services.NotificationQueueService>();
             services.AddScoped<Services.ITenantService, Services.TenantService>();
             return services; // TODO: Use reflection to find all services.
@@ -69,14 +63,10 @@ namespace Pims.Dal
             services.AddScoped<Services.Admin.IRoleService, Services.Admin.RoleService>();
             services.AddScoped<Services.Admin.IUserService, Services.Admin.UserService>();
             services.AddScoped<Services.Admin.IBuildingConstructionTypeService, Services.Admin.BuildingConstructionTypeService>();
+            services.AddScoped<Services.Admin.IBuildingOccupantTypeService, Services.Admin.BuildingOccupantTypeService>();
             services.AddScoped<Services.Admin.IBuildingPredominateUseService, Services.Admin.BuildingPredominateUseService>();
             services.AddScoped<Services.Admin.IPropertyClassificationService, Services.Admin.PropertyClassificationService>();
             services.AddScoped<Services.Admin.IPropertyTypeService, Services.Admin.PropertyTypeService>();
-            services.AddScoped<Services.Admin.IProjectService, Services.Admin.ProjectService>();
-            services.AddScoped<Services.Admin.IProjectStatusService, Services.Admin.ProjectStatusService>();
-            services.AddScoped<Services.Admin.IProjectRiskService, Services.Admin.ProjectRiskService>();
-            services.AddScoped<Services.Admin.ITierLevelService, Services.Admin.TierLevelService>();
-            services.AddScoped<Services.Admin.IWorkflowService, Services.Admin.WorkflowService>();
             return services; // TODO: Use reflection to find all services.
         }
 
@@ -97,12 +87,14 @@ namespace Pims.Dal
                 {
                     options.CommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
                     options.UseNetTopologySuite();
+                    // options.MigrationsHistoryTable("PIMS_MIGRATION_HISTORY"); // TODO: This doesn't work in .NET 5.0 currently.
                 });
                 if (!env.IsProduction())
                 {
                     var debugLoggerFactory = LoggerFactory.Create(builder => { builder.AddDebug(); }); // NOSONAR
                     sql.UseLoggerFactory(debugLoggerFactory);
                     options.EnableSensitiveDataLogging();
+                    options.LogTo(Console.WriteLine);
                 }
             });
 

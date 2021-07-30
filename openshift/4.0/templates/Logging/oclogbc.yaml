@@ -1,0 +1,135 @@
+# This is a build template for sidecar logging
+# It will build a new image from the specified source control repo
+# that will run your application.
+kind: Template
+apiVersion: v1
+metadata:
+  name: pims-app-log-build
+  annotations:
+    openshift.io/display-name: pims log sidecar
+    description: openshift sidecar - will collect oc logs and submit a zip to an endpoint.
+    tags: pims,log
+parameters:
+  - name: APP_NAME
+    displayName: "App Name"
+    description: "The name of the application (grouped)."
+    required: true
+    value: "pims-logging"
+  - name: ROLE_NAME
+    displayName: "Component Role Name"
+    description: "The name of the application component"
+    required: true
+    value: "pimslog"
+  - name: PROJECT_NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift project containing the application."
+    required: true
+    value: "3cd915"
+  - name: ENV_NAME
+    displayName: "Environment name"
+    description: "The name for this environment [dev, test, prod, tools]"
+    required: true
+    value: "tools"
+
+  - name: GIT_URL
+    displayName: "Git Repository URL"
+    description: "The URL of the repository with your application source code."
+    required: true
+    value: "https://github.com/bcgov/PSP.git"
+  - name: GIT_REF
+    displayName: "Git Reference"
+    description:
+      "Set this to a branch name, tag or other ref of your repository if you
+      are not using the default branch."
+    value: dev
+  - name: CONTEXT_DIR
+    displayName: "Context Directory"
+    description: "Set this to use a subdirectory of the source code repository"
+    value: "openshift/4.0/templates/Logging"
+
+  - name: DOCKERFILE_PATH
+    displayName: Path to Dockerfile
+    description: Path for alternate Dockerfile to use for build
+    value: "Dockerfile"
+
+  - name: OUTPUT_IMAGE_TAG
+    displayName: "Output Image Tag"
+    description: "The tag given to the built image."
+    required: true
+    value: "latest"
+
+  - name: BASE_IMAGE_TAG
+    displayName: "Base Image Tag"
+    description: "The tag given to the base image."
+    required: true
+    value: "latest"
+
+  - name: BASE_IMAGE
+    displayName: "Base Image"
+    description: "Build dockerfile from this base image."
+    required: true
+    value: "alpine-base"
+
+  - name: CPU_LIMIT
+    displayName: "Resources CPU Limit"
+    description: "The resources CPU limit (in cores) for this build."
+    required: true
+    value: "400m"
+  - name: MEMORY_LIMIT
+    displayName: "Memory Limit"
+    description: "Maximum amount of memory the container can use."
+    required: true
+    value: "1Gi"
+objects:
+  # The final build image.
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      annotations:
+        description: Keeps track of changes in the database image
+      labels:
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+
+  # The build config that will be created will be named for the branch you created it for.
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}.${GIT_REF}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      annotations:
+        description: Defines how to build the database image
+      labels:
+        name: ${APP_NAME}.${GIT_REF}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        branch: ${GIT_REF}
+    spec:
+      completionDeadlineSeconds: 1800
+      triggers:
+        - type: ImageChange
+        - type: ConfigChange
+      runPolicy: Serial
+      source:
+        git:
+          uri: ${GIT_URL}
+          ref: ${GIT_REF}
+        contextDir: ${CONTEXT_DIR}
+      strategy:
+        dockerStrategy:
+          dockerfilePath: "${DOCKERFILE_PATH}"
+          from:
+            kind: ImageStreamTag
+            namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+            name: ${BASE_IMAGE}:${BASE_IMAGE_TAG}
+        type: Docker
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${APP_NAME}:${OUTPUT_IMAGE_TAG}
+      resources:
+        limits:
+          cpu: ${CPU_LIMIT}
+          memory: ${MEMORY_LIMIT}

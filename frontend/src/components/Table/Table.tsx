@@ -9,7 +9,10 @@ import { Form, Formik, FormikProps } from 'formik';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
-import _, { keys } from 'lodash';
+import keys from 'lodash/keys';
+import map from 'lodash/map';
+import remove from 'lodash/remove';
+import uniq from 'lodash/uniq';
 import React, {
   PropsWithChildren,
   ReactElement,
@@ -18,7 +21,8 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import { Collapse, Spinner } from 'react-bootstrap';
+import Collapse from 'react-bootstrap/Collapse';
+import Spinner from 'react-bootstrap/Spinner';
 import { FaAngleDown, FaAngleRight, FaUndo } from 'react-icons/fa';
 import {
   Cell,
@@ -175,11 +179,11 @@ const IndeterminateCheckbox = React.forwardRef(
         setSelected([]);
       } else {
         if (currentSelected.find(selected => selected.id === row.original.id)) {
-          _.remove(currentSelected, row.original);
+          remove(currentSelected, row.original);
         } else {
           currentSelected.push(row.original);
         }
-        setSelected(_.uniq([...currentSelected]));
+        setSelected(uniq([...currentSelected]));
       }
     };
     rest.checked = isHeaderCheck
@@ -372,16 +376,20 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderHeaderCell = (column: ColumnInstanceWithProps<T>) => {
     return (
       <div className="sortable-column">
-        <ColumnFilter
-          onFilter={values => {
-            if (filterFormRef.current?.dirty) {
-              filterFormRef.current.submitForm();
-            }
-          }}
-          column={column}
-        >
-          {column.render('Header')}
-        </ColumnFilter>
+        {filterable ? (
+          <ColumnFilter
+            onFilter={values => {
+              if (filterFormRef.current?.dirty) {
+                filterFormRef.current.submitForm();
+              }
+            }}
+            column={column}
+          >
+            {column.render('Header')}
+          </ColumnFilter>
+        ) : (
+          column.render('Header')
+        )}
         <span style={{ flex: '1 1 auto' }} />
         <ColumnSort
           onSort={() => {
@@ -506,7 +514,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             {footerGroup.headers.map(
               (column: ColumnInstanceWithProps<T> & { Footer?: Function }) => (
                 <div {...column.getHeaderProps(headerProps)} className="th">
-                  {column.Footer ? <column.Footer properties={_.map(page, 'original')} /> : null}
+                  {column.Footer ? <column.Footer properties={map(page, 'original')} /> : null}
                 </div>
               ),
             )}

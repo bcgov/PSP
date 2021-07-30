@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
 
 /**
@@ -98,7 +98,6 @@ export const LoginStyled = styled(Container)`
       color: ${props => props.theme.css.textColor} !important;
     }
     .pims-logo {
-      margin-left: -300px;
       margin-bottom: 10px;
     }
   }
