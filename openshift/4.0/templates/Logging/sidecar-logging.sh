@@ -172,9 +172,10 @@ has_log() {
 
 #login
 oc_login='oc login --token=$OC_TOKEN --server=$OC_SERVER'
+oc_login_sa='oc login --token=$OC_SA_TOKEN'
 
 if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
-  eval $oc_login
+  eval $oc_login || eval $oc_login_sa
 fi
 #export time must be greater than delayed or sleep time
 if [ $EXPORT_TIME -lt $SLEEP_TIME ]; then

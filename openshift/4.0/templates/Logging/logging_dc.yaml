@@ -66,7 +66,7 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2020-%3D"
+    value: "?your_AZ_SAS_TOKEN_here"
 
   #Amazon s3 Variables 
   - name: AWS_HOST
@@ -93,7 +93,7 @@ parameters:
     displayName: "S3 secret Access key"
     description: "AWS S3 secret Access ke"
     required: true
-    value: "FljS6LdqF9NMpR28VjFvC"
+    value: "your_AWS_SECRET_ACCESS_KEY_here"
 
   - name: EXPORT_TIME
     displayName: "Wait time before export in sec"
