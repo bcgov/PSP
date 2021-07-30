@@ -175,7 +175,7 @@ has_log() {
 
 #login
 oc_login='oc login --token=$OC_TOKEN --server=$OC_SERVER'
-oc_login_sa='oc login --token=$OC_SA_TOKEN'
+oc_login_sa='oc login --token=$OC_SA_TOKEN --server=$OC_SERVER'
 
 if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
   eval $oc_login || eval $oc_login_sa
