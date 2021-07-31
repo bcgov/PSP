@@ -19,12 +19,8 @@ readonly SCRIPT_NAME="$(basename $0)"
 AZ_BLOB_URL=${AZ_BLOB_URL:-""}
 AZ_BLOB_CONTAINER=${AZ_BLOB_CONTAINER:-""}
 AZ_SAS_TOKEN=${AZ_SAS_TOKEN:-""}
-#OC_SA_TOKEN=${OC_SA_TOKEN:-""}
 
 declare -i elapse=0
-
-#echo "output here: " $OC_SA_TOKEN
-echo "output here: " $AWS_ACCESS_KEY_ID
 
 #echo $PROJECT_PATH
 
@@ -177,7 +173,7 @@ has_log() {
 
 #login
 oc_login='oc login --token=$OC_TOKEN --server=$OC_SERVER'
-oc_login_sa='oc login --token=$OC_SA_TOKEN --server=$OC_SERVER'
+oc_login_sa='oc login --token=$OC_SERVICEACCOUNT_TOKEN --server=$OC_SERVER'
 
 if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
   eval $oc_login || eval $oc_login_sa
