@@ -13,8 +13,8 @@ import LayersControl from './LayersControl';
 jest.mock('axios');
 
 // component under test
-function Template({ openDefault = false }) {
-  const [open, setOpen] = useState(openDefault);
+function Template({ openByDefault = false }) {
+  const [open, setOpen] = useState(openByDefault);
   return <LayersControl open={open} setOpen={() => setOpen(!open)} />;
 }
 
@@ -75,7 +75,7 @@ describe('LayersControl View', () => {
   });
 
   it('when open, clicking the button should close the layers list', async () => {
-    const { ready, findLayerList, findToggleButton } = setup(<Template openDefault={true} />);
+    const { ready, findLayerList, findToggleButton } = setup(<Template openByDefault={true} />);
     await waitFor(() => ready);
     // when layer list is open...
     const layersContainer = findLayerList();

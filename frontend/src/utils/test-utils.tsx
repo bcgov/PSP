@@ -6,9 +6,6 @@ import {
   RenderResult,
 } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { IRole } from 'interfaces';
-import { IAgency } from 'interfaces/agency';
-import { KeycloakInstance } from 'keycloak-js';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
@@ -18,14 +15,17 @@ import { ToastContainer } from 'react-toastify';
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';
 
-export const mockKeycloak = (claims: string[], agencies: number[]) => {
+export const mockKeycloak = (claims: string[], agencies: number[], authenticated = false) => {
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
       userInfo: {
         agencies: agencies,
         roles: claims,
+        email: 'test@test.com',
+        name: 'Chester Tester',
       },
       subject: 'test',
+      authenticated,
     },
   });
 };
@@ -165,7 +165,7 @@ export * from '@testing-library/react';
 export interface RenderOptions extends RtlRenderOptions {
   store?: any;
   history?: MemoryHistory;
-  authenticated?: boolean;
+  useMockAuthentication?: boolean;
   agencies?: number[];
   roles?: string[];
 }
@@ -174,34 +174,23 @@ function render(
   ui: React.ReactElement,
   options: Omit<RenderOptions, 'wrapper'> = {},
 ): RenderResult {
-  const { store, history, authenticated = false, agencies, roles, ...renderOptions } = options;
-  let auth: {
-    initialized: boolean;
-    keycloak: Partial<KeycloakInstance>;
-  } = {
-    initialized: true,
-    keycloak: {},
-  };
+  const {
+    store,
+    history,
+    useMockAuthentication = false,
+    agencies,
+    roles,
+    ...renderOptions
+  } = options;
 
-  // mock authentication state prior to rendering
-  if (!authenticated) {
-    auth.keycloak = { authenticated: false };
+  // mock authentication state prior to rendering. Check first that keycloak has been mocked!
+  if (!!useMockAuthentication || !!roles || !!agencies) {
+    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
+      mockKeycloak(roles ?? [], agencies ?? [1], true);
+    }
   }
-  if (!!authenticated || !!roles || !!agencies) {
-    auth.keycloak = {
-      userInfo: {
-        agencies: agencies ?? [1],
-        roles: roles ?? [],
-        email: 'test@test.com',
-        name: 'Chester Tester',
-      },
-      subject: 'test',
-      authenticated: true,
-    };
-  }
-  (useKeycloak as jest.Mock).mockReturnValue(auth);
 
-  // new providers will need to be added here
+  // IMPORTANT: new context providers need to be added here
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
       <TestProviderWrapper store={store}>
