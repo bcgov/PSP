@@ -22,6 +22,7 @@ AZ_SAS_TOKEN=${AZ_SAS_TOKEN:-""}
 
 declare -i elapse=0
 
+echo "test outut " ${OC_SERVICEACCOUNT_TOKEN}
 #echo $PROJECT_PATH
 
 # Includes
