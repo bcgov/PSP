@@ -24,19 +24,15 @@ jobs:
       PROJECT_NAMESPACE: 3cd915-dev
       EXPORT_TIME: 120
       OC_TOKEN: ${{ secrets.OC_TOKEN }}
-      OC_SA_TOKEN: ${{ secrets.OC_SA_TOKEN }}
+      OC_SERVICEACCOUNT_TOKEN: ${{ secrets.OC_SERVICEACCOUNT_TOKEN }}
       OC_SERVER: https://api.silver.devops.gov.bc.ca:6443
       working-directory: ./openshift/4.0/templates/Logging
 
     steps:
     - uses: actions/checkout@v1
     - name: Build the pims-logging docker-compose stack
-      run: docker-compose -f docker-compose.yml up -d
+      run: docker-compose -f docker-compose.yml up
       working-directory: ${{env.working-directory}}
-    - name: Sleep for 120 seconds
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '150'
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
