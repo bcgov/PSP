@@ -37,6 +37,15 @@ jobs:
       uses: jakejarvis/wait-action@master
       with:
         time: '180s'
+    - uses: actions/checkout@v1
+    - name: Check Extracted Logs
+      run: | 
+        if [[ "$(ls -A /logging/pims* 2>/dev/null | wc -l)" != "0" ]]; then
+            ls -A /logging/pims*
+        else
+            echo "There's an error capturing pims logs" && exit 1
+        fi
+      working-directory: ./logging
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
