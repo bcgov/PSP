@@ -31,8 +31,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the pims-logging docker-compose stack
-      run: docker-compose -f docker-compose.yml up --exit-code-from logging
+      run: docker-compose -f docker-compose.yml up -d --exit-code-from logging
       working-directory: ${{env.working-directory}}
+    - name: Sleep for 120 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '128s'
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
