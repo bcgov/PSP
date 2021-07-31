@@ -23,7 +23,7 @@ AZ_SAS_TOKEN=${AZ_SAS_TOKEN:-""}
 
 declare -i elapse=0
 
-echo "output here: " $OC_SA_TOKEN
+#echo "output here: " $OC_SA_TOKEN
 echo "output here: " $AWS_ACCESS_KEY_ID
 
 #echo $PROJECT_PATH
