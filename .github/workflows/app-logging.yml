@@ -36,7 +36,7 @@ jobs:
     - name: Sleep for 120 seconds
       uses: jakejarvis/wait-action@master
       with:
-        time: '128s'
+        time: '180s'
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-logging logs
