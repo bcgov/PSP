@@ -24,7 +24,7 @@ jobs:
       PROJECT_NAMESPACE: 3cd915-dev
       EXPORT_TIME: 120
       OC_TOKEN: ${{ secrets.OC_TOKEN }}
-      OC_SERVICEACCOUNT_TOKEN: rrrrrr
+      OC_SERVICEACCOUNT_TOKEN: ${{ secrets.OC_SERVICEACCOUNT_TOKEN }}
       OC_SERVER: https://api.silver.devops.gov.bc.ca:6443
       working-directory: ./openshift/4.0/templates/Logging
 
