@@ -62,6 +62,13 @@ $ oc tag pims-logging:latest pims-logging:dev
 ```bash
 oc process -f .\role-binding.yaml -p NAMESPACE=3cd915-dev | oc apply -f -
 ```
+### Add ServiceAccount Access namespace for local DEVELOPMENT and GIT Action
+
+```bash
+oc policy add-role-to-user edit system:serviceaccount:3cd915-dev:default -n 3cd915-dev
+oc policy add-role-to-user edit system:serviceaccount:3cd915-dev:default -n 3cd915-test
+oc policy add-role-to-user edit system:serviceaccount:3cd915-dev:default -n 3cd915-prod
+```
 
 ### Create pims-logging deployment config
 
