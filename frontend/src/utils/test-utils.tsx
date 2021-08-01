@@ -5,6 +5,7 @@ import {
   RenderOptions as RtlRenderOptions,
   RenderResult,
 } from '@testing-library/react';
+import { FilterProvider } from 'components/maps/providers/FIlterProvider';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
@@ -203,7 +204,7 @@ function render(
             rtl={false}
             pauseOnFocusLoss={false}
           />
-          {children}
+          <FilterProvider>{children}</FilterProvider>
         </TestRouterWrapper>
       </TestProviderWrapper>
     );

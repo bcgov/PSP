@@ -159,6 +159,8 @@ const Map: React.FC<MapProps> = ({
   onMapClick,
   disableMapFilterBar,
   sidebarSize,
+  whenReady,
+  whenCreated,
 }) => {
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
@@ -245,6 +247,20 @@ const Map: React.FC<MapProps> = ({
         [60.09114547, -119.49609429],
         [48.78370426, -139.35937554],
       ]);
+    }
+  };
+
+  const handleMapReady = () => {
+    fitMapBounds();
+    if (typeof whenReady === 'function') {
+      whenReady();
+    }
+  };
+
+  const handleMapCreated = (mapInstance: L.Map) => {
+    mapRef.current = mapInstance;
+    if (typeof whenCreated === 'function') {
+      whenCreated(mapInstance);
     }
   };
 
@@ -336,8 +352,8 @@ const Map: React.FC<MapProps> = ({
               zoom={lastZoom}
               maxZoom={MAP_MAX_ZOOM}
               closePopupOnClick={true}
-              whenCreated={mapInstance => (mapRef.current = mapInstance)}
-              whenReady={() => fitMapBounds()}
+              whenCreated={handleMapCreated}
+              whenReady={handleMapReady}
             >
               <MapEvents
                 click={showLocationDetails}
