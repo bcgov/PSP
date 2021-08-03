@@ -41,9 +41,9 @@ jobs:
     - name: Check Extracted Logs
       run: |
         docker cp pims-logging:/logging/. . 
-        ls -A /pims*
-        if [[ "$(ls -A /pims* 2>/dev/null | wc -l)" != "0" ]]; then
-            ls -A /pims* && rm -f /pims*
+        ls -A pims*
+        if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
+            ls -A pims* && rm -f pims*
         else
             echo "There's an error capturing pims logs" && exit 1
         fi
