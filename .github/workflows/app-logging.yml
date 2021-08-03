@@ -37,21 +37,38 @@ jobs:
       uses: jakejarvis/wait-action@master
       with:
         time: '180s'
-    - uses: actions/checkout@v1
-    - name: Check Extracted Logs
-      run: |
-        docker exec -it pims-logging bash 
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check pims-logging logs
+      run: docker logs pims-logging
+      
+      
+    verify_build:
+    
+      runs-on: ubuntu-latest
+      container: { image: pims-logging:latest }
+      steps:
+      - uses: actions/checkout@v1
+      - name: Check Extracted Logs
+      run: | 
         if [[ "$(ls -A /logging/pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A /logging/pims*
         else
             echo "There's an error capturing pims logs" && exit 1
         fi
       working-directory: ./logging
-    - name: Check running containers
-      run: docker ps -a
-    - name: Check pims-logging logs
-      run: docker logs pims-logging
-    - name: Stop containers
+      
+    stop_container:
+    
+      runs-on: ubuntu-latest
+      env:
+         working-directory: ./openshift/4.0/templates/Logging
+        
+      steps:
+      - uses: actions/checkout@v1
+      - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose.yml" down
       working-directory: ${{env.working-directory}}
+    
+      
