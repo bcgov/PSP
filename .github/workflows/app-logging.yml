@@ -40,9 +40,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Check Extracted Logs
       run: |
-        docker cp pims-logging:/logging/pims* /tmp/ 
-        if [[ "$(ls -A /tmp//pims* 2>/dev/null | wc -l)" != "0" ]]; then
-            ls -A /tmp/pims* && rm -f /tmp/pims*
+        docker cp pims-logging:/logging/pims* . 
+        if [[ "$(ls -A /pims* 2>/dev/null | wc -l)" != "0" ]]; then
+            ls -A /pims* && rm -f /pims*
         else
             echo "There's an error capturing pims logs" && exit 1
         fi
