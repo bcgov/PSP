@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    name: build pims-logging
+    name: pims-logging
     runs-on: ubuntu-latest
     env:
       SLEEP_TIME: 60
@@ -34,7 +34,7 @@ jobs:
     - name: Build the pims-logging docker-compose stack
       run: docker-compose -f docker-compose.yml up -d
       working-directory: ${{env.working-directory}}
-    - name: Sleep for 120 seconds
+    - name: Sleep for 180 seconds
       uses: jakejarvis/wait-action@master
       with:
         time: '180s'
