@@ -217,12 +217,12 @@ _send() {
   #initialize container variables
 
   # get app pod and container name
-  APP_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o jsonpath="{.items[*].metadata.name}")
-  APP_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${FRONTEND_APP_NAME} -o jsonpath={.items[*].spec.containers[*].name})
+  APP_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --sort-by=.status.startTime --selector=name=${FRONTEND_APP_NAME} -o jsonpath="{.items[0].metadata.name}")
+  APP_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --sort-by=.status.startTime --selector=name=${FRONTEND_APP_NAME} -o jsonpath={.items[0].spec.containers[*].name})
 
   # get api pod and container name
-  API_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o jsonpath="{.items[*].metadata.name}")
-  API_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --selector=name=${API_NAME} -o jsonpath={.items[*].spec.containers[*].name})
+  API_POD_NAME=$(oc -n $PROJECT_NAMESPACE get pods --sort-by=.status.startTime --selector=name=${API_NAME} -o jsonpath="{.items[0].metadata.name}")
+  API_CONTAINER_NAME=$(oc -n $PROJECT_NAMESPACE get pods --sort-by=.status.startTime --selector=name=${API_NAME} -o jsonpath={.items[0].spec.containers[*].name})
 
   # set log server URL
   if [[ $STORAGE_TYPE =~ "Azure" ]]; then
