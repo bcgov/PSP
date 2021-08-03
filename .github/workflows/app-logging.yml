@@ -45,7 +45,7 @@ jobs:
   verify_build:
     
     runs-on: ubuntu-latest
-    container: { image: pims-logging:latest }
+    container: pims-logging:latest
     steps:
     - uses: actions/checkout@v1
     - name: Check Extracted Logs
