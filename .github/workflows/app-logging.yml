@@ -41,32 +41,31 @@ jobs:
       run: docker ps -a
     - name: Check pims-logging logs
       run: docker logs pims-logging
-      
-      
-    verify_build:
+          
+  verify_build:
     
-      runs-on: ubuntu-latest
-      container: { image: pims-logging:latest }
-      steps:
-      - uses: actions/checkout@v1
-      - name: Check Extracted Logs
-      run: | 
+    runs-on: ubuntu-latest
+    container: { image: pims-logging:latest }
+    steps:
+    - uses: actions/checkout@v1
+    - name: Check Extracted Logs
+    run: | 
         if [[ "$(ls -A /logging/pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A /logging/pims*
         else
             echo "There's an error capturing pims logs" && exit 1
         fi
-      working-directory: ./logging
+    working-directory: ./logging
       
-    stop_container:
-    
-      runs-on: ubuntu-latest
-      env:
-         working-directory: ./openshift/4.0/templates/Logging
+  stop_container:
+   
+    runs-on: ubuntu-latest
+    env:
+       working-directory: ./openshift/4.0/templates/Logging
         
-      steps:
-      - uses: actions/checkout@v1
-      - name: Stop containers
+    steps:
+    - uses: actions/checkout@v1
+    - name: Stop containers
       if: always()
       run: docker-compose -f "docker-compose.yml" down
       working-directory: ${{env.working-directory}}
