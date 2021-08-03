@@ -10,6 +10,7 @@ jobs:
 
   build:
 
+    name: build pims-logging
     runs-on: ubuntu-latest
     env:
       SLEEP_TIME: 60
@@ -41,7 +42,6 @@ jobs:
     - name: Check Extracted Logs
       run: |
         docker cp pims-logging:/logging/. . 
-        ls -A pims*
         if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A pims* && rm -f pims*
         else
