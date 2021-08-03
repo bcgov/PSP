@@ -10,6 +10,7 @@ jobs:
 
   build:
 
+    name: build pims-logging
     runs-on: ubuntu-latest
     env:
       SLEEP_TIME: 60
@@ -44,10 +45,16 @@ jobs:
           
   verify_build:
     
+    needs: build
+    name: verify build
     runs-on: ubuntu-latest
     container: pims-logging:latest
     steps:
     - uses: actions/checkout@v1
+    - name: Sleep for 180 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '180s'
     - name: Check Extracted Logs
       run: | 
         if [[ "$(ls -A /logging/pims* 2>/dev/null | wc -l)" != "0" ]]; then
@@ -59,6 +66,8 @@ jobs:
       
   stop_container:
    
+    needs: [build, verify_build]
+    name: stop container
     runs-on: ubuntu-latest
     env:
        working-directory: ./openshift/4.0/templates/Logging
