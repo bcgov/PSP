@@ -85,7 +85,6 @@ const storeState = {
 };
 
 // To check for alert message
-const emptyDetails = null;
 const noParcels = [] as IProperty[];
 
 const baseMapLayers = {

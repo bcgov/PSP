@@ -388,7 +388,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 const convertedProperty = convertToProperty(
                   m.properties,
                   m.geometry.coordinates[1],
-                  m.geometry.coordinates[0],                );
+                  m.geometry.coordinates[0],
+                );
                 if (
                   m.properties.propertyTypeId === PropertyTypes.Parcel ||
                   m.properties.propertyTypeId === PropertyTypes.Subdivision
