@@ -23,6 +23,7 @@ services:
       PROJECT_NAMESPACE: "${PROJECT_NAMESPACE}"
       EXPORT_TIME: ${EXPORT_TIME}
       OC_TOKEN: "${OC_TOKEN}"
+      OC_SERVICEACCOUNT_TOKEN: "${OC_SERVICEACCOUNT_TOKEN}"
       OC_SERVER: "${OC_SERVER}"
     volumes:
       - logging-data:/tmp
