@@ -173,7 +173,7 @@ objects:
           targetPort: ${{APP_PORT}}
       selector:
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
       type: ClusterIP
       sessionAffinity: None
 
@@ -238,7 +238,7 @@ objects:
       labels:
         name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
     spec:
       strategy:
         type: Rolling
@@ -264,14 +264,14 @@ objects:
       replicas: ${{REPLICAS}}
       selector:
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
       template:
         metadata:
           name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
           labels:
             name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
             app: ${APP_NAME}
-            role: ${ROLE_NAME}
+            role: ${ROLE_NAME}${ENV_INSTANCE}
         spec:
           volumes:
             - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}

@@ -22,7 +22,6 @@ AZ_SAS_TOKEN=${AZ_SAS_TOKEN:-""}
 
 declare -i elapse=0
 
-
 #echo $PROJECT_PATH
 
 # Includes
@@ -166,7 +165,6 @@ has_log() {
   if eval "$1"; then
     local logs=$(eval "$1" | grep '.')
     echo $logs
-    #echo "shoot ocal " $ys > /dev/stderr
   else
     err "No logs available"
   fi
@@ -177,7 +175,8 @@ oc_login='oc login --token=$OC_TOKEN --server=$OC_SERVER'
 oc_login_sa='oc login --token=$OC_SERVICEACCOUNT_TOKEN --server=$OC_SERVER'
 
 if [ "$(oc whoami 2>/dev/null | wc -l)" == "0" ]; then
-  eval $oc_login || eval $oc_login_sa || err "oc login failed" && exit 1
+  eval $oc_login || eval $oc_login_sa
+  if [ "$?" -ne 0 ]; then err "oc login failed" && exit 1; else info "Login to " $OC_SERVER succeeded; fi
 fi
 #export time must be greater than delayed or sleep time
 if [ $EXPORT_TIME -lt $SLEEP_TIME ]; then
@@ -251,17 +250,19 @@ _send() {
 
     #run proess for X# of seconds, check if logs was extracted then upload to server
     if [[ $elapse -ge $EXPORT_TIME && "$(ls -A /tmp/* 2>/dev/null | wc -l)" != "0" && "${TERM_EXIT}" != true ]]; then
-      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
-      (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+      eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME* &
+      eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*
       if [ "$?" -eq 0 ]; then info "Logs sent to " $host_url; else err "Error sending logs to " $host_url; fi
     elif [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" == "0" ]]; then
-      echo "nothing to zip, logs are empty"
+      info $(printf "No log captured between %(%Y-%m-%d %H:%M:%S)T\n and" $(($(printf "%(%s)T") - $SLEEP_TIME))) $(printf "%(%Y-%m-%d %H:%M:%S)T\n")
     elif [[ "${TERM_EXIT}" == true ]]; then #check for extracted logs and send before pod scaled to zero
-      (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
-      (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
-      #echo $api_send_zip
-      [ "$?" -eq 0 ] && info "Logs sent to " $host_url "via sigterm request"
-      [ "$?" -ne 0 ] && err "Error sending logs to " $host_url "via sigterm request"
+      if [[ "$(ls -A /tmp/* 2>/dev/null | wc -l)" != "0" ]]; then
+        (eval $app_gzip_curl && eval $app_send_zip && rm -f /tmp/$FRONTEND_APP_NAME* && rm -f /logging/$APP_CONTAINER_NAME*) &
+        (eval $api_gzip_curl && eval $api_send_zip && rm -f /tmp/$API_NAME* && rm -f /logging/$API_CONTAINER_NAME*)
+        if [ "$?" -eq 0 ]; then info "Logs sent to " $host_url "via sigterm request"; else err "Error sending logs to " $host_url " via sigterm request"; fi
+      else
+        info $(printf "No log captured between %(%Y-%m-%d %H:%M:%S)T\n and" $(($(printf "%(%s)T") - $SLEEP_TIME))) $(printf "%(%Y-%m-%d %H:%M:%S)T\n")
+      fi
     else
       echo "waiting for export time to elapse (""$((EXPORT_TIME - elapse))"'s'") remaining"
     fi
