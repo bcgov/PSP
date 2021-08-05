@@ -15,8 +15,8 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { propertiesSlice } from 'store/slices/properties';
 import { store } from 'store/store';
+import { fillInput } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
-import { fillInput } from 'utils/testUtils';
 
 import MotiInventoryContainer from './MotiInventoryContainer';
 

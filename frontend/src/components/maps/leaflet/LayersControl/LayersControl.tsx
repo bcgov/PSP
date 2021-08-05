@@ -1,14 +1,13 @@
 import variables from '_variables.module.scss';
 import clsx from 'classnames';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import * as L from 'leaflet';
-import * as React from 'react';
-import { useEffect } from 'react';
+import L from 'leaflet';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaLayerGroup } from 'react-icons/fa';
-import Control from 'react-leaflet-control';
 import styled from 'styled-components';
 
+import Control from '../Control/Control';
 import LayersTree from './LayersTree';
 
 const LayersContainer = styled.div`

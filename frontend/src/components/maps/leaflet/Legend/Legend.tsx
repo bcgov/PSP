@@ -1,6 +1,6 @@
 import './Legend.scss';
 
-import * as React from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
