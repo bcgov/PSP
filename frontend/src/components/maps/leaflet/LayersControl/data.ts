@@ -197,6 +197,18 @@ export const layersTree: ILayerItem[] = [
         opacity: 0.5,
       },
       {
+        key: 'highways',
+        label: 'Provincial Public Highways',
+        on: false,
+        url: 'http://vip-dev-geo.th.gov.bc.ca:8081/ogs-geoV06/ows?',
+        layers: 'psp:ISS_PROVINCIAL_PUBLIC_HIGHWAY',
+        transparent: true,
+        format: 'image/png',
+        zIndex: 4,
+        id: 'highwaysLayer',
+        color: '#e05700',
+      },
+      {
         key: 'parcelBoundaries',
         label: 'Parcel Boundaries',
         on: true,
