@@ -7,8 +7,8 @@ import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { propertiesSlice } from 'store/slices/properties';
+import { fillInput } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
-import { fillInput } from 'utils/testUtils';
 
 import PropertyForm from './PropertyForm';
 

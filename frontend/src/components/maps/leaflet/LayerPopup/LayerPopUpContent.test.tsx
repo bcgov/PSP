@@ -1,20 +1,31 @@
 import { cleanup, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { createMemoryHistory } from 'history';
-import { LatLng, LatLngBounds } from 'leaflet';
+import L from 'leaflet';
 import queryString from 'query-string';
 import React from 'react';
-import { Router } from 'react-router-dom';
-import renderer from 'react-test-renderer';
+import { useMap } from 'react-leaflet';
+import { createRouteProvider } from 'utils/test-utils';
 
 import { IPopupContentProps, LayerPopupContent } from './LayerPopupContent';
 
 const history = createMemoryHistory();
-jest.mock('hooks/useApi');
 
-const northEast = new LatLng(50.5, -120.7);
-const southWest = new LatLng(50.3, -121.2);
-const bounds = new LatLngBounds(southWest, northEast);
+jest.mock('react-leaflet');
+
+// Mock react-leaflet dependencies
+const map: Partial<L.Map> = {
+  getZoom: jest.fn(),
+  getBoundsZoom: jest.fn(),
+  flyToBounds: jest.fn(),
+};
+
+(useMap as jest.Mock).mockReturnValue(map);
+
+const northEast = new L.LatLng(50.5, -120.7);
+const southWest = new L.LatLng(50.3, -121.2);
+const bounds = new L.LatLngBounds(southWest, northEast);
 
 const mockLayer: IPopupContentProps = {
   config: {},
@@ -39,71 +50,79 @@ const mockLayer: IPopupContentProps = {
   onAddToParcel: jest.fn(),
   bounds: bounds,
 };
+
+const renderPopup = (props: IPopupContentProps) => {
+  const wrapper = createRouteProvider(history);
+  return render(<LayerPopupContent {...props} />, { wrapper });
+};
+
 describe('Layer Popup Content', () => {
-  afterEach(() => {
-    cleanup();
-  });
+  afterEach(cleanup);
 
   it('Renders correctly', () => {
-    const tree = renderer
-      .create(
-        <Router history={history}>
-          <LayerPopupContent
-            data={mockLayer.data}
-            config={mockLayer.config}
-            onAddToParcel={mockLayer.onAddToParcel}
-          />
-        </Router>,
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = renderPopup(mockLayer);
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Populate details link does not appear on default', () => {
-    const { queryByText } = render(
-      <Router history={history}>
-        <LayerPopupContent
-          data={mockLayer.data}
-          config={mockLayer.config}
-          onAddToParcel={mockLayer.onAddToParcel}
-        />
-      </Router>,
-    );
+  it(`Doesn't render Populate details link by default`, () => {
+    const { queryByText } = renderPopup(mockLayer);
     const link = queryByText(/Populate property details/i);
     expect(link).toBeNull();
   });
 
-  it('Populate details link appears when sideBar open', () => {
+  it('Renders the Populate details link when sideBar is open', () => {
     history.location.search = queryString.stringify({
       disabled: false,
       loadDraft: false,
       sidebar: true,
       sidebarContext: SidebarContextType.ADD_BUILDING,
     });
-    const { getByText } = render(
-      <Router history={history}>
-        <LayerPopupContent
-          data={mockLayer.data}
-          config={mockLayer.config}
-          onAddToParcel={mockLayer.onAddToParcel}
-        />
-      </Router>,
-    );
+    const { getByText } = renderPopup(mockLayer);
     const link = getByText(/Populate property details/i);
     expect(link).toBeInTheDocument();
   });
 
-  it('Zoom link does not appear without bounds', () => {
-    const { queryByText } = render(
-      <Router history={history}>
-        <LayerPopupContent
-          data={mockLayer.data}
-          config={mockLayer.config}
-          onAddToParcel={mockLayer.onAddToParcel}
-        />
-      </Router>,
-    );
+  it('Calls onAddToParcel when Populate details is clicked', () => {
+    history.location.search = queryString.stringify({
+      disabled: false,
+      loadDraft: false,
+      sidebar: true,
+      sidebarContext: SidebarContextType.ADD_BUILDING,
+    });
+    // render popup
+    const { getByText } = renderPopup(mockLayer);
+    const link = getByText(/Populate property details/i);
+    expect(link).toBeInTheDocument();
+    // click link
+    userEvent.click(link);
+    expect(mockLayer.onAddToParcel).toBeCalled();
+  });
+
+  it(`Doesn't render Zoom link when bounds are not provided`, () => {
+    (map.getZoom as jest.Mock).mockReturnValue(5);
+    (map.getBoundsZoom as jest.Mock).mockReturnValue(10);
+    const { queryByText } = renderPopup({ ...mockLayer, bounds: undefined });
     const link = queryByText(/Zoom/i);
     expect(link).toBeNull();
+  });
+
+  it(`Renders the Zoom link when bounds are provided`, () => {
+    (map.getZoom as jest.Mock).mockReturnValue(5);
+    (map.getBoundsZoom as jest.Mock).mockReturnValue(10);
+    const { getByText } = renderPopup(mockLayer);
+    const link = getByText(/Zoom/i);
+    expect(link).toBeInTheDocument();
+  });
+
+  it(`Zooms the map to property bounds when Zoom link is clicked`, () => {
+    (map.getZoom as jest.Mock).mockReturnValue(5);
+    (map.getBoundsZoom as jest.Mock).mockReturnValue(10);
+    // render popup
+    const { getByText } = renderPopup(mockLayer);
+    const link = getByText(/Zoom/i);
+    expect(link).toBeInTheDocument();
+    // click link
+    userEvent.click(link);
+    expect(map.flyToBounds).toBeCalled();
   });
 });

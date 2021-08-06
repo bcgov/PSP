@@ -9,18 +9,17 @@ import { MAX_ZOOM } from 'constants/strings';
 import { useApi } from 'hooks/useApi';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IBuilding, IParcel } from 'interfaces';
-import * as L from 'leaflet';
-import * as React from 'react';
-import { useEffect } from 'react';
+import L from 'leaflet';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaInfo } from 'react-icons/fa';
-import { useLeaflet } from 'react-leaflet';
-import Control from 'react-leaflet-control';
+import { useMap } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { storeBuildingDetail } from 'store/slices/properties';
 import styled from 'styled-components';
 
+import Control from '../Control/Control';
 import FilterBackdrop from '../FilterBackdrop';
 import { AssociatedBuildingsList } from './AssociatedBuildingsList';
 import AssociatedParcelsList from './AssociatedParcelsList';
@@ -136,19 +135,19 @@ export type InfoControlProps = {
  * @param onHeaderActionClick action to be taken when a menu item is clicked
  */
 const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderActionClick }) => {
-  const popUpContext = React.useContext(PropertyPopUpContext);
+  const popUpContext = useContext(PropertyPopUpContext);
   const { getParcel, getBuilding } = useApi();
-  const leaflet = useLeaflet();
+  const mapInstance = useMap();
   const { propertyInfo } = popUpContext;
   const jumpToView = () =>
-    leaflet.map?.setView(
+    mapInstance.setView(
       [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
-      Math.max(MAX_ZOOM, leaflet.map.getZoom()),
+      Math.max(MAX_ZOOM, mapInstance.getZoom()),
     );
   const zoomToView = () =>
-    leaflet.map?.flyTo(
+    mapInstance.flyTo(
       [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
-      Math.max(MAX_ZOOM, leaflet.map.getZoom()),
+      Math.max(MAX_ZOOM, mapInstance.getZoom()),
       { animate: false },
     );
 
@@ -160,7 +159,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   });
 
   //whether the general info is open
-  const [generalInfoOpen, setGeneralInfoOpen] = React.useState<boolean>(true);
+  const [generalInfoOpen, setGeneralInfoOpen] = useState<boolean>(true);
 
   const isBuilding = popUpContext.propertyTypeId === PropertyTypes.Building;
 

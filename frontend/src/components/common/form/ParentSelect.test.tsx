@@ -9,9 +9,9 @@ import { ParentSelect } from './ParentSelect';
 import { SelectOptions } from './Select';
 
 const testOptions: SelectOptions = [
-  { value: 1, label: 'parent' },
+  { value: 1, label: 'parent', parent: '' },
   { value: 2, label: 'child', parentId: 1, parent: 'parent' },
-  { value: 3, label: 'other' },
+  { value: 3, label: 'other', parent: '' },
 ];
 
 it('renders correctly', () => {
