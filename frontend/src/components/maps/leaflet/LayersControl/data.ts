@@ -200,7 +200,7 @@ export const layersTree: ILayerItem[] = [
         key: 'highways',
         label: 'Provincial Public Highways',
         on: false,
-        url: 'http://vip-dev-geo.th.gov.bc.ca:8081/ogs-geoV06/ows?',
+        url: 'https://dev-motigeo.th.gov.bc.ca/ogs-internal/ows?',
         layers: 'psp:ISS_PROVINCIAL_PUBLIC_HIGHWAY',
         transparent: true,
         format: 'image/png',
