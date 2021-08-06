@@ -12,7 +12,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { agenciesSlice } from 'store/slices/agencies';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { fillInput } from 'utils/testUtils';
+import { fillInput } from 'utils/test-utils';
 
 import EditAgencyPage from './EditAgencyPage';
 

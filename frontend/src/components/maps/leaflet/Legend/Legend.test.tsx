@@ -1,11 +1,10 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import { Legend } from './Legend';
 
 describe('Map Legend View', () => {
-  it('Legend renders correctly', () => {
-    const tree = renderer.create(<Legend />).toJSON();
-    expect(tree).toMatchSnapshot();
+  it('renders correctly', () => {
+    const { asFragment } = render(<Legend />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

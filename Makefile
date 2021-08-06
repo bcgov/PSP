@@ -97,7 +97,7 @@ npm-clean: ## Removes local containers, images, volumes, for frontend applicatio
 	@echo "$(P) Removing frontend containers and volumes."
 	@docker-compose stop frontend
 	@docker-compose rm -f -v -s frontend
-	@docker volume rm -f pims-frontend-node-cache
+	@docker volume rm -f psp-frontend-node-cache
 
 npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packages are changed.
 	@make npm-clean; make build n=frontend; make up;

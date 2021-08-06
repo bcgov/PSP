@@ -2,14 +2,14 @@ import 'react-simple-tree-menu/dist/main.css';
 
 import variables from '_variables.module.scss';
 import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
-import * as L from 'leaflet';
+import L from 'leaflet';
 import flatten from 'lodash/flatten';
 import noop from 'lodash/noop';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa';
-import { useLeaflet } from 'react-leaflet';
+import { useMap } from 'react-leaflet';
 import TreeMenu, { TreeMenuItem, TreeNode } from 'react-simple-tree-menu';
 import styled from 'styled-components';
 
@@ -136,20 +136,20 @@ const LayerNodeCheckbox: React.FC<{ name: string; label: string; color: string }
 const featureGroup = new L.FeatureGroup();
 const LeafletListenerComp = () => {
   const { values } = useFormikContext<{ layers: ILayerItem[] }>();
-  const { map } = useLeaflet();
+  const mapInstance = useMap();
 
-  React.useEffect(() => {
-    if (map) {
-      featureGroup.addTo(map);
+  useEffect(() => {
+    if (mapInstance) {
+      featureGroup.addTo(mapInstance);
     }
 
     return () => {
-      map?.removeLayer(featureGroup);
+      mapInstance?.removeLayer(featureGroup);
     };
-  }, [map]);
+  }, [mapInstance]);
 
-  React.useEffect(() => {
-    if (!!map) {
+  useEffect(() => {
+    if (!!mapInstance) {
       const currentLayers = Object.keys((featureGroup as any)._layers)
         .map(k => (featureGroup as any)._layers[k])
         .map(l => l.options)
@@ -173,7 +173,7 @@ const LeafletListenerComp = () => {
         }
       });
     }
-  }, [values, map]);
+  }, [values, mapInstance]);
 
   return null;
 };

@@ -1,12 +1,12 @@
 import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
-import { LatLngBounds } from 'leaflet';
+import L from 'leaflet';
 import keys from 'lodash/keys';
 import queryString from 'query-string';
 import * as React from 'react';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { LatLng, useLeaflet } from 'react-leaflet';
+import { useMap } from 'react-leaflet';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -51,9 +51,9 @@ export interface IPopupContentProps {
    * {ADMIN_AREA_SQFT: (data: any) => `${data.ADMIN_AREA_SQFT} ft^2`}
    */
   config: PopupContentConfig;
-  center?: LatLng;
+  center?: L.LatLng;
   onAddToParcel: (e: MouseEvent, data: { [key: string]: any }) => void;
-  bounds?: LatLngBounds;
+  bounds?: L.LatLngBounds;
 }
 
 /**
@@ -80,9 +80,9 @@ export const LayerPopupContent: React.FC<IPopupContentProps> = ({
   ].includes(urlParsed.sidebarContext as any);
   const populateDetails = urlParsed.sidebar === 'true' && isEditing ? true : false;
 
-  const leaflet = useLeaflet();
-  const curZoom = leaflet.map?.getZoom();
-  const boundZoom = leaflet.map?.getBoundsZoom(bounds!);
+  const mapInstance = useMap();
+  const curZoom = mapInstance.getZoom();
+  const boundZoom = mapInstance.getBoundsZoom(bounds!);
 
   return (
     <>
@@ -113,7 +113,7 @@ export const LayerPopupContent: React.FC<IPopupContentProps> = ({
           {bounds && curZoom! !== boundZoom ? (
             <StyledLink
               to={{ ...location }}
-              onClick={() => leaflet.map?.flyToBounds(bounds, { animate: false })}
+              onClick={() => mapInstance.flyToBounds(bounds, { animate: false })}
             >
               Zoom
             </StyledLink>

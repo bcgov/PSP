@@ -37,6 +37,10 @@ parameters:
     description: "The namespace of the OpenShift tools containing the build images."
     required: true
     value: "3cd915-tools"
+  - name: ENV_INSTANCE
+    displayName: "Instance name for shared env"
+    description: "instance name for shared env"
+    value: ""
   - name: IMAGE_TAG
     displayName: "Image Tag Name"
     description: "The image tag that will be used for this deployment.
@@ -66,7 +70,7 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2020-%3D"
+    value: "?your_AZ_SAS_TOKEN_here"
 
   #Amazon s3 Variables 
   - name: AWS_HOST
@@ -93,7 +97,7 @@ parameters:
     displayName: "S3 secret Access key"
     description: "AWS S3 secret Access ke"
     required: true
-    value: "FljS6LdqF9NMpR28VjFvC"
+    value: "your_AWS_SECRET_ACCESS_KEY_here"
 
   - name: EXPORT_TIME
     displayName: "Wait time before export in sec"
@@ -153,12 +157,12 @@ objects:
   - kind: Service
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       annotations:
         description: Exposes and load balances the application pods.
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
     spec:
@@ -169,7 +173,7 @@ objects:
           targetPort: ${{APP_PORT}}
       selector:
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
       type: ClusterIP
       sessionAffinity: None
 
@@ -177,12 +181,12 @@ objects:
   - kind: Secret
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       annotations:
         description: "Azure blob or S3 token secrets"
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
     type: Opaque
@@ -194,10 +198,10 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         role: ${ROLE_NAME}
     spec:
       storageClassName: ${LOGGING_VOLUME_CLASS}
@@ -210,10 +214,10 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}-root
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
       namespace: ${PROJECT_NAMESPACE}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         role: ${ROLE_NAME}
     spec:
       storageClassName: ${LOGGING_VOLUME_CLASS}
@@ -227,14 +231,14 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       annotations:
         description: "Defines how to deploy ${APP_NAME}-${ROLE_NAME}"
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
     spec:
       strategy:
         type: Rolling
@@ -252,7 +256,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - ${APP_NAME}-${ROLE_NAME}
+              - ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
             from:
               kind: ImageStreamTag
               namespace: "${TOOLS_NAMESPACE}"
@@ -260,25 +264,25 @@ objects:
       replicas: ${{REPLICAS}}
       selector:
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
       template:
         metadata:
-          name: ${APP_NAME}-${ROLE_NAME}
+          name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
           labels:
-            name: ${APP_NAME}-${ROLE_NAME}
+            name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
             app: ${APP_NAME}
-            role: ${ROLE_NAME}
+            role: ${ROLE_NAME}${ENV_INSTANCE}
         spec:
           volumes:
-            - name: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${ROLE_NAME}
-            - name: ${APP_NAME}-${ROLE_NAME}-root
+                claimName: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
+            - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${ROLE_NAME}-root
+                claimName: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
           terminationGracePeriodSeconds: 60
           containers:
-            - name: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
               image: ""
               ports:
                 - containerPort: ${{APP_PORT}}
@@ -305,12 +309,12 @@ objects:
                 - name: AZ_SAS_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}
+                      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
                       key: AZ_SAS_TOKEN
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}
+                      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
                       key: AWS_SECRET_ACCESS_KEY
                 - name: FRONTEND_APP_NAME
                   value: ${FRONTEND_APP_NAME}
@@ -328,8 +332,8 @@ objects:
                   cpu: ${CPU_LIMIT}
                   memory: ${MEMORY_LIMIT}
               volumeMounts:
-                - name: ${APP_NAME}-${ROLE_NAME}
+                - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
                   mountPath: ${LOGGING_VOLUME_MOUNT_PATH}
-                - name: ${APP_NAME}-${ROLE_NAME}-root
+                - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
                   mountPath: ${APP_VOLUME_MOUNT_PATH}
                 

@@ -1,0 +1,56 @@
+name: PIMS Logging CI
+
+on:
+  push:
+    branches: [master, dev, test]
+  pull_request:
+    branches: [master, dev, test]
+
+jobs:
+
+  build:
+
+    name: pims-logging
+    runs-on: ubuntu-latest
+    env:
+      SLEEP_TIME: 60
+      STORAGE_TYPE: Amazon_S3
+      AWS_HOST: moti-int.objectstore.gov.bc.ca
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_BUCKET_NAME: tran_api_psp_logfiles_dev
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      FRONTEND_APP_NAME: pims-app
+      API_NAME: pims-api
+      PROJECT_NAMESPACE: 3cd915-dev
+      EXPORT_TIME: 120
+      OC_TOKEN: ${{ secrets.OC_TOKEN }}
+      OC_SERVICEACCOUNT_TOKEN: ${{ secrets.OC_SERVICEACCOUNT_TOKEN }}
+      OC_SERVER: https://api.silver.devops.gov.bc.ca:6443
+      working-directory: ./openshift/4.0/templates/Logging
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the pims-logging docker-compose stack
+      run: docker-compose -f docker-compose.yml up -d
+      working-directory: ${{env.working-directory}}
+    - name: Sleep for 180 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '180s'
+    - name: Check Extracted Logs
+      run: |
+        docker cp pims-logging:/logging/. . 
+        if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
+            ls -A pims* && rm -f pims*
+        else
+            echo "There's an error capturing pims logs" && exit 1
+        fi
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check pims-logging logs
+      run: docker logs pims-logging
+    - name: Stop containers
+      if: always()
+      run: docker-compose -f "docker-compose.yml" down
+      working-directory: ${{env.working-directory}}
