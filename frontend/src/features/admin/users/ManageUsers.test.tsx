@@ -17,7 +17,7 @@ import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { networkSlice } from 'store/slices/network/networkSlice';
 import { usersSlice } from 'store/slices/users';
-import { fillInput } from 'utils/testUtils';
+import { fillInput } from 'utils/test-utils';
 
 import { ManageUsers } from './ManageUsers';
 

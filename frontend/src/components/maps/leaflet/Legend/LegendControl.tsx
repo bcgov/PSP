@@ -8,9 +8,9 @@ import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
 import ClickAwayListener from 'react-click-away-listener';
 import { FiMapPin } from 'react-icons/fi';
-import Control from 'react-leaflet-control';
 import styled from 'styled-components';
 
+import Control from '../Control/Control';
 import { Legend } from './Legend';
 
 const LegendButton = styled(Button)`

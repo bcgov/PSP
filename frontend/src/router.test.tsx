@@ -25,8 +25,8 @@ import { NotFoundPage } from 'pages/404/NotFoundPage';
 import Test from 'pages/Test.ignore';
 import { act } from 'react-dom/test-utils';
 import AppRouter from 'router';
+import { flushPromises, mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
-import { flushPromises, mockKeycloak } from 'utils/testUtils';
 
 const mockAxios = new MockAdapter(axios);
 

@@ -15,7 +15,7 @@ import { useAccessRequests } from 'store/slices/accessRequests/useAccessRequests
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { fillInput } from 'utils/testUtils';
+import { fillInput } from 'utils/test-utils';
 
 import * as actionTypes from '../../../constants/actionTypes';
 import AccessRequestPage from './AccessRequestPage';
