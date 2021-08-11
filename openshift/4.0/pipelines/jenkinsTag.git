@@ -2,6 +2,7 @@
 def MS_TEAMS_SECRET
 def MS_TEAMS_WEBHOOK_KEY
 def RELEASE_VERSION
+def TAG
 pipeline {
 
     agent any
@@ -35,9 +36,14 @@ pipeline {
       returnStdout: true,
       script: 'git describe --abbrev=0 --tags'
     ).trim()
+	    TAG = sh (
+      returnStdout: true,
+      script: 'git fetch --tags && git tag --points-at HEAD | awk NF'
+    ).trim()
         // some instructions here
           // Print all environment variables
           echo "${RELEASE_VERSION}"
+		  echo "${TAG}"
            // echo sh(returnStdout: true, script: 'env')
         }
                   
