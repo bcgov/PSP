@@ -13,17 +13,17 @@ pipeline {
     }
 
     options {
-        script{
+       
              MS_TEAMS_SECRET = 'ms-teams-secrets'
         MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
-         env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
+         env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=notification-webhook secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
       
         office365ConnectorWebhooks([[
                     startNotification: true,
                         url: "${env.NOTIFICATION_WEBHOOK_URL}"
             ]]
         )
-        }
+        
     }
 
     stages {
