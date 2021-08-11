@@ -64,11 +64,13 @@ pipeline {
   }
   post {
     failure {
+        script{
+            error =  "${e}"
       office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
         factDefinitions: [
-          [name: "fact1", template: "content of fact1"],
-          [name: "fact2", template: "content of fact2"]
+          [name: "Failure reason", template: "${error}"]
         ]
+        }
     }
     success {
       script {
