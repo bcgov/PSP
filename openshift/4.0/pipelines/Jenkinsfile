@@ -41,9 +41,8 @@ pipeline {
       script: 'git describe --tags `git rev-list --tags --max-count=1`'
     ).trim()
 
-    BUILD_TRIGGER_BY = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
-    echo "userName: ${BUILD_TRIGGER_BY.userName}"
-    //echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
+    BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
+    echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
         // some instructions here
           // Print all environment variables
           echo "${RELEASE_VERSION}"
@@ -66,7 +65,8 @@ pipeline {
             message: 'Application has been [deployed](https://uat.green.biz)',
             status: 'Success',
             color: '#00FF00',
-            factDefinitions: [[name: "Release Version", template: "${RELEASE_VERSION}" ]]
+            factDefinitions: [[name: "Release version", template: "${RELEASE_VERSION}" ],
+                              [name: "Remarks", template: "${BUILD_TRIGGER_BY}" ]]
             }
         }
         }
