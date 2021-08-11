@@ -1,80 +1,86 @@
 #!groovy
+
 def MS_TEAMS_SECRET
 def MS_TEAMS_WEBHOOK_KEY
 def RELEASE_VERSION
 def TAG
 pipeline {
 
-    agent any
-    environment {
-            // MS Teams Configuration
-        MS_TEAMS_SECRET = 'ms-teams-secrets'
-        MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
-        WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-        
-        DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
-        //echo "${WEBHOOK_URL}"
-        url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
-    }
+  agent any
+  environment {
+    // MS Teams Configuration
+    MS_TEAMS_SECRET = 'ms-teams-secrets'
+    MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
+    WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
 
-    options {
-        office365ConnectorWebhooks([[
-                    startNotification: true,
-                        url: '${WEBHOOK_URL}'
-            ]]
-        )
-    }
+    DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
+    //echo "${WEBHOOK_URL}"
+    url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
+  }
 
-    stages {
-        stage('Init') {
-            steps {
-                echo 'Starting!'
-            }
-        }
-        stage('Upload') {
-    steps {
+  options {
+    office365ConnectorWebhooks([
+      [
+        startNotification: true,
+        url: '${WEBHOOK_URL}'
+      ]
+    ])
+  }
+
+  stages {
+    stage('Init') {
+      steps {
+        echo 'Starting!'
+      }
+    }
+    stage('Upload') {
+      steps {
         script {
-        MS_TEAMS_SECRET = 'ms-teams-secrets'
-        MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
-         env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-        //RELEASE_VERSION = 'v2.0.7.0.3'
-		    RELEASE_VERSION = sh (
-      returnStdout: true,
-      script: 'git describe --abbrev=0 --tags'
-    ).trim()
-	    TAG = sh (
-      returnStdout: true,
-      script: 'git describe --tags `git rev-list --tags --max-count=1`'
-    ).trim()
+          MS_TEAMS_SECRET = 'ms-teams-secrets'
+          MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
+          env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
+          //RELEASE_VERSION = 'v2.0.7.0.3'
+          RELEASE_VERSION = sh(
+            returnStdout: true,
+            script: 'git describe --abbrev=0 --tags'
+          ).trim()
+          TAG = sh(
+            returnStdout: true,
+            script: 'git describe --tags `git rev-list --tags --max-count=1`'
+          ).trim()
 
-    BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
-    echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
-        // some instructions here
+          BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
+          echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
+          // some instructions here
           // Print all environment variables
           echo "${RELEASE_VERSION}"
-		  echo "${TAG}"
-          echo "${env.NOTIFICATION_WEBHOOK_URL}"
+          echo "${TAG}"
+          // echo "${env.NOTIFICATION_WEBHOOK_URL}"
           //echo sh(returnStdout: true, script: 'env')
         }
-                  
+        error("Build failed because of this and that..")
+      }
     }
-        }
+  }
+  post {
+    failure {
+      office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
+        factDefinitions: [
+          [name: "fact1", template: "content of fact1"],
+          [name: "fact2", template: "content of fact2"]
+        ]
     }
-        post {
-        failure {
-            office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-                factDefinitions: [[name: "fact1", template: "content of fact1"],
-                                  [name: "fact2", template: "content of fact2"]]
-        }
-        success{
-            script {
-            office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-            message: 'Application has been [deployed](https://uat.green.biz)',
-            status: 'Success',
-            color: '#00FF00',
-            factDefinitions: [[name: "Release version", template: "${RELEASE_VERSION}" ],
-                              [name: "Remarks", template: "${BUILD_TRIGGER_BY}" ]]
-            }
-        }
-        }
+    success {
+      script {
+        office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
+          message: 'Application has been [deployed](https://uat.green.biz)',
+          status: 'Success',
+          color: '#00FF00',
+          factDefinitions: [
+            [name: "Release version", template: "${RELEASE_VERSION}"],
+            [name: "Remarks", template: "${BUILD_TRIGGER_BY}"]
+          ]
+      }
+    }
+  }
 }
