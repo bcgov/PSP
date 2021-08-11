@@ -15,8 +15,8 @@ import thunk from 'redux-thunk';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice, useProperties } from 'store/slices/properties';
+import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
-import { mockKeycloak } from 'utils/testUtils';
 
 import MapView from './MapView';
 
@@ -311,8 +311,8 @@ describe('MapView', () => {
       fireEvent.click(map!);
     });
     expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 54.97761367069628,
-      lng: -129.37500000000003,
+      lat: 52.81604319154934,
+      lng: -124.67285156250001,
     });
   });
 
@@ -335,8 +335,8 @@ describe('MapView', () => {
       fireEvent.click(map!);
     });
     expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 54.97761367069628,
-      lng: -129.37500000000003,
+      lat: 52.81604319154934,
+      lng: -124.67285156250001,
     });
     const closeButton = container.querySelector('.leaflet-popup-close-button');
     fireEvent.click(closeButton!);
