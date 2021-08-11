@@ -41,8 +41,9 @@ pipeline {
       script: 'git describe --tags `git rev-list --tags --max-count=1`'
     ).trim()
 
-    BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId}"
-    echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
+    BUILD_TRIGGER_BY = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
+    echo "userName: ${BUILD_TRIGGER_BY.userName}"
+    //echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
         // some instructions here
           // Print all environment variables
           echo "${RELEASE_VERSION}"
