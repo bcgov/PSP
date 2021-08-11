@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
@@ -106,18 +106,14 @@ describe('Edit agency page', () => {
     it('displays a loading toast', async () => {
       const { getByText, findByText } = renderEditAgencyPage();
       const saveButton = getByText(/save/i);
-      act(() => {
-        saveButton.click();
-      });
+      fireEvent.click(saveButton);
       await findByText('Updating Agency...');
     });
 
     it('displays a success toast if the request passes', async () => {
       const { getByText, findByText } = renderEditAgencyPage();
       const saveButton = getByText(/save/i);
-      act(() => {
-        saveButton.click();
-      });
+      fireEvent.click(saveButton);
       await findByText('Agency updated');
     });
 
@@ -126,9 +122,7 @@ describe('Edit agency page', () => {
       const saveButton = getByText(/save/i);
       mockAxios.reset();
       mockAxios.onAny().reply(500, {});
-      act(() => {
-        saveButton.click();
-      });
+      fireEvent.click(saveButton);
       await findByText('Failed to update Agency');
     });
 
@@ -136,9 +130,7 @@ describe('Edit agency page', () => {
       history.push('/new');
       const { getByText, findByText } = renderEditAgencyPage();
       const saveButton = getByText(/Submit Agency/i);
-      act(() => {
-        saveButton.click();
-      });
+      fireEvent.click(saveButton);
       await findByText('An agency name is required.');
     });
 
@@ -147,14 +139,12 @@ describe('Edit agency page', () => {
       const { getByText, findByText, container } = renderEditAgencyPage();
       mockAxios.reset();
       mockAxios.onAny().reply(200, {});
-      await fillInput(container, 'name', 'test agency');
-      await fillInput(container, 'code', 'TA');
-      await fillInput(container, 'email', '1@1.ca');
-      await fillInput(container, 'addressTo', 'hello you');
+      await waitFor(() => fillInput(container, 'name', 'test agency'));
+      await waitFor(() => fillInput(container, 'code', 'TA'));
+      await waitFor(() => fillInput(container, 'email', '1@1.ca'));
+      await waitFor(() => fillInput(container, 'addressTo', 'hello you'));
       const saveButton = getByText(/Submit Agency/i);
-      act(() => {
-        saveButton.click();
-      });
+      fireEvent.click(saveButton);
       await findByText('Agency updated');
     });
 
@@ -164,19 +154,15 @@ describe('Edit agency page', () => {
       mockAxios.reset();
       mockAxios.onAny().reply(200, {});
       mockAxios.onGet().reply(200, { total: 0 });
-      await fillInput(container, 'name', 'test agency');
-      await fillInput(container, 'code', 'TA');
-      await fillInput(container, 'email', '1@1.ca');
-      await fillInput(container, 'addressTo', 'hello you');
+      await waitFor(() => fillInput(container, 'name', 'test agency'));
+      await waitFor(() => fillInput(container, 'code', 'TA'));
+      await waitFor(() => fillInput(container, 'email', '1@1.ca'));
+      await waitFor(() => fillInput(container, 'addressTo', 'hello you'));
       const deleteButton = getByText(/Delete Agency/i);
-      act(() => {
-        deleteButton.click();
-      });
+      fireEvent.click(deleteButton);
       await screen.findByText('Are you sure you want to permanently delete the agency?');
       const deleteConfirm = getByText(/^Delete$/i);
-      act(() => {
-        deleteConfirm.click();
-      });
+      fireEvent.click(deleteConfirm);
       await waitFor(async () => {
         expect(mockAxios.history.delete).toHaveLength(1);
       });
@@ -187,21 +173,17 @@ describe('Edit agency page', () => {
       const { getByText, container } = renderEditAgencyPage();
       mockAxios.reset();
       mockAxios.onAny().reply(200, {});
-      await fillInput(container, 'name', 'test agency');
-      await fillInput(container, 'code', 'TA');
-      await fillInput(container, 'email', '1@1.ca');
-      await fillInput(container, 'addressTo', 'hello you');
+      await waitFor(() => fillInput(container, 'name', 'test agency'));
+      await waitFor(() => fillInput(container, 'code', 'TA'));
+      await waitFor(() => fillInput(container, 'email', '1@1.ca'));
+      await waitFor(() => fillInput(container, 'addressTo', 'hello you'));
       const deleteButton = getByText(/Delete Agency/i);
-      act(() => {
-        deleteButton.click();
-      });
+      fireEvent.click(deleteButton);
       await screen.findByText(
         'You are not able to delete this agency as there are properties currently associated with it.',
       );
       const deleteConfirm = getByText(/^ok$/i);
-      act(() => {
-        deleteConfirm.click();
-      });
+      fireEvent.click(deleteConfirm);
     });
   });
 });
