@@ -14,7 +14,7 @@ pipeline {
         
         DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
         //echo "${WEBHOOK_URL}"
-        sh(script: 'echo "${WEBHOOK_URL}"')
+        url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
     }
 
     options {
