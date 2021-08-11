@@ -29,7 +29,8 @@ pipeline {
         stage('Upload') {
     steps {
         script {
-   
+    MS_TEAMS_SECRET = 'ms-teams-secrets'
+        MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
          env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
         //RELEASE_VERSION = 'v2.0.7.0.3'
 		    RELEASE_VERSION = sh (
@@ -47,6 +48,7 @@ pipeline {
           // Print all environment variables
           echo "${RELEASE_VERSION}"
 		  echo "${TAG}"
+          echo "${env.NOTIFICATION_WEBHOOK_UR}"
            //echo sh(returnStdout: true, script: 'env')
         }
                   
