@@ -11,7 +11,6 @@ pipeline {
     // MS Teams Configuration
     MS_TEAMS_SECRET = 'ms-teams-secrets'
     MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
-    WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
     VANITY_URL = "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/"
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
@@ -30,6 +29,7 @@ pipeline {
     stage('Init') {
       steps {
           script{
+                WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
                   office365ConnectorWebhooks([
       [
         startNotification: true,
@@ -79,11 +79,12 @@ pipeline {
       }
       options { timeout(time: 2, unit: 'MINUTES') }
       input {
-        message "Proceed with deployment to dev] ?"
+        message "Proceed with deployment to [${DESTINATION}] ?"
         ok 'Yes, go ahead'
       }
       steps {
-    
+      echo "${RELEASE_VERSION}"
+              echo "${TAG}"
         echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
         echo 'Deploy successful'
       }
