@@ -12,7 +12,7 @@ pipeline {
     MS_TEAMS_SECRET = 'ms-teams-secrets'
     MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
     WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-    VANITY_URL="https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/"
+    VANITY_URL = "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/"
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     //echo "${WEBHOOK_URL}"
@@ -34,25 +34,24 @@ pipeline {
         echo 'Starting!'
       }
     }
-    stage('Upload') {
+    stage('Release Tag') {
       steps {
         script {
           MS_TEAMS_SECRET = 'ms-teams-secrets'
           MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
           env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
           //RELEASE_VERSION = 'v2.0.7.0.3'
-          if (env.BRANCH_NAME != 'dev'){
-          RELEASE_VERSION = sh(
-            returnStdout: true,
-            script: 'git describe --abbrev=0 --tags'
-          ).trim() + "-" + OC_JOB_NAME
+          if (env.BRANCH_NAME != 'dev') {
+            RELEASE_VERSION = sh(
+              returnStdout: true,
+              script: 'git describe --abbrev=0 --tags'
+            ).trim() + "-" + OC_JOB_NAME
 
-          }
-          else{
-          TAG = sh(
-            returnStdout: true,
-            script: 'git describe --tags `git rev-list --tags --max-count=1`'
-          ).trim() + "-" + OC_JOB_NAME
+          } else {
+            TAG = sh(
+              returnStdout: true,
+              script: 'git describe --tags `git rev-list --tags --max-count=1`'
+            ).trim() + "-" + OC_JOB_NAME
           }
           BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
           echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
@@ -69,19 +68,20 @@ pipeline {
   }
   post {
     failure {
-        script{
-      office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-        factDefinitions: [
-          [name: "Release version", template: "${RELEASE_VERSION}"]
-        ]
-        }
+      script {
+        office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
+          factDefinitions: [
+            [name: "Release version", template: "${RELEASE_VERSION}"]
+          ]
+      }
     }
     success {
       script {
+          echo "${VANITY_URL}"
         office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          message: 'Application has been [deployed]("${VANITY_URL}")',
+          message: 'Application has been [deployed](${VANITY_URL})',
           status: 'Success',
-          color: '#00FF00',//green
+          color: '#00FF00', //green
           factDefinitions: [
             [name: "Release version", template: "${RELEASE_VERSION}"],
             [name: "Remarks", template: "${BUILD_TRIGGER_BY}"]
