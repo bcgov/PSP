@@ -75,7 +75,7 @@ pipeline {
       }
       options { timeout(time: 2, unit: 'MINUTES') }
       input {
-        message "Proceed with deployment to [${DESTINATION}] ?"
+        message "Proceed with deployment to dev] ?"
         ok 'Yes, go ahead'
       }
       steps {
@@ -97,7 +97,7 @@ pipeline {
     success {
       script {
         office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          message: "Application has been [deployed to dev](${VANITY_URL})",
+          message: "Application has been [deployed to ${DESTINATION}](${VANITY_URL})",
           status: 'Success',
           color: '#00FF00', //green
           factDefinitions: [
