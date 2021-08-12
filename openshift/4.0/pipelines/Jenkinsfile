@@ -77,9 +77,8 @@ pipeline {
     }
     success {
       script {
-          echo "${VANITY_URL}"
         office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          message: 'Application has been [deployed](${VANITY_URL})',
+          message: "Application has been [deployed](${VANITY_URL})",
           status: 'Success',
           color: '#00FF00', //green
           factDefinitions: [
