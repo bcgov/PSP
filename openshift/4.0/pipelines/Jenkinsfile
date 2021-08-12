@@ -22,18 +22,21 @@ pipeline {
   }
 
   options {
-    office365ConnectorWebhooks([
-      [
-        startNotification: true,
-        url: "${url}"
-      ]
-    ])
+
   }
 
   stages {
     stage('Init') {
       steps {
+          script{
+                  office365ConnectorWebhooks([
+      [
+        startNotification: true,
+        url: "${WEBHOOK_URL}"
+      ]
+    ])
         echo 'Starting!'
+      }
       }
     }
     stage('Release Tag') {
