@@ -16,7 +16,7 @@ pipeline {
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
-    DESTINATION = 'dev'
+    DESTINATION = ''sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()''
     //echo "${WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
@@ -73,14 +73,16 @@ pipeline {
       }
       options { timeout(time: 2, unit: 'MINUTES') }
       input {
-        message "Proceed with deployment to [${DESTINATION}] ?"
+        message "Proceed with deployment to [dev] ?"
         ok 'Yes, go ahead'
       }
       steps {
+          script{
         echo "${RELEASE_VERSION}"
         echo "${TAG}"
         echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
         echo 'Deploy successful'
+          }
       }
     }
   }
