@@ -22,7 +22,8 @@ pipeline {
   }
 
   options {
-
+    disableResume()
+	disableConcurrentBuilds()
   }
 
   stages {
