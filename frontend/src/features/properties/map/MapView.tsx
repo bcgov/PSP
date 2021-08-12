@@ -7,8 +7,7 @@ import { MotiInventoryContainer } from 'features/mapSideBar';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { LeafletMouseEvent } from 'leaflet';
 import queryString from 'query-string';
-import React, { useRef, useState } from 'react';
-import { Map as LeafletMap } from 'react-leaflet';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
@@ -34,7 +33,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const lookupCodes = useLookupCodeHelpers();
   const properties = useAppSelector(state => [...state.properties.parcels]);
   const [loadedProperties, setLoadedProperties] = useState(false);
-  const mapRef = useRef<LeafletMap>(null);
   const propertyDetail = useAppSelector(state => state.properties.propertyDetail);
   const agencies = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
   const administrativeAreas = lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME);
@@ -76,7 +74,6 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
           disableMapFilterBar={disableFilter}
           showParcelBoundaries={props.showParcelBoundaries ?? true}
           zoom={6}
-          mapRef={mapRef}
         />
       </FilterProvider>
     </div>

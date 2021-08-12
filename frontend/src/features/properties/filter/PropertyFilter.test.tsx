@@ -15,7 +15,7 @@ import thunk from 'redux-thunk';
 import filterSlice from 'store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { TenantProvider } from 'tenants';
-import { fillInput } from 'utils/testUtils';
+import { fillInput } from 'utils/test-utils';
 
 import propertyNameSlice from '../common/slices/propertyNameSlice';
 import { PropertyFilter } from '.';
@@ -161,7 +161,7 @@ describe('MapFilterBar', () => {
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await fillInput(container, 'administrativeArea', 'Victoria', 'typeahead');
+    await waitFor(() => fillInput(container, 'administrativeArea', 'Victoria', 'typeahead'));
 
     await waitFor(() => {
       fireEvent.change(classificationId!, {
@@ -247,7 +247,7 @@ describe('MapFilterBar', () => {
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await fillInput(container, 'administrativeArea', 'Victoria', 'typeahead');
+    await waitFor(() => fillInput(container, 'administrativeArea', 'Victoria', 'typeahead'));
 
     await waitFor(() => {
       fireEvent.change(classificationId!, {

@@ -37,6 +37,10 @@ parameters:
     description: "The namespace of the OpenShift tools containing the build images."
     required: true
     value: "3cd915-tools"
+  - name: ENV_INSTANCE
+    displayName: "Instance name for shared env"
+    description: "instance name for shared env"
+    value: ""
   - name: IMAGE_TAG
     displayName: "Image Tag Name"
     description: "The image tag that will be used for this deployment.
@@ -47,6 +51,11 @@ parameters:
     description: "Return logs newer than this duration or collect logs every sleep time (1hr = 3600s)."
     required: true
     value: "3600"
+  - name: STORAGE_TYPE
+    displayName: "Optical storage type e.g Amazon_S3 or Azure_Blob"
+    description: "Choose storage type to use between amazon or azure"
+    required: true
+    value: "Amazon_S3"
   - name: AZ_BLOB_URL
     displayName: "Azur Blob URL"
     description: "URL for Azure blob container"
@@ -61,7 +70,35 @@ parameters:
     displayName: "Azure blob container token"
     description: "Azure blob container token. start with ?"
     required: true
-    value: "?sp=rcw&st=2021-07-04T06:11:43Z&se=2021-08-25T14:11:43Z&sv=2020-0reewtNqZc7LDQdjeoXM%3D"
+    value: "?your_AZ_SAS_TOKEN_here"
+
+  #Amazon s3 Variables 
+  - name: AWS_HOST
+    displayName: "AWS Host name"
+    description: "AWS REST host name"
+    required: true
+    value: "moti-int.objectstore.gov.bc.ca"
+  - name: AWS_REGION
+    displayName: "AWS S3 Region"
+    description: "AWS S3 Region"
+    required: true
+    value: "us-east-1"
+  - name: AWS_ACCESS_KEY_ID
+    displayName: "S3 Acccess Key ID"
+    description: "AWS S3 Access key ID"
+    required: true
+    value: "tran_api_psp_logfiles_dev"
+  - name: AWS_BUCKET_NAME
+    displayName: "S3 bucket name"
+    description: "AWS S3 bucket name"
+    required: true
+    value: "tran_api_psp_logfiles_dev"
+  - name: AWS_SECRET_ACCESS_KEY
+    displayName: "S3 secret Access key"
+    description: "AWS S3 secret Access ke"
+    required: true
+    value: "your_AWS_SECRET_ACCESS_KEY_here"
+
   - name: EXPORT_TIME
     displayName: "Wait time before export in sec"
     description: "Time to wait before exporting zip. Export time > sleep_time. Export log every 24hrs"
@@ -103,7 +140,7 @@ parameters:
   - name: CPU_REQUEST
     displayName: "CPU Request"
     description: "Starting amount of CPU the container can use."
-    value: "100m"
+    value: "250m"
   - name: CPU_LIMIT
     displayName: "CPU Limit"
     description: "Maximum amount of CPU the container can use."
@@ -111,7 +148,7 @@ parameters:
   - name: MEMORY_REQUEST
     displayName: "Memory Request"
     description: "Starting amount of memory the container can use."
-    value: "100Mi"
+    value: "250Mi"
   - name: MEMORY_LIMIT
     displayName: "Memory Limit"
     description: "Maximum amount of memory the container can use."
@@ -120,12 +157,12 @@ objects:
   - kind: Service
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       annotations:
         description: Exposes and load balances the application pods.
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
     spec:
@@ -136,7 +173,7 @@ objects:
           targetPort: ${{APP_PORT}}
       selector:
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
       type: ClusterIP
       sessionAffinity: None
 
@@ -144,31 +181,32 @@ objects:
   - kind: Secret
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       annotations:
         description: "Azure blob or S3 token secrets"
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
         role: ${ROLE_NAME}
     type: Opaque
     stringData:
       AZ_SAS_TOKEN: ${AZ_SAS_TOKEN}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
 
   # Storage for pims-logging.
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         role: ${ROLE_NAME}
     spec:
       storageClassName: ${LOGGING_VOLUME_CLASS}
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: ${LOGGING_VOLUME_SIZE}
@@ -176,15 +214,15 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}-root
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
       namespace: ${PROJECT_NAMESPACE}
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         role: ${ROLE_NAME}
     spec:
       storageClassName: ${LOGGING_VOLUME_CLASS}
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       resources:
         requests:
           storage: ${LOGGING_VOLUME_SIZE}
@@ -193,14 +231,14 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: ${APP_NAME}-${ROLE_NAME}
+      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
       namespace: ${PROJECT_NAMESPACE}
       annotations:
         description: "Defines how to deploy ${APP_NAME}-${ROLE_NAME}"
       labels:
-        name: ${APP_NAME}-${ROLE_NAME}
+        name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
     spec:
       strategy:
         type: Rolling
@@ -218,7 +256,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - ${APP_NAME}-${ROLE_NAME}
+              - ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
             from:
               kind: ImageStreamTag
               namespace: "${TOOLS_NAMESPACE}"
@@ -226,41 +264,58 @@ objects:
       replicas: ${{REPLICAS}}
       selector:
         app: ${APP_NAME}
-        role: ${ROLE_NAME}
+        role: ${ROLE_NAME}${ENV_INSTANCE}
       template:
         metadata:
-          name: ${APP_NAME}-${ROLE_NAME}
+          name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
           labels:
-            name: ${APP_NAME}-${ROLE_NAME}
+            name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
             app: ${APP_NAME}
-            role: ${ROLE_NAME}
+            role: ${ROLE_NAME}${ENV_INSTANCE}
         spec:
           volumes:
-            - name: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${ROLE_NAME}
-            - name: ${APP_NAME}-${ROLE_NAME}-root
+                claimName: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
+            - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
               persistentVolumeClaim:
-                claimName: ${APP_NAME}-${ROLE_NAME}-root
-          terminationGracePeriodSeconds: 120
+                claimName: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
+          terminationGracePeriodSeconds: 60
           containers:
-            - name: ${APP_NAME}-${ROLE_NAME}
+            - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
               image: ""
               ports:
                 - containerPort: ${{APP_PORT}}
                   protocol: TCP
               env:
+                - name: TZ
+                  value: America/Los_Angeles
                 - name: SLEEP_TIME
                   value: ${SLEEP_TIME}
                 - name: AZ_BLOB_URL
                   value: ${AZ_BLOB_URL}
                 - name: AZ_BLOB_CONTAINER
                   value: ${AZ_BLOB_CONTAINER}
+                - name: STORAGE_TYPE
+                  value: ${STORAGE_TYPE}
+                - name: AWS_HOST
+                  value: ${AWS_HOST}
+                - name: AWS_REGION
+                  value: ${AWS_REGION}
+                - name: AWS_ACCESS_KEY_ID
+                  value: ${AWS_ACCESS_KEY_ID}
+                - name: AWS_BUCKET_NAME
+                  value: ${AWS_BUCKET_NAME}
                 - name: AZ_SAS_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: ${APP_NAME}-${ROLE_NAME}
+                      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
                       key: AZ_SAS_TOKEN
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
+                      key: AWS_SECRET_ACCESS_KEY
                 - name: FRONTEND_APP_NAME
                   value: ${FRONTEND_APP_NAME}
                 - name: API_NAME
@@ -277,7 +332,8 @@ objects:
                   cpu: ${CPU_LIMIT}
                   memory: ${MEMORY_LIMIT}
               volumeMounts:
-                - name: ${APP_NAME}-${ROLE_NAME}
+                - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}
                   mountPath: ${LOGGING_VOLUME_MOUNT_PATH}
-                - name: ${APP_NAME}-${ROLE_NAME}-root
+                - name: ${APP_NAME}-${ROLE_NAME}${ENV_INSTANCE}-root
                   mountPath: ${APP_VOLUME_MOUNT_PATH}
+                

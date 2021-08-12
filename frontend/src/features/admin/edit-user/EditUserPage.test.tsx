@@ -5,7 +5,6 @@ import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import moment from 'moment-timezone';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -69,7 +68,7 @@ const testRender = () =>
   render(
     <Provider store={store}>
       <Router history={history}>
-        <EditUserPage key="TEST-ID" />,
+        <EditUserPage userKey="TEST-ID" />,
       </Router>
     </Provider>,
   );
@@ -86,7 +85,7 @@ const renderEditUserPage = () =>
           rtl={false}
           pauseOnFocusLoss={false}
         />
-        <EditUserPage key="TEST-ID" />,
+        <EditUserPage userKey="TEST-ID" />,
       </Router>
     </Provider>,
   );
@@ -103,7 +102,7 @@ describe('Edit user page', () => {
     const { container } = render(
       <Provider store={noDateStore}>
         <Router history={history}>
-          <EditUserPage key="TEST-ID" />,
+          <EditUserPage userKey="TEST-ID" />,
         </Router>
       </Provider>,
     );

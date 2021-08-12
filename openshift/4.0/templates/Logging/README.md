@@ -62,6 +62,13 @@ $ oc tag pims-logging:latest pims-logging:dev
 ```bash
 oc process -f .\role-binding.yaml -p NAMESPACE=3cd915-dev | oc apply -f -
 ```
+### Add ServiceAccount Access namespace for local DEVELOPMENT and GIT Action
+
+```bash
+oc policy add-role-to-user edit system:serviceaccount:3cd915-dev:default -n 3cd915-dev
+oc policy add-role-to-user edit system:serviceaccount:3cd915-dev:default -n 3cd915-test
+oc policy add-role-to-user edit system:serviceaccount:3cd915-dev:default -n 3cd915-prod
+```
 
 ### Create pims-logging deployment config
 
@@ -71,7 +78,8 @@ Create a deploy config env file here in the base dir `deploy.dev.env` with a val
 
 ```bash
 IMAGE_TAG=dev
-SLEEP_TIME=60
+SLEEP_TIME=3600
+STORAGE_TYPE=Azure_blob
 AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
 AZ_BLOB_CONTAINER=pims
 AZ_SAS_TOKEN=?{TOKEN SECRET}
@@ -79,7 +87,25 @@ FRONTEND_APP_NAME=pims-app
 API_NAME=pims-api
 PROJECT_NAMESPACE=3cd915-dev
 TOOLS_NAMESPACE=3cd915-tools
-EXPORT_TIME=360
+EXPORT_TIME=43200
+```
+
+To switch to Amazon S3 storage `deploy.dev.env` should look like ;
+
+```bash
+IMAGE_TAG=dev
+SLEEP_TIME=3600
+STORAGE_TYPE=Amazon_S3
+AWS_HOST=moti-int.objectstore.gov.bc.ca
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=tran_api_psp_logfiles_dev
+AWS_BUCKET_NAME=tran_api_psp_logfiles_dev
+AWS_SECRET_ACCESS_KEY=XXXXXXXXXX
+FRONTEND_APP_NAME=pims-app
+API_NAME=pims-api
+PROJECT_NAMESPACE=3cd915-dev
+TOOLS_NAMESPACE=3cd915-tools
+EXPORT_TIME=43200
 ```
 
 Create the logging deployment
@@ -146,6 +172,7 @@ Create .env file with the required environment variables e.g.
 
 ```bash
 SLEEP_TIME=30
+STORAGE_TYPE=Azure_blob
 AZ_BLOB_URL=https://pimsapp.blob.core.windows.net
 AZ_BLOB_CONTAINER=pims
 AZ_SAS_TOKEN=?XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -154,6 +181,23 @@ API_NAME=pims-api
 PROJECT_NAMESPACE=3cd915-dev
 EXPORT_TIME=120
 OC_TOKEN=sha256~XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+OC_SERVER=https://api.silver.devops.gov.bc.ca:6443
+```
+
+For Amazon S3 storage .env file should look like:
+```bash
+SLEEP_TIME=30
+STORAGE_TYPE=Amazon_S3
+AWS_HOST=moti-int.objectstore.gov.bc.ca
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=tran_api_psp_logfiles_dev
+AWS_BUCKET_NAME=tran_api_psp_logfiles_dev
+AWS_SECRET_ACCESS_KEY=XXXXXXXXXX
+FRONTEND_APP_NAME=pims-app
+API_NAME=pims-api
+PROJECT_NAMESPACE=3cd915-dev
+EXPORT_TIME=60
+OC_TOKEN=sha256~XXXXXXXXXXX
 OC_SERVER=https://api.silver.devops.gov.bc.ca:6443
 ```
 
