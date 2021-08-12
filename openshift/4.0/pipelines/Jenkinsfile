@@ -16,7 +16,7 @@ pipeline {
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
-    DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
+    DESTINATION = 'dev'
     //echo "${WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
