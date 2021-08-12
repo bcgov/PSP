@@ -4,6 +4,7 @@ def MS_TEAMS_SECRET
 def MS_TEAMS_WEBHOOK_KEY
 def RELEASE_VERSION
 def TAG
+def DESTINATION
 pipeline {
 
   agent any
@@ -73,22 +74,26 @@ pipeline {
       }
     }
     stage('Validate Deployment') {
+        steps{
+            script{
       when {
         beforeInput true
         expression { new Boolean(env.APPROVAL_REQUIRED) }
       }
       options { timeout(time: 2, unit: 'MINUTES') }
-      script{
       input {
         message "Proceed with deployment to [${DESTINATION}] ?"
         ok 'Yes, go ahead'
       }
-      }
+            }
+        }
       steps {
+          script {
       echo "${RELEASE_VERSION}"
               echo "${TAG}"
         echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
         echo 'Deploy successful'
+          }
       }
     }
   }
