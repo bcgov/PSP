@@ -33,39 +33,35 @@ pipeline {
         script {
           MS_TEAMS_SECRET = 'ms-teams-secrets'
           MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
-          DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
+          DESTINATION = sh(script: 'echo "${DESTINATION:-uat}"', returnStdout: true).trim()
           env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-
+          BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
           //echo "web URL is ! ${env.NOTIFICATION_WEBHOOK_URL}"
         }
       }
     }
-    stage('Release Tag') {
+    stage('Release Version') {
       steps {
         script {
-           //RELEASE_VERSION = 'v2.0.7.0.3'
           if (env.BRANCH_NAME != 'dev') {
             RELEASE_VERSION = sh(
               returnStdout: true,
-              script: 'git describe --abbrev=0 --tags'
+              script: 'git describe --tags `git rev-list --tags --max-count=1`'
             ).trim() + "-" + OC_JOB_NAME
 
           } else {
-            TAG = sh(
-              returnStdout: true,
-              script: 'git describe --tags `git rev-list --tags --max-count=1`'
-            ).trim() + "-" + OC_JOB_NAME
+            RELEASE_VERSION = 'latest'
           }
-          BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
+          
         }
       }
     }
     stage('Approve Deployment') {
       when {
         beforeInput true
-        expression {
-          new Boolean(env.APPROVAL_REQUIRED)
-        }
+         expression { 
+             DESTINATION == 'uat'
+             }
       }
       steps {
         script {
