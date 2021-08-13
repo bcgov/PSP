@@ -16,7 +16,8 @@ pipeline {
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
-    
+    WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
+
     //echo "${WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
@@ -24,6 +25,12 @@ pipeline {
   options {
     disableResume()
     disableConcurrentBuilds()
+               office365ConnectorWebhooks([
+            [
+              startNotification: true,
+              url: "${env.WEBHOOK_URL}"
+            ]
+          ])
   }
 
   stages {
@@ -34,13 +41,8 @@ pipeline {
           MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
           DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
           env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-           office365ConnectorWebhooks([
-            [
-              startNotification: true,
-              url: "${env.NOTIFICATION_WEBHOOK_URL}"
-            ]
-          ])
-          echo "web URL is ! ${env.NOTIFICATION_WEBHOOK_URL}"
+
+          //echo "web URL is ! ${env.NOTIFICATION_WEBHOOK_URL}"
         }
       }
     }
@@ -85,7 +87,7 @@ pipeline {
           echo "${DESTINATION}"
           echo "${RELEASE_VERSION}"
           timeout(time: 2, unit: 'MINUTES') {
-            def val = input(message: 'Deploy Release version ?', ok: 'Yes, go ahead')
+            def val = input(message: 'Deploy Release version' "${RELEASE_VERSION}"' , ok: 'Yes, go ahead')
 
             echo "${val}"
             //  } else {
