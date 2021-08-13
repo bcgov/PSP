@@ -95,7 +95,7 @@ pipeline {
           def dest = ${DESTINATION}.toString().toUpperCase()
           echo "${dest}"
         office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          message: "Application has been [deployed to ${DESTINATION^^}](${VANITY_URL})",
+          message: "Application has been [deployed to ${DESTINATION}](${VANITY_URL})",
           status: 'Success',
           color: '#00FF00', //green
           factDefinitions: [
