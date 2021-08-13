@@ -73,7 +73,7 @@ pipeline {
         //error("Build failed because of this and that..")
       }
     }
-    stage('Validate Deployment') {
+    stage('Approve Deployment') {
       when {
         beforeInput true
         expression {
@@ -82,25 +82,20 @@ pipeline {
       }
       steps {
         script {
-          //echo "${DESTINATION}"
-          //echo "${RELEASE_VERSION}"
           timeout(time: 2, unit: 'MINUTES') {
             def val = input(message: "Deploy Release version $RELEASE_VERSION to $DESTINATION?" , ok: 'Yes, go ahead')
-
-            echo "${val}"
-            //  } else {
-            //about 
-            //  error("Build failed because of this and that..")
-            // }
-
-            echo 'DEBUG - All pipeline environment variables:'
-            echo sh(returnStdout: true, script: 'env')
-            echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
-            echo 'Deploy successful'
+            echo "*** ${RELEASE_VERSION} has been approved for deployment. Proceeding... ***"
           }
 
         }
       }
+    }
+    stage('Deploy'){
+        steps {
+            script{
+                echo 'Deployment completed...'
+            }
+        }
     }
   }
   post {
