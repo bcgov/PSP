@@ -25,7 +25,7 @@ pipeline {
   options {
     disableResume()
     disableConcurrentBuilds()
-    echo "${env.WEBHOOK_URL}"
+    
                office365ConnectorWebhooks([
             [
               startNotification: true,
