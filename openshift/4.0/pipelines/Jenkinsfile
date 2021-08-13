@@ -15,7 +15,7 @@ pipeline {
     VANITY_URL = "https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca/"
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
-    APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
+    APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-false}"', returnStdout: true).trim()
     WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
   }
 
