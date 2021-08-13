@@ -43,7 +43,8 @@ pipeline {
     stage('Release Version') {
       steps {
         script {
-            echo "branch name is ! ${env.BRANCH_NAME}"
+                    echo 'DEBUG - All pipeline environment variables:'
+            echo sh(returnStdout: true, script: 'env')
           if (env.BRANCH_NAME != 'dev') {
             RELEASE_VERSION = sh(
               returnStdout: true,
