@@ -18,7 +18,7 @@ pipeline {
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
     WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
 
-    echo "${env.WEBHOOK_URL}"
+    //echo "${env.WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
 
