@@ -23,16 +23,13 @@ pipeline {
   }
 
   options {
-    disableResume()
-    disableConcurrentBuilds()
-    
                office365ConnectorWebhooks([
             [
               startNotification: true,
               notifyUnstable: true,
               notifyFailure: true,
               notifyBackToNormal: true,
-              url: "https://bcgov.webhook.office.com/webhookb2/2efef2eb-e8ad-40ac-826c-87ae0751445e@6fdb5200-3d0d-4a8a-b036-d3685e359adc/IncomingWebhook/4487f15457684a3cbb78de177fdf6e20/09519648-29f1-4055-ba6b-ba6a2cab509a"
+              url: 'https://bcgov.webhook.office.com/webhookb2/2efef2eb-e8ad-40ac-826c-87ae0751445e@6fdb5200-3d0d-4a8a-b036-d3685e359adc/IncomingWebhook/4487f15457684a3cbb78de177fdf6e20/09519648-29f1-4055-ba6b-ba6a2cab509a'
             ]
           ])
   }
