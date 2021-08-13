@@ -74,26 +74,25 @@ pipeline {
       }
     }
     stage('Validate Deployment') {
-        steps{
-            script{
       when {
         beforeInput true
         expression { new Boolean(env.APPROVAL_REQUIRED) }
       }
-      options { timeout(time: 2, unit: 'MINUTES') }
-      input {
-        message "Proceed with deployment to [${DESTINATION}] ?"
-        ok 'Yes, go ahead'
-      }
-            }
-        }
       steps {
           script {
-      echo "${RELEASE_VERSION}"
+      options { timeout(time: 2, unit: 'MINUTES') }
+      input {
+        message "Proceed with deployment of [${DESTINATION}] ?"
+        ok 'Yes, go ahead'
+      }
+     
+        echo "${RELEASE_VERSION}"
               echo "${TAG}"
         echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
         echo 'Deploy successful'
-          }
+          
+      
+    }
       }
     }
   }
