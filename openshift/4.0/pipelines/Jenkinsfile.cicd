@@ -279,8 +279,9 @@ pipeline {
     success {
       script {
         if (new Boolean(env.SKIP_BUILD) == false) {
+		  def upperDestination = "${DESTINATION}".toString().toUpperCase()
           office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          message: "Application has been [deployed to ${DESTINATION}](${VANITY_URL})",
+          message: "Application has been [deployed to ${upperDestination}](${VANITY_URL})",
           status: 'Success',
           color: '#00FF00', //green
           factDefinitions: [
