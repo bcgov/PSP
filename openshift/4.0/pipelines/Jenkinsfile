@@ -36,16 +36,15 @@ pipeline {
           DESTINATION = sh(script: 'echo "${DESTINATION:-uat}"', returnStdout: true).trim()
           env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
           BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
-          env.BRANCH_NAME = sh(label: 'getBranchName', returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-          echo "web URL is ! ${env.BRANCH_NAME}"
-          println env.BRANCH_NAME
+          BRANCH_NAME = "${env.GIT_BRANCH.replaceFirst(/^.*\//, '')}"
+          echo "branch name is: ${BRANCH_NAME}"
         }
       }
     }
     stage('Release Version') {
       steps {
         script {
-          if (env.BRANCH_NAME  != 'dev') {
+          if (BRANCH_NAME  != 'dev') {
             RELEASE_VERSION = sh(
               returnStdout: true,
               script: 'git describe --tags `git rev-list --tags --max-count=1`'
