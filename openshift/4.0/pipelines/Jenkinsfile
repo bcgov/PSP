@@ -87,7 +87,7 @@ pipeline {
           echo "${DESTINATION}"
           echo "${RELEASE_VERSION}"
           timeout(time: 2, unit: 'MINUTES') {
-            def val = input(message: 'Deploy Release version' "${RELEASE_VERSION}"' , ok: 'Yes, go ahead')
+            def val = input(message: "Deploy Release version \n\t ${RELEASE_VERSION}\n\t"? , ok: 'Yes, go ahead')
 
             echo "${val}"
             //  } else {
