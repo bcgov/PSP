@@ -29,7 +29,10 @@ pipeline {
                office365ConnectorWebhooks([
             [
               startNotification: true,
-              url: "${env.WEBHOOK_URL}"
+              notifyUnstable: true,
+              notifyFailure: true,
+              notifyBackToNormal: true,
+              url: $env.WEBHOOK_URL
             ]
           ])
   }
@@ -85,10 +88,10 @@ pipeline {
       }
       steps {
         script {
-          echo "${DESTINATION}"
-          echo "${RELEASE_VERSION}"
+          //echo "${DESTINATION}"
+          //echo "${RELEASE_VERSION}"
           timeout(time: 2, unit: 'MINUTES') {
-            def val = input(message: "Deploy Release version $DESTINATION ?" , ok: 'Yes, go ahead')
+            def val = input(message: "Deploy Release version $RELEASE_VERSION to $DESTINATION?" , ok: 'Yes, go ahead')
 
             echo "${val}"
             //  } else {
@@ -96,8 +99,8 @@ pipeline {
             //  error("Build failed because of this and that..")
             // }
 
-            echo "${RELEASE_VERSION}"
-            echo "${TAG}"
+            echo 'DEBUG - All pipeline environment variables:'
+            echo sh(returnStdout: true, script: 'env')
             echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
             echo 'Deploy successful'
           }
