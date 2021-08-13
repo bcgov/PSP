@@ -62,8 +62,8 @@ pipeline {
           }
           BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
           echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
-          echo "${RELEASE_VERSION}"
-          echo "${TAG}"
+          //echo "${RELEASE_VERSION}"
+          //echo "${TAG}"
           // some instructions here
           // Print all environment variables
 
@@ -82,23 +82,24 @@ pipeline {
       }
       steps {
         script {
+          echo "${DESTINATION}"
+          echo "${RELEASE_VERSION}"
           timeout(time: 2, unit: 'MINUTES') {
             def val = input(message: "Deploy Release version ${RELEASE_VERSION} to [${DESTINATION}] ?", ok: 'Yes, go ahead',
               parameters: [booleanParam(defaultValue: true,
                 description: "You about to deploy  ${RELEASE_VERSION} to ${DESTINATION} ")])
-            if (val) {
-              echo "${val}"
-            } else {
-              //about 
-              error("Build failed because of this and that..")
-            }
-          
 
-          echo "${RELEASE_VERSION}"
-          echo "${TAG}"
-          echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
-          echo 'Deploy successful'
-        }
+            echo "${val}"
+            //  } else {
+            //about 
+            //  error("Build failed because of this and that..")
+            // }
+
+            echo "${RELEASE_VERSION}"
+            echo "${TAG}"
+            echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
+            echo 'Deploy successful'
+          }
 
         }
       }
