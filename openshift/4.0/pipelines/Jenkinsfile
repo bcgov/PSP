@@ -32,7 +32,7 @@ pipeline {
               notifyUnstable: true,
               notifyFailure: true,
               notifyBackToNormal: true,
-              url: $env.WEBHOOK_URL
+              url: "${env.WEBHOOK_URL}"
             ]
           ])
   }
