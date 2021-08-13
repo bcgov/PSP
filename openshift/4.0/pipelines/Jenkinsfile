@@ -16,7 +16,7 @@ pipeline {
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
-     DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
+    
     //echo "${WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
@@ -30,11 +30,14 @@ pipeline {
     stage('Init') {
       steps {
         script {
-          WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-          office365ConnectorWebhooks([
+          MS_TEAMS_SECRET = 'ms-teams-secrets'
+          MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
+           DESTINATION = sh(script: 'echo "${DESTINATION:-dev}"', returnStdout: true).trim()
+          env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
+           office365ConnectorWebhooks([
             [
               startNotification: true,
-              url: "${WEBHOOK_URL}"
+              url: "${env.NOTIFICATION_WEBHOOK_URL}"
             ]
           ])
           echo "web URL is ! ${WEBHOOK_URL}"
@@ -44,10 +47,7 @@ pipeline {
     stage('Release Tag') {
       steps {
         script {
-          MS_TEAMS_SECRET = 'ms-teams-secrets'
-          MS_TEAMS_WEBHOOK_KEY = 'notification-webhook'
-          env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-          //RELEASE_VERSION = 'v2.0.7.0.3'
+           //RELEASE_VERSION = 'v2.0.7.0.3'
           if (env.BRANCH_NAME != 'dev') {
             RELEASE_VERSION = sh(
               returnStdout: true,
