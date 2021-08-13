@@ -85,6 +85,18 @@ pipeline {
         message "Proceed with deployment of [${DESTINATION}] ?"
         ok 'Yes, go ahead'
       }
+                timeout(time: 2, unit: 'MINUTES') {
+            def val = input(message: "Deploy Release version ${RELEASE_VERSION} to [${DESTINATION}] ?", ok: 'Yes, go ahead' ,
+            parameters: [booleanParam(defaultValue: true,
+            description: "You about to deploy  ${RELEASE_VERSION} to ${DESTINATION} ")
+            ])
+            if (val) {
+              echo "${val}"
+            } else {
+              //about 
+              error("Build failed because of this and that..")
+            }
+          }
      
         echo "${RELEASE_VERSION}"
               echo "${TAG}"
