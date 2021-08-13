@@ -23,7 +23,7 @@ pipeline {
                office365ConnectorWebhooks([
             [
               startNotification: true,
-              url: "${env.WEBHOOK_URL}"
+              url: '$env.WEBHOOK_URL'
             ]
           ])
   }
