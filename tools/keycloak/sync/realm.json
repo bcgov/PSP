@@ -1,8 +1,8 @@
 {
   "Realm": {
     "Name": "72x8v9rw",
-    "DisplayName": "MoTI PIMS Production Environment",
-    "DisplayNameHtml": "<a>MoTI PIMS Production Environment</a>",
+    "DisplayName": "MoTI PIMS PRODUCTION Environment",
+    "DisplayNameHtml": "<a>MoTI PIMS PRODUCTION Environment</a>",
     "Roles": [
       {
         "Name": "admin-agencies",
@@ -127,7 +127,7 @@
         "AuthorizationServicesEnabled": false,
         "RedirectUris": [
           "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*",
-          "https://pims.th.gov.bc.ca/api/*"
+          "https:/pims.th.gov.bc.ca/api/*"
         ],
         "WebOrigins": ["*"],
         "Attributes": {
@@ -151,12 +151,12 @@
         "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
         "RedirectUris": [
           "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/*",
-          "https://pims.th.gov.bc.ca/*"
+          "https:/pims.th.gov.bc.ca/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": [
           "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
-          "https://pims.th.gov.bc.ca"
+          "https:/pims.th.gov.bc.ca"
         ],
         "ProtocolMappers": [
           {
