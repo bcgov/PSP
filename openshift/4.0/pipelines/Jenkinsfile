@@ -23,7 +23,7 @@ pipeline {
                office365ConnectorWebhooks([
             [
               startNotification: true,
-              url: '$env.WEBHOOK_URL'
+              url: "${env.WEBHOOK_URL}"
             ]
           ])
   }
@@ -58,10 +58,6 @@ pipeline {
             ).trim() + "-" + OC_JOB_NAME
           }
           BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
-
-
-          // echo "${env.NOTIFICATION_WEBHOOK_URL}"
-          echo sh(returnStdout: true, script: 'env')
         }
       }
     }
