@@ -17,9 +17,6 @@ pipeline {
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
     WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-
-    //echo "${env.WEBHOOK_URL}"
-    url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
 
   options {
@@ -61,16 +58,11 @@ pipeline {
             ).trim() + "-" + OC_JOB_NAME
           }
           BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
-          echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
-          //echo "${RELEASE_VERSION}"
-          //echo "${TAG}"
-          // some instructions here
-          // Print all environment variables
+
 
           // echo "${env.NOTIFICATION_WEBHOOK_URL}"
-          //echo sh(returnStdout: true, script: 'env')
+          echo sh(returnStdout: true, script: 'env')
         }
-        //error("Build failed because of this and that..")
       }
     }
     stage('Approve Deployment') {
