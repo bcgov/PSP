@@ -23,7 +23,6 @@ function AppNavBar() {
         <Nav>
           <HomeButton />
           <AdminDropdown />
-          <AddProperty />
           <ViewInventory />
         </Nav>
       </Navbar.Collapse>
@@ -113,7 +112,6 @@ function AdminDropdown() {
       <NavDropdown.Item onClick={() => history.push('/admin/access/requests')}>
         Access Requests
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => history.push('/admin/agencies')}>Agencies</NavDropdown.Item>
     </NavDropdown>
   ) : null;
 }
