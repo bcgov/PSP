@@ -167,7 +167,7 @@ pipeline {
     stage('OWASP Scan') {
       steps {
         script {
-          
+          echo "capture"
         }
       }
 
@@ -187,6 +187,7 @@ pipeline {
           steps {
             script {
               dir(DEVOPS_DIRECTORY) {
+                echo "capture"
                 //sh "OC_JOB_NAME=${OC_JOB_NAME} ./player.sh build app-base -apply"
                 //sh "OC_JOB_NAME=${OC_JOB_NAME} ./player.sh build app -apply"
               }
@@ -196,6 +197,7 @@ pipeline {
         stage('Build Backend') {
           steps {
             dir(DEVOPS_DIRECTORY) {
+              echo "capture"
               //sh "OC_JOB_NAME=${OC_JOB_NAME} ./player.sh build api -apply"
             }
           }
@@ -245,7 +247,7 @@ pipeline {
       }
       steps {
         script {
-          
+          echo "capture"
           }
         
       }
