@@ -172,8 +172,6 @@ pipeline {
       }
 
     }
-
-    //Test stage is perform using github action
     stage('Build') {
       when {
         expression {
@@ -249,7 +247,7 @@ pipeline {
         script {
           
           }
-        }
+        
       }
     }
   } // stages
