@@ -23,12 +23,12 @@ import { UserUpdateSchema } from 'utils/YupSchema';
 import { Form, Input, Select, SelectOption } from '../../../components/common/form';
 
 interface IEditUserPageProps {
-  key: string;
+  userKey: string;
   match?: any;
 }
 
 const EditUserPage = (props: IEditUserPageProps) => {
-  const userId = props?.match?.params?.key || props.key;
+  const userId = props?.match?.params?.key || props.userKey;
   const history = useHistory();
   const { updateUser, fetchUserDetail } = useUsers();
 
