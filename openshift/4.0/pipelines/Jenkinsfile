@@ -40,7 +40,7 @@ pipeline {
               url: "${env.NOTIFICATION_WEBHOOK_URL}"
             ]
           ])
-          echo "web URL is ! ${WEBHOOK_URL}"
+          echo "web URL is ! ${env.NOTIFICATION_WEBHOOK_URL}"
         }
       }
     }
