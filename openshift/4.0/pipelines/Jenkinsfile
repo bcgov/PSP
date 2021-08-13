@@ -18,13 +18,14 @@ pipeline {
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
     WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
 
-    //echo "${WEBHOOK_URL}"
+    echo "${env.WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
 
   options {
     disableResume()
     disableConcurrentBuilds()
+    echo "${env.WEBHOOK_URL}"
                office365ConnectorWebhooks([
             [
               startNotification: true,
@@ -87,7 +88,7 @@ pipeline {
           echo "${DESTINATION}"
           echo "${RELEASE_VERSION}"
           timeout(time: 2, unit: 'MINUTES') {
-            def val = input(message: "Deploy Release version $env.DESTINATION ?" , ok: 'Yes, go ahead')
+            def val = input(message: "Deploy Release version $DESTINATION ?" , ok: 'Yes, go ahead')
 
             echo "${val}"
             //  } else {
