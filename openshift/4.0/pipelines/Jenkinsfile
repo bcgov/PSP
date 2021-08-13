@@ -16,29 +16,29 @@ pipeline {
     DEBUG_OUTPUT = sh(script: 'echo "${DEBUG_OUTPUT:-true}"', returnStdout: true).trim()
     OC_JOB_NAME = sh(script: 'echo "${OC_JOB_NAME:-dev}"', returnStdout: true).trim()
     APPROVAL_REQUIRED = sh(script: 'echo "${APPROVAL_REQUIRED:-true}"', returnStdout: true).trim()
-     DESTINATION = 'dev'
+    DESTINATION = 'dev'
     //echo "${WEBHOOK_URL}"
     url = sh(script: 'echo "${WEBHOOK_URL:-}"', returnStdout: true).trim()
   }
 
   options {
     disableResume()
-	disableConcurrentBuilds()
+    disableConcurrentBuilds()
   }
 
   stages {
     stage('Init') {
       steps {
-          script{
-                WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
-                  office365ConnectorWebhooks([
-      [
-        startNotification: true,
-        url: "${WEBHOOK_URL}"
-      ]
-    ])
-        echo 'Starting!'
-      }
+        script {
+          WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/ms-teams-secrets 2>&1 | sed -n 2p", returnStdout: true).trim()
+          office365ConnectorWebhooks([
+            [
+              startNotification: true,
+              url: "${WEBHOOK_URL}"
+            ]
+          ])
+          echo 'Starting!'
+        }
       }
     }
     stage('Release Tag') {
@@ -62,8 +62,8 @@ pipeline {
           }
           BUILD_TRIGGER_BY = "${currentBuild.getBuildCauses()[0].shortDescription}"
           echo "BUILD_TRIGGER_BY: ${BUILD_TRIGGER_BY}"
-              echo "${RELEASE_VERSION}"
-              echo "${TAG}"
+          echo "${RELEASE_VERSION}"
+          echo "${TAG}"
           // some instructions here
           // Print all environment variables
 
@@ -76,35 +76,31 @@ pipeline {
     stage('Validate Deployment') {
       when {
         beforeInput true
-        expression { new Boolean(env.APPROVAL_REQUIRED) }
+        expression {
+          new Boolean(env.APPROVAL_REQUIRED)
+        }
       }
       steps {
-          script {
-      options { timeout(time: 2, unit: 'MINUTES') }
-      input {
-        message "Proceed with deployment of [${DESTINATION}] ?"
-        ok 'Yes, go ahead'
-      }
-                timeout(time: 2, unit: 'MINUTES') {
-            def val = input(message: "Deploy Release version ${RELEASE_VERSION} to [${DESTINATION}] ?", ok: 'Yes, go ahead' ,
-            parameters: [booleanParam(defaultValue: true,
-            description: "You about to deploy  ${RELEASE_VERSION} to ${DESTINATION} ")
-            ])
+        script {
+          timeout(time: 2, unit: 'MINUTES') {
+            def val = input(message: "Deploy Release version ${RELEASE_VERSION} to [${DESTINATION}] ?", ok: 'Yes, go ahead',
+              parameters: [booleanParam(defaultValue: true,
+                description: "You about to deploy  ${RELEASE_VERSION} to ${DESTINATION} ")])
             if (val) {
               echo "${val}"
             } else {
               //about 
               error("Build failed because of this and that..")
             }
-          }
-     
-        echo "${RELEASE_VERSION}"
-              echo "${TAG}"
-        echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
-        echo 'Deploy successful'
           
-      
-    }
+
+          echo "${RELEASE_VERSION}"
+          echo "${TAG}"
+          echo '*** CI/CD pipeline run has been approved. Proceeding... ***'
+          echo 'Deploy successful'
+        }
+
+        }
       }
     }
   }
