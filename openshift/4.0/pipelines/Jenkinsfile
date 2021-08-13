@@ -92,7 +92,7 @@ pipeline {
     }
     success {
       script {
-          def dest = ${DESTINATION}.toString().toUpperCase()
+          def dest = "${DESTINATION}".toString().toUpperCase()
           echo "${dest}"
         office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
           message: "Application has been [deployed to ${DESTINATION}](${VANITY_URL})",
