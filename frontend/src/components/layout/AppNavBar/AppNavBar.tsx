@@ -2,9 +2,7 @@ import './AppNavBar.scss';
 
 import { Claims } from 'constants/claims';
 import { HelpContainer } from 'features/help/containers/HelpContainer';
-import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import queryString from 'query-string';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -23,7 +21,6 @@ function AppNavBar() {
         <Nav>
           <HomeButton />
           <AdminDropdown />
-          <AddProperty />
           <ViewInventory />
         </Nav>
       </Navbar.Collapse>
@@ -44,42 +41,6 @@ function HomeButton() {
     </Nav.Item>
   );
 }
-
-/**
- * Add a property dropdown item.
- */
-const AddProperty = () => {
-  const keycloak = useKeycloakWrapper();
-  const history = useHistory();
-  return keycloak.hasClaim(Claims.PROPERTY_ADD) ? (
-    <Nav.Link
-      className={
-        history.location.pathname.includes('mapview') &&
-        queryString.parse(history.location.search).sidebar === 'true'
-          ? 'active'
-          : 'idle'
-      }
-      onClick={() =>
-        history.push({
-          pathname: '/mapview',
-          search: queryString.stringify({
-            ...queryString.parse(history.location.search),
-            sidebar: true,
-            disabled: false,
-            loadDraft: false,
-            parcelId: undefined,
-            buildingId: undefined,
-            new: true,
-            sidebarContext: SidebarContextType.ADD_PROPERTY_TYPE_SELECTOR,
-            sidebarSize: 'narrow',
-          }),
-        })
-      }
-    >
-      Add a Property
-    </Nav.Link>
-  ) : null;
-};
 
 /**
  * View Inventory navigation item.
@@ -113,7 +74,6 @@ function AdminDropdown() {
       <NavDropdown.Item onClick={() => history.push('/admin/access/requests')}>
         Access Requests
       </NavDropdown.Item>
-      <NavDropdown.Item onClick={() => history.push('/admin/agencies')}>Agencies</NavDropdown.Item>
     </NavDropdown>
   ) : null;
 }

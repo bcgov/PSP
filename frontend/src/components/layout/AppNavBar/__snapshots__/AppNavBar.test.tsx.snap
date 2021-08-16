@@ -76,7 +76,6 @@ exports[`AppNavBar matches snapshot. 1`] = `
                   >
                     <HomeButton />
                     <AdminDropdown />
-                    <AddProperty />
                     <ViewInventory />
                   </div>
                 </ForwardRef>
