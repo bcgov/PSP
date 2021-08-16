@@ -49,12 +49,7 @@ const HelpModal: FunctionComponent<IModalProps> = ({ handleCancel, handleSubmit,
 
   return (
     <Container>
-      <ModalStyled
-        dialogAs={DraggableModalDialog}
-        show={show}
-        onHide={handleCancel}
-        dialogClassName="help-modal"
-      >
+      <ModalStyled dialogAs={DraggableModalDialog} show={show} onHide={handleCancel}>
         <ModalHeader closeButton>
           <DraggableTitle>
             Help Desk&nbsp;
@@ -107,6 +102,10 @@ const ModalStyled = styled(Modal)`
     color: white;
     text-shadow: 0 1px 0 #000;
     opacity: 0.9;
+  }
+  .modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
   }
 `;
 
