@@ -118,8 +118,6 @@ namespace Pims.Dal.Keycloak
             var kuser = await _keycloakService.GetUserAsync(user.Key) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsAdminService.User.Get(user.Id);
 
-            if (user.Username != kuser.Username) throw new InvalidOperationException($"Cannot change the username from '{kuser.Username}' to '{user.Username}'.");
-
             IEnumerable<long> addRoleIds;
             IEnumerable<long> removeRoleIds;
             if (user.Roles.Any() || euser.Roles.Any())
@@ -171,6 +169,7 @@ namespace Pims.Dal.Keycloak
             removeAgencyIds = removeAgencyIds.Except(addAgencyIds).ToArray();
 
             // Update PIMS
+            euser.Username = kuser.Username; // PIMS must use whatever username is set in keycloak.
             euser.FirstName = user.FirstName;
             euser.LastName = user.LastName;
             euser.Email = user.Email;
