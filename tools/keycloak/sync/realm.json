@@ -151,12 +151,12 @@
         "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
         "RedirectUris": [
           "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/*",
-          "https:/pims.th.gov.bc.ca/*"
+          "https://pims.th.gov.bc.ca/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": [
           "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
-          "https:/pims.th.gov.bc.ca"
+          "https://pims.th.gov.bc.ca"
         ],
         "ProtocolMappers": [
           {
