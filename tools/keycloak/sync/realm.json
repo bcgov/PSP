@@ -127,7 +127,7 @@
         "AuthorizationServicesEnabled": false,
         "RedirectUris": [
           "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*",
-          "https:/pims.th.gov.bc.ca/api/*"
+          "https://pims.th.gov.bc.ca/api/*"
         ],
         "WebOrigins": ["*"],
         "Attributes": {
