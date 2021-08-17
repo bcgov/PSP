@@ -200,7 +200,6 @@ pipeline {
   post {
     success {
       script {
-        if (new Boolean(env.SKIP_BUILD) == false) {
 		      def upperDestination = "${DESTINATION}".toString().toUpperCase()
           office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
           message: "Application has been [deployed to ${upperDestination}](${VANITY_URL})",
@@ -209,8 +208,7 @@ pipeline {
           factDefinitions: [
             [name: "Release version", template: "${RELEASE_VERSION}"],
             [name: "Remarks", template: "${BUILD_TRIGGER_BY}"]
-          ]
-        }
+          ]       
       }
     }
     failure {
