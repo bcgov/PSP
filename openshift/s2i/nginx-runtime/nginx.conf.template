@@ -21,7 +21,7 @@ http {
     # Use a w3c standard log format
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
+                      '"$http_user_agent" "$http_x_forwarded_for" "$bearer_auth"';
 
     access_log  /var/log/nginx/access.log  main if=$loggable;
 
@@ -40,7 +40,7 @@ http {
         ignore_invalid_headers off;
 
         # add in most common security headers
-        add_header Content-Security-Policy "default-src 'self'; frame-ancestors 'self'; img-src 'self' data: https://dev-motigeo.th.gov.bc.ca/ https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/; frame-src 'self' https://*.oidc.gov.bc.ca https://oidc.gov.bc.ca; connect-src 'self' https://dev-motigeo.th.gov.bc.ca/ https://*.oidc.gov.bc.ca/ https://oidc.gov.bc.ca https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/; form-action 'self'; style-src 'self' 'sha256-TJWtAQZhIjMP4+e4lQ8ZSVLt8o/wOfWY1ac6ZjvOwr8=' 'sha256-BeZ6EL8ajstckTUyE8k0bjY3v2P92XLxVp25GnrBG30=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';";
+        add_header Content-Security-Policy "default-src 'self'; frame-ancestors 'self'; img-src 'self' data: blob: https://dev-motigeo.th.gov.bc.ca/ https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/; frame-src 'self' https://*.oidc.gov.bc.ca https://oidc.gov.bc.ca; connect-src 'self' https://dev-motigeo.th.gov.bc.ca/ https://*.oidc.gov.bc.ca/ https://oidc.gov.bc.ca https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/; form-action 'self'; style-src 'self' 'sha256-TJWtAQZhIjMP4+e4lQ8ZSVLt8o/wOfWY1ac6ZjvOwr8=' 'sha256-BeZ6EL8ajstckTUyE8k0bjY3v2P92XLxVp25GnrBG30=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';";
         add_header Strict-Transport-Security "max-age=86400; includeSubDomains";
         add_header X-Content-Type-Options "nosniff";
         add_header X-XSS-Protection 1;
@@ -50,9 +50,26 @@ http {
         add_header Cache-Control "no-cache, no-store, must-revalidate";
         add_header Pragma "no-cache";
         add_header Expires "0";
+        set $bearer_auth '';
 
         location /api {
             proxy_pass          %API_URL%;
+        }
+
+        location @handle_redirect {
+            resolver 8.8.8.8;
+            set $saved_redirect_location '$upstream_http_location';
+            proxy_set_header Authorization $bearer_auth;
+            proxy_pass $saved_redirect_location;
+            
+        }
+
+        location /ogs-internal {
+            set $bearer_auth $http_authorization;
+            resolver 8.8.8.8;
+            proxy_pass          %GEOSERVER_URL%;
+            proxy_intercept_errors on;
+            error_page 301 302 307 = @handle_redirect;
         }
 
         # serve our app here
