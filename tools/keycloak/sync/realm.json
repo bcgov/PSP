@@ -1,8 +1,8 @@
 {
   "Realm": {
     "Name": "72x8v9rw",
-    "DisplayName": "MoTI PIMS Production Environment",
-    "DisplayNameHtml": "<a>MoTI PIMS Production Environment</a>",
+    "DisplayName": "MoTI PIMS PRODUCTION Environment",
+    "DisplayNameHtml": "<a>MoTI PIMS PRODUCTION Environment</a>",
     "Roles": [
       {
         "Name": "admin-agencies",
