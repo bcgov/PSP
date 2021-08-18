@@ -23,6 +23,7 @@ const getUseApiHook = (store?: any) => {
 
 describe('useApi hook', () => {
   beforeEach(() => {
+    process.env.REACT_APP_TENANT = 'MOTI';
     fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
   });
   describe('useApi axios functionality', () => {
