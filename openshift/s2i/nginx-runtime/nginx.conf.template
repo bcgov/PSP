@@ -55,6 +55,10 @@ http {
             proxy_pass          %API_URL%;
         }
 
+        location /ogs-internal {
+            proxy_pass          %GEOSERVER_URL%;
+        }
+
         # serve our app here
         location / {
             root   /tmp/app/dist;

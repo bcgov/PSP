@@ -15,6 +15,7 @@ import styled from 'styled-components';
 
 import { layersTree } from './data';
 import { ILayerItem } from './types';
+import { wmsHeaders } from './wmsHeaders';
 
 const ParentNode = styled(ListGroup.Item)`
   display: flex;
@@ -163,7 +164,7 @@ const LeafletListenerComp = () => {
       );
 
       layersToAdd.forEach((node: any) => {
-        const layer = L.tileLayer.wms(node.url, node);
+        const layer = wmsHeaders(node.url, node);
         featureGroup.addLayer(layer);
       });
 
