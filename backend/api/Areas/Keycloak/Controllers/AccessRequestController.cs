@@ -11,7 +11,7 @@ using Model = Pims.Api.Areas.Keycloak.Models.AccessRequest;
 namespace Pims.Api.Areas.Keycloak.Controllers
 {
     /// <summary>
-    /// UserController class, provides endpoints for managing users within keycloak.
+    /// AccessRequestController class, provides endpoints for managing access requests.
     /// </summary>
     [HasPermission(Permissions.AdminUsers)]
     [ApiController]

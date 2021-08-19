@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 namespace Pims.Api.Helpers.Converters
 {
     /// <summary>
-    /// ParcelConverter static class, provides converters for parcels.
+    /// PropertyConverter static class, provides converters for property.
     /// </summary>
-    public static class ParcelConverter
+    public static class PropertyConverter
     {
         /// <summary>
         /// Convert the formatted PID string into a number.

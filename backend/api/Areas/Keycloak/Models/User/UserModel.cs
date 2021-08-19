@@ -10,12 +10,12 @@ namespace Pims.Api.Areas.Keycloak.Models.User
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key IDENTITY.
+        /// get/set - The primary key.
         /// </summary>
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - Unique key to identify the claim.
+        /// get/set - Unique key to identify the user within keycloak.
         /// </summary>
         public Guid KeycloakUserId { get; set; }
 

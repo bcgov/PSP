@@ -17,7 +17,7 @@ using Model = Pims.Api.Models.AccessRequest;
 namespace Pims.Api.Controllers
 {
     /// <summary>
-    /// UserController class, provides endpoints for managing access requests.
+    /// AccessRequestController class, provides endpoints for managing access requests.
     /// </summary>
     [Authorize]
     [ApiController]

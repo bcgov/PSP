@@ -52,7 +52,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindTitleSummariesAsync(string pid)
         {
-            var result = await _ltsaService.GetTitleSummariesAsync(ParcelConverter.ConvertPID(pid));
+            var result = await _ltsaService.GetTitleSummariesAsync(PropertyConverter.ConvertPID(pid));
             return new JsonResult(result.TitleSummaries);
         }
 
@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         {
             if (!string.IsNullOrEmpty(pid))
             {
-                var result = await _ltsaService.PostParcelInfoOrder(ParcelConverter.ConvertPIDToDash(pid));
+                var result = await _ltsaService.PostParcelInfoOrder(PropertyConverter.ConvertPIDToDash(pid));
                 return new JsonResult(result?.Order);
             }
             throw new BadHttpRequestException("The pid of the desired property must be specified");
