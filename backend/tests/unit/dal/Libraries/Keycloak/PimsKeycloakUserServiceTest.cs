@@ -37,49 +37,47 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
-                Id = euser.Key,
-                Username = euser.Username,
+                Id = euser.KeycloakUserId.Value,
+                Username = euser.BusinessIdentifier,
                 Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
-            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.Key))
+            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.KeycloakUserId.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
                     Id = new Guid(g)
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
-            var pimsAdminServiceMock = helper.GetMock<Pims.Dal.Services.Admin.IPimsAdminService>();
-            pimsAdminServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
-            pimsAdminServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns(removeRole);
+            var pimsServiceMock = helper.GetMock<IPimsService>();
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns(removeRole);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.Key, euser.Username, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Id, euser.KeycloakUserId.Value, euser.BusinessIdentifier, "new first name", "new last name");
             var addRole = user.Roles.First();
             addRole.Id = 2;
             addRole.KeycloakGroupId = Guid.NewGuid();
-            pimsAdminServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns(addRole);
-            pimsAdminServiceMock.Setup(m => m.Agency.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Agency>());
-
-            var pimsServiceMock = helper.GetMock<IPimsService>();
-            pimsServiceMock.Setup(m => m.User.GetAgencies(It.IsAny<Guid>())).Returns(euser.Agencies.Select(a => a.Id));
+            pimsServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns(addRole);
+            pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
+            pimsServiceMock.Setup(m => m.User.GetOrganizations(It.IsAny<Guid>())).Returns(euser.Organizations.Select(a => a.Id));
 
             // Act
             var result = await service.UpdateUserAsync(user);
 
             // Assert
             result.Id.Should().Be(user.Id);
-            result.Username.Should().Be(user.Username);
-            result.FirstName.Should().Be(user.FirstName);
-            result.LastName.Should().Be(user.LastName);
-            result.Agencies.Count.Should().Be(euser.Agencies.Count);
+            result.BusinessIdentifier.Should().Be(user.BusinessIdentifier);
+            result.Person.FirstName.Should().Be(user.Person.FirstName);
+            result.Person.Surname.Should().Be(user.Person.Surname);
+            result.Organizations.Count.Should().Be(euser.Organizations.Count);
             result.RolesManyToMany.Count.Should().Be(1);
             result.RolesManyToMany.First().Role.KeycloakGroupId.Should().Be(user.Roles.First().KeycloakGroupId);
 
-            keycloakServiceMock.Verify(m => m.GetUserGroupsAsync(euser.Key), Times.Once);
-            keycloakServiceMock.Verify(m => m.RemoveGroupFromUserAsync(euser.Key, new Guid(kuser.Groups.First())), Times.Once);
-            keycloakServiceMock.Verify(m => m.AddGroupToUserAsync(euser.Key, addRole.KeycloakGroupId.Value), Times.Once);
-            pimsAdminServiceMock.Verify(m => m.User.Update(It.IsAny<Entity.User>()), Times.Once);
-            pimsServiceMock.Verify(m => m.User.GetAgencies(It.IsAny<Guid>()), Times.Once);
+            keycloakServiceMock.Verify(m => m.GetUserGroupsAsync(euser.KeycloakUserId.Value), Times.Once);
+            keycloakServiceMock.Verify(m => m.RemoveGroupFromUserAsync(euser.KeycloakUserId.Value, new Guid(kuser.Groups.First())), Times.Once);
+            keycloakServiceMock.Verify(m => m.AddGroupToUserAsync(euser.KeycloakUserId.Value, addRole.KeycloakGroupId.Value), Times.Once);
+            pimsServiceMock.Verify(m => m.User.Update(It.IsAny<Entity.User>()), Times.Once);
+            pimsServiceMock.Verify(m => m.User.GetOrganizations(It.IsAny<Guid>()), Times.Once);
             keycloakServiceMock.Verify(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()), Times.Once);
         }
 
@@ -123,38 +121,35 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
-                Id = euser.Key,
+                Id = euser.KeycloakUserId.Value,
                 Username = "keycloak username",
-                Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
+                Groups = new[] { euser.KeycloakUserId.Value.ToString() }
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
-            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.Key))
+            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.KeycloakUserId.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
                     Id = new Guid(g)
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
-            var pimsAdminServiceMock = helper.GetMock<Pims.Dal.Services.Admin.IPimsAdminService>();
-            pimsAdminServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
-            pimsAdminServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns(removeRole);
+            var pimsServiceMock = helper.GetMock<IPimsService>();
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns(removeRole);
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.Key, euser.Username, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(1, euser.KeycloakUserId.Value, euser.BusinessIdentifier, "new first name", "new last name");
             var addRole = user.Roles.First();
             addRole.Id = 2;
             addRole.KeycloakGroupId = Guid.NewGuid();
-            pimsAdminServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns(addRole);
-            pimsAdminServiceMock.Setup(m => m.Agency.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Agency>());
-
-            var pimsServiceMock = helper.GetMock<IPimsService>();
-            pimsServiceMock.Setup(m => m.User.GetAgencies(It.IsAny<Guid>())).Returns(euser.Agencies.Select(a => a.Id));
+            pimsServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns(addRole);
+            pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
+            pimsServiceMock.Setup(m => m.User.GetOrganizations(It.IsAny<Guid>())).Returns(euser.Organizations.Select(a => a.Id));
 
             // Act
             var result = await service.UpdateUserAsync(user);
 
             // Assert
-            result.Username.Should().Be("keycloak username");
-            
+            result.BusinessIdentifier.Should().Be("keycloak username");
         }
 
         /// <summary>
@@ -175,26 +170,26 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
-                Id = euser.Key,
-                Username = euser.Username,
+                Id = euser.KeycloakUserId.Value,
+                Username = euser.BusinessIdentifier,
                 Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
-            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.Key))
+            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.KeycloakUserId.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
                     Id = new Guid(g)
                 }).ToArray());
 
-            var pimsAdminServiceMock = helper.GetMock<Pims.Dal.Services.Admin.IPimsAdminService>();
-            pimsAdminServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
-            pimsAdminServiceMock.Setup(m => m.Agency.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Agency>());
-            pimsAdminServiceMock.Setup(m => m.Agency.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Agency>());
+            var pimsServiceMock = helper.GetMock<IPimsService>();
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
+            pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.Key, euser.Username, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Id, euser.KeycloakUserId.Value, euser.BusinessIdentifier, "new first name", "new last name");
             var addRole = user.Roles.First();
             addRole.KeycloakGroupId = Guid.NewGuid();
-            pimsAdminServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns<Entity.Role>(null);
+            pimsServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns<Entity.Role>(null);
 
             // Act
             // Assert
@@ -220,28 +215,28 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakService>();
             var kuser = new Pims.Keycloak.Models.UserModel()
             {
-                Id = euser.Key,
-                Username = euser.Username,
+                Id = euser.KeycloakUserId.Value,
+                Username = euser.BusinessIdentifier,
                 Groups = new string[] { removeRole.KeycloakGroupId.ToString() }
             };
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync(kuser);
-            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.Key))
+            keycloakServiceMock.Setup(m => m.GetUserGroupsAsync(euser.KeycloakUserId.Value))
                 .ReturnsAsync(kuser.Groups.Select(g => new Pims.Keycloak.Models.GroupModel()
                 {
                     Id = new Guid(g)
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
-            var pimsAdminServiceMock = helper.GetMock<Pims.Dal.Services.Admin.IPimsAdminService>();
-            pimsAdminServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
-            pimsAdminServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns<Entity.Role>(null);
-            pimsAdminServiceMock.Setup(m => m.Agency.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Agency>());
+            var pimsServiceMock = helper.GetMock<IPimsService>();
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns<Entity.Role>(null);
+            pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
 
-            var user = EntityHelper.CreateUser(euser.Id, euser.Key, euser.Username, "new first name", "new last name");
+            var user = EntityHelper.CreateUser(euser.Id, euser.KeycloakUserId.Value, euser.BusinessIdentifier, "new first name", "new last name");
             var addRole = user.Roles.First();
             addRole.Id = 2;
             addRole.KeycloakGroupId = Guid.NewGuid();
-            pimsAdminServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns(addRole);
+            pimsServiceMock.Setup(m => m.Role.Find(addRole.Id)).Returns(addRole);
 
             // Act
             // Assert

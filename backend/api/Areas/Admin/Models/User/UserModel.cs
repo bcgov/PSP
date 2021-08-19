@@ -17,22 +17,12 @@ namespace Pims.Api.Areas.Admin.Models.User
         /// <summary>
         /// get/set - The user's unique identifier.
         /// </summary>
-        public Guid Key { get; set; }
+        public Guid KeycloakUserId { get; set; }
 
         /// <summary>
         /// get/set - The user's unique identity.
         /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        /// get/set - The user's position title.
-        /// </summary>
-        public string Position { get; set; }
-
-        /// <summary>
-        /// get/set - The user's display name.
-        /// </summary>
-        public string DisplayName { get; set; }
+        public string BusinessIdentifier { get; set; }
 
         /// <summary>
         /// get/set - The user's given name.
@@ -42,12 +32,12 @@ namespace Pims.Api.Areas.Admin.Models.User
         /// <summary>
         /// get/set - The user's middlename.
         /// </summary>
-        public string MiddleName { get; set; }
+        public string MiddleNames { get; set; }
 
         /// <summary>
         /// get/set - The user's surname.
         /// </summary>
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
         /// <summary>
         /// get/set - The user's email.
@@ -61,25 +51,9 @@ namespace Pims.Api.Areas.Admin.Models.User
         public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - Whether the email has been verified.
+        /// get/set - An array of organizations the user belongs to.
         /// </summary>
-        /// <value></value>
-        public bool EmailVerified { get; set; }
-
-        /// <summary>
-        /// get/set - A note about the user.
-        /// </summary>
-        public string Note { get; set; }
-
-        /// <summary>
-        /// get/set - User's last login timestamp
-        /// </summary>
-        public DateTime? LastLogin { get; set; }
-
-        /// <summary>
-        /// get/set - An array of agencies the user belongs to.
-        /// </summary>
-        public IEnumerable<AgencyModel> Agencies { get; set; } = new List<AgencyModel>();
+        public IEnumerable<OrganizationModel> Organizations { get; set; } = new List<OrganizationModel>();
 
         /// <summary>
         /// get/set - An array of roles the user is a member of.

@@ -178,7 +178,7 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       address: filter?.address,
       administrativeArea: filter?.administrativeArea,
       pid: filter?.pid,
-      agencies: filter?.agencies,
+      organizations: filter?.organizations,
       classificationId: filter?.classificationId,
       minLandArea: filter?.minLandArea,
       maxLandArea: filter?.maxLandArea,

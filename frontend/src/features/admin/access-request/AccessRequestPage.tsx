@@ -26,13 +26,13 @@ import { AccessRequestSchema } from 'utils/YupSchema';
 import { Form, Input, Select, TextArea } from '../../../components/common/form';
 
 interface IAccessRequestForm extends IAccessRequest {
-  agency?: number;
+  organization?: number;
   role?: number;
 }
 
 /**
  * The AccessRequestPage provides a way to new authenticated users to submit a request
- * that associates them with a specific agency and a role within the agency.
+ * that associates them with a specific organization and a role within the organization.
  * If they have an active access request already submitted, it will allow them to update it until it has been approved or disabled.
  * If their prior request was disabled they will then be able to submit a new request.
  */
@@ -51,7 +51,7 @@ const AccessRequestPage = () => {
 
   const { getPublicByType } = useLookupCodeHelpers();
   const roles = getPublicByType(API.ROLE_CODE_SET_NAME);
-  const agencies = getPublicByType(API.AGENCY_CODE_SET_NAME);
+  const organizations = getPublicByType(API.ORGANIZATION_CODE_SET_NAME);
 
   const accessRequest = data?.accessRequest;
   const initialValues: IAccessRequestForm = {
@@ -67,11 +67,11 @@ const AccessRequestPage = () => {
       email: userInfo?.email,
       position: accessRequest?.user?.position ?? userInfo?.position ?? '',
     },
-    agencies: accessRequest?.agencies ?? [],
+    organizations: accessRequest?.organizations ?? [],
     status: accessRequest?.status || AccessRequestStatus.OnHold,
     roles: accessRequest?.roles ?? [],
     note: accessRequest?.note ?? '',
-    agency: agencies?.find(a => a.code === 'TRAN')?.id, // Select TRAN as the default agency for all access requests.
+    organization: organizations?.find(a => a.code === 'TRAN')?.id, // Select TRAN as the default organization for all access requests.
     role: accessRequest?.roles?.find(role => role)?.id,
     rowVersion: accessRequest?.rowVersion,
   };

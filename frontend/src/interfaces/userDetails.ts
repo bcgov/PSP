@@ -1,4 +1,4 @@
-import { IAgency } from './agency';
+import { IOrganization } from './organization';
 import { IRole } from './role';
 
 export interface IUserDetails {
@@ -14,7 +14,7 @@ export interface IUserDetails {
   note?: string;
   lastLogin?: string;
   emailVerified?: boolean;
-  agencies?: IAgency[];
+  organizations?: IOrganization[];
   roles?: IRole[];
   createdOn?: string;
   rowVersion: number;

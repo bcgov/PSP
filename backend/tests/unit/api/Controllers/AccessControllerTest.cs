@@ -1,0 +1,410 @@
+using MapsterMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Moq;
+using Pims.Api.Controllers;
+using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Comparers;
+using Pims.Core.Http;
+using Pims.Core.Http.Configuration;
+using Pims.Core.Test;
+using Pims.Dal;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
+using Entity = Pims.Dal.Entities;
+using KModel = Pims.Keycloak.Models;
+using Model = Pims.Api.Models.AccessRequest;
+
+namespace PimsApi.Test.Controllers
+{
+    [Trait("category", "unit")]
+    [Trait("category", "api")]
+    [Trait("group", "user")]
+    [ExcludeFromCodeCoverage]
+    public class AccessRequestControllerTest
+    {
+        #region Tests
+        #region GetAccessRequest
+        [Fact]
+        public void GetAccessRequest_Current_Success()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+
+            var accessRequest = EntityHelper.CreateAccessRequest(11);
+            service.Setup(m => m.AccessRequest.Get()).Returns(accessRequest);
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            var result = controller.GetAccessRequest();
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            Assert.Equal(model.Organizations, actualResult.Organizations, new DeepPropertyCompare());
+            Assert.Equal(model.Role, actualResult.Role, new DeepPropertyCompare());
+            Assert.Equal(model.User.Id, actualResult.User.Id);
+            service.Verify(m => m.AccessRequest.Get(), Times.Once());
+        }
+
+        [Fact]
+        public void GetAccessRequest_Current_NoContent()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+
+            service.Setup(m => m.AccessRequest.Get());
+
+            // Act
+            var result = controller.GetAccessRequest();
+
+            // Assert
+            var actionResult = Assert.IsType<NoContentResult>(result);
+            service.Verify(m => m.AccessRequest.Get(), Times.Once());
+        }
+
+        [Fact]
+        public void GetAccessRequest_Success()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+
+            var accessRequest = EntityHelper.CreateAccessRequest(1);
+            service.Setup(m => m.AccessRequest.Get(It.IsAny<long>())).Returns(accessRequest);
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            var result = controller.GetAccessRequest(1);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            Assert.Equal(model.Organizations, actualResult.Organizations, new DeepPropertyCompare());
+            Assert.Equal(model.Role, actualResult.Role, new DeepPropertyCompare());
+            Assert.Equal(model.User.Id, actualResult.User.Id);
+            service.Verify(m => m.AccessRequest.Get(1), Times.Once());
+        }
+        #endregion
+
+        #region AddAccessRequest
+        [Fact]
+        public void AddAccessRequest_Success()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = EntityHelper.CreateAccessRequest(1);
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            var result = controller.AddAccessRequest(model);
+
+            // Assert
+            var actionResult = Assert.IsType<CreatedAtActionResult>(result);
+            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            Assert.Equal(model.Organizations.First().Id, actualResult.Organizations.First().Id);
+            Assert.Equal(model.Role.Id, actualResult.Role.Id);
+            Assert.Equal(model.User.Id, actualResult.User.Id);
+            service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Once());
+        }
+
+        [Fact]
+        public void AddAccessRequest_Null_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.AddAccessRequest(null));
+            service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void AddAccessRequest_NullOrganizations_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = null,
+                Role = new Model.RoleModel()
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.AddAccessRequest(model));
+            service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void AddAccessRequest_NullRole_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Role = null
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.AddAccessRequest(model));
+            service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void AddAccessRequest_InvalidRole_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = new List<Model.AccessRequestOrganizationModel>(new[] { new Model.AccessRequestOrganizationModel() }),
+                Role = new Model.RoleModel()
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.AddAccessRequest(model));
+            service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void AddAccessRequest_InvalidOrganizations_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Role = new Model.RoleModel()
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.AddAccessRequest(model));
+            service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+        #endregion
+
+        #region UpdateAccessRequest
+        [Fact]
+        public void UpdateAccessRequest_Success()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = EntityHelper.CreateAccessRequest(1);
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            var result = controller.UpdateAccessRequest(model.Id, model);
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
+            Assert.Equal(model, actualResult, new ShallowPropertyCompare());
+            Assert.Equal(model.Organizations.First().Id, actualResult.Organizations.First().Id);
+            Assert.Equal(model.Role.Id, actualResult.Role.Id);
+            Assert.Equal(model.User.Id, actualResult.User.Id);
+            service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Once());
+        }
+
+        [Fact]
+        public void UpdateAccessRequest_Null_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.UpdateAccessRequest(1, null));
+            service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void UpdateAccessRequest_NullOrganizations_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = null,
+                Role = new Model.RoleModel()
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.UpdateAccessRequest(model.Id, model));
+            service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void UpdateAccessRequest_NullRole_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Role = null
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.UpdateAccessRequest(model.Id, model));
+            service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void UpdateAccessRequest_InvalidRole_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = new List<Model.AccessRequestOrganizationModel>(new[] { new Model.AccessRequestOrganizationModel() }),
+                Role = new Model.RoleModel()
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.UpdateAccessRequest(model.Id, model));
+            service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+
+        [Fact]
+        public void UpdateAccessRequest_InvalidOrganizations_BadRequest()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForRole();
+            var helper = new TestHelper();
+            var controller = helper.CreateController<AccessRequestController>(user);
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
+
+            var accessRequest = new Model.AccessRequestModel()
+            {
+                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Role = new Model.RoleModel()
+            };
+            var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+
+            // Act
+            // Assert
+            Assert.Throws<BadRequestException>(() => controller.UpdateAccessRequest(model.Id, model));
+            service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Never());
+        }
+        #endregion
+        #endregion
+    }
+}

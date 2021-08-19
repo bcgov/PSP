@@ -136,7 +136,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
             Roles
              
             <a
-              href="https://github.com/bcgov/PIMS/wiki/Architecture-Security"
+              href="https://github.com/bcgov/PSP/wiki/Architecture-Security"
               rel="noopener noreferrer"
               target="_blank"
             >

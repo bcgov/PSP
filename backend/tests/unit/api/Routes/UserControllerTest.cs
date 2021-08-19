@@ -17,15 +17,6 @@ namespace Pims.Api.Test.Routes
     [ExcludeFromCodeCoverage]
     public class UserControllerTest
     {
-        #region Variables
-        #endregion
-
-        #region Constructors
-        public UserControllerTest()
-        {
-        }
-        #endregion
-
         #region Tests
         [Fact]
         public void User_Route()
@@ -49,54 +40,6 @@ namespace Pims.Api.Test.Routes
             // Assert
             Assert.NotNull(endpoint);
             endpoint.HasGet("info");
-        }
-
-        [Fact]
-        public void GetAccessRequest_Current_Route()
-        {
-            // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.GetAccessRequest));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasGet("access/requests");
-        }
-
-        [Fact]
-        public void GetAccessRequest_Route()
-        {
-            // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.GetAccessRequest), typeof(long));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasGet("access/requests/{id}");
-        }
-
-        [Fact]
-        public void AddAccessRequest_Route()
-        {
-            // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.AddAccessRequestAsync), typeof(Model.AccessRequestModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPost("access/requests");
-        }
-
-        [Fact]
-        public void UpdateAccessRequest_Route()
-        {
-            // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.UpdateAccessRequest), typeof(long), typeof(Model.AccessRequestModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPut("access/requests/{id}");
         }
         #endregion
     }

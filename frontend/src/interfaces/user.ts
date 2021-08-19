@@ -1,4 +1,4 @@
-import { IAgency } from './agency';
+import { IOrganization } from './organization';
 import { IRole } from './role';
 
 export interface IUser {
@@ -13,7 +13,7 @@ export interface IUser {
   email?: string;
   username?: string;
   roles?: IRole[];
-  agencies?: IAgency[];
+  organizations?: IOrganization[];
   isDisabled?: boolean;
   lastLogin?: string;
   createdOn?: string;

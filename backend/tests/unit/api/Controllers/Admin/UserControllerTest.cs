@@ -5,9 +5,8 @@ using Moq;
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
-using Pims.Dal.Helpers.Extensions;
+using Pims.Dal;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Admin;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -40,7 +39,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var users = new Entity.User[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.User>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
@@ -64,11 +63,10 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var users = new Entity.User[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.User>(users);
-            var filter = new Entity.Models.UserFilter(1, 1, "test", "test",
-                "test", "test", "test", "test", false, "test", "test", null);
+            var filter = new Entity.Models.UserFilter(1, 1, "organization", "username", "lastname", "firstname", "email", false, "role", null);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
@@ -92,11 +90,10 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var users = new Entity.User[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.User>(users);
-            var filter = new Entity.Models.UserFilter(1, 1, "test", "test",
-                "test", "test", "test", "test", false, "test", "test", null);
+            var filter = new Entity.Models.UserFilter(1, 1, "organization", "username", "lastname", "firstname", "email", false, "role", null);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
@@ -120,19 +117,19 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Get(It.IsAny<Guid>())).Returns(user);
 
             // Act
-            var result = controller.GetUser(user.Key);
+            var result = controller.GetUser(user.KeycloakUserId.Value);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.UserModel>(user), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.User.Get(user.Key), Times.Once());
+            service.Verify(m => m.User.Get(user.KeycloakUserId.Value), Times.Once());
         }
         #endregion
 
@@ -145,9 +142,9 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
-            var agency = user.Agencies.First();
+            var organization = user.Organizations.First();
             service.Setup(m => m.User.Add(It.IsAny<Entity.User>())).Callback<Entity.User>(u => { });
             var model = mapper.Map<Model.UserModel>(user);
 
@@ -158,17 +155,11 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            actualResult.DisplayName.Should().Be(user.DisplayName);
-            actualResult.Email.Should().Be(user.Email);
-            actualResult.EmailVerified.Should().Be(user.EmailVerified);
-            actualResult.FirstName.Should().Be(user.FirstName);
-            actualResult.LastLogin.Should().Be(user.LastLogin);
-            actualResult.LastName.Should().Be(user.LastName);
-            actualResult.MiddleName.Should().Be(user.MiddleName);
-            actualResult.Note.Should().Be(user.Note);
-            actualResult.Position.Should().Be(user.Position);
+            // actualResult.Email.Should().Be(user.Email);
+            actualResult.FirstName.Should().Be(user.Person.FirstName);
+            actualResult.Surname.Should().Be(user.Person.Surname);
             actualResult.RowVersion.Should().Be(user.RowVersion);
-            actualResult.Username.Should().Be(user.Username);
+            actualResult.BusinessIdentifier.Should().Be(user.BusinessIdentifier);
             service.Verify(m => m.User.Add(It.IsAny<Entity.User>()), Times.Once());
         }
         #endregion
@@ -182,29 +173,23 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Update(It.IsAny<Entity.User>()));
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
-            var result = controller.UpdateUser(user.Key, model);
+            var result = controller.UpdateUser(user.KeycloakUserId.Value, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            actualResult.DisplayName.Should().Be(user.DisplayName);
-            actualResult.Email.Should().Be(user.Email);
-            actualResult.EmailVerified.Should().Be(user.EmailVerified);
-            actualResult.FirstName.Should().Be(user.FirstName);
-            actualResult.LastLogin.Should().Be(user.LastLogin);
-            actualResult.LastName.Should().Be(user.LastName);
-            actualResult.MiddleName.Should().Be(user.MiddleName);
-            actualResult.Note.Should().Be(user.Note);
-            actualResult.Position.Should().Be(user.Position);
+            // actualResult.Email.Should().Be(user.Email);
+            actualResult.FirstName.Should().Be(user.Person.FirstName);
+            actualResult.Surname.Should().Be(user.Person.Surname);
             actualResult.RowVersion.Should().Be(user.RowVersion);
-            actualResult.Username.Should().Be(user.Username);
+            actualResult.BusinessIdentifier.Should().Be(user.BusinessIdentifier);
             service.Verify(m => m.User.Update(It.IsAny<Entity.User>()), Times.Once());
         }
         #endregion
@@ -218,20 +203,20 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
-            service.Setup(m => m.User.Remove(It.IsAny<Entity.User>()));
+            service.Setup(m => m.User.Delete(It.IsAny<Entity.User>()));
             var model = mapper.Map<Model.UserModel>(user);
 
             // Act
-            var result = controller.DeleteUser(user.Key, model);
+            var result = controller.DeleteUser(user.KeycloakUserId.Value, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.UserModel>(user), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.User.Remove(It.IsAny<Entity.User>()), Times.Once());
+            service.Verify(m => m.User.Delete(It.IsAny<Entity.User>()), Times.Once());
         }
         #endregion
         #endregion

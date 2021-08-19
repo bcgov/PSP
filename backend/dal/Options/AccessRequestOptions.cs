@@ -12,7 +12,7 @@ namespace Pims.Dal
         public string NotificationTemplate { get; set; } = "Access Request";
 
         /// <summary>
-        /// get/set - Email address to send access requests to in addition to system and agency administrators.
+        /// get/set - Email address to send access requests to in addition to system and organization administrators.
         /// </summary>
         public string SendTo { get; set; }
         #endregion

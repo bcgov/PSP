@@ -7,6 +7,6 @@ export interface IUserInfo {
   firstName: string;
   lastName: string;
   Groups: any[];
-  agencies: number[];
+  organizations: number[];
   position?: string;
 }

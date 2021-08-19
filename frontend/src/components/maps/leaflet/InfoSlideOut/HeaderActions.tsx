@@ -28,9 +28,9 @@ interface IHeaderActions {
   zoomToView: () => void;
   /** additional action to be taken when a link in the menu is clicked */
   onLinkClick?: () => void;
-  /** whether the user has the correct agency/permissions to view all the details */
+  /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
-  /** whether the user has the correct agency/permissions to edit property details */
+  /** whether the user has the correct organization/permissions to edit property details */
   canEditDetails: boolean;
 }
 

@@ -9,8 +9,8 @@ const InventoryFilterHelpText = () => {
       The filter provides a way to search for properties with the specified attributes. The filter
       is cumulative ("AND"), which means each value will refine the results.
       <br />
-      <strong>Agency:</strong> The agency that owns the property. This list is restricted to
-      agencies and sub-agencies that you have access to view.
+      <strong>Organization:</strong> The organization that owns the property. This list is
+      restricted to organizations and sub-organizations that you have access to view.
       <br />
       <strong>Property name:</strong> The name given to the property in PIMS.
       <br />

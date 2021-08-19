@@ -9,19 +9,19 @@ import { mapLookupCodeWithParentString } from 'utils';
 
 interface IProps {
   value: IUsersFilter;
-  agencyLookups: ILookupCode[];
+  organizationLookups: ILookupCode[];
   rolesLookups: ILookupCode[];
   onChange: (value: IUsersFilter) => void;
 }
 
 export const UsersFilterBar: React.FC<IProps> = ({
   value,
-  agencyLookups,
+  organizationLookups,
   rolesLookups,
   onChange,
 }) => {
-  const agencyOptions = (agencyLookups ?? []).map(c =>
-    mapLookupCodeWithParentString(c, agencyLookups),
+  const organizationOptions = (organizationLookups ?? []).map(c =>
+    mapLookupCodeWithParentString(c, organizationLookups),
   );
   const roleOptions = rolesLookups.map(rl => ({ label: rl.name, value: rl.name } as SelectOption));
 
@@ -30,9 +30,9 @@ export const UsersFilterBar: React.FC<IProps> = ({
       initialValues={value}
       onChange={onChange}
       customReset={() => {
-        onChange?.({ agency: '' });
+        onChange?.({ organization: '' });
       }}
-      customResetField="agency"
+      customResetField="organization"
     >
       <Col className="bar-item">
         <Input field="username" placeholder="IDIR/BCeID" />
@@ -51,10 +51,10 @@ export const UsersFilterBar: React.FC<IProps> = ({
       </Col>
       <Col className="bar-item">
         <ParentSelect
-          field="agency"
-          options={agencyOptions}
+          field="organization"
+          options={organizationOptions}
           filterBy={['code', 'label', 'parent']}
-          placeholder="Enter an Agency"
+          placeholder="Enter an Organization"
         />
       </Col>
       <Col className="bar-item">

@@ -58,6 +58,5 @@
     <ProjectReference Include="..\geocoder\Pims.Geocoder.csproj" />
     <ProjectReference Include="..\ltsa\Pims.Ltsa.csproj" />
     <ProjectReference Include="..\keycloak\Pims.Keycloak.csproj" />
-    <ProjectReference Include="..\notifications\Pims.Notifications.csproj" />
   </ItemGroup>
 </Project>
