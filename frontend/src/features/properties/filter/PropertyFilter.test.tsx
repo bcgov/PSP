@@ -39,7 +39,7 @@ const mockKeycloak = (claims: string[]) => {
       subject: 'test',
       userInfo: {
         roles: claims,
-        agencies: ['1'],
+        organizations: ['1'],
       },
     },
   });
@@ -49,8 +49,8 @@ let history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { id: 1, name: 'agencyVal', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { id: 2, name: 'disabledAgency', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'organizationVal', isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
+    { id: 2, name: 'disabledOrganization', isDisabled: true, type: API.ORGANIZATION_CODE_SET_NAME },
     { id: 1, name: 'roleVal', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
     { id: 2, name: 'disabledRole', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
     {
@@ -99,7 +99,7 @@ const defaultFilter: IPropertyFilter = {
   address: '',
   administrativeArea: '',
   propertyType: '',
-  agencies: '',
+  organizations: '',
   classificationId: '',
   minLotSize: '',
   maxLotSize: '',
@@ -107,16 +107,16 @@ const defaultFilter: IPropertyFilter = {
   name: '',
 };
 
-const getUiElement = (filter: IPropertyFilter, showAllAgencySelect = true) => (
+const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
   <TenantProvider>
     <Provider store={getStore(filter)}>
       <Router history={history}>
         <PropertyFilter
           defaultFilter={filter}
-          agencyLookupCodes={MOCK.AGENCIES}
+          organizationLookupCodes={MOCK.ORGANIZATIONS}
           adminAreaLookupCodes={MOCK.ADMINISTRATIVEAREAS}
           onChange={onFilterChange}
-          showAllAgencySelect={showAllAgencySelect}
+          showAllOrganizationSelect={showAllOrganizationSelect}
         />
       </Router>
     </Provider>
@@ -144,11 +144,11 @@ describe('MapFilterBar', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('renders only my agencies if showAllAgencies not set', () => {
+  it('renders only my organizations if showAllOrganizations not set', () => {
     mockKeycloak(['property-view']);
     // Capture any changes
     const { getByPlaceholderText } = render(getUiElement(defaultFilter, false));
-    expect(getByPlaceholderText('My Agencies')).toBeVisible();
+    expect(getByPlaceholderText('My Organizations')).toBeVisible();
   });
 
   it('submits correct values', async () => {
@@ -180,7 +180,7 @@ describe('MapFilterBar', () => {
       pid: '',
       address: '',
       administrativeArea: 'Victoria',
-      agencies: '',
+      organizations: '',
       classificationId: `${Classifications.CoreOperational}`,
       minLotSize: '',
       maxLotSize: '',
@@ -197,7 +197,7 @@ describe('MapFilterBar', () => {
       searchBy: 'address',
       address: 'mockaddress',
       administrativeArea: 'mockAdministrativeArea',
-      agencies: '2',
+      organizations: '2',
       classificationId: `${Classifications.CoreStrategic}`,
       minLotSize: '10',
       maxLotSize: '20',
@@ -208,13 +208,13 @@ describe('MapFilterBar', () => {
     expect(getByText('Core Operational')).toBeVisible();
   });
 
-  it('loads filter values if array based agencies is provided', () => {
+  it('loads filter values if array based organizations is provided', () => {
     const providedFilter: IPropertyFilter = {
       pid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
       administrativeArea: 'mockAdministrativeArea',
-      agencies: ['2'] as any,
+      organizations: ['2'] as any,
       classificationId: `${Classifications.CoreStrategic}`,
       minLotSize: '10',
       maxLotSize: '20',
@@ -224,21 +224,21 @@ describe('MapFilterBar', () => {
     expect(getByDisplayValue('HTLH')).toBeVisible();
   });
 
-  it('loads filter values if empty agencies array is provided', () => {
+  it('loads filter values if empty organizations array is provided', () => {
     const providedFilter: IPropertyFilter = {
       pid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
       administrativeArea: 'mockAdministrativeArea',
-      agencies: [] as any,
+      organizations: [] as any,
       classificationId: `${Classifications.CoreStrategic}`,
       minLotSize: '10',
       maxLotSize: '20',
       rentableArea: '0',
     };
     const { container } = render(getUiElement(providedFilter));
-    const agencies = container.querySelector('input[name="agencies"]');
-    expect(agencies).toHaveValue('');
+    const organizations = container.querySelector('input[name="organizations"]');
+    expect(organizations).toHaveValue('');
   });
 
   it('resets values when reset button is clicked', async () => {
@@ -263,7 +263,7 @@ describe('MapFilterBar', () => {
       pid: '',
       address: '',
       administrativeArea: '',
-      agencies: '',
+      organizations: '',
       classificationId: '',
       minLotSize: '',
       maxLotSize: '',
@@ -287,23 +287,23 @@ describe('MapFilterBar', () => {
     });
   });
 
-  it('disables the property name and agencies fields when All Government is selected', async () => {
+  it('disables the property name and organizations fields when All Government is selected', async () => {
     await act(async () => {
       const { container, getByPlaceholderText } = render(
         getUiElement({ ...defaultFilter, includeAllProperties: true }),
       );
       expect(getByPlaceholderText('Property name')).toBeDisabled();
-      expect(container.querySelector('input[name="agencies"]')).toBeDisabled();
+      expect(container.querySelector('input[name="organizations"]')).toBeDisabled();
     });
   });
 
-  it('enables the property name and agencies fields when My Agencies is selected', async () => {
+  it('enables the property name and organizations fields when My Organizations is selected', async () => {
     await act(async () => {
       const { container, getByPlaceholderText } = render(
         getUiElement({ ...defaultFilter, includeAllProperties: false }),
       );
       expect(getByPlaceholderText('Property name')).not.toBeDisabled();
-      expect(container.querySelector('input[name="agencies"]')).not.toBeDisabled();
+      expect(container.querySelector('input[name="organizations"]')).not.toBeDisabled();
     });
   });
 });

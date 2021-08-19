@@ -11,7 +11,7 @@ namespace Pims.Api.Mapping
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
 
@@ -19,7 +19,7 @@ namespace Pims.Api.Mapping
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }

@@ -20,7 +20,7 @@ export const toAccessRequest = (values: any): IAccessRequest => {
       email: values.user.email,
       position: values.user.position,
     },
-    agencies: isNaN(values.agency) ? [] : [{ id: parseInt(values.agency) }],
+    organizations: isNaN(values.organization) ? [] : [{ id: parseInt(values.organization) }],
     roles: [{ id: values.role }],
     status: values.status,
     note: values.note,
@@ -30,7 +30,7 @@ export const toAccessRequest = (values: any): IAccessRequest => {
 
 export const initialState: IAccessRequestsState = {
   pagedAccessRequests: { page: 1, pageIndex: 0, total: 0, quantity: 0, items: [] },
-  filter: { agency: '', role: '', searchText: '' },
+  filter: { organization: '', role: '', searchText: '' },
   sorting: { column: 'username', direction: 'desc' },
   selections: [],
   accessRequest: null,

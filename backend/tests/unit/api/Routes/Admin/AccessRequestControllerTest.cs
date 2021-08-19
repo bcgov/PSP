@@ -1,7 +1,6 @@
 using Pims.Api.Areas.Admin.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Xunit;
 
@@ -17,12 +16,6 @@ namespace Pims.Api.Test.Routes.Admin
     [Trait("group", "route")]
     public class AccessRequestControllerTest
     {
-        #region Constructors
-        public AccessRequestControllerTest()
-        {
-        }
-        #endregion
-
         #region Tests
         [Fact]
         public void AccessRequests_Route()
@@ -44,7 +37,7 @@ namespace Pims.Api.Test.Routes.Admin
             // Arrange
             var endpoint = typeof(AccessRequestController).FindMethod(nameof(AccessRequestController.GetPage),
                 typeof(int), typeof(int), typeof(string), typeof(string),
-                typeof(string), typeof(string), typeof(AccessRequestStatus));
+                typeof(string), typeof(string), typeof(string));
 
             // Act
             // Assert

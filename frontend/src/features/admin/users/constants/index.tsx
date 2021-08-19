@@ -57,8 +57,8 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
       props.row.original.isDisabled ? <FaTimes /> : <FaCheck />,
   },
   {
-    Header: 'Agency',
-    accessor: 'agency',
+    Header: 'Organization',
+    accessor: 'organization',
     align: 'left',
     sortable: true,
     clickable: true,

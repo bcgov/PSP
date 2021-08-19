@@ -37,7 +37,7 @@ const extractProps = (props: string[], source: any): any => {
 const defaultFilter = {
   address: '',
   administrativeArea: '',
-  agencies: '',
+  organizations: '',
   classificationId: '',
   includeAllProperties: '',
   maxAssessedValue: '',

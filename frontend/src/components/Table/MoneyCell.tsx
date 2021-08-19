@@ -35,7 +35,7 @@ export const EditableMoneyCell = ({
   ) : (
     <TooltipWrapper
       toolTipId={`${namespace}.${cell.row.id}.${cell.column.id}`}
-      toolTip="You may only edit a property if it belongs to your agency."
+      toolTip="You may only edit a property if it belongs to your organization."
     >
       <i>{cell.value === undefined || cell.value === '' ? '' : formatMoney(cell.value)}</i>
     </TooltipWrapper>

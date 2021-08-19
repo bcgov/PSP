@@ -23,7 +23,7 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
     { name: 'roleVal', id: 2, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
 };
@@ -172,13 +172,13 @@ describe('Header tests', () => {
       expect(name).toBeVisible();
     });
 
-    it('displays appropriate agency', () => {
+    it('displays appropriate organization', () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
           authenticated: true,
           userInfo: {
-            agencies: ['1'],
+            organizations: ['1'],
             firstName: 'test',
             lastName: 'user',
           },
@@ -194,7 +194,7 @@ describe('Header tests', () => {
         </TenantProvider>,
       );
       fireEvent.click(getByText(/test user/i));
-      expect(getByText(/agencyVal/i)).toBeInTheDocument();
+      expect(getByText(/organizationVal/i)).toBeInTheDocument();
     });
   });
 });

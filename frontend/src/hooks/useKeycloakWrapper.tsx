@@ -19,7 +19,7 @@ export interface IUserInfo {
   roles: string[];
   given_name?: string;
   family_name?: string;
-  agencies: number[];
+  organizations: number[];
 }
 
 /**
@@ -35,12 +35,12 @@ export interface IKeycloak {
   lastName?: string;
   email?: string;
   roles: string[];
-  agencyId?: number;
+  organizationId?: number;
   isAdmin: boolean;
   hasRole(role?: string | Array<string>): boolean;
   hasClaim(claim?: string | Array<string>): boolean;
-  hasAgency(agency?: number): boolean;
-  agencyIds: number[];
+  hasOrganization(organization?: number): boolean;
+  organizationIds: number[];
   canUserEditProperty: (property: IProperty | null) => boolean;
   canUserViewProperty: (property: IProperty | null) => boolean;
   canUserDeleteProperty: (property: IProperty | null) => boolean;
@@ -82,11 +82,15 @@ export function useKeycloakWrapper(): IKeycloak {
   };
 
   /**
-   * Determine if the user belongs to the specified 'agency'
-   * @param agency - The agency name
+   * Determine if the user belongs to the specified 'organization'
+   * @param organization - The organization name
    */
-  const hasAgency = (agency?: number): boolean => {
-    return agency !== undefined && agency !== null && userInfo?.agencies?.includes(agency);
+  const hasOrganization = (organization?: number): boolean => {
+    return (
+      organization !== undefined &&
+      organization !== null &&
+      userInfo?.organizations?.includes(organization)
+    );
   };
 
   /**
@@ -140,7 +144,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
    */
   const canUserEditProperty = (property: IProperty | null): boolean => {
-    const ownsProperty = !!property?.agencyId && hasAgency(property.agencyId);
+    const ownsProperty = !!property?.organizationId && hasOrganization(property.organizationId);
     return !!property && (isAdmin || (canEdit && ownsProperty));
   };
 
@@ -149,7 +153,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
    */
   const canUserDeleteProperty = (property: IProperty | null): boolean => {
-    const ownsProperty = !!property?.agencyId && hasAgency(property.agencyId);
+    const ownsProperty = !!property?.organizationId && hasOrganization(property.organizationId);
     const isSubdivision = property?.propertyTypeId === PropertyTypes.Subdivision;
     return (
       !!property &&
@@ -165,7 +169,9 @@ export function useKeycloakWrapper(): IKeycloak {
     return (
       !!property &&
       (hasClaim(Claims.ADMIN_PROPERTIES) ||
-        (hasClaim(Claims.PROPERTY_VIEW) && !!property?.agencyId && hasAgency(property.agencyId)))
+        (hasClaim(Claims.PROPERTY_VIEW) &&
+          !!property?.organizationId &&
+          hasOrganization(property.organizationId)))
     );
   };
 
@@ -176,13 +182,13 @@ export function useKeycloakWrapper(): IKeycloak {
     firstName: firstName(),
     lastName: lastName(),
     email: email(),
-    isAdmin: hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasRole(Roles.AGENCY_ADMINISTRATOR),
+    isAdmin: hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasRole(Roles.ORGANIZATION_ADMINISTRATOR),
     roles: roles(),
-    agencyId: userInfo?.agencies?.find(x => x),
+    organizationId: userInfo?.organizations?.find(x => x),
     hasRole: hasRole,
     hasClaim: hasClaim,
-    hasAgency: hasAgency,
-    agencyIds: userInfo?.agencies,
+    hasOrganization: hasOrganization,
+    organizationIds: userInfo?.organizations,
     canUserEditProperty,
     canUserDeleteProperty,
     canUserViewProperty,

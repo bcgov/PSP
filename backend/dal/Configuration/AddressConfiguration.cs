@@ -13,31 +13,63 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
+            builder.ToMotiTable();
 
             builder.HasMotiKey(m => m.Id);
             builder.HasMotiSequence(m => m.Id)
                 .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.Address1).HasMaxLength(150)
-                .HasComment("The first line of the address");
+            builder.Property(m => m.AddressTypeId)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasComment("Foreign key to address usage type");
+            builder.Property(m => m.RegionId)
+                .HasColumnType("SMALLINT")
+                .HasComment("Foreign key to the region");
+            builder.Property(m => m.DistrictId)
+                .HasColumnType("SMALLINT")
+                .HasComment("Foreign key to the district");
+            builder.Property(m => m.ProvinceId)
+                .HasColumnType("SMALLINT")
+                .HasComment("Foreign key to the province");
+            builder.Property(m => m.CountryId)
+                .HasColumnType("SMALLINT")
+                .HasComment("Foreign key to the country");
 
-            builder.Property(m => m.Address2).HasMaxLength(150)
-                .HasComment("The second line of the address");
-
-            builder.Property(m => m.Postal).HasMaxLength(6)
+            builder.Property(m => m.StreetAddress1)
+                .HasMaxLength(200)
+                .HasComment("The street address part 1");
+            builder.Property(m => m.StreetAddress2)
+                .HasMaxLength(200)
+                .HasComment("The street address part 2");
+            builder.Property(m => m.StreetAddress3)
+                .HasMaxLength(200)
+                .HasComment("The street address part 3");
+            builder.Property(m => m.Municipality)
+                .HasMaxLength(20)
+                .HasComment("The municipality location");
+            builder.Property(m => m.Postal)
+                .HasMaxLength(20)
                 .HasComment("The postal code of the address");
 
-            builder.Property(m => m.ProvinceId).HasMaxLength(2).IsRequired()
-                .HasComment("Foreign key to the province");
+            builder.Property(m => m.Latitude)
+                .HasColumnType("NUMERIC(8,6)")
+                .HasComment("GIS latitude location");
+            builder.Property(m => m.Longitude)
+                .HasColumnType("NUMERIC(9,6)")
+                .HasComment("GIS longitude location");
 
-            builder.Property(m => m.AdministrativeArea).HasMaxLength(150).IsRequired()
-                .HasComment("Administrative area name (city, district, region, etc.)");
+            builder.HasOne(m => m.AddressType).WithMany(m => m.Addresses).HasForeignKey(m => m.AddressTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_ADUSGT_PIM_ADDRSS_FK");
+            builder.HasOne(m => m.Region).WithMany(m => m.Addresses).HasForeignKey(m => m.RegionId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_REGION_PIM_ADDRSS_FK");
+            builder.HasOne(m => m.District).WithMany(m => m.Addresses).HasForeignKey(m => m.DistrictId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_DSTRCT_PIM_ADDRSS_FK");
+            builder.HasOne(m => m.Province).WithMany(m => m.Addresses).HasForeignKey(m => m.ProvinceId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PROVNC_PIM_ADDRSS_FK");
+            builder.HasOne(m => m.Country).WithMany(m => m.Addresses).HasForeignKey(m => m.CountryId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_CNTRY_PIM_ADDRSS_FK");
 
-            builder.HasOne(m => m.Province).WithMany().HasForeignKey(m => m.ProvinceId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("ADDR_PROVINCE_ID_IDX");
-
-            builder.HasIndex(m => new { m.Address1, m.AdministrativeArea, m.Postal }, "ADDR_ADDRESS1_ADMINISTRATIVE_AREA_POSTAL_IDX").IncludeProperties(m => new { m.Address2 });
-            builder.HasIndex(m => m.ProvinceId, "ADDR_PROVINCE_ID_IDX");
+            builder.HasIndex(m => m.AddressTypeId).HasDatabaseName("ADDRSS_ADDRESS_USAGE_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.RegionId).HasDatabaseName("ADDRSS_REGION_CODE_IDX");
+            builder.HasIndex(m => m.DistrictId).HasDatabaseName("ADDRSS_DISTRICT_CODE_IDX");
+            builder.HasIndex(m => m.ProvinceId).HasDatabaseName("ADDRSS_PROVINCE_STATE_ID_IDX");
+            builder.HasIndex(m => m.CountryId).HasDatabaseName("ADDRSS_COUNTRY_ID_IDX");
 
             base.Configure(builder);
         }

@@ -84,6 +84,14 @@ namespace Pims.Dal.Services
 
             return (T)this.Context.Entry(entity).OriginalValues[propertyName];
         }
+
+        /// <summary>
+        /// Commit all saved changes as a single transaction.
+        /// </summary>
+        public void CommitTransaction()
+        {
+            this.Context.CommitTransaction();
+        }
         #endregion
     }
 }

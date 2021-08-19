@@ -1,0 +1,7 @@
+PRINT N'Adding [PIMS_WORKFLOW_MODEL_TYPE]'
+
+INSERT INTO PIMS_WORKFLOW_MODEL_TYPE (WORKFLOW_MODEL_TYPE_CODE, DESCRIPTION)
+VALUES
+  (N'ACQUIRE', N'Property Acquisition'),
+  (N'DISPOSE', N'Property Disposition'),
+  (N'EVALUATE', N'Property Valuation');

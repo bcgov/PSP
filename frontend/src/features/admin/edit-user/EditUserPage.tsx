@@ -37,7 +37,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
-  const agencies = getByType(API.AGENCY_CODE_SET_NAME);
+  const organizations = getByType(API.ORGANIZATION_CODE_SET_NAME);
   const roles = getByType(API.ROLE_CODE_SET_NAME);
 
   const user = useAppSelector(state => state.users.userDetail);
@@ -47,22 +47,22 @@ const EditUserPage = (props: IEditUserPageProps) => {
     selected: !!user?.roles?.find(x => x.id === code.id.toString()) ?? [],
   });
 
-  const selectAgencies = agencies.map(c => mapLookupCode(c));
+  const selectOrganizations = organizations.map(c => mapLookupCode(c));
   const selectRoles = roles.map(c => mapLookupCode(c));
 
-  // Arrays below are used to add the role/agency from the dropdown later in code
-  let agenciesToUpdate: any[];
+  // Arrays below are used to add the role/organization from the dropdown later in code
+  let organizationsToUpdate: any[];
   let rolesToUpdate: any[];
 
-  const checkAgencies = (
+  const checkOrganizations = (
     <Select
-      label="Agency"
-      field="agency"
-      data-testid="agency"
+      label="Organization"
+      field="organization"
+      data-testid="organization"
       required={true}
-      options={selectAgencies}
+      options={selectOrganizations}
       placeholder={
-        user?.agencies?.length && user?.agencies?.length > 0 ? undefined : 'Please Select'
+        user?.organizations?.length && user?.organizations?.length > 0 ? undefined : 'Please Select'
       }
     />
   );
@@ -104,10 +104,11 @@ const EditUserPage = (props: IEditUserPageProps) => {
     isDisabled: !!user.isDisabled ?? '',
     rowVersion: user.rowVersion ?? '',
     emailVerified: false,
-    agencies: user.agencies ?? [],
+    organizations: user.organizations ?? [],
     roles: user?.roles?.map(x => x.id) ?? [],
     note: user.note ?? '',
-    agency: user.agencies && user.agencies.length !== 0 ? user.agencies[0].id : '',
+    organization:
+      user.organizations && user.organizations.length !== 0 ? user.organizations[0].id : '',
     role: user.roles && user.roles.length !== 0 ? user.roles[0].id : '',
     position: user.position ?? '',
     lastLogin: formatApiDateTime(user.lastLogin),
@@ -125,10 +126,10 @@ const EditUserPage = (props: IEditUserPageProps) => {
             initialValues={initialValues}
             validationSchema={UserUpdateSchema}
             onSubmit={async (values, { setSubmitting, setValues }) => {
-              if (values.agency !== '') {
-                agenciesToUpdate = [{ id: Number(values.agency) }];
+              if (values.organization !== '') {
+                organizationsToUpdate = [{ id: Number(values.organization) }];
               } else {
-                agenciesToUpdate = user.agencies ?? [];
+                organizationsToUpdate = user.organizations ?? [];
               }
               if (values.roles) {
                 rolesToUpdate = values.roles.map(r => ({ id: r }));
@@ -147,7 +148,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                 isDisabled: values.isDisabled,
                 rowVersion: values.rowVersion,
                 emailVerified: values.emailVerified,
-                agencies: agenciesToUpdate,
+                organizations: organizationsToUpdate,
                 roles: rolesToUpdate,
                 position: values.position ?? undefined,
                 note: values.note,
@@ -203,7 +204,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                   type="email"
                 />
 
-                {checkAgencies}
+                {checkOrganizations}
 
                 <Label>Position</Label>
                 <Input

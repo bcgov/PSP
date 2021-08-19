@@ -102,11 +102,11 @@ describe('users slice reducer functionality', () => {
   it('allows an admin to update the users filter', () => {
     const result = userReducer(undefined, {
       type: usersSlice.actions.setUsersFilter,
-      payload: { agency: '1', role: '2', searchText: '3' },
+      payload: { organization: '1', role: '2', searchText: '3' },
     });
     expect(result).toEqual({
       ...initialState,
-      filter: { agency: '1', role: '2', searchText: '3' },
+      filter: { organization: '1', role: '2', searchText: '3' },
     });
   });
 });

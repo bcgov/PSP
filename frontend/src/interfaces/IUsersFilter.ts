@@ -4,6 +4,6 @@ export interface IUsersFilter {
   lastName?: string;
   email?: string;
   position?: string;
-  agency?: string;
+  organization?: string;
   role?: string;
 }

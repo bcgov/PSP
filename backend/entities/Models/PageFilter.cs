@@ -21,7 +21,7 @@ namespace Pims.Dal.Entities.Models
         public int Quantity { get; set; } = 10;
 
         /// <summary>
-        /// get/set - An array of sorting page conditions (i.e. AgencyId desc, ClassificationId asc)
+        /// get/set - An array of sorting page conditions (i.e. OrganizationId desc, ClassificationId asc)
         /// </summary>
         /// <value></value>
         public string[] Sort { get; set; }

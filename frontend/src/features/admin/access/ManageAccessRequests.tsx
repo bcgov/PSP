@@ -64,7 +64,8 @@ const ManageAccessRequests = () => {
         status: ar.status as string,
         note: ar.note as string,
         position: ar.user.position,
-        agency: ar.agencies && ar.agencies.length !== 0 ? ar.agencies[0].name : '',
+        organization:
+          ar.organizations && ar.organizations.length !== 0 ? ar.organizations[0].name : '',
         role: ar.roles && ar.roles.length !== 0 ? ar.roles[0].name : '',
       } as IAccessRequestModel),
   );

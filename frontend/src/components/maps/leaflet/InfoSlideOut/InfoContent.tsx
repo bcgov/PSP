@@ -35,7 +35,7 @@ interface IInfoContent {
   propertyInfo: IParcel | IBuilding | null;
   /** The property type [Parcel, Building] */
   propertyTypeId: PropertyTypes | null;
-  /** whether the user has the correct agency/permissions to view all the details */
+  /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
 }
 
@@ -95,21 +95,21 @@ export const InfoContent: React.FC<IInfoContent> = ({
               {propertyInfo?.name && (
                 <ThreeColumnItem leftSideLabel={'Name'} rightSideItem={propertyInfo?.name} />
               )}
-              {propertyInfo?.subAgency ? (
+              {propertyInfo?.subOrganization ? (
                 <>
                   <ThreeColumnItem
                     leftSideLabel={'Ministry'}
-                    rightSideItem={propertyInfo?.agencyFullName}
+                    rightSideItem={propertyInfo?.organizationFullName}
                   />
                   <ThreeColumnItem
-                    leftSideLabel={'Owning agency'}
-                    rightSideItem={propertyInfo.subAgencyFullName}
+                    leftSideLabel={'Owning organization'}
+                    rightSideItem={propertyInfo.subOrganizationFullName}
                   />
                 </>
               ) : (
                 <ThreeColumnItem
                   leftSideLabel={'Owning ministry'}
-                  rightSideItem={propertyInfo?.agencyFullName}
+                  rightSideItem={propertyInfo?.organizationFullName}
                 />
               )}
             </>

@@ -21,7 +21,7 @@ export const initialState: IUsersState = {
     lastName: '',
     email: '',
     isDisabled: false,
-    agencies: [],
+    organizations: [],
     roles: [],
     createdOn: '',
     rowVersion: 1,
