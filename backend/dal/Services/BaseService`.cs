@@ -30,6 +30,15 @@ namespace Pims.Dal.Services
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Find the entity for the specified 'keyValues'.
+        /// </summary>
+        /// <param name="keyValues"></param>
+        /// <returns></returns>
+        public ET Find(params object[] keyValues)
+        {
+            return this.Context.Find<ET>(keyValues);
+        }
         #endregion
     }
 }

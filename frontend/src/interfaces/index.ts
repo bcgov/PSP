@@ -1,5 +1,4 @@
 export * from './address';
-export * from './agency';
 export * from './associatedLand';
 export * from './building';
 export * from './evaluation';
@@ -12,6 +11,7 @@ export * from './IParentParcel';
 export * from './IUsersFilter';
 export * from './leasedLand';
 export * from './leasedLandTypes';
+export * from './organization';
 export * from './pagedItems';
 export * from './parcel';
 export * from './property';

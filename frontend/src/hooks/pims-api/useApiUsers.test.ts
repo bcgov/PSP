@@ -20,7 +20,7 @@ describe('useApiUsers api hook', () => {
 
   it('Gets paged users', () => {
     renderHook(async () => {
-      mockAxios.onPost(`/admin/users/my/agency`).reply(200, {
+      mockAxios.onPost(`/admin/users/my/organization`).reply(200, {
         items: [mockAccessRequest],
         pageIndex: 1,
         page: 1,

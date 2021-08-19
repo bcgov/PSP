@@ -23,9 +23,8 @@ namespace Pims.Api.Test.Helpers
                 new object[] { new[] { new { Id = 1, Name = "test,1" }, new { Id = 2, Name = "test,2" } }, "Id,Name\r\n1,\"test,1\"\r\n2,\"test,2\"\r\n" },
                 new object[]
                 {
-                    new[] { new Entity.PropertyType("test1") { Id = 1 }, new Entity.PropertyType("test2") { Id = 2 } },
-                    "Id,Name,IsDisabled,SortOrder,RowVersion\r\n1,test1,False,0,0\r\n2,test2,False,0,0\r\n"
-
+                    new[] { new Entity.PropertyType("test1", ""), new Entity.PropertyType("test2", "") },
+                    "Id,Description,IsDisabled,DisplayOrder,RowVersion\r\ntest1,,False,,0\r\ntest2,,False,,0\r\n"
                 }
             };
 
@@ -36,9 +35,9 @@ namespace Pims.Api.Test.Helpers
                 new object[] { new[] { new { Id = 1, Name = "test;1" }, new { Id = 2, Name = "test;2" } }, ";", "Id;Name\r\n1;\"test;1\"\r\n2;\"test;2\"\r\n" },
                 new object[]
                 {
-                    new[] { new Entity.PropertyType("test1") { Id = 1 }, new Entity.PropertyType("test2") { Id = 2 } },
+                    new[] { new Entity.PropertyType("test1", ""), new Entity.PropertyType("test2", "") },
                     "-",
-                    "Id-Name-IsDisabled-SortOrder-RowVersion\r\n1-test1-False-0-0\r\n2-test2-False-0-0\r\n"
+                    "Id-Description-IsDisabled-DisplayOrder-RowVersion\r\ntest1--False--0\r\ntest2--False--0\r\n"
                 }
             };
         #endregion

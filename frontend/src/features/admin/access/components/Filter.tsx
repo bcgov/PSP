@@ -18,7 +18,11 @@ interface IProps {
   applyFilter: (filter: IAccessRequestsFilterData) => void;
 }
 
-export const defaultFilter: IAccessRequestsFilterData = { searchText: '', role: '', agency: '' };
+export const defaultFilter: IAccessRequestsFilterData = {
+  searchText: '',
+  role: '',
+  organization: '',
+};
 
 export const AccessRequestFilter = (props: IProps) => {
   const [filterState, setFilterState] = React.useState(props.initialValues || defaultFilter);
@@ -28,10 +32,10 @@ export const AccessRequestFilter = (props: IProps) => {
     fetchLookupCodes();
   }, [fetchLookupCodes]);
 
-  const agencies: IMenuItemProps[] = lookupCodes.getByType('Agency').map(value => {
+  const organizations: IMenuItemProps[] = lookupCodes.getByType('Organization').map(value => {
     return {
       label: value.name,
-      onClick: () => setFilterState({ ...filterState, agency: value.name }),
+      onClick: () => setFilterState({ ...filterState, organization: value.name }),
     };
   });
 
@@ -59,14 +63,14 @@ export const AccessRequestFilter = (props: IProps) => {
       <Row className="filters">
         <Col className="filter">
           <Menu
-            searchPlaceholder="Filter agencies"
+            searchPlaceholder="Filter organizations"
             enableFilter={true}
             alignLeft={true}
             width="260px"
-            options={agencies}
+            options={organizations}
             disableScrollToMenuElement={true}
           >
-            {`Agency: ${filterState.agency || 'Show all'}`}&nbsp;&nbsp;
+            {`Organization: ${filterState.organization || 'Show all'}`}&nbsp;&nbsp;
             <FaCaretDown />
           </Menu>
         </Col>

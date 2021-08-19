@@ -2,9 +2,9 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Policies;
+using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Admin;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using Entity = Pims.Dal.Entities;
@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     {
         #region Variables
         private readonly ILogger<RoleController> _logger;
-        private readonly IPimsAdminService _pimsAdminService;
+        private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -34,12 +34,12 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// Creates a new instance of a RoleController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="logger"></param>
-        /// <param name="pimsAdminService"></param>
+        /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public RoleController(ILogger<RoleController> logger, IPimsAdminService pimsAdminService, IMapper mapper)
+        public RoleController(ILogger<RoleController> logger, IPimsService pimsService, IMapper mapper)
         {
             _logger = logger;
-            _pimsAdminService = pimsAdminService;
+            _pimsService = pimsService;
             _mapper = mapper;
         }
         #endregion
@@ -63,7 +63,7 @@ namespace Pims.Api.Areas.Admin.Controllers
             if (quantity < 1) quantity = 1;
             if (quantity > 50) quantity = 50;
 
-            var paged = _pimsAdminService.Role.Get(page, quantity, name);
+            var paged = _pimsService.Role.Get(page, quantity, name);
             var result = _mapper.Map<Api.Models.PageModel<Model.RoleModel>>(paged);
             return new JsonResult(result);
         }
@@ -80,7 +80,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRole(Guid key)
         {
-            var entity = _pimsAdminService.Role.Get(key);
+            var entity = _pimsService.Role.Get(key);
             var role = _mapper.Map<Model.RoleModel>(entity);
             return new JsonResult(role);
         }
@@ -97,7 +97,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult GetRoleByName(string name)
         {
-            var entity = _pimsAdminService.Role.GetByName(name);
+            var entity = _pimsService.Role.GetByName(name);
             var role = _mapper.Map<Model.RoleModel>(entity);
             return new JsonResult(role);
         }
@@ -115,7 +115,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult AddRole([FromBody] Model.RoleModel model)
         {
             var entity = _mapper.Map<Entity.Role>(model); // TODO: Return bad request.
-            _pimsAdminService.Role.Add(entity);
+            _pimsService.Role.Add(entity);
             var role = _mapper.Map<Model.RoleModel>(entity);
 
             return CreatedAtAction(nameof(GetRole), new { id = role.Id }, role);
@@ -136,7 +136,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult UpdateRole(Guid key, [FromBody] Model.RoleModel model)
         {
             var entity = _mapper.Map<Role>(model);
-            _pimsAdminService.Role.Update(entity);
+            _pimsService.Role.Update(entity);
 
             var role = _mapper.Map<Model.RoleModel>(entity);
             return new JsonResult(role);
@@ -157,7 +157,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult DeleteRole(Guid key, [FromBody] Model.RoleModel model)
         {
             var entity = _mapper.Map<Role>(model);
-            _pimsAdminService.Role.Remove(entity);
+            _pimsService.Role.Delete(entity);
 
             return new JsonResult(model);
         }

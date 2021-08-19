@@ -25,7 +25,7 @@ const getItems = (disabled?: boolean) => [
     lastName: 'testUserLast1',
     isDisabled: !!disabled,
     position: 'tester position',
-    agencies: [{ id: 1, name: 'HLTH' }],
+    organizations: [{ id: 1, name: 'HLTH' }],
     roles: [{ id: 1, name: 'admin' }],
     lastLogin: '2020-10-14T17:45:39.7381599',
   },

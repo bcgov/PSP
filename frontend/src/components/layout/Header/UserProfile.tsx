@@ -53,7 +53,7 @@ const LogoutButton = styled(FaSignOutAlt)`
   margin-left: 5px;
 `;
 
-/** Component that allows the user to logout, and gives information on current user's agency/roles */
+/** Component that allows the user to logout, and gives information on current user's organization/roles */
 export const UserProfile: React.FC = () => {
   const keycloak = useKeycloakWrapper();
   const displayName =
@@ -63,7 +63,7 @@ export const UserProfile: React.FC = () => {
       : 'default');
   const configuration = useConfiguration();
   const lookupCodes = useLookupCodeHelpers();
-  const agencyOptions = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
+  const organizationOptions = lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME);
   const roles = keycloak.roles.join(', ');
 
   return (
@@ -73,8 +73,8 @@ export const UserProfile: React.FC = () => {
         <p style={{ margin: 5 }}>
           <b>
             {
-              agencyOptions.find(
-                (x: ILookupCode) => x.id.toString() === keycloak.agencyId?.toString(),
+              organizationOptions.find(
+                (x: ILookupCode) => x.id.toString() === keycloak.organizationId?.toString(),
               )?.name
             }
           </b>

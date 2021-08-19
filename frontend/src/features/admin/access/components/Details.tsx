@@ -62,12 +62,12 @@ export const AccessRequestDetails: React.FC<IProps> = ({ request, onClose }) => 
                 <Form.Control disabled defaultValue={request.position} />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} controlId="agency">
+            <Form.Group as={Row} controlId="organization">
               <Form.Label column sm="4">
-                Agency:
+                Organization:
               </Form.Label>
               <Col sm="8">
-                <Form.Control disabled defaultValue={request.agency} />
+                <Form.Control disabled defaultValue={request.organization} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="role">

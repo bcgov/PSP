@@ -12,7 +12,7 @@ export interface IFlatParcel extends IProperty {
   landLegalDescription: string;
   zoning: string;
   zoningPotential: string;
-  agencyId: number | '';
+  organizationId: number | '';
   isSensitive: boolean;
   buildings: IBuilding[];
   assessedLand: number | '';

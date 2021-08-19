@@ -105,26 +105,26 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
-        /// Add the claim 'agencies' to the specified 'user'.
+        /// Add the claim 'organizations' to the specified 'user'.
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="agencyId"></param>
+        /// <param name="organizationId"></param>
         /// <returns></returns>
-        public static ClaimsPrincipal AddAgency(this ClaimsPrincipal user, params int[] agencyId)
+        public static ClaimsPrincipal AddOrganization(this ClaimsPrincipal user, params int[] organizationId)
         {
-            var agencies = String.Join(",", agencyId);
-            return user.AddClaim("agencies", agencies);
+            var organizations = String.Join(",", organizationId);
+            return user.AddClaim("organizations", organizations);
         }
 
         /// <summary>
-        /// Add the claim 'agencies' to the specified 'user'.
+        /// Add the claim 'organizations' to the specified 'user'.
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="agencyIds"></param>
+        /// <param name="organizationIds"></param>
         /// <returns></returns>
-        public static ClaimsPrincipal AddAgency(this ClaimsPrincipal user, IEnumerable<int> agencyIds)
+        public static ClaimsPrincipal AddOrganization(this ClaimsPrincipal user, IEnumerable<int> organizationIds)
         {
-            return user.AddClaim("agencies", String.Join(",", agencyIds));
+            return user.AddClaim("organizations", String.Join(",", organizationIds));
         }
     }
 }

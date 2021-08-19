@@ -3,11 +3,11 @@ import { PropertyTypes } from 'constants/propertyTypes';
 export interface IProperty {
   id: number | '';
   propertyTypeId?: PropertyTypes;
-  agencyId: number | '';
-  agency: string;
-  subAgency?: string;
-  agencyFullName?: string;
-  subAgencyFullName?: string;
+  organizationId: number | '';
+  organization: string;
+  subOrganization?: string;
+  organizationFullName?: string;
+  subOrganizationFullName?: string;
   latitude: number | '';
   longitude: number | '';
   name?: string;

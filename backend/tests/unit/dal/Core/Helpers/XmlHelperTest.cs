@@ -23,8 +23,8 @@ namespace Pims.Api.Test.Helpers
                 new object[]
                 {
                     new[] {
-                        new Entity.PropertyType("test1") { Id = 1 },
-                        new Entity.PropertyType("test2") { Id = 2 }
+                        new Entity.PropertyType("test1", ""),
+                        new Entity.PropertyType("test2", "")
                     },
                     5
                 }

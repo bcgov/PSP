@@ -125,7 +125,7 @@ items:
     source:
       git:
         ref: dev
-        uri: https://github.com/bcgov/PIMS.git
+        uri: https://github.com/bcgov/PSP.git
       type: Git
     strategy:
       jenkinsPipelineStrategy:

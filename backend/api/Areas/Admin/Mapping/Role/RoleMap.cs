@@ -16,7 +16,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Role
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.Claims, src => src.ClaimsManyToMany)
-                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -26,7 +26,7 @@ namespace Pims.Api.Areas.Admin.Mapping.Role
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.ClaimsManyToMany, src => src.Claims)
-                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
         }
     }
 }

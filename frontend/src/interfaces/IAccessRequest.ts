@@ -5,7 +5,7 @@ export interface IAccessRequest {
   userId: number;
   user: IUser;
   roles: IAccessRequestRole[];
-  agencies: IAccessRequestAgency[];
+  organizations: IAccessRequestOrganization[];
   note?: string | null;
   status: AccessRequestStatus;
   position?: string;
@@ -28,7 +28,7 @@ interface IUser {
   rowVersion?: number;
 }
 
-export interface IAccessRequestAgency {
+export interface IAccessRequestOrganization {
   id: number;
   code?: string;
   name?: string;

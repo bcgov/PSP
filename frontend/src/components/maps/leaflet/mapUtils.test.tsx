@@ -130,8 +130,8 @@ describe('mapUtils tests', () => {
     describe('convert feature to property', () => {
       const property: IProperty = {
         id: 1,
-        agency: 'test agency',
-        agencyId: 1,
+        organization: 'test organization',
+        organizationId: 1,
         latitude: 1,
         longitude: 2,
         isSensitive: false,
@@ -166,8 +166,8 @@ describe('mapUtils tests', () => {
     describe('create points function', () => {
       const property: IProperty = {
         id: 1,
-        agency: 'test agency',
-        agencyId: 1,
+        organization: 'test organization',
+        organizationId: 1,
         latitude: 1,
         longitude: 2,
         isSensitive: false,
@@ -177,8 +177,8 @@ describe('mapUtils tests', () => {
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: {
-              agency: 'test agency',
-              agencyId: 1,
+              organization: 'test organization',
+              organizationId: 1,
               cluster: false,
               id: 1,
               isSensitive: false,
@@ -190,8 +190,8 @@ describe('mapUtils tests', () => {
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: {
-              agency: 'test agency',
-              agencyId: 1,
+              organization: 'test organization',
+              organizationId: 1,
               cluster: false,
               id: 1,
               isSensitive: false,

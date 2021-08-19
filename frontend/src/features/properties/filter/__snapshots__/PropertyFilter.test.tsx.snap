@@ -39,7 +39,7 @@ exports[`MapFilterBar renders correctly 1`] = `
             class="option"
             value="false"
           >
-            My Agencies
+            My Organizations
           </option>
           <option
             class="option"
@@ -66,9 +66,9 @@ exports[`MapFilterBar renders correctly 1`] = `
               aria-haspopup="listbox"
               autocomplete="off"
               class="rbt-input-main form-control rbt-input"
-              id="agencies-field"
-              name="agencies"
-              placeholder="Agency"
+              id="organizations-field"
+              name="organizations"
+              placeholder="Organization"
               role="combobox"
               type="text"
               value=""

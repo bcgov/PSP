@@ -14,8 +14,8 @@ export interface IPropertyFilter {
   address: string;
   /** The location of the property. */
   administrativeArea: string;
-  /** comma-separated list of agencies to filter by */
-  agencies: string;
+  /** comma-separated list of organizations to filter by */
+  organizations: string;
   /** The classification of the property. */
   classificationId: string;
   /** The minimum lot size of the property. */
@@ -42,6 +42,6 @@ export interface IPropertyFilter {
   maxNetBookValue?: '';
   /** The maximum Market Value for a property */
   maxMarketValue?: '';
-  /** Whether to return properties owned by other agencies. */
+  /** Whether to return properties owned by other organizations. */
   includeAllProperties?: boolean;
 }

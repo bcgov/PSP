@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Dal.Entities;
 using System;
 using System.Linq;
 using Entity = Pims.Dal.Entities;
@@ -13,19 +14,14 @@ namespace Pims.Api.Areas.Reports.Mapping.User
             config.NewConfig<Entity.User, Model.UserModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Username, src => src.Username)
-                .Map(dest => dest.Position, src => src.Position)
-                .Map(dest => dest.DisplayName, src => src.DisplayName)
-                .Map(dest => dest.FirstName, src => src.FirstName)
-                .Map(dest => dest.MiddleName, src => src.MiddleName)
-                .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Agencies, src => String.Join(",", src.Agencies.Select(a => a.Name)))
+                .Map(dest => dest.BusinessIdentifier, src => src.BusinessIdentifier)
+                .Map(dest => dest.FirstName, src => src.Person.FirstName)
+                .Map(dest => dest.Surname, src => src.Person.Surname)
+                .Map(dest => dest.Email, src => src.Person.GetEmail())
+                .Map(dest => dest.Organizations, src => String.Join(",", src.Organizations.Select(a => a.Name)))
                 .Map(dest => dest.Roles, src => String.Join(",", src.Roles.Select(a => a.Name)))
-                .Map(dest => dest.LastLogin, src => src.LastLogin)
-                .Map(dest => dest.ApprovedBy, src => src.ApprovedBy != null ? src.ApprovedBy.DisplayName : null)
-                .Map(dest => dest.ApprovedOn, src => src.ApprovedOn)
+                .Map(dest => dest.ApprovedBy, src => src.ApprovedBy)
+                .Map(dest => dest.IssueOn, src => src.IssueOn)
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
         }
     }

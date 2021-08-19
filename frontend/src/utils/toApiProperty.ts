@@ -30,9 +30,9 @@ export const toApiProperty = (
     },
     zoning: property.zoning ?? '',
     zoningPotential: property.zoningPotential ?? '',
-    agency: property.agency,
-    subAgency: property.subAgency,
-    agencyId: property.agencyId,
+    organization: property.organization,
+    subOrganization: property.subOrganization,
+    organizationId: property.organizationId,
     isSensitive: property.isSensitive,
     landArea: property.landArea,
     landLegalDescription: property.landLegalDescription,
@@ -132,11 +132,11 @@ export interface IProperty {
   latitude: number;
   longitude: number;
   isSensitive: boolean;
-  agencyId: number;
-  agency: string;
-  agencyCode: string;
-  subAgency?: string;
-  subAgencyCode?: string;
+  organizationId: number;
+  organization: string;
+  organizationCode: string;
+  subOrganization?: string;
+  subOrganizationCode?: string;
 
   addressId: number;
   address: string;

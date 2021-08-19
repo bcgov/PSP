@@ -35,7 +35,7 @@ namespace Pims.Api.Controllers
         public IActionResult Error()
         {
             var exceptionHandlerPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-            _logger.LogError(exceptionHandlerPathFeature.Error, "Unhandled error occured.");
+            _logger.LogError(exceptionHandlerPathFeature.Error, "Unhandled error occurred.");
             return new JsonResult(new { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         #endregion

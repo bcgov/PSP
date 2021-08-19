@@ -76,7 +76,7 @@ VALUES
 ),
 (
     1
-    , 6   -- admin-agencies
+    , 6   -- admin-organizations
     , 'migration'
     , ''
     , 'migration'
@@ -100,7 +100,7 @@ VALUES
 ),
 (
     1
-    , 2   -- agency-administrator
+    , 2   -- organization-administrator
     , 'migration'
     , ''
     , 'migration'
@@ -108,7 +108,7 @@ VALUES
 ),
 
 
--- agency-administrator
+-- organization-administrator
 (
     2
     , 8   -- property-view
@@ -151,7 +151,7 @@ VALUES
 ),
 (
     2
-    , 2   -- agency-administrator
+    , 2   -- organization-administrator
     , 'migration'
     , ''
     , 'migration'

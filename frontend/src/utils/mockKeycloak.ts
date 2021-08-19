@@ -1,10 +1,10 @@
 import { useKeycloak } from '@react-keycloak/web';
 
-export const mockKeycloak = (claims: string[], agencies: number[]) => {
+export const mockKeycloak = (claims: string[], organizations: number[]) => {
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
       userInfo: {
-        agencies: agencies,
+        organizations: organizations,
         roles: claims,
       },
       subject: 'test',

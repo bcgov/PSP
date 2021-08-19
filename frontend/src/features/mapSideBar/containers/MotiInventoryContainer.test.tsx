@@ -75,7 +75,7 @@ const defaultStore = mockStore({
 
 const renderContainer = ({ store }: any) =>
   render(
-    <TestCommonWrapper history={history} store={store ?? defaultStore} agencies={[1 as any]}>
+    <TestCommonWrapper history={history} store={store ?? defaultStore} organizations={[1 as any]}>
       <Route path="/mapview/:id?">
         <MotiInventoryContainer />
       </Route>

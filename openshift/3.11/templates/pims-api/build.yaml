@@ -50,7 +50,7 @@ objects:
           from:
             kind: ImageStreamTag
             name: ${DOTNET_BUILDER_IMAGE}:${DOTNET_BUILDER_TAG}
-          # scripts: https://raw.githubusercontent.com/bcgov/PIMS/dev/.s2i/bin
+          # scripts: https://raw.githubusercontent.com/bcgov/PSP/dev/.s2i/bin
           env:
             - name: DOTNET_CONFIGURATION
               value: ${DOTNET_CONFIGURATION}
@@ -86,7 +86,7 @@ parameters:
     displayName: Git Repository URL
     description: The URL of the repository with your application source code.
     required: true
-    value: https://github.com/bcgov/PIMS.git
+    value: https://github.com/bcgov/PSP.git
   - name: GIT_REF
     displayName: Git Reference
     description:

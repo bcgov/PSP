@@ -6,7 +6,7 @@ namespace Pims.Api.Areas.Admin.Models.Role
     /// <summary>
     /// RoleModel class, provides a model that represents a role.
     /// </summary>
-    public class RoleModel : Api.Models.BaseAppModel
+    public class RoleModel : Api.Models.BaseModel
     {
         #region Properties
         /// <summary>
@@ -48,7 +48,7 @@ namespace Pims.Api.Areas.Admin.Models.Role
         /// <summary>
         /// get/set - The item's sort order.
         /// </summary>
-        public int SortOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
         /// <summary>
         /// get/set - An array of claims associated to this role.
