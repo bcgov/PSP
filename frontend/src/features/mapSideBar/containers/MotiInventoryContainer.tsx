@@ -199,7 +199,6 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         toast.error(
           'Property search failed. Please check your search criteria and try again. If this error persists, contact the Help Desk.',
         );
-        // console.debug(error);
       } finally {
         setLoading(false);
       }

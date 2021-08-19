@@ -1,4 +1,5 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup } from '@testing-library/react-hooks';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { createMemoryHistory } from 'history';
@@ -103,12 +104,15 @@ jest.mock('hooks/useApi');
 
 describe('MotiInventoryContainer functionality', () => {
   beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
     fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
+    process.env.REACT_APP_TENANT = 'MOTI';
     history.push('');
   });
   afterAll(() => {
     jest.restoreAllMocks();
+  });
+  afterEach(() => {
+    cleanup();
   });
   it('displays as expected', () => {
     history.push('/mapview?sidebar=true');
@@ -143,6 +147,9 @@ describe('MotiInventoryContainer functionality', () => {
       isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
     });
+    afterEach(() => {
+      cleanup();
+    });
     xit('searches by pid', async () => {
       findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
       const { container, getByTestId, findByTestId } = renderContainer({});
@@ -163,7 +170,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await screen.findByText(
         'Unable to find parcel identifier (PID) for the searched location. A property must have a PID to be added to PSP, ensure this property has a PID.',
@@ -190,7 +197,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText(`PID: 123-456-789 not found in Title Direct Search Service.`);
       expect(toast).toBeInTheDocument();
@@ -203,7 +210,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText(`Request failed from Title Direct Search Service.`);
       expect(toast).toBeInTheDocument();
@@ -218,7 +225,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText('test error');
       expect(toast).toBeInTheDocument();
@@ -231,7 +238,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText(`PID: 123-456-789 not found in Title Direct Search Service.`);
       expect(toast).toBeInTheDocument();
@@ -244,7 +251,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText('Request failed from Title Direct Search Service.');
       expect(toast).toBeInTheDocument();
@@ -259,7 +266,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText('test error');
       expect(toast).toBeInTheDocument();
@@ -271,7 +278,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const toast = await findByText(
         'Property search failed. Please check your search criteria and try again. If this error persists, contact the Help Desk.',
@@ -295,15 +302,11 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchAddressInput = container.querySelector('input[name="searchAddress"]');
-      await waitFor(() =>
-        fireEvent.change(searchAddressInput!, { target: { value: '12345 fake' } }),
-      );
+      fireEvent.change(searchAddressInput!, { target: { value: '12345 fake' } });
       const suggestion = await findByText('12345 fake st.');
       expect(suggestion).toBeTruthy();
 
-      act(() => {
-        fireEvent.click(suggestion);
-      });
+      fireEvent.click(suggestion);
       await waitFor(() => {
         const addressSearchButton = getByTestId('address-search-button');
         expect(addressSearchButton).not.toHaveAttribute('disabled');
@@ -325,15 +328,11 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchAddressInput = container.querySelector('input[name="searchAddress"]');
-      await waitFor(() =>
-        fireEvent.change(searchAddressInput!, { target: { value: '12345 fake' } }),
-      );
+      fireEvent.change(searchAddressInput!, { target: { value: '12345 fake' } });
       const suggestion = await findByText('12345 fake st.');
       expect(suggestion).toBeTruthy();
 
-      act(() => {
-        fireEvent.click(suggestion);
-      });
+      fireEvent.click(suggestion);
       await waitFor(() => {
         const addressSearchButton = getByTestId('address-search-button');
         expect(addressSearchButton).not.toHaveAttribute('disabled');
@@ -353,15 +352,11 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchAddressInput = container.querySelector('input[name="searchAddress"]');
-      await waitFor(() =>
-        fireEvent.change(searchAddressInput!, { target: { value: '12345 fake' } }),
-      );
+      fireEvent.change(searchAddressInput!, { target: { value: '12345 fake' } });
       const suggestion = await findByText('12345 fake st.');
       expect(suggestion).toBeTruthy();
 
-      act(() => {
-        fireEvent.click(suggestion);
-      });
+      fireEvent.click(suggestion);
       await waitFor(() => {
         const addressSearchButton = getByTestId('address-search-button');
         expect(addressSearchButton).not.toHaveAttribute('disabled');
@@ -380,6 +375,9 @@ describe('MotiInventoryContainer functionality', () => {
       history.push('/mapview?sidebar=true&sidebarContext=addBareLand');
       isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
+    });
+    afterEach(() => {
+      cleanup();
     });
     it('queries for data as expected when the marker is placed on the map', async () => {
       findOneWhereContains.mockResolvedValueOnce({
@@ -415,6 +413,9 @@ describe('MotiInventoryContainer functionality', () => {
       isPidAvailable.mockResolvedValue({ available: true });
       jest.clearAllMocks();
     });
+    afterEach(() => {
+      cleanup();
+    });
 
     it('the cancel and submit buttons are disabled by default', async () => {
       const { findByText } = renderContainer({});
@@ -432,7 +433,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const cancelButton = (await findByText('Cancel')).closest('button') as HTMLButtonElement;
       const submitButton = (await findByText('Save')).closest('button') as HTMLButtonElement;
@@ -447,7 +448,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const submitButton = (await findByText('Save')).closest('button') as HTMLButtonElement;
       expect(submitButton).not.toBeDisabled();
@@ -471,7 +472,7 @@ describe('MotiInventoryContainer functionality', () => {
 
       await findByTestId('pid-search-button');
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
       fireEvent.click(getByTestId('pid-search-button'));
       const propertyTab = await findByText('Property');
 
@@ -496,13 +497,15 @@ describe('MotiInventoryContainer functionality', () => {
       findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
     });
 
+    afterEach(() => {
+      cleanup();
+    });
+
     it('displays the duplicate pid modal if a duplicate pid is detected.', async () => {
       const { container, getByTestId } = renderContainer({});
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
-      act(() => {
-        fireEvent.click(getByTestId('pid-search-button'));
-      });
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
+      fireEvent.click(getByTestId('pid-search-button'));
       const modal = await screen.findByText(/The parcel identifier \(PID\) 123-456-789/g);
       expect(modal).toBeInTheDocument();
     });
@@ -510,39 +513,29 @@ describe('MotiInventoryContainer functionality', () => {
       isPidAvailable.mockResolvedValue({ available: true });
       const { container, getByTestId } = renderContainer({});
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
-      act(() => {
-        fireEvent.click(getByTestId('pid-search-button'));
-      });
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
+      fireEvent.click(getByTestId('pid-search-button'));
       const modal = await screen.queryByText(/The parcel identifier \(PID\) 123-456-789/g);
       expect(modal).not.toBeInTheDocument();
     });
     it('opens the expected url in a new window when Yes clicked', async () => {
       const { container, getByTestId } = renderContainer({});
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
-      act(() => {
-        fireEvent.click(getByTestId('pid-search-button'));
-      });
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
+      fireEvent.click(getByTestId('pid-search-button'));
       await screen.findByText(/The parcel identifier \(PID\) 123-456-789/g);
       const yesButton = screen.getByText('Yes');
-      act(() => {
-        fireEvent.click(yesButton);
-      });
+      fireEvent.click(yesButton);
       expect(window.open).toHaveBeenCalled();
     });
     it('closes the modal when no is clicked', async () => {
       const { container, getByTestId } = renderContainer({});
       const searchPid = container.querySelector('input[name="searchPid"]');
-      await waitFor(() => fireEvent.change(searchPid!, { target: { value: '123-456-789' } }));
-      act(() => {
-        fireEvent.click(getByTestId('pid-search-button'));
-      });
+      fireEvent.change(searchPid!, { target: { value: '123-456-789' } });
+      fireEvent.click(getByTestId('pid-search-button'));
       await screen.findByText(/The parcel identifier \(PID\) 123-456-789/g);
       const noButton = screen.getByText('No');
-      act(() => {
-        fireEvent.click(noButton);
-      });
+      fireEvent.click(noButton);
       expect(window.open).not.toHaveBeenCalled();
     });
   });
@@ -552,6 +545,9 @@ describe('MotiInventoryContainer functionality', () => {
       process.env.REACT_APP_TENANT = 'MOTI';
       isPidAvailable.mockResolvedValue({ available: true });
       findByPid.mockResolvedValueOnce(mockParcelLayerResponse);
+    });
+    afterEach(() => {
+      cleanup();
     });
 
     it('does not call pid search field with original store value', async () => {
