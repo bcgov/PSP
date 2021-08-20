@@ -77,10 +77,11 @@ namespace Pims.Dal.Configuration
                 .HasColumnType("NVARCHAR(MAX)")
                 .HasComment("Titled legal land description");
             builder.Property(m => m.Boundary)
-                .HasComment("A geo-spatial description of the building boundary");
+                .HasColumnType("GEOMETRY")
+                .HasComment("A geo-spatial description of the property boundary");
             builder.Property(m => m.Location)
-                .IsRequired()
-                .HasComment("A geo-spatial point where the building is located");
+                .HasColumnType("GEOMETRY")
+                .HasComment("A geo-spatial point where the property is located");
             builder.Property(m => m.EncumbranceReason)
                 .HasMaxLength(500)
                 .HasComment("A description of the reason for encumbrance");

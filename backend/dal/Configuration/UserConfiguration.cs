@@ -28,9 +28,18 @@ namespace Pims.Dal.Configuration
                 .HasComment("User account business identifier");
             builder.Property(m => m.KeycloakUserId).IsRequired()
                 .HasComment("Unique key to link to keycloak user account");
+            builder.Property(m => m.Position)
+                .HasMaxLength(100)
+                .HasComment("The user's position or job title");
+            builder.Property(m => m.Note)
+                .HasMaxLength(1000)
+                .HasComment("A note about the user");
             builder.Property(m => m.ApprovedBy)
                 .HasMaxLength(30)
                 .HasComment("User name who approved this account");
+            builder.Property(m => m.LastLogin)
+                .HasColumnType("DATETIME")
+                .HasComment("The date the user last logged in");
             builder.Property(m => m.IssueOn)
                 .IsRequired()
                 .HasColumnType("DATETIME")

@@ -26,6 +26,10 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.StatusId)
                 .HasComment("foreign key to the access request status type");
 
+            builder.Property(m => m.Note)
+                .HasMaxLength(1000)
+                .HasComment("A note to describe the access request reason");
+
             builder.HasOne(m => m.User).WithMany(u => u.AccessRequests).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_USER_PIM_ACRQST_FK");
             builder.HasOne(m => m.Role).WithMany(u => u.AccessRequests).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_ROLE_PIM_ACRQST_FK");
             builder.HasOne(m => m.Status).WithMany(u => u.AccessRequests).HasForeignKey(m => m.StatusId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_ARQSTT_PIM_ACRQST_FK");

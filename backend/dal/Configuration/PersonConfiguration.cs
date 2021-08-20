@@ -34,7 +34,6 @@ namespace Pims.Dal.Configuration
                 .HasMaxLength(200)
                 .HasComment("Person's middle names.");
             builder.Property(m => m.NameSuffix)
-                .IsRequired()
                 .HasMaxLength(50)
                 .HasComment("Person's name suffix (Mr, Mrs, Miss).");
             builder.Property(m => m.BirthDate)
