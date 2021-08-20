@@ -11,7 +11,7 @@ using Pims.Dal;
 namespace Pims.Dal.Migrations
 {
     [DbContext(typeof(PimsContext))]
-    [Migration("20210818203405_Initial")]
+    [Migration("20210820154301_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,12 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("GETUTCDATE()")
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("NOTE")
+                        .HasComment("A note to describe the access request reason");
 
                     b.Property<long>("RoleId")
                         .HasColumnType("BIGINT")
@@ -566,8 +572,8 @@ namespace Pims.Dal.Migrations
                         .HasComment("GIS longitude location");
 
                     b.Property<string>("Municipality")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasColumnName("MUNICIPALITY_NAME")
                         .HasComment("The municipality location");
 
@@ -1407,7 +1413,6 @@ namespace Pims.Dal.Migrations
                         .HasComment("Person's middle names.");
 
                     b.Property<string>("NameSuffix")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("NAME_SUFFIX")
@@ -2454,9 +2459,9 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to property area unit type");
 
                     b.Property<Geometry>("Boundary")
-                        .HasColumnType("geography")
+                        .HasColumnType("GEOMETRY")
                         .HasColumnName("BOUNDARY")
-                        .HasComment("A geo-spatial description of the building boundary");
+                        .HasComment("A geo-spatial description of the property boundary");
 
                     b.Property<string>("ClassificationId")
                         .IsRequired()
@@ -2563,10 +2568,9 @@ namespace Pims.Dal.Migrations
                         .HasComment("Titled legal land description");
 
                     b.Property<Point>("Location")
-                        .IsRequired()
-                        .HasColumnType("geography")
+                        .HasColumnType("GEOMETRY")
                         .HasColumnName("LOCATION")
-                        .HasComment("A geo-spatial point where the building is located");
+                        .HasComment("A geo-spatial point where the property is located");
 
                     b.Property<string>("Name")
                         .HasMaxLength(250)
@@ -4157,10 +4161,27 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("GUID_IDENTIFIER_VALUE")
                         .HasComment("Unique key to link to keycloak user account");
 
+                    b.Property<DateTime?>("LastLogin")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("LAST_LOGIN")
+                        .HasComment("The date the user last logged in");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("NOTE")
+                        .HasComment("A note about the user");
+
                     b.Property<long>("PersonId")
                         .HasColumnType("BIGINT")
                         .HasColumnName("PERSON_ID")
                         .HasComment("Foreign key to person");
+
+                    b.Property<string>("Position")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("POSITION")
+                        .HasComment("The user's position or job title");
 
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
