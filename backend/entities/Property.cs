@@ -306,7 +306,8 @@ namespace Pims.Dal.Entities
             this.TenureId = tenure.Id;
             this.AreaUnit = areaUnit ?? throw new ArgumentNullException(nameof(areaUnit));
             this.AreaUnitId = areaUnit.Id;
-            this.Location = new Point(address.Longitude, address.Latitude) { SRID = 4326 };
+            if (address.Longitude.HasValue && address.Latitude.HasValue)
+                this.Location = new Point(address.Longitude.Value, address.Latitude.Value) { SRID = 4326 };
             this.DataSource = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
             this.DataSourceId = dataSource.Id;
             this.DataSourceEffectiveDate = dataSourceEffectiveDate;

@@ -11,7 +11,7 @@ using Pims.Dal;
 namespace Pims.Dal.Migrations
 {
     [DbContext(typeof(PimsContext))]
-    [Migration("20210820154301_Initial")]
+    [Migration("20210820183209_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -561,12 +561,12 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("DISTRICT_CODE")
                         .HasComment("Foreign key to the district");
 
-                    b.Property<decimal>("Latitude")
+                    b.Property<decimal?>("Latitude")
                         .HasColumnType("NUMERIC(8,6)")
                         .HasColumnName("LATITUDE")
                         .HasComment("GIS latitude location");
 
-                    b.Property<decimal>("Longitude")
+                    b.Property<decimal?>("Longitude")
                         .HasColumnType("NUMERIC(9,6)")
                         .HasColumnName("LONGITUDE")
                         .HasComment("GIS longitude location");

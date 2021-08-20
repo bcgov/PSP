@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using NetTopologySuite.Geometries;
 
 namespace Pims.Core.Extensions
 {
@@ -30,6 +31,8 @@ namespace Pims.Core.Extensions
                 .Where(p => p.PropertyType.IsPrimitive
                     || p.PropertyType.IsEnum
                     || p.PropertyType == typeof(string)
+                    || p.PropertyType == typeof(Point)
+                    || p.PropertyType == typeof(Geometry)
                     || (p.PropertyType.IsGenericType
                         && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)
                         && Nullable.GetUnderlyingType(p.PropertyType).IsPrimitive)
