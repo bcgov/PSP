@@ -46,7 +46,7 @@ namespace Pims.Dal.Configuration
                 .HasMaxLength(200)
                 .HasComment("The street address part 3");
             builder.Property(m => m.Municipality)
-                .HasMaxLength(20)
+                .HasMaxLength(200)
                 .HasComment("The municipality location");
             builder.Property(m => m.Postal)
                 .HasMaxLength(20)

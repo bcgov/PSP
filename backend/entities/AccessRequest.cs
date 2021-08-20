@@ -51,6 +51,12 @@ namespace Pims.Dal.Entities
         public AccessRequestStatusType Status { get; set; }
 
         /// <summary>
+        /// get/set - A note to describe the access request reason.
+        /// </summary>
+        [Column("NOTE")]
+        public string Note { get; set; }
+
+        /// <summary>
         /// get - the list of organizations that the user is requesting to be added to.
         /// </summary>
         public ICollection<Organization> Organizations { get; } = new List<Organization>();
