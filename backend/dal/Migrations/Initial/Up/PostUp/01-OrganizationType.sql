@@ -7,4 +7,7 @@ VALUES
   (N'PRIVATE', N'Private owner'),
   (N'RAILWAY', N'Railway corporation'),
   (N'OTHER', N'Other'),
+  (N'BCMIN', N'BC Ministry'),
+  (N'BCREG', N'BC Regional Office'),
+  (N'BCDIST', N'BC District Office'),
   (N'PARTNER', N'Partnership');

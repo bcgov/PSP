@@ -559,12 +559,12 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("DISTRICT_CODE")
                         .HasComment("Foreign key to the district");
 
-                    b.Property<decimal>("Latitude")
+                    b.Property<decimal?>("Latitude")
                         .HasColumnType("NUMERIC(8,6)")
                         .HasColumnName("LATITUDE")
                         .HasComment("GIS latitude location");
 
-                    b.Property<decimal>("Longitude")
+                    b.Property<decimal?>("Longitude")
                         .HasColumnType("NUMERIC(9,6)")
                         .HasColumnName("LONGITUDE")
                         .HasComment("GIS longitude location");

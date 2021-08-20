@@ -42,7 +42,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Assert
             o2.PID.Should().Be(o1.PID);
             o2.Description.Should().Be(o1.Description);
-            o2.Location.Should().NotBe(o1.Location);
+            o2.Location.Should().Be(o1.Location);
         }
         #endregion
         #endregion
