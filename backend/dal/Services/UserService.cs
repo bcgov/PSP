@@ -83,7 +83,7 @@ namespace Pims.Dal.Services
                 var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
                 person.ContactMethods.Add(contactMethod);
                 user = new User(key, username, person);
-                user.IssueOn = DateTime.Now;
+                user.IssueOn = DateTime.UtcNow;
                 this.Context.Users.Add(user);
                 this.Context.CommitTransaction();
             }
@@ -273,7 +273,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public User Add(User add)
         {
-            add.IssueOn = DateTime.Now;
+            add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
             return add;
