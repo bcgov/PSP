@@ -28,11 +28,15 @@ The *.zip files contain the following files:
     * **Note:** If there are multiple scripts in this folder, the scripts should be run in the order indicated by the first two digits in the script name.
 
 ## Execution
-Follow the steps below to build or alter the database.
+Follow the steps below to drop, build or alter the database.
+
+### Drop
+1. Run the xx_PSP_PIMS_Snn.nn_DROP.sql file to drop the database.
 
 ### Build
 1. Run the build file (e.g. 01_PSP_PIMS_S09.00_Build.sql)
 1. Run any remaining DML scripts in ascending order by file name (e.g. 30_DML_PIMS_ADDRESS_USAGE_TYPE.sql)
+1. **DO NOT** execute the xx_PSP_PIMS_Snn.nn_DROP.sql file as this will drop the database and you'll have to restart the build process.
 
 ### Alter Up
 1. Run the alter file (e.g. 01_PSP_PIMS_S08.01_Alter.sql to update the S08.01 database to version S09.00)
