@@ -41,6 +41,18 @@ namespace Pims.Dal.Entities
         public Guid? KeycloakUserId { get; set; }
 
         /// <summary>
+        /// get/set - The user's position or job title.
+        /// </summary>
+        [Column("POSITION")]
+        public string Position { get; set; }
+
+        /// <summary>
+        /// get/set - A note about the user.
+        /// </summary>
+        [Column("NOTE")]
+        public string Note { get; set; }
+
+        /// <summary>
         /// get/set - The user's identification who approved this user.
         /// </summary>
         [Column("APPROVED_BY_ID")]
@@ -57,6 +69,12 @@ namespace Pims.Dal.Entities
         /// </summary>
         [Column("EXPIRY_DATE")]
         public DateTime? ExpiryOn { get; set; }
+
+        /// <summary>
+        /// get/set - The date the user last logged in.
+        /// </summary>
+        [Column("LAST_LOGIN")]
+        public DateTime? LastLogin { get; set; }
 
         /// <summary>
         /// get/set - Whether the user account is disabled.
