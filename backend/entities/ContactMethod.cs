@@ -94,16 +94,15 @@ namespace Pims.Dal.Entities
         /// <param name="organization"></param>
         /// <param name="methodType"></param>
         /// <param name="value"></param>
-        public ContactMethod(Person person, Organization organization, ContactMethodType methodType, string value)
+        public ContactMethod(Person person, Organization organization, string methodTypeId, string value)
         {
             if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(value));
 
             this.Person = person ?? throw new ArgumentNullException(nameof(person));
             this.PersonId = person.Id;
-            this.Organization = organization ?? throw new ArgumentNullException(nameof(organization));
-            this.OrganizationId = organization.Id;
-            this.ContactMethodType = methodType ?? throw new ArgumentNullException(nameof(methodType));
-            this.ContactMethodTypeId = methodType.Id;
+            this.Organization = organization;
+            this.OrganizationId = organization?.Id;
+            this.ContactMethodTypeId = methodTypeId;
             this.Value = value;
         }
         #endregion

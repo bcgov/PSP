@@ -83,6 +83,12 @@ namespace Pims.Dal.Entities
         public bool IsDisabled { get; set; }
 
         /// <summary>
+        /// get/set - information following users full name.
+        /// </summary>
+        [Column("NAME_SUFFIX")]
+        public string NameSuffix { get; set; }
+
+        /// <summary>
         /// get - A collection of organizations this user belongs to.
         /// </summary>
         public ICollection<Organization> Organizations { get; } = new List<Organization>();

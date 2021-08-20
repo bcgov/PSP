@@ -68,7 +68,7 @@ namespace Pims.Dal.Entities
         /// <param name="userId"></param>
         /// <param name="organizationId"></param>
         /// <param name="roleId"></param>
-        public UserOrganization(long userId, long organizationId, long roleId)
+        public UserOrganization(long userId, long organizationId, long? roleId)
         {
             this.UserId = userId;
             this.OrganizationId = organizationId;
