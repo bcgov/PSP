@@ -107,13 +107,13 @@ namespace Pims.Dal.Entities
         /// get/set - Latitude part of the location.
         /// </summary>
         [Column("LATITUDE")]
-        public double Latitude { get; set; }
+        public double? Latitude { get; set; }
 
         /// <summary>
         /// get/set - Longitude part of the location.
         /// </summary>
         [Column("LONGITUDE")]
-        public double Longitude { get; set; }
+        public double? Longitude { get; set; }
 
         /// <summary>
         /// get - A collection of organizations with this address.
