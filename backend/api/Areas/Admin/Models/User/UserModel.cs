@@ -25,6 +25,16 @@ namespace Pims.Api.Areas.Admin.Models.User
         public string BusinessIdentifier { get; set; }
 
         /// <summary>
+        /// get/set - The user's position or job title.
+        /// </summary>
+        public string Position { get; set; }
+
+        /// <summary>
+        /// get/set - A note corresponding to this user.
+        /// </summary>
+        public string Note { get; set; }
+
+        /// <summary>
         /// get/set - The user's given name.
         /// </summary>
         public string FirstName { get; set; }

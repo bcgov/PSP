@@ -276,7 +276,7 @@ namespace Pims.Dal.Services
             add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
-            return add;
+            return Get(add.Id);
         }
 
         /// <summary>
@@ -360,8 +360,11 @@ namespace Pims.Dal.Services
                 if (remove != null)
                     this.Context.Entry(remove).State = EntityState.Deleted;
             });
-
-            this.Context.Users.Update(update);
+            user.Note = update.Note;
+            user.Position = update.Position;
+            user.LastLogin = update.LastLogin;
+            user.ExpiryOn = update.ExpiryOn;
+            this.Context.Users.Update(user);
             return user;
         }
 
