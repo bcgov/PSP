@@ -25,7 +25,6 @@ function run(args) {
   const releaseType = args[0];
   const packageJson = JSON.parse(fs.readFileSync(packageJsonLoc, 'utf8'));
   const version = packageJson.version;
-  //   const version = require(packageJsonLoc).version;
 
   let [newVersion, assemblyVersion] = bumpVersion(releaseType, version);
 
@@ -72,13 +71,29 @@ function updateCsproj(csproj) {
 
 // version format: <major>.<minor>.<patch>-<IS_number>.<build>
 // e.g. 0.2.0-7.3
-function bumpVersion(releaseType, version) {
-  let major, minor, patch, is, build;
+function isValidVersion(version) {
+  if (!version) {
+    return false;
+  }
+  return /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version);
+}
 
-  if (version) {
-    const [semVer, metadata] = version.split('-');
-    [major, minor, patch] = semVer.split('.');
-    [is, build] = metadata.split('.');
+function parse(version) {
+  const [semVer, metadata] = version.split('-');
+  const [major, minor, patch] = semVer?.split('.');
+  const [isNumber, build] = metadata?.split('.');
+
+  return [major, minor, patch, isNumber, build];
+}
+
+function bumpVersion(releaseType, version) {
+  let major, minor, patch, isNumber, build;
+
+  // Support setting version to a fixed value; e.g. "0.1.0-8.5"
+  if (isValidVersion(releaseType)) {
+    [major, minor, patch, isNumber, build] = parse(releaseType);
+  } else if (version) {
+    [major, minor, patch, isNumber, build] = parse(version);
 
     switch (releaseType) {
       case 'major':
@@ -116,8 +131,8 @@ function bumpVersion(releaseType, version) {
     build = 0;
   }
 
-  let newVersion = `${major}.${minor}.${patch}-${is}.${build}`;
-  let assemblyVersion = `${major}.${minor}.${patch}.${is}`;
+  let newVersion = `${major}.${minor}.${patch}-${isNumber}.${build}`;
+  let assemblyVersion = `${major}.${minor}.${patch}.${isNumber}`;
 
   return [newVersion, assemblyVersion];
 }
