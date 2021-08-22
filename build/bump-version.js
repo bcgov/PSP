@@ -66,7 +66,7 @@ function updateJson(packageJson) {
 
 function updateCsproj(csproj) {
   console.info(`==> Applying changes to ${csprojLoc}`);
-  fs.writeFileSync(csprojLoc, `${csproj}${os.EOL}`, 'utf8');
+  fs.writeFileSync(csprojLoc, csproj, 'utf8');
 }
 
 // version format: <major>.<minor>.<patch>-<IS_number>.<build>

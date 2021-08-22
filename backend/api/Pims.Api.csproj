@@ -61,11 +61,3 @@
     <ProjectReference Include="..\notifications\Pims.Notifications.csproj" />
   </ItemGroup>
 </Project>
-
-
-
-
-
-
-
-
