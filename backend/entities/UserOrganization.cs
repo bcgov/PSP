@@ -42,7 +42,7 @@ namespace Pims.Dal.Entities
         /// get/set - The foreign key to the role.
         /// </summary>
         [Column("ROLE_ID")]
-        public long RoleId { get; set; }
+        public long RoleId { get; set; } = 5; // this is the default value for the undefined role.
 
         /// <summary>
         /// get/set - The role.
