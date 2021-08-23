@@ -2,9 +2,9 @@ name: PIMS Logging CI
 
 on:
   push:
-    branches: [master, test]
+    branches: [master, test, pims-sookeke]
   pull_request:
-    branches: [master, test]
+    branches: [master, test, pims-sookeke]
 
 jobs:
 
@@ -34,6 +34,16 @@ jobs:
     - name: Build the pims-logging docker-compose stack
       run: docker-compose -f docker-compose.yml up -d
       working-directory: ${{env.working-directory}}
+    - name: scan pims-logging image
+      uses: anchore/scan-action@v2
+      id: scan
+      with:
+        image: "pims-logging:latest"
+        acs-report-enable: true
+    - name: upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
     - name: Sleep for 180 seconds
       uses: jakejarvis/wait-action@master
       with:
