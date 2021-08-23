@@ -58,17 +58,17 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Setup .NET 5
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.300
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.300
 
     - name: Install dependencies
-        run: dotnet restore
-        working-directory: ${{env.working-directory}}
+      run: dotnet restore
+      working-directory: ${{env.working-directory}}
         
     - name: Build
-        run: dotnet build --configuration Release --no-restore
-        working-directory: ${{env.working-directory}}
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{env.working-directory}}
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
