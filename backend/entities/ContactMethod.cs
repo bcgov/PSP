@@ -73,6 +73,25 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <param name="organization"></param>
+        /// <param name="methodTypeId"></param>
+        /// <param name="value"></param>
+        public ContactMethod(Person person, Organization organization, string methodTypeId, string value)
+        {
+            if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(value));
+
+            this.Person = person ?? throw new ArgumentNullException(nameof(person));
+            this.PersonId = person.Id;
+            this.Organization = organization;
+            this.OrganizationId = organization?.Id;
+            this.ContactMethodTypeId = methodTypeId;
+            this.Value = value;
+        }
+
+        /// <summary>
+        /// Create a new instance of a ContactMethod class, initializes with specified arguments.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="organization"></param>
         /// <param name="methodType"></param>
         /// <param name="value"></param>
         public ContactMethod(Person person, Organization organization, ContactMethodType methodType, string value)

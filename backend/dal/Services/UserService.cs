@@ -80,10 +80,10 @@ namespace Pims.Dal.Services
                 this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
                 var person = new Person(surname, givenName);
-                var contactMethodType = this.Context.ContactMethodTypes.First(cmt => cmt.Id == "EMAIL");
-                var contactMethod = new ContactMethod(person, organization, contactMethodType, email);
+                var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
                 person.ContactMethods.Add(contactMethod);
                 user = new User(key, username, person);
+                user.IssueOn = DateTime.UtcNow;
                 this.Context.Users.Add(user);
                 this.Context.CommitTransaction();
             }
@@ -161,19 +161,35 @@ namespace Pims.Dal.Services
 
                 if (filter.Sort.Any())
                 {
+                    var direction = filter.Sort[0].Split(" ").FirstOrDefault();
                     if (filter.Sort[0].StartsWith("Organization"))
                     {
-                        var direction = filter.Sort[0].Split(" ")[1];
                         query = direction == "asc" ?
                             query.OrderBy(u => u.Organizations.Any() ? u.Organizations.FirstOrDefault().Name : null)
                             : query.OrderByDescending(u => u.Organizations.Any() ? u.Organizations.FirstOrDefault().Name : null);
                     }
+                    else if (filter.Sort[0].StartsWith("Email"))
+                    {
+                        query = direction == "asc" ?
+                            query.OrderBy(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null)
+                            : query.OrderByDescending(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null);
+                    }
+                    else if (filter.Sort[0].StartsWith("SurName"))
+                    {
+                        query = direction == "asc" ?
+                            query.OrderBy(u => u.Person.Surname != null ? u.Person.Surname : null)
+                            : query.OrderByDescending(u => u.Person.Surname != null ? u.Person.Surname : null);
+                    }
+                    else if (filter.Sort[0].StartsWith("FirstName"))
+                    {
+                        query = direction == "asc" ?
+                            query.OrderBy(u => u.Person.FirstName != null ? u.Person.FirstName : null)
+                            : query.OrderByDescending(u => u.Person.FirstName != null ? u.Person.FirstName : null);
+                    }
                     else
                     {
                         query = query.OrderByProperty(filter.Sort);
-
                     }
-
                 }
             }
             var users = query.Skip((filter.Page - 1) * filter.Quantity).Take(filter.Quantity);
@@ -257,9 +273,10 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public User Add(User add)
         {
+            add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
-            return add;
+            return Get(add.Id);
         }
 
         /// <summary>
@@ -343,8 +360,11 @@ namespace Pims.Dal.Services
                 if (remove != null)
                     this.Context.Entry(remove).State = EntityState.Deleted;
             });
-
-            this.Context.Users.Update(update);
+            user.Note = update.Note;
+            user.Position = update.Position;
+            user.LastLogin = update.LastLogin;
+            user.ExpiryOn = update.ExpiryOn;
+            this.Context.Users.Update(user);
             return user;
         }
 

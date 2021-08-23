@@ -65,6 +65,19 @@ VALUES
     , ''
     , 'migration'
     , ''
+),
+(
+    5
+    , '57726C45-BEE0-4C60-9E93-98E84B4AD136'
+    , 'Undetermined'
+    , 'The user has an undetermined role with their organization.'
+    , 0
+    , 0
+    , 0
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
 )
 
 -- Update sequence so that it works with the latest data.
