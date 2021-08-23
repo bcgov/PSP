@@ -24,6 +24,6 @@ RUN chmod 777 ${APP_LOG}
 # add none root user app
 RUN addgroup -S app && adduser -S -G app app
 # switch to non-root user
-USER app
+#USER app
 
 ENTRYPOINT ["/opt/app/sidecar-logging.sh"]

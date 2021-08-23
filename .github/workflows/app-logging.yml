@@ -39,6 +39,8 @@ jobs:
       id: scan
       with:
         image: "pims-logging:latest"
+        fail-build: true
+        dockerfile-path: ${{env.working-directory}}
         acs-report-enable: true
     - name: upload Anchore scan SARIF report
       uses: github/codeql-action/upload-sarif@v1
