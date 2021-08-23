@@ -32,7 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the pims-logging docker-compose stack
-      run: docker build -t pims-logging:latest .
+      run: docker-compose -f docker-compose.yml up -d
       working-directory: ${{env.working-directory}}
     - name: scan pims-logging image
       uses: anchore/scan-action@v2
@@ -45,25 +45,12 @@ jobs:
       uses: anchore/scan-action@v2
       with:
          path: ${{env.working-directory}}
-    - name: Inspect action SARIF report
-      run: cat ${{ steps.scan.outputs.sarif }}
-    
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'pims-logging:latest'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
-        ignore-unfixed: true
-        severity: 'CRITICAL,HIGH'
-        output: 'trivy-results.sarif'
-    - name: Upload Trivy scan results to GitHub Security tab
+    - name: upload Anchore scan SARIF report
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: 'trivy-results.sarif'  
-    - name: Run the pims-logging docker-compose stack
-      run: docker-compose -f docker-compose.yml up -d
-      working-directory: ${{env.working-directory}}
+        sarif_file: ${{ steps.scan.outputs.sarif }}
+    - name: Inspect action SARIF report
+      run: cat ${{ steps.scan.outputs.sarif }}
     - name: Sleep for 180 seconds
       uses: jakejarvis/wait-action@master
       with:
