@@ -32,7 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the pims-logging docker-compose stack
-      run: docker-compose -f docker-compose.yml build pims-logging --force-recreate
+      run: docker-compose -f docker-compose.yml build logging --force-recreate
       working-directory: ${{env.working-directory}}
     - name: scan pims-logging image
       uses: anchore/scan-action@v2
