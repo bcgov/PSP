@@ -38,4 +38,13 @@ namespace Pims.Dal.Entities
         }
         #endregion
     }
+
+    public static class ContactMethodTypes
+    {
+        public const string Fax = "FAX";
+        public const string PerseEmail = "PERSEMAIL";
+        public const string PersePhone = "PERSPHONE";
+        public const string WorkEmail = "WORKEMAIL";
+        public const string WorkPhone = "WORKPHONE";
+    }
 }

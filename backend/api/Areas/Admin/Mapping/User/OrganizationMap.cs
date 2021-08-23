@@ -20,8 +20,8 @@ namespace Pims.Api.Areas.Admin.Mapping.User
 
             config.NewConfig<Entity.UserOrganization, Model.OrganizationModel>()
                 .Map(dest => dest.Id, src => src.OrganizationId)
-                .Map(dest => dest.ParentId, src => src.Organization.ParentId)
-                .Map(dest => dest.Name, src => src.Organization.Name);
+                .Map(dest => dest.ParentId, src => src.Organization != null ? src.Organization.ParentId : null)
+                .Map(dest => dest.Name, src => src.Organization != null ? src.Organization.Name : null);
 
             config.NewConfig<Model.OrganizationModel, Entity.UserOrganization>()
                 .Map(dest => dest.OrganizationId, src => src.Id);
