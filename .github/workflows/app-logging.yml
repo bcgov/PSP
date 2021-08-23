@@ -32,7 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the pims-logging docker-compose stack
-      run: docker-compose -f docker-compose.yml up -d
+      run: docker-compose -f docker-compose.yml build pims-logging --force-recreate
       working-directory: ${{env.working-directory}}
     - name: scan pims-logging image
       uses: anchore/scan-action@v2
@@ -51,6 +51,9 @@ jobs:
         sarif_file: ${{ steps.scan.outputs.sarif }}
     - name: Inspect action SARIF report
       run: cat ${{ steps.scan.outputs.sarif }}
+    - name: Run the pims-logging docker-compose stack
+      run: docker-compose -f docker-compose.yml up -d
+      working-directory: ${{env.working-directory}}
     - name: Sleep for 180 seconds
       uses: jakejarvis/wait-action@master
       with:
