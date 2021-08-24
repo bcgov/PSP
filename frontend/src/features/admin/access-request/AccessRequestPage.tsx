@@ -61,14 +61,14 @@ const AccessRequestPage = () => {
       email: userInfo?.email,
       position: accessRequest?.user?.position ?? userInfo?.position ?? '',
     },
-    status: accessRequest?.status || AccessRequestStatus.Received,
+    status: AccessRequestStatus.Received,
     note: accessRequest?.note ?? '',
     organizationId: organizations?.find(a => a.code === 'MOTI2')?.id, // Select TRAN as the default organization for all access requests.
     roleId: accessRequest?.role?.id,
     rowVersion: accessRequest?.rowVersion,
   };
 
-  const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.role?.uid));
+  const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.role?.id));
 
   const checkRoles = (
     <Form.Group className="check-roles">

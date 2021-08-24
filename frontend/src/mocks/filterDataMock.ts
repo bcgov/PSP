@@ -718,7 +718,7 @@ export const mockAccessRequest: IAccessRequest = {
     description: '',
   },
   role: {
-    uid: '1',
+    id: 1,
     name: 'Real Estate Manager',
   },
 

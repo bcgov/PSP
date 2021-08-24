@@ -44,7 +44,6 @@ namespace Pims.Api.Areas.Admin.Mapping.User
                 .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required for signature")]
         private static void UpdateUser(Model.UserModel model, Entity.User entity)
         {
             entity.Organizations.Where(a => a != null).ForEach(a => a.Id = entity.Id);

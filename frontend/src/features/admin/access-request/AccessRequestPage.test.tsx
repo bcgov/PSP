@@ -127,13 +127,11 @@ describe('AccessRequestPage', () => {
           .first()
           .prop('initialValues'),
       ).toEqual({
-        organizations: [],
-        organization: undefined,
-        id: 0,
-        status: 'OnHold',
+        organizationId: undefined,
+        id: undefined,
+        status: 'RECEIVED',
         note: '',
-        role: undefined,
-        roles: [],
+        roleId: undefined,
         rowVersion: undefined,
         user: {
           displayName: undefined,
@@ -145,6 +143,7 @@ describe('AccessRequestPage', () => {
           businessIdentifier: undefined,
         },
         userId: undefined,
+        key: undefined,
       });
     });
 
@@ -167,7 +166,7 @@ describe('AccessRequestPage', () => {
 
   it('renders dropdown for roles', () => {
     const { container } = testRender();
-    const dropdown = container.querySelector(`select[name="role"]`);
+    const dropdown = container.querySelector(`select[name="roleId"]`);
     expect(dropdown).toBeVisible();
   });
 
@@ -189,7 +188,7 @@ describe('AccessRequestPage', () => {
   it('displays a success message upon form submission', async () => {
     const { addAccessRequest } = useAccessRequests();
     const { container, getByText } = testRender();
-    await fillInput(container, 'role', '1', 'select');
+    await fillInput(container, 'roleId', '1', 'select');
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);
@@ -201,7 +200,7 @@ describe('AccessRequestPage', () => {
     const { addAccessRequest } = useAccessRequests();
     (addAccessRequest as jest.Mock).mockRejectedValueOnce(new Error('network-error'));
     const { container, getByText } = testRender();
-    await fillInput(container, 'role', '1', 'select');
+    await fillInput(container, 'roleId', '1', 'select');
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);

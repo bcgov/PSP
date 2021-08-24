@@ -121,7 +121,7 @@ namespace Pims.Dal.Keycloak
 
             IEnumerable<long> addRoleIds;
             IEnumerable<long> removeRoleIds;
-            if (update.Roles.Any() || euser.Roles.Any())
+            if (update.Roles.Any())
             {
                 addRoleIds = update.Roles.Except(euser.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
                 removeRoleIds = euser.Roles.Except(update.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
@@ -134,7 +134,7 @@ namespace Pims.Dal.Keycloak
 
             IEnumerable<long> addOrganizationIds;
             IEnumerable<long> removeOrganizationIds;
-            if (update.Organizations.Any() || euser.Organizations.Any())
+            if (update.Organizations.Any())
             {
                 addOrganizationIds = update.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
                 removeOrganizationIds = euser.Organizations.Except(update.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
@@ -174,7 +174,10 @@ namespace Pims.Dal.Keycloak
             euser.Person.FirstName = update.Person.FirstName;
             euser.Person.MiddleNames = update.Person.MiddleNames;
             euser.Person.Surname = update.Person.Surname;
-            // euser.Email = update.Email; // TODO: Update user email
+            euser.Person.ContactMethods.Clear();
+            euser.Position = update.Position;
+            euser.Note = update.Note;
+            update.Person.ContactMethods.ForEach(c => euser.Person.ContactMethods.Add(c));
             euser.IsDisabled = update.IsDisabled;
             euser.RowVersion = update.RowVersion;
 

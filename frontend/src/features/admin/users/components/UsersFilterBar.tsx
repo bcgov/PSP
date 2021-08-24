@@ -26,14 +26,7 @@ export const UsersFilterBar: React.FC<IProps> = ({
   const roleOptions = rolesLookups.map(rl => ({ label: rl.name, value: rl.name } as SelectOption));
 
   return (
-    <FilterBar<IUsersFilter>
-      initialValues={value}
-      onChange={onChange}
-      customReset={() => {
-        onChange?.({ organization: '' });
-      }}
-      customResetField="organization"
-    >
+    <FilterBar<IUsersFilter> initialValues={value} onChange={onChange}>
       <Col className="bar-item">
         <Input field="businessIdentifier" placeholder="IDIR/BCeID" />
       </Col>

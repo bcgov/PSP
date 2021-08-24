@@ -44,7 +44,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
     label: code.name,
     value: code.id,
-    selected: !!user?.roles?.find(x => x.uid === code.id.toString()) ?? [],
+    selected: !!user?.roles?.find(x => x.id === code.id) ?? [],
   });
 
   const selectOrganizations = organizations.map(c => mapLookupCode(c));
@@ -105,11 +105,11 @@ const EditUserPage = (props: IEditUserPageProps) => {
     rowVersion: user.rowVersion ?? '',
     emailVerified: false,
     organizations: user.organizations ?? [],
-    roles: user?.roles?.map(x => x.uid) ?? [],
+    roles: user?.roles?.map(x => x.id) ?? [],
     note: user.note ?? '',
     organization:
       user.organizations && user.organizations.length !== 0 ? user.organizations[0].id : '',
-    role: user.roles && user.roles.length !== 0 ? user.roles[0].uid : '',
+    role: user.roles && user.roles.length !== 0 ? user.roles[0].id : '',
     position: user.position ?? '',
     lastLogin: formatApiDateTime(user.lastLogin),
   };

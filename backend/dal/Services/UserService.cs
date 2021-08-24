@@ -83,8 +83,10 @@ namespace Pims.Dal.Services
                 this.Context.Persons.Add(person);
                 this.Context.CommitTransaction();
 
-                user = new User(key, username, person);
-                user.IssueOn = DateTime.UtcNow;
+                user = new User(key, username, person)
+                {
+                    IssueOn = DateTime.UtcNow
+                };
                 this.Context.Users.Add(user);
                 this.Context.CommitTransaction();
 
@@ -153,12 +155,12 @@ namespace Pims.Dal.Services
                 if (filter.Quantity > 50) filter.Quantity = 50;
                 if (filter.Sort == null) filter.Sort = Array.Empty<string>();
 
-                if (!string.IsNullOrWhiteSpace(filter.Username))
-                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifier, $"%{filter.Username}%"));
+                if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifier))
+                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifier, $"%{filter.BusinessIdentifier}%"));
                 if (!string.IsNullOrWhiteSpace(filter.FirstName))
                     query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
-                if (!string.IsNullOrWhiteSpace(filter.LastName))
-                    query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.LastName}%"));
+                if (!string.IsNullOrWhiteSpace(filter.Surname))
+                    query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.Surname}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Email))
                     query = query.Where(u => u.Person.ContactMethods.Any(cm => EF.Functions.Like(cm.Value, $"%{filter.Email}%")));
                 if (filter.IsDisabled != null)
@@ -185,17 +187,17 @@ namespace Pims.Dal.Services
                             query.OrderBy(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null)
                             : query.OrderByDescending(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null);
                     }
-                    else if (filter.Sort[0].StartsWith("SurName"))
+                    else if (filter.Sort[0].StartsWith("Surname"))
                     {
                         query = direction == "asc" ?
-                            query.OrderBy(u => u.Person.Surname != null ? u.Person.Surname : null)
-                            : query.OrderByDescending(u => u.Person.Surname != null ? u.Person.Surname : null);
+                            query.OrderBy(u => u.Person.Surname ?? null)
+                            : query.OrderByDescending(u => u.Person.Surname ?? null);
                     }
                     else if (filter.Sort[0].StartsWith("FirstName"))
                     {
                         query = direction == "asc" ?
-                            query.OrderBy(u => u.Person.FirstName != null ? u.Person.FirstName : null)
-                            : query.OrderByDescending(u => u.Person.FirstName != null ? u.Person.FirstName : null);
+                            query.OrderBy(u => u.Person.FirstName ?? null)
+                            : query.OrderByDescending(u => u.Person.FirstName ?? null);
                     }
                     else
                     {
@@ -221,6 +223,7 @@ namespace Pims.Dal.Services
                 .Include(u => u.Roles)
                 .Include(u => u.Organizations)
                 .ThenInclude(o => o.Parent)
+                .Include(u => u.OrganizationsManyToMany)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.ContactMethods)
                 .AsNoTracking()
@@ -303,7 +306,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public User Add(User add)
         {
-            if (add == null) throw new ArgumentNullException();
+            if (add == null) throw new ArgumentNullException("user cannot be null.");
             add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
@@ -350,6 +353,7 @@ namespace Pims.Dal.Services
         public User UpdateOnly(User update)
         {
             this.Context.Users.Update(update);
+            this.Context.CommitTransaction();
 
             return update;
         }

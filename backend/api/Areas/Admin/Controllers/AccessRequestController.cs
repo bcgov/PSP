@@ -82,7 +82,6 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-access-requests" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes ({id})")]
         public IActionResult Delete(long id, [FromBody] Model.AccessRequestModel model)
         {
             var entity = _mapper.Map<Entity.AccessRequest>(model);
