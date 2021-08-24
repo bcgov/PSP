@@ -147,6 +147,7 @@ namespace PimsApi.Test.Admin.Controllers
             var organization = user.Organizations.First();
             service.Setup(m => m.User.Add(It.IsAny<Entity.User>())).Callback<Entity.User>(u => { });
             var model = mapper.Map<Model.UserModel>(user);
+            model.Email = "test@test.com";
 
             // Act
             var result = controller.AddUser(model);
@@ -177,6 +178,7 @@ namespace PimsApi.Test.Admin.Controllers
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Update(It.IsAny<Entity.User>()));
             var model = mapper.Map<Model.UserModel>(user);
+            model.Email = "test@test.com";
 
             // Act
             var result = controller.UpdateUser(user.KeycloakUserId.Value, model);
@@ -207,6 +209,7 @@ namespace PimsApi.Test.Admin.Controllers
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Delete(It.IsAny<Entity.User>()));
             var model = mapper.Map<Model.UserModel>(user);
+            model.Email = "test@.test.com";
 
             // Act
             var result = controller.DeleteUser(user.KeycloakUserId.Value, model);
@@ -215,7 +218,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
-            Assert.Equal(mapper.Map<Model.UserModel>(user), actualResult, new DeepPropertyCompare());
+            Assert.Equal(model, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.User.Delete(It.IsAny<Entity.User>()), Times.Once());
         }
         #endregion

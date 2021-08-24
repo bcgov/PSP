@@ -21,9 +21,11 @@ namespace Pims.Api.Areas.Admin.Mapping.User
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.MiddleNames, src => src.Person.MiddleNames)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
+                .Map(dest => dest.LastLogin, src => src.LastLogin)
                 .Map(dest => dest.Email, src => src.Person.GetEmail())
                 .Map(dest => dest.Organizations, src => src.OrganizationsManyToMany.OrderBy(a => a.Organization != null ? a.Organization.ParentId : null))
-                .Map(dest => dest.Roles, src => src.RolesManyToMany)
+                .Map(dest => dest.Roles, src => src.Roles)
+                .Map(dest => dest.CreatedOn, src => src.CreatedOn)
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.UserModel, Entity.User>()
@@ -47,7 +49,7 @@ namespace Pims.Api.Areas.Admin.Mapping.User
         {
             entity.Organizations.Where(a => a != null).ForEach(a => a.Id = entity.Id);
             entity.Roles.Where(r => r != null).ForEach(r => r.Id = entity.Id);
-            if (model.Email.Length > 0)
+            if (model?.Email?.Length > 0)
             {
                 entity.Person.ContactMethods.Add(new ContactMethod(entity.Person, null, ContactMethodTypes.WorkEmail, model.Email));
             }

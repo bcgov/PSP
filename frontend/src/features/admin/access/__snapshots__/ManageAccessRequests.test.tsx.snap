@@ -630,7 +630,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              lastName
+              surname
             </div>
             <div
               className="td clickable"
@@ -690,7 +690,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              On Hold
+              Received
             </div>
             <div
               className="td clickable"
@@ -710,7 +710,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              organization 1
+              
             </div>
             <div
               className="td clickable"
@@ -730,7 +730,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              role1
+              
             </div>
             <div
               className="td"

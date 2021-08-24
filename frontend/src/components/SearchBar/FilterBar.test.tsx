@@ -6,7 +6,10 @@ import FilterBar from './FilterBar';
 const componentRender = () => {
   let component = create(
     <div>
-      <FilterBar initialValues={{ username: 'test', firstName: 'user' }} onChange={() => {}} />
+      <FilterBar
+        initialValues={{ businessIdentifier: 'test', firstName: 'user' }}
+        onChange={() => {}}
+      />
     </div>,
   );
   return component;

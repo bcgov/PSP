@@ -112,12 +112,12 @@ export const ORGANIZATIONS = [
 
 export const mockUser: IUserDetails = {
   id: 1,
-  key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-  username: 'admin',
+  keycloakUserId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  businessIdentifier: 'admin',
   email: 'admin@pims.gov.bc.ca',
   displayName: 'User, Admin',
   firstName: 'Admin',
-  lastName: 'User',
+  surname: 'User',
   position: '',
   organizations: [],
   roles: [],
@@ -698,43 +698,30 @@ export const ACTIVE = {
 export const mockAccessRequest: IAccessRequest = {
   id: 2,
   userId: 1,
-  status: AccessRequestStatus.OnHold,
+  status: AccessRequestStatus.Received,
   note: '',
   user: {
     id: 1,
     key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     displayName: 'User, Admin',
     firstName: 'Admin',
-    lastName: 'User',
+    surname: 'User',
     email: 'admin@pims.gov.bc.ca',
-    username: 'admin',
+    businessIdentifier: 'admin',
     position: '',
     createdOn: '2021-05-04T19:07:09.6920606',
   },
-  organizations: [
-    {
-      id: 251,
-      code: 'AG',
-      name: 'Attorney General',
-      description: '',
-      isDisabled: false,
-      sortOrder: 0,
-      createdOn: '2021-05-07T00:37:06.2457312',
-    },
-  ],
-  roles: [
-    {
-      id: 1,
-      name: 'Real Estate Manager',
-      description: 'Real Estate Manager can manage properties within their organizations.',
-      isDisabled: false,
-      sortOrder: 0,
-      createdOn: '2021-05-07T00:37:06.2457315',
-      updatedByName: 'unknown',
-      updatedByEmail: 'unknown',
-      rowVersion: 1,
-    },
-  ],
+  organization: {
+    id: 251,
+    code: 'AG',
+    name: 'Attorney General',
+    description: '',
+  },
+  role: {
+    uid: '1',
+    name: 'Real Estate Manager',
+  },
+
   createdOn: '2021-05-07T00:37:06.2457303',
 };
 

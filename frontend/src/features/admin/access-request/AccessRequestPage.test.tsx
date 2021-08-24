@@ -140,9 +140,9 @@ describe('AccessRequestPage', () => {
           email: undefined,
           firstName: undefined,
           id: undefined,
-          lastName: undefined,
+          surname: undefined,
           position: '',
-          username: undefined,
+          businessIdentifier: undefined,
         },
         userId: undefined,
       });

@@ -45,10 +45,10 @@ const selectedUser = {
   firstName: 'George',
   id: 1,
   key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-  lastName: 'User',
+  surname: 'User',
   position: '',
   rowVersion: 1,
-  username: 'admin',
+  businessIdentifier: 'admin',
   lastLogin: '2020-10-14T17:45:39.7381599',
 };
 
@@ -138,13 +138,13 @@ describe('Edit user page', () => {
   });
 
   describe('appropriate fields are autofilled', () => {
-    it('autofills  email, username, first and last name', () => {
+    it('autofills  email, businessIdentifier, first and last name', () => {
       const { getByTestId } = renderEditUserPage();
       expect(getByTestId('email').getAttribute('value')).toEqual('admin@pims.gov.bc.ca');
-      expect(getByTestId('username').getAttribute('value')).toEqual('admin');
+      expect(getByTestId('businessIdentifier').getAttribute('value')).toEqual('admin');
       expect(getByTestId('firstName').getAttribute('value')).toEqual('George');
-      expect(getByTestId('lastName').getAttribute('value')).toEqual('User');
-      expect(getByTestId('lastName').getAttribute('value')).toEqual('User');
+      expect(getByTestId('surname').getAttribute('value')).toEqual('User');
+      expect(getByTestId('surname').getAttribute('value')).toEqual('User');
     });
   });
 

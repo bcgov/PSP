@@ -35,13 +35,13 @@ export const UsersFilterBar: React.FC<IProps> = ({
       customResetField="organization"
     >
       <Col className="bar-item">
-        <Input field="username" placeholder="IDIR/BCeID" />
+        <Input field="businessIdentifier" placeholder="IDIR/BCeID" />
       </Col>
       <Col className="bar-item">
         <Input field="firstName" placeholder="First name" />
       </Col>
       <Col className="bar-item">
-        <Input field="lastName" placeholder="Last name" />
+        <Input field="surname" placeholder="Last name" />
       </Col>
       <Col className="bar-item">
         <Input field="email" placeholder="Email" />

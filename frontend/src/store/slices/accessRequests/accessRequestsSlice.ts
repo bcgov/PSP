@@ -16,22 +16,23 @@ export const toAccessRequest = (values: any): IAccessRequest => {
     userId: values.userId,
     user: {
       id: values.userId,
-      username: values.user.username,
+      businessIdentifier: values.user.businessIdentifier,
       email: values.user.email,
       position: values.user.position,
     },
-    organizations: isNaN(values.organization) ? [] : [{ id: parseInt(values.organization) }],
-    roles: [{ id: values.role }],
+    organization: values.organizationId !== undefined ? { id: +values.organizationId } : undefined,
+    role: values.roleId !== undefined ? { id: +values.roleId } : undefined,
     status: values.status,
     note: values.note,
     rowVersion: values.rowVersion,
+    position: values.position,
   };
 };
 
 export const initialState: IAccessRequestsState = {
   pagedAccessRequests: { page: 1, pageIndex: 0, total: 0, quantity: 0, items: [] },
   filter: { organization: '', role: '', searchText: '' },
-  sorting: { column: 'username', direction: 'desc' },
+  sorting: { column: 'businessIdentifier', direction: 'desc' },
   selections: [],
   accessRequest: null,
   pageSize: MAX_ACCESS_RESULTS_PER_PAGE,

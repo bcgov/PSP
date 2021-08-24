@@ -57,8 +57,8 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         >
           <input
             class="form-control"
-            id="input-username"
-            name="username"
+            id="input-businessIdentifier"
+            name="businessIdentifier"
             placeholder="IDIR/BCeID"
             value=""
           />
@@ -87,8 +87,8 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         >
           <input
             class="form-control"
-            id="input-lastName"
-            name="lastName"
+            id="input-surname"
+            name="surname"
             placeholder="Last name"
             value=""
           />

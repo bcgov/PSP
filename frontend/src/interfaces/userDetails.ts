@@ -3,12 +3,12 @@ import { IRole } from './role';
 
 export interface IUserDetails {
   id?: number;
-  username?: string;
-  key?: string;
+  businessIdentifier?: string;
+  keycloakUserId?: string;
   email?: string;
   displayName?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   position?: string | null;
   isDisabled?: boolean;
   note?: string;

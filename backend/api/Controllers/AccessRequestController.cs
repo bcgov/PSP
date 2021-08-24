@@ -22,8 +22,8 @@ namespace Pims.Api.Controllers
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/access/requests")]
-    [Route("access/requests")]
+    [Route("v{version:apiVersion}")]
+    [Route("")]
     public class AccessRequestController : ControllerBase
     {
         #region Variables
@@ -100,11 +100,10 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult AddAccessRequest([FromBody] Model.AccessRequestModel model)
         {
-            if (model == null || model.Organizations == null || model.Role == null) throw new BadRequestException("Invalid access request specified");
-            if (model.Organizations.Count() != 1) throw new BadRequestException("Each access request can only contain one organization.");
+            if (model == null || model.Organization == null || model.Role == null) throw new BadRequestException("Invalid access request specified");
 
             var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
-            _pimsService.AccessRequest.Add(accessRequest);
+            accessRequest = _pimsService.AccessRequest.Add(accessRequest);
 
             return CreatedAtAction(nameof(GetAccessRequest), new { id = accessRequest.Id }, _mapper.Map<Model.AccessRequestModel>(accessRequest));
         }
@@ -122,11 +121,10 @@ namespace Pims.Api.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is used for consistent routing.")]
         public IActionResult UpdateAccessRequest(long id, [FromBody] Model.AccessRequestModel model)
         {
-            if (model == null || model.Organizations == null || model.Role == null) throw new BadRequestException("Invalid access request specified");
-            if (model.Organizations.Count() != 1) throw new BadRequestException("Each access request must only contain one organization.");
+            if (model == null || model.Organization == null || model.Role == null) throw new BadRequestException("Invalid access request specified");
 
             var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
-            _pimsService.AccessRequest.Update(accessRequest);
+            accessRequest = _pimsService.AccessRequest.Update(accessRequest);
             return new JsonResult(_mapper.Map<Model.AccessRequestModel>(accessRequest));
         }
         #endregion

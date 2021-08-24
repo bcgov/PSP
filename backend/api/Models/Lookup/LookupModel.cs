@@ -12,6 +12,11 @@ namespace Pims.Api.Models.Lookup
         public string Id { get; set; }
 
         /// <summary>
+        /// get/set - Code value of this lookup
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
         /// get/set - The item's name.
         /// </summary>
         public string Name { get; set; }

@@ -7,9 +7,9 @@ describe('users slice reducer functionality', () => {
     rowVersion: 1,
     displayName: 'User, Admin',
     firstName: 'Admin',
-    lastName: 'User',
+    surname: 'User',
     email: 'admin@pims.gov.bc.ca',
-    username: 'admin',
+    businessIdentifier: 'admin',
     position: '',
     createdOn: '2021-05-04T19:07:09.6920606',
   };

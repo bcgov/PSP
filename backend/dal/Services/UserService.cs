@@ -80,11 +80,21 @@ namespace Pims.Dal.Services
                 this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
                 var person = new Person(surname, givenName);
-                var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
-                person.ContactMethods.Add(contactMethod);
+                this.Context.Persons.Add(person);
+                this.Context.CommitTransaction();
+
                 user = new User(key, username, person);
                 user.IssueOn = DateTime.UtcNow;
                 this.Context.Users.Add(user);
+                this.Context.CommitTransaction();
+
+                var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
+                person.ContactMethods.Add(contactMethod);
+                this.Context.CommitTransaction();
+            } else
+            {
+                user.LastLogin = DateTime.UtcNow;
+                this.Context.Entry(user).State = EntityState.Modified;
                 this.Context.CommitTransaction();
             }
 
@@ -123,7 +133,8 @@ namespace Pims.Dal.Services
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
             var query = this.Context.Users
-                .Include(u => u.Organizations)
+                .Include(u => u.OrganizationsManyToMany)
+                .ThenInclude(o => o.Organization)
                 .Include(u => u.Roles)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.ContactMethods)
@@ -217,6 +228,25 @@ namespace Pims.Dal.Services
         }
 
         /// <summary>
+        /// Get the user with the specified 'id'.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
+        /// <returns></returns>
+        public User GetTracking(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
+
+            return this.Context.Users
+                .Include(u => u.Roles)
+                .Include(u => u.Organizations)
+                .ThenInclude(o => o.Parent)
+                .Include(u => u.Person)
+                .ThenInclude(p => p.ContactMethods)
+                .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
         /// Load the specified 'user' organizations into context.
         /// </summary>
         /// <param name="user"></param>
@@ -273,6 +303,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public User Add(User add)
         {
+            if (add == null) throw new ArgumentNullException();
             add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
@@ -315,6 +346,18 @@ namespace Pims.Dal.Services
         /// Updates the specified user in the datasource.
         /// </summary>
         /// <param name="update"></param>
+        /// <returns></returns>
+        public User UpdateOnly(User update)
+        {
+            this.Context.Users.Update(update);
+
+            return update;
+        }
+
+        /// <summary>
+        /// Updates the specified user in the datasource.
+        /// </summary>
+        /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
         public User UpdateWithoutSave(User update)
@@ -329,7 +372,7 @@ namespace Pims.Dal.Services
                 .ThenInclude(p => p.ContactMethods)
                 .FirstOrDefault(u => u.Id == update.Id) ?? throw new KeyNotFoundException();
 
-            // If the user has no organizations we assume this update is an approval.
+            //If the user has no organizations we assume this update is an approval.
             if (!user.Organizations.Any())
             {
                 var key = this.User.GetUserKey();

@@ -25,15 +25,15 @@ exports[`AccessRequestPage renders correctly 1`] = `
         >
           <label
             class="form-label"
-            for="input-user.username"
+            for="input-user.businessIdentifier"
           >
             IDIR/BCeID
              
           </label>
           <input
             class="form-control"
-            id="input-user.username"
-            name="user.username"
+            id="input-user.businessIdentifier"
+            name="user.businessIdentifier"
             readonly=""
             type="text"
             value=""
@@ -73,15 +73,15 @@ exports[`AccessRequestPage renders correctly 1`] = `
             >
               <label
                 class="form-label"
-                for="input-user.lastName"
+                for="input-user.surname"
               >
                 Last Name
                  
               </label>
               <input
                 class="form-control"
-                id="input-user.lastName"
-                name="user.lastName"
+                id="input-user.surname"
+                name="user.surname"
                 readonly=""
                 type="text"
                 value=""

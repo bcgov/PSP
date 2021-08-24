@@ -84,9 +84,12 @@ namespace Pims.Dal.Services
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
             var query = this.Context.AccessRequests
-                .Include(p => p.User)
-                .Include(p => p.Role)
-                .Include(p => p.Organizations)
+                .Include(a => a.User)
+                .ThenInclude(u => u.Person)
+                .ThenInclude(p => p.ContactMethods)
+                .Include(a => a.Role)
+                .Include(a => a.Organizations)
+                .Include(a => a.Status)
                 .AsNoTracking();
 
             var userOrganizations = this.User.GetOrganizations();
@@ -118,7 +121,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public AccessRequest Delete(AccessRequest delete)
         {
-            var accessRequest = Context.AccessRequests.FirstOrDefault(a => a.Id == delete.Id) ?? throw new KeyNotFoundException();
+            var accessRequest = Context.AccessRequests.Include(a => a.Organizations).FirstOrDefault(a => a.Id == delete.Id) ?? throw new KeyNotFoundException();
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
@@ -139,19 +142,22 @@ namespace Pims.Dal.Services
         public AccessRequest Add(AccessRequest add)
         {
             if (add == null) throw new ArgumentNullException(nameof(add));
-            if (add.Organizations?.Any() == false) throw new ArgumentException($"Argument '{nameof(add)}.{nameof(add.Organizations)}' is required.", nameof(add));
+            if (add.OrganizationsManyToMany?.Any() == false) throw new ArgumentException($"Argument '{nameof(add)}.{nameof(add.OrganizationsManyToMany)}' is required.", nameof(add));
+            var organizations = add.OrganizationsManyToMany.Select(o => new AccessRequestOrganization() { OrganizationId = o.OrganizationId }).ToList();
+            add.OrganizationsManyToMany.Clear();
 
             var key = this.User.GetUserKey();
+            var position = add.User.Position;
             add.User = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
-
+            add.User.Position = position;
             add.UserId = add.User.Id;
+            add.Status = this.Context.AccessRequestStatusTypes.FirstOrDefault(a => a.Id == "RECEIVED");
 
-            add.OrganizationsManyToMany.ForEach((accessRequestOrganization) =>
-            {
-                accessRequestOrganization.Organization = this.Context.Organizations.Find(accessRequestOrganization.OrganizationId);
-            });
-            add.Role = this.Context.Roles.Find(add.RoleId);
+            // TODO: PIMS_ACRQOR_I_S_I_TR causes the insert to fail, likely due to the trigger running at an innapropriate time when the generated sql is running.
+            // adding the access request and then adding the organizations after resolves this issue.
             this.Context.AccessRequests.Add(add);
+            this.Context.CommitTransaction();
+            organizations.ForEach(o => add.OrganizationsManyToMany.Add(new AccessRequestOrganization() { OrganizationId = o.OrganizationId, AccessRequestId = add.Id }));
             this.Context.CommitTransaction();
             return add;
         }
@@ -164,11 +170,13 @@ namespace Pims.Dal.Services
         public AccessRequest Update(AccessRequest update)
         {
             if (update == null) throw new ArgumentNullException(nameof(update));
-            if (update.Organizations?.Any() == false) throw new ArgumentException($"Argument '{nameof(update)}.{nameof(update.Organizations)}' is required.", nameof(update));
+            if (update.OrganizationsManyToMany?.Any() == false) throw new ArgumentException($"Argument '{nameof(update)}.{nameof(update.OrganizationsManyToMany)}' is required.", nameof(update));
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
+            var position = update.User.Position;
             update.User = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
+            update.User.Position = position;
             if (!isAdmin && update.User.KeycloakUserId != key) throw new NotAuthorizedException(); // Not allowed to update someone elses request.
 
             // fetch the existing request from the datasource.
@@ -189,10 +197,12 @@ namespace Pims.Dal.Services
             // Copy values into entity.
             accessRequest.RoleId = update.RoleId;
             accessRequest.RowVersion = update.RowVersion;
+            accessRequest.Note = update.Note;
+            accessRequest.StatusId = update.StatusId;
 
             this.Context.AccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();
-            return accessRequest;
+            return Get(update.Id);
         }
         #endregion
     }

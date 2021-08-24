@@ -15,6 +15,7 @@ namespace Pims.Api.Areas.Admin.Mapping.AccessRequest
                 .Map(dest => dest.BusinessIdentifier, src => src.BusinessIdentifier)
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
+                .Map(dest => dest.Position, src => src.Position)
                 .Map(dest => dest.Email, src => src.Person.GetEmail())
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
 

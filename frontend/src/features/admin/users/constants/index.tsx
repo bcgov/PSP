@@ -10,10 +10,14 @@ import { IUserRecord } from '../interfaces/IUserRecord';
 export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
   {
     Header: 'IDIR/BCeID',
-    accessor: 'username',
+    accessor: 'businessIdentifier',
     align: 'left',
     Cell: (props: CellProps<IUserRecord>) => {
-      return <Link to={`/admin/user/${props.row.original.id}`}>{props.row.original.username}</Link>;
+      return (
+        <Link to={`/admin/user/${props.row.original.id}`}>
+          {props.row.original.businessIdentifier}
+        </Link>
+      );
     },
     sortable: true,
   },
@@ -26,7 +30,7 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
   },
   {
     Header: 'Last name',
-    accessor: 'lastName',
+    accessor: 'surname',
     align: 'left',
     clickable: true,
     sortable: true,

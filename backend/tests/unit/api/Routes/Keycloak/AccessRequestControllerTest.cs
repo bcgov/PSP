@@ -31,7 +31,7 @@ namespace Pims.Api.Test.Routes.Keycloak
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPut("access/request");
+            endpoint.HasPut("access/requests");
             endpoint.HasPermissions(Permissions.AdminUsers);
         }
         #endregion

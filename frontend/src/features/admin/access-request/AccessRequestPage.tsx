@@ -1,7 +1,6 @@
 import './AccessRequestPage.scss';
 
 import { ISnackbarState, Snackbar } from 'components/common/Snackbar';
-import TooltipWrapper from 'components/common/TooltipWrapper';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as API from 'constants/API';
 import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from 'constants/strings';
@@ -24,11 +23,6 @@ import { mapLookupCode } from 'utils';
 import { AccessRequestSchema } from 'utils/YupSchema';
 
 import { Form, Input, Select, TextArea } from '../../../components/common/form';
-
-interface IAccessRequestForm extends IAccessRequest {
-  organization?: number;
-  role?: number;
-}
 
 /**
  * The AccessRequestPage provides a way to new authenticated users to submit a request
@@ -54,53 +48,41 @@ const AccessRequestPage = () => {
   const organizations = getPublicByType(API.ORGANIZATION_CODE_SET_NAME);
 
   const accessRequest = data?.accessRequest;
-  const initialValues: IAccessRequestForm = {
-    id: accessRequest?.id ?? 0,
+  const initialValues: Partial<IAccessRequest> = {
+    id: accessRequest?.id,
     userId: userInfo?.id,
     user: {
       id: userInfo?.id,
       key: userInfo?.key,
-      username: userInfo?.username,
+      businessIdentifier: userInfo?.username,
       displayName: userInfo?.name,
       firstName: userInfo?.firstName,
-      lastName: userInfo?.lastName,
+      surname: userInfo?.lastName,
       email: userInfo?.email,
       position: accessRequest?.user?.position ?? userInfo?.position ?? '',
     },
-    organizations: accessRequest?.organizations ?? [],
-    status: accessRequest?.status || AccessRequestStatus.OnHold,
-    roles: accessRequest?.roles ?? [],
+    status: accessRequest?.status || AccessRequestStatus.Received,
     note: accessRequest?.note ?? '',
-    organization: organizations?.find(a => a.code === 'TRAN')?.id, // Select TRAN as the default organization for all access requests.
-    role: accessRequest?.roles?.find(role => role)?.id,
+    organizationId: organizations?.find(a => a.code === 'MOTI2')?.id, // Select TRAN as the default organization for all access requests.
+    roleId: accessRequest?.role?.id,
     rowVersion: accessRequest?.rowVersion,
   };
 
-  const selectRoles = roles.map(c => mapLookupCode(c, initialValues.role));
+  const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.role?.uid));
 
   const checkRoles = (
     <Form.Group className="check-roles">
       <Form.Label>
-        Roles{' '}
+        Role{' '}
         <a target="_blank" rel="noopener noreferrer" href={AUTHORIZATION_URL}>
           Role Descriptions
         </a>
       </Form.Label>
-      <TooltipWrapper
-        toolTipId="select-roles-tip"
-        toolTip="To select multiple roles, hold Ctrl and select options."
-      >
-        <Select
-          field="role"
-          required={true}
-          options={selectRoles}
-          placeholder={initialValues?.roles?.length > 0 ? undefined : 'Please Select'}
-        />
-      </TooltipWrapper>
+      <Select field="roleId" required={true} options={selectRoles} placeholder="Please Select" />
     </Form.Group>
   );
 
-  const button = initialValues.id === 0 ? 'Submit' : 'Update';
+  const button = initialValues.id === undefined ? 'Submit' : 'Update';
   const inProgress = React.useMemo(
     () =>
       initialValues.id !== 0 ? (
@@ -147,8 +129,8 @@ const AccessRequestPage = () => {
 
                 <Input
                   label="IDIR/BCeID"
-                  field="user.username"
-                  placeholder={initialValues.user.username}
+                  field="user.businessIdentifier"
+                  placeholder={initialValues?.user?.businessIdentifier}
                   readOnly={true}
                   type="text"
                 />
@@ -158,7 +140,7 @@ const AccessRequestPage = () => {
                     <Input
                       label="First Name"
                       field="user.firstName"
-                      placeholder={initialValues.user.firstName}
+                      placeholder={initialValues?.user?.firstName}
                       readOnly={true}
                       type="text"
                     />
@@ -166,8 +148,8 @@ const AccessRequestPage = () => {
                   <Col>
                     <Input
                       label="Last Name"
-                      field="user.lastName"
-                      placeholder={initialValues.user.lastName}
+                      field="user.surname"
+                      placeholder={initialValues?.user?.surname}
                       readOnly={true}
                       type="text"
                     />
@@ -177,7 +159,7 @@ const AccessRequestPage = () => {
                 <Input
                   label="Email"
                   field="user.email"
-                  placeholder={initialValues.user.email}
+                  placeholder={initialValues?.user?.email}
                   readOnly={true}
                   type="email"
                 />

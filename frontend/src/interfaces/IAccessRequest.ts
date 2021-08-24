@@ -1,26 +1,31 @@
 import { AccessRequestStatus } from 'constants/index';
 
+import { IOrganization } from './organization';
+import { IRole } from './role';
+
 export interface IAccessRequest {
   id: number;
   userId: number;
   user: IUser;
-  roles: IAccessRequestRole[];
-  organizations: IAccessRequestOrganization[];
   note?: string | null;
   status: AccessRequestStatus;
   position?: string;
   createdOn?: string;
   rowVersion?: number;
+  organization?: IOrganization;
+  organizationId?: number | '';
+  role?: IRole;
+  roleId?: number | '';
 }
 
 interface IUser {
   id?: number;
   key?: string;
-  username?: string;
+  businessIdentifier?: string;
   email?: string;
   displayName?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   position?: string | null;
   isDisabled?: boolean;
   note?: string;
