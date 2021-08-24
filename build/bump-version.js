@@ -5,11 +5,15 @@ const packageJsonLoc = './frontend/package.json';
 const csprojLoc = './backend/api/Pims.Api.csproj';
 
 /**
- * USAGE:
+ * A script for automated version bumps. It requires Node.js to be installed on the server.
+ * The script will default to a DRY RUN to avoid unintended changes; run with '--apply' to execute the changes.
  *
- * node ./build/bump-version.js [<new-version> | major | minor | patch | is | build] [--apply] [--release-version]
- *
+ * NOTE:
  * To print the next version without releasing anything, add the '--release-version' flag.
+ *
+ * USAGE:
+ * node ./build/bump-version.js [<new-version> | major | minor | patch | is | build] [--apply] [--print-version]
+ *
  */
 
 // parse command-line args
@@ -20,7 +24,7 @@ run(args);
 
 function run(args) {
   const IS_DRY_RUN = !args.includes('--apply'); // default to dry-run
-  const IS_RELEASE_VERSION = args.includes('--release-version');
+  const IS_PRINT_VERSION = args.includes('--print-version');
 
   const releaseType = args[0];
   const packageJson = JSON.parse(fs.readFileSync(packageJsonLoc, 'utf8'));
@@ -28,7 +32,7 @@ function run(args) {
 
   let [newVersion, assemblyVersion] = bumpVersion(releaseType, version);
 
-  if (IS_RELEASE_VERSION) {
+  if (IS_PRINT_VERSION) {
     console.info(newVersion);
     process.exit(0);
   }
@@ -115,7 +119,7 @@ function bumpVersion(releaseType, version) {
         break;
 
       case 'is':
-        is = parseInt(is, 10) + 1;
+        isNumber = parseInt(isNumber, 10) + 1;
         build = 0;
         break;
 
@@ -127,7 +131,7 @@ function bumpVersion(releaseType, version) {
     major = 0;
     minor = 1;
     patch = 0;
-    is = 1;
+    isNumber = 1;
     build = 0;
   }
 
