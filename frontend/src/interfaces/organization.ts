@@ -1,8 +1,8 @@
 export interface IOrganization {
   parentId?: any;
-  code: string;
-  id: number;
-  name: string;
+  code?: string;
+  id?: number;
+  name?: string;
   description?: string;
   /** string value of parent not given by api but found by frontend */
   parent?: string;
@@ -44,9 +44,9 @@ export interface IAddOrganization {
 
 /** for use in organization tables */
 export interface IOrganizationRecord {
-  name: string;
-  id: number;
-  code: string;
+  name?: string;
+  id?: number;
+  code?: string;
   description?: string;
   parentId?: number;
   parent?: string;

@@ -25,7 +25,6 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to the role");
             builder.Property(m => m.StatusId)
                 .HasComment("foreign key to the access request status type");
-
             builder.Property(m => m.Note)
                 .HasMaxLength(1000)
                 .HasComment("A note to describe the access request reason");
@@ -35,8 +34,8 @@ namespace Pims.Dal.Configuration
             builder.HasOne(m => m.Status).WithMany(u => u.AccessRequests).HasForeignKey(m => m.StatusId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_ARQSTT_PIM_ACRQST_FK");
 
             builder.HasMany(m => m.Organizations).WithMany(m => m.AccessRequests).UsingEntity<AccessRequestOrganization>(
-                m => m.HasOne(m => m.Organization).WithMany(m => m.AccessRequestsManyToMany).HasForeignKey(m => m.OrganizationId),
-                m => m.HasOne(m => m.AccessRequest).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.AccessRequestId)
+                m => m.HasOne(m => m.Organization).WithMany(m => m.AccessRequestsManyToMany).HasForeignKey(m => m.OrganizationId).OnDelete(DeleteBehavior.ClientCascade),
+                m => m.HasOne(m => m.AccessRequest).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.AccessRequestId).OnDelete(DeleteBehavior.ClientCascade)
             );
 
             builder.HasIndex(m => m.UserId).HasDatabaseName("ACCRQT_USER_ID_IDX");

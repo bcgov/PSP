@@ -80,11 +80,23 @@ namespace Pims.Dal.Services
                 this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
                 var person = new Person(surname, givenName);
+                this.Context.Persons.Add(person);
+                this.Context.CommitTransaction();
+
+                user = new User(key, username, person)
+                {
+                    IssueOn = DateTime.UtcNow
+                };
+                this.Context.Users.Add(user);
+                this.Context.CommitTransaction();
+
                 var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
                 person.ContactMethods.Add(contactMethod);
-                user = new User(key, username, person);
-                user.IssueOn = DateTime.UtcNow;
-                this.Context.Users.Add(user);
+                this.Context.CommitTransaction();
+            } else
+            {
+                user.LastLogin = DateTime.UtcNow;
+                this.Context.Entry(user).State = EntityState.Modified;
                 this.Context.CommitTransaction();
             }
 
@@ -123,7 +135,8 @@ namespace Pims.Dal.Services
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
             var query = this.Context.Users
-                .Include(u => u.Organizations)
+                .Include(u => u.OrganizationsManyToMany)
+                .ThenInclude(o => o.Organization)
                 .Include(u => u.Roles)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.ContactMethods)
@@ -142,12 +155,12 @@ namespace Pims.Dal.Services
                 if (filter.Quantity > 50) filter.Quantity = 50;
                 if (filter.Sort == null) filter.Sort = Array.Empty<string>();
 
-                if (!string.IsNullOrWhiteSpace(filter.Username))
-                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifier, $"%{filter.Username}%"));
+                if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifier))
+                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifier, $"%{filter.BusinessIdentifier}%"));
                 if (!string.IsNullOrWhiteSpace(filter.FirstName))
                     query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
-                if (!string.IsNullOrWhiteSpace(filter.LastName))
-                    query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.LastName}%"));
+                if (!string.IsNullOrWhiteSpace(filter.Surname))
+                    query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.Surname}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Email))
                     query = query.Where(u => u.Person.ContactMethods.Any(cm => EF.Functions.Like(cm.Value, $"%{filter.Email}%")));
                 if (filter.IsDisabled != null)
@@ -174,17 +187,17 @@ namespace Pims.Dal.Services
                             query.OrderBy(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null)
                             : query.OrderByDescending(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null);
                     }
-                    else if (filter.Sort[0].StartsWith("SurName"))
+                    else if (filter.Sort[0].StartsWith("Surname"))
                     {
                         query = direction == "asc" ?
-                            query.OrderBy(u => u.Person.Surname != null ? u.Person.Surname : null)
-                            : query.OrderByDescending(u => u.Person.Surname != null ? u.Person.Surname : null);
+                            query.OrderBy(u => u.Person.Surname ?? null)
+                            : query.OrderByDescending(u => u.Person.Surname ?? null);
                     }
                     else if (filter.Sort[0].StartsWith("FirstName"))
                     {
                         query = direction == "asc" ?
-                            query.OrderBy(u => u.Person.FirstName != null ? u.Person.FirstName : null)
-                            : query.OrderByDescending(u => u.Person.FirstName != null ? u.Person.FirstName : null);
+                            query.OrderBy(u => u.Person.FirstName ?? null)
+                            : query.OrderByDescending(u => u.Person.FirstName ?? null);
                     }
                     else
                     {
@@ -210,9 +223,29 @@ namespace Pims.Dal.Services
                 .Include(u => u.Roles)
                 .Include(u => u.Organizations)
                 .ThenInclude(o => o.Parent)
+                .Include(u => u.OrganizationsManyToMany)
                 .Include(u => u.Person)
                 .ThenInclude(p => p.ContactMethods)
                 .AsNoTracking()
+                .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Get the user with the specified 'id'.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
+        /// <returns></returns>
+        public User GetTracking(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
+
+            return this.Context.Users
+                .Include(u => u.Roles)
+                .Include(u => u.Organizations)
+                .ThenInclude(o => o.Parent)
+                .Include(u => u.Person)
+                .ThenInclude(p => p.ContactMethods)
                 .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
         }
 
@@ -273,6 +306,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public User Add(User add)
         {
+            if (add == null) throw new ArgumentNullException("user cannot be null.");
             add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
@@ -315,6 +349,19 @@ namespace Pims.Dal.Services
         /// Updates the specified user in the datasource.
         /// </summary>
         /// <param name="update"></param>
+        /// <returns></returns>
+        public User UpdateOnly(User update)
+        {
+            this.Context.Users.Update(update);
+            this.Context.CommitTransaction();
+
+            return update;
+        }
+
+        /// <summary>
+        /// Updates the specified user in the datasource.
+        /// </summary>
+        /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
         public User UpdateWithoutSave(User update)
@@ -329,7 +376,7 @@ namespace Pims.Dal.Services
                 .ThenInclude(p => p.ContactMethods)
                 .FirstOrDefault(u => u.Id == update.Id) ?? throw new KeyNotFoundException();
 
-            // If the user has no organizations we assume this update is an approval.
+            //If the user has no organizations we assume this update is an approval.
             if (!user.Organizations.Any())
             {
                 var key = this.User.GetUserKey();

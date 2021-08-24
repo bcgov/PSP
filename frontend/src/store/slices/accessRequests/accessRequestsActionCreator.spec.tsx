@@ -28,7 +28,7 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useAccessRequests functionality', () => {
   describe('fetchCurrentAccessRequest', () => {
-    const url = `/users/access/requests`;
+    const url = `/access/requests`;
     const mockResponse = {
       data: mockAccessRequest,
     };
@@ -103,7 +103,7 @@ describe('useAccessRequests functionality', () => {
 
   describe('addAccessRequest action creator', () => {
     const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
-    const url = `/users/access/requests`;
+    const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 
     it('calls the api with the expected url', () => {
@@ -170,7 +170,7 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('updateAccessRequest action creator', () => {
-    const url = `/keycloak/users/access/request`;
+    const url = `/keycloak/access/requests`;
     const mockResponse = { data: mockAccessRequest };
     it('calls the api with the expected url', () => {
       mockAxios.onPut(url).reply(200, mockResponse);

@@ -15,7 +15,7 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string GetEmail(this Person person)
         {
-            return person.ContactMethods.FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
+            return person?.ContactMethods.FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
         }
     }
 }

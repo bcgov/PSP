@@ -30,6 +30,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.Person.Surname, src => src.Surname)
                 .Map(dest => dest.Organizations, src => src.Organizations)
                 .Map(dest => dest.Roles, src => src.Roles)
+                .Map(dest => dest.Position, src => src.Position)
                 .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
         }
     }

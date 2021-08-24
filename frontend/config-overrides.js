@@ -1,5 +1,5 @@
 // customize CRA configuration, add compression to js.
-const { override } = require('customize-cra');
+const { override, addExternalBabelPlugins } = require('customize-cra');
 const CompressionPlugin = require('compression-webpack-plugin'); //gzip
 
 const addCompressionPlugin = () => config => {
@@ -16,5 +16,8 @@ const addCompressionPlugin = () => config => {
 };
 
 module.exports = {
-  webpack: override(addCompressionPlugin()),
+  webpack: override(
+    ...addExternalBabelPlugins('@babel/plugin-proposal-nullish-coalescing-operator'),
+    addCompressionPlugin(),
+  ),
 };

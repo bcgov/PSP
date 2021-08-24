@@ -27,9 +27,9 @@ namespace Pims.Api.Test.Controllers.Reports
         public readonly static IEnumerable<object[]> AllPropertiesFilters = new List<object[]>()
         {
             new object [] { new UserFilter(1, 100) },
-            new object [] { new UserFilter(1, 100) { Username = "username" } },
+            new object [] { new UserFilter(1, 100) { BusinessIdentifier = "businessIdentifier" } },
             new object [] { new UserFilter(1, 100) { FirstName = "firstname" } },
-            new object [] { new UserFilter(1, 100) { LastName = "lastname" } },
+            new object [] { new UserFilter(1, 100) { Surname = "surname" } },
             new object [] { new UserFilter(1, 100) { Email = "email" } },
             new object [] { new UserFilter(1, 100) { IsDisabled = false } },
             new object [] { new UserFilter(1, 100) { Role = "role" } },

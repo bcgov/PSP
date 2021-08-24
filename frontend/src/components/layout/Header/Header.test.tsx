@@ -154,7 +154,7 @@ describe('Header tests', () => {
           userInfo: {
             roles: [],
             firstName: 'firstName',
-            lastName: 'lastName',
+            surname: 'surname',
           },
         },
       });
@@ -168,7 +168,7 @@ describe('Header tests', () => {
           </Provider>
         </TenantProvider>,
       );
-      const name = getByText('firstName lastName');
+      const name = getByText('firstName surname');
       expect(name).toBeVisible();
     });
 
@@ -180,7 +180,7 @@ describe('Header tests', () => {
           userInfo: {
             organizations: ['1'],
             firstName: 'test',
-            lastName: 'user',
+            surname: 'user',
           },
         },
       });

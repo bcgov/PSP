@@ -9,11 +9,11 @@ import { IProperty } from 'interfaces';
  */
 export interface IUserInfo {
   displayName?: string;
-  username: string;
+  businessIdentifier: string;
   name?: string;
-  preferred_username?: string;
+  preferred_businessIdentifier?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   email: string;
   groups: string[];
   roles: string[];
@@ -28,11 +28,11 @@ export interface IUserInfo {
 export interface IKeycloak {
   obj: any;
   displayName?: string;
-  username: string;
+  businessIdentifier: string;
   name?: string;
-  preferred_username?: string;
+  preferred_businessIdentifier?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   email?: string;
   roles: string[];
   organizationId?: number;
@@ -101,17 +101,17 @@ export function useKeycloakWrapper(): IKeycloak {
   };
 
   /**
-   * Return the user's username
+   * Return the user's businessIdentifier
    */
-  const username = (): string => {
-    return userInfo?.username;
+  const businessIdentifier = (): string => {
+    return userInfo?.businessIdentifier;
   };
 
   /**
    * Return the user's display name
    */
   const displayName = (): string | undefined => {
-    return userInfo?.name ?? userInfo?.preferred_username;
+    return userInfo?.name ?? userInfo?.preferred_businessIdentifier;
   };
 
   /**
@@ -124,8 +124,8 @@ export function useKeycloakWrapper(): IKeycloak {
   /**
    * Return the user's last name
    */
-  const lastName = (): string | undefined => {
-    return userInfo?.lastName ?? userInfo?.family_name;
+  const surname = (): string | undefined => {
+    return userInfo?.surname ?? userInfo?.family_name;
   };
 
   /**
@@ -177,10 +177,10 @@ export function useKeycloakWrapper(): IKeycloak {
 
   return {
     obj: keycloak,
-    username: username(),
+    businessIdentifier: businessIdentifier(),
     displayName: displayName(),
     firstName: firstName(),
-    lastName: lastName(),
+    surname: surname(),
     email: email(),
     isAdmin: hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasRole(Roles.ORGANIZATION_ADMINISTRATOR),
     roles: roles(),

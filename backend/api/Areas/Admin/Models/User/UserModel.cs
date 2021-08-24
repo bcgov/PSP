@@ -61,6 +61,16 @@ namespace Pims.Api.Areas.Admin.Models.User
         public bool IsDisabled { get; set; }
 
         /// <summary>
+        /// get/set - The user's organization, or first organization if multiple.
+        /// </summary>
+        public string Organization { get; set; }
+
+        /// <summary>
+        /// get/set - The date this user last logged into PSP
+        /// </summary>
+        public DateTime? LastLogin { get; set; }
+
+        /// <summary>
         /// get/set - An array of organizations the user belongs to.
         /// </summary>
         public IEnumerable<OrganizationModel> Organizations { get; set; } = new List<OrganizationModel>();
