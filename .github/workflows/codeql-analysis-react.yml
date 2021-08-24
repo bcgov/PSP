@@ -1,0 +1,60 @@
+#
+name: "CodeQL (React)"
+
+on:
+  push:
+    branches: [ master, dev, test, pims-sookeke ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master, dev, test, pims-sookeke ]
+  schedule:
+    - cron: '43 5 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ]
+		node-version: [14.x]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
+        # Learn more:
+        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: npm ci
+      working-directory: ${{env.working-directory}}
+
+    - run: npm run lint
+      working-directory: ${{env.working-directory}}
+
+    - run: npm run build --if-present
+      working-directory: ${{env.working-directory}}	
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+        config-file: ./.github/workflows/codeql/codeql-config.yml
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
