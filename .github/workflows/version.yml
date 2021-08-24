@@ -2,7 +2,7 @@ name: Bump version
 
 on:
   push:
-    branches: [dev, versioning]
+    branches: [dev]
 
 jobs:
   version:
@@ -14,8 +14,8 @@ jobs:
           node-version: "14"
       - name: Bump version number
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           NEW_VERSION=$(node ./build/bump-version.js --release-version)
 
