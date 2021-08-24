@@ -9,9 +9,9 @@ export interface IUser {
   note?: string;
   firstName?: string;
   middleName?: string;
-  lastName?: string;
+  surname?: string;
   email?: string;
-  username?: string;
+  businessIdentifier?: string;
   roles?: IRole[];
   organizations?: IOrganization[];
   isDisabled?: boolean;

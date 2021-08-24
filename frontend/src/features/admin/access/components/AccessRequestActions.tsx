@@ -20,7 +20,7 @@ export const AccessRequestActions = (props: IAccessRequestActionsProps) => {
 
   const declineRequests = async () => {
     const items = props.selections.map(
-      x => ({ ...x, status: AccessRequestStatus.Declined } as IAccessRequest),
+      x => ({ ...x, status: AccessRequestStatus.Denied } as IAccessRequest),
     );
     await submit(items);
   };

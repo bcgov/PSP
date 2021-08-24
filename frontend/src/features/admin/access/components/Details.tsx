@@ -22,12 +22,12 @@ export const AccessRequestDetails: React.FC<IProps> = ({ request, onClose }) => 
 
         <Modal.Body style={{ maxHeight: '500px' }}>
           <Form>
-            <Form.Group as={Row} controlId="username">
+            <Form.Group as={Row} controlId="businessIdentifier">
               <Form.Label column sm="4">
                 IDIR/BCeID:
               </Form.Label>
               <Col sm="8">
-                <Form.Control disabled defaultValue={request.username} />
+                <Form.Control disabled defaultValue={request.businessIdentifier} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="emailAddress">
@@ -46,12 +46,12 @@ export const AccessRequestDetails: React.FC<IProps> = ({ request, onClose }) => 
                 <Form.Control disabled defaultValue={request.firstName} />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} controlId="lastName">
+            <Form.Group as={Row} controlId="surname">
               <Form.Label column sm="4">
                 Last name:
               </Form.Label>
               <Col sm="8">
-                <Form.Control disabled defaultValue={request.lastName} />
+                <Form.Control disabled defaultValue={request.surname} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="position">

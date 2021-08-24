@@ -12,14 +12,8 @@ Yup.addMethod(Yup.string, 'optional', function optional() {
 
 export const AccessRequestSchema = Yup.object().shape({
   showOrganization: Yup.boolean(),
-  organization: Yup.number().when('showOrganization', {
-    is: true,
-    then: Yup.number()
-      .min(1, 'Invalid Organization')
-      .required('Required'),
-  }),
-  role: Yup.string()
-    .min(1, 'Invalid Role')
+  roleId: Yup.number()
+    .min(0, 'Invalid Role')
     .required('Required'),
   note: Yup.string().max(1000, 'Note must be less than 1000 characters'),
   user: Yup.object().shape({
@@ -33,7 +27,7 @@ export const UserUpdateSchema = Yup.object().shape({
     .max(100, 'Email must be less than 100 characters'),
   firstName: Yup.string().max(100, 'First Name must be less than 100 characters'),
   middleName: Yup.string().max(100, 'Middle Name must be less than 100 characters'),
-  lastName: Yup.string().max(100, 'Last Name must be less than 100 characters'),
+  surname: Yup.string().max(100, 'Last Name must be less than 100 characters'),
 });
 
 export const OrganizationEditSchema = Yup.object().shape({
@@ -63,7 +57,7 @@ export const UserSchema = Yup.object().shape({
     .max(100, 'First Name must be less than 100 characters')
     .required('Required'),
   middleName: Yup.string().max(100, 'Middle Name must be less than 100 characters'),
-  lastName: Yup.string()
+  surname: Yup.string()
     .max(100, 'Last Name must be less than 100 characters')
     .required('Required'),
   role: Yup.number()

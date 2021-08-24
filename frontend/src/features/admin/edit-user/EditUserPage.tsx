@@ -44,7 +44,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
     label: code.name,
     value: code.id,
-    selected: !!user?.roles?.find(x => x.id === code.id.toString()) ?? [],
+    selected: !!user?.roles?.find(x => x.id === code.id) ?? [],
   });
 
   const selectOrganizations = organizations.map(c => mapLookupCode(c));
@@ -96,9 +96,9 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    username: user.username ?? '',
+    businessIdentifier: user.businessIdentifier ?? '',
     firstName: user.firstName ?? '',
-    lastName: user.lastName ?? '',
+    surname: user.surname ?? '',
     email: user.email ?? '',
     displayName: user.displayName ?? '',
     isDisabled: !!user.isDisabled ?? '',
@@ -139,11 +139,11 @@ const EditUserPage = (props: IEditUserPageProps) => {
 
               await updateUser({
                 id: user.id,
-                key: user.key,
-                username: user.username,
+                keycloakUserId: user.keycloakUserId,
+                businessIdentifier: user.businessIdentifier,
                 displayName: values.displayName,
                 firstName: values.firstName,
-                lastName: values.lastName,
+                surname: values.surname,
                 email: values.email,
                 isDisabled: values.isDisabled,
                 rowVersion: values.rowVersion,
@@ -160,9 +160,9 @@ const EditUserPage = (props: IEditUserPageProps) => {
               <Form className="userInfo">
                 <Label>IDIR/BCeID</Label>
                 <Input
-                  data-testid="username"
-                  field="username"
-                  value={props.values.username}
+                  data-testid="businessIdentifier"
+                  field="businessIdentifier"
+                  value={props.values.businessIdentifier}
                   readOnly={true}
                   type="text"
                 />
@@ -188,9 +188,9 @@ const EditUserPage = (props: IEditUserPageProps) => {
                   <Col>
                     <Label>Last Name</Label>
                     <Input
-                      data-testid="lastName"
-                      field="lastName"
-                      placeholder={props.values.lastName}
+                      data-testid="surname"
+                      field="surname"
+                      placeholder={props.values.surname}
                       type="text"
                     />
                   </Col>

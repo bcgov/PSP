@@ -36,14 +36,14 @@ const accessRequests = {
   items: [
     {
       id: 1,
-      status: AccessRequestStatus.OnHold,
+      status: AccessRequestStatus.Received,
       roles: [{ id: '1', name: 'role1' }],
       organizations: [{ id: '1', name: 'organization 1' }],
       user: {
         id: 'userid',
         displayName: 'testUser',
         firstName: 'firstName',
-        lastName: 'lastName',
+        surname: 'surname',
         email: 'user@email.com',
         position: 'position 1',
       },

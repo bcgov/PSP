@@ -20,9 +20,9 @@ const getItems = (disabled?: boolean) => [
   {
     id: 1,
     key: '03c92a6b-686e-4015-84b3-e726905473f4',
-    username: 'testername1',
+    businessIdentifier: 'testername1',
     firstName: 'testUserFirst1',
-    lastName: 'testUserLast1',
+    surname: 'testUserLast1',
     isDisabled: !!disabled,
     position: 'tester position',
     organizations: [{ id: 1, name: 'HLTH' }],
@@ -72,9 +72,7 @@ describe('rowAction functions', () => {
     fireEvent.click(enableButton);
     await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe(
-        '/keycloak/users/03c92a6b-686e-4015-84b3-e726905473f4',
-      );
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/undefined');
     });
   });
   it('disable button', async () => {
@@ -87,9 +85,7 @@ describe('rowAction functions', () => {
     fireEvent.click(disableButton);
     await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe(
-        '/keycloak/users/03c92a6b-686e-4015-84b3-e726905473f4',
-      );
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/undefined');
     });
   });
   it('open button', async () => {

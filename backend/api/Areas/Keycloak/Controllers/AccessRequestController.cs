@@ -17,8 +17,8 @@ namespace Pims.Api.Areas.Keycloak.Controllers
     [ApiController]
     [Area("keycloak")]
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[area]/access/requests")]
-    [Route("[area]/access/requests")]
+    [Route("v{version:apiVersion}/[area]")]
+    [Route("[area]")]
     public class AccessRequestController : ControllerBase
     {
         #region Variables
@@ -45,7 +45,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("access/request")]
+        [HttpPut("access/requests")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]

@@ -72,9 +72,9 @@ const getStore = (includeDate?: boolean) =>
         items: [
           {
             id: 1,
-            username: 'testername1',
+            businessIdentifier: 'testername1',
             firstName: 'testUserFirst1',
-            lastName: 'testUserLast1',
+            surname: 'testUserLast1',
             isDisabled: false,
             position: 'tester position',
             organizations: [{ id: 1, name: 'HLTH' }],
@@ -83,9 +83,9 @@ const getStore = (includeDate?: boolean) =>
           },
           {
             id: 2,
-            username: 'testername2',
+            businessIdentifier: 'testername2',
             firstName: 'testUser',
-            lastName: 'testUser',
+            surname: 'testUser',
             isDisabled: true,
             position: 'tester',
             organizations: [{ id: 1, name: 'HLTH' }],

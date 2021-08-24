@@ -34,6 +34,11 @@ namespace Pims.Api.Areas.Admin.Models.AccessRequest
         public string Surname { get; set; }
 
         /// <summary>
+        /// get/set - The user's job title.
+        /// </summary>
+        public string Position { get; set; }
+
+        /// <summary>
         /// get/set - The user's email.
         /// </summary>
         public string Email { get; set; }

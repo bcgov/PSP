@@ -6,9 +6,13 @@ namespace Pims.Api.Areas.Admin.Models.AccessRequest
     {
         #region Properties
         public long Id { get; set; }
+        public long StatusId { get; set; }
+        public string Status { get; set; }
+
+        public string Note { get; set; }
         public UserModel User { get; set; }
         public RoleModel Role { get; set; }
-        public IEnumerable<OrganizationModel> Organizations { get; set; }
+        public OrganizationModel Organization { get; set; }
         #endregion
     }
 }

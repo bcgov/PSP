@@ -17,6 +17,8 @@ namespace Pims.Dal.Services
         Paged<User> Get(UserFilter filter);
         User Get(Guid key);
         User Get(long id);
+
+        User GetTracking(long id);
         void LoadOrganizations(User user);
         void LoadRoles(User user);
         IEnumerable<long> GetOrganizations(Guid keycloakUserId);
@@ -24,6 +26,7 @@ namespace Pims.Dal.Services
         User Add(User add);
         void AddWithoutSave(User add);
         User Update(User update);
+        User UpdateOnly(User update);
         User UpdateWithoutSave(User update);
         void Delete(User delete);
     }

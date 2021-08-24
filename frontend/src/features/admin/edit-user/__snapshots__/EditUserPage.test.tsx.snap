@@ -32,9 +32,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
         >
           <input
             class="form-control"
-            data-testid="username"
-            id="input-username"
-            name="username"
+            data-testid="businessIdentifier"
+            id="input-businessIdentifier"
+            name="businessIdentifier"
             readonly=""
             type="text"
             value="admin"
@@ -96,9 +96,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
             >
               <input
                 class="form-control"
-                data-testid="lastName"
-                id="input-lastName"
-                name="lastName"
+                data-testid="surname"
+                id="input-surname"
+                name="surname"
                 placeholder="User"
                 type="text"
                 value="User"

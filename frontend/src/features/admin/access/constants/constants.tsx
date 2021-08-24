@@ -10,11 +10,13 @@ import { IAccessRequestModel } from '../interfaces';
 export const columnDefinitions: ColumnWithProps<IAccessRequestModel>[] = [
   {
     Header: 'IDIR/BCeID',
-    accessor: 'username',
+    accessor: 'businessIdentifier',
     align: 'left',
     Cell: (props: CellProps<IAccessRequestModel>) => {
       return (
-        <Link to={`/admin/user/${props.row.original.userId}`}>{props.row.original.username}</Link>
+        <Link to={`/admin/user/${props.row.original.userId}`}>
+          {props.row.original.businessIdentifier}
+        </Link>
       );
     },
   },
@@ -26,7 +28,7 @@ export const columnDefinitions: ColumnWithProps<IAccessRequestModel>[] = [
   },
   {
     Header: 'Last name',
-    accessor: 'lastName',
+    accessor: 'surname',
     align: 'left',
     clickable: true,
   },
