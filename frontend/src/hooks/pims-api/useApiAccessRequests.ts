@@ -15,20 +15,20 @@ export const useApiAccessRequests = () => {
 
   return React.useMemo(
     () => ({
-      getAccessRequest: () => api.get<IAccessRequest>(`/users/access/requests`),
+      getAccessRequest: () => api.get<IAccessRequest>(`/access/requests`),
       getAccessRequestsPaged: (params: IPaginateAccessRequests) =>
         api.get<IPagedItems<IAccessRequest>>(
           `/admin/access/requests?${queryString.stringify(params)}`,
         ),
       postAccessRequest: (accessRequest: IAccessRequest) => {
         return api.request<IAccessRequest>({
-          url: `/users/access/requests${accessRequest.id ? `/${accessRequest.id}` : ''}`,
-          method: accessRequest.id === 0 ? 'post' : 'put',
+          url: `/access/requests${accessRequest.id === undefined ? '' : `/${accessRequest.id}`}`,
+          method: accessRequest.id === undefined ? 'post' : 'put',
           data: accessRequest,
         });
       },
       putAccessRequest: (accessRequest: IAccessRequest) =>
-        api.put<IAccessRequest>(`/keycloak/users/access/request`, accessRequest),
+        api.put<IAccessRequest>(`/keycloak/access/requests`, accessRequest),
       deleteAccessRequest: (accessRequest: IAccessRequest) =>
         api.delete<IAccessRequest>(`/admin/access/requests/${accessRequest.id}`, {
           data: accessRequest,

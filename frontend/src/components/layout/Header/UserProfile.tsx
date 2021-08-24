@@ -58,8 +58,8 @@ export const UserProfile: React.FC = () => {
   const keycloak = useKeycloakWrapper();
   const displayName =
     keycloak.displayName ??
-    (!!keycloak.firstName && !!keycloak.lastName
-      ? `${keycloak.firstName} ${keycloak.lastName}`
+    (!!keycloak.firstName && !!keycloak.surname
+      ? `${keycloak.firstName} ${keycloak.surname}`
       : 'default');
   const configuration = useConfiguration();
   const lookupCodes = useLookupCodeHelpers();

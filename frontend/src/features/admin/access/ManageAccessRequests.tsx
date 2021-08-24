@@ -47,7 +47,7 @@ const ManageAccessRequests = () => {
       const paginateParams: API.IPaginateAccessRequests = toFilteredApiPaginateParams<
         IAccessRequestsFilterData
       >(pageIndex, pageSize, '', filter);
-      paginateParams.status = AccessRequestStatus.OnHold;
+      paginateParams.status = AccessRequestStatus.Received;
       fetchAccessRequests(paginateParams);
     }
   }, [updateRequestAccessAdmin, pageSize, filter, pageIndex, fetchAccessRequests]);
@@ -57,16 +57,15 @@ const ManageAccessRequests = () => {
       ({
         id: ar.id as number,
         userId: ar.user.id as number,
-        username: ar.user.username as string,
+        businessIdentifier: ar.user.businessIdentifier as string,
         firstName: ar.user.firstName as string,
-        lastName: ar.user.lastName as string,
+        surname: ar.user.surname as string,
         email: ar.user.email as string,
         status: ar.status as string,
         note: ar.note as string,
         position: ar.user.position,
-        organization:
-          ar.organizations && ar.organizations.length !== 0 ? ar.organizations[0].name : '',
-        role: ar.roles && ar.roles.length !== 0 ? ar.roles[0].name : '',
+        organization: ar?.organization?.name,
+        role: ar?.role?.name,
       } as IAccessRequestModel),
   );
 

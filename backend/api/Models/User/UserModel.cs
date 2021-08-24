@@ -26,6 +26,8 @@ namespace Pims.Api.Models.User
 
         public string Email { get; set; }
 
+        public string Position { get; set; }
+
         public IEnumerable<OrganizationModel> Organizations { get; set; }
 
         public IEnumerable<RoleModel> Roles { get; set; }

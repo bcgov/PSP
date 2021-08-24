@@ -11,9 +11,9 @@ export interface IPaginateParams {
 }
 
 export interface IGetUsersParams extends IPaginateParams {
-  username?: string;
+  businessIdentifier?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   email?: string;
   organization?: string;
   role?: string;

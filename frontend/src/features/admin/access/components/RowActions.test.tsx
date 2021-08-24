@@ -19,7 +19,7 @@ const mockAxios = new MockAdapter(axios);
 const getItems = (disabled?: boolean) => [
   {
     id: '1',
-    username: 'testername1',
+    businessIdentifier: 'testername1',
     firstName: 'testUserFirst1',
     lastName: 'testUserLast1',
     isDisabled: !!disabled,
@@ -70,7 +70,7 @@ describe('rowAction functions', () => {
     fireEvent.click(approveButton);
     await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/access/request');
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/access/requests');
     });
   });
   it('disable button', async () => {
@@ -83,7 +83,7 @@ describe('rowAction functions', () => {
     fireEvent.click(holdButton);
     await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/access/request');
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/access/requests');
     });
   });
   it('open button', async () => {
@@ -94,7 +94,7 @@ describe('rowAction functions', () => {
     fireEvent.click(declineButton);
     await waitFor(() => {
       expect(mockAxios.history.put).toHaveLength(1);
-      expect(mockAxios.history.put[0].url).toBe('/keycloak/users/access/request');
+      expect(mockAxios.history.put[0].url).toBe('/keycloak/access/requests');
     });
   });
 });

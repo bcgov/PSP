@@ -1,4 +1,5 @@
 export interface IRole {
-  id: string;
+  id?: number;
+  keycloakGroupId?: string;
   name?: string;
 }

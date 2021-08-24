@@ -123,6 +123,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var user = EntityHelper.CreateUser("test");
             service.Setup(m => m.UpdateUserAsync(It.IsAny<Entity.User>())).Returns(Task.FromResult(user));
             var model = mapper.Map<AdminModels.UserModel>(user);
+            model.Email = "test@test.com";
 
             // Act
             var result = await controller.UpdateUserAsync(user.KeycloakUserId.Value, model);

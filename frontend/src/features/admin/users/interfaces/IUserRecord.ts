@@ -7,9 +7,9 @@ export interface IUserRecord {
   id: number;
   key: string;
   email?: string;
-  username?: string;
+  businessIdentifier?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   isDisabled?: boolean;
   organization?: string;
   roles?: string;

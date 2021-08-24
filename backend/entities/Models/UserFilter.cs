@@ -14,13 +14,13 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The username.
         /// </summary>
         /// <value></value>
-        public string Username { get; set; }
+        public string BusinessIdentifier { get; set; }
 
         /// <summary>
         /// get/set - The user last name.
         /// </summary>
         /// <value></value>
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
         /// <summary>
         /// get/set - The user first name.
@@ -74,20 +74,20 @@ namespace Pims.Dal.Entities.Models
         /// <param name="page"></param>
         /// <param name="quantity"></param>
         /// <param name="organization"></param>
-        /// <param name="username"></param>
-        /// <param name="lastName"></param>
+        /// <param name="businessIdentifier"></param>
+        /// <param name="surname"></param>
         /// <param name="firstName"></param>
         /// <param name="email"></param>
         /// <param name="isDisabled"></param>
         /// <param name="role"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public UserFilter(int page, int quantity, string organization, string username, string lastName,
+        public UserFilter(int page, int quantity, string organization, string businessIdentifier, string surname,
             string firstName, string email, bool? isDisabled, string role, string[] sort) : base(page, quantity, sort)
         {
             this.Organization = organization;
-            this.Username = username;
-            this.LastName = lastName;
+            this.BusinessIdentifier = businessIdentifier;
+            this.Surname = surname;
             this.FirstName = firstName;
             this.Email = email;
             this.IsDisabled = isDisabled;
@@ -105,8 +105,8 @@ namespace Pims.Dal.Entities.Models
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
             this.Page = filter.GetIntValue(nameof(this.Page), 1);
             this.Quantity = filter.GetIntValue(nameof(this.Quantity), 10);
-            this.Username = filter.GetStringValue(nameof(this.Username));
-            this.LastName = filter.GetStringValue(nameof(this.LastName));
+            this.BusinessIdentifier = filter.GetStringValue(nameof(this.BusinessIdentifier));
+            this.Surname = filter.GetStringValue(nameof(this.Surname));
             this.FirstName = filter.GetStringValue(nameof(this.FirstName));
             this.Email = filter.GetStringValue(nameof(this.Email));
             this.Organization = filter.GetStringValue(nameof(this.Organization));

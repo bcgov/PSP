@@ -54,7 +54,7 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organizations, actualResult.Organizations, new DeepPropertyCompare());
+            Assert.Equal(model.Organization, actualResult.Organization, new DeepPropertyCompare());
             Assert.Equal(model.Role, actualResult.Role, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(), Times.Once());
@@ -103,7 +103,7 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organizations, actualResult.Organizations, new DeepPropertyCompare());
+            Assert.Equal(model.Organization, actualResult.Organization, new DeepPropertyCompare());
             Assert.Equal(model.Role, actualResult.Role, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(1), Times.Once());
@@ -121,10 +121,10 @@ namespace PimsApi.Test.Controllers
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()));
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>())).Returns(accessRequest);
 
             // Act
             var result = controller.AddAccessRequest(model);
@@ -133,7 +133,7 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organizations.First().Id, actualResult.Organizations.First().Id);
+            Assert.Equal(model.Organization.Id, actualResult.Organization.Id);
             Assert.Equal(model.Role.Id, actualResult.Role.Id);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Once());
@@ -171,7 +171,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = null,
+                Organization = null,
                 Role = new Model.RoleModel()
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -196,7 +196,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Organization = new Model.AccessRequestOrganizationModel(),
                 Role = null
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -221,7 +221,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = new List<Model.AccessRequestOrganizationModel>(new[] { new Model.AccessRequestOrganizationModel() }),
+                Organization = new Model.AccessRequestOrganizationModel(),
                 Role = new Model.RoleModel()
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -246,7 +246,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Organization = new Model.AccessRequestOrganizationModel(),
                 Role = new Model.RoleModel()
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -269,10 +269,10 @@ namespace PimsApi.Test.Controllers
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()));
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
+            service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>())).Returns(accessRequest);
 
             // Act
             var result = controller.UpdateAccessRequest(model.Id, model);
@@ -281,7 +281,7 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organizations.First().Id, actualResult.Organizations.First().Id);
+            Assert.Equal(model.Organization.Id, actualResult.Organization.Id);
             Assert.Equal(model.Role.Id, actualResult.Role.Id);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Once());
@@ -319,7 +319,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = null,
+                Organization = null,
                 Role = new Model.RoleModel()
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -344,7 +344,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Organization = new Model.AccessRequestOrganizationModel(),
                 Role = null
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -369,7 +369,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = new List<Model.AccessRequestOrganizationModel>(new[] { new Model.AccessRequestOrganizationModel() }),
+                Organization = new Model.AccessRequestOrganizationModel(),
                 Role = new Model.RoleModel()
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
@@ -394,7 +394,7 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organizations = new List<Model.AccessRequestOrganizationModel>(),
+                Organization = new Model.AccessRequestOrganizationModel(),
                 Role = new Model.RoleModel()
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
