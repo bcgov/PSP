@@ -56,9 +56,11 @@ http {
         }
 
         location @handle_redirect {
+            log_format upstream_logging $upstream_header_authentication
             resolver 8.8.8.8;
             set $saved_redirect_location '$upstream_http_location';
             proxy_pass $saved_redirect_location;
+            proxy_set_header Authorization "Bearer $upstream_header_authentication";
         }
 
         location /ogs-internal {
