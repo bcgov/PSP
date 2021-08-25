@@ -21,8 +21,7 @@ http {
     # Use a w3c standard log format
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"'
-                      '"$upstream_http_authorization" "$http_authorization"';
+                      '"$http_user_agent" "$http_x_forwarded_for"';
 
     access_log  /var/log/nginx/access.log  main if=$loggable;
 
@@ -60,7 +59,7 @@ http {
             resolver 8.8.8.8;
             set $saved_redirect_location '$upstream_http_location';
             proxy_pass $saved_redirect_location;
-            proxy_set_header Authorization "Bearer $upstream_http_authorization";
+            proxy_set_header Authorization "Bearer $http_authorization";
         }
 
         location /ogs-internal {
