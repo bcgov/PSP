@@ -53,8 +53,6 @@ http {
 
         location /api {
             proxy_pass          %API_URL%;
-            proxy_intercept_errors on;
-            error_page 301 302 307 = @handle_redirect;
         }
 
         location @handle_redirect {
@@ -64,6 +62,8 @@ http {
 
         location /ogs-internal {
             proxy_pass          %GEOSERVER_URL%;
+            proxy_intercept_errors on;
+            error_page 301 302 307 = @handle_redirect;
         }
 
         # serve our app here
