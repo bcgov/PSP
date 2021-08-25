@@ -50,11 +50,11 @@ http {
         }
 
         location @handle_redirect {
-            log_format main '$upstream_http_authentication $http_authentication'
+            log_format main '$upstream_http_authorization $http_authorization'
             resolver 8.8.8.8;
             set $saved_redirect_location '$upstream_http_location';
             proxy_pass $saved_redirect_location;
-            proxy_set_header Authorization "Bearer $upstream_http_authentication";
+            proxy_set_header Authorization "Bearer $upstream_http_authorization";
             access_log  /var/log/nginx/access.log  main if=$loggable;
         }
 
