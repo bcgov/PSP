@@ -113,23 +113,23 @@ namespace Pims.Dal
         /// <param name="builder"></param>
         protected override void ForeignKeyConstraint(AddForeignKeyOperation operation, IModel model, MigrationCommandListBuilder builder)
         {
-            var entityProps = _currentEntityType?.GetProperties();
-            if (operation.Columns.Length > 1)
-            {
-                // If the foreign key is composed of multiple keys then join the names together.
-                var columnNames = String.Join("_", operation.Columns
-                                    .Select(column => entityProps
-                                        .FirstOrDefault(p => column.IsIn(p.GetCustomAttribute<ColumnAttribute>()?.Name, p.Name))?.GetCustomAttribute<ColumnAttribute>()?.Name ?? column)
-                                    .NotNull());
-                operation.Name = $"PIMS_{GetAbbreviation(operation.PrincipalTable)}_PIMS_{GetAbbreviation(operation.Table)}_{columnNames}_FK";
-            }
-            else
-            {
-                // Single foreign key column, look for the ForeignKeyAttribute.
-                var column = operation.Columns.First();
-                var foreignKeyName = entityProps.FirstOrDefault(p => column.IsIn(p.GetCustomAttribute<ColumnAttribute>()?.Name, p.Name))?.GetCustomAttribute<ForeignKeyAttribute>()?.Name;
-                operation.Name = String.IsNullOrWhiteSpace(foreignKeyName) ? $"PIMS_{GetAbbreviation(operation.PrincipalTable)}_PIMS_{GetAbbreviation(operation.Table)}_FK" : foreignKeyName;
-            }
+            // var entityProps = _currentEntityType?.GetProperties();
+            // if (operation.Columns.Length > 1)
+            // {
+            //     // If the foreign key is composed of multiple keys then join the names together.
+            //     var columnNames = String.Join("_", operation.Columns
+            //                         .Select(column => entityProps
+            //                             .FirstOrDefault(p => column.IsIn(p.GetCustomAttribute<ColumnAttribute>()?.Name, p.Name))?.GetCustomAttribute<ColumnAttribute>()?.Name ?? column)
+            //                         .NotNull());
+            //     operation.Name = $"PIMS_{GetAbbreviation(operation.PrincipalTable)}_PIMS_{GetAbbreviation(operation.Table)}_{columnNames}_FK";
+            // }
+            // else
+            // {
+            //     // Single foreign key column, look for the ForeignKeyAttribute.
+            //     var column = operation.Columns.First();
+            //     var foreignKeyName = entityProps.FirstOrDefault(p => column.IsIn(p.GetCustomAttribute<ColumnAttribute>()?.Name, p.Name))?.GetCustomAttribute<ForeignKeyAttribute>()?.Name;
+            //     operation.Name = String.IsNullOrWhiteSpace(foreignKeyName) ? $"PIMS_{GetAbbreviation(operation.PrincipalTable)}_PIMS_{GetAbbreviation(operation.Table)}_FK" : foreignKeyName;
+            // }
             base.ForeignKeyConstraint(operation, model, builder);
         }
 

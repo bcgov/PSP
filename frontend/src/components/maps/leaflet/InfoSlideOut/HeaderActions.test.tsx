@@ -20,7 +20,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: [1],
+      organizations: [1],
       roles: [],
     },
     subject: 'test',

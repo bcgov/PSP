@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { waitFor } from '@testing-library/react';
+import { wait, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Footer, Header } from 'components/layout';
@@ -11,9 +11,9 @@ import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import Login from 'features/account/Login';
 import ManageAccessRequests from 'features/admin/access/ManageAccessRequests';
 import AccessRequestPage from 'features/admin/access-request/AccessRequestPage';
-import EditAgencyPage from 'features/admin/agencies/EditAgencyPage';
-import ManageAgencies from 'features/admin/agencies/ManageAgencies';
 import EditUserPage from 'features/admin/edit-user/EditUserPage';
+import EditOrganizationPage from 'features/admin/organizations/EditOrganizationPage';
+import ManageOrganizations from 'features/admin/organizations/ManageOrganizations';
 import ManageUsers from 'features/admin/users/ManageUsers';
 import { PropertyListView } from 'features/properties/list';
 import { Formik } from 'formik';
@@ -52,7 +52,7 @@ describe('PSP routing', () => {
           lookupCode: { lookupCodes: [] },
           tenants: { config: { settings: {} } },
           users: { pagedUsers: { items: [] }, userDetail: {} },
-          agencies: { pagedAgencies: { items: [] }, agencyDetail: {} },
+          organizations: { pagedOrganizations: { items: [] }, organizationDetail: {} },
           accessRequests: { pagedAccessRequests: { items: [] } },
         }}
       >
@@ -143,7 +143,7 @@ describe('PSP routing', () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           userInfo: {
-            agencies: [1],
+            organizations: [1],
             groups: [Claims.PROPERTY_VIEW],
             roles: [Claims.PROPERTY_VIEW, Claims.ADMIN_USERS],
           },
@@ -210,27 +210,27 @@ describe('PSP routing', () => {
       });
     });
 
-    it('displays the admin agencies page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/agencies'));
-      await waitFor(async () => {
+    it('displays the admin organizations page at the expected route', async () => {
+      const wrapper = mount(getRouter('/admin/organizations'));
+      await wait(async () => {
         wrapper.update();
-        expect(wrapper.find(ManageAgencies)).toHaveLength(1);
+        expect(wrapper.find(ManageOrganizations)).toHaveLength(1);
       });
     });
 
-    it('displays the edit agencies page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/agency/1'));
-      await waitFor(async () => {
+    it('displays the edit organizations page at the expected route', async () => {
+      const wrapper = mount(getRouter('/admin/organization/1'));
+      await wait(async () => {
         wrapper.update();
-        expect(wrapper.find(EditAgencyPage)).toHaveLength(1);
+        expect(wrapper.find(EditOrganizationPage)).toHaveLength(1);
       });
     });
 
-    it('displays the add agencies page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/agency/new'));
-      await waitFor(async () => {
+    it('displays the add organizations page at the expected route', async () => {
+      const wrapper = mount(getRouter('/admin/organization/new'));
+      await wait(async () => {
         wrapper.update();
-        expect(wrapper.find(EditAgencyPage)).toHaveLength(1);
+        expect(wrapper.find(EditOrganizationPage)).toHaveLength(1);
       });
     });
   });

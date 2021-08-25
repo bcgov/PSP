@@ -21,7 +21,7 @@ export interface IBuilding extends IProperty {
   buildingTenancyUpdatedOn?: string;
   rentableArea: number | '';
   totalArea: number | '';
-  agencyCode: string;
+  organizationCode: string;
   assessedLand: number | '';
   assessedBuilding: number | '';
   evaluations: IEvaluation[];

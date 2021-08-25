@@ -19,7 +19,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: [1],
+      organizations: [1],
       roles: [],
     },
     subject: 'test',
@@ -31,8 +31,8 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { name: 'disabledAgency', id: 2, isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
+    { name: 'disabledOrganization', id: 2, isDisabled: true, type: API.ORGANIZATION_CODE_SET_NAME },
     { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
     { name: 'disabledRole', id: 2, isDisabled: true, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
@@ -45,10 +45,10 @@ const selectedUser = {
   firstName: 'George',
   id: 1,
   key: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-  lastName: 'User',
+  surname: 'User',
   position: '',
   rowVersion: 1,
-  username: 'admin',
+  businessIdentifier: 'admin',
   lastLogin: '2020-10-14T17:45:39.7381599',
 };
 
@@ -113,18 +113,18 @@ describe('Edit user page', () => {
     const { getAllByText, getByTestId } = renderEditUserPage();
     expect(getAllByText(/Roles/i));
     expect(getAllByText(/roleVal/i));
-    expect(getAllByText(/agencyVal/i));
+    expect(getAllByText(/organizationVal/i));
     expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
   });
 
-  it('displays enabled agencies', () => {
+  it('displays enabled organizations', () => {
     const { queryByText } = testRender();
-    expect(queryByText('agencyVal')).toBeVisible();
+    expect(queryByText('organizationVal')).toBeVisible();
   });
 
-  it('Does not display disabled agencies', () => {
+  it('Does not display disabled organizations', () => {
     const { queryByText } = testRender();
-    expect(queryByText('disabledAgency')).toBeNull();
+    expect(queryByText('disabledOrganization')).toBeNull();
   });
 
   it('displays enabled roles', () => {
@@ -138,13 +138,13 @@ describe('Edit user page', () => {
   });
 
   describe('appropriate fields are autofilled', () => {
-    it('autofills  email, username, first and last name', () => {
+    it('autofills  email, businessIdentifier, first and last name', () => {
       const { getByTestId } = renderEditUserPage();
       expect(getByTestId('email').getAttribute('value')).toEqual('admin@pims.gov.bc.ca');
-      expect(getByTestId('username').getAttribute('value')).toEqual('admin');
+      expect(getByTestId('businessIdentifier').getAttribute('value')).toEqual('admin');
       expect(getByTestId('firstName').getAttribute('value')).toEqual('George');
-      expect(getByTestId('lastName').getAttribute('value')).toEqual('User');
-      expect(getByTestId('lastName').getAttribute('value')).toEqual('User');
+      expect(getByTestId('surname').getAttribute('value')).toEqual('User');
+      expect(getByTestId('surname').getAttribute('value')).toEqual('User');
     });
   });
 

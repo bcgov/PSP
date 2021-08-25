@@ -30,29 +30,29 @@ namespace Pims.Dal.Keycloak
 
                 foreach (var kgroup in kgroups)
                 {
-                    var erole = _pimsAdminService.Role.GetByName(kgroup.Name);
+                    var erole = _pimsService.Role.GetByName(kgroup.Name);
 
                     if (erole == null)
                     {
                         // Need to add the group as a role within PIMS.
                         erole = _mapper.Map<Entity.Role>(kgroup);
-                        _pimsAdminService.Role.AddOne(erole);
+                        _pimsService.Role.AddWithoutSave(erole);
                     }
                     else
                     {
                         _mapper.Map(kgroup, erole);
-                        _pimsAdminService.Role.UpdateOne(erole);
+                        _pimsService.Role.UpdateWithoutSave(erole);
                     }
 
                     roles.Add(erole);
                 }
 
-                _pimsAdminService.CommitTransaction();
+                _pimsService.Role.CommitTransaction();
             }
 
             // Remove groups in PIMS that don't exist in keycloak.
             var roleIds = roles.Select(g => g.Key).ToArray();
-            _pimsAdminService.Role.RemoveAll(roleIds);
+            _pimsService.Role.RemoveAll(roleIds);
 
             return roles;
         }
@@ -69,7 +69,7 @@ namespace Pims.Dal.Keycloak
             var kgroups = await _keycloakService.GetGroupsAsync((page - 1) * quantity, quantity, search);
 
             // TODO: Need better performing solution.
-            return kgroups.Select(g => ExceptionHelper.HandleKeyNotFound(() => _pimsAdminService.Role.GetByKeycloakId(g.Id)) ?? _mapper.Map<Entity.Role>(g));
+            return kgroups.Select(g => ExceptionHelper.HandleKeyNotFound(() => _pimsService.Role.GetByKeycloakId(g.Id)) ?? _mapper.Map<Entity.Role>(g));
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         public async Task<Entity.Role> GetRoleAsync(Guid key)
         {
-            var role = ExceptionHelper.HandleKeyNotFound(() => _pimsAdminService.Role.Get(key));
+            var role = ExceptionHelper.HandleKeyNotFound(() => _pimsService.Role.Get(key));
             if (role == null)
             {
                 var kgroup = await _keycloakService.GetGroupAsync(key) ?? throw new KeyNotFoundException();
@@ -101,13 +101,13 @@ namespace Pims.Dal.Keycloak
             if (await _keycloakService.GetGroupAsync(role.Key) == null) throw new KeyNotFoundException();
 
             // Role does not exist in PIMS, it needs to be added.
-            if (_pimsAdminService.Role.Find(role.Id) == null)
+            if (_pimsService.Role.Find(role.Id) == null)
             {
-                _pimsAdminService.Role.Add(role);
+                _pimsService.Role.Add(role);
             }
             else
             {
-                _pimsAdminService.Role.Update(role);
+                _pimsService.Role.Update(role);
             }
 
             var kmodel = _mapper.Map<KModel.GroupModel>(role);

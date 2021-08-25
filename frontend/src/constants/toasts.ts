@@ -123,21 +123,23 @@ export const building = {
   BUILDING_DELETING_ERROR,
 };
 
-/** These toasts are used by the update agency api */
-const AGENCY_UPDATING_TOAST_ID = 'UPDATING_AGENCY';
-const AGENCY_UPDATING = () =>
-  toast.dark('Updating Agency...', { toastId: AGENCY_UPDATING_TOAST_ID });
-const AGENCY_UPDATED_TOAST_ID = 'AGENCY_UPDATED';
-const AGENCY_UPDATED = () => toast.dark('Agency updated', { toastId: AGENCY_UPDATED_TOAST_ID });
-const AGENCY_ERROR_TOAST_ID = 'AGENCY_ERROR';
-const AGENCY_ERROR = () => toast.error('Failed to update Agency', { toastId: USER_ERROR_TOAST_ID });
-export const agency = {
-  AGENCY_UPDATING_TOAST_ID,
-  AGENCY_UPDATING,
-  AGENCY_UPDATED_TOAST_ID,
-  AGENCY_UPDATED,
-  AGENCY_ERROR_TOAST_ID,
-  AGENCY_ERROR,
+/** These toasts are used by the update organization api */
+const ORGANIZATION_UPDATING_TOAST_ID = 'UPDATING_ORGANIZATION';
+const ORGANIZATION_UPDATING = () =>
+  toast.dark('Updating Organization...', { toastId: ORGANIZATION_UPDATING_TOAST_ID });
+const ORGANIZATION_UPDATED_TOAST_ID = 'ORGANIZATION_UPDATED';
+const ORGANIZATION_UPDATED = () =>
+  toast.dark('Organization updated', { toastId: ORGANIZATION_UPDATED_TOAST_ID });
+const ORGANIZATION_ERROR_TOAST_ID = 'ORGANIZATION_ERROR';
+const ORGANIZATION_ERROR = () =>
+  toast.error('Failed to update Organization', { toastId: USER_ERROR_TOAST_ID });
+export const organization = {
+  ORGANIZATION_UPDATING_TOAST_ID,
+  ORGANIZATION_UPDATING,
+  ORGANIZATION_UPDATED_TOAST_ID,
+  ORGANIZATION_UPDATED,
+  ORGANIZATION_ERROR_TOAST_ID,
+  ORGANIZATION_ERROR,
 };
 
 /** These toasts are used to display bc data warehouse loading */

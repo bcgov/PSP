@@ -8,12 +8,12 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// ClaimConfiguration class, provides a way to configure claims in the database.
     ///</summary>
-    public class ClaimConfiguration : BaseEntityConfiguration<Claim>
+    public class ClaimConfiguration : BaseAppEntityConfiguration<Claim>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<Claim> builder)
         {
-            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
+            builder.ToMotiTable();
 
             builder.HasMotiKey(m => m.Id);
             builder.HasMotiSequence(m => m.Id)
@@ -23,18 +23,17 @@ namespace Pims.Dal.Configuration
                 .HasComment("A unique key to identify the record");
             builder.Property(m => m.KeycloakRoleId)
                 .HasComment("A unique key to identify the associated role in keycloak");
-
-            builder.Property(m => m.Name).HasMaxLength(100).IsRequired()
+            builder.Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(100)
                 .HasComment("A unique name to identify this record");
-
-            builder.Property(m => m.Description).HasMaxLength(500)
+            builder.Property(m => m.Description)
+                .HasMaxLength(500)
                 .HasComment("A description of the claim");
             builder.Property(m => m.IsDisabled)
                 .HasComment("Whether this claim is disabled");
 
-            builder.HasIndex(m => new { m.Key }, "CLAIM_CLAIM_UID_TUC").IsUnique();
             builder.HasIndex(m => new { m.Name }, "CLAIM_NAME_TUC").IsUnique();
-            builder.HasIndex(m => new { m.IsDisabled }, "CLAIM_IS_DISABLED_IDX");
 
             base.Configure(builder);
         }

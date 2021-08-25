@@ -16,7 +16,7 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.Code)
                 .IsRequired()
                 .HasComment("Unique human friendly code name to identity this record");
-            builder.Property(m => m.SortOrder).HasDefaultValue(0)
+            builder.Property(m => m.DisplayOrder).HasDefaultValue(0)
                 .HasComment("Sorting order of record");
             builder.Property(m => m.IsDisabled).HasDefaultValue(false)
                 .HasComment("Whether this record is disabled");

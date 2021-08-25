@@ -14,7 +14,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string FormatAddress(this Address address)
         {
-            return address != null ? $"{address.Address1} {address.Address2}".Trim() : "";
+            return address != null ? $"{address.StreetAddress1} {address.StreetAddress2} {address.StreetAddress3}".Trim() : "";
         }
     }
 }

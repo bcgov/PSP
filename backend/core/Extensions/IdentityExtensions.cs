@@ -23,18 +23,18 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Get the user's list of agencies they have access to.
-        /// Return 'null' if no agencies are found.
+        /// Get the user's list of organizations they have access to.
+        /// Return 'null' if no organizations are found.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static long[] GetAgencies(this ClaimsPrincipal user, string delimiter = ",")
+        public static long[] GetOrganizations(this ClaimsPrincipal user, string delimiter = ",")
         {
-            var agencies = user?.FindAll("agencies");
+            var organizations = user?.FindAll("organizations");
             var results = new List<long>();
 
-            agencies?.ForEach(c =>
+            organizations?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
                 results.AddRange(split.Select(v => long.TryParse(v, out long value) ? value : (long?)null).NotNull().Select(v => (long)v));
@@ -44,18 +44,18 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
-        /// Get the user's list of agencies they have access to.
-        /// Return 'null' if no agencies are found.
+        /// Get the user's list of organizations they have access to.
+        /// Return 'null' if no organizations are found.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        public static long?[] GetAgenciesAsNullable(this ClaimsPrincipal user, string delimiter = ",")
+        public static long?[] GetOrganizationsAsNullable(this ClaimsPrincipal user, string delimiter = ",")
         {
-            var agencies = user?.FindAll("agencies");
+            var organizations = user?.FindAll("organizations");
             var results = new List<long?>();
 
-            agencies?.ForEach(c =>
+            organizations?.ForEach(c =>
             {
                 var split = c.Value.Split(delimiter);
                 results.AddRange(split.Select(v => long.TryParse(v, out long value) ? value : (long?)null));

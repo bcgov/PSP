@@ -49,7 +49,7 @@ const mockDetails: IPropertyDetail = {
     classificationId: Classifications.CoreStrategic,
     zoning: '',
     zoningPotential: '',
-    agencyId: 0,
+    organizationId: 0,
     latitude: 48,
     longitude: -123,
     classification: 'Core Operational',
@@ -74,7 +74,7 @@ const mockDetails: IPropertyDetail = {
     landArea: '',
     landLegalDescription: 'test',
     buildings: [],
-    agency: 'FIN',
+    organization: 'FIN',
   },
 };
 
@@ -121,7 +121,7 @@ function createProps(): TestProps {
     properties: mockParcels,
     selectedProperty: mockDetails,
     disableMapFilterBar: false,
-    renderOptions: { useMockAuthentication: true, agencies: [0], store: storeState },
+    renderOptions: { useMockAuthentication: true, organizations: [0], store: storeState },
   };
 }
 
@@ -133,7 +133,7 @@ function Template(props: Omit<TestProps, 'renderOptions'>) {
       lat={48.43}
       lng={-123.37}
       zoom={zoom}
-      agencies={[]}
+      organizations={[]}
       administrativeAreas={[]}
       whenReady={done}
       whenCreated={setMap}
@@ -171,7 +171,7 @@ describe('MapProperties View', () => {
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
       userInfo: {
-        agencies: [0],
+        organizations: [0],
       },
     },
   });

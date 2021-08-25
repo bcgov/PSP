@@ -53,7 +53,7 @@ namespace Pims.Dal.Extensions
         /// <param name="sequenceName"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static EntityTypeBuilder<T> HasMotiSequence<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, object>> propertyExpression, bool isRequired = true, string sequenceName = null)
+        public static PropertyBuilder<object> HasMotiSequence<T>(this EntityTypeBuilder<T> builder, Expression<Func<T, object>> propertyExpression, bool isRequired = true, string sequenceName = null)
             where T : class
         {
             // Generate a sequence name based on the column name.
@@ -66,13 +66,11 @@ namespace Pims.Dal.Extensions
                 sequenceName = $"PIMS_{column}_SEQ";
             }
 
-            builder.Property(propertyExpression)
+            return builder.Property(propertyExpression)
                 .HasColumnType("BIGINT")
                 .IsRequired(isRequired)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql($"NEXT VALUE FOR {sequenceName}");
-
-            return builder;
         }
 
         /// <summary>

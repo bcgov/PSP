@@ -16,7 +16,7 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
 
             config.NewConfig<KModel.GroupModel, Entity.Role>()
                 .Map(dest => dest.KeycloakGroupId, src => src.Id)

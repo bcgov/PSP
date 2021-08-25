@@ -83,171 +83,171 @@ namespace Pims.Api.Test.Core.Extensions
         }
         #endregion
 
-        #region GetAgencies
+        #region GetOrganizations
         [Fact]
-        public void GetAgencies_Empty()
+        public void GetOrganizations_Empty()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "")
+                new Claim("organizations", "")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetAgencies_Whitespace()
+        public void GetOrganizations_Whitespace()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", " ")
+                new Claim("organizations", " ")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetAgencies()
+        public void GetOrganizations()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1,2")
+                new Claim("organizations", "1,2")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgencies_WithSeparator()
+        public void GetOrganizations_WithSeparator()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1;2")
+                new Claim("organizations", "1;2")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgencies(";");
+            var organizations = principal.GetOrganizations(";");
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgencies_NoUser()
+        public void GetOrganizations_NoUser()
         {
             // Arrange
             var principal = new ClaimsPrincipal();
 
             // Act
-            var agencies = principal.GetAgencies();
+            var organizations = principal.GetOrganizations();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
         #endregion
 
-        #region GetAgenciesAsNullable
+        #region GetOrganizationsAsNullable
         [Fact]
-        public void GetAgenciesAsNullable_Empty()
+        public void GetOrganizationsAsNullable_Empty()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "")
+                new Claim("organizations", "")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Count().Should().Be(1);
-            agencies.First().Should().BeNull();
+            organizations.Count().Should().Be(1);
+            organizations.First().Should().BeNull();
         }
 
         [Fact]
-        public void GetAgenciesAsNullable_Whitespace()
+        public void GetOrganizationsAsNullable_Whitespace()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", " ")
+                new Claim("organizations", " ")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Count().Should().Be(1);
-            agencies.First().Should().BeNull();
+            organizations.Count().Should().Be(1);
+            organizations.First().Should().BeNull();
         }
 
         [Fact]
-        public void GetAgenciesAsNullable()
+        public void GetOrganizationsAsNullable()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1,2")
+                new Claim("organizations", "1,2")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgenciesAsNullable_WithSeparator()
+        public void GetOrganizationsAsNullable_WithSeparator()
         {
             // Arrange
             var claims = new List<Claim>()
             {
-                new Claim("agencies", "1;2")
+                new Claim("organizations", "1;2")
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable(";");
+            var organizations = principal.GetOrganizationsAsNullable(";");
 
             // Assert
-            agencies.Count().Should().Be(2);
+            organizations.Count().Should().Be(2);
         }
 
         [Fact]
-        public void GetAgenciesAsNullable_NoUser()
+        public void GetOrganizationsAsNullable_NoUser()
         {
             // Arrange
             var principal = new ClaimsPrincipal();
 
             // Act
-            var agencies = principal.GetAgenciesAsNullable();
+            var organizations = principal.GetOrganizationsAsNullable();
 
             // Assert
-            agencies.Should().BeEmpty();
+            organizations.Should().BeEmpty();
         }
         #endregion
 

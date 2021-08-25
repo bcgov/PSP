@@ -15,7 +15,7 @@ describe('useApiLookupCodes.test.ts api hook', () => {
     jest.restoreAllMocks();
   });
 
-  it('Gets paged agencies', () => {
+  it('Gets paged organizations', () => {
     renderHook(async () => {
       mockAxios.onGet(`/lookup/all`).reply(200, []);
 

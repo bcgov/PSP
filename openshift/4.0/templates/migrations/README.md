@@ -16,7 +16,7 @@ parameters:
   ROLE=migrations
   ENV_NAME=prod
   DESTINATION_ROLE=database
-  GIT_URL=https://github.com/bcgov/PIMS.git
+  GIT_URL=https://github.com/bcgov/PSP.git
   GIT_REF=master
   SOURCE_CONTEXT_DIR=backend
   CPU_LIMIT=1000m
