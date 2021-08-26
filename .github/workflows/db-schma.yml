@@ -64,8 +64,9 @@ jobs:
       run: docker logs db-schema
     - name: Check schema load
       run: |
-        docker cp db-schema:/.log .
-        result="$(cat .log)"
+        ls
+        docker cp db-schema:/log.txt .
+        result="$(cat log.txt)"
         echo $result
         if [[ "$result" != "0" ]]; then
             echo "$result record loaded"
