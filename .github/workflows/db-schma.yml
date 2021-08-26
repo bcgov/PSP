@@ -1,0 +1,62 @@
+name: PIMS Db-Schema CI
+
+on:
+  push:
+    branches: [master, test, dev, pims-sookeke]
+  pull_request:
+    branches: [master, test, dev, pims-sookeke]
+
+jobs:
+
+  build:
+
+    name: db-schema
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./database/mssql/scripts/dbscripts
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up random env variable
+      run: |
+        passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!
+        echo \
+        "ACCEPT_EULA=Y
+        MSSQL_SA_PASSWORD=$passvar
+        MSSQL_PID=Developer
+        TZ=America/Los_Angeles
+        TARGET_SPRINT=PSP_PIMS_S08_00
+        DB_USER=admin
+        DB_PASSWORD=$passvar
+        TIMEOUT_LENGTH=120" >> ./.env
+    - name: Build ms sql 2019 stack
+      run: docker build -t pims-database .   
+      working-directory: ${{env.working-directory}}
+    - name: scan pims-database image
+      uses: anchore/scan-action@v2
+      id: scan
+      with:
+        image: "pims-database:latest"
+        fail-build: true
+        acs-report-enable: true
+    - name: Scan current project
+      uses: anchore/scan-action@v2
+      with:
+         path: ${{env.working-directory}}
+    - name: upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
+    - name: Inspect action SARIF report
+      run: cat ${{ steps.scan.outputs.sarif }}'
+    - name: Build db-schema and load schema
+      run: docker run -p 5433:1433 --name db-schema  pims-database  
+      working-directory: ${{env.working-directory}}
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check pims-database logs
+      run: docker logs pims-logging
+    - name: Stop containers
+      if: always()
+      run: docker stop pims-database
+      working-directory: ${{env.working-directory}}
