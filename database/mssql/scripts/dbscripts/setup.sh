@@ -32,7 +32,7 @@ count=$(echo "$response" | grep -o -E '[0-9]+')
 if [ "$count" -eq "0" ]; 
 then echo "======= ERROR LOADING DB SCHEMA ========"
 exit 1;
-else echo $response; echo $count >> .log 
+else echo $response && echo $count >> log.txt && ls;
 fi
 
 echo "=======DB SCHEMA LOADED ========"
