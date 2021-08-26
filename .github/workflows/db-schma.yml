@@ -29,6 +29,8 @@ jobs:
         DB_USER=admin
         DB_PASSWORD=$passvar
         TIMEOUT_LENGTH=120" >> ./.env
+        cat ./.env
+      working-directory: ${{env.working-directory}}
     - name: Build ms sql 2019 stack
       run: docker build -t pims-database .   
       working-directory: ${{env.working-directory}}
@@ -49,7 +51,7 @@ jobs:
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
     - name: Build db-schema and load schema
-      run: docker run -p 5433:1433 --name db-schema --env-file .\.env pims-database  
+      run: docker run -p 5433:1433 --name db-schema --env-file ./.env pims-database  
       working-directory: ${{env.working-directory}}
     - name: Check running containers
       run: docker ps -a
