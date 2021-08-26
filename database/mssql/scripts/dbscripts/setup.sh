@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 # wait for MSSQL server to start
 #pid=$!
 
