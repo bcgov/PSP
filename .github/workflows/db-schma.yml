@@ -38,6 +38,7 @@ jobs:
       with:
         image: "pims-database:latest"
         fail-build: true
+        severity-cutoff: critical
         acs-report-enable: true
     - name: Scan current project
       uses: anchore/scan-action@v2
