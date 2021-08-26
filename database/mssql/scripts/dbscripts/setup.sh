@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # wait for MSSQL server to start
-#pid=$!
+pid=$!
 
 echo "Waiting for MS SQL to be available ⏳"
 /opt/mssql-tools/bin/sqlcmd -l 30 -S localhost -h-1 -V1 -U sa -P $MSSQL_SA_PASSWORD -Q "SET NOCOUNT ON SELECT \"YAY WE ARE UP\" , @@servername"
@@ -32,11 +32,11 @@ count=$(echo "$response" | grep -o -E '[0-9]+')
 if [ "$count" -eq "0" ]; 
 then echo "======= ERROR LOADING DB SCHEMA ========"
 exit 1;
-else echo $response; 
+else echo $response; echo $count >> .log 
 fi
 
 echo "=======DB SCHEMA LOADED ========"
 
 
 # Wait on the sqlserver process
-#wait $pid
+wait $pid
