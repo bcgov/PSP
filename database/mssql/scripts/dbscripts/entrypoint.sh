@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -eo pipefail
 # Start SQL Server
 echo "Start MS SQL Server and run scripts"
 
@@ -10,4 +11,4 @@ if ! whoami &> /dev/null; then
 fi
 # exec "$@"
 
-/usr/config/setup.sh & /opt/mssql/bin/sqlservr
+/usr/config/setup.sh & /opt/mssql/bin/sqlservr 

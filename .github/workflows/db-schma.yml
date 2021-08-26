@@ -54,10 +54,25 @@ jobs:
     - name: Build db-schema and load schema
       run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env pims-database
       working-directory: ${{env.working-directory}}
+    - name: Wait on the sqlserver process
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '180s'        
     - name: Check running containers
       run: docker ps -a
     - name: Check pims-database logs
-      run: docker logs pims-logging
+      run: docker logs db-schema
+    - name: Check schema load
+      run: |
+        docker cp db-schema:/.log .
+        result="$(cat .log)"
+        echo $result
+        if [[ "$result" != "0" ]]; then
+            echo "$result record loaded"
+        else
+            echo "There's an error loading schema" && exit 1 
+      working-directory: ${{env.working-directory}}
+            
     - name: Stop containers
       if: always()
       run: docker stop pims-database
