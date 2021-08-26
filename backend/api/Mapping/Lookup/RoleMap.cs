@@ -15,9 +15,9 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
+                .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
@@ -26,8 +26,8 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
-                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Inherits<Models.BaseModel, Entity.BaseEntity>();
         }
     }
 }

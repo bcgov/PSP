@@ -15,8 +15,8 @@ namespace Pims.Dal.Security
         [Display(GroupName = "admin", Name = "system-administrator", Description = "Can administer application settings.")]
         SystemAdmin = 1,
 
-        [Display(GroupName = "admin", Name = "agency-administrator", Description = "Can administer agencies.")]
-        AgencyAdmin = 2,
+        [Display(GroupName = "admin", Name = "organization-administrator", Description = "Can administer organizations.")]
+        OrganizationAdmin = 2,
 
         [Display(GroupName = "admin", Name = "admin-users", Description = "Can administer user accounts.")]
         AdminUsers = 3,
@@ -24,8 +24,8 @@ namespace Pims.Dal.Security
         [Display(GroupName = "admin", Name = "admin-roles", Description = "Can administer application roles.")]
         AdminRoles = 4,
 
-        [Display(GroupName = "admin", Name = "admin-agencies", Description = "Can administer application roles.")]
-        AdminAgencies = 5,
+        [Display(GroupName = "admin", Name = "admin-organizations", Description = "Can administer application roles.")]
+        AdminOrganizations = 5,
 
         [Display(GroupName = "admin", Name = "admin-properties", Description = "Can administer properties.")]
         AdminProperties = 6,

@@ -16,11 +16,11 @@ export interface IProperty {
   latitude: number;
   longitude: number;
   isSensitive: boolean;
-  agencyId: number;
-  agency: string;
-  agencyCode: string;
-  subAgency?: string;
-  subAgencyCode?: string;
+  organizationId: number;
+  organization: string;
+  organizationCode: string;
+  subOrganization?: string;
+  subOrganizationCode?: string;
 
   addressId: number;
   address: string;
@@ -73,7 +73,7 @@ export interface IPropertyQueryParams {
   name?: string;
   administrativeArea?: string;
   classificationId?: number;
-  agencies?: number | number[];
+  organizations?: number | number[];
   minLandArea?: number;
   maxLandArea?: number;
   minLotArea?: number;
@@ -111,11 +111,11 @@ export interface IFlatProperty {
   latitude: number;
   longitude: number;
   isSensitive: boolean;
-  agencyId: number;
-  agency: string;
-  agencyCode: string;
-  subAgency?: string;
-  subAgencyCode?: string;
+  organizationId: number;
+  organization: string;
+  organizationCode: string;
+  subOrganization?: string;
+  subOrganizationCode?: string;
 
   addressId: number;
   address: string;
@@ -183,9 +183,9 @@ export interface IApiProperty {
   landLegalDescription: string;
   zoning: string;
   zoningPotential: string;
-  agency?: string;
-  subAgency?: string;
-  agencyId: number;
+  organization?: string;
+  subOrganization?: string;
+  organizationId: number;
   isSensitive: boolean;
   buildings: IBuilding[];
   evaluations: IEvaluation[];

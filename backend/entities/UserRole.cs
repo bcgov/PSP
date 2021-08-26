@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// UserRole class, provides an entity for the datamodel to manage user agencies.
+    /// UserRole class, provides an entity for the datamodel to manage user organizations.
     /// </summary>
-    [MotiTable("PIMS_USER_ROLE", "USRROL")]
+    [MotiTable("PIMS_USER_ROLE", "USERRL")]
     public class UserRole : BaseAppEntity
     {
         #region Properties
@@ -37,6 +37,12 @@ namespace Pims.Dal.Entities
         /// get/set - The role the user belongs to.
         /// </summary>
         public Role Role { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this user role is disabled.
+        /// </summary>
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
         #endregion
 
         #region Constructors
@@ -50,7 +56,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="roleId"></param>
-        public UserRole(int userId, int roleId)
+        public UserRole(long userId, long roleId)
         {
             this.UserId = userId;
             this.RoleId = roleId;

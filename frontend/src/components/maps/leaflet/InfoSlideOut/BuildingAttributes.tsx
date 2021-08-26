@@ -13,7 +13,7 @@ import { ThreeColumnItem } from './ThreeColumnItem';
 interface IBuildingAttributes {
   /** the selected building information */
   buildingInfo: IBuilding;
-  /** whether the user has the correct agency/permissions to view all the details */
+  /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
 }
 

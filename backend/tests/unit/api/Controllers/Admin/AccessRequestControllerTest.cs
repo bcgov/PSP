@@ -5,9 +5,9 @@ using Pims.Api.Areas.Admin.Controllers;
 using Pims.Api.Models;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Admin;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Admin.Models.AccessRequest;
@@ -35,23 +35,23 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<AccessRequestController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
             var paged = new Entity.Models.Paged<Entity.AccessRequest>(accessRequests);
 
-            service.Setup(m => m.User.GetAccessRequests(It.IsAny<AccessRequestFilter>())).Returns(paged);
+            service.Setup(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
-            var result = controller.GetPage(1, 10, null, null, null, null, Entity.AccessRequestStatus.OnHold);
+            var result = controller.GetPage(1, 10, null, null, null, null, null);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items, new DeepPropertyCompare());
-            service.Verify(m => m.User.GetAccessRequests(It.IsAny<AccessRequestFilter>()), Times.Once());
+            service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
         [Fact]
@@ -62,12 +62,12 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<AccessRequestController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
             var paged = new Entity.Models.Paged<Entity.AccessRequest>(accessRequests);
-            service.Setup(m => m.User.GetAccessRequests(It.IsAny<AccessRequestFilter>())).Returns(paged);
+            service.Setup(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetPage(-1, -10);
@@ -78,7 +78,7 @@ namespace PimsApi.Test.Admin.Controllers
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items,
                 new DeepPropertyCompare());
-            service.Verify(m => m.User.GetAccessRequests(It.IsAny<AccessRequestFilter>()), Times.Once());
+            service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
 
         [Fact]
@@ -89,12 +89,12 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<AccessRequestController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsAdminService>>();
+            var service = helper.GetService<Mock<IPimsService>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
             var paged = new Entity.Models.Paged<Entity.AccessRequest>(accessRequests);
-            service.Setup(m => m.User.GetAccessRequests(It.IsAny<AccessRequestFilter>())).Returns(paged);
+            service.Setup(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>())).Returns(paged);
 
             // Act
             var result = controller.GetPage(2, 100);
@@ -104,7 +104,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<PageModel<Model.AccessRequestModel>>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.AccessRequestModel[]>(accessRequests), actualResult.Items, new DeepPropertyCompare());
-            service.Verify(m => m.User.GetAccessRequests(It.IsAny<AccessRequestFilter>()), Times.Once());
+            service.Verify(m => m.AccessRequest.Get(It.IsAny<AccessRequestFilter>()), Times.Once());
         }
         #endregion
     }

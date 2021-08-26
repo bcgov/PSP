@@ -13,7 +13,7 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<UserRole> builder)
         {
-            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
+            builder.ToMotiTable();
 
             builder.HasMotiKey(m => m.Id);
             builder.HasMotiSequence(m => m.Id)
@@ -21,16 +21,19 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.UserId).IsRequired()
                 .HasComment("Foreign key to the user");
-
             builder.Property(m => m.RoleId).IsRequired()
                 .HasComment("Foreign key to the role");
 
-            builder.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRROL_USER_ID_IDX");
-            builder.HasOne(m => m.Role).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("USRROL_ROLE_ID_IDX");
+            builder.Property(m => m.IsDisabled)
+                .HasComment("Whether this relationship between user and role is disabled");
+
+            builder.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PIM_USER_PIM_USERRL_FK");
+            builder.HasOne(m => m.Role).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.RoleId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PIM_ROLE_PIM_USERRL_FK");
 
             builder.HasIndex(m => new { m.UserId, m.RoleId }, "USRROL_USER_ROLE_TUC").IsUnique();
-            builder.HasIndex(m => m.UserId, "USRROL_USER_ID_IDX");
-            builder.HasIndex(m => m.RoleId, "USRROL_ROLE_ID_IDX");
+
+            builder.HasIndex(m => m.UserId).HasDatabaseName("USRROL_USER_ID_IDX");
+            builder.HasIndex(m => m.RoleId).HasDatabaseName("USRROL_ROLE_ID_IDX");
 
             base.Configure(builder);
         }

@@ -49,17 +49,17 @@
         ],
         "ProtocolMappers": [
           {
-            "Name": "agencies",
+            "Name": "organizations",
             "Protocol": "openid-connect",
             "ProtocolMapper": "oidc-usermodel-attribute-mapper",
             "ConsentRequired": false,
             "Config": {
               "userinfo.token.claim": "true",
               "multivalued": "true",
-              "user.attribute": "agencies",
+              "user.attribute": "organizations",
               "id.token.claim": "false",
               "access.token.claim": "true",
-              "claim.name": "agencies",
+              "claim.name": "organizations",
               "jsonType.label": "int"
             }
           },
@@ -271,17 +271,17 @@
         "WebOrigins": ["https://dev-pims.th.gov.bc.ca"],
         "ProtocolMappers": [
           {
-            "Name": "agencies",
+            "Name": "organizations",
             "Protocol": "openid-connect",
             "ProtocolMapper": "oidc-usermodel-attribute-mapper",
             "ConsentRequired": false,
             "Config": {
               "userinfo.token.claim": "true",
               "multivalued": "true",
-              "user.attribute": "agencies",
+              "user.attribute": "organizations",
               "id.token.claim": "false",
               "access.token.claim": "true",
-              "claim.name": "agencies",
+              "claim.name": "organizations",
               "jsonType.label": "int"
             }
           },

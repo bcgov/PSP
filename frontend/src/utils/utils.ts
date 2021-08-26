@@ -42,7 +42,7 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
   return !isNaN(Number(input)) && Number(input) > -1;
 };
 
-/** used for filters that need to display the string value of a parent agency agency */
+/** used for filters that need to display the string value of a parent organization organization */
 export const mapLookupCodeWithParentString = (
   code: ILookupCode,
   /** the list of lookup codes to look for parent */
@@ -55,7 +55,7 @@ export const mapLookupCodeWithParentString = (
   parent: options.find((a: ILookupCode) => a.id.toString() === code.parentId?.toString())?.name,
 });
 
-/** used for inputs that need to display the string value of a parent agency agency */
+/** used for inputs that need to display the string value of a parent organization organization */
 export const mapSelectOptionWithParent = (
   code: SelectOption,
   /** the list of lookup codes to look for parent */

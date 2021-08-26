@@ -158,7 +158,7 @@ parameters:
     displayName: GIT Source Repo URL
     description: A GIT URL to your source code.
     required: true
-    value: https://github.com/bcgov/PIMS.git
+    value: https://github.com/bcgov/PSP.git
   - name: GIT_REF
     displayName: Git Reference
     description: The git reference or branch.

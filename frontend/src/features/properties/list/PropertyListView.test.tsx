@@ -34,7 +34,7 @@ window.open = jest.fn();
 
 const lCodes = {
   lookupCodes: [
-    { id: 1, name: 'agencyVal', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { id: 1, name: 'organizationVal', isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
     {
       id: 1,
       name: 'classificationVal',
@@ -99,7 +99,7 @@ const setupTests = (items?: IProperty[], buildingItems?: IProperty[]) => {
       subject: 'test',
       userInfo: {
         roles: ['property-edit', 'property-view'],
-        agencies: [1],
+        organizations: [1],
       },
     },
   });
@@ -198,7 +198,7 @@ describe('Property list view', () => {
     });
   });
 
-  it('Enables edit on property rows that the user has the same agency as the property', async () => {
+  it('Enables edit on property rows that the user has the same organization as the property', async () => {
     setupTests([{ ...mockFlatProperty }]);
 
     await act(async () => {
@@ -220,7 +220,7 @@ describe('Property list view', () => {
   });
 
   it('Disables property rows that the user does not have edit permissions for', async () => {
-    setupTests([{ ...mockFlatProperty, agencyId: 2 }]);
+    setupTests([{ ...mockFlatProperty, organizationId: 2 }]);
 
     await act(async () => {
       const { getByTestId, container } = renderPage();

@@ -52,17 +52,17 @@
         ],
         "ProtocolMappers": [
           {
-            "Name": "agencies",
+            "Name": "organizations",
             "Protocol": "openid-connect",
             "ProtocolMapper": "oidc-usermodel-attribute-mapper",
             "ConsentRequired": false,
             "Config": {
               "userinfo.token.claim": "true",
               "multivalued": "true",
-              "user.attribute": "agencies",
+              "user.attribute": "organizations",
               "id.token.claim": "false",
               "access.token.claim": "true",
-              "claim.name": "agencies",
+              "claim.name": "organizations",
               "jsonType.label": "int"
             }
           },
@@ -278,17 +278,17 @@
         "WebOrigins": ["*"],
         "ProtocolMappers": [
           {
-            "Name": "agencies",
+            "Name": "organizations",
             "Protocol": "openid-connect",
             "ProtocolMapper": "oidc-usermodel-attribute-mapper",
             "ConsentRequired": false,
             "Config": {
               "userinfo.token.claim": "true",
               "multivalued": "true",
-              "user.attribute": "agencies",
+              "user.attribute": "organizations",
               "id.token.claim": "false",
               "access.token.claim": "true",
-              "claim.name": "agencies",
+              "claim.name": "organizations",
               "jsonType.label": "int"
             }
           },
