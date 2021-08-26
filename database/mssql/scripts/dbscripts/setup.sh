@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -e
 # wait for MSSQL server to start
 #pid=$!
 
