@@ -169,34 +169,6 @@ namespace Pims.Dal.Keycloak
             // Don't incorrectly remove child organizations.
             removeOrganizationIds = removeOrganizationIds.Except(addOrganizationIds).ToArray();
 
-            // Update PIMS
-            euser.BusinessIdentifier = kuser.Username; // PIMS must use whatever username is set in keycloak.
-            euser.Person.FirstName = update.Person.FirstName;
-            euser.Person.MiddleNames = update.Person.MiddleNames;
-            euser.Person.Surname = update.Person.Surname;
-            euser.Person.ContactMethods.Clear();
-            euser.Position = update.Position;
-            euser.Note = update.Note;
-            update.Person.ContactMethods.ForEach(c => euser.Person.ContactMethods.Add(c));
-            euser.IsDisabled = update.IsDisabled;
-            euser.RowVersion = update.RowVersion;
-
-            // Remove all keycloak groups from user.  // TODO: Only add/remove the ones that should be removed.
-            var userGroups = await _keycloakService.GetUserGroupsAsync(euser.KeycloakUserId.Value);
-            foreach (var group in userGroups)
-            {
-                await _keycloakService.RemoveGroupFromUserAsync(update.KeycloakUserId.Value, group.Id);
-            }
-
-            var roleIds = update.Roles.Any() ? update.Roles.Select(r => r.Id) : update.RolesManyToMany.Select(r => r.RoleId);
-            foreach (var roleId in roleIds)
-            {
-                var role = _pimsService.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
-                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifier}'.");
-                await _keycloakService.AddGroupToUserAsync(update.KeycloakUserId.Value, role.KeycloakGroupId.Value);
-            }
-
             // Update Roles.
             removeRoleIds.ForEach(r =>
             {
@@ -241,10 +213,103 @@ namespace Pims.Dal.Keycloak
                 euser.OrganizationsManyToMany.Remove(userOrganization);
             });
 
+            return await SaveUserChanges(update, euser, kuser, true);
+        }
+
+        /// <summary>
+        /// Update the specified user in keycloak and PIMS, only add new organizations and roles.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <exception type="KeyNotFoundException">User does not exist in keycloak or PIMS.</exception>
+        /// <returns></returns>
+        public async Task<Entity.User> AppendToUserAsync(Entity.User update)
+        {
+            var kuser = await _keycloakService.GetUserAsync(update.KeycloakUserId.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var euser = _pimsService.User.GetTracking(update.Id);
+
+            IEnumerable<long> addRoleIds = update.RolesManyToMany.Except(euser.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
+            IEnumerable<long> addOrganizationIds = update.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
+            addOrganizationIds = update.OrganizationsManyToMany.Except(euser.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
+            // Each parent organization should add children organizations.
+            addOrganizationIds.ToArray().ForEach(id =>
+            {
+                var childOrganizations = _pimsService.Organization.GetChildren(id).Select(a => a.Id).ToArray();
+                addOrganizationIds = addOrganizationIds.Concat(childOrganizations).Distinct().ToArray();
+            });
+
+            var roleIds = update.Roles.Any() ? update.Roles.Select(r => r.Id) : update.RolesManyToMany.Select(r => r.RoleId);
+            foreach (var roleId in roleIds)
+            {
+                var role = _pimsService.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
+                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifier}'.");
+                await _keycloakService.AddGroupToUserAsync(update.KeycloakUserId.Value, role.KeycloakGroupId.Value);
+            }
+
+            addRoleIds.ForEach(r =>
+            {
+                var role = _pimsService.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
+                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                euser.RolesManyToMany.Add(new Entity.UserRole(euser, role));
+            });
+
+            // Update Organizations
+            addOrganizationIds.ForEach(oId =>
+            {
+                var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
+                var roleId = update.OrganizationsManyToMany.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
+                var role = _pimsService.Role.Find(roleId);
+                euser.OrganizationsManyToMany.Add(new Entity.UserOrganization(euser, organization, role));
+            });
+
+            return await SaveUserChanges(update, euser, kuser);
+        }
+
+        /// <summary>
+        /// Save the updated user in keycloak and database.
+        /// </summary>
+        /// <param name="update"></param>
+        /// <param name="euser"></param>
+        /// <param name="kuser"></param>
+        /// <returns></returns>
+        private async Task<Entity.User> SaveUserChanges(Entity.User update, Entity.User euser, KModel.UserModel kuser, bool resetRoles = false)
+        {
+
+            // Update PIMS
+            euser.BusinessIdentifier = kuser.Username; // PIMS must use whatever username is set in keycloak.
+            euser.Person.FirstName = update.Person.FirstName;
+            euser.Person.MiddleNames = update.Person.MiddleNames;
+            euser.Person.Surname = update.Person.Surname;
+            euser.Person.ContactMethods.Clear();
+            euser.Position = update.Position;
+            euser.Note = update.Note;
+            update.Person.ContactMethods.ForEach(c => euser.Person.ContactMethods.Add(c));
+            euser.IsDisabled = update.IsDisabled;
+            euser.RowVersion = update.RowVersion;
+
             euser = _pimsService.User.UpdateOnly(euser);
 
             // Now update keycloak
             var kmodel = _mapper.Map<KModel.UserModel>(update);
+
+            if (resetRoles)
+            {
+                // Remove all keycloak groups from user.  // TODO: Only add/remove the ones that should be removed.
+                var userGroups = await _keycloakService.GetUserGroupsAsync(euser.KeycloakUserId.Value);
+                foreach (var group in userGroups)
+                {
+                    await _keycloakService.RemoveGroupFromUserAsync(update.KeycloakUserId.Value, group.Id);
+                }
+            }
+
+            var roleIds = update.Roles.Any() ? update.Roles.Select(r => r.Id) : update.RolesManyToMany.Select(r => r.RoleId);
+            foreach (var roleId in roleIds)
+            {
+                var role = _pimsService.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
+                if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
+                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifier}'.");
+                await _keycloakService.AddGroupToUserAsync(update.KeycloakUserId.Value, role.KeycloakGroupId.Value);
+            }
 
             kmodel.Attributes = new Dictionary<string, string[]>
             {
@@ -269,12 +334,14 @@ namespace Pims.Dal.Keycloak
             _user.ThrowIfNotAuthorized(Permissions.AdminUsers, Permissions.OrganizationAdmin);
 
             var accessRequest = _pimsService.AccessRequest.Get(update.Id);
-            var user = _pimsService.User.GetTracking(accessRequest.UserId);
+            var user = _pimsService.User.Get(accessRequest.UserId);
 
             if (update.StatusId == AccessRequestStatusTypes.APPROVED) {
                 
                 user.RolesManyToMany.Clear();
+                user.Roles.Clear();
                 user.RolesManyToMany.Add(new Entity.UserRole(user.Id, update.RoleId));
+                update.Organizations.Clear();
                 update.OrganizationsManyToMany.ForEach(aro =>
                 {
                     if (!user.OrganizationsManyToMany.Any(a => a.OrganizationId == aro.OrganizationId))
@@ -282,7 +349,7 @@ namespace Pims.Dal.Keycloak
                         user.OrganizationsManyToMany.Add(new Entity.UserOrganization(update.UserId, aro.OrganizationId, update.RoleId));
                     }
                 });
-                await UpdateUserAsync(user);
+                await AppendToUserAsync(user);
                 
             }
             update.User = user;
