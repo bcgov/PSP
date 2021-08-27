@@ -1,4 +1,4 @@
-name: PIMS Db-Schema CI
+name: build
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    name: db-schema
+    name: Build
     runs-on: ubuntu-18.04
     permissions:
       actions: read
