@@ -1,16 +1,16 @@
-name: PIMS Db-Schema CI
+name: build
 
 on:
   push:
-    branches: [master, test, pims-sookeke]
+    branches: [master, test, dev, pims-sookeke]
   pull_request:
-    branches: [master, test, pims-sookeke]
+    branches: [master, test, dev, pims-sookeke]
 
 jobs:
 
   build:
 
-    name: db-schema
+    name: Build
     runs-on: ubuntu-18.04
     permissions:
       actions: read
