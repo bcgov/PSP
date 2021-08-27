@@ -2,9 +2,11 @@ name: build
 
 on:
   push:
-    branches: [master, test, dev, pims-sookeke]
+    branches: [pims-sookeke]
   pull_request:
-    branches: [master, test, dev, pims-sookeke]
+    branches: [pims-sookeke]
+  schedule:
+    - cron: '42 15 * * 5'
 
 jobs:
 
@@ -39,12 +41,12 @@ jobs:
       working-directory: ${{env.working-directory}}
     - name: Build ms sql 2019 stack
       run: |
-        docker build -t pims-database .   
+        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
       working-directory: ${{env.working-directory}}
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'pims-database:latest'
+        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
         format: 'template'
         template: '@/contrib/sarif.tpl'
         exit-code: '1'
