@@ -40,8 +40,8 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'pims-database:latest'
-        format: 'table'
-        severity: 'CRITICAL,HIGH'
+        format: 'template'
+        template: '@/contrib/sarif.tpl'
         output: 'trivy-results.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
       if: always()
