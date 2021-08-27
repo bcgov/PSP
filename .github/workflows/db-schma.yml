@@ -61,10 +61,6 @@ jobs:
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: 'trivy-results.sarif'
-    - name: upload Anchore scan SARIF report
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
     - name: Build db-schema and load schema
       run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env pims-database
       working-directory: ${{env.working-directory}}
