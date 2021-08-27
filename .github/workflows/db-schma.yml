@@ -54,7 +54,6 @@ jobs:
         image-ref: 'pims-database:latest'
         format: 'template'
         template: '@/contrib/sarif.tpl'
-        output: 'trivy-results.sarif'
         severity: 'CRITICAL,HIGH'
         output: 'trivy-results.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
