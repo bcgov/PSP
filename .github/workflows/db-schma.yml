@@ -36,24 +36,11 @@ jobs:
     - name: Build ms sql 2019 stack
       run: docker build -t pims-database .   
       working-directory: ${{env.working-directory}}
-    - name: scan pims-database image
-      uses: anchore/scan-action@v2
-      id: scan
-      with:
-        image: "pims-database:latest"
-        fail-build: true
-        severity-cutoff: critical
-        acs-report-enable: true
-    - name: Scan current project
-      uses: anchore/scan-action@v2
-      with:
-         path: ${{env.working-directory}}
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: 'pims-database:latest'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
+        format: 'table'
         severity: 'CRITICAL,HIGH'
         output: 'trivy-results.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
