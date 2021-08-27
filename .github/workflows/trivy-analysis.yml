@@ -46,7 +46,8 @@ jobs:
         
     
   build_backend:
-  
+    
+    if: always()
     needs: build
     name: pims-backend
     runs-on: ubuntu-latest
@@ -83,6 +84,7 @@ jobs:
         
   build_logging:
   
+    if: always()
     needs: [build, build_backend] 
     name: pims-logging
     runs-on: ubuntu-latest
