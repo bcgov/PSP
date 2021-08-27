@@ -2,9 +2,9 @@ name: PIMS Logging CI
 
 on:
   push:
-    branches: [master, test, pims-sookeke]
+    branches: [master, test]
   pull_request:
-    branches: [master, test, pims-sookeke]
+    branches: [master, test]
 
 jobs:
 
