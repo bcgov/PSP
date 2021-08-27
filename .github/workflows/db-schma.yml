@@ -62,7 +62,7 @@ jobs:
       run: docker ps -a
     - name: Check pims-database logs
       run: docker logs db-schema
-    - name: Check schema load
+    - name: Check schema build
       run: |
         docker cp db-schema:/tmp/log.txt .
         result="$(cat log.txt)"
@@ -76,5 +76,5 @@ jobs:
             
     - name: Stop containers
       if: always()
-      run: docker stop pims-database
+      run: docker stop db-schema
       working-directory: ${{env.working-directory}}
