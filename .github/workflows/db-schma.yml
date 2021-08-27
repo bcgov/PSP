@@ -20,12 +20,13 @@ jobs:
     - name: Set up random env variable
       run: |
         passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!
+        last_sprint=$(ls -d */ |  tail -n 1 | cut -f1 -d'/')
         echo \
         "ACCEPT_EULA=Y
         MSSQL_SA_PASSWORD=$passvar
         MSSQL_PID=Developer
         TZ=America/Los_Angeles
-        TARGET_SPRINT=PSP_PIMS_S08_00
+        TARGET_SPRINT=$last_sprint
         DB_USER=admin
         DB_PASSWORD=$passvar
         TIMEOUT_LENGTH=120" >> ./.env
