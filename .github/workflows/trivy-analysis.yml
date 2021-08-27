@@ -1,4 +1,4 @@
-name: build
+name: PIMS Db-Schema CI
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    name: Build
+    name: db-schema
     runs-on: ubuntu-18.04
     permissions:
       actions: read
@@ -38,7 +38,8 @@ jobs:
         chmod +x ./setup.sh
       working-directory: ${{env.working-directory}}
     - name: Build ms sql 2019 stack
-      run: docker build -t pims-database .   
+      run: |
+        docker build -t pims-database .   
       working-directory: ${{env.working-directory}}
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
@@ -46,35 +47,13 @@ jobs:
         image-ref: 'pims-database:latest'
         format: 'template'
         template: '@/contrib/sarif.tpl'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
         output: 'trivy-results.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
       if: always()
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: 'trivy-results.sarif'
-    - name: Build db-schema and load schema
-      run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env pims-database
-      working-directory: ${{env.working-directory}}
-    - name: Wait on the sqlserver process
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '180s'        
-    - name: Check running containers
-      run: docker ps -a
-    - name: Check pims-database logs
-      run: docker logs db-schema
-    - name: Check schema build
-      run: |
-        docker cp db-schema:/tmp/log.txt .
-        result="$(cat log.txt)"
-        if [[ "$result" != "0" ]]; then
-            echo "$result record loaded";
-        else
-            echo "There's an error loading schema" && exit 1 ;
-        fi
-      working-directory: ${{env.working-directory}}
-            
-    - name: Stop containers
-      if: always()
-      run: docker stop db-schema
-      working-directory: ${{env.working-directory}}
