@@ -19,7 +19,7 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory_frontend: ./frontend
+      working-directory: ./frontend
 
     steps:
     - uses: actions/checkout@v1
@@ -55,7 +55,7 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory_frontend: ./backend
+      working-directory: ./backend
       
       
     steps:
@@ -91,7 +91,7 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory_frontend: ./openshift/4.0/templates/Logging
+      working-directory: ./openshift/4.0/templates/Logging
       
       
     steps:
