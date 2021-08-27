@@ -48,6 +48,15 @@ jobs:
       uses: anchore/scan-action@v2
       with:
          path: ${{env.working-directory}}
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'pims-database:latest'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
     - name: upload Anchore scan SARIF report
       uses: github/codeql-action/upload-sarif@v1
       with:
@@ -67,7 +76,6 @@ jobs:
       run: |
         docker cp db-schema:/tmp/log.txt .
         result="$(cat log.txt)"
-        echo $result
         if [[ "$result" != "0" ]]; then
             echo "$result record loaded";
         else
