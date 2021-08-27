@@ -1,17 +1,19 @@
-name: PIMS Db-Schema CI
+name: db-schema CI
 
 on:
   push:
-    branches: [master, test, dev]
+    branches: [master, test, dev, pims-sookeke]
   pull_request:
-    branches: [master, test, dev]
+    branches: [master, test, dev, pims-sookeke]
+  schedule:
+    - cron: '42 15 * * 5'
 
 jobs:
 
   build:
 
     name: db-schema
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: read
@@ -38,22 +40,28 @@ jobs:
         chmod +x ./setup.sh
       working-directory: ${{env.working-directory}}
     - name: Build ms sql 2019 stack
-      run: docker build -t pims-database .   
+      run: |
+        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
       working-directory: ${{env.working-directory}}
-    - name: Run Trivy vulnerability scanner
+    - name: Scan Built Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'pims-database:latest'
+        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
         format: 'template'
         template: '@/contrib/sarif.tpl'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL'
         output: 'trivy-results.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
       if: always()
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: 'trivy-results.sarif'
+        
     - name: Build db-schema and load schema
-      run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env pims-database
+      run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env docker.io/my-organization/my-app:${{ github.sha }}
       working-directory: ${{env.working-directory}}
     - name: Wait on the sqlserver process
       uses: jakejarvis/wait-action@master
