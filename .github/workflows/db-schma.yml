@@ -64,8 +64,7 @@ jobs:
       run: docker logs db-schema
     - name: Check schema load
       run: |
-        ls
-        docker cp db-schema:log.txt .
+        docker cp db-schema:/tmp/log.txt .
         result="$(cat log.txt)"
         echo $result
         if [[ "$result" != "0" ]]; then
