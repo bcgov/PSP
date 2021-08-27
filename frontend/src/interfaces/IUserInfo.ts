@@ -1,11 +1,11 @@
 export interface IUserInfo {
   id: number;
-  key: string;
-  username: string;
+  keycloakUserId: string;
+  businessIdentifier: string;
   name: string;
   email: string;
   firstName: string;
-  lastName: string;
+  surname: string;
   Groups: any[];
   organizations: number[];
   position?: string;

@@ -95,7 +95,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   const organizations = (organizationLookupCodes ?? []).map(c =>
     mapLookupCodeWithParentString(c, organizationLookupCodes),
   );
-  const classifications = lookupCodes.getPropertyClassificationOptions();
+  const classifications = lookupCodes.getPropertyClassificationTypeOptions();
   const adminAreas = (adminAreaLookupCodes ?? []).map(c => mapLookupCode(c));
   const [clear, setClear] = useState<boolean | undefined>(false);
   const [options, setOptions] = useState<string[]>([]);
@@ -172,10 +172,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
             </OrganizationCol>
             <Col className="map-filter-typeahead">
               <AsyncTypeahead
-                disabled={
-                  (findMoreOpen || values.includeAllProperties === true) &&
-                  !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)
-                }
+                disabled={findMoreOpen && !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)}
                 isLoading={initialLoad}
                 id={`name-field`}
                 inputProps={{ id: `name-field` }}

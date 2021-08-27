@@ -1,7 +1,7 @@
 import { IPaginateParams } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
-import { IOrganization, IOrganizationDetail, IPagedItems } from 'interfaces';
+import { IOrganization, IPagedItems } from 'interfaces';
 import React from 'react';
 
 import { useApi } from '.';
@@ -26,9 +26,9 @@ export const useApiOrganizations = () => {
       getOrganization: (id: number) => api.get<IOrganization>(`/admin/organizations/${id}`),
       getOrganizationsPaged: (params: IPaginateParams) =>
         api.post<IPagedItems<IOrganization>>(`/admin/organizations/filter`, params),
-      postOrganization: (organization: IOrganizationDetail) =>
+      postOrganization: (organization: IOrganization) =>
         apiWithToasts.post<IOrganization>(`/admin/organizations`, organization),
-      putOrganization: (organization: IOrganizationDetail) =>
+      putOrganization: (organization: IOrganization) =>
         apiWithToasts.put<IOrganization>(`/admin/organizations/${organization.id}`, organization),
       deleteOrganization: (organization: IOrganization) =>
         api.delete<IOrganization>(`/admin/organizations/${organization.id}`, {

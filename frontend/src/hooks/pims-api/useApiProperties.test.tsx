@@ -1,9 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
 import { IPagedItems } from 'interfaces';
-import { mockBuilding } from 'mocks/filterDataMock';
+import { mockParcel } from 'mocks/filterDataMock';
 
 import { useApiProperties } from './useApiProperties';
 
@@ -28,7 +27,7 @@ describe('useApiProperties api hook', () => {
       } as IPagedItems);
 
       const api = useApiProperties();
-      const response = await api.getParcels({} as any);
+      const response = await api.getProperties({} as any);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual({
@@ -43,10 +42,10 @@ describe('useApiProperties api hook', () => {
 
   it('Gets detailed parcels', () => {
     renderHook(async () => {
-      mockAxios.onGet(`/properties/parcels?`).reply(200, mockParcel);
+      mockAxios.onGet(`/properties?`).reply(200, mockParcel);
 
       const api = useApiProperties();
-      const response = await api.getParcelsDetail({} as any);
+      const response = await api.getProperties({} as any);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual(mockParcel);
@@ -54,10 +53,10 @@ describe('useApiProperties api hook', () => {
   });
   it('Gets a detailed parcel', () => {
     renderHook(async () => {
-      mockAxios.onGet(`/properties/parcels/${mockParcel.id}`).reply(200, mockParcel);
+      mockAxios.onGet(`/properties/${mockParcel.id}`).reply(200, mockParcel);
 
       const api = useApiProperties();
-      const response = await api.getParcelDetail(mockParcel.id as number);
+      const response = await api.getProperty(mockParcel.id as number);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual(mockParcel);
@@ -66,9 +65,9 @@ describe('useApiProperties api hook', () => {
 
   it('Puts an updated parcel', () => {
     renderHook(async () => {
-      mockAxios.onPut(`/properties/parcels/${mockParcel.id}`).reply(200, mockParcel);
+      mockAxios.onPut(`/properties/${mockParcel.id}`).reply(200, mockParcel);
       const api = useApiProperties();
-      const response = await api.putParcel(mockParcel);
+      const response = await api.putProperty(mockParcel);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual(mockParcel);
@@ -78,9 +77,9 @@ describe('useApiProperties api hook', () => {
   it('Posts a new parcel', () => {
     const newParcel = { ...mockParcel, id: 0 };
     renderHook(async () => {
-      mockAxios.onPost(`/properties/parcels`).reply(201, newParcel);
+      mockAxios.onPost(`/properties`).reply(201, newParcel);
       const api = useApiProperties();
-      const response = await api.postParcel(newParcel);
+      const response = await api.postProperty(newParcel);
 
       expect(response.status).toBe(201);
       expect(response.data).toStrictEqual(newParcel);
@@ -88,36 +87,13 @@ describe('useApiProperties api hook', () => {
   });
 
   it('Deletes a parcel', () => {
-    mockAxios.onDelete(`/properties/parcels/${mockParcel.id}`).reply(200, mockParcel);
+    mockAxios.onDelete(`/properties/${mockParcel.id}`).reply(200, mockParcel);
     renderHook(async () => {
       const api = useApiProperties();
-      const response = await api.deleteParcel(mockParcel);
+      const response = await api.deleteProperty(mockParcel);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual(mockParcel);
-    });
-  });
-
-  it('Gets a detailed building', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/properties/buildings/${mockBuilding.id}`).reply(200, mockBuilding);
-
-      const api = useApiProperties();
-      const response = await api.getBuilding(mockBuilding.id as number);
-
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockBuilding);
-    });
-  });
-
-  it('Deletes a building', () => {
-    mockAxios.onDelete(`/properties/buildings/${mockBuilding.id}`).reply(200, mockBuilding);
-    renderHook(async () => {
-      const api = useApiProperties();
-      const response = await api.deleteBuilding(mockBuilding);
-
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockBuilding);
     });
   });
 });

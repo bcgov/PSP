@@ -1,9 +1,8 @@
-import { FiscalKeys } from 'constants/fiscalKeys';
-import { IFiscal } from 'interfaces';
+import { IPropertyEvaluation } from 'interfaces';
 import _ from 'lodash';
 import { getCurrentFiscalYear } from 'utils';
 
-export const getCurrentFiscal = (fiscals: IFiscal[], key: FiscalKeys) => {
+export const getCurrentFiscal = (fiscals: IPropertyEvaluation[], key: number) => {
   const currentFiscal = getCurrentFiscalYear();
-  return _.find(fiscals, { fiscalYear: currentFiscal, key: key });
+  return _.find(fiscals, { evaluatedOn: new Date(`${currentFiscal}-01-01`), key: key });
 };

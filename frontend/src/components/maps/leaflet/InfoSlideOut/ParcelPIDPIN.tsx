@@ -1,4 +1,4 @@
-import { IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import * as React from 'react';
 import { pidFormatter } from 'utils/propertyUtils';
 
@@ -7,7 +7,7 @@ import { ThreeColumnItem } from './ThreeColumnItem';
 
 interface IParcelPIDPIN {
   /** the selected parcel information */
-  parcelInfo: IParcel;
+  parcelInfo: IProperty;
 }
 
 /**

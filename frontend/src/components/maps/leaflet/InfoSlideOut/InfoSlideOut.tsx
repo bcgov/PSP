@@ -6,17 +6,15 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import { PropertyPopUpContext } from 'components/maps/providers/PropertyPopUpProvider';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { MAX_ZOOM } from 'constants/strings';
-import { useApi } from 'hooks/useApi';
+import { useApiProperties } from 'hooks/pims-api';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IBuilding, IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import L from 'leaflet';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { FaInfo } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
-import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { storeBuildingDetail } from 'store/slices/properties';
 import styled from 'styled-components';
 
 import Control from '../Control/Control';
@@ -136,7 +134,7 @@ export type InfoControlProps = {
  */
 const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderActionClick }) => {
   const popUpContext = useContext(PropertyPopUpContext);
-  const { getParcel, getBuilding } = useApi();
+  const { getProperty } = useApiProperties();
   const mapInstance = useMap();
   const { propertyInfo } = popUpContext;
   const jumpToView = () =>
@@ -164,7 +162,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   const isBuilding = popUpContext.propertyTypeId === PropertyTypes.Building;
 
   const keycloak = useKeycloakWrapper();
-  const dispatch = useDispatch();
   const canViewProperty = keycloak.canUserViewProperty(propertyInfo);
   const canEditProperty = keycloak.canUserEditProperty(propertyInfo);
 
@@ -192,16 +189,9 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
         );
       } else if (canViewProperty) {
         if (isBuilding) {
-          return (
-            <AssociatedParcelsList parcels={(popUpContext.propertyInfo as IBuilding).parcels} />
-          );
+          return <AssociatedParcelsList parcels={[] as IProperty[]} />;
         } else {
-          return (
-            <AssociatedBuildingsList
-              propertyInfo={popUpContext.propertyInfo as IParcel}
-              canEditDetails={canEditProperty}
-            />
-          );
+          return <AssociatedBuildingsList buildings={[popUpContext.propertyInfo as IProperty]} />;
         }
       }
     } else {
@@ -226,36 +216,16 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
               const id = popUpContext.propertyInfo?.id;
               if (typeof propertyTypeId === 'number' && propertyTypeId >= 0 && !!id && !open) {
                 popUpContext.setLoading(true);
-                if ([PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(propertyTypeId)) {
-                  getParcel(id as number)
-                    .then((parcel: IParcel) => {
-                      popUpContext.setPropertyInfo(parcel);
-                    })
-                    .catch(() => {
-                      toast.error(
-                        'Unable to load property details, refresh the page and try again.',
-                      );
-                    })
-                    .finally(() => {
-                      popUpContext.setLoading(false);
-                    });
-                } else if (propertyTypeId === PropertyTypes.Building) {
-                  getBuilding(id as number)
-                    .then((building: IBuilding) => {
-                      popUpContext.setPropertyInfo(building);
-                      if (!!building.parcels.length) {
-                        dispatch(storeBuildingDetail(building));
-                      }
-                    })
-                    .catch(() => {
-                      toast.error(
-                        'Unable to load property details, refresh the page and try again.',
-                      );
-                    })
-                    .finally(() => {
-                      popUpContext.setLoading(false);
-                    });
-                }
+                getProperty(id as number)
+                  .then(parcel => {
+                    popUpContext.setPropertyInfo(parcel.data);
+                  })
+                  .catch(() => {
+                    toast.error('Unable to load property details, refresh the page and try again.');
+                  })
+                  .finally(() => {
+                    popUpContext.setLoading(false);
+                  });
               }
               if (!open) {
                 setOpen(true);

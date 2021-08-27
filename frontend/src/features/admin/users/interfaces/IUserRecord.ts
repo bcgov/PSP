@@ -4,8 +4,8 @@ export enum AccountActive {
 }
 
 export interface IUserRecord {
-  id: number;
-  key: string;
+  id?: number;
+  keycloakUserId?: string;
   email?: string;
   businessIdentifier?: string;
   firstName?: string;
@@ -16,5 +16,5 @@ export interface IUserRecord {
   position?: string;
   lastLogin?: string;
   createdOn?: string;
-  rowVersion: number;
+  rowVersion?: number;
 }

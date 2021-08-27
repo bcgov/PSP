@@ -3,8 +3,8 @@ import 'leaflet/dist/leaflet.css';
 
 import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { IParcel } from 'interfaces';
-import { mockBuilding, mockParcel } from 'mocks/filterDataMock';
+import { IProperty } from 'interfaces';
+import { mockProperties } from 'mocks/filterDataMock';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -18,7 +18,7 @@ const history = createMemoryHistory();
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 
-const AsscParcelsTab = (parcels: IParcel[]) => {
+const AsscParcelsTab = (parcels: IProperty[]) => {
   return (
     <Provider store={store}>
       <Router history={history}>
@@ -28,11 +28,11 @@ const AsscParcelsTab = (parcels: IParcel[]) => {
   );
 };
 
-const AsscBuildingsTab = (propertyInfo: IParcel | null, canEditProperty: boolean) => {
+const AsscBuildingsTab = (buildings: IProperty[]) => {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <AssociatedBuildingsList propertyInfo={propertyInfo} canEditDetails={canEditProperty} />
+        <AssociatedBuildingsList buildings={buildings} />
       </Router>
     </Provider>
   );
@@ -40,31 +40,27 @@ const AsscBuildingsTab = (propertyInfo: IParcel | null, canEditProperty: boolean
 
 describe('Associated Buildings/Parcels view', () => {
   it('Associated buildings list renders correctly', () => {
-    const { container } = render(AsscBuildingsTab(mockParcel, true));
+    const { container } = render(AsscBuildingsTab(mockProperties));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('Associated buildings list shows building name', () => {
-    const { getByText } = render(
-      AsscBuildingsTab({ ...mockParcel, buildings: [mockBuilding] }, true),
-    );
+    const { getByText } = render(AsscBuildingsTab(mockProperties));
     expect(getByText('test name')).toBeVisible();
   });
 
   it('Add associated building link does not appear if no permission', () => {
-    const { queryByText } = render(
-      AsscBuildingsTab({ ...mockParcel, buildings: [mockBuilding] }, false),
-    );
+    const { queryByText } = render(AsscBuildingsTab(mockProperties));
     expect(queryByText('Add a new Building')).toBeNull();
   });
 
   it('Associated parcels list renders correctly', () => {
-    const { container } = render(AsscParcelsTab(mockBuilding.parcels));
+    const { container } = render(AsscParcelsTab(mockProperties));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('Associated parcels list shows parcel PID', () => {
-    const { getByText } = render(AsscParcelsTab(mockBuilding.parcels));
+    const { getByText } = render(AsscParcelsTab(mockProperties));
     expect(getByText('000-000-000')).toBeVisible();
   });
 });

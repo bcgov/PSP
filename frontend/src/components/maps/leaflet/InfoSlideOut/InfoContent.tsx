@@ -3,7 +3,8 @@ import './InfoSlideOut.scss';
 import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
 import { Label } from 'components/common/Label';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { IBuilding, IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
+import { Moment } from 'moment';
 import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -19,9 +20,12 @@ import { ThreeColumnItem } from './ThreeColumnItem';
  * This should handle 'undefined' values by treating them as earlier.
  * @param a First date to compare.
  * @param b Second date to compare.
- * @returns A negative number indicating ealier, 0 as equal, positive number as later.
+ * @returns A negative number indicating earlier, 0 as equal, positive number as later.
  */
-export const compareDate = (a: Date | string | undefined, b: Date | string | undefined): number => {
+export const compareDate = (
+  a: Date | string | Moment | undefined,
+  b: Date | string | Moment | undefined,
+): number => {
   if (a === undefined && b === undefined) return 0;
   if (a === undefined && b !== undefined) return -1;
   if (a !== undefined && b === undefined) return 1;
@@ -32,7 +36,7 @@ export const compareDate = (a: Date | string | undefined, b: Date | string | und
 
 interface IInfoContent {
   /** the selected property information */
-  propertyInfo: IParcel | IBuilding | null;
+  propertyInfo: IProperty | null;
   /** The property type [Parcel, Building] */
   propertyTypeId: PropertyTypes | null;
   /** whether the user has the correct organization/permissions to view all the details */
@@ -83,33 +87,22 @@ export const InfoContent: React.FC<IInfoContent> = ({
 }) => {
   const isParcel =
     propertyTypeId !== null &&
-    [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(propertyTypeId);
+    [PropertyTypes.Land, PropertyTypes.Subdivision].includes(propertyTypeId);
   return (
     <>
       <ListGroup>
         {getHeading(propertyTypeId)}
-        {isParcel && <ParcelPIDPIN parcelInfo={propertyInfo as IParcel} />}
+        {isParcel && <ParcelPIDPIN parcelInfo={propertyInfo as IProperty} />}
         <OuterRow>
           {canViewDetails && (
             <>
               {propertyInfo?.name && (
                 <ThreeColumnItem leftSideLabel={'Name'} rightSideItem={propertyInfo?.name} />
               )}
-              {propertyInfo?.subOrganization ? (
-                <>
-                  <ThreeColumnItem
-                    leftSideLabel={'Ministry'}
-                    rightSideItem={propertyInfo?.organizationFullName}
-                  />
-                  <ThreeColumnItem
-                    leftSideLabel={'Owning organization'}
-                    rightSideItem={propertyInfo.subOrganizationFullName}
-                  />
-                </>
-              ) : (
+              {propertyInfo?.organizations && propertyInfo?.organizations.length && (
                 <ThreeColumnItem
-                  leftSideLabel={'Owning ministry'}
-                  rightSideItem={propertyInfo?.organizationFullName}
+                  leftSideLabel={'Organization'}
+                  rightSideItem={propertyInfo?.organizations[0].name}
                 />
               )}
             </>
@@ -125,11 +118,11 @@ export const InfoContent: React.FC<IInfoContent> = ({
         <OuterRow>
           <ThreeColumnItem
             leftSideLabel={'Civic address'}
-            rightSideItem={propertyInfo?.address?.line1}
+            rightSideItem={propertyInfo?.address?.streetAddress1}
           />
           <ThreeColumnItem
             leftSideLabel={'Location'}
-            rightSideItem={propertyInfo?.address?.administrativeArea}
+            rightSideItem={propertyInfo?.address?.municipality}
           />
         </OuterRow>
         <OuterRow>
@@ -138,11 +131,11 @@ export const InfoContent: React.FC<IInfoContent> = ({
         </OuterRow>
       </ListGroup>
       {isParcel && (
-        <ParcelAttributes parcelInfo={propertyInfo as IParcel} canViewDetails={canViewDetails} />
+        <ParcelAttributes parcelInfo={propertyInfo as IProperty} canViewDetails={canViewDetails} />
       )}
       {propertyTypeId === PropertyTypes.Building && (
         <BuildingAttributes
-          buildingInfo={propertyInfo as IBuilding}
+          buildingInfo={propertyInfo as IProperty}
           canViewDetails={canViewDetails}
         />
       )}

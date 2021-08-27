@@ -2,11 +2,11 @@ import { useKeycloak } from '@react-keycloak/web';
 import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { mockParcel } from 'components/maps/leaflet/InfoSlideOut/InfoContent.test';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import { useApi } from 'hooks/useApi';
-import { mockFlatBuildingProperty, mockFlatProperty } from 'mocks/filterDataMock';
+import { useApiProperties } from 'hooks/pims-api';
+import { IProperty } from 'interfaces';
+import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -18,13 +18,12 @@ import { TenantProvider } from 'tenants';
 import { fillInput } from 'utils/test-utils';
 
 import service from '../service';
-import { IProperty } from '.';
 import PropertyListView from './PropertyListView';
 
 // Set all module functions to jest.fn
 jest.mock('../service');
 jest.mock('@react-keycloak/web');
-jest.mock('hooks/useApi');
+jest.mock('hooks/pims-api/useApiPropertiesProperties');
 
 const mockedService = service as jest.Mocked<typeof service>;
 
@@ -90,9 +89,8 @@ const setupTests = (items?: IProperty[], buildingItems?: IProperty[]) => {
       items: buildingItems ?? [],
     });
   }
-  (useApi as jest.Mock).mockReturnValue({
-    updateParcel: jest.fn(),
-    updateBuilding: jest.fn(),
+  (useApiProperties as jest.Mock).mockReturnValue({
+    updateProperty: jest.fn(),
   });
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
@@ -199,7 +197,7 @@ describe('Property list view', () => {
   });
 
   it('Enables edit on property rows that the user has the same organization as the property', async () => {
-    setupTests([{ ...mockFlatProperty }]);
+    setupTests([{ ...mockParcel }]);
 
     await act(async () => {
       const { getByTestId, container } = renderPage();
@@ -220,7 +218,7 @@ describe('Property list view', () => {
   });
 
   it('Disables property rows that the user does not have edit permissions for', async () => {
-    setupTests([{ ...mockFlatProperty, organizationId: 2 }]);
+    setupTests([{ ...mockParcel }]);
 
     await act(async () => {
       const { getByTestId, container } = renderPage();
@@ -240,7 +238,7 @@ describe('Property list view', () => {
   });
 
   it('rows act as clickable links to the property details page.', async () => {
-    setupTests([mockFlatProperty]);
+    setupTests([mockParcel]);
 
     const { container } = renderPage();
 
@@ -251,7 +249,7 @@ describe('Property list view', () => {
   });
 
   it('rows can be edited by clicking the edit button', async () => {
-    setupTests([{ ...mockFlatProperty, id: 1 }]);
+    setupTests([{ ...mockParcel, id: 1 }]);
 
     const { container, getByTestId } = renderPage();
 
@@ -264,7 +262,7 @@ describe('Property list view', () => {
   });
 
   it('edit mode can be toggled on and off', async () => {
-    setupTests([{ ...mockFlatProperty, id: 1 }]);
+    setupTests([{ ...mockParcel, id: 1 }]);
 
     const { container, getByTestId, getByText, queryByTestId, queryByText } = renderPage();
 
@@ -283,7 +281,7 @@ describe('Property list view', () => {
   });
 
   it('updates to financials made in edit mode can be saved', async () => {
-    setupTests([{ ...mockFlatProperty, id: 1 }]);
+    setupTests([{ ...mockParcel, id: 1 }]);
 
     const { container, getByTestId, getByText } = renderPage();
 
@@ -293,13 +291,13 @@ describe('Property list view', () => {
     await waitFor(async () => expect(getByText('Save edits')).toBeVisible());
     await fillInput(container, 'properties.0.assessedLand', '12345');
 
-    (useApi().updateParcel as jest.MockedFunction<any>).mockResolvedValueOnce(mockParcel);
+    (useApiProperties().putProperty as jest.MockedFunction<any>).mockResolvedValueOnce(mockParcel);
     fireEvent.click(getByText('Save edits'));
-    await waitFor(() => expect(useApi().updateParcel).toHaveBeenCalled());
+    await waitFor(() => expect(useApiProperties().putProperty).toHaveBeenCalled());
   });
 
   it('updates to financials made in edit mode that throw errors are handled', async () => {
-    setupTests([{ ...mockFlatProperty, id: 1 }]);
+    setupTests([{ ...mockParcel, id: 1 }]);
 
     const { container, getByTestId, getByText } = renderPage();
 
@@ -308,7 +306,7 @@ describe('Property list view', () => {
     fireEvent.click(editButton);
     await waitFor(async () => expect(getByText('Save edits')).toBeVisible());
     await fillInput(container, 'properties.0.assessedLand', '12345');
-    (useApi().updateParcel as jest.MockedFunction<any>).mockImplementationOnce(() => {
+    (useApiProperties().putProperty as jest.MockedFunction<any>).mockImplementationOnce(() => {
       throw Error;
     });
     fireEvent.click(getByText('Save edits'));
@@ -317,16 +315,5 @@ describe('Property list view', () => {
         'Failed to save changes for Test Property. undefined',
       );
     });
-  });
-
-  it('rows can be expanded by clicking the folder icon', async () => {
-    setupTests([mockFlatProperty], [mockFlatBuildingProperty]);
-
-    const { container, getByText } = renderPage();
-
-    await waitFor(async () => expect(container.querySelector('.spinner-border')).toBeNull());
-    const cells = container.querySelectorAll('.td.expander');
-    fireEvent.click(cells[0]);
-    await waitFor(async () => expect(getByText('6460 Applecross Road')).toBeVisible());
   });
 });

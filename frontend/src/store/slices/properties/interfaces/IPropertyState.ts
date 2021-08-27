@@ -3,10 +3,9 @@ import { IProperty } from 'interfaces';
 
 import { IPropertyDetail } from '.';
 
-export interface IParcelState {
-  parcels: IProperty[];
-  draftParcels: PointFeature[];
+export interface IPropertyState {
+  properties: IProperty[];
+  draftProperties: PointFeature[];
   propertyDetail?: IPropertyDetail | null;
-  associatedBuildingDetail: IPropertyDetail | null;
-  pid: number;
+  pid?: number;
 }

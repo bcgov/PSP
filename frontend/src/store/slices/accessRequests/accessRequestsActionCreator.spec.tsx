@@ -325,7 +325,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(mockAxios.history.delete[0]).toMatchObject({ url: url });
             }),
@@ -339,7 +339,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -361,7 +361,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

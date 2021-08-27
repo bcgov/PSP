@@ -1,27 +1,18 @@
-import { Classifications } from 'constants/classifications';
-import { EvaluationKeys } from 'constants/evaluationKeys';
-import { FiscalKeys } from 'constants/fiscalKeys';
+import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { IEvaluation, IFiscal } from 'interfaces';
+import { IPropertyEvaluation } from 'interfaces';
 import moment, { Moment } from 'moment';
 import { getCurrentFiscalYear } from 'utils';
 
 import { getCurrentFiscal, getMostRecentAppraisal, getMostRecentEvaluation } from '.';
-import { toFlatProperty } from './propertyUtils';
 
-const createAppraisal = (date: Moment): IEvaluation => {
+const createEvaluation = (date: Moment): IPropertyEvaluation => {
   return {
-    key: EvaluationKeys.Appraised,
+    id: 1,
+    propertyId: 1,
+    key: 1,
     value: 123,
-    date: date.format('YYYY-MM-DD'),
-  };
-};
-
-const createFiscal = (year: number): IFiscal => {
-  return {
-    key: FiscalKeys.Market,
-    value: 123,
-    fiscalYear: year,
+    evaluatedOn: date.format('YYYY-MM-DD'),
   };
 };
 
@@ -34,233 +25,55 @@ describe('property util function tests', () => {
       expect(getMostRecentAppraisal([])).toBeUndefined();
     });
     it('returns undefined if there are no appraisals within a year of the current date', () => {
-      const appraisal = createAppraisal(moment().add(2, 'years'));
-      expect(getMostRecentAppraisal([appraisal])).toBeUndefined();
+      const evaluation = createEvaluation(moment().add(2, 'years'));
+      expect(getMostRecentAppraisal([evaluation])).toBeUndefined();
     });
     it('returns the most recent appraisal if there is an appraisal within a year of the current date', () => {
-      const appraisal = createAppraisal(moment().add(300, 'days'));
-      expect(getMostRecentAppraisal([appraisal])).toBe(appraisal);
+      const evaluation = createEvaluation(moment().add(300, 'days'));
+      expect(getMostRecentAppraisal([evaluation])).toBe(evaluation);
     });
     it('returns the most recent appraisal if there are multiple appraisals within a year of the current date', () => {
       const appraisals = [];
-      appraisals.push(createAppraisal(moment().subtract(1, 'days')));
-      appraisals.push(createAppraisal(moment().subtract(2, 'days')));
+      appraisals.push(createEvaluation(moment().subtract(1, 'days')));
+      appraisals.push(createEvaluation(moment().subtract(2, 'days')));
       expect(getMostRecentAppraisal(appraisals)).toBe(appraisals[0]);
     });
     it('returns the most recent appraisal if there are multiple appraisals within a year of the disposal date', () => {
       const appraisals = [];
       const disposalDate = moment('2018-01-01');
-      appraisals.push(createAppraisal(disposalDate.subtract(1, 'days')));
-      appraisals.push(createAppraisal(disposalDate.subtract(2, 'days')));
-      appraisals.push(createAppraisal(moment().subtract(1, 'days')));
+      appraisals.push(createEvaluation(disposalDate.subtract(1, 'days')));
+      appraisals.push(createEvaluation(disposalDate.subtract(2, 'days')));
+      appraisals.push(createEvaluation(moment().subtract(1, 'days')));
       expect(getMostRecentAppraisal(appraisals, '2018-01-01')).toBe(appraisals[0]);
     });
     it('returns undefined if there are no appraisals within a year of the disposal date', () => {
       const disposalDate = moment('2018-01-01');
-      const appraisal = createAppraisal(disposalDate.add(366, 'days'));
+      const appraisal = createEvaluation(disposalDate.add(366, 'days'));
       expect(getMostRecentAppraisal([appraisal], '2018-01-01')).toBeUndefined();
     });
   });
   describe('getCurrentFiscal', () => {
     it('returns undefined if passed an empty array', () => {
-      expect(getCurrentFiscal([], FiscalKeys.Market)).toBeUndefined();
+      expect(getCurrentFiscal([], 1)).toBeUndefined();
     });
     it('returns the most recent fiscal', () => {
       const fiscals = [];
-      fiscals.push(createFiscal(getCurrentFiscalYear() - 1));
-      fiscals.push(createFiscal(getCurrentFiscalYear()));
-      fiscals.push(createFiscal(getCurrentFiscalYear() - 2));
-      expect(getCurrentFiscal(fiscals, FiscalKeys.Market)).toBe(fiscals[1]);
+      fiscals.push(createEvaluation(moment(`${getCurrentFiscalYear() - 1}-01-01`)));
+      fiscals.push(createEvaluation(moment(`${getCurrentFiscalYear()}-01-01`)));
+      fiscals.push(createEvaluation(moment(`${getCurrentFiscalYear() - 2}-01-01`)));
+      expect(getCurrentFiscal(fiscals, 1)).toBe(fiscals[1]);
     });
   });
   describe('getMostRecentEvaluation', () => {
     it('returns undefined if passed an empty array', () => {
-      expect(getMostRecentEvaluation([], EvaluationKeys.Assessed)).toBeUndefined();
+      expect(getMostRecentEvaluation([], 1)).toBeUndefined();
     });
     it('returns the most recent evaluation', () => {
       const evaluations = [];
-      evaluations.push(createAppraisal(moment('2018-01-01')));
-      evaluations.push(createAppraisal(moment('2021-01-01')));
-      evaluations.push(createAppraisal(moment('2020-01-01')));
-      expect(getMostRecentEvaluation(evaluations, EvaluationKeys.Appraised)).toBe(evaluations[1]);
-    });
-  });
-  describe('toFlatProperty', () => {
-    describe('evaluation population', () => {
-      it('does not populate parcel evaluation fields if no evaluations present', () => {
-        const apiProperty = { ...mockApiProjectParcel, evaluations: [] };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.assessedLand).toBe('');
-        expect(property.assessedBuilding).toBe('');
-      });
-      it('does not populate building evaluation fields if no evaluations present', () => {
-        const apiProperty = { ...mockApiProjectBuilding, evaluations: [] };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.assessedLand).toBe('');
-        expect(property.assessedBuilding).toBe('');
-      });
-      it('populates parcel assessed fields properly', () => {
-        const apiProperty = {
-          ...mockApiProjectParcel,
-          evaluations: [
-            { key: EvaluationKeys.Assessed, value: 200, date: new Date() },
-            { key: EvaluationKeys.Improvements, value: 300, date: new Date() },
-          ] as IEvaluation[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.assessedLand).toBe(200);
-        expect(property.assessedBuilding).toBe(300);
-      });
-      it('populates building assessed fields properly', () => {
-        const apiProperty = {
-          ...mockApiProjectBuilding,
-          evaluations: [
-            { key: EvaluationKeys.Assessed, value: 200, date: moment() },
-            { key: EvaluationKeys.Improvements, value: 300 },
-          ] as IEvaluation[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.assessedLand).toBe('');
-        expect(property.assessedBuilding).toBe(200);
-      });
-      it('does not populate parcel assessed fields if all evaluations are too old', () => {
-        const apiProperty = {
-          ...mockApiProjectParcel,
-          evaluations: [
-            {
-              key: EvaluationKeys.Assessed,
-              value: 200,
-              date: moment()
-                .add(-1, 'years')
-                .toDate(),
-            },
-            {
-              key: EvaluationKeys.Improvements,
-              value: 300,
-              date: moment()
-                .add(-1, 'years')
-                .toDate(),
-            },
-          ] as IEvaluation[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.assessedLand).toBe('');
-        expect(property.assessedBuilding).toBe('');
-      });
-      it('does not populate building assessed fields if all evaluations are too old', () => {
-        const apiProperty = {
-          ...mockApiProjectBuilding,
-          evaluations: [
-            {
-              key: EvaluationKeys.Assessed,
-              value: 200,
-              date: moment()
-                .add(-1, 'years')
-                .toDate(),
-            },
-            {
-              key: EvaluationKeys.Improvements,
-              value: 300,
-              date: moment()
-                .add(-1, 'years')
-                .toDate(),
-            },
-          ] as IEvaluation[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.assessedLand).toBe('');
-        expect(property.assessedBuilding).toBe('');
-      });
-    });
-    describe('fiscal population', () => {
-      it('does not populate parcel fiscal fields if no fiscals present', () => {
-        const apiProperty = { ...mockApiProjectParcel, fiscals: [], evaluations: [] };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.market).toBe('');
-        expect(property.netBook).toBe('');
-      });
-      it('does not populate building fiscal fields if no fiscals present', () => {
-        const apiProperty = { ...mockApiProjectBuilding, fiscals: [], evaluations: [] };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.market).toBe('');
-        expect(property.netBook).toBe('');
-      });
-      it('populates parcel fiscal fields properly', () => {
-        const apiProperty = {
-          ...mockApiProjectParcel,
-          evaluations: [],
-          fiscals: [
-            { key: FiscalKeys.Market, value: 200, fiscalYear: getCurrentFiscalYear() },
-            { key: FiscalKeys.NetBook, value: 300, fiscalYear: getCurrentFiscalYear() },
-          ] as IFiscal[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.market).toBe(200);
-        expect(property.netBook).toBe(300);
-      });
-      it('populates building fiscal fields properly', () => {
-        const apiProperty = {
-          ...mockApiProjectBuilding,
-          evaluations: [],
-          fiscals: [
-            { key: FiscalKeys.Market, value: 200, fiscalYear: getCurrentFiscalYear() },
-            { key: FiscalKeys.NetBook, value: 300, fiscalYear: getCurrentFiscalYear() },
-          ] as IFiscal[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.market).toBe(200);
-        expect(property.netBook).toBe(300);
-      });
-      it('does not populate parcel fiscal fields if all fiscals are too old', () => {
-        const apiProperty = {
-          ...mockApiProjectParcel,
-          evaluations: [],
-          fiscals: [
-            {
-              key: FiscalKeys.Market,
-              value: 200,
-              fiscalYear: moment()
-                .add(-1, 'years')
-                .year(),
-            },
-            {
-              key: FiscalKeys.NetBook,
-              value: 300,
-              fiscalYear: moment()
-                .add(-1, 'years')
-                .year(),
-            },
-          ] as IFiscal[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.market).toBe('');
-        expect(property.netBook).toBe('');
-      });
-      it('does not populate building fiscal fields if all fiscals are too old', () => {
-        const apiProperty = {
-          ...mockApiProjectBuilding,
-          evaluations: [],
-          fiscals: [
-            {
-              key: FiscalKeys.Market,
-              value: 200,
-              fiscalYear: moment()
-                .add(-1, 'years')
-                .year(),
-            },
-            {
-              key: FiscalKeys.NetBook,
-              value: 300,
-              fiscalYear: moment()
-                .add(-1, 'years')
-                .year(),
-            },
-          ] as IFiscal[],
-        };
-        const property = toFlatProperty(apiProperty as any);
-        expect(property.market).toBe('');
-        expect(property.netBook).toBe('');
-      });
+      evaluations.push(createEvaluation(moment('2018-01-01')));
+      evaluations.push(createEvaluation(moment('2021-01-01')));
+      evaluations.push(createEvaluation(moment('2020-01-01')));
+      expect(getMostRecentEvaluation(evaluations, 1)).toBe(evaluations[1]);
     });
   });
 });
@@ -270,7 +83,7 @@ export const mockApiProjectParcel = {
   projectId: '1007',
   propertyType: 'Land',
   parcelId: 87,
-  propertyTypeId: PropertyTypes.Parcel,
+  propertyTypeId: PropertyTypes.Land,
   parcel: {
     pid: '000-359-173',
     landArea: 34.74,
@@ -322,7 +135,7 @@ export const mockApiProjectParcel = {
     id: 87,
     projectNumber: 'SPP-10006',
     description: 'Nanaimo Main Campus except Wakesiah Ave \u0026 Res.',
-    classificationId: Classifications.Disposed,
+    classificationId: PropertyClassificationTypes.Disposed,
     classification: 'Disposed',
     organizationId: 0,
     address: {
@@ -405,7 +218,7 @@ export const mockApiProjectBuilding = {
     id: 87,
     projectNumber: 'SPP-10006',
     description: 'Nanaimo Main Campus except Wakesiah Ave \u0026 Res.',
-    classificationId: Classifications.Disposed,
+    classificationId: PropertyClassificationTypes.Disposed,
     classification: 'Disposed',
     organizationId: 0,
     address: {

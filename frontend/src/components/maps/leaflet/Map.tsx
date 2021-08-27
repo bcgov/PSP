@@ -27,8 +27,8 @@ import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
-import { IPropertyDetail, storeParcelDetail } from 'store/slices/properties';
-import { decimalOrUndefined, floatOrUndefined } from 'utils';
+import { IPropertyDetail, storeProperty } from 'store/slices/properties';
+import { floatOrUndefined } from 'utils';
 
 import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
@@ -89,35 +89,22 @@ const defaultFilterValues: IPropertyFilter = {
   searchBy: 'address',
   pid: '',
   address: '',
-  administrativeArea: '',
-  propertyType: '',
+  municipality: '',
   organizations: '',
-  classificationId: '',
   minLotSize: '',
   maxLotSize: '',
-  rentableArea: '',
   name: '',
-  maxAssessedValue: '',
-  maxMarketValue: '',
-  maxNetBookValue: '',
-  includeAllProperties: false,
 };
 
 const whitelistedFilterKeys = [
   'pid',
   'address',
-  'administrativeArea',
+  'municipality',
   'classificationId',
   'organizations',
   'minLandArea',
   'maxLandArea',
-  'rentableArea',
   'name',
-  'predominateUseId',
-  'constructionTypeId',
-  'floorCount',
-  'bareLandOnly',
-  'includeAllProperties',
 ];
 
 /**
@@ -128,18 +115,12 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   return {
     pid: filter.pid,
     address: filter.address,
-    administrativeArea: filter.administrativeArea,
-    classificationId: decimalOrUndefined(filter.classificationId),
+    municipality: filter.municipality,
+    classificationId: filter.classificationId,
     organizations: filter.organizations,
     minLandArea: floatOrUndefined(filter.minLotSize),
     maxLandArea: floatOrUndefined(filter.maxLotSize),
-    rentableArea: floatOrUndefined(filter.rentableArea),
     name: filter.name,
-    predominateUseId: parseInt(filter.predominateUseId!),
-    constructionTypeId: parseInt(filter.constructionTypeId!),
-    floorCount: parseInt(filter.floorCount!),
-    bareLandOnly: filter.bareLandOnly,
-    includeAllProperties: filter.includeAllProperties,
   };
 };
 
@@ -181,7 +162,7 @@ const Map: React.FC<MapProps> = ({
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
 
-  if (mapRef.current && !selectedProperty?.parcelDetail) {
+  if (mapRef.current && !selectedProperty?.propertyDetail) {
     const center = mapRef.current.getCenter();
     lat = center.lat;
     lng = center.lng;
@@ -220,7 +201,7 @@ const Map: React.FC<MapProps> = ({
     };
     // Search button will always trigger filter changed (triggerFilterChanged is set to true when search button is clicked)
     if (!isEqualWith(geoFilter, filter, compareValues) || triggerFilterChanged) {
-      dispatch(storeParcelDetail(null));
+      dispatch(storeProperty(null));
       setGeoFilter(getQueryParams(filter));
       setChanged(true);
       setTriggerFilterChanged(false);
@@ -330,7 +311,6 @@ const Map: React.FC<MapProps> = ({
             <PropertyFilter
               defaultFilter={{
                 ...defaultFilterValues,
-                includeAllProperties: keycloak.hasClaim(Claims.ADMIN_PROPERTIES),
               }}
               organizationLookupCodes={organizations}
               adminAreaLookupCodes={administrativeAreas}
@@ -373,7 +353,7 @@ const Map: React.FC<MapProps> = ({
                   offset={[0, -25]}
                   onClose={() => {
                     setLayerPopup(undefined);
-                    dispatch(storeParcelDetail(null));
+                    dispatch(storeProperty(null));
                   }}
                   closeButton={true}
                   autoPan={false}

@@ -1,11 +1,11 @@
 import { Label } from 'components/common/Label';
-import { IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 interface IAssociatedParcels {
   /** the list of parcels */
-  parcels: IParcel[];
+  parcels: IProperty[];
 }
 
 /**

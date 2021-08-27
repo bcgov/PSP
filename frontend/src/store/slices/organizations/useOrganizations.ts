@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { useApiOrganizations } from 'hooks/pims-api/useApiOrganizations';
-import { IOrganization, IOrganizationDetail, IPagedItems } from 'interfaces';
+import { IOrganization, IPagedItems } from 'interfaces';
 import { useCallback } from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { useAppDispatch } from 'store/hooks';
@@ -56,7 +56,7 @@ export const useOrganizations = () => {
    * @return the detailed organization.
    */
   const fetchDetail = useCallback(
-    async (id: number): Promise<IOrganizationDetail> => {
+    async (id: number): Promise<IOrganization> => {
       dispatch(logRequest(actionTypes.GET_ORGANIZATION_DETAILS));
       dispatch(showLoading());
       return getOrganization(id)
@@ -77,9 +77,7 @@ export const useOrganizations = () => {
    * @return the updated organization.
    */
   const update = useCallback(
-    async (
-      updatedOrganization: IOrganizationDetail,
-    ): Promise<AxiosResponse<IOrganizationDetail>> => {
+    async (updatedOrganization: IOrganization): Promise<AxiosResponse<IOrganization>> => {
       const axiosPromise = putOrganization(updatedOrganization).then((response: AxiosResponse) => {
         return Promise.resolve(response);
       });
@@ -93,7 +91,7 @@ export const useOrganizations = () => {
    * @return the added organization.
    */
   const add = useCallback(
-    async (organization: IOrganizationDetail): Promise<IOrganization> => {
+    async (organization: IOrganization): Promise<IOrganization> => {
       dispatch(logRequest(actionTypes.ADD_ORGANIZATION));
       dispatch(showLoading());
       try {
@@ -121,7 +119,7 @@ export const useOrganizations = () => {
    * @return the deleted organization.
    */
   const remove = useCallback(
-    async (organization: IOrganization): Promise<IOrganizationDetail> => {
+    async (organization: IOrganization): Promise<IOrganization> => {
       dispatch(logRequest(actionTypes.DELETE_ORGANIZATION));
       dispatch(showLoading());
       return await deleteOrganization(organization)

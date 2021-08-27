@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -79,6 +80,23 @@ namespace Pims.Dal.Services
                 .ToArray();
 
             return new Paged<Property>(items, filter.Page, filter.Quantity, query.Count());
+        }
+
+        /// <summary>
+        /// Get the property for the specified PID value.
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public Property GetForPID(string pid)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+            var search = pid.ConvertPID();
+
+            var property = this.Context.Properties
+                .Include(p => p.Address)
+                .Where(p => p.PID == search)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+            return property;
         }
         #endregion
     }

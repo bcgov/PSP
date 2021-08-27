@@ -1,11 +1,5 @@
 import { TableSort } from 'components/Table/TableSort';
-import {
-  IOrganization,
-  IOrganizationDetail,
-  IOrganizationFilter,
-  IOrganizationRecord,
-  IPagedItems,
-} from 'interfaces';
+import { IOrganization, IOrganizationFilter, IOrganizationRecord, IPagedItems } from 'interfaces';
 
 export interface IOrganizationsState {
   pagedOrganizations: IPagedItems<IOrganization>;
@@ -13,5 +7,5 @@ export interface IOrganizationsState {
   filter: IOrganizationFilter;
   sort: TableSort<IOrganizationRecord>;
   pageIndex: number;
-  organizationDetail: IOrganizationDetail;
+  organizationDetail: IOrganization;
 }

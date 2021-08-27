@@ -4,10 +4,10 @@ import MockAdapter from 'axios-mock-adapter';
 import { GET_ORGANIZATIONS } from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
-import { IOrganizationDetail } from 'interfaces';
+import { IOrganization } from 'interfaces';
 import { find } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
-import { ORGANIZATIONS } from 'mocks/filterDataMock';
+import { mockOrganization } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import configureMockStore from 'redux-mock-store';
@@ -44,7 +44,7 @@ describe('organizations async actions', () => {
     const url = `/admin/organizations/filter`;
     const mockResponse = {
       data: {
-        items: ORGANIZATIONS,
+        items: [mockOrganization],
         page: 1,
         pageIndex: 0,
         quantity: 0,
@@ -92,7 +92,7 @@ describe('organizations async actions', () => {
 
     it('Request failure, dispatches error with correct response', () => {
       const url = ENVIRONMENT.apiUrl + API.POST_ORGANIZATIONS();
-      const mockResponse = { data: [ORGANIZATIONS] };
+      const mockResponse = { data: [mockOrganization] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
@@ -116,16 +116,16 @@ describe('organizations async actions', () => {
   });
 
   describe('getOrganizationDetail action creator', () => {
-    const url = `/admin/organizations/${ORGANIZATIONS[0].id}`;
+    const url = `/admin/organizations/${mockOrganization.id}`;
     const mockResponse = {
-      data: [ORGANIZATIONS[0]],
+      data: [mockOrganization],
     };
     it('calls the api with the expected url', () => {
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useOrganizations()
-            .fetchOrganizationDetail(+ORGANIZATIONS[0].id)
+            .fetchOrganizationDetail(mockOrganization.id ?? 0)
             .then(() => {
               expect(mockAxios.history.get[0]).toMatchObject({ url: '/admin/organizations/1' });
             }),
@@ -139,7 +139,7 @@ describe('organizations async actions', () => {
       renderHook(
         () =>
           useOrganizations()
-            .fetchOrganizationDetail(+ORGANIZATIONS[0].id)
+            .fetchOrganizationDetail(mockOrganization.id ?? 0)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -157,12 +157,12 @@ describe('organizations async actions', () => {
     });
 
     it('Request failure, dispatches error with correct response', () => {
-      const mockResponse = { data: [ORGANIZATIONS] };
+      const mockResponse = { data: [mockOrganization] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
       renderHook(
         () =>
           useOrganizations()
-            .fetchOrganizationDetail(+ORGANIZATIONS[0].id)
+            .fetchOrganizationDetail(mockOrganization.id ?? 0)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -183,9 +183,9 @@ describe('organizations async actions', () => {
   describe('addOrganization action creator', () => {
     const url = `/admin/organizations`;
     const mockResponse = {
-      data: [ORGANIZATIONS[0]],
+      data: [mockOrganization],
     };
-    const mockOrganization = { ...ORGANIZATIONS[0], email: '', sendEmail: true, addressTo: '' };
+    const mockOrganization1 = { ...mockOrganization, email: '', sendEmail: true, addressTo: '' };
     it('calls the api with the expected url', () => {
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
@@ -205,7 +205,7 @@ describe('organizations async actions', () => {
       renderHook(
         () =>
           useOrganizations()
-            .addOrganization(mockOrganization)
+            .addOrganization(mockOrganization1)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -238,16 +238,12 @@ describe('organizations async actions', () => {
   });
 
   describe('updateOrganization action creator', () => {
-    const url = `/admin/organizations/${ORGANIZATIONS[0].id}`;
+    const url = `/admin/organizations/${mockOrganization.id}`;
     const mockResponse = {
-      data: [ORGANIZATIONS[0]],
+      data: [mockOrganization],
     };
-    const organizationDetail: IOrganizationDetail = {
-      ...ORGANIZATIONS[0],
-      id: +ORGANIZATIONS[0].id,
-      email: 'mail',
-      sendEmail: true,
-      addressTo: '',
+    const organizationDetail: IOrganization = {
+      ...mockOrganization,
       rowVersion: 1,
     };
     it('calls the api with the expected url', () => {
@@ -302,16 +298,16 @@ describe('organizations async actions', () => {
   });
 
   describe('deleteOrganization action creator', () => {
-    const url = `/admin/organizations/${ORGANIZATIONS[0].id}`;
+    const url = `/admin/organizations/${mockOrganization.id}`;
     const mockResponse = {
-      data: [ORGANIZATIONS[0]],
+      data: [mockOrganization],
     };
     it('calls the api with the expected url', () => {
       mockAxios.onDelete(url).reply(200, mockResponse);
       renderHook(
         () =>
           useOrganizations()
-            .removeOrganization(ORGANIZATIONS[0])
+            .removeOrganization(mockOrganization)
             .then(() => {
               expect(mockAxios.history.delete[0]).toMatchObject({ url: '/admin/organizations/1' });
             }),
@@ -325,7 +321,7 @@ describe('organizations async actions', () => {
       renderHook(
         () =>
           useOrganizations()
-            .removeOrganization(ORGANIZATIONS[0])
+            .removeOrganization(mockOrganization)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -343,7 +339,7 @@ describe('organizations async actions', () => {
       renderHook(
         () =>
           useOrganizations()
-            .removeOrganization(ORGANIZATIONS[0])
+            .removeOrganization(mockOrganization)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

@@ -1,5 +1,4 @@
-import { EvaluationKeys, FiscalKeys } from 'constants/index';
-import { IEvaluation, IFiscal } from 'interfaces';
+import { IPropertyEvaluation } from 'interfaces';
 import moment, { Moment } from 'moment';
 import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from 'utils';
 
@@ -80,19 +79,19 @@ describe('Is Positive or Zero', () => {
     expect(output).toEqual(expectedOutput);
   });
 
-  const createAppraisal = (date: Moment): IEvaluation => {
+  const createAppraisal = (date: Moment): IPropertyEvaluation => {
     return {
-      key: EvaluationKeys.Appraised,
+      key: 3,
       value: 123,
-      date: date.format('YYYY-MM-DD'),
+      evaluatedOn: date.format('YYYY-MM-DD'),
     };
   };
 
-  const createFiscal = (year: number): IFiscal => {
+  const createFiscal = (year: number): IPropertyEvaluation => {
     return {
-      key: FiscalKeys.Market,
+      key: 2,
       value: 123,
-      fiscalYear: year,
+      evaluatedOn: new Date(`{year}-01-01`),
     };
   };
 
@@ -130,26 +129,26 @@ describe('Is Positive or Zero', () => {
   });
   describe('getCurrentFiscal', () => {
     it('returns undefined if passed an empty array', () => {
-      expect(getCurrentFiscal([], FiscalKeys.Market)).toBeUndefined();
+      expect(getCurrentFiscal([], 2)).toBeUndefined();
     });
     it('returns the most recent fiscal', () => {
       const fiscals = [];
       fiscals.push(createFiscal(getCurrentFiscalYear() - 1));
       fiscals.push(createFiscal(getCurrentFiscalYear()));
       fiscals.push(createFiscal(getCurrentFiscalYear() - 2));
-      expect(getCurrentFiscal(fiscals, FiscalKeys.Market)).toBe(fiscals[1]);
+      expect(getCurrentFiscal(fiscals, 2)).toBe(fiscals[1]);
     });
   });
   describe('getMostRecentEvaluation', () => {
     it('returns undefined if passed an empty array', () => {
-      expect(getMostRecentEvaluation([], EvaluationKeys.Assessed)).toBeUndefined();
+      expect(getMostRecentEvaluation([], 1)).toBeUndefined();
     });
     it('returns the most recent evaluation', () => {
       const evaluations = [];
       evaluations.push(createAppraisal(moment('2018-01-01')));
       evaluations.push(createAppraisal(moment('2021-01-01')));
       evaluations.push(createAppraisal(moment('2020-01-01')));
-      expect(getMostRecentEvaluation(evaluations, EvaluationKeys.Appraised)).toBe(evaluations[1]);
+      expect(getMostRecentEvaluation(evaluations, 3)).toBe(evaluations[1]);
     });
   });
 });

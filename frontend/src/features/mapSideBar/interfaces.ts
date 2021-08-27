@@ -1,3 +1,4 @@
+import { AddressTypes } from 'constants/index';
 import { IAddress } from 'interfaces';
 
 export interface IProperty {
@@ -20,11 +21,12 @@ export interface IProperty {
 
 export const defaultPropertyValues: IProperty = {
   address: {
-    line1: '',
-    administrativeArea: '',
+    addressTypeId: AddressTypes.Physical,
+    streetAddress1: '',
+    municipality: '',
     postal: '',
     province: '',
-    provinceId: 'BC',
+    provinceId: 1,
   },
   titleNumber: '',
   legalDescription: '',

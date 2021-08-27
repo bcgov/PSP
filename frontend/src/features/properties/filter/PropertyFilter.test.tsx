@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import * as API from 'constants/API';
-import { Classifications } from 'constants/classifications';
+import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import * as MOCK from 'mocks/filterDataMock';
@@ -97,13 +97,10 @@ const defaultFilter: IPropertyFilter = {
   searchBy: 'name',
   pid: '',
   address: '',
-  administrativeArea: '',
-  propertyType: '',
+  municipality: '',
   organizations: '',
-  classificationId: '',
   minLotSize: '',
   maxLotSize: '',
-  rentableArea: '',
   name: '',
 };
 
@@ -113,8 +110,8 @@ const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true)
       <Router history={history}>
         <PropertyFilter
           defaultFilter={filter}
-          organizationLookupCodes={MOCK.ORGANIZATIONS}
-          adminAreaLookupCodes={MOCK.ADMINISTRATIVEAREAS}
+          organizationLookupCodes={MOCK.mockOrganizationLookups}
+          adminAreaLookupCodes={MOCK.mockAdministrativeAreaLookups}
           onChange={onFilterChange}
           showAllOrganizationSelect={showAllOrganizationSelect}
         />
@@ -166,7 +163,7 @@ describe('MapFilterBar', () => {
     await waitFor(() => {
       fireEvent.change(classificationId!, {
         target: {
-          value: `${Classifications.CoreOperational}`,
+          value: `${PropertyClassificationTypes.CoreOperational}`,
         },
       });
     });
@@ -179,15 +176,13 @@ describe('MapFilterBar', () => {
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
       pid: '',
       address: '',
-      administrativeArea: 'Victoria',
+      municipality: 'Victoria',
       organizations: '',
-      classificationId: `${Classifications.CoreOperational}`,
+      classificationId: PropertyClassificationTypes.CoreOperational,
       minLotSize: '',
       maxLotSize: '',
       name: '',
       searchBy: 'name',
-      propertyType: '',
-      rentableArea: '',
     });
   });
 
@@ -196,12 +191,11 @@ describe('MapFilterBar', () => {
       pid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
-      administrativeArea: 'mockAdministrativeArea',
+      municipality: 'mockAdministrativeArea',
       organizations: '2',
-      classificationId: `${Classifications.CoreStrategic}`,
+      classificationId: PropertyClassificationTypes.CoreStrategic,
       minLotSize: '10',
       maxLotSize: '20',
-      rentableArea: '0',
     };
     const { getByText } = render(getUiElement(providedFilter));
     expect(getByText('Address')).toBeVisible();
@@ -213,12 +207,11 @@ describe('MapFilterBar', () => {
       pid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
-      administrativeArea: 'mockAdministrativeArea',
+      municipality: 'mockAdministrativeArea',
       organizations: ['2'] as any,
-      classificationId: `${Classifications.CoreStrategic}`,
+      classificationId: PropertyClassificationTypes.CoreStrategic,
       minLotSize: '10',
       maxLotSize: '20',
-      rentableArea: '0',
     };
     const { getByDisplayValue } = render(getUiElement(providedFilter));
     expect(getByDisplayValue('HTLH')).toBeVisible();
@@ -229,12 +222,11 @@ describe('MapFilterBar', () => {
       pid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
-      administrativeArea: 'mockAdministrativeArea',
+      municipality: 'mockAdministrativeArea',
       organizations: [] as any,
-      classificationId: `${Classifications.CoreStrategic}`,
+      classificationId: PropertyClassificationTypes.CoreStrategic,
       minLotSize: '10',
       maxLotSize: '20',
-      rentableArea: '0',
     };
     const { container } = render(getUiElement(providedFilter));
     const organizations = container.querySelector('input[name="organizations"]');
@@ -262,20 +254,17 @@ describe('MapFilterBar', () => {
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
       pid: '',
       address: '',
-      administrativeArea: '',
+      municipality: '',
       organizations: '',
-      classificationId: '',
       minLotSize: '',
       maxLotSize: '',
       name: '',
       searchBy: 'name',
-      propertyType: '',
-      rentableArea: '',
     });
   });
 
   it('searches for property names', async () => {
-    const { container } = render(getUiElement({ ...defaultFilter, includeAllProperties: true }));
+    const { container } = render(getUiElement({ ...defaultFilter }));
     const nameField = container.querySelector('input[id="name-field"]');
     fireEvent.change(nameField!, {
       target: {
@@ -289,9 +278,7 @@ describe('MapFilterBar', () => {
 
   it('disables the property name and organizations fields when All Government is selected', async () => {
     await act(async () => {
-      const { container, getByPlaceholderText } = render(
-        getUiElement({ ...defaultFilter, includeAllProperties: true }),
-      );
+      const { container, getByPlaceholderText } = render(getUiElement({ ...defaultFilter }));
       expect(getByPlaceholderText('Property name')).toBeDisabled();
       expect(container.querySelector('input[name="organizations"]')).toBeDisabled();
     });
@@ -299,9 +286,7 @@ describe('MapFilterBar', () => {
 
   it('enables the property name and organizations fields when My Organizations is selected', async () => {
     await act(async () => {
-      const { container, getByPlaceholderText } = render(
-        getUiElement({ ...defaultFilter, includeAllProperties: false }),
-      );
+      const { container, getByPlaceholderText } = render(getUiElement({ ...defaultFilter }));
       expect(getByPlaceholderText('Property name')).not.toBeDisabled();
       expect(container.querySelector('input[name="organizations"]')).not.toBeDisabled();
     });

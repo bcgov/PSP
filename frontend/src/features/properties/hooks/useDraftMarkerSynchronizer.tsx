@@ -8,7 +8,7 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/hooks';
-import { storeDraftParcels } from 'store/slices/properties';
+import { storeDraftProperties } from 'store/slices/properties';
 
 /**
  * Get a list of draft markers from the current form values.
@@ -38,7 +38,7 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
         id: 0,
         name: values.name?.length ? values.name : 'New Parcel',
         propertyTypeId:
-          values.parcelId !== undefined ? PropertyTypes.DraftBuilding : PropertyTypes.DraftParcel,
+          values.parcelId !== undefined ? PropertyTypes.DraftBuilding : PropertyTypes.DraftLand,
       },
     },
   ];
@@ -50,23 +50,21 @@ const getDraftMarkers = (values: any, initialValues: any, nameSpace: string) => 
  */
 const useDraftMarkerSynchronizer = (nameSpace: string) => {
   const { values, initialValues } = useFormikContext();
-  const properties = useAppSelector(state => [...state.properties.draftParcels]);
+  const properties = useAppSelector(state => [...state.properties.draftProperties]);
   const dispatch = useDispatch();
   const nonDraftProperties = React.useMemo(
     () =>
       properties.filter(
         (property: PointFeature) =>
           property.properties.propertyTypeId !== undefined &&
-          [PropertyTypes.Building, PropertyTypes.Parcel].includes(
-            property.properties.propertyTypeId,
-          ),
+          [PropertyTypes.Building, PropertyTypes.Land].includes(property.properties.propertyTypeId),
       ),
     [properties],
   );
 
   React.useEffect(() => {
     return () => {
-      dispatch(storeDraftParcels([]));
+      dispatch(storeDraftProperties([]));
     };
   }, [dispatch]);
 
@@ -91,9 +89,9 @@ const useDraftMarkerSynchronizer = (nameSpace: string) => {
                 dbProperty.geometry.coordinates[1] === draftMarker.geometry.coordinates[1],
             ) === undefined,
         );
-        dispatch(storeDraftParcels(newDraftMarkers as PointFeature[]));
+        dispatch(storeDraftProperties(newDraftMarkers as PointFeature[]));
       } else {
-        dispatch(storeDraftParcels([]));
+        dispatch(storeDraftProperties([]));
       }
     },
     [dispatch],

@@ -1,7 +1,6 @@
 import { ColumnWithProps, Table } from 'components/Table';
+import { IProperty } from 'interfaces';
 import * as React from 'react';
-
-import { IProperty } from '..';
 
 /**
  * Buildings table component properties

@@ -20,7 +20,7 @@ export const toAccessRequest = (values: any): IAccessRequest => {
       email: values.user.email,
       position: values.user.position,
     },
-    organization: values.organizationId !== undefined ? { id: +values.organizationId } : undefined,
+    organizationId: values.organizationId,
     role: values.roleId !== undefined ? { id: +values.roleId } : undefined,
     status: values.status,
     note: values.note,
@@ -56,12 +56,12 @@ export const accessRequestsSlice = createSlice({
     },
     deleteAccessRequest(state: IAccessRequestsState, action: PayloadAction<number>) {
       state.pagedAccessRequests.items = state.pagedAccessRequests.items.filter(
-        (accessRequest: { id: number }) => accessRequest.id !== action.payload,
+        (accessRequest: { id?: number }) => accessRequest.id !== action.payload,
       );
     },
     updateAccessRequestsAdmin(state: IAccessRequestsState, action: PayloadAction<IAccessRequest>) {
       state.pagedAccessRequests.items = state.pagedAccessRequests.items.filter(
-        (accessRequest: { id: number }) => accessRequest.id !== action.payload.id,
+        (accessRequest: { id?: number }) => accessRequest.id !== action.payload.id,
       );
     },
     updateAccessRequestPageSize(state: IAccessRequestsState, action: PayloadAction<number>) {

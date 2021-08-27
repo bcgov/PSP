@@ -1,10 +1,10 @@
 import { IGeoSearchParams } from 'constants/API';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { BBox } from 'geojson';
-import { useApi } from 'hooks/useApi';
+import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IBuilding, IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import { GeoJSON, LatLngBounds } from 'leaflet';
 import { flatten, uniqBy } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -146,11 +146,11 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const mapInstance = useMap();
   const [features, setFeatures] = useState<PointFeature[]>([]);
   const [loadingTiles, setLoadingTiles] = useState(false);
-  const { loadProperties } = useApi();
+  const { getPropertiesWfs } = useApiProperties();
   const { changed: filterChanged } = useFilterContext();
   const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
 
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
+  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftProperties);
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -176,24 +176,18 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     return tiles.map(tile => ({
       bbox: tile.bbox,
       address: filter?.address,
-      administrativeArea: filter?.administrativeArea,
+      municipality: filter?.municipality,
       pid: filter?.pid,
       organizations: filter?.organizations,
       classificationId: filter?.classificationId,
       minLandArea: filter?.minLandArea,
       maxLandArea: filter?.maxLandArea,
-      floorCount: filter?.floorCount,
-      predominateUseId: Number(filter?.predominateUseId),
-      constructionTypeId: filter?.constructionTypeId,
       name: filter?.name,
-      bareLandOnly: filter?.bareLandOnly,
-      rentableArea: filter?.rentableArea,
-      includeAllProperties: filter?.includeAllProperties,
     }));
   }, [filter]);
 
   const loadTile = async (filter: IGeoSearchParams) => {
-    return loadProperties(filter);
+    return getPropertiesWfs(filter);
   };
 
   const search = async (filters: IGeoSearchParams[]) => {
@@ -210,11 +204,8 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
         point => `${point?.properties?.id}-${point?.properties?.propertyTypeId}`,
       );
 
-      /**
-       * Whether the land has buildings on it.
-       * @param property PIMS property
-       */
-      const hasBuildings = (property: IParcel | IBuilding) => false;
+      // TODO: Why does this exist?
+      const hasBuildings = (property: IProperty) => false;
 
       let results = items.filter(({ properties }: any) => {
         return (
@@ -226,11 +217,11 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       }) as any;
 
       // Fit to municipality bounds
-      const administrativeArea = filter?.administrativeArea;
-      if (results.length === 0 && !!administrativeArea) {
-        const municipality = await municipalitiesService.findByAdministrative(administrativeArea);
-        if (municipality) {
-          const bounds = (GeoJSON.geometryToLayer(municipality) as any)._bounds;
+      const municipality = filter?.municipality;
+      if (results.length === 0 && !!municipality) {
+        const value = await municipalitiesService.findByAdministrative(municipality);
+        if (value) {
+          const bounds = (GeoJSON.geometryToLayer(value) as any)._bounds;
           mapInstance.fitBounds(bounds, { maxZoom: 11 });
         }
       }

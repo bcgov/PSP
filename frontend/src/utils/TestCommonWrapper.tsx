@@ -1,7 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { MemoryHistory } from 'history';
 import { IRole } from 'interfaces';
-import { IOrganization } from 'interfaces/organization';
+import { IOrganization } from 'interfaces';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';

@@ -31,7 +31,7 @@ interface MapViewProps {
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const lookupCodes = useLookupCodeHelpers();
-  const properties = useAppSelector(state => [...state.properties.parcels]);
+  const properties = useAppSelector(state => [...state.properties.properties]);
   const [loadedProperties, setLoadedProperties] = useState(false);
   const propertyDetail = useAppSelector(state => state.properties.propertyDetail);
   const organizations = lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME);

@@ -1,25 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PointFeature } from 'components/maps/types';
-import { IBuilding, IParcel, IProperty } from 'interfaces';
+import { IProperty } from 'interfaces';
 
-import { IParcelState, IPropertyDetail, IStorePropertyDetail } from './interfaces';
+import { IPropertyDetail, IPropertyState, IStorePropertyDetail } from './interfaces';
 
-export const initialState: IParcelState = {
-  parcels: [],
-  draftParcels: [],
+export const initialState: IPropertyState = {
+  properties: [],
+  draftProperties: [],
   propertyDetail: null,
-  associatedBuildingDetail: null,
   pid: 0,
 };
 
 const getPropertyDetail = (
-  property: IParcel | IBuilding | null,
+  property: IProperty | null,
   position?: [number, number],
 ): IPropertyDetail => {
   if (property === null) {
-    return { parcelDetail: null, propertyTypeId: undefined };
+    return { propertyDetail: null, propertyTypeId: undefined };
   }
-  return { parcelDetail: property, propertyTypeId: property.propertyTypeId, position };
+  return { propertyDetail: property, propertyTypeId: property.propertyTypeId, position };
 };
 
 /**
@@ -29,21 +28,21 @@ export const propertiesSlice = createSlice({
   name: 'properties',
   initialState: initialState,
   reducers: {
-    storeParcels(state: IParcelState, action: PayloadAction<IProperty[]>) {
-      state.parcels = action.payload;
+    storeProperties(state: IPropertyState, action: PayloadAction<IProperty[]>) {
+      state.properties = action.payload;
     },
-    storeDraftParcels(state: IParcelState, action: PayloadAction<PointFeature[]>) {
-      state.draftParcels = action.payload;
+    storeDraftProperties(state: IPropertyState, action: PayloadAction<PointFeature[]>) {
+      state.draftProperties = action.payload;
     },
-    storeParcelsFromMap(state: IParcelState, action: PayloadAction<IProperty>) {
-      state.parcels = [
-        ...state.parcels.filter(parcel => parcel.id !== action.payload.id),
+    storePropertiesFromMap(state: IPropertyState, action: PayloadAction<IProperty>) {
+      state.properties = [
+        ...state.properties.filter(property => property.id !== action.payload.id),
         action.payload,
       ];
     },
-    storeParcelDetail(
-      state: IParcelState,
-      action: PayloadAction<IStorePropertyDetail | IBuilding | IParcel | null>,
+    storeProperty(
+      state: IPropertyState,
+      action: PayloadAction<IStorePropertyDetail | IProperty | null>,
     ) {
       const storeProperty = action.payload as IStorePropertyDetail;
       if (!!storeProperty?.property) {
@@ -52,21 +51,7 @@ export const propertiesSlice = createSlice({
           storeProperty?.position,
         );
       } else {
-        state.propertyDetail = getPropertyDetail(action.payload as IParcel | IBuilding | null);
-      }
-    },
-    storeBuildingDetail(
-      state: IParcelState,
-      action: PayloadAction<IStorePropertyDetail | IBuilding | IParcel | null>,
-    ) {
-      const storeProperty = action.payload as IStorePropertyDetail;
-      if (!!storeProperty?.property) {
-        state.propertyDetail = getPropertyDetail(
-          storeProperty?.property ?? null,
-          storeProperty?.position,
-        );
-      } else {
-        state.propertyDetail = getPropertyDetail(action.payload as IParcel | IBuilding | null);
+        state.propertyDetail = getPropertyDetail(action.payload as IProperty | null);
       }
     },
   },
@@ -74,9 +59,8 @@ export const propertiesSlice = createSlice({
 
 // Destructure and export the plain action creators
 export const {
-  storeParcels,
-  storeDraftParcels,
-  storeParcelsFromMap,
-  storeParcelDetail,
-  storeBuildingDetail,
+  storeProperties,
+  storeDraftProperties,
+  storePropertiesFromMap,
+  storeProperty,
 } = propertiesSlice.actions;

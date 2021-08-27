@@ -2,7 +2,7 @@ import './InfoSlideOut.scss';
 
 import { Label } from 'components/common/Label';
 import { getIn } from 'formik';
-import { IBuilding } from 'interfaces';
+import { IProperty } from 'interfaces';
 import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { formatMoney } from 'utils/numberFormatUtils';
@@ -12,7 +12,7 @@ import { ThreeColumnItem } from './ThreeColumnItem';
 
 interface IBuildingAttributes {
   /** the selected building information */
-  buildingInfo: IBuilding;
+  buildingInfo: IProperty;
   /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
 }
@@ -27,11 +27,9 @@ export const BuildingAttributes: React.FC<IBuildingAttributes> = ({
   canViewDetails,
 }) => {
   let formatAssessed;
-  if (buildingInfo?.assessedBuilding) {
-    formatAssessed = formatMoney(buildingInfo?.assessedBuilding);
-  } else if (buildingInfo?.evaluations?.length >= 1) {
+  if (buildingInfo?.evaluations?.length) {
     const sortedEvaluations = [...buildingInfo?.evaluations]
-      .sort((a, b) => compareDate(a?.date, b?.date))
+      .sort((a, b) => compareDate(a?.evaluatedOn, b?.evaluatedOn))
       .reverse();
     formatAssessed = formatMoney(getIn(sortedEvaluations, '0')?.value);
   } else {
@@ -45,10 +43,7 @@ export const BuildingAttributes: React.FC<IBuildingAttributes> = ({
         <OuterRow>
           {canViewDetails && (
             <>
-              <ThreeColumnItem
-                leftSideLabel={'Predominate Use'}
-                rightSideItem={buildingInfo.buildingPredominateUse}
-              />
+              <ThreeColumnItem leftSideLabel={'Name'} rightSideItem={buildingInfo.name} />
               {buildingInfo.description && (
                 <ThreeColumnItem
                   leftSideLabel={'Description'}
@@ -58,32 +53,16 @@ export const BuildingAttributes: React.FC<IBuildingAttributes> = ({
             </>
           )}
           <ThreeColumnItem
-            leftSideLabel={'Total area'}
-            rightSideItem={buildingInfo.totalArea + ' sq. metres'}
+            leftSideLabel={'Land area'}
+            rightSideItem={buildingInfo.landArea + ' ' + buildingInfo.areaUnit}
           />
-          <ThreeColumnItem
-            leftSideLabel={'Net usable area'}
-            rightSideItem={buildingInfo.rentableArea + ' sq. metres'}
-          />
-          {canViewDetails && (
-            <ThreeColumnItem
-              leftSideLabel={'Tenancy %'}
-              rightSideItem={buildingInfo.buildingTenancy}
-            />
-          )}
         </OuterRow>
       </ListGroup>
       {canViewDetails && (
         <ListGroup>
           <Label className="header">Valuation</Label>
           <OuterRow>
-            {buildingInfo.parcels?.length < 1 ? (
-              <ThreeColumnItem leftSideLabel={'Assessed value:'} rightSideItem={formatAssessed} />
-            ) : (
-              <ListGroup.Item>
-                <Label>Please see the associated parcel(s) for assessment information</Label>
-              </ListGroup.Item>
-            )}
+            <ThreeColumnItem leftSideLabel={'Assessed value:'} rightSideItem={formatAssessed} />
           </OuterRow>
         </ListGroup>
       )}

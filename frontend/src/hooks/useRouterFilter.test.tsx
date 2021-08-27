@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { Classifications } from 'constants/classifications';
+import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { createMemoryHistory } from 'history';
 import queryString from 'query-string';
 import React from 'react';
@@ -48,7 +48,7 @@ const defaultFilter = {
   address: '2',
   administrativeArea: '3',
   organizations: '5',
-  classificationId: `${Classifications.Subdivided}`,
+  classificationId: `${PropertyClassificationTypes.Subdivided}`,
   minLotSize: '7',
   maxLotSize: '8',
   parcelId: '9',

@@ -7,9 +7,9 @@ import {
   PropertyPopUpContextProvider,
 } from 'components/maps/providers/PropertyPopUpProvider';
 import { Claims, PropertyTypes } from 'constants/index';
-import { PimsAPI, useApi } from 'hooks/useApi';
+import { useApiProperties } from 'hooks/pims-api';
 import noop from 'lodash/noop';
-import { mockBuildingWithAssociatedLand, mockParcel } from 'mocks/filterDataMock';
+import { mockParcel } from 'mocks/filterDataMock';
 import React, { useState } from 'react';
 import {
   cleanup,
@@ -27,12 +27,9 @@ jest.mock('@react-keycloak/web');
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 jest.mock('hooks/useApi');
-((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-  getParcel: async () => {
+((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+  getProperty: async () => {
     return mockParcel;
-  },
-  getBuilding: async () => {
-    return mockBuildingWithAssociatedLand;
   },
 });
 
@@ -43,7 +40,7 @@ function Template({ openByDefault = false }) {
 }
 
 function createParcelContext(): Partial<IPopUpContext> {
-  return { propertyTypeId: PropertyTypes.Parcel, propertyInfo: { id: 1 } as any };
+  return { propertyTypeId: PropertyTypes.Land, propertyInfo: { id: 1 } as any };
 }
 
 function createBuildingContext(): Partial<IPopUpContext> {

@@ -2,11 +2,11 @@ import { useKeycloak } from '@react-keycloak/web';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Classifications } from 'constants/classifications';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
-import { PimsAPI, useApi } from 'hooks/useApi';
-import { IParcel, IProperty } from 'interfaces';
+import { useApiProperties } from 'hooks/pims-api';
+import { IProperty } from 'interfaces';
+import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -29,59 +29,26 @@ const fetchPropertyNames = jest.fn(() => Promise.resolve(['test']));
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
-  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
-  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Parcel },
+  { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
+  { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
 ] as IProperty[];
 
 jest.mock('hooks/useApi');
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails: IPropertyDetail = {
-  propertyTypeId: PropertyTypes.Parcel,
-  parcelDetail: {
-    id: 1,
-    name: 'test name',
-    pid: '000-000-000',
-    pin: '',
-    encumbranceReason: '',
-    assessedBuilding: 0,
-    assessedLand: 0,
-    classificationId: Classifications.CoreStrategic,
-    zoning: '',
-    zoningPotential: '',
-    organizationId: 0,
+  propertyTypeId: PropertyTypes.Land,
+  propertyDetail: {
+    ...mockParcel,
     latitude: 48,
     longitude: -123,
-    classification: 'Core Operational',
-    description: 'test',
-    isSensitive: false,
-    parcels: [],
-    evaluations: [
-      {
-        date: '2019',
-        key: '',
-        value: 100000,
-      },
-    ],
-    fiscals: [],
-    address: {
-      line1: '1234 mock Street',
-      line2: 'N/A',
-      administrativeArea: '',
-      provinceId: 'BC',
-      postal: 'V1V1V1',
-    },
-    landArea: '',
-    landLegalDescription: 'test',
-    buildings: [],
-    organization: 'FIN',
   },
 };
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: { parcelDetail: mockDetails, draftParcels: [] },
-  [leafletMouseSlice.name]: { parcelDetail: mockDetails },
+  [propertiesSlice.name]: { propertyDetail: mockDetails, draftParcels: [] },
+  [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 };
 
 // To check for alert message
@@ -177,7 +144,7 @@ describe('MapProperties View', () => {
   });
 
   let mockLoadProperties: jest.Mock<Promise<PointFeature[]>>;
-  let mockGetParcel: jest.Mock<Promise<IParcel>>;
+  let mockGetParcel: jest.Mock<Promise<IProperty>>;
 
   beforeEach(() => {
     mockAxios.reset();
@@ -192,11 +159,11 @@ describe('MapProperties View', () => {
     }));
 
     mockLoadProperties = jest.fn(async () => createPoints(mockParcels));
-    mockGetParcel = jest.fn(async () => ({} as IParcel));
+    mockGetParcel = jest.fn(async () => ({} as IProperty));
 
-    ((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-      loadProperties: mockLoadProperties,
-      getParcel: mockGetParcel,
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+      getPropertiesWfs: mockLoadProperties,
+      getProperty: mockGetParcel,
     });
   });
 

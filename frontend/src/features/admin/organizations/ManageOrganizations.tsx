@@ -52,8 +52,6 @@ const ManageOrganizations: React.FC = () => {
   let organizationList = pagedOrganizations.items.map(
     (a: IOrganization): IOrganizationRecord => ({
       name: a.name,
-      code: a.code,
-      description: a.description,
       parentId: a.parentId,
       id: a.id,
       parent: organizationLookupCodes.find(x => x.id === a.parentId)?.name,

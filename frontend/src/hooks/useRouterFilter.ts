@@ -1,5 +1,5 @@
 import { TableSort } from 'components/Table/TableSort';
-import { PropertyTypeNames } from 'constants/propertyTypeNames';
+import { PropertyTypes } from 'constants/index';
 import _ from 'lodash';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -97,7 +97,7 @@ export const useRouterFilter = <T extends object>({
       if (_.intersection(Object.keys(params), filterProps).length) {
         let merged = { ...defaultFilter, ...extractProps(filterProps, params) };
         if (!merged.propertyType) {
-          merged = { ...merged, propertyType: PropertyTypeNames.Land };
+          merged = { ...merged, propertyType: PropertyTypes.Land };
         }
         // Only change state if the query parameters are different than the default filter.
         if (!_.isEqual(_.omit(merged, 'propertyType'), _.omit(filter, 'propertyType')))
@@ -105,7 +105,7 @@ export const useRouterFilter = <T extends object>({
       } else if (savedFilter?.hasOwnProperty(key)) {
         let merged = { ...defaultFilter, ...extractProps(filterProps, savedFilter[key]) };
         if (!merged.propertyType) {
-          merged = { ...merged, propertyType: PropertyTypeNames.Land };
+          merged = { ...merged, propertyType: PropertyTypes.Land };
         }
         // Only change state if the saved filter is different than the default filter.
         if (!_.isEqual(_.omit(merged, 'propertyType'), _.omit(filter, 'propertyType')))

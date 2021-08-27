@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
-import { IOrganization, IOrganizationDetail, IPagedItems } from 'interfaces';
+import { OrganizationIdentifierTypes, OrganizationTypes } from 'constants/index';
+import { IOrganization, IPagedItems } from 'interfaces';
 
 import { IOrganizationsState } from '.';
 
@@ -11,15 +12,13 @@ export const initialState: IOrganizationsState = {
   sort: { name: 'asc' },
   pageIndex: 0,
   organizationDetail: {
-    parentId: -1,
-    code: '',
     id: -1,
+    parentId: -1,
     name: '',
-    description: '',
-    email: '',
-    addressTo: '',
+    organizationTypeId: OrganizationTypes.BCMinistry,
+    identifierTypeId: OrganizationIdentifierTypes.Government,
+    identifier: '',
     isDisabled: false,
-    sendEmail: false,
     rowVersion: 1,
   },
 };
@@ -36,10 +35,7 @@ export const organizationsSlice = createSlice({
     ) {
       state.pagedOrganizations = action.payload;
     },
-    storeOrganizationDetails(
-      state: IOrganizationsState,
-      action: PayloadAction<IOrganizationDetail>,
-    ) {
+    storeOrganizationDetails(state: IOrganizationsState, action: PayloadAction<IOrganization>) {
       state.organizationDetail = action.payload;
     },
   },

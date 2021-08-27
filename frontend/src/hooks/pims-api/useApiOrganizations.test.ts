@@ -2,12 +2,11 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IPagedItems } from 'interfaces';
-import { mockAccessRequest, ORGANIZATIONS } from 'mocks/filterDataMock';
+import { mockAccessRequest, mockOrganization } from 'mocks/filterDataMock';
 
 import { useApiOrganizations } from './useApiOrganizations';
 
 const mockAxios = new MockAdapter(axios);
-const mockOrganization = ORGANIZATIONS[0];
 
 describe('useApiOrganizations api hook', () => {
   beforeEach(() => {
@@ -46,7 +45,7 @@ describe('useApiOrganizations api hook', () => {
       mockAxios.onGet(`/admin/organizations/${mockOrganization.id}`).reply(200, mockOrganization);
 
       const api = useApiOrganizations();
-      const response = await api.getOrganization(mockOrganization.id);
+      const response = await api.getOrganization(mockOrganization.id ?? 0);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual(mockOrganization);

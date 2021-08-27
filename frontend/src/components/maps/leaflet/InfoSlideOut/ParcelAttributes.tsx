@@ -1,8 +1,7 @@
 import './InfoSlideOut.scss';
 
 import { Label } from 'components/common/Label';
-import { EvaluationKeys } from 'constants/evaluationKeys';
-import { IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { getCurrentYearEvaluation } from 'utils';
@@ -13,7 +12,7 @@ import { ThreeColumnItem } from './ThreeColumnItem';
 
 interface IParcelAttributes {
   /** the selected parcel information */
-  parcelInfo: IParcel;
+  parcelInfo: IProperty;
   /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
 }
@@ -24,24 +23,13 @@ interface IParcelAttributes {
  * @param canViewDetails user can view all property details
  */
 export const ParcelAttributes: React.FC<IParcelAttributes> = ({ parcelInfo, canViewDetails }) => {
-  let formatAssessed;
-  if (parcelInfo?.assessedLand) {
-    formatAssessed = formatMoney(parcelInfo?.assessedLand);
-  } else if (!!getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Assessed)) {
-    formatAssessed = formatMoney(
-      getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Assessed)?.value,
-    );
-  } else {
-    formatAssessed = '';
-  }
-  let improvements = '';
-  if (parcelInfo?.assessedBuilding) {
-    improvements = formatMoney(parcelInfo?.assessedBuilding);
-  } else if (!!getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Improvements)) {
-    improvements = formatMoney(
-      getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Improvements)?.value,
-    );
-  }
+  let formatAssessed = '';
+  const assessed = getCurrentYearEvaluation(parcelInfo?.evaluations ?? [], 1);
+  if (assessed) formatAssessed = formatMoney(assessed.value);
+
+  let formatImprovements = '';
+  const improvements = getCurrentYearEvaluation(parcelInfo?.evaluations ?? [], 2);
+  if (improvements) formatImprovements = formatMoney(improvements.value);
 
   return (
     <>
@@ -73,7 +61,7 @@ export const ParcelAttributes: React.FC<IParcelAttributes> = ({ parcelInfo, canV
               {!!improvements && (
                 <ThreeColumnItem
                   leftSideLabel={'Assessed Building(s):'}
-                  rightSideItem={improvements}
+                  rightSideItem={formatImprovements}
                 />
               )}
             </OuterRow>

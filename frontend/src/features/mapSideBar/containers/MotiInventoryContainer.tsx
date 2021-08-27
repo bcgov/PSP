@@ -6,6 +6,7 @@ import {
   useLayerQuery,
 } from 'components/maps/leaflet/LayerPopup';
 import { ADMINISTRATIVE_AREA_CODE_SET_NAME } from 'constants/API';
+import { AddressTypes } from 'constants/index';
 import {
   SidebarContextType,
   useQueryParamSideBar,
@@ -119,15 +120,17 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
         legalDescription:
           ltsaParcelResponse?.orderedProduct?.fieldedData?.legalDescription?.fullLegalDescription,
         address: {
-          line1: geocoderResponse?.address1 ?? '',
-          administrativeArea:
+          addressTypeId: AddressTypes.Physical,
+          streetAddress1: geocoderResponse?.address1 ?? '',
+          municipality:
             geocoderResponse?.administrativeArea ??
             getAdminAreaFromLayerData(
               adminAreas,
               getIn(parcelLayerResponse, 'features.0.properties.MUNICIPALITY'),
             )?.name ??
             '',
-          provinceId: geocoderResponse?.provinceCode ?? 'BC',
+          provinceId: 1,
+          province: geocoderResponse?.provinceCode ?? 'BC',
           postal: '',
         },
         latitude: latLng.lat,

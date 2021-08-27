@@ -3,7 +3,7 @@ import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { ADMINISTRATIVE_AREA_CODE_SET_NAME, PROVINCE_CODE_SET_NAME } from 'constants/API';
 import { createMemoryHistory } from 'history';
 import { useApiLtsa } from 'hooks/pims-api/useApiLtsa';
-import { PimsAPI, useApi } from 'hooks/useApi';
+import { IPimsAPI, useApi } from 'hooks/useApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { mockParcelLayerResponse } from 'mocks/filterDataMock';
 import { Route } from 'react-router-dom';
@@ -96,7 +96,7 @@ const geocoderResponse = {
 const searchAddress = jest.fn();
 const getNearestAddress = jest.fn();
 jest.mock('hooks/useApi');
-((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
+((useApi as unknown) as jest.Mock<Partial<IPimsAPI>>).mockReturnValue({
   searchAddress,
   isPidAvailable,
   getNearestAddress,

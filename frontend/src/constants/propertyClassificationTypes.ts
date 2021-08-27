@@ -1,19 +1,19 @@
 /**
  * Property classifications, identify the purpose of the property.
  */
-export enum Classifications {
+export enum PropertyClassificationTypes {
   /** The property is currently being used. */
-  CoreOperational = 1,
+  CoreOperational = 'COREOPER',
   /** The property is not currently being used but has a strategic purpose. */
-  CoreStrategic = 2,
+  CoreStrategic = 'CORESTRAT',
   /** The property is available for disposal. */
-  SurplusActive = 3,
+  SurplusActive = 'SURPACTIVE',
   /** The property is available for disposal but is encumbered. */
-  SurplusEncumbered = 4,
+  SurplusEncumbered = 'SURPENCUM',
   /** The property has been disposed. */
-  Disposed = 5,
+  Disposed = 'DISPOSED',
   /** The property has been demolished */
-  Demolished = 6,
+  Demolished = 'DEMOLISHED',
   /** The property has been subdivided */
-  Subdivided = 7,
+  Subdivided = 'SUBDIVIDED',
 }

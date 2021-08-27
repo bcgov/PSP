@@ -3,10 +3,11 @@ import './EditOrganizationPage.scss';
 import GenericModal from 'components/common/GenericModal';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import * as API from 'constants/API';
+import { OrganizationIdentifierTypes, OrganizationTypes } from 'constants/index';
 import service from 'features/properties/service';
 import { Formik } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IOrganizationDetail } from 'interfaces';
+import { IOrganization } from 'interfaces';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
@@ -80,7 +81,7 @@ const EditOrganizationPage = (props: IEditOrganizationPageProps) => {
     rowVersion: '',
   };
 
-  const initialValues: IOrganizationDetail = {
+  const initialValues: IOrganization = {
     ...newValues,
     ...organization,
   };
@@ -111,27 +112,23 @@ const EditOrganizationPage = (props: IEditOrganizationPageProps) => {
                 if (!newOrganization) {
                   const data = await updateOrganization({
                     id: organization.id,
-                    name: values.name,
-                    code: values.code,
-                    email: values.email,
-                    isDisabled: values.isDisabled,
-                    sendEmail: values.sendEmail,
-                    addressTo: values.addressTo,
                     parentId: values.parentId ? Number(values.parentId) : undefined,
-                    description: values.description,
+                    name: values.name,
+                    organizationTypeId: OrganizationTypes.BCMinistry, // TODO: Needs to be implemented on the form.
+                    identifierTypeId: OrganizationIdentifierTypes.Government, // TODO: Needs to be implemented on the form.
+                    identifier: 'fake value', // TODO: Needs to be implemented on the form.
+                    isDisabled: values.isDisabled,
                     rowVersion: values.rowVersion,
                   });
                   setValues(data);
                 } else {
                   const data = await addOrganization({
-                    name: values.name,
-                    code: values.code,
-                    email: values.email,
-                    isDisabled: values.isDisabled,
-                    sendEmail: values.sendEmail,
-                    addressTo: values.addressTo,
                     parentId: Number(values.parentId),
-                    description: values.description,
+                    name: values.name,
+                    organizationTypeId: OrganizationTypes.BCMinistry, // TODO: Needs to be implemented on the form.
+                    identifierTypeId: OrganizationIdentifierTypes.Government, // TODO: Needs to be implemented on the form.
+                    identifier: 'fake value', // TODO: Needs to be implemented on the form.
+                    isDisabled: values.isDisabled,
                   });
                   setValues(data);
                   history.replace(`/admin/organization/${data.id}`);

@@ -1,15 +1,13 @@
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { find } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
 import {
-  mockBuilding,
   mockBuildingDetail,
   mockParcel,
   mockParcelDetail,
-  mockProperty,
+  mockProperties,
 } from 'mocks/filterDataMock';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
@@ -45,15 +43,15 @@ describe('useProperties functions', () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
-  describe('fetchParcels action creator', () => {
+  describe('getProperties action creator', () => {
     const url = `/properties/search?`;
     it('Null Params - Request successful, dispatches success with correct response', () => {
-      const mockResponse = { data: [mockProperty] };
+      const mockResponse = { data: mockProperties };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchParcels(null)
+            .getProperties(null)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -71,12 +69,12 @@ describe('useProperties functions', () => {
     });
 
     it('Request successful, dispatches error with correct response', () => {
-      const mockResponse = { data: [mockProperty] };
+      const mockResponse = { data: mockProperties };
       mockAxios.onGet(url).reply(400, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchParcels(null)
+            .getProperties(null)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -93,15 +91,15 @@ describe('useProperties functions', () => {
       );
     });
   });
-  describe('fetchParcelDetail action creator', () => {
-    const url = `/properties/parcels/${mockParcel.id}`;
+  describe('getProperty action creator', () => {
+    const url = `/properties/${mockParcel.id}`;
     it('Request successful, dispatches success with correct response', () => {
       const mockResponse = { data: mockParcelDetail };
       mockAxios.onGet(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .fetchParcelDetail(1)
+            .getProperty(1)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -124,7 +122,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .fetchParcelDetail(1)
+            .getProperty(1)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -142,114 +140,15 @@ describe('useProperties functions', () => {
     });
   });
 
-  describe('fetchBuildingDetail action creator', () => {
-    const url = `/properties/buildings/${mockBuilding.id}`;
-    it('Request successful, dispatches success with correct response', () => {
-      const mockResponse = { data: { mockBuildingDetail } };
-      mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useProperties()
-            .fetchBuildingDetail(mockBuilding.id as number)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: { position: undefined, property: mockResponse },
-                type: 'properties/storeBuildingDetail',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
-    });
-
-    it('Request failure, dispatches error with correct response', () => {
-      mockAxios.onGet(url).reply(400, MOCK.ERROR);
-      const mockResponse = { data: { mockBuildingDetail } };
-      renderHook(
-        () =>
-          useProperties()
-            .fetchBuildingDetail(mockBuilding.id as number)
-            .catch(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: { position: undefined, property: mockResponse },
-                type: 'properties/storeBuildingDetail',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
-    });
-  });
-
-  describe('fetchPropertyDetail action creator', () => {
-    it('parcel Request successful, dispatches success with correct response', () => {
-      const url = `/properties/parcels/${mockParcel.id}`;
-      const mockResponse = { data: mockParcel };
-      mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useProperties()
-            .fetchPropertyDetail(1, PropertyTypes.Parcel, undefined)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: { position: undefined, property: mockResponse },
-                type: 'properties/storeParcelDetail',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
-    });
-
-    it('building Request successful, dispatches success with correct response', () => {
-      const url = `/properties/buildings/${mockBuilding.id}`;
-      const mockResponse = { data: mockBuilding };
-      mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useProperties()
-            .fetchPropertyDetail(+mockBuilding.id, PropertyTypes.Building, undefined)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: { position: undefined, property: mockResponse },
-                type: 'properties/storeBuildingDetail',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
-    });
-  });
-
-  describe('createParcel action creator', () => {
-    const url = `/properties/parcels`;
+  describe('postProperty action creator', () => {
+    const url = `/properties`;
     it('Request successful, dispatches success with correct response', () => {
       const mockResponse = { data: mockParcelDetail };
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .createParcel(mockParcel)
+            .createProperty(mockParcel)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -272,7 +171,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .createParcel(mockParcel)
+            .createProperty(mockParcel)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -290,15 +189,15 @@ describe('useProperties functions', () => {
     });
   });
 
-  describe('updateParcel action creator', () => {
-    const url = `/properties/parcels/${mockParcel.id}`;
+  describe('updateProperty action creator', () => {
+    const url = `/properties/${mockParcel.id}`;
     it('Request successful, dispatches success with correct response', () => {
       const mockResponse = { data: mockParcel };
       mockAxios.onPut(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .updateParcel(mockParcel)
+            .updateProperty(mockParcel)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -321,7 +220,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .updateParcel(mockParcel)
+            .updateProperty(mockParcel)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -340,14 +239,14 @@ describe('useProperties functions', () => {
   });
 
   describe('deleteParcel action creator', () => {
-    const url = `/properties/parcels/${mockParcel.id}`;
+    const url = `/properties/${mockParcel.id}`;
     it('Request successful, dispatches success with correct response', () => {
       const mockResponse = { data: { success: true } };
       mockAxios.onDelete(url).reply(200, mockResponse);
       renderHook(
         () =>
           useProperties()
-            .removeParcel(mockParcel)
+            .deleteProperty(mockParcel)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -369,54 +268,7 @@ describe('useProperties functions', () => {
       renderHook(
         () =>
           useProperties()
-            .removeParcel(mockParcel)
-            .catch(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: null,
-                type: 'properties/storeParcelDetail',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
-    });
-  });
-  describe('deleteBuilding action creator', () => {
-    const url = `/properties/buildings/${mockBuilding.id}`;
-    it('Request successful, dispatches success with correct response', () => {
-      const mockResponse = { data: { success: true } };
-      mockAxios.onDelete(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useProperties()
-            .removeBuilding(mockBuilding)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: null,
-                type: 'properties/storeParcelDetail',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
-    });
-
-    it('Request successful, dispatches error with correct response', () => {
-      mockAxios.onDelete(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useProperties()
-            .removeBuilding(mockBuilding)
+            .deleteProperty(mockParcel)
             .catch(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
