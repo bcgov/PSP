@@ -68,9 +68,10 @@ jobs:
         result="$(cat log.txt)"
         echo $result
         if [[ "$result" != "0" ]]; then
-            echo "$result record loaded"
+            echo "$result record loaded";
         else
-            echo "There's an error loading schema" && exit 1 
+            echo "There's an error loading schema" && exit 1 ;
+        fi
       working-directory: ${{env.working-directory}}
             
     - name: Stop containers
