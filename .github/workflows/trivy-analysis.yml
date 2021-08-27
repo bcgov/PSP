@@ -27,7 +27,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
-          format: 'table'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
