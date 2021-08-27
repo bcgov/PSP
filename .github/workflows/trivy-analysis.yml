@@ -27,7 +27,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
-          format: 'template'
+          format: 'table'
+          ignore-unfixed: true
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
