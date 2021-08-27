@@ -27,13 +27,14 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
-          format: 'template'
+          format: 'table'
+          exit-code: '1'
           ignore-unfixed: true
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-results.sarif'
+          vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results to GitHub Security tab
+        if: always()
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: 'trivy-results.sarif'
