@@ -25,30 +25,30 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build PIMS Frontend
       run: |
-        docker build -t pims-frontend:${{ github.sha }} .   
+        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Frontend Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'pims-frontend:${{ github.sha }}'
-        format: 'template'
+        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+        format: 'table'
         template: '@/contrib/sarif.tpl'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: 'trivy-results.sarif'
+        output: 'pims-frontend.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
       if: always()
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: 'trivy-results.sarif'
+        sarif_file: 'pims-frontend.sarif'
     - if: always()
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: trivy report frontend
-        path: 'trivy-results.sarif'
+        name:  frontend Image Scan report
+        path: 'pims-frontend.sarif'
         
     
   build_backend:
@@ -69,19 +69,19 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build PIMS Backend
       run: |
-        docker build -t pims-backend:${{ github.sha }} .   
+        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Backend Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'pims-backend:${{ github.sha }}'
-        format: 'template'
+        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+        format: 'table'
         template: '@/contrib/sarif.tpl'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: 'trivy-results.sarif'
+        output: 'pims-backend.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
       if: always()
       uses: github/codeql-action/upload-sarif@v1
@@ -91,7 +91,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: trivy report backend
+        name: backend image scan report
         path: 'trivy-results.sarif'    
         
   build_logging:
@@ -124,9 +124,9 @@ jobs:
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: 'trivy-results.sarif'
+        output: 'pims-logging.sarif'
     - name: Upload Trivy scan results to GitHub Security tab
       if: always()
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: 'trivy-results.sarif'
+        sarif_file: 'pims-logging.sarif'
