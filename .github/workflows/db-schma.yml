@@ -59,8 +59,9 @@ jobs:
       run: |
         docker cp db-schema:/tmp/log.txt .
         result="$(cat log.txt)"
+        echo "Error code ${result}"
         if [[ "$result" != "0" ]]; then
-            echo "$result record loaded";
+            echo "=======DB SCHEMA LOADED ========";
         else
             echo "There's an error loading schema" && exit 1 ;
         fi
