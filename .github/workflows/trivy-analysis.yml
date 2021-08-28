@@ -25,12 +25,12 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build PIMS Frontend
       run: |
-        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
+        docker build -t docker.io/pims-frontend:${{ github.sha }} .   
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Frontend Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+        image-ref: 'docker.io/pims-frontend:${{ github.sha }}'
         format: 'template'
         template: '@/contrib/sarif.tpl'
         exit-code: '1'
@@ -69,12 +69,12 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build PIMS Backend
       run: |
-        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
+        docker build -t docker.io/pims-backend:${{ github.sha }} .   
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Backend Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+        image-ref: 'docker.io/pims-backend:${{ github.sha }}'
         format: 'template'
         template: '@/contrib/sarif.tpl'
         exit-code: '1'
