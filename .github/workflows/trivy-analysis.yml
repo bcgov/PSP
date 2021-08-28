@@ -32,7 +32,6 @@ jobs:
       with:
         image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
         format: 'table'
-        template: '@/contrib/sarif.tpl'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
@@ -76,7 +75,6 @@ jobs:
       with:
         image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
         format: 'table'
-        template: '@/contrib/sarif.tpl'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
@@ -119,7 +117,6 @@ jobs:
       with:
         image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
         format: 'template'
-        template: '@/contrib/sarif.tpl'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
