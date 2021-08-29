@@ -2,9 +2,9 @@ name: Security CI
 
 on:
   push:
-    branches: [master, test, dev]
+    branches: [master, test]
   pull_request:
-    branches: [master, test, dev]
+    branches: [master, test]
   schedule:
     - cron: '42 15 * * 5'
 
