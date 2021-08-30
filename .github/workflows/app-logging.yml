@@ -2,16 +2,19 @@ name: PIMS Logging CI
 
 on:
   push:
-    branches: [master, test]
+    branches: [master, test, dev, pims-sookeke]
   pull_request:
-    branches: [master, test]
+    branches: [master, test, dev, pims-sookeke]
 
 jobs:
 
   build:
 
     name: pims-logging
+    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test' || github.event.ref == 'refs/heads/pims-sookeke'
     runs-on: ubuntu-latest
+    environment: 
+      name: dev
     env:
       SLEEP_TIME: 60
       STORAGE_TYPE: Amazon_S3
@@ -31,6 +34,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Set ENV variable
+      id: step_one
+      run: |
+        if [[ ${{github.event.ref}} == 'refs/heads/test' || ${{github.event.ref}} == 'refs/heads/pims-sookeke' ]]; then
+            echo "FRONTEND_APP_NAME=pims-app-test" >> $GITHUB_ENV
+            echo "API_NAME=pims-api-test" >> $GITHUB_ENV
+        elif [[ ${{github.event.ref}} == 'refs/heads/master' ]]
+           echo "FRONTEND_APP_NAME=pims-app-uat" >> $GITHUB_ENV
+           echo "API_NAME=pims-api-uat" >> $GITHUB_ENV
+        else
+            echo "FRONTEND_APP_NAME=pims-app" >> $GITHUB_ENV
+            echo "API_NAME=pims-api" >> $GITHUB_ENV
+        fi
+        echo "${{github.event.ref}}"
+        echo $GITHUB_ENV
     - name: Build the pims-logging docker-compose stack
       run: docker-compose -f docker-compose.yml up -d
       working-directory: ${{env.working-directory}}
