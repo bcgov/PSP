@@ -103,7 +103,7 @@ jobs:
         
   build_logging:
   
-    if:     if: always() && github.event.ref != 'refs/heads/dev'
+    if: always() && github.event.ref != 'refs/heads/dev'
     needs: [build_frontend, build_backend] 
     name: pims-logging
     runs-on: ubuntu-latest
