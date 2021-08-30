@@ -1,7 +1,7 @@
-import { useKeycloak } from '@react-keycloak/web';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { Claims } from 'constants/claims';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { useApiProperties } from 'hooks/pims-api';
@@ -11,7 +11,15 @@ import React from 'react';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
-import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
+import {
+  cleanup,
+  deferred,
+  fireEvent,
+  prettyDOM,
+  render,
+  RenderOptions,
+  waitFor,
+} from 'utils/test-utils';
 
 import { PointFeature } from '../types';
 import Map from './Map';
@@ -34,6 +42,7 @@ const mockParcels = [
 ] as IProperty[];
 
 jest.mock('hooks/useApi');
+jest.mock('hooks/pims-api');
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails: IPropertyDetail = {
@@ -47,7 +56,7 @@ const mockDetails: IPropertyDetail = {
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
-  [propertiesSlice.name]: { propertyDetail: mockDetails, draftParcels: [] },
+  [propertiesSlice.name]: { propertyDetail: mockDetails, draftProperties: [] },
   [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 };
 
@@ -88,7 +97,12 @@ function createProps(): TestProps {
     properties: mockParcels,
     selectedProperty: mockDetails,
     disableMapFilterBar: false,
-    renderOptions: { useMockAuthentication: true, organizations: [0], store: storeState },
+    renderOptions: {
+      useMockAuthentication: true,
+      organizations: [0],
+      store: storeState,
+      roles: [Claims.PROPERTY_EDIT],
+    },
   };
 }
 
@@ -135,14 +149,6 @@ function setup(props: Omit<TestProps, 'done'>) {
 }
 
 describe('MapProperties View', () => {
-  (useKeycloak as jest.Mock).mockReturnValue({
-    keycloak: {
-      userInfo: {
-        organizations: [0],
-      },
-    },
-  });
-
   let mockLoadProperties: jest.Mock<Promise<PointFeature[]>>;
   let mockGetParcel: jest.Mock<Promise<IProperty>>;
 
@@ -185,9 +191,10 @@ describe('MapProperties View', () => {
     const { component, ready, findSlideOutButton } = setup({ ...props, disableMapFilterBar: true });
     await waitFor(() => ready);
     const infoButton = findSlideOutButton();
-    userEvent.click(infoButton);
+    userEvent.dblClick(infoButton);
     const { findByText } = component;
-    expect(await findByText(/Click a pin to view the property details/i)).toBeVisible();
+    const expectedText = await findByText(/Click a pin to view the property details/i);
+    expect(expectedText).toBeVisible();
   });
 
   it('should open the layer list when clicked', async () => {
@@ -204,6 +211,16 @@ describe('MapProperties View', () => {
     const layersControlButton = findLayerListButton();
     userEvent.click(layersControlButton);
     await waitFor(() => expect(layersContainer.className).not.toContain('closed'));
+  });
+
+  it('should render the properties as cluster and on selected property', async () => {
+    const props = createProps();
+    const { ready, findMapCluster } = setup(props);
+    await waitFor(() => ready);
+    await waitFor(() => {
+      const cluster = findMapCluster();
+      expect(cluster).toBeVisible();
+    });
   });
 
   it(`renders the filter bar when disableMapFilterBar is set to "false"`, async () => {
@@ -244,14 +261,6 @@ describe('MapProperties View', () => {
     await waitFor(() => ready);
     const marker = findMapMarker();
     expect(marker).toBeNull();
-  });
-
-  it('should render the properties as cluster and on selected property', async () => {
-    const props = createProps();
-    const { ready, findMapCluster } = setup(props);
-    await waitFor(() => ready);
-    const cluster = findMapCluster();
-    expect(cluster).toBeVisible();
   });
 
   it('should call the API to load map data', async () => {

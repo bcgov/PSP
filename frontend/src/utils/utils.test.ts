@@ -91,7 +91,7 @@ describe('Is Positive or Zero', () => {
     return {
       key: 2,
       value: 123,
-      evaluatedOn: new Date(`{year}-01-01`),
+      evaluatedOn: new Date(`${year}-01-01`),
     };
   };
 
@@ -148,7 +148,7 @@ describe('Is Positive or Zero', () => {
       evaluations.push(createAppraisal(moment('2018-01-01')));
       evaluations.push(createAppraisal(moment('2021-01-01')));
       evaluations.push(createAppraisal(moment('2020-01-01')));
-      expect(getMostRecentEvaluation(evaluations, 3)).toBe(evaluations[1]);
+      expect(getMostRecentEvaluation(evaluations, 3)).toEqual(evaluations[1]);
     });
   });
 });

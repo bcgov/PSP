@@ -70,7 +70,7 @@ const defaultStore = mockStore({
       },
     ],
   },
-  [propertiesSlice.name]: { parcels: [], draftParcels: [] },
+  [propertiesSlice.name]: { parcels: [], draftProperties: [] },
 });
 
 const renderContainer = ({ store }: any) =>
@@ -149,7 +149,7 @@ describe('MotiInventoryContainer functionality', () => {
       await findByTestId('pid-search-button');
       await fillInput(container, 'searchPid', '123-456-789');
       fireEvent.click(getByTestId('pid-search-button'));
-      const cityInput = await screen.findByDisplayValue('Victoria');
+      const cityInput = await screen.findByDisplayValue('Capital Regional District');
 
       expect(findByPid).toHaveBeenCalledWith('123-456-789');
       expect(getParcelInfo).toHaveBeenCalledWith('123-456-789');

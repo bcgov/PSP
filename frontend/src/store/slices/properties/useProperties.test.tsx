@@ -59,7 +59,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
-                type: 'properties/storeParcels',
+                type: 'properties/storeProperties',
               });
             }),
         {
@@ -82,7 +82,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: mockResponse,
-                type: 'properties/storeParcels',
+                type: 'properties/storeProperties',
               });
             }),
         {
@@ -107,7 +107,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: { position: undefined, property: mockResponse },
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {
@@ -130,7 +130,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: { position: undefined, property: mockResponse },
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {
@@ -156,7 +156,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {
@@ -205,7 +205,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: mockResponse,
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {
@@ -228,7 +228,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: mockResponse,
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {
@@ -254,7 +254,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).toContainEqual({
                 payload: null,
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {
@@ -276,7 +276,7 @@ describe('useProperties functions', () => {
               expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
               expect(currentStore.getActions()).not.toContainEqual({
                 payload: null,
-                type: 'properties/storeParcelDetail',
+                type: 'properties/storeProperty',
               });
             }),
         {

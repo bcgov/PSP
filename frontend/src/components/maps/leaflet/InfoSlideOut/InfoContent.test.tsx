@@ -35,6 +35,7 @@ const mockParcel = {
   dataSourceId: PropertyDataSourceTypes.PAIMS,
   dataSourceEffectiveDate: new Date(),
   classificationId: PropertyClassificationTypes.SurplusActive,
+  classification: 'Core Operational',
   tenureId: PropertyTenureTypes.TitledLandMOTI,
   zoning: '',
   zoningPotential: '',
@@ -66,6 +67,12 @@ const mockParcel = {
   areaUnitId: PropertyAreaUnitTypes.Hectare,
   landArea: 123,
   landLegalDescription: 'test description',
+  organizations: [
+    {
+      id: 1,
+      name: 'Ministry of Transportation',
+    },
+  ],
 } as IProperty;
 
 const lCodes = {
@@ -138,8 +145,7 @@ describe('InfoContent View functionality', () => {
     //Identification information
     expect(getByText('000-000-000')).toBeVisible();
     expect(getByText('test name')).toBeVisible();
-    expect(getByText('Ministry of Advanced Education')).toBeVisible();
-    expect(getByText('Kwantlen Polytechnic University')).toBeVisible();
+    expect(getByText('Ministry of Transportation')).toBeVisible();
     expect(getByText('Core Operational')).toBeVisible();
     //Location data
     expect(getByText('1234 mock Street')).toBeVisible();
@@ -157,32 +163,5 @@ describe('InfoContent View functionality', () => {
   it('Assessed value formats correctly', () => {
     const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
     expect(getByText('$10,000')).toBeVisible();
-  });
-
-  it('Correct label if no sub organization', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
-    expect(getByText('Owning ministry')).toBeVisible();
-  });
-
-  it('Shows all building information when can view', () => {
-    const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.Building, true));
-    expect(getByText('Building Identification')).toBeVisible();
-    //Identification information
-    expect(getByText('test name')).toBeVisible();
-    expect(getByText('Ministry of Advanced Education')).toBeVisible();
-    expect(getByText('Kwantlen Polytechnic University')).toBeVisible();
-    expect(getByText('Core Operational')).toBeVisible();
-    //Location data
-    expect(getByText('1234 mock Street')).toBeVisible();
-    expect(getByText('Victoria')).toBeVisible();
-    expect(getByText('48')).toBeVisible();
-    //Building Attributes
-    expect(getByText('University/College')).toBeVisible();
-    expect(getByText('100%')).toBeVisible();
-  });
-
-  it('Building area formated correctly', () => {
-    const { getByText } = render(ContentComponent(mockBuilding, PropertyTypes.Building, true));
-    expect(getByText('100 sq. metres')).toBeVisible();
   });
 });

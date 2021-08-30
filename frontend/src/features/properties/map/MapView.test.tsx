@@ -1,5 +1,14 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  prettyDOM,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
@@ -41,6 +50,7 @@ jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');
 jest.mock('features/properties/common/slices/usePropertyNames');
 jest.mock('store/slices/properties/useProperties');
+jest.mock('hooks/pims-api');
 
 const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
 (usePropertyNames as any).mockImplementation(() => ({
@@ -83,7 +93,7 @@ const smallMockParcels = [
 const mockParcels = [
   { id: 1, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
   { id: 2, latitude: 53.917065, longitude: -122.749672, propertyTypeId: PropertyTypes.Land },
-  { id: 3, latitude: 53.918165, longitude: -122.749772, propertyTypeId: PropertyTypes.Land },
+  { id: 3, latitude: 53.917065, longitude: -122.749772, propertyTypeId: PropertyTypes.Land },
 ] as IProperty[];
 
 let findOneWhereContains = jest.fn();
@@ -155,12 +165,13 @@ describe('MapView', () => {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
+          roles: ['property-edit', 'property-view'],
           organizations: [0],
         },
       },
     });
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
+      getPropertiesWfs: jest.fn(async () => {
         return createPoints(mockParcels);
       }),
       getProperty: async () => {
@@ -266,7 +277,7 @@ describe('MapView', () => {
 
   it('the map can zoom in until no clusters are visible', async () => {
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
+      getPropertiesWfs: jest.fn(async () => {
         return createPoints(smallMockParcels);
       }),
       getParcel: async () => {
@@ -288,7 +299,7 @@ describe('MapView', () => {
     const { container } = render(getMap());
     await waitFor(() => {
       const icon = container.querySelector('.leaflet-control-zoom-out');
-      fireEvent.click(icon!);
+      userEvent.click(icon!);
       const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
       expect(cluster).toBeVisible();
     });
@@ -331,8 +342,8 @@ describe('MapView', () => {
       fireEvent.click(map!);
     });
     expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 52.81604319154934,
-      lng: -124.67285156250001,
+      lat: 48.004625021133904,
+      lng: 123.00292968750001,
     });
   });
 
@@ -352,11 +363,11 @@ describe('MapView', () => {
     await waitFor(() => {
       const map = container.querySelector('.leaflet-container');
       expect(map).toBeVisible();
-      fireEvent.click(map!);
+      userEvent.click(map!);
     });
     expect(findOneWhereContains).toHaveBeenLastCalledWith({
-      lat: 52.81604319154934,
-      lng: -124.67285156250001,
+      lat: 48.004625021133904,
+      lng: 123.00292968750001,
     });
     const closeButton = container.querySelector('.leaflet-popup-close-button');
     fireEvent.click(closeButton!);
@@ -366,7 +377,7 @@ describe('MapView', () => {
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      loadProperties: jest.fn(async () => {
+      getPropertiesWfs: jest.fn(async () => {
         return createPoints(largeMockParcels);
       }),
       getProperty: async () => {

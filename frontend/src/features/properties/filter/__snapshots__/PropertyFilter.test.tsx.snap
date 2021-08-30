@@ -68,7 +68,7 @@ exports[`MapFilterBar renders correctly 1`] = `
               class="rbt-input-main form-control rbt-input"
               id="organizations-field"
               name="organizations"
-              placeholder="Organization"
+              placeholder=""
               role="combobox"
               type="text"
               value=""
@@ -234,6 +234,24 @@ exports[`MapFilterBar renders correctly 1`] = `
             value="2"
           >
             Core Strategic
+          </option>
+          <option
+            class="option"
+            value="5"
+          >
+            Disposed
+          </option>
+          <option
+            class="option"
+            value="6"
+          >
+            Demolished
+          </option>
+          <option
+            class="option"
+            value="7"
+          >
+            Subdivided
           </option>
         </select>
       </div>

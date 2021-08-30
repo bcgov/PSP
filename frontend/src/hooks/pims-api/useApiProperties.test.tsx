@@ -42,13 +42,13 @@ describe('useApiProperties api hook', () => {
 
   it('Gets detailed parcels', () => {
     renderHook(async () => {
-      mockAxios.onGet(`/properties?`).reply(200, mockParcel);
+      mockAxios.onGet(`/properties/search?`).reply(200, mockParcel);
 
       const api = useApiProperties();
       const response = await api.getProperties({} as any);
 
       expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockParcel);
+      expect(response.data).toEqual(mockParcel);
     });
   });
   it('Gets a detailed parcel', () => {
@@ -59,7 +59,7 @@ describe('useApiProperties api hook', () => {
       const response = await api.getProperty(mockParcel.id as number);
 
       expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockParcel);
+      expect(response.data).toEqual(mockParcel);
     });
   });
 
@@ -70,19 +70,19 @@ describe('useApiProperties api hook', () => {
       const response = await api.putProperty(mockParcel);
 
       expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockParcel);
+      expect(response.data).toEqual(mockParcel);
     });
   });
 
   it('Posts a new parcel', () => {
-    const newParcel = { ...mockParcel, id: 0 };
+    const newParcel = { ...mockParcel, id: undefined };
     renderHook(async () => {
       mockAxios.onPost(`/properties`).reply(201, newParcel);
       const api = useApiProperties();
       const response = await api.postProperty(newParcel);
 
       expect(response.status).toBe(201);
-      expect(response.data).toStrictEqual(newParcel);
+      expect(response.data).toEqual(newParcel);
     });
   });
 
@@ -93,7 +93,7 @@ describe('useApiProperties api hook', () => {
       const response = await api.deleteProperty(mockParcel);
 
       expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(mockParcel);
+      expect(response.data).toEqual(mockParcel);
     });
   });
 });

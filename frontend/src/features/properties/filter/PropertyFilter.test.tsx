@@ -173,15 +173,16 @@ describe('MapFilterBar', () => {
     });
 
     // Assert
-    expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
+    expect(onFilterChange).toBeCalledWith({
       pid: '',
       address: '',
-      municipality: 'Victoria',
+      administrativeArea: 'Victoria',
+      municipality: '',
       organizations: '',
-      classificationId: PropertyClassificationTypes.CoreOperational,
       minLotSize: '',
       maxLotSize: '',
       name: '',
+      classificationId: '',
       searchBy: 'name',
     });
   });
@@ -273,22 +274,6 @@ describe('MapFilterBar', () => {
     });
     await waitFor(() => {
       expect(fetchPropertyNames).toHaveBeenCalled();
-    });
-  });
-
-  it('disables the property name and organizations fields when All Government is selected', async () => {
-    await act(async () => {
-      const { container, getByPlaceholderText } = render(getUiElement({ ...defaultFilter }));
-      expect(getByPlaceholderText('Property name')).toBeDisabled();
-      expect(container.querySelector('input[name="organizations"]')).toBeDisabled();
-    });
-  });
-
-  it('enables the property name and organizations fields when My Organizations is selected', async () => {
-    await act(async () => {
-      const { container, getByPlaceholderText } = render(getUiElement({ ...defaultFilter }));
-      expect(getByPlaceholderText('Property name')).not.toBeDisabled();
-      expect(container.querySelector('input[name="organizations"]')).not.toBeDisabled();
     });
   });
 });

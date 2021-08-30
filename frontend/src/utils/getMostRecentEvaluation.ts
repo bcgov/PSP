@@ -1,5 +1,6 @@
 import { IPropertyEvaluation } from 'interfaces';
 import _ from 'lodash';
+import moment from 'moment';
 
 /**
  * Get the most recent evaluation matching the passed evaluation type.
@@ -10,6 +11,9 @@ export const getMostRecentEvaluation = (
   evaluations: IPropertyEvaluation[],
   key: number,
 ): IPropertyEvaluation | undefined => {
-  const mostRecentEvaluation = _.find(_.orderBy(evaluations ?? [], 'date', 'desc'), { key: key });
+  const mostRecentEvaluation = _.find(
+    _.orderBy(evaluations ?? [], evaluation => moment(evaluation.evaluatedOn), 'desc'),
+    { key: key },
+  );
   return mostRecentEvaluation;
 };

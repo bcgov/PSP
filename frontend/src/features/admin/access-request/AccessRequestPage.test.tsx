@@ -127,7 +127,7 @@ describe('AccessRequestPage', () => {
           .first()
           .prop('initialValues'),
       ).toEqual({
-        organizationId: undefined,
+        organizationId: 0,
         id: undefined,
         status: 'RECEIVED',
         note: '',
@@ -141,9 +141,9 @@ describe('AccessRequestPage', () => {
           surname: undefined,
           position: '',
           businessIdentifier: undefined,
+          keycloakUserId: undefined,
         },
         userId: undefined,
-        key: undefined,
       });
     });
 

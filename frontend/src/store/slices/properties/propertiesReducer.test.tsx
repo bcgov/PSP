@@ -43,7 +43,7 @@ describe('property slice reducer functionality', () => {
   });
   it('stores the parcel from the map', () => {
     const result = propertiesReducer(
-      { ...initialState, properties: mockProperties },
+      { ...initialState, properties: [mockProperties[0]] },
       {
         type: propertiesSlice.actions.storePropertiesFromMap,
         payload: mockParcel,
@@ -51,7 +51,7 @@ describe('property slice reducer functionality', () => {
     );
     expect(result).toEqual({
       ...initialState,
-      parcels: mockProperties,
+      properties: [mockProperties[0]],
     });
   });
   it('stores the draft parcels', () => {
@@ -61,7 +61,7 @@ describe('property slice reducer functionality', () => {
     });
     expect(result).toEqual({
       ...initialState,
-      draftParcels: [pointFeature],
+      draftProperties: [pointFeature],
     });
   });
   it('saves the building detail', () => {

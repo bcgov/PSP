@@ -12,7 +12,7 @@ export const REGIONAL_LAYER_URL =
 export const parcelLayerPopupConfig = {
   PARCEL_NAME: { label: 'Parcel Name:', display: (data: any) => data.PARCEL_NAME },
   PIN: { label: 'Parcel PIN:', display: (data: any) => data.PIN },
-  PID: { label: 'Parcel PID:', display: (data: any) => <PidLink data={data} /> },
+  PID: { label: 'Parcel PID:', display: (data: any) => PidLink(data) },
   PLAN_NUMBER: { label: 'Plan Number:', display: (data: any) => data.PLAN_NUMBER },
   PARCEL_CLASS: { label: 'Parcel Class:', display: (data: any) => data.PARCEL_CLASS },
   MUNICIPALITY: { label: 'Municipality:', display: (data: any) => data.MUNICIPALITY },

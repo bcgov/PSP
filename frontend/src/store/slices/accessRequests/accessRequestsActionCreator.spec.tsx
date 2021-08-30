@@ -102,12 +102,12 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('addAccessRequest action creator', () => {
-    const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
+    const newMockAccessRequest = { ...mockAccessRequest, id: undefined };
     const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 
     it('calls the api with the expected url', () => {
-      mockAxios.onPost(url).reply(200, mockResponse);
+      mockAxios.onPost(`${url}/${newMockAccessRequest.id}`).reply(200, mockResponse);
       renderHook(
         () =>
           useAccessRequests()
@@ -120,7 +120,7 @@ describe('useAccessRequests functionality', () => {
         },
       );
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', done => {
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>

@@ -22,11 +22,48 @@ exports[`MapProperties View renders correctly 1`] = `
   height: 0px;
 }
 
-.c11 {
+.c10 {
+  width: 100%;
+  height: 52px;
+  background-color: slideOutBlue;
+  color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
+  padding-top: 16px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.c14 {
+  width: 100%;
+  padding-left: 10px;
+  padding: 0px 10px 5px 10px;
+  position: relative;
+}
+
+.c14.open {
+  overflow-y: scroll;
+  max-height: calc(100vh - 380px);
+}
+
+.c13 {
   font-size: 30px;
 }
 
-.c10 {
+.c12 {
   width: 52px;
   height: 52px;
   position: absolute;
@@ -37,10 +74,19 @@ exports[`MapProperties View renders correctly 1`] = `
   box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
 }
 
-.c10.open {
+.c12.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   top: 0px;
+}
+
+.c11 {
+  font-size: 18px;
+  color: #ffffff;
+  -webkit-text-decoration: none solid rgb(255,255,255);
+  text-decoration: none solid rgb(255,255,255);
+  line-height: 18px;
+  font-weight: bold;
 }
 
 .c6 {
@@ -610,16 +656,25 @@ exports[`MapProperties View renders correctly 1`] = `
                 class="leaflet-control"
               >
                 <div
-                  class="c9 closed"
+                  class="c9"
                   id="infoContainer"
                 >
+                  <div
+                    class="c10"
+                  >
+                    <p
+                      class="c11"
+                    >
+                      Property Info
+                    </p>
+                  </div>
                   <button
-                    class="c10 btn btn-outline-secondary"
+                    class="c12 open btn btn-outline-secondary"
                     id="slideOutInfoButton"
                     type="button"
                   >
                     <svg
-                      class="c11"
+                      class="c13"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -633,6 +688,15 @@ exports[`MapProperties View renders correctly 1`] = `
                       />
                     </svg>
                   </button>
+                  <div
+                    class="c14 open"
+                  >
+                    <p
+                      id="emptySlideOut"
+                    >
+                      Click a pin to view the property details
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
