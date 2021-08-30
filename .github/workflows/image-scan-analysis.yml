@@ -99,7 +99,7 @@ jobs:
   
     if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
     needs: [build_frontend, build_backend] 
-    name: pims-logging
+    name: logging
     runs-on: ubuntu-latest
     permissions:
       actions: read
