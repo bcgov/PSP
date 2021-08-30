@@ -60,9 +60,8 @@ jobs:
     
   build_backend:
     
-    if: always()
-    needs: build_frontend
-    if: github.event.ref != 'refs/heads/dev' 
+    if: always() && github.event.ref != 'refs/heads/dev'
+    needs: build_frontend 
     name: pims-backend
     runs-on: ubuntu-latest
     permissions:
@@ -104,9 +103,8 @@ jobs:
         
   build_logging:
   
-    if: always()
+    if:     if: always() && github.event.ref != 'refs/heads/dev'
     needs: [build_frontend, build_backend] 
-    if: github.event.ref != 'refs/heads/dev' 
     name: pims-logging
     runs-on: ubuntu-latest
     permissions:
