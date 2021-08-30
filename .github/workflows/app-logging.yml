@@ -60,8 +60,10 @@ jobs:
         docker cp pims-logging:/logging/. . 
         exitcode=$(docker inspect pims-logging --format='{{.State.ExitCode}}')
         echo $exitcode
-        if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" || $exitcode == 0 ]]; then
+        if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A pims* && rm -f pims*
+        elif [[ $exitcode == 0 ]];then
+            echo "Info: No log captured between sleep time"
         else
             echo "There's an error capturing pims logs" && exit 1
         fi
