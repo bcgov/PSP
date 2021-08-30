@@ -40,7 +40,7 @@ jobs:
         if [[ ${{github.event.ref}} == 'refs/heads/test' || ${{github.event.ref}} == 'refs/heads/pims-sookeke' ]]; then
             echo "FRONTEND_APP_NAME=pims-app-test" >> $GITHUB_ENV
             echo "API_NAME=pims-api-test" >> $GITHUB_ENV
-        elif [[ ${{github.event.ref}} == 'refs/heads/master' ]]
+        elif [[ ${{github.event.ref}} == 'refs/heads/master' ]]; then
            echo "FRONTEND_APP_NAME=pims-app-uat" >> $GITHUB_ENV
            echo "API_NAME=pims-api-uat" >> $GITHUB_ENV
         else
