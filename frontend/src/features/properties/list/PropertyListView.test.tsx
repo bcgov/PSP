@@ -15,7 +15,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { TenantProvider } from 'tenants';
-import { fillInput } from 'utils/test-utils';
 
 import service from '../service';
 import PropertyListView from './PropertyListView';

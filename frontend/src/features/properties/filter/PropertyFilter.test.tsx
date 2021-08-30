@@ -7,7 +7,6 @@ import { usePropertyNames } from 'features/properties/common/slices/usePropertyN
 import { createMemoryHistory } from 'history';
 import * as MOCK from 'mocks/filterDataMock';
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';

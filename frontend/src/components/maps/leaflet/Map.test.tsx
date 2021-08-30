@@ -11,15 +11,7 @@ import React from 'react';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
-import {
-  cleanup,
-  deferred,
-  fireEvent,
-  prettyDOM,
-  render,
-  RenderOptions,
-  waitFor,
-} from 'utils/test-utils';
+import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { PointFeature } from '../types';
 import Map from './Map';

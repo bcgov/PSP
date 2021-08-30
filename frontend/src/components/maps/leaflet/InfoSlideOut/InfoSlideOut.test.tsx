@@ -18,7 +18,6 @@ import {
   render,
   RenderOptions,
   waitFor,
-  within,
 } from 'utils/test-utils';
 
 import InfoSlideOut from './InfoSlideOut';
