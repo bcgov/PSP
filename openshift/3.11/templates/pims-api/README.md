@@ -107,7 +107,7 @@ oc process --parameters -f build.yaml
 NAME                     DESCRIPTION        VALUE
 APP_NAME                 ...                pims
 COMP_NAME                ...                api
-GIT_REPO_URL             ...                https://github.com/bcgov/PIMS.git
+GIT_REPO_URL             ...                https://github.com/bcgov/PSP.git
 GIT_REF                  ...                dev
 SOURCE_CONTEXT_DIR       ...                backend
 DOTNET_BUILDER_IMAGE     ...                dotnet-31-rhel7
@@ -157,7 +157,7 @@ oc process --parameters -f pims-api-build.yaml | awk -F '[ ]{2,}' 'NR>1{ print $
 # output (which you can copy-paste in an .env file)
 APP_NAME=pims
 COMP_NAME=api
-GIT_REPO_URL=https://github.com/bcgov/PIMS.git
+GIT_REPO_URL=https://github.com/bcgov/PSP.git
 GIT_REF=dev
 SOURCE_CONTEXT_DIR=backend
 

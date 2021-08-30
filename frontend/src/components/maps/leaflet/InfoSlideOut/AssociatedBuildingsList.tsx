@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 interface IAssociatedBuildings {
   /** the selected property information */
   propertyInfo: IParcel | null;
-  /** whether the user has the correct agency/permissions to edit property details */
+  /** whether the user has the correct organization/permissions to edit property details */
   canEditDetails: boolean;
 }
 

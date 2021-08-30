@@ -1,3 +1,4 @@
+using NetTopologySuite.Geometries;
 using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Pims.Dal.Entities.Models
     /// <summary>
     /// PropertyFilter class, provides a model for filtering property queries.
     /// </summary>
-    public abstract class PropertyFilter : PageFilter
+    public class PropertyFilter : PageFilter
     {
         #region Properties
         /// <summary>
@@ -43,20 +44,14 @@ namespace Pims.Dal.Entities.Models
         public double? SWLongitude { get; set; }
 
         /// <summary>
-        /// get/set - The RAEG/SPP number.
+        /// get/set - The unique identifier for titled property.
         /// </summary>
-        public string ProjectNumber { get; set; }
+        public string PID { get; set; }
 
         /// <summary>
-        /// get/set - The property type
+        /// get/set - The unique identifier for untitled property.
         /// </summary>
-        public PropertyTypes? PropertyType { get; set; }
-
-        /// <summary>
-        /// get/set - Flag indicating properties in projects should be ignored.
-        /// </summary>
-        /// <value></value>
-        public bool? IgnorePropertiesInProjects { get; set; }
+        public int? PIN { get; set; }
 
         /// <summary>
         /// get/set - The value of the property name.
@@ -65,21 +60,26 @@ namespace Pims.Dal.Entities.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// get/set - The parcelId for the property
+        /// get/set - The municipality name.
         /// </summary>
         /// <value></value>
-        public long? ParcelId { get; set; }
+        public string Municipality { get; set; }
 
         /// <summary>
         /// get/set - Building classification Id.
         /// </summary>
         /// <value></value>
-        public long? ClassificationId { get; set; }
+        public string ClassificationId { get; set; }
 
         /// <summary>
         /// get/set - The property description.
         /// </summary>
-        public string Description { get; set; }
+        public string TenureId { get; set; }
+
+        /// <summary>
+        /// get/set - The property description.
+        /// </summary>
+        public string PropertyTypeId { get; set; }
 
         /// <summary>
         /// get/set - The property address.
@@ -88,51 +88,10 @@ namespace Pims.Dal.Entities.Models
         public string Address { get; set; }
 
         /// <summary>
-        /// get/set - The property administrative area (city, muncipality, district, etc.).
-        /// </summary>
-        public string AdministrativeArea { get; set; }
-
-        /// <summary>
-        /// get/set - Building minimum market value.
+        /// get/set - An array of organizations.
         /// </summary>
         /// <value></value>
-        public decimal? MinMarketValue { get; set; }
-
-        /// <summary>
-        /// get/set - Bare land only flag
-        /// </summary>
-        /// <value></value>
-        public bool? BareLandOnly { get; set; }
-
-        /// <summary>
-        /// get/set - Rentable Area
-        /// </summary>
-        /// <value></value>
-        public float? RentableArea { get; set; }
-
-        /// <summary>
-        /// get/set - Building maximum market value.
-        /// </summary>
-        /// <value></value>
-        public decimal? MaxMarketValue { get; set; }
-
-        /// <summary>
-        /// get/set - Property minimum assessed value.
-        /// </summary>
-        /// <value></value>
-        public decimal? MinAssessedValue { get; set; }
-
-        /// <summary>
-        /// get/set - Property maximum assessed value.
-        /// </summary>
-        /// <value></value>
-        public decimal? MaxAssessedValue { get; set; }
-
-        /// <summary>
-        /// get/set - An array of agencies.
-        /// </summary>
-        /// <value></value>
-        public long[] Agencies { get; set; }
+        public long[] Organizations { get; set; }
         #endregion
 
         #region Constructors
@@ -159,25 +118,29 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a PropertyFilter class, initializes it with the specified arguments.
         /// </summary>
+        /// <param name="boundary"></param>
+        public PropertyFilter(Envelope boundary)
+        {
+            this.NELatitude = boundary?.MaxY;
+            this.NELongitude = boundary?.MaxX;
+            this.SWLatitude = boundary?.MinY;
+            this.SWLongitude = boundary?.MinX;
+        }
+
+        /// <summary>
+        /// Creates a new instance of a PropertyFilter class, initializes it with the specified arguments.
+        /// </summary>
         /// <param name="address"></param>
-        /// <param name="agencyId"></param>
+        /// <param name="organizationId"></param>
         /// <param name="classificationId"></param>
-        /// <param name="minMarketValue"></param>
-        /// <param name="maxMarketValue"></param>
-        /// <param name="minAssessedValue"></param>
-        /// <param name="maxAssessedValue"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public PropertyFilter(string address, long? agencyId, long? classificationId, decimal? minMarketValue, decimal? maxMarketValue, decimal? minAssessedValue, decimal? maxAssessedValue, string[] sort)
+        public PropertyFilter(string address, long? organizationId, string classificationId, string[] sort)
         {
             this.Address = address;
             this.ClassificationId = classificationId;
-            this.MinMarketValue = minMarketValue;
-            this.MaxMarketValue = maxMarketValue;
-            this.MinAssessedValue = minAssessedValue;
-            this.MaxAssessedValue = maxAssessedValue;
-            if (agencyId.HasValue)
-                this.Agencies = new[] { agencyId.Value };
+            if (organizationId.HasValue)
+                this.Organizations = new[] { organizationId.Value };
             this.Sort = sort;
         }
 
@@ -197,21 +160,15 @@ namespace Pims.Dal.Entities.Models
             this.SWLatitude = filter.GetDoubleNullValue(nameof(this.SWLatitude));
             this.SWLongitude = filter.GetDoubleNullValue(nameof(this.SWLongitude));
 
-            this.ProjectNumber = filter.GetStringValue(nameof(this.ProjectNumber));
-            this.IgnorePropertiesInProjects = filter.GetBoolNullValue(nameof(this.IgnorePropertiesInProjects));
-            this.PropertyType = Enum.TryParse(filter.GetStringValue(nameof(this.PropertyType), null), out PropertyTypes propType) ? (PropertyTypes?)propType : null;
+            this.PropertyTypeId = filter.GetStringValue(nameof(this.PropertyTypeId));
+            this.TenureId = filter.GetStringValue(nameof(this.TenureId));
             this.Address = filter.GetStringValue(nameof(this.Address));
-            this.AdministrativeArea = filter.GetStringValue(nameof(this.AdministrativeArea));
+            this.Municipality = filter.GetStringValue(nameof(this.Municipality));
+            this.Name = filter.GetStringValue(nameof(this.Name));
+            this.PID = filter.GetStringValue(nameof(this.PID));
+            this.PIN = filter.GetIntNullValue(nameof(this.PIN));
 
-            this.BareLandOnly = filter.GetBoolNullValue(nameof(this.BareLandOnly));
-            this.ClassificationId = filter.GetLongNullValue(nameof(this.ClassificationId));
-            this.Description = filter.GetStringValue(nameof(this.Description));
-            this.MinMarketValue = filter.GetDecimalNullValue(nameof(this.MinMarketValue));
-            this.MaxMarketValue = filter.GetDecimalNullValue(nameof(this.MaxMarketValue));
-            this.MinAssessedValue = filter.GetDecimalNullValue(nameof(this.MinAssessedValue));
-            this.MaxAssessedValue = filter.GetDecimalNullValue(nameof(this.MaxAssessedValue));
-
-            this.Agencies = filter.GetLongArrayValue(nameof(this.Agencies)).Where(a => a != 0).ToArray();
+            this.Organizations = filter.GetLongArrayValue(nameof(this.Organizations)).Where(a => a != 0).ToArray();
         }
         #endregion
 
@@ -227,19 +184,15 @@ namespace Pims.Dal.Entities.Models
                 || this.NELongitude.HasValue
                 || this.SWLatitude.HasValue
                 || this.SWLongitude.HasValue
-                || !String.IsNullOrWhiteSpace(this.ProjectNumber)
-                || this.IgnorePropertiesInProjects == true
+                || !String.IsNullOrWhiteSpace(this.PID)
+                || this.PIN.HasValue
+                || !String.IsNullOrWhiteSpace(this.Name)
                 || !String.IsNullOrWhiteSpace(this.Address)
-                || !String.IsNullOrWhiteSpace(this.AdministrativeArea)
-                || !String.IsNullOrWhiteSpace(this.Description)
-                || this.MaxAssessedValue.HasValue
-                || this.MinAssessedValue.HasValue
-                || this.MinMarketValue.HasValue
-                || this.MaxMarketValue.HasValue
-                || this.BareLandOnly == true
-                || this.Agencies?.Any() == true
-                || this.PropertyType.HasValue
-                || this.ClassificationId.HasValue;
+                || !String.IsNullOrWhiteSpace(this.Municipality)
+                || !String.IsNullOrWhiteSpace(this.PropertyTypeId)
+                || !String.IsNullOrWhiteSpace(this.TenureId)
+                || !String.IsNullOrWhiteSpace(this.ClassificationId)
+                || this.Organizations?.Any() == true;
         }
         #endregion
     }

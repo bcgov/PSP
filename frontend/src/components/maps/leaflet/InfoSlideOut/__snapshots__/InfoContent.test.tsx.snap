@@ -149,7 +149,7 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
           <p
             class="label"
           >
-            Owning agency
+            Owning organization
           </p>
         </div>
       </div>

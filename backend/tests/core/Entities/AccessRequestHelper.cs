@@ -1,4 +1,3 @@
-using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -11,21 +10,11 @@ namespace Pims.Core.Test
         /// <summary>
         /// Create a new instance of an AccessRequest for a default user.
         /// </summary>
-        /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest()
-        {
-            return CreateAccessRequest(1);
-        }
-
-        /// <summary>
-        /// Create a new instance of an AccessRequest for a default user.
-        /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest(int id)
+        public static Entity.AccessRequest CreateAccessRequest(long id)
         {
-            var user = EntityHelper.CreateUser("test");
-            return CreateAccessRequest(id, user);
+            return CreateAccessRequest(id, null, null, null);
         }
 
         /// <summary>
@@ -33,30 +22,29 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <param name="user"></param>
+        /// <param name="role"></param>
+        /// <param name="organization"></param>
         /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest(int id, Entity.User user)
+        public static Entity.AccessRequest CreateAccessRequest(long id, Entity.User user, Entity.Role role, Entity.Organization organization)
         {
+            user ??= EntityHelper.CreateUser("test");
+            role ??= EntityHelper.CreateRole("Real Estate Manager");
             var accessRequest = new Entity.AccessRequest()
             {
                 Id = id,
                 UserId = user.Id,
-                User = user
+                User = user,
+                RoleId = role.Id,
+                Role = role
             };
 
-            accessRequest.AgenciesManyToMany.Add(new Entity.AccessRequestAgency()
+            organization ??= EntityHelper.CreateOrganization(id, "test", EntityHelper.CreateOrganizationType("Type 1"), EntityHelper.CreateOrganizationIdentifierType("Identifier 1"), EntityHelper.CreateAddress(id));
+            accessRequest.OrganizationsManyToMany.Add(new Entity.AccessRequestOrganization()
             {
                 AccessRequestId = id,
                 AccessRequest = accessRequest,
-                AgencyId = 99,
-                Agency = EntityHelper.CreateAgency(99, "TEST", "access request test agency")
-            });
-
-            accessRequest.RolesManyToMany.Add(new Entity.AccessRequestRole()
-            {
-                AccessRequestId = id,
-                AccessRequest = accessRequest,
-                RoleId = 99,
-                Role = EntityHelper.CreateRole(99, "access request test role")
+                OrganizationId = organization.Id,
+                Organization = organization
             });
 
             return accessRequest;

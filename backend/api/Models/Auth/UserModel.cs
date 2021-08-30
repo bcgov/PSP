@@ -44,7 +44,7 @@ namespace Pims.Api.Models.Auth
         public UserModel(Entity.User user)
         {
             this.Id = user.Id;
-            this.Key = user.Key;
+            this.Key = user.KeycloakUserId.Value;
         }
         #endregion
     }

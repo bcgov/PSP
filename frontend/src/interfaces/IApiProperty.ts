@@ -19,9 +19,9 @@ export interface IApiProperty {
   landLegalDescription: string;
   zoning: string;
   zoningPotential: string;
-  agency?: string;
-  subAgency?: string;
-  agencyId: number;
+  organization?: string;
+  subOrganization?: string;
+  organizationId: number;
   isSensitive: boolean;
   buildings: IBuilding[];
   evaluations: IEvaluation[];

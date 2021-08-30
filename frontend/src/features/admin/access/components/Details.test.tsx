@@ -9,16 +9,16 @@ describe('Access request details', () => {
   it('Snapshot matches', () => {
     const request: IAccessRequestModel = {
       id: 1,
-      username: 'idir/bceid',
+      businessIdentifier: 'idir/bceid',
       userId: 2,
       firstName: 'firstName',
-      lastName: 'lastName',
+      surname: 'surname',
       email: 'user@email.com',
       position: 'position 1',
       role: 'Role',
-      agency: 'Agency Name',
+      organization: 'Organization Name',
       note: 'Note here',
-      status: AccessRequestStatus.OnHold,
+      status: AccessRequestStatus.Received,
     };
     const component = mount(
       <div>

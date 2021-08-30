@@ -13,13 +13,13 @@ namespace Pims.Api.Areas.Admin.Keycloak.Role
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.BaseAppEntity, BaseAppModel>();
+                .Inherits<Entity.BaseEntity, BaseModel>();
 
             config.NewConfig<Model.Update.RoleModel, Entity.Role>()
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<BaseModel, Entity.BaseEntity>();
 
             config.NewConfig<Entity.BaseAppEntity, BaseAppModel>()
                 .Map(dest => dest.RowVersion, src => src.RowVersion);

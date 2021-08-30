@@ -118,11 +118,11 @@ describe('access request reducer functionality', () => {
   it('allows an admin to update the access request filter', () => {
     const result = accessRequestReducer(undefined, {
       type: accessRequestsSlice.actions.filterAccessRequestsAdmin,
-      payload: { agency: '1', role: '2', searchText: '3' },
+      payload: { organization: '1', role: '2', searchText: '3' },
     });
     expect(result).toEqual({
       ...initialState,
-      filter: { agency: '1', role: '2', searchText: '3' },
+      filter: { organization: '1', role: '2', searchText: '3' },
     });
   });
 });

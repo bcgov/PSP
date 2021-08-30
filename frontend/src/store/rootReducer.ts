@@ -1,13 +1,13 @@
 import propertyNameSlice from 'features/properties/common/slices/propertyNameSlice';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
-import { agenciesSlice } from 'store/slices/agencies/agenciesSlice';
 import filterSlice from 'store/slices/filter/filterSlice';
 import jwtSlice from 'store/slices/jwt/JwtSlice';
 import keycloakReadySlice from 'store/slices/keycloakReady/keycloakReadySlice';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import mapViewZoomSlice from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import { networkSlice } from 'store/slices/network/networkSlice';
+import { organizationsSlice } from 'store/slices/organizations/organizationsSlice';
 import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import { lookupCodesSlice } from './slices/lookupCodes/lookupCodesSlice';
@@ -21,7 +21,7 @@ export const reducer = {
   [usersSlice.name]: usersSlice.reducer,
   [accessRequestsSlice.name]: accessRequestsSlice.reducer,
   [lookupCodesSlice.name]: lookupCodesSlice.reducer,
-  [agenciesSlice.name]: agenciesSlice.reducer,
+  [organizationsSlice.name]: organizationsSlice.reducer,
   [networkSlice.name]: networkSlice.reducer,
   [leafletMouseSlice.name]: leafletMouseSlice.reducer,
   [parcelLayerDataSlice.name]: parcelLayerDataSlice.reducer,

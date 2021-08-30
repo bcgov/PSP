@@ -7,9 +7,9 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdminModels = Pims.Api.Areas.Admin.Models.User;
+using Model = Pims.Api.Areas.Admin.Models.User;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Keycloak.Models.User;
+using KModel = Pims.Api.Areas.Keycloak.Models.User;
 
 namespace Pims.Api.Areas.Keycloak.Controllers
 {
@@ -55,18 +55,17 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// <returns></returns>
         [HttpPost("sync/{key}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.UserModel), 200)]
+        [ProducesResponseType(typeof(KModel.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
         public async Task<IActionResult> SyncUserAsync(Guid key)
         {
             var user = await _keycloakService.SyncUserAsync(key);
-            var result = _mapper.Map<Model.UserModel>(user);
+            var result = _mapper.Map<KModel.UserModel>(user);
 
             return new JsonResult(result);
         }
-
 
         /// <summary>
         /// Fetch an array of users from keycloak.
@@ -78,14 +77,14 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.UserModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<KModel.UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
         public async Task<IActionResult> GetUsersAsync(int page = 1, int quantity = 10, string search = null)
         {
             var users = await _keycloakService.GetUsersAsync(page, quantity, search);
-            var result = _mapper.Map<Model.UserModel[]>(users);
+            var result = _mapper.Map<KModel.UserModel[]>(users);
 
             return new JsonResult(result);
         }
@@ -98,14 +97,14 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// <returns></returns>
         [HttpGet("{key:guid}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.UserModel), 200)]
+        [ProducesResponseType(typeof(KModel.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "keycloak-user" })]
         [HasPermission(Permissions.AdminUsers)]
         public async Task<IActionResult> GetUserAsync(Guid key)
         {
             var user = await _keycloakService.GetUserAsync(key);
-            var result = _mapper.Map<Model.UserModel>(user);
+            var result = _mapper.Map<KModel.UserModel>(user);
 
             return new JsonResult(result);
         }
@@ -118,38 +117,18 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         /// <returns></returns>
         [HttpPut("{key:guid}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(AdminModels.UserModel), 200)]
+        [ProducesResponseType(typeof(Model.UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "keycloak-user" })]
+        [SwaggerOperation(Tags = new[] { "admin-user" })]
         [HasPermission(Permissions.AdminUsers)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
-        public async Task<IActionResult> UpdateUserAsync(Guid key, [FromBody] AdminModels.UserModel model)
+        public async Task<IActionResult> UpdateUserAsync(Guid key, [FromBody] Model.UserModel model)
         {
             var user = _mapper.Map<Entity.User>(model);
             var entity = await _keycloakService.UpdateUserAsync(user);
-            var result = _mapper.Map<AdminModels.UserModel>(entity);
+            var result = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(result);
         }
-
-        #region Access Request
-        /// <summary>
-        /// Update an access request, generally to grant/deny it.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPut("access/request")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AccessRequestModel), 200)]
-        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "keycloak-user" })]
-        [HasPermission(Permissions.AdminUsers)]
-        public async Task<IActionResult> UpdateAccessRequestAsync(Model.AccessRequestModel model)
-        {
-            var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
-            var result = await _keycloakService.UpdateAccessRequestAsync(accessRequest);
-            return new JsonResult(_mapper.Map<Model.AccessRequestModel>(result));
-        }
-        #endregion
         #endregion
     }
 }

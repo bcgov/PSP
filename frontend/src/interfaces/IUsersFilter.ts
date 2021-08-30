@@ -1,9 +1,9 @@
 export interface IUsersFilter {
-  username?: string;
+  businessIdentifier?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   email?: string;
   position?: string;
-  agency?: string;
+  organization?: string;
   role?: string;
 }

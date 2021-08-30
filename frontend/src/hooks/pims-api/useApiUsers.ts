@@ -26,9 +26,9 @@ export const useApiUsers = () => {
       activateUser: () => api.post('/auth/activate'),
       getUser: (key: string) => api.get<IUserDetails>(`/admin/users/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
-        api.post<IPagedItems<IUser>>(`/admin/users/my/agency`, params),
+        api.post<IPagedItems<IUser>>(`/admin/users/my/organization`, params),
       putUser: (user: IUserDetails) =>
-        apiWithToasts.put<IUser>(`/keycloak/users/${user.key}`, user),
+        apiWithToasts.put<IUser>(`/keycloak/users/${user.keycloakUserId}`, user),
     }),
     [api, apiWithToasts],
   );

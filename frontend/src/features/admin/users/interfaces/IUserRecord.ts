@@ -7,11 +7,11 @@ export interface IUserRecord {
   id: number;
   key: string;
   email?: string;
-  username?: string;
+  businessIdentifier?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   isDisabled?: boolean;
-  agency?: string;
+  organization?: string;
   roles?: string;
   position?: string;
   lastLogin?: string;

@@ -19,8 +19,10 @@ const MapView = lazy(() => import('./features/properties/map/MapView'));
 const AccessRequestPage = lazy(() => import('./features/admin/access-request/AccessRequestPage'));
 const EditUserPage = lazy(() => import('./features/admin/edit-user/EditUserPage'));
 const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAccessRequests'));
-const ManageAgencies = lazy(() => import('features/admin/agencies/ManageAgencies'));
-const EditAgencyPage = lazy(() => import('features/admin/agencies/EditAgencyPage'));
+const ManageOrganizations = lazy(() => import('features/admin/organizations/ManageOrganizations'));
+const EditOrganizationPage = lazy(() =>
+  import('features/admin/organizations/EditOrganizationPage'),
+);
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
 const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
 
@@ -131,27 +133,27 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
-          path="/admin/agencies"
-          component={ManageAgencies}
+          path="/admin/organizations"
+          component={ManageOrganizations}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
-          title={getTitle('Agency Management')}
+          title={getTitle('Organization Management')}
         />
         <AppRoute
           protected
-          path="/admin/agency/:id"
-          component={EditAgencyPage}
+          path="/admin/organization/:id"
+          component={EditOrganizationPage}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
-          title={getTitle('Edit Agency')}
+          title={getTitle('Edit Organization')}
         />
         <AppRoute
           protected
-          path="/admin/agency/new"
-          component={EditAgencyPage}
+          path="/admin/organization/new"
+          component={EditOrganizationPage}
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
-          title={getTitle('Edit Agency')}
+          title={getTitle('Edit Organization')}
         />
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
       </Switch>

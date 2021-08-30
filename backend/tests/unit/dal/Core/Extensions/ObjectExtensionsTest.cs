@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Pims.Core.Extensions;
+using Pims.Core.Test;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
@@ -19,19 +20,21 @@ namespace Pims.Api.Test.Core.Extensions
         public void CopyValues_ArgumentNullException()
         {
             // Arrange
-            var o1 = new Entity.Parcel(1, 1, 1);
+            var o1 = EntityHelper.CreateProperty(1);
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => o1.CopyValues((Entity.Parcel)null));
+            Assert.Throws<ArgumentNullException>(() => o1.CopyValues((Entity.Property)null));
         }
 
         [Fact]
         public void CopyValues()
         {
             // Arrange
-            var o1 = new Entity.Parcel(1, 1, 1) { Description = "test" };
-            var o2 = new Entity.Parcel(2, 2, 2);
+            var o1 = EntityHelper.CreateProperty(1);
+            o1.Description = "test";
+            o1.Location = new NetTopologySuite.Geometries.Point(1, 1, 1);
+            var o2 = EntityHelper.CreateProperty(2);
 
             // Act
             o1.CopyValues(o2);
@@ -39,7 +42,7 @@ namespace Pims.Api.Test.Core.Extensions
             // Assert
             o2.PID.Should().Be(o1.PID);
             o2.Description.Should().Be(o1.Description);
-            o2.Location.Should().NotBe(o1.Location);
+            o2.Location.Should().Be(o1.Location);
         }
         #endregion
         #endregion

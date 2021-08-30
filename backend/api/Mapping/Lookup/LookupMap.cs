@@ -1,5 +1,6 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
+using Model = Pims.Api.Models.Lookup;
 
 namespace Pims.Api.Mapping.Lookup
 {
@@ -7,70 +8,92 @@ namespace Pims.Api.Mapping.Lookup
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Province, Models.LookupModel>()
+            config.NewConfig<Entity.Province, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Name, src => src.Code)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
-            config.NewConfig<Entity.Role, Models.LookupModel>()
+            config.NewConfig<Entity.Country, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Code)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name)
+                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+
+            config.NewConfig<Entity.Region, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
-
-            config.NewConfig<Entity.PropertyType, Models.LookupModel>()
+            config.NewConfig<Entity.District, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
-
-            config.NewConfig<Entity.PropertyClassification, Models.LookupModel>()
+            config.NewConfig<Entity.Role, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.IsVisible, src => Convert(src))
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
-
-            config.NewConfig<Entity.BuildingConstructionType, Models.LookupModel>()
+            config.NewConfig<Entity.Organization, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Code, src => src.Identifier)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
-
-            config.NewConfig<Entity.BuildingOccupantType, Models.LookupModel>()
+            config.NewConfig<Entity.OrganizationType, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Name, src => src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
 
-
-            config.NewConfig<Entity.BuildingPredominateUse, Models.LookupModel>()
+            config.NewConfig<Entity.PropertyType, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Name, src => src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.SortOrder, src => src.SortOrder)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Type, src => src.GetType().Name)
                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
-        }
 
-        private bool? Convert(Entity.PropertyClassification classification)
-        {
-            return classification.IsVisible;
+            config.NewConfig<Entity.PropertyClassificationType, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Id)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name)
+                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+
+            config.NewConfig<Entity.PropertyAreaUnitType, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Id)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name)
+                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+
+            config.NewConfig<Entity.PropertyTenureType, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Name, src => src.Id)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Type, src => src.GetType().Name)
+                .Inherits<Entity.BaseEntity, Models.BaseModel>();
         }
     }
 }
