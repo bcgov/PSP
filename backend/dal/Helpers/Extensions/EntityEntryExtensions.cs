@@ -37,6 +37,10 @@ namespace Pims.Dal.Extensions
             }
         }
 
+        /// <summary>
+        /// Update the rowversion by incrementing it.
+        /// </summary>
+        /// <param name="entry"></param>
         public static void UpdateRowversion(this EntityEntry entry)
         {
             if (entry.Entity is BaseEntity entity)
@@ -45,6 +49,14 @@ namespace Pims.Dal.Extensions
             }
         }
 
+        /// <summary>
+        /// Auto update the application audit properties.
+        /// This handles both added and updated entities.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="username"></param>
+        /// <param name="userKey"></param>
+        /// <param name="userDirectory"></param>
         public static void UpdateAppAuditProperties(this EntityEntry entry, string username, Guid userKey, string userDirectory)
         {
             if (entry.Entity is BaseAppEntity entity)

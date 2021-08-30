@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Pims.Api.Models.Membership;
+using Pims.Api.Models.Keycloak;
 using System.Security.Claims;
 using System.Threading.Tasks;
 

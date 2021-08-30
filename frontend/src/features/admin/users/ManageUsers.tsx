@@ -64,7 +64,7 @@ const downloadUsers = (filter: IPaginateParams) =>
 export const ManageUsers = () => {
   const dispatch = useDispatch();
   const { getByType } = useLookupCodeHelpers();
-  const agencies = useMemo(() => getByType(API.AGENCY_CODE_SET_NAME), [getByType]);
+  const organizations = useMemo(() => getByType(API.ORGANIZATION_CODE_SET_NAME), [getByType]);
   const roles = useMemo(() => getByType(API.ROLE_CODE_SET_NAME), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
 
@@ -116,12 +116,12 @@ export const ManageUsers = () => {
       id: u.id,
       key: u.key,
       email: u.email,
-      username: u.username,
+      businessIdentifier: u.businessIdentifier,
       firstName: u.firstName,
-      lastName: u.lastName,
+      surname: u.surname,
       isDisabled: u.isDisabled,
       roles: u.roles ? u.roles.map(r => r.name).join(', ') : '',
-      agency: u.agencies && u.agencies.length > 0 ? u.agencies[0].name : '',
+      organization: u.organizations && u.organizations.length > 0 ? u.organizations[0].name : '',
       position: u.position ?? '',
       lastLogin: formatApiDateTime(u.lastLogin),
       createdOn: formatApiDateTime(u.createdOn),
@@ -155,17 +155,19 @@ export const ManageUsers = () => {
     <div className="users-management-page">
       <UsersFilterBar
         value={filter}
-        agencyLookups={agencies}
+        organizationLookups={organizations}
         rolesLookups={roles}
         onChange={value => {
-          (value as any)?.agency
+          (value as any)?.organization
             ? dispatch(
                 setUsersFilter({
                   ...value,
-                  agency: (find(agencies, { id: +(value as any)?.agency }) as any)?.name,
+                  organization: (find(organizations, {
+                    id: +(value as any)?.organization,
+                  }) as any)?.name,
                 }),
               )
-            : dispatch(setUsersFilter({ ...value, agency: '' }));
+            : dispatch(setUsersFilter({ ...value, organization: '' }));
           dispatch(setUsersPageIndex(0));
         }}
       />

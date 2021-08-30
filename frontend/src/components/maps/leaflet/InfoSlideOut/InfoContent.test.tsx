@@ -27,7 +27,7 @@ const mockParcelNoSub = {
   zoningPotential: '',
   classificationId: Classifications.SurplusActive,
   encumbranceReason: '',
-  agencyId: '',
+  organizationId: '',
   isSensitive: false,
   latitude: 48,
   longitude: 123,
@@ -62,7 +62,7 @@ const mockParcelNoSub = {
   landLegalDescription: 'test description',
   buildings: [],
   parcels: [],
-  agency: 'AEST',
+  organization: 'AEST',
 } as IParcel;
 
 export const mockParcel = {
@@ -73,7 +73,7 @@ export const mockParcel = {
   zoningPotential: '',
   classificationId: Classifications.SurplusActive,
   encumbranceReason: '',
-  agencyId: '',
+  organizationId: '',
   isSensitive: false,
   latitude: 48,
   longitude: 123,
@@ -109,10 +109,10 @@ export const mockParcel = {
   landLegalDescription: 'test description',
   buildings: [mockBuilding],
   parcels: [],
-  agency: 'AEST',
-  agencyFullName: 'Ministry of Advanced Education',
-  subAgency: 'KPU',
-  subAgencyFullName: 'Kwantlen Polytechnic University',
+  organization: 'AEST',
+  organizationFullName: 'Ministry of Advanced Education',
+  subOrganization: 'KPU',
+  subOrganizationFullName: 'Kwantlen Polytechnic University',
 } as IParcel;
 
 const lCodes = {
@@ -122,14 +122,14 @@ const lCodes = {
       id: 1,
       isDisabled: false,
       name: 'Ministry of Advanced Education',
-      type: API.AGENCY_CODE_SET_NAME,
+      type: API.ORGANIZATION_CODE_SET_NAME,
     },
     {
       code: 'KPU',
       id: 181,
       isDisabled: false,
       name: 'Kwantlen Polytechnic University',
-      type: API.AGENCY_CODE_SET_NAME,
+      type: API.ORGANIZATION_CODE_SET_NAME,
     },
   ],
 };
@@ -167,7 +167,7 @@ describe('InfoContent View functionality', () => {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
-          agencies: [1],
+          organizations: [1],
           roles: [],
         },
         subject: 'test',
@@ -206,7 +206,7 @@ describe('InfoContent View functionality', () => {
     expect(getByText('$10,000')).toBeVisible();
   });
 
-  it('Correct label if no sub agency', () => {
+  it('Correct label if no sub organization', () => {
     const { getByText } = render(ContentComponent(mockParcelNoSub, PropertyTypes.Parcel, true));
     expect(getByText('Owning ministry')).toBeVisible();
   });

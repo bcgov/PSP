@@ -10,7 +10,7 @@ import { usePropertyNames } from 'features/properties/common/slices/usePropertyN
 import { Formik, getIn } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodes from 'hooks/useLookupCodeHelpers';
-import { useMyAgencies } from 'hooks/useMyAgencies';
+import { useMyOrganizations } from 'hooks/useMyOrganizations';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useRef, useState } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -24,7 +24,7 @@ import { FilterBarSchema } from 'utils/YupSchema';
 import { Form, Select } from '../../../components/common/form';
 import { PropertyFilterOptions } from './';
 import { IPropertyFilter } from './IPropertyFilter';
-import { PropertyFilterAgencyOptions } from './PropertyFilterAgencyOptions';
+import { PropertyFilterOrganizationOptions } from './PropertyFilterOrganizationOptions';
 
 /**
  * PropertyFilter component properties.
@@ -32,8 +32,8 @@ import { PropertyFilterAgencyOptions } from './PropertyFilterAgencyOptions';
 export interface IPropertyFilterProps {
   /** The default filter to apply if a different one hasn't been set in the URL or stored in redux. */
   defaultFilter: IPropertyFilter;
-  /** An array of agency lookup codes. */
-  agencyLookupCodes: ILookupCode[];
+  /** An array of organization lookup codes. */
+  organizationLookupCodes: ILookupCode[];
   /** An array of administrative area codes. */
   adminAreaLookupCodes: ILookupCode[];
   /** Callback event when the filter is changed during Mount. */
@@ -42,13 +42,13 @@ export interface IPropertyFilterProps {
   sort?: TableSort<any>;
   /** Event fire when sorting changes. */
   onSorting?: (sort: TableSort<any>) => void;
-  /** Show select with my agencies/All Government dropdown */
-  showAllAgencySelect?: boolean;
+  /** Show select with my organizations/All Government dropdown */
+  showAllOrganizationSelect?: boolean;
   /** Override to trigger filterchanged in the parent */
   setTriggerFilterChanged?: (used: boolean) => void;
 }
 
-const AgencyCol = styled(Col)`
+const OrganizationCol = styled(Col)`
   display: flex;
   .form-control {
     width: 165px;
@@ -69,12 +69,12 @@ const AgencyCol = styled(Col)`
  */
 export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   defaultFilter,
-  agencyLookupCodes,
+  organizationLookupCodes,
   adminAreaLookupCodes,
   onChange,
   sort,
   onSorting,
-  showAllAgencySelect,
+  showAllOrganizationSelect,
   setTriggerFilterChanged,
 }) => {
   const [propertyFilter, setPropertyFilter] = React.useState<IPropertyFilter>(defaultFilter);
@@ -92,8 +92,8 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     setSorting: onSorting,
   });
 
-  const agencies = (agencyLookupCodes ?? []).map(c =>
-    mapLookupCodeWithParentString(c, agencyLookupCodes),
+  const organizations = (organizationLookupCodes ?? []).map(c =>
+    mapLookupCodeWithParentString(c, organizationLookupCodes),
   );
   const classifications = lookupCodes.getPropertyClassificationOptions();
   const adminAreas = (adminAreaLookupCodes ?? []).map(c => mapLookupCode(c));
@@ -103,28 +103,31 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
 
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
-    if (typeof values.agencies === 'string') {
-      const agency = agencies.find(x => x.value.toString() === values.agencies?.toString()) as any;
-      if (agency) {
-        values.agencies = agency;
+    if (typeof values.organizations === 'string') {
+      const organization = organizations.find(
+        x => x.value.toString() === values.organizations?.toString(),
+      ) as any;
+      if (organization) {
+        values.organizations = organization;
       }
     } else {
-      const agencies: any[] = values?.agencies || [];
-      if (agencies.length > 0) {
-        values.agencies = agencies[0] || (agencies.length === 2 ? agencies[1] : undefined);
+      const organizations: any[] = values?.organizations || [];
+      if (organizations.length > 0) {
+        values.organizations =
+          organizations[0] || (organizations.length === 2 ? organizations[1] : undefined);
       }
     }
     return values;
-  }, [defaultFilter, propertyFilter, agencies]);
+  }, [defaultFilter, propertyFilter, organizations]);
 
-  const myAgencies = useMyAgencies();
+  const myOrganizations = useMyOrganizations();
 
   const changeFilter = (values: IPropertyFilter) => {
-    const agencyIds = (values.agencies as any)?.value
-      ? (values.agencies as any).value
-      : values.agencies;
-    setPropertyFilter({ ...values, agencies: agencyIds });
-    onChange?.({ ...values, agencies: agencyIds });
+    const organizationIds = (values.organizations as any)?.value
+      ? (values.organizations as any).value
+      : values.organizations;
+    setPropertyFilter({ ...values, organizations: organizationIds });
+    onChange?.({ ...values, organizations: organizationIds });
   };
 
   const resetFilter = () => {
@@ -150,20 +153,23 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
       {({ isSubmitting, setFieldValue, values }) => (
         <Form>
           <Form.Row className="map-filter-bar">
-            <AgencyCol>
-              {showAllAgencySelect ? (
-                <PropertyFilterAgencyOptions disabled={findMoreOpen} agencies={agencies} />
+            <OrganizationCol>
+              {showAllOrganizationSelect ? (
+                <PropertyFilterOrganizationOptions
+                  disabled={findMoreOpen}
+                  organizations={organizations}
+                />
               ) : (
                 <ParentSelect
-                  field="agencies"
-                  options={myAgencies.map(c => mapSelectOptionWithParent(c, myAgencies))}
+                  field="organizations"
+                  options={myOrganizations.map(c => mapSelectOptionWithParent(c, myOrganizations))}
                   filterBy={['code', 'label', 'parent']}
-                  placeholder="My Agencies"
+                  placeholder="My Organizations"
                   selectClosest
                   disabled={findMoreOpen}
                 />
               )}
-            </AgencyCol>
+            </OrganizationCol>
             <Col className="map-filter-typeahead">
               <AsyncTypeahead
                 disabled={
@@ -176,7 +182,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
                 placeholder="Property name"
                 onSearch={() => {
                   setInitialLoad(true);
-                  fetchPropertyNames(keycloak.agencyId!).then(results => {
+                  fetchPropertyNames(keycloak.organizationId!).then(results => {
                     setOptions(results);
                     setInitialLoad(false);
                   });

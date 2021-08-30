@@ -64,7 +64,7 @@ export type MapProps = {
   lng: number;
   zoom?: number;
   properties: IProperty[];
-  agencies: ILookupCode[];
+  organizations: ILookupCode[];
   administrativeAreas: ILookupCode[];
   selectedProperty?: IPropertyDetail | null;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
@@ -91,7 +91,7 @@ const defaultFilterValues: IPropertyFilter = {
   address: '',
   administrativeArea: '',
   propertyType: '',
-  agencies: '',
+  organizations: '',
   classificationId: '',
   minLotSize: '',
   maxLotSize: '',
@@ -108,7 +108,7 @@ const whitelistedFilterKeys = [
   'address',
   'administrativeArea',
   'classificationId',
-  'agencies',
+  'organizations',
   'minLandArea',
   'maxLandArea',
   'rentableArea',
@@ -130,7 +130,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     address: filter.address,
     administrativeArea: filter.administrativeArea,
     classificationId: decimalOrUndefined(filter.classificationId),
-    agencies: filter.agencies,
+    organizations: filter.organizations,
     minLandArea: floatOrUndefined(filter.minLotSize),
     maxLandArea: floatOrUndefined(filter.maxLotSize),
     rentableArea: floatOrUndefined(filter.rentableArea),
@@ -153,7 +153,7 @@ const Map: React.FC<MapProps> = ({
   lat,
   lng,
   zoom: zoomProp,
-  agencies,
+  organizations,
   administrativeAreas,
   selectedProperty,
   onMapClick,
@@ -332,11 +332,11 @@ const Map: React.FC<MapProps> = ({
                 ...defaultFilterValues,
                 includeAllProperties: keycloak.hasClaim(Claims.ADMIN_PROPERTIES),
               }}
-              agencyLookupCodes={agencies}
+              organizationLookupCodes={organizations}
               adminAreaLookupCodes={administrativeAreas}
               onChange={handleMapFilterChange}
               setTriggerFilterChanged={setTriggerFilterChanged}
-              showAllAgencySelect={true}
+              showAllOrganizationSelect={true}
             />
           </Container>
         </Container>

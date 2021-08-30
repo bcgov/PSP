@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using AdminModels = Pims.Api.Areas.Admin.Models.User;
-using Model = Pims.Api.Areas.Keycloak.Models.User;
 
 namespace Pims.Api.Test.Routes.Keycloak
 {
@@ -21,15 +20,6 @@ namespace Pims.Api.Test.Routes.Keycloak
     [ExcludeFromCodeCoverage]
     public class UserControllerTest
     {
-        #region Variables
-        #endregion
-
-        #region Constructors
-        public UserControllerTest()
-        {
-        }
-        #endregion
-
         #region Tests
         [Fact]
         public void User_Route()
@@ -94,19 +84,6 @@ namespace Pims.Api.Test.Routes.Keycloak
             // Assert
             Assert.NotNull(endpoint);
             endpoint.HasPut("{key:guid}");
-            endpoint.HasPermissions(Permissions.AdminUsers);
-        }
-
-        [Fact]
-        public void UpdateAccessRequestAsync_Route()
-        {
-            // Arrange
-            var endpoint = typeof(UserController).FindMethod(nameof(UserController.UpdateAccessRequestAsync), typeof(Model.AccessRequestModel));
-
-            // Act
-            // Assert
-            Assert.NotNull(endpoint);
-            endpoint.HasPut("access/request");
             endpoint.HasPermissions(Permissions.AdminUsers);
         }
         #endregion

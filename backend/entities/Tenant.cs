@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// Tenant class, provides an entity for the datamodel to manage property agencies.
+    /// Tenant class, provides an entity for the datamodel to manage property organizations.
     /// </summary>
     [MotiTable("PIMS_TENANT", "TENANT")]
     public class Tenant : BaseEntity

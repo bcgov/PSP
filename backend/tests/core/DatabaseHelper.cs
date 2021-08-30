@@ -134,14 +134,24 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static PimsContext SeedDatabase(this PimsContext context)
         {
-            context.AddRange(EntityHelper.CreateDefaultPropertyClassifications());
-            context.AddRange(EntityHelper.CreateDefaultProvinces());
-            context.AddRange(EntityHelper.CreateDefaultAdministrativeAreas());
+            var countries = EntityHelper.CreateDefaultCountries();
+            var regions = EntityHelper.CreateDefaultRegions();
+            var organizationTypes = EntityHelper.CreateDefaultOrganizationTypes();
+            var organizationIdentifierTypes = EntityHelper.CreateDefaultOrganizationIdentifierTypes();
+            context.AddRange(countries);
+            context.AddRange(regions);
+            context.AddRange(organizationTypes);
+            context.AddRange(organizationIdentifierTypes);
             context.AddRange(EntityHelper.CreateDefaultRoles());
-            context.AddRange(EntityHelper.CreateDefaultBuildingPredominateUses());
-            context.AddRange(EntityHelper.CreateDefaultBuildingConstructionTypes());
-            context.AddRange(EntityHelper.CreateDefaultBuildingOccupantTypes());
-            context.AddRange(EntityHelper.CreateDefaultAgencies());
+            context.AddRange(EntityHelper.CreateDefaultPropertyTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyClassificationTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyTenureTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyAreaUnitTypes());
+            context.AddRange(EntityHelper.CreateDefaultPropertyDataSourceTypes());
+            context.AddRange(EntityHelper.CreateDefaultContactMethodTypes());
+            context.AddRange(EntityHelper.CreateDefaultProvinces(countries.First()));
+            context.AddRange(EntityHelper.CreateDefaultDistricts(regions.First()));
+            context.AddRange(EntityHelper.CreateDefaultOrganizations(organizationTypes.First(), organizationIdentifierTypes.First()));
             context.SaveChanges();
             return context;
         }

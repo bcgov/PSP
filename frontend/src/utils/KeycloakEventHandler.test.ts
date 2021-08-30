@@ -20,7 +20,7 @@ const keycloak = ({
   subject: 'test',
   userInfo: {
     roles: [],
-    agencies: ['1'],
+    organizations: ['1'],
   },
   token: '123456789',
 } as any) as KeycloakInstance;

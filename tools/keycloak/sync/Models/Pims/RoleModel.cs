@@ -47,7 +47,7 @@ namespace Pims.Tools.Keycloak.Sync.Models.Pims
         /// <summary>
         /// get/set - sorting order.
         /// </summary>
-        public int SortOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
         /// <summary>
         /// get/set - An array of claims associated to this role.

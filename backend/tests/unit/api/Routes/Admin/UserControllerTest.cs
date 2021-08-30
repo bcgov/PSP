@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Routes.Admin
             // Act
             // Assert
             Assert.NotNull(endpoint);
-            endpoint.HasPost("my/agency");
+            endpoint.HasPost("my/organization");
         }
 
         [Fact]

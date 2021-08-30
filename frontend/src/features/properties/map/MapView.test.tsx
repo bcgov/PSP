@@ -92,7 +92,7 @@ const mockDetails: IPropertyDetail = {
     classificationId: Classifications.CoreStrategic,
     zoning: '',
     zoningPotential: '',
-    agencyId: 0,
+    organizationId: 0,
     latitude: 48,
     longitude: 123,
     classification: 'Core Operational',
@@ -117,7 +117,7 @@ const mockDetails: IPropertyDetail = {
     landArea: '',
     landLegalDescription: 'test',
     buildings: [],
-    agency: 'FIN',
+    organization: 'FIN',
   },
 };
 
@@ -135,7 +135,7 @@ describe('MapView', () => {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
-          agencies: [0],
+          organizations: [0],
         },
       },
     });

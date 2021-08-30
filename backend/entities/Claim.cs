@@ -7,8 +7,8 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Claim class, provides an entity for the datamodel to manage claims.
     /// </summary>
-    [MotiTable("PIMS_CLAIM", "CLAIM")]
-    public class Claim : BaseEntity
+    [MotiTable("PIMS_CLAIM", "CLMTYP")]
+    public class Claim : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -42,7 +42,7 @@ namespace Pims.Dal.Entities
         public string Description { get; set; }
 
         /// <summary>
-        /// get/set - Whether the user is disabled.
+        /// get/set - Whether the claim is disabled.
         /// </summary>
         [Column("IS_DISABLED")]
         public bool IsDisabled { get; set; }

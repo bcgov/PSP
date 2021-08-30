@@ -15,13 +15,13 @@ namespace Pims.Api.Test.Core.Extensions
     public class EnumExtensionsTest
     {
         #region Data
-        public static IEnumerable<object[]> EnumInData = new List<object[]>()
+        public readonly static IEnumerable<object[]> EnumInData = new List<object[]>()
         {
-            new object[] { Entity.NotificationEncodings.Utf8, new[] { Entity.NotificationEncodings.Utf8, Entity.NotificationEncodings.Hex }, true },
-            new object[] { Entity.NotificationEncodings.Utf8, new[] { Entity.NotificationEncodings.Utf8 }, true },
-            new object[] { Entity.NotificationEncodings.Utf8, new[] { Entity.NotificationEncodings.Binary, Entity.NotificationEncodings.Hex }, false },
-            new object[] { Entity.NotificationEncodings.Utf8, new[] { Entity.NotificationEncodings.Binary }, false },
-            new object[] { Entity.NotificationEncodings.Utf8, new Entity.NotificationEncodings[0], false },
+            new object[] { TestEnum.Utf8, new[] { TestEnum.Utf8, TestEnum.Hex }, true },
+            new object[] { TestEnum.Utf8, new[] { TestEnum.Utf8 }, true },
+            new object[] { TestEnum.Utf8, new[] { TestEnum.Binary, TestEnum.Hex }, false },
+            new object[] { TestEnum.Utf8, new[] { TestEnum.Binary }, false },
+            new object[] { TestEnum.Utf8, new TestEnum[0], false },
         };
         #endregion
 
@@ -31,7 +31,7 @@ namespace Pims.Api.Test.Core.Extensions
         public void Enum_ToLower()
         {
             // Arrange
-            var encoding = Entity.NotificationEncodings.Utf8;
+            var encoding = TestEnum.Utf8;
 
             // Act
             var result = encoding.ToLower();
@@ -44,7 +44,7 @@ namespace Pims.Api.Test.Core.Extensions
         #region In
         [Theory]
         [MemberData(nameof(EnumInData))]
-        public void Enum_In(Entity.NotificationEncodings value, Entity.NotificationEncodings[] inValues, bool expectedResult)
+        public void Enum_In(TestEnum value, TestEnum[] inValues, bool expectedResult)
         {
             // Arrange
             // Act
@@ -60,15 +60,22 @@ namespace Pims.Api.Test.Core.Extensions
         public void Enum_ConvertTo()
         {
             // Arrange
-            var encoding = Entity.NotificationEncodings.Utf8;
+            var encoding = TestEnum.Utf8;
 
             // Act
-            var result = encoding.ConvertTo<Entity.NotificationEncodings, CModel.EmailEncodings>();
+            var result = encoding.ConvertTo<TestEnum, CModel.EmailEncodings>();
 
             // Assert
             result.Should().Be(CModel.EmailEncodings.Utf8);
         }
         #endregion
         #endregion
+
+        public enum TestEnum
+        {
+            Utf8,
+            Binary,
+            Hex
+        }
     }
 }
