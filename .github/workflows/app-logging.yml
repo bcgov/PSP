@@ -11,10 +11,8 @@ jobs:
   build:
 
     name: pims-logging
-    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test' || github.event.ref == 'refs/heads/pims-sookeke'
+    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test' || github.event.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
-    environment: 
-      name: dev
     env:
       SLEEP_TIME: 60
       STORAGE_TYPE: Amazon_S3
@@ -35,9 +33,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Set ENV variable
-      id: step_one
       run: |
-        if [[ ${{github.event.ref}} == 'refs/heads/test' || ${{github.event.ref}} == 'refs/heads/pims-sookeke' ]]; then
+        if [[ ${{github.event.ref}} == 'refs/heads/test' ]]; then
             echo "FRONTEND_APP_NAME=pims-app-test" >> $GITHUB_ENV
             echo "API_NAME=pims-api-test" >> $GITHUB_ENV
         elif [[ ${{github.event.ref}} == 'refs/heads/master' ]]; then
@@ -59,10 +56,9 @@ jobs:
       run: |
         docker cp pims-logging:/logging/. . 
         exitcode=$(docker inspect pims-logging --format='{{.State.ExitCode}}')
-        echo $exitcode
         if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A pims* && rm -f pims*
-        elif [[ $exitcode == 0 ]];then
+        elif [[ $exitcode == 0 ]]; then
             echo "Info: No log captured between sleep time"
         else
             echo "There's an error capturing pims logs" && exit 1
