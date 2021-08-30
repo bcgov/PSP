@@ -2,17 +2,24 @@ name: Security CI
 
 on:
   push:
-    branches: [master, test]
+    branches: [master, test, dev, pims-sookeke]
   pull_request:
-    branches: [master, test]
+    branches: [master, test, dev, pims-sookeke]
   schedule:
     - cron: '42 15 * * 5'
 
 jobs:
 
-  build:
+  check:
+    if: ${{ github.ref != 'refs/heads/dev' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Scanning Images on branch $GITHUB_REF"
+
+  build_frontend:
 
     name: pims-frontend
+    if: github.event.ref != 'refs/heads/dev' 
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -54,7 +61,8 @@ jobs:
   build_backend:
     
     if: always()
-    needs: build
+    needs: build_frontend
+    if: github.event.ref != 'refs/heads/dev' 
     name: pims-backend
     runs-on: ubuntu-latest
     permissions:
@@ -97,7 +105,8 @@ jobs:
   build_logging:
   
     if: always()
-    needs: [build, build_backend] 
+    needs: [build_frontend, build_backend] 
+    if: github.event.ref != 'refs/heads/dev' 
     name: pims-logging
     runs-on: ubuntu-latest
     permissions:
