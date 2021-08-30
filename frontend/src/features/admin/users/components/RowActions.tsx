@@ -19,8 +19,8 @@ export const RowActions = (props: CellProps<IUserRecord>) => {
   const changeAccountStatus = async (disabled: boolean) => {
     const user = getUser();
     if (user) {
-      user.isDisabled = disabled;
-      await updateUser(user);
+      const tempUser = { ...user, isDisabled: disabled };
+      await updateUser(tempUser);
     }
   };
   const enableUser = async () => {

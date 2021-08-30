@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace Pims.Api.Areas.Property.Models.Search
 {
     /// <summary>
@@ -24,22 +21,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// <summary>
         /// get/set - The foreign key to the property type [Land, Building].
         /// </summary>
-        public long PropertyTypeId { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the property status.
-        /// </summary>
-        public long StatusId { get; set; }
-
-        /// <summary>
-        /// get/set - The status of the property.
-        /// </summary>
-        public string Status { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the property classification.
-        /// </summary>
-        public long ClassificationId { get; set; }
+        public string PropertyType { get; set; }
 
         /// <summary>
         /// get/set - The classification of the property.
@@ -67,41 +49,9 @@ namespace Pims.Api.Areas.Property.Models.Search
         public string Description { get; set; }
 
         /// <summary>
-        /// get/set - The property project numbers.
-        /// </summary>
-        public IEnumerable<string> ProjectNumbers { get; set; }
-
-        /// <summary>
         /// get/set - Whether the property is sensitive data.
         /// </summary>
         public bool IsSensitive { get; set; }
-        #endregion
-
-        #region Agency
-        /// <summary>
-        /// get/set - The foreign key to the owning agency.
-        /// </summary>
-        public long? AgencyId { get; set; }
-
-        /// <summary>
-        /// get/set - The owning agency name.
-        /// </summary>
-        public string Agency { get; set; }
-
-        /// <summary>
-        /// get/set - The owning agency code.
-        /// </summary>
-        public string AgencyCode { get; set; }
-
-        /// <summary>
-        /// get/set - The owning subagency name.
-        /// </summary>
-        public string SubAgency { get; set; }
-
-        /// <summary>
-        /// get/set - The owning subagency code.
-        /// </summary>
-        public string SubAgencyCode { get; set; }
         #endregion
 
         #region Address
@@ -116,9 +66,9 @@ namespace Pims.Api.Areas.Property.Models.Search
         public string Address { get; set; }
 
         /// <summary>
-        /// get/set - The name of the administrative area (city, municipality, district, etc.).
+        /// get/set - The name of the municipality name.
         /// </summary>
-        public string AdministrativeArea { get; set; }
+        public string Municipality { get; set; }
 
         /// <summary>
         /// get/set - The name of the province.
@@ -161,110 +111,6 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// get/set - The property zoning potential.
         /// </summary>
         public string ZoningPotential { get; set; }
-        #endregion
-
-        #region Building Properties
-        /// <summary>
-        /// get/set - Foreign key to the construction type.
-        /// </summary>
-        public long? ConstructionTypeId { get; set; }
-
-        /// <summary>
-        /// get/set - The construction type name.
-        /// </summary>
-        public string ConstructionType { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the predominate use.
-        /// </summary>
-        public long? PredominateUseId { get; set; }
-
-        /// <summary>
-        /// get/set - The predominate use name.
-        /// </summary>
-        public string PredominateUse { get; set; }
-
-        /// <summary>
-        /// get/set - The foreign key to the occupant type.
-        /// </summary>
-        public long? OccupantTypeId { get; set; }
-
-        /// <summary>
-        /// get/set - The occupant type name.
-        /// </summary>
-        public string OccupantType { get; set; }
-
-        /// <summary>
-        /// get/set - The number of floors in the building.
-        /// </summary>
-        public int? FloorCount { get; set; }
-
-        /// <summary>
-        /// get/set - A description of the building tenancy.
-        /// </summary>
-        public string Tenancy { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the occupant.
-        /// </summary>
-        public string OccupantName { get; set; }
-
-        /// <summary>
-        /// get/set - The date the lease expires.
-        /// </summary>
-        public DateTime? LeaseExpiry { get; set; }
-
-        /// <summary>
-        /// get/set - Whether the lease will transfer with the sale.
-        /// </summary>
-        public bool? TransferLeaseOnSale { get; set; }
-
-        /// <summary>
-        /// get/set - The square feet of rentable area in the building.
-        /// </summary>
-        public float? RentableArea { get; set; }
-        #endregion
-
-        #region Financials
-        /// <summary>
-        /// get/set - The property market value.
-        /// </summary>
-        public decimal? Market { get; set; }
-
-        /// <summary>
-        /// get/set - The fiscal year of the market value.
-        /// </summary>
-        public int? MarketFiscalYear { get; set; }
-
-        /// <summary>
-        /// get/set - The property netbook value.
-        /// </summary>
-        public decimal? NetBook { get; set; }
-
-        /// <summary>
-        /// get/set - The fiscal year of the netbook value.
-        /// </summary>
-        public int? NetBookFiscalYear { get; set; }
-
-        /// <summary>
-        /// get/set - The property assessed value.
-        /// </summary>
-        public decimal? AssessedLand { get; set; }
-
-        /// <summary>
-        /// get/set - The date when the assessment occured.
-        /// </summary>
-        public DateTime? AssessedLandDate { get; set; }
-
-        /// <summary>
-        /// get/set - The property appraised value.
-        /// </summary>
-        public decimal? AssessedBuilding { get; set; }
-
-        /// <summary>
-        /// get/set - the date when the appraisal occured.
-        /// </summary>
-        public DateTime? AssessedBuildingDate { get; set; }
         #endregion
         #endregion
     }

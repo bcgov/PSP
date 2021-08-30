@@ -18,64 +18,33 @@ namespace Pims.Dal.Entities
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - A unique key to identify the user.
+        /// get/set - Foreign key to the person.
         /// </summary>
-        [Column("USER_UID")]
-        public Guid Key { get; set; }
+        [Column("PERSON_ID")]
+        public long PersonId { get; set; }
 
         /// <summary>
-        /// get/set - The unique user name to identify the user.
+        /// get/set - The person.
         /// </summary>
-        [Column("USERNAME")]
-        public string Username { get; set; }
+        public Person Person { get; set; }
 
         /// <summary>
-        /// get/set - The users display name.
+        /// get/set - The business identifier value.
         /// </summary>
-        [Column("DISPLAY_NAME")]
-        public string DisplayName { get; set; }
+        [Column("BUSINESS_IDENTIFIER_VALUE")]
+        public string BusinessIdentifier { get; set; }
 
         /// <summary>
-        /// get/set - The users first name.
+        /// get/set - Keycloak user id.
         /// </summary>
-        [Column("FIRST_NAME")]
-        public string FirstName { get; set; }
+        [Column("GUID_IDENTIFIER_VALUE")]
+        public Guid? KeycloakUserId { get; set; }
 
         /// <summary>
-        /// get/set - The users middle name.
-        /// </summary>
-        [Column("MIDDLE_NAME")]
-        public string MiddleName { get; set; }
-
-        /// <summary>
-        /// get/set - The users last name.
-        /// </summary>
-        [Column("LAST_NAME")]
-        public string LastName { get; set; }
-
-        /// <summary>
-        /// get/set - The users email address.
-        /// </summary>
-        [Column("EMAIL")]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// get/set - The user's position title.
+        /// get/set - The user's position or job title.
         /// </summary>
         [Column("POSITION")]
         public string Position { get; set; }
-
-        /// <summary>
-        /// get/set - Whether the user is disabled.
-        /// </summary>
-        [Column("IS_DISABLED")]
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
-        /// get/set - Whether their email has been verified.
-        /// </summary>
-        [Column("EMAIL_VERIFIED")]
-        public bool EmailVerified { get; set; }
 
         /// <summary>
         /// get/set - A note about the user.
@@ -84,44 +53,44 @@ namespace Pims.Dal.Entities
         public string Note { get; set; }
 
         /// <summary>
-        /// get/set - Whether this user account is a system account.
-        /// A system account will not be visible through user management.
+        /// get/set - The user's identification who approved this user.
         /// </summary>
-        [Column("IS_SYSTEM")]
-        public bool IsSystem { get; set; }
+        [Column("APPROVED_BY_ID")]
+        public string ApprovedBy { get; set; }
 
         /// <summary>
-        /// get/set - Last Login date time
+        /// get/set - When this user account was issued.
+        /// </summary>
+        [Column("ISSUE_DATE")]
+        public DateTime IssueOn { get; set; }
+
+        /// <summary>
+        /// get/set - The date this user account expires.
+        /// </summary>
+        [Column("EXPIRY_DATE")]
+        public DateTime? ExpiryOn { get; set; }
+
+        /// <summary>
+        /// get/set - The date the user last logged in.
         /// </summary>
         [Column("LAST_LOGIN")]
         public DateTime? LastLogin { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the user who approved this user.
+        /// get/set - Whether the user account is disabled.
         /// </summary>
-        [Column("APPROVED_BY_ID")]
-        public long? ApprovedById { get; set; }
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The user who approved this user.
+        /// get - A collection of organizations this user belongs to.
         /// </summary>
-        public User ApprovedBy { get; set; }
+        public ICollection<Organization> Organizations { get; } = new List<Organization>();
 
         /// <summary>
-        /// get/set - When the user was approved.
+        /// get - Collection of many-to-many relational entities to support the relationship to organizations.
         /// </summary>
-        [Column("APPROVED_ON")]
-        public DateTime? ApprovedOn { get; set; }
-
-        /// <summary>
-        /// get - A collection of agencies this user belongs to.
-        /// </summary>
-        public ICollection<Agency> Agencies { get; } = new List<Agency>();
-
-        /// <summary>
-        /// get - Collection of many-to-many relational entities to support the relationship to agencies.
-        /// </summary>
-        public ICollection<UserAgency> AgenciesManyToMany { get; } = new List<UserAgency>();
+        public ICollection<UserOrganization> OrganizationsManyToMany { get; } = new List<UserOrganization>();
 
         /// <summary>
         /// get - A collection of roles this user belongs to.
@@ -137,6 +106,11 @@ namespace Pims.Dal.Entities
         /// get - A collection of access requests belonging to this user.
         /// </summary>
         public ICollection<AccessRequest> AccessRequests { get; } = new List<AccessRequest>();
+
+        /// <summary>
+        /// get - A collection of project activity tasks this user has been assigned to.
+        /// </summary>
+        public ICollection<ProjectActivityTask> ProjectActivityTasks { get; } = new List<ProjectActivityTask>();
         #endregion
 
         #region Constructors
@@ -148,33 +122,17 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a User class, initializes with specified arguments.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="userName"></param>
-        /// <param name="email"></param>
-        public User(Guid key, string userName, string email)
+        /// <param name="keycloakUserId"></param>
+        /// <param name="username"></param>
+        /// <param name="person"></param>
+        public User(Guid keycloakUserId, string username, Person person)
         {
-            if (key == Guid.Empty) throw new ArgumentException("User key must be unique.", nameof(key));
-            if (String.IsNullOrWhiteSpace(userName)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(userName));
-            if (String.IsNullOrWhiteSpace(email)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(email));
+            if (String.IsNullOrWhiteSpace(username)) throw new ArgumentException($"Argument '{nameof(username)}' is required.", nameof(username));
 
-            this.Key = key;
-            this.Username = userName;
-            this.Email = email;
-        }
-
-        /// <summary>
-        /// Create a new instance of a User class, initializes with specified arguments.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="userName"></param>
-        /// <param name="email"></param>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        public User(Guid key, string userName, string email, string firstName, string lastName) : this(key, userName, email)
-        {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.DisplayName = $"{lastName}, {firstName}";
+            this.BusinessIdentifier = username;
+            this.KeycloakUserId = keycloakUserId;
+            this.Person = person ?? throw new ArgumentNullException(nameof(person));
+            this.PersonId = person.Id;
         }
         #endregion
     }

@@ -1,5 +1,5 @@
 export interface IAccessRequestsFilterData {
-  agency?: string;
+  organization?: string;
   role?: string;
   searchText?: string;
 }

@@ -59,10 +59,10 @@ namespace Pims.Api.Controllers
             var user = _pimsService.User.Activate();
             if (!exists)
             {
-                return new CreatedResult($"{user.Key}", new Model.UserModel(user));
+                return new CreatedResult($"{user.KeycloakUserId}", new Model.UserModel(user));
             }
 
-            return new JsonResult(new Model.UserModel(user.Id, user.Key));
+            return new JsonResult(new Model.UserModel(user.Id, user.KeycloakUserId.Value));
         }
 
         /// <summary>

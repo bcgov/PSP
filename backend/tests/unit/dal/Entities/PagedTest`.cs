@@ -113,7 +113,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_To()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
@@ -134,7 +134,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_To_ArgumentNullException()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
@@ -151,7 +151,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_GetEnumerator()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
@@ -171,14 +171,14 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Add()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
             var paged = new Paged<User>(items, page, quantity, total);
 
             // Act
-            paged.Add(new User(Guid.NewGuid(), "three", "three"));
+            paged.Add(EntityHelper.CreateUser("three"));
 
             // Assert
             paged.Count().Should().Be(3);
@@ -190,7 +190,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Clear()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
@@ -209,7 +209,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Contains()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
@@ -228,7 +228,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_CopyTo()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;
@@ -251,7 +251,7 @@ namespace Pims.Dal.Test.Entities
         public void Paged_Remove()
         {
             // Arrange
-            var items = new[] { new User(Guid.NewGuid(), "one", "one"), new User(Guid.NewGuid(), "two", "two") };
+            var items = new[] { EntityHelper.CreateUser("one"), EntityHelper.CreateUser("two") };
             var page = 2;
             var quantity = 4;
             var total = 6;

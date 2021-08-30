@@ -24,7 +24,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: [1],
+      organizations: [1],
       roles: [],
     },
     subject: 'test',
@@ -40,8 +40,20 @@ jest.mock('store/slices/accessRequests/useAccessRequests');
 const lCodes = {
   lookupCodes: [
     { id: 1, name: 'One', code: '', isDisabled: false, type: 'core operational' },
-    { id: 1, name: 'agencyVal', code: '', isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
-    { id: 2, name: 'disabledAgency', code: '', isDisabled: true, type: API.AGENCY_CODE_SET_NAME },
+    {
+      id: 1,
+      name: 'organizationVal',
+      code: '',
+      isDisabled: false,
+      type: API.ORGANIZATION_CODE_SET_NAME,
+    },
+    {
+      id: 2,
+      name: 'disabledOrganization',
+      code: '',
+      isDisabled: true,
+      type: API.ORGANIZATION_CODE_SET_NAME,
+    },
     { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
     { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
     {
@@ -101,7 +113,7 @@ describe('AccessRequestPage', () => {
 
   // Enzyme tests
   describe('component functionality when requestAccess status is 200 and fetching is false', () => {
-    it('initializes form with null for agencies and roles', () => {
+    it('initializes form with null for organizations and roles', () => {
       const componentRender = mount(
         <Provider store={successStore}>
           <Router history={history}>
@@ -115,24 +127,23 @@ describe('AccessRequestPage', () => {
           .first()
           .prop('initialValues'),
       ).toEqual({
-        agencies: [],
-        agency: undefined,
-        id: 0,
-        status: 'OnHold',
+        organizationId: undefined,
+        id: undefined,
+        status: 'RECEIVED',
         note: '',
-        role: undefined,
-        roles: [],
+        roleId: undefined,
         rowVersion: undefined,
         user: {
           displayName: undefined,
           email: undefined,
           firstName: undefined,
           id: undefined,
-          lastName: undefined,
+          surname: undefined,
           position: '',
-          username: undefined,
+          businessIdentifier: undefined,
         },
         userId: undefined,
+        key: undefined,
       });
     });
 
@@ -155,7 +166,7 @@ describe('AccessRequestPage', () => {
 
   it('renders dropdown for roles', () => {
     const { container } = testRender();
-    const dropdown = container.querySelector(`select[name="role"]`);
+    const dropdown = container.querySelector(`select[name="roleId"]`);
     expect(dropdown).toBeVisible();
   });
 
@@ -177,7 +188,7 @@ describe('AccessRequestPage', () => {
   it('displays a success message upon form submission', async () => {
     const { addAccessRequest } = useAccessRequests();
     const { container, getByText } = testRender();
-    await fillInput(container, 'role', '1', 'select');
+    await fillInput(container, 'roleId', '1', 'select');
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);
@@ -189,7 +200,7 @@ describe('AccessRequestPage', () => {
     const { addAccessRequest } = useAccessRequests();
     (addAccessRequest as jest.Mock).mockRejectedValueOnce(new Error('network-error'));
     const { container, getByText } = testRender();
-    await fillInput(container, 'role', '1', 'select');
+    await fillInput(container, 'roleId', '1', 'select');
     await fillInput(container, 'note', 'some notes', 'textarea');
     const submit = getByText('Submit');
     fireEvent.click(submit);

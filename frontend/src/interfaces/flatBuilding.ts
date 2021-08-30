@@ -20,7 +20,7 @@ export interface IFlatBuilding extends IProperty {
   transferLeaseOnSale: boolean;
   buildingTenancy: string;
   rentableArea: number | '';
-  agencyCode: string;
+  organizationCode: string;
   assessedLand: number | '';
   assessedBuilding: number | '';
   netBook: number | '';

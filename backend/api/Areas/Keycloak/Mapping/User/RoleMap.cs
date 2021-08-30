@@ -11,20 +11,18 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
             config.NewConfig<Entity.Role, Model.RoleModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
-                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
 
             config.NewConfig<Model.RoleModel, Entity.Role>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Name)
-                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
 
             config.NewConfig<Entity.UserRole, Model.RoleModel>()
-                .Map(dest => dest.Id, src => src.UserId)
-                .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
+                .Map(dest => dest.Id, src => src.UserId);
 
             config.NewConfig<Model.RoleModel, Entity.UserRole>()
-                .Map(dest => dest.UserId, src => src.Id)
-                .Inherits<Api.Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Map(dest => dest.UserId, src => src.Id);
         }
     }
 }

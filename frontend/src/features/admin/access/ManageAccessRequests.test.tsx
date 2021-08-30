@@ -22,7 +22,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: [1],
+      organizations: [1],
       roles: [],
     },
     subject: 'test',
@@ -36,14 +36,14 @@ const accessRequests = {
   items: [
     {
       id: 1,
-      status: AccessRequestStatus.OnHold,
+      status: AccessRequestStatus.Received,
       roles: [{ id: '1', name: 'role1' }],
-      agencies: [{ id: '1', name: 'agency 1' }],
+      organizations: [{ id: '1', name: 'organization 1' }],
       user: {
         id: 'userid',
         displayName: 'testUser',
         firstName: 'firstName',
-        lastName: 'lastName',
+        surname: 'surname',
         email: 'user@email.com',
         position: 'position 1',
       },
@@ -57,7 +57,7 @@ const mockStore = configureMockStore([thunk]);
 
 const lCodes = {
   lookupCodes: [
-    { name: 'agencyVal', id: 1, isDisabled: false, type: API.AGENCY_CODE_SET_NAME },
+    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
     { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
   ] as ILookupCode[],
 };
@@ -70,7 +70,7 @@ jest.mock('react-router-dom', () => ({
 const successStore = mockStore({
   [accessRequestsSlice.name]: {
     pageSize: 10,
-    filter: { searchText: '', role: '', agency: '' },
+    filter: { searchText: '', role: '', organization: '' },
     pagedAccessRequests: accessRequests,
   },
   [networkSlice.name]: {

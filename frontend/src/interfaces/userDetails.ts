@@ -1,20 +1,20 @@
-import { IAgency } from './agency';
+import { IOrganization } from './organization';
 import { IRole } from './role';
 
 export interface IUserDetails {
   id?: number;
-  username?: string;
-  key?: string;
+  businessIdentifier?: string;
+  keycloakUserId?: string;
   email?: string;
   displayName?: string;
   firstName?: string;
-  lastName?: string;
+  surname?: string;
   position?: string | null;
   isDisabled?: boolean;
   note?: string;
   lastLogin?: string;
   emailVerified?: boolean;
-  agencies?: IAgency[];
+  organizations?: IOrganization[];
   roles?: IRole[];
   createdOn?: string;
   rowVersion: number;

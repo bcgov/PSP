@@ -32,9 +32,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
         >
           <input
             class="form-control"
-            data-testid="username"
-            id="input-username"
-            name="username"
+            data-testid="businessIdentifier"
+            id="input-businessIdentifier"
+            name="businessIdentifier"
             readonly=""
             type="text"
             value="admin"
@@ -96,9 +96,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
             >
               <input
                 class="form-control"
-                data-testid="lastName"
-                id="input-lastName"
-                name="lastName"
+                data-testid="surname"
+                id="input-surname"
+                name="surname"
                 placeholder="User"
                 type="text"
                 value="User"
@@ -129,15 +129,15 @@ exports[`Edit user page EditUserPage renders 1`] = `
         >
           <label
             class="form-label"
-            for="input-agency"
+            for="input-organization"
           >
-            Agency
+            Organization
           </label>
           <select
             class="form-select form-control"
-            data-testid="agency"
-            id="input-agency"
-            name="agency"
+            data-testid="organization"
+            id="input-organization"
+            name="organization"
             required=""
           >
             <option
@@ -149,7 +149,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
               class="option"
               value="1"
             >
-              agencyVal
+              organizationVal
             </option>
           </select>
         </div>
@@ -180,7 +180,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             Roles
              
             <a
-              href="https://github.com/bcgov/PIMS/wiki/Architecture-Security"
+              href="https://github.com/bcgov/PSP/wiki/Architecture-Security"
               rel="noopener noreferrer"
               target="_blank"
             >

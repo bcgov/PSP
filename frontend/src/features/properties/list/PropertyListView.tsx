@@ -82,7 +82,7 @@ const VerticalDivider = styled.div`
 const initialQuery: IPropertyQueryParams = {
   page: 1,
   quantity: 10,
-  agencies: [],
+  organizations: [],
 };
 
 const defaultFilterValues: IPropertyFilter = {
@@ -91,7 +91,7 @@ const defaultFilterValues: IPropertyFilter = {
   address: '',
   administrativeArea: '',
   name: '',
-  agencies: '',
+  organizations: '',
   classificationId: '',
   minLotSize: '',
   maxLotSize: '',
@@ -121,10 +121,10 @@ export const flattenProperty = (apiProperty: IApiProperty): IProperty => {
     isSensitive: apiProperty.isSensitive,
     latitude: apiProperty.latitude,
     longitude: apiProperty.longitude,
-    agencyId: apiProperty.agencyId,
-    agency: apiProperty.agency ?? '',
-    agencyCode: apiProperty.agency ?? '',
-    subAgency: apiProperty.subAgency,
+    organizationId: apiProperty.organizationId,
+    organization: apiProperty.organization ?? '',
+    organizationCode: apiProperty.organization ?? '',
+    subOrganization: apiProperty.subOrganization,
     classification: apiProperty.classification ?? '',
     classificationId: apiProperty.classificationId,
     addressId: apiProperty.address?.id as number,
@@ -159,7 +159,7 @@ const getServerQuery = (state: {
   pageIndex: number;
   pageSize: number;
   filter: IPropertyFilter;
-  agencyIds: number[];
+  organizationIds: number[];
 }) => {
   const {
     pageIndex,
@@ -171,7 +171,7 @@ const getServerQuery = (state: {
       classificationId,
       bareLandOnly,
       name,
-      agencies,
+      organizations,
       minLotSize,
       maxLotSize,
       propertyType,
@@ -181,15 +181,15 @@ const getServerQuery = (state: {
     },
   } = state;
 
-  let parsedAgencies: number[] = [];
-  if (agencies !== null && agencies !== undefined && agencies !== '') {
-    parsedAgencies = Array.isArray(agencies)
-      ? (agencies as any)
+  let parsedOrganizations: number[] = [];
+  if (organizations !== null && organizations !== undefined && organizations !== '') {
+    parsedOrganizations = Array.isArray(organizations)
+      ? (organizations as any)
           .filter((x: any) => !!x)
           .map((a: any) => {
             return parseInt(typeof a === 'string' ? a : a.value, 10);
           })
-      : [parseInt(agencies, 10)];
+      : [parseInt(organizations, 10)];
   }
 
   const query: IPropertyQueryParams = {
@@ -198,7 +198,7 @@ const getServerQuery = (state: {
     pid,
     administrativeArea,
     classificationId: decimalOrUndefined(classificationId),
-    agencies: parsedAgencies,
+    organizations: parsedOrganizations,
     minLandArea: decimalOrUndefined(minLotSize),
     maxLandArea: decimalOrUndefined(maxLotSize),
     bareLandOnly: bareLandOnly,
@@ -256,10 +256,12 @@ const PropertyListView: React.FC = () => {
     () => lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME),
     [lookupCodes],
   );
-  const agencies = useMemo(() => lookupCodes.getByType(API.AGENCY_CODE_SET_NAME), [lookupCodes]);
+  const organizations = useMemo(() => lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME), [
+    lookupCodes,
+  ]);
 
-  const agenciesList = agencies.filter(a => !a.parentId).map(mapLookupCode);
-  const subAgencies = agencies.filter(a => !!a.parentId).map(mapLookupCode);
+  const organizationsList = organizations.filter(a => !a.parentId).map(mapLookupCode);
+  const subOrganizations = organizations.filter(a => !!a.parentId).map(mapLookupCode);
 
   const propertyClassifications = useMemo(() => lookupCodes.getPropertyClassificationOptions(), [
     lookupCodes,
@@ -269,7 +271,7 @@ const PropertyListView: React.FC = () => {
     [lookupCodes],
   );
 
-  const agencyIds = useMemo(() => agencies.map(x => x.id), [agencies]);
+  const organizationIds = useMemo(() => organizations.map(x => x.id), [organizations]);
   const [sorting, setSorting] = useState<TableSort<IProperty>>({ description: 'asc' });
 
   // We'll start our table without any data
@@ -287,40 +289,40 @@ const PropertyListView: React.FC = () => {
   const parcelColumns = useMemo(
     () =>
       cols(
-        agenciesList,
-        subAgencies,
+        organizationsList,
+        subOrganizations,
         municipalities,
         propertyClassifications,
         PropertyTypes.Parcel,
         editable,
       ),
-    [agenciesList, subAgencies, municipalities, propertyClassifications, editable],
+    [organizationsList, subOrganizations, municipalities, propertyClassifications, editable],
   );
 
   const buildingExpandColumns = useMemo(
     () =>
       cols(
-        agenciesList,
-        subAgencies,
+        organizationsList,
+        subOrganizations,
         municipalities,
         propertyClassifications,
         PropertyTypes.Building,
         false,
       ),
-    [agenciesList, subAgencies, municipalities, propertyClassifications],
+    [organizationsList, subOrganizations, municipalities, propertyClassifications],
   );
 
   const buildingColumns = useMemo(
     () =>
       buildingCols(
-        agenciesList,
-        subAgencies,
+        organizationsList,
+        subOrganizations,
         municipalities,
         propertyClassifications,
         PropertyTypes.Building,
         editable,
       ),
-    [agenciesList, subAgencies, municipalities, propertyClassifications, editable],
+    [organizationsList, subOrganizations, municipalities, propertyClassifications, editable],
   );
 
   const [pageSize, setPageSize] = useState(10);
@@ -331,14 +333,14 @@ const PropertyListView: React.FC = () => {
 
   const parsedFilter = useMemo(() => {
     const data = { ...filter };
-    if (data.agencies) {
-      data.agencies = Array.isArray(data.agencies)
-        ? (data.agencies as any)
+    if (data.organizations) {
+      data.organizations = Array.isArray(data.organizations)
+        ? (data.organizations as any)
             .filter((x: any) => !!x)
             .map((a: any) => {
               return parseInt(typeof a === 'string' ? a : a.value, 10);
             })
-        : [parseInt(data.agencies, 10)];
+        : [parseInt(data.organizations, 10)];
     }
 
     return data;
@@ -373,13 +375,13 @@ const PropertyListView: React.FC = () => {
       pageIndex,
       pageSize,
       filter,
-      agencyIds,
+      organizationIds,
       sorting,
     }: {
       pageIndex: number;
       pageSize: number;
       filter: IPropertyFilter;
-      agencyIds: number[];
+      organizationIds: number[];
       sorting: TableSort<IProperty>;
     }) => {
       // Give this fetch an ID
@@ -389,9 +391,9 @@ const PropertyListView: React.FC = () => {
       // setLoading(true);
 
       // Only update the data if this is the latest fetch
-      if (agencyIds?.length > 0) {
+      if (organizationIds?.length > 0) {
         setData(undefined);
-        const query = getServerQuery({ pageIndex, pageSize, filter, agencyIds });
+        const query = getServerQuery({ pageIndex, pageSize, filter, organizationIds });
         const data = await service.getPropertyList(query, sorting);
         // The server could send back total page count.
         // For now we'll just calculate it.
@@ -408,8 +410,8 @@ const PropertyListView: React.FC = () => {
 
   // Listen for changes in pagination and use the state to fetch our new data
   useDeepCompareEffect(() => {
-    fetchData({ pageIndex, pageSize, filter, agencyIds, sorting });
-  }, [fetchData, pageIndex, pageSize, filter, agencyIds, sorting]);
+    fetchData({ pageIndex, pageSize, filter, organizationIds, sorting });
+  }, [fetchData, pageIndex, pageSize, filter, organizationIds, sorting]);
 
   const dispatch = useDispatch();
 
@@ -418,7 +420,7 @@ const PropertyListView: React.FC = () => {
    * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
    */
   const fetch = (accept: 'csv' | 'excel', getAllFields?: boolean) => {
-    const query = getServerQuery({ pageIndex, pageSize, filter, agencyIds });
+    const query = getServerQuery({ pageIndex, pageSize, filter, organizationIds });
     return dispatch(
       download({
         url: getAllFields
@@ -466,11 +468,13 @@ const PropertyListView: React.FC = () => {
   };
 
   const appliedFilter = { ...filter };
-  if (appliedFilter.agencies && typeof appliedFilter.agencies === 'string') {
-    const agencySelections = agencies.map(mapLookupCode);
-    appliedFilter.agencies = filter.agencies
+  if (appliedFilter.organizations && typeof appliedFilter.organizations === 'string') {
+    const organizationSelections = organizations.map(mapLookupCode);
+    appliedFilter.organizations = filter.organizations
       .split(',')
-      .map(value => agencySelections.find(agency => agency.value === value) || '') as any;
+      .map(
+        value => organizationSelections.find(organization => organization.value === value) || '',
+      ) as any;
   }
 
   const onRowClick = useCallback((row: IProperty) => {
@@ -578,7 +582,7 @@ const PropertyListView: React.FC = () => {
         <Container className="px-0">
           <PropertyFilter
             defaultFilter={defaultFilterValues}
-            agencyLookupCodes={agencies}
+            organizationLookupCodes={organizations}
             adminAreaLookupCodes={administrativeAreas}
             onChange={handleFilterChange}
             sort={sorting}

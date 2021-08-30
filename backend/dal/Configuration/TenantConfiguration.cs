@@ -13,7 +13,7 @@ namespace Pims.Dal.Configuration
         #region Methods
         public override void Configure(EntityTypeBuilder<Tenant> builder)
         {
-            builder.ToMotiTable().HasAnnotation("ProductVersion", "2.0.0");
+            builder.ToMotiTable();
 
             builder.HasMotiKey(m => m.Id);
             builder.HasMotiSequence(m => m.Id)
