@@ -10,16 +10,10 @@ on:
 
 jobs:
 
-  check:
-    if: ${{ github.ref != 'refs/heads/dev' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Scanning Images on branch $GITHUB_REF"
-
   build_frontend:
 
     name: pims-frontend
-    if: github.event.ref != 'refs/heads/dev' 
+    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -60,7 +54,7 @@ jobs:
     
   build_backend:
     
-    if: always() && github.event.ref != 'refs/heads/dev'
+    if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
     needs: build_frontend 
     name: pims-backend
     runs-on: ubuntu-latest
@@ -103,7 +97,7 @@ jobs:
         
   build_logging:
   
-    if: always() && github.event.ref != 'refs/heads/dev'
+    if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
     needs: [build_frontend, build_backend] 
     name: pims-logging
     runs-on: ubuntu-latest
