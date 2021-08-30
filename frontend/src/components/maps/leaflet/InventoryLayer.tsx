@@ -204,16 +204,8 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
         point => `${point?.properties?.id}-${point?.properties?.propertyTypeId}`,
       );
 
-      // TODO: Why does this exist?
-      const hasBuildings = (property: IProperty) => false;
-
       let results = items.filter(({ properties }: any) => {
-        return (
-          properties?.propertyTypeId === PropertyTypes.Building ||
-          !hasBuildings(properties) ||
-          (properties?.propertyTypeId === PropertyTypes.Subdivision &&
-            keycloak.canUserEditProperty(properties))
-        );
+        return keycloak.canUserEditProperty(properties);
       }) as any;
 
       // Fit to municipality bounds

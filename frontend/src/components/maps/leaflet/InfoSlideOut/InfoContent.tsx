@@ -10,7 +10,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 
-import BuildingAttributes from './BuildingAttributes';
 import ParcelAttributes from './ParcelAttributes';
 import { ParcelPIDPIN } from './ParcelPIDPIN';
 import { ThreeColumnItem } from './ThreeColumnItem';
@@ -130,15 +129,7 @@ export const InfoContent: React.FC<IInfoContent> = ({
           <ThreeColumnItem leftSideLabel={'Longitude'} rightSideItem={propertyInfo?.longitude} />
         </OuterRow>
       </ListGroup>
-      {isParcel && (
-        <ParcelAttributes parcelInfo={propertyInfo as IProperty} canViewDetails={canViewDetails} />
-      )}
-      {propertyTypeId === PropertyTypes.Building && (
-        <BuildingAttributes
-          buildingInfo={propertyInfo as IProperty}
-          canViewDetails={canViewDetails}
-        />
-      )}
+      <ParcelAttributes parcelInfo={propertyInfo as IProperty} canViewDetails={canViewDetails} />
     </>
   );
 };

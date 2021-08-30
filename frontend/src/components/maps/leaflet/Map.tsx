@@ -296,7 +296,8 @@ const Map: React.FC<MapProps> = ({
     }
   };
 
-  const [infoOpen, setInfoOpen] = React.useState(false);
+  const property = useAppSelector(state => state.properties.propertyDetail);
+  const [infoOpen, setInfoOpen] = React.useState(!!property);
   const [layersOpen, setLayersOpen] = React.useState(false);
   return (
     <Container

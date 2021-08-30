@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { PidLink } from '../';
 
 export const MUNICIPALITY_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP';
@@ -12,7 +12,7 @@ export const REGIONAL_LAYER_URL =
 export const parcelLayerPopupConfig = {
   PARCEL_NAME: { label: 'Parcel Name:', display: (data: any) => data.PARCEL_NAME },
   PIN: { label: 'Parcel PIN:', display: (data: any) => data.PIN },
-  PID: { label: 'Parcel PID:', display: (data: any) => data.PID },
+  PID: { label: 'Parcel PID:', display: (data: any) => <PidLink data={data} /> },
   PLAN_NUMBER: { label: 'Plan Number:', display: (data: any) => data.PLAN_NUMBER },
   PARCEL_CLASS: { label: 'Parcel Class:', display: (data: any) => data.PARCEL_CLASS },
   MUNICIPALITY: { label: 'Municipality:', display: (data: any) => data.MUNICIPALITY },
