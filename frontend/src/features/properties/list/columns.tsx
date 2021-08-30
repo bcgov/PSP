@@ -5,7 +5,6 @@ import { PropertyTypeCell } from 'components/Table/PropertyTypeCell';
 import { PropertyTypes } from 'constants/index';
 import { IProperty } from 'interfaces';
 import { isEqual } from 'lodash';
-import React from 'react';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';

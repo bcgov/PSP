@@ -83,6 +83,39 @@ namespace Pims.Dal.Services
         }
 
         /// <summary>
+        /// Get the property for the specified primary key 'id' value.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Property Get(int id)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+
+            var property = this.Context.Properties
+                .Include(p => p.District)
+                .Include(p => p.Region)
+                .Include(p => p.PropertyType)
+                .Include(p => p.Status)
+                .Include(p => p.DataSource)
+                .Include(p => p.Classification)
+                .Include(p => p.Tenure)
+                .Include(p => p.AreaUnit)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.AddressType)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Region)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.District)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Province)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Country)
+                .Where(p => p.Id == id)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+            return property;
+        }
+
+        /// <summary>
         /// Get the property for the specified PID value.
         /// </summary>
         /// <param name="pid"></param>
@@ -93,7 +126,24 @@ namespace Pims.Dal.Services
             var search = pid.ConvertPID();
 
             var property = this.Context.Properties
+                .Include(p => p.District)
+                .Include(p => p.Region)
+                .Include(p => p.PropertyType)
+                .Include(p => p.Status)
+                .Include(p => p.DataSource)
+                .Include(p => p.Classification)
+                .Include(p => p.Tenure)
+                .Include(p => p.AreaUnit)
                 .Include(p => p.Address)
+                .ThenInclude(a => a.AddressType)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Region)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.District)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Province)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Country)
                 .Where(p => p.PID == search)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return property;

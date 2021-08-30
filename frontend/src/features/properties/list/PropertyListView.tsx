@@ -211,15 +211,10 @@ const PropertyListView: React.FC = () => {
   // We'll start our table without any data
   const [data, setData] = useState<IProperty[] | undefined>();
   // For getting the buildings on parcel folder click
-  const [expandData, setExpandData] = useState<any>({});
 
   // Filtering and pagination state
   const [filter, setFilter] = useState<IPropertyFilter>(defaultFilterValues);
-  const isParcel =
-    !filter ||
-    [PropertyTypes.Land.toString(), PropertyTypes.Subdivision.toString()].includes(
-      filter?.propertyType ?? '',
-    );
+
   const propertyColumns = useMemo(
     () =>
       cols(

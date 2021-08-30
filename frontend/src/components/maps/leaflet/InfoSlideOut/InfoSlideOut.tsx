@@ -1,12 +1,8 @@
 import variables from '_variables.module.scss';
-import { ReactComponent as BuildingSvg } from 'assets/images/icon-business.svg';
 import clsx from 'classnames';
-import { LandSvg } from 'components/common/Icons';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { PropertyPopUpContext } from 'components/maps/providers/PropertyPopUpProvider';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { MAX_ZOOM } from 'constants/strings';
-import { useApiProperties } from 'hooks/pims-api';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import L from 'leaflet';
 import React, { useContext, useEffect, useState } from 'react';
@@ -14,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { FaInfo } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import { toast } from 'react-toastify';
+import { useProperties } from 'store/slices/properties';
 import styled from 'styled-components';
 
 import Control from '../Control/Control';
@@ -83,29 +80,6 @@ const InfoButton = styled(Button)`
   }
 `;
 
-const TabButton = styled(Button)`
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  left: -40px;
-  background-color: #fff;
-  color: ${variables.slideOutBlue};
-  border-color: ${variables.slideOutBlue};
-  box-shadow: -2px 1px 4px rgba(0, 0, 0, 0.2);
-  &.open {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    top: 55px;
-  }
-  .svg {
-    stroke: ${variables.slideOutBlue};
-    margin-left: -8px;
-    :hover {
-      stroke: #fff;
-    }
-  }
-`;
-
 const Title = styled.p`
   font-size: 18px;
   color: #ffffff;
@@ -131,7 +105,7 @@ export type InfoControlProps = {
  */
 const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderActionClick }) => {
   const popUpContext = useContext(PropertyPopUpContext);
-  const { getProperty } = useApiProperties();
+  const { getProperty } = useProperties();
   const mapInstance = useMap();
   const { propertyInfo } = popUpContext;
   const jumpToView = () =>
@@ -155,8 +129,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
 
   //whether the general info is open
   const [generalInfoOpen, setGeneralInfoOpen] = useState<boolean>(true);
-
-  const isBuilding = popUpContext.propertyTypeId === PropertyTypes.Building;
 
   const keycloak = useKeycloakWrapper();
   const canViewProperty = keycloak.canUserViewProperty(propertyInfo);
@@ -195,7 +167,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
       <InfoContainer id="infoContainer" className={clsx({ closed: !open })}>
         {open && (
           <InfoHeader>
-            {isBuilding ? <Title>Building Info</Title> : <Title>Property Info</Title>}
+            <Title>Property Info</Title>
           </InfoHeader>
         )}
         <TooltipWrapper toolTipId="info-slideout-id" toolTip="Property Information">
@@ -203,13 +175,11 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
             id="slideOutInfoButton"
             variant="outline-secondary"
             onClick={() => {
-              const propertyTypeId = popUpContext.propertyTypeId;
-              const id = popUpContext.propertyInfo?.id;
-              if (typeof propertyTypeId === 'number' && propertyTypeId >= 0 && !!id && !open) {
+              if (popUpContext.propertyInfo?.id && !open) {
                 popUpContext.setLoading(true);
-                getProperty(id as number)
-                  .then(parcel => {
-                    popUpContext.setPropertyInfo(parcel.data);
+                getProperty(popUpContext.propertyInfo.id as number)
+                  .then(property => {
+                    popUpContext.setPropertyInfo(property);
                   })
                   .catch(() => {
                     toast.error('Unable to load property details, refresh the page and try again.');
@@ -232,23 +202,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
             <InfoIcon />
           </InfoButton>
         </TooltipWrapper>
-        {open && popUpContext.propertyInfo && canViewProperty && (
-          <TooltipWrapper
-            toolTipId="associated-items-id"
-            toolTip={isBuilding ? 'Associated Land' : 'Associated Buildings'}
-          >
-            <TabButton
-              id="slideOutTab"
-              variant="outline-secondary"
-              className={clsx({ open })}
-              onClick={() => {
-                setGeneralInfoOpen(false);
-              }}
-            >
-              {isBuilding ? <LandSvg className="svg" /> : <BuildingSvg className="svg" />}
-            </TabButton>
-          </TooltipWrapper>
-        )}
         {open && <InfoMain className={clsx({ open })}>{renderContent()}</InfoMain>}
       </InfoContainer>
     </Control>

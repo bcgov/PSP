@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { wait, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Footer, Header } from 'components/layout';

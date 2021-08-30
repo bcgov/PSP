@@ -25,28 +25,28 @@ export interface IProperty {
   pin?: number | '';
   propertyTypeId: PropertyTypes;
   propertyType?: string;
-  statusId: PropertyStatusTypes;
+  statusId?: PropertyStatusTypes;
   status?: string;
-  dataSourceId: PropertyDataSourceTypes;
+  dataSourceId?: PropertyDataSourceTypes;
   dataSource?: string;
-  dataSourceEffectiveDate: Date | string | Moment;
-  classificationId: PropertyClassificationTypes;
+  dataSourceEffectiveDate?: Date | string | Moment;
+  classificationId?: PropertyClassificationTypes;
   classification?: string;
-  tenureId: PropertyTenureTypes;
+  tenureId?: PropertyTenureTypes;
   tenure?: string;
   name?: string;
   description?: string;
   addressId?: number;
   address: IAddress;
-  regionId: number;
+  regionId?: number;
   region?: string;
-  districtId: number;
+  districtId?: number;
   district?: string;
 
   latitude?: number;
   longitude?: number;
 
-  areaUnitId: PropertyAreaUnitTypes;
+  areaUnitId?: PropertyAreaUnitTypes;
   areaUnit?: string;
   landArea: number;
   landLegalDescription: string;

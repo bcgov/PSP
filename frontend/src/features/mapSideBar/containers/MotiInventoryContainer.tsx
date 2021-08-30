@@ -17,6 +17,7 @@ import { useApiLtsa } from 'hooks/pims-api/useApiLtsa';
 import { IGeocoderResponse, useApi } from 'hooks/useApi';
 import { useCallbackAppSelector } from 'hooks/useCallbackAppSelector';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
+import { IProperty } from 'interfaces';
 import { ParcelInfoOrder, TitleSummary } from 'interfaces/ltsaModels';
 import { geoJSON, LatLngLiteral } from 'leaflet';
 import * as React from 'react';
@@ -32,7 +33,6 @@ import {
   defaultPropertyValues,
   FormHeader,
   InventoryFormButtons,
-  IProperty,
   MapSideBarLayout,
   PropertyForm,
   PropertySearchForm,
@@ -110,14 +110,12 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
       geocoderResponse?: IGeocoderResponse,
     ) => {
       const newValues = {
-        municipality: getIn(parcelLayerResponse, 'features.0.properties.MUNICIPALITY') ?? '',
-        electoralDistrict: getIn(electoralLayerResponse, 'features.0.properties.ED_NAME') ?? '',
-        regionalDistrict:
-          getIn(parcelLayerResponse, 'features.0.properties.REGIONAL_DISTRICT') ?? '',
-        ruralArea: getIn(parcelLayerResponse, 'features.0.properties.ADMIN_AREA_NAME') ?? '',
         pid: pidFormatter(getIn(parcelLayerResponse, 'features.0.properties.PID') ?? ''),
+        district: getIn(electoralLayerResponse, 'features.0.properties.ED_NAME') ?? '',
+        region: getIn(parcelLayerResponse, 'features.0.properties.REGIONAL_DISTRICT') ?? '',
+        ruralArea: getIn(parcelLayerResponse, 'features.0.properties.ADMIN_AREA_NAME') ?? '',
         titleNumber: getIn(ltsaTitleSummariesResponse, '0.titleNumber') ?? '',
-        legalDescription:
+        landLegalDescription:
           ltsaParcelResponse?.orderedProduct?.fieldedData?.legalDescription?.fullLegalDescription,
         address: {
           addressTypeId: AddressTypes.Physical,
@@ -131,12 +129,17 @@ export const MotiInventoryContainer: React.FunctionComponent = () => {
             '',
           provinceId: 1,
           province: geocoderResponse?.provinceCode ?? 'BC',
+          region: getIn(parcelLayerResponse, 'features.0.properties.REGIONAL_DISTRICT') ?? '',
+          district: getIn(electoralLayerResponse, 'features.0.properties.ED_NAME') ?? '',
           postal: '',
         },
         latitude: latLng.lat,
         longitude: latLng.lng,
       };
-      setCurrentProperty({ ...defaultPropertyValues, ...newValues });
+      setCurrentProperty({
+        ...((defaultPropertyValues as unknown) as IProperty),
+        ...((newValues as unknown) as IProperty),
+      });
     },
     [adminAreas],
   );

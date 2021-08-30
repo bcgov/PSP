@@ -1,6 +1,6 @@
 import './InfoSlideOut.scss';
 
-import { BuildingSvg, LandSvg, SubdivisionSvg } from 'components/common/Icons';
+import { LandSvg } from 'components/common/Icons';
 import { Label } from 'components/common/Label';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { IProperty } from 'interfaces';
@@ -9,9 +9,9 @@ import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
+import { formatAddress, pidFormatter } from 'utils';
 
 import ParcelAttributes from './ParcelAttributes';
-import { ParcelPIDPIN } from './ParcelPIDPIN';
 import { ThreeColumnItem } from './ThreeColumnItem';
 
 /**
@@ -46,35 +46,9 @@ export const OuterRow = styled(Row)`
   margin: 0px 0px 10px 0px;
 `;
 
-const getHeading = (propertyTypeId: PropertyTypes | null) => {
-  switch (propertyTypeId) {
-    case PropertyTypes.Subdivision:
-      return (
-        <Label className="header">
-          <SubdivisionSvg className="svg" style={{ height: 25, width: 25, marginRight: 5 }} />
-          Potential Subdivision
-        </Label>
-      );
-    case PropertyTypes.Building:
-      return (
-        <Label className="header">
-          <BuildingSvg className="svg" style={{ height: 25, width: 25, marginRight: 5 }} />
-          Building Identification
-        </Label>
-      );
-    default:
-      return (
-        <Label className="header">
-          <LandSvg className="svg" style={{ height: 25, width: 25, marginRight: 5 }} />
-          Parcel Identification
-        </Label>
-      );
-  }
-};
-
 /**
  * Component that displays the appropriate information about the selected property
- * in the property info slideout
+ * in the property info slide-out
  * @param {IInfoContent} propertyInfo the selected property
  * @param {IInfoContent} propertyTypeId the property type [Parcel, Building]
  * @param canViewDetails user can view all property details
@@ -84,14 +58,17 @@ export const InfoContent: React.FC<IInfoContent> = ({
   propertyTypeId,
   canViewDetails,
 }) => {
-  const isParcel =
-    propertyTypeId !== null &&
-    [PropertyTypes.Land, PropertyTypes.Subdivision].includes(propertyTypeId);
   return (
     <>
       <ListGroup>
-        {getHeading(propertyTypeId)}
-        {isParcel && <ParcelPIDPIN parcelInfo={propertyInfo as IProperty} />}
+        <Label className="header">
+          <LandSvg className="svg" style={{ height: 25, width: 25, marginRight: 5 }} />
+          Property Identification
+        </Label>
+        <OuterRow>
+          <ThreeColumnItem leftSideLabel={'PID'} rightSideItem={pidFormatter(propertyInfo?.pid)} />
+          <ThreeColumnItem leftSideLabel={'PIN'} rightSideItem={propertyInfo?.pin} />
+        </OuterRow>
         <OuterRow>
           {canViewDetails && (
             <>
@@ -106,10 +83,7 @@ export const InfoContent: React.FC<IInfoContent> = ({
               )}
             </>
           )}
-          <ThreeColumnItem
-            leftSideLabel={'Classification'}
-            rightSideItem={propertyInfo?.classification}
-          />
+          <ThreeColumnItem leftSideLabel={'Owner'} rightSideItem={null} />
         </OuterRow>
       </ListGroup>
       <ListGroup>
@@ -117,16 +91,20 @@ export const InfoContent: React.FC<IInfoContent> = ({
         <OuterRow>
           <ThreeColumnItem
             leftSideLabel={'Civic address'}
-            rightSideItem={propertyInfo?.address?.streetAddress1}
+            rightSideItem={formatAddress(propertyInfo?.address)}
           />
           <ThreeColumnItem
             leftSideLabel={'Location'}
+            rightSideItem={propertyInfo?.address?.district}
+          />
+          <ThreeColumnItem
+            leftSideLabel={'Municipality'}
             rightSideItem={propertyInfo?.address?.municipality}
           />
-        </OuterRow>
-        <OuterRow>
-          <ThreeColumnItem leftSideLabel={'Latitude'} rightSideItem={propertyInfo?.latitude} />
-          <ThreeColumnItem leftSideLabel={'Longitude'} rightSideItem={propertyInfo?.longitude} />
+          <ThreeColumnItem
+            leftSideLabel={'Regional District'}
+            rightSideItem={propertyInfo?.address?.region}
+          />
         </OuterRow>
       </ListGroup>
       <ParcelAttributes parcelInfo={propertyInfo as IProperty} canViewDetails={canViewDetails} />

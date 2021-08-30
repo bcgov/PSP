@@ -23,15 +23,30 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - The foreign key to the property type.
         /// </summary>
+        public string PropertyTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The property type description.
+        /// </summary>
         public string PropertyType { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the status type.
         /// </summary>
+        public string StatusId { get; set; }
+
+        /// <summary>
+        /// get/set - The status description.
+        /// </summary>
         public string Status { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the data source type.
+        /// </summary>
+        public string DataSourceId { get; set; }
+
+        /// <summary>
+        /// get/set - The data source description.
         /// </summary>
         public string DataSource { get; set; }
 
@@ -43,10 +58,20 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - The foreign key to the classification type.
         /// </summary>
+        public string ClassificationId { get; set; }
+
+        /// <summary>
+        /// get/set - The classification description.
+        /// </summary>
         public string Classification { get; set; }
 
         /// <summary>
         /// get/set - The foreign key to the tenure type.
+        /// </summary>
+        public string TenureId { get; set; }
+
+        /// <summary>
+        /// get/set - The tenure description.
         /// </summary>
         public string Tenure { get; set; }
 
@@ -85,7 +110,7 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - The address of the property.
         /// </summary>
-        public string Address { get; set; }
+        public AddressModel Address { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the region.
@@ -100,27 +125,12 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// <summary>
         /// get/set - Foreign key to the district.
         /// </summary>
-        public string DistrictId { get; set; }
+        public int DistrictId { get; set; }
 
         /// <summary>
         /// get/set - The name of the district.
         /// </summary>
         public string District { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the municipality name.
-        /// </summary>
-        public string Municipality { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the province.
-        /// </summary>
-        public string Province { get; set; }
-
-        /// <summary>
-        /// get/set - The postal code.
-        /// </summary>
-        public string Postal { get; set; }
         #endregion
 
         #region Parcel Properties
@@ -136,6 +146,11 @@ namespace Pims.Api.Areas.Property.Models.Property
 
         /// <summary>
         /// get/set - Foreign key to the area unit type.
+        /// </summary>
+        public string AreaUnitId { get; set; }
+
+        /// <summary>
+        /// get/set - Area Unit name.
         /// </summary>
         public string AreaUnit { get; set; }
 

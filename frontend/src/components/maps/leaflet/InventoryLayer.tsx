@@ -1,10 +1,8 @@
 import { IGeoSearchParams } from 'constants/API';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { BBox } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IProperty } from 'interfaces';
 import { GeoJSON, LatLngBounds } from 'leaflet';
 import { flatten, uniqBy } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';

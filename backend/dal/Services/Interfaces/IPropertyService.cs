@@ -12,6 +12,7 @@ namespace Pims.Dal.Services
         int Count();
         IEnumerable<Property> Get(PropertyFilter filter);
         Paged<Property> GetPage(PropertyFilter filter);
+        Property Get(int id);
         Property GetForPID(string pid);
     }
 }

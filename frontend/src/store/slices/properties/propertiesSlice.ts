@@ -57,7 +57,7 @@ export const propertiesSlice = createSlice({
   },
 });
 
-// Destructure and export the plain action creators
+// Destructor and export the plain action creators
 export const {
   storeProperties,
   storeDraftProperties,

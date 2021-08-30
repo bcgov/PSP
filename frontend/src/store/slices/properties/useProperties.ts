@@ -3,7 +3,6 @@ import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { useApiProperties } from 'hooks/pims-api';
 import { IProperty } from 'interfaces';
-import _ from 'lodash';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -22,7 +21,7 @@ export const useProperties = () => {
   } = useApiProperties();
 
   /**
-   * fetch propertys, passing the current bounds of the map.
+   * fetch properties, passing the current bounds of the map.
    */
   const fetchProperties = useCallback(
     async (propertyBounds: API.IPropertySearchParams | null) => {

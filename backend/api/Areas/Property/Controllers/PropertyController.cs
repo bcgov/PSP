@@ -41,7 +41,7 @@ namespace Pims.Api.Areas.Property.Controllers
 
         #region Endpoints
         /// <summary>
-        /// Get the property for the specified PID.
+        /// Get the property for the specified unique 'pid'.
         /// </summary>
         /// <returns></returns>
         [HttpGet("{pid}")]
@@ -52,6 +52,22 @@ namespace Pims.Api.Areas.Property.Controllers
         public IActionResult GetPropertyWithPid(string pid)
         {
             var property = _pimsService.Property.GetForPID(pid);
+
+            return new JsonResult(_mapper.Map<Models.Property.PropertyModel>(property));
+        }
+
+        /// <summary>
+        /// Get the property for the specified primary key 'id'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:int}")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Models.Property.PropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        public IActionResult GetProperty(int id)
+        {
+            var property = _pimsService.Property.Get(id);
 
             return new JsonResult(_mapper.Map<Models.Property.PropertyModel>(property));
         }
