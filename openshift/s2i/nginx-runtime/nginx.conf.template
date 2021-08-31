@@ -50,26 +50,13 @@ http {
         add_header Cache-Control "no-cache, no-store, must-revalidate";
         add_header Pragma "no-cache";
         add_header Expires "0";
-        set $bearer_auth '';
 
         location /api {
             proxy_pass          %API_URL%;
         }
 
-        location @handle_redirect {
-            resolver 8.8.8.8;
-            set $saved_redirect_location '$upstream_http_location';
-            proxy_set_header Authorization $bearer_auth;
-            proxy_pass $saved_redirect_location;
-            
-        }
-
         location /ogs-internal {
-            set $bearer_auth $http_authorization;
-            resolver 8.8.8.8;
             proxy_pass          %GEOSERVER_URL%;
-            proxy_intercept_errors on;
-            error_page 301 302 307 = @handle_redirect;
         }
 
         # serve our app here
