@@ -102,7 +102,7 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('addAccessRequest action creator', () => {
-    const newMockAccessRequest = { ...mockAccessRequest, id: undefined };
+    const newMockAccessRequest = mockAccessRequest;
     const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 
@@ -120,12 +120,12 @@ describe('useAccessRequests functionality', () => {
         },
       );
     });
-    it('Request successful, dispatches success with correct response', done => {
+    it('Request successful, dispatches success with correct response', () => {
       mockAxios.onPost(url).reply(200, mockResponse);
       renderHook(
         () =>
           useAccessRequests()
-            .addAccessRequest(newMockAccessRequest)
+            .addAccessRequest({ ...mockAccessRequest, id: undefined })
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

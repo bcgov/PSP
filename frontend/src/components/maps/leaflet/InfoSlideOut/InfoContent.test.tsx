@@ -60,10 +60,15 @@ const mockParcel = {
     provinceId: 1,
     province: 'BC',
     postal: 'V1V1V1',
+    region: 'a region',
+    district: 'a district',
   },
   regionId: 1,
+  region: 'region',
   districtId: 1,
+  district: 'district',
   areaUnitId: PropertyAreaUnitTypes.Hectare,
+  areaUnit: 'hectares',
   landArea: 123,
   landLegalDescription: 'test description',
   organizations: [
@@ -140,16 +145,16 @@ describe('InfoContent View functionality', () => {
 
   it('Shows all parcel information when can view', () => {
     const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
-    expect(getByText('Parcel Identification')).toBeVisible();
+    expect(getByText('Property Identification')).toBeVisible();
     //Identification information
     expect(getByText('000-000-000')).toBeVisible();
     expect(getByText('test name')).toBeVisible();
     expect(getByText('Ministry of Transportation')).toBeVisible();
-    expect(getByText('Core Operational')).toBeVisible();
     //Location data
-    expect(getByText('1234 mock Street')).toBeVisible();
+    expect(getByText(/1234 mock Street +BC, V1V1V1/i)).toBeVisible();
     expect(getByText('Victoria')).toBeVisible();
-    expect(getByText('48')).toBeVisible();
+    expect(getByText('a district')).toBeVisible();
+    expect(getByText('a region')).toBeVisible();
     //Legal Description
     expect(getByText('test description')).toBeVisible();
   });
@@ -157,10 +162,5 @@ describe('InfoContent View functionality', () => {
   it('Lot size formats correctly', () => {
     const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
     expect(getByText('123 hectares')).toBeVisible();
-  });
-
-  it('Assessed value formats correctly', () => {
-    const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
-    expect(getByText('$10,000')).toBeVisible();
   });
 });

@@ -6,7 +6,7 @@ import {
   IPopUpContext,
   PropertyPopUpContextProvider,
 } from 'components/maps/providers/PropertyPopUpProvider';
-import { Claims, PropertyTypes } from 'constants/index';
+import { PropertyTypes } from 'constants/index';
 import { useApiProperties } from 'hooks/pims-api';
 import noop from 'lodash/noop';
 import { mockParcel } from 'mocks/filterDataMock';
@@ -41,10 +41,6 @@ function Template({ openByDefault = false }) {
 
 function createParcelContext(): Partial<IPopUpContext> {
   return { propertyTypeId: PropertyTypes.Land, propertyInfo: { id: 1 } as any };
-}
-
-function createBuildingContext(): Partial<IPopUpContext> {
-  return { propertyTypeId: PropertyTypes.Building, propertyInfo: { id: 1 } as any };
 }
 
 function setup(
@@ -99,76 +95,6 @@ describe('InfoSlideOut View', () => {
     const slideOut = findContainer();
     expect(slideOut).toBeInTheDocument();
     expect(slideOut.className).toContain('closed');
-  });
-
-  it('when closed, clicking the toggle button should open the PARCEL details within the info component', async () => {
-    const context = createParcelContext();
-    const { component, ready, findContainer, findToggleButton } = setup(context);
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const headerLabel = component.container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-lot.svgParcel Identification');
-  });
-
-  it('with appropriate user permissions, opening the info component should display additional PARCEL information', async () => {
-    // user can see additional parcel information
-    const renderOptions: RenderOptions = {
-      useMockAuthentication: true,
-      roles: [Claims.ADMIN_PROPERTIES],
-      organizations: [1],
-    };
-
-    const context = createParcelContext();
-    const { component, ready, findContainer, findToggleButton } = setup(
-      context,
-      <Template />,
-      renderOptions,
-    );
-
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const { container } = component;
-    const headerLabel = container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-lot.svgParcel Identification');
-    // additional information should be available...
-    const tabButton = container.querySelector('#slideOutTab') as HTMLElement;
-    userEvent.click(tabButton);
-  });
-
-  it('when closed, clicking the toggle button should open the BUILDING details within the info component', async () => {
-    const context = createBuildingContext();
-    const { component, ready, findContainer, findToggleButton } = setup(context);
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const headerLabel = component.container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-business.svgBuilding Identification');
   });
 
   it('when open, clicking the button should close the layers list', async () => {
