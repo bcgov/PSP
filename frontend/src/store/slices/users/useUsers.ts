@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { useApiUsers } from 'hooks/pims-api/useApiUsers';
-import { IPagedItems, IUser, IUserDetails } from 'interfaces';
+import { IPagedItems, IUser } from 'interfaces';
 import { useCallback } from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { useAppDispatch } from 'store/hooks';
@@ -76,7 +76,7 @@ export const useUsers = () => {
    * @return the detailed user.
    */
   const fetchDetail = useCallback(
-    async (key: string): Promise<IUserDetails> => {
+    async (key: string): Promise<IUser> => {
       dispatch(logRequest(actionTypes.GET_USER_DETAIL));
       dispatch(showLoading());
       return getUser(key)
@@ -105,7 +105,7 @@ export const useUsers = () => {
    * @return the updated user.
    */
   const update = useCallback(
-    async (updatedUser: IUserDetails): Promise<IUserDetails> => {
+    async (updatedUser: IUser): Promise<IUser> => {
       const axiosPromise = putUser(updatedUser).then((response: AxiosResponse) => {
         dispatch(updateUser(response.data));
         return Promise.resolve(response);

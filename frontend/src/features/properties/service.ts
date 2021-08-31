@@ -1,12 +1,12 @@
 import { TableSort } from 'components/Table/TableSort';
-import { ENVIRONMENT } from 'constants/environment';
+import { ENVIRONMENT, PropertyTypes } from 'constants/index';
 import CustomAxios from 'customAxios';
-import { IPagedItems } from 'interfaces';
+import { IPagedItems, IProperty } from 'interfaces';
 import { isEmpty } from 'lodash';
 import queryString from 'query-string';
 import { generateMultiSortCriteria } from 'utils';
 
-import { IProperty, IPropertyQueryParams } from './list/interfaces';
+import { IPropertyQueryParams } from './list/IPropertyQueryParams';
 
 const { apiUrl: basePath } = ENVIRONMENT;
 
@@ -36,7 +36,7 @@ const loadBuildings = async (parcelId: number): Promise<IPagedItems<IProperty>> 
     page: 1,
     quantity: 10,
     parcelId: parcelId,
-    propertyType: '1',
+    propertyType: PropertyTypes.Land,
   };
   const url = API_ENDPOINTS.propertiesSearch(filter);
   const response = await CustomAxios().get<IPagedItems<IProperty>>(url);

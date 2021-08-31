@@ -1,73 +1,78 @@
 import { PointFeature } from 'components/maps/types';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { mockBuildingDetail, mockParcelDetail, mockProperty } from 'mocks/filterDataMock';
+import {
+  mockBuildingDetail,
+  mockParcel,
+  mockParcelDetail,
+  mockProperties,
+} from 'mocks/filterDataMock';
 
 import { initialState, propertiesSlice } from './propertiesSlice';
 
 const pointFeature: PointFeature = {
   type: 'Feature',
   geometry: { coordinates: [1, 2] } as any,
-  properties: { id: 1, propertyTypeId: PropertyTypes.Parcel, name: 'name' },
+  properties: { id: 1, propertyTypeId: PropertyTypes.Land, name: 'name' },
 };
 
 describe('property slice reducer functionality', () => {
   const propertiesReducer = propertiesSlice.reducer;
   it('saves the list of properties', () => {
     const result = propertiesReducer(undefined, {
-      type: propertiesSlice.actions.storeParcels,
-      payload: [mockProperty],
+      type: propertiesSlice.actions.storeProperties,
+      payload: mockProperties,
     });
     expect(result).toEqual({
       ...initialState,
-      parcels: [mockProperty],
+      properties: mockProperties,
     });
   });
   it('saves the property detail', () => {
     const result = propertiesReducer(undefined, {
-      type: propertiesSlice.actions.storeParcelDetail,
+      type: propertiesSlice.actions.storeProperty,
       payload: mockParcelDetail,
     });
     expect(result).toEqual({
       ...initialState,
       propertyDetail: {
-        parcelDetail: mockParcelDetail,
+        propertyDetail: mockParcelDetail,
         position: undefined,
-        propertyTypeId: PropertyTypes.Parcel,
+        propertyTypeId: PropertyTypes.Land,
       },
     });
   });
   it('stores the parcel from the map', () => {
     const result = propertiesReducer(
-      { ...initialState, parcels: [mockProperty] },
+      { ...initialState, properties: [mockProperties[0]] },
       {
-        type: propertiesSlice.actions.storeParcelsFromMap,
-        payload: mockProperty,
+        type: propertiesSlice.actions.storePropertiesFromMap,
+        payload: mockParcel,
       },
     );
     expect(result).toEqual({
       ...initialState,
-      parcels: [mockProperty],
+      properties: [mockProperties[0]],
     });
   });
   it('stores the draft parcels', () => {
     const result = propertiesReducer(undefined, {
-      type: propertiesSlice.actions.storeDraftParcels,
+      type: propertiesSlice.actions.storeDraftProperties,
       payload: [pointFeature],
     });
     expect(result).toEqual({
       ...initialState,
-      draftParcels: [pointFeature],
+      draftProperties: [pointFeature],
     });
   });
   it('saves the building detail', () => {
     const result = propertiesReducer(undefined, {
-      type: propertiesSlice.actions.storeBuildingDetail,
+      type: propertiesSlice.actions.storeProperty,
       payload: mockBuildingDetail,
     });
     expect(result).toEqual({
       ...initialState,
       propertyDetail: {
-        parcelDetail: mockBuildingDetail,
+        propertyDetail: mockBuildingDetail,
         position: undefined,
         propertyTypeId: PropertyTypes.Building,
       },

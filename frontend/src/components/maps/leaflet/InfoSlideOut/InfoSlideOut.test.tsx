@@ -6,10 +6,10 @@ import {
   IPopUpContext,
   PropertyPopUpContextProvider,
 } from 'components/maps/providers/PropertyPopUpProvider';
-import { Claims, PropertyTypes } from 'constants/index';
-import { PimsAPI, useApi } from 'hooks/useApi';
+import { PropertyTypes } from 'constants/index';
+import { useApiProperties } from 'hooks/pims-api';
 import noop from 'lodash/noop';
-import { mockBuildingWithAssociatedLand, mockParcel } from 'mocks/filterDataMock';
+import { mockParcel } from 'mocks/filterDataMock';
 import React, { useState } from 'react';
 import {
   cleanup,
@@ -18,7 +18,6 @@ import {
   render,
   RenderOptions,
   waitFor,
-  within,
 } from 'utils/test-utils';
 
 import InfoSlideOut from './InfoSlideOut';
@@ -27,12 +26,10 @@ jest.mock('@react-keycloak/web');
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 jest.mock('hooks/useApi');
-((useApi as unknown) as jest.Mock<Partial<PimsAPI>>).mockReturnValue({
-  getParcel: async () => {
+jest.mock('hooks/pims-api');
+((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+  getProperty: async () => {
     return mockParcel;
-  },
-  getBuilding: async () => {
-    return mockBuildingWithAssociatedLand;
   },
 });
 
@@ -43,11 +40,7 @@ function Template({ openByDefault = false }) {
 }
 
 function createParcelContext(): Partial<IPopUpContext> {
-  return { propertyTypeId: PropertyTypes.Parcel, propertyInfo: { id: 1 } as any };
-}
-
-function createBuildingContext(): Partial<IPopUpContext> {
-  return { propertyTypeId: PropertyTypes.Building, propertyInfo: { id: 1 } as any };
+  return { propertyTypeId: PropertyTypes.Land, propertyInfo: { id: 1 } as any };
 }
 
 function setup(
@@ -102,114 +95,6 @@ describe('InfoSlideOut View', () => {
     const slideOut = findContainer();
     expect(slideOut).toBeInTheDocument();
     expect(slideOut.className).toContain('closed');
-  });
-
-  it('when closed, clicking the toggle button should open the PARCEL details within the info component', async () => {
-    const context = createParcelContext();
-    const { component, ready, findContainer, findToggleButton } = setup(context);
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const headerLabel = component.container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-lot.svgParcel Identification');
-  });
-
-  it('with appropriate user permissions, opening the info component should display additional PARCEL information', async () => {
-    // user can see additional parcel information
-    const renderOptions: RenderOptions = {
-      useMockAuthentication: true,
-      roles: [Claims.ADMIN_PROPERTIES],
-      organizations: [1],
-    };
-
-    const context = createParcelContext();
-    const { component, ready, findContainer, findToggleButton } = setup(
-      context,
-      <Template />,
-      renderOptions,
-    );
-
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const { container } = component;
-    const headerLabel = container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-lot.svgParcel Identification');
-    // additional information should be available...
-    const tabButton = container.querySelector('#slideOutTab') as HTMLElement;
-    userEvent.click(tabButton);
-    const { findByText } = within(slideOut);
-    expect(await findByText('Associated Buildings')).toBeInTheDocument();
-  });
-
-  it('when closed, clicking the toggle button should open the BUILDING details within the info component', async () => {
-    const context = createBuildingContext();
-    const { component, ready, findContainer, findToggleButton } = setup(context);
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const headerLabel = component.container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-business.svgBuilding Identification');
-  });
-
-  it('with appropriate user permissions, opening the info component should display additional BUILDING information', async () => {
-    // user can see additional parcel information
-    const renderOptions: RenderOptions = {
-      useMockAuthentication: true,
-      roles: [Claims.ADMIN_PROPERTIES],
-      organizations: [1],
-    };
-
-    const context = createBuildingContext();
-    const { component, ready, findContainer, findToggleButton } = setup(
-      context,
-      <Template />,
-      renderOptions,
-    );
-
-    await waitFor(() => ready);
-    // when info component is closed...
-    const slideOut = findContainer();
-    expect(slideOut).toBeInTheDocument();
-    expect(slideOut.className).toContain('closed');
-    // clicking the button should open it...
-    const toggleBtn = findToggleButton();
-    userEvent.click(toggleBtn);
-    // wait for it to open...
-    await waitFor(() => expect(slideOut.className).not.toContain('closed'));
-    // check appropriate text has been rendered...
-    const { container } = component;
-    const headerLabel = container.querySelector('p.label.header');
-    expect(headerLabel).toHaveTextContent('icon-business.svgBuilding Identification');
-    // additional information should be available...
-    const tabButton = container.querySelector('#slideOutTab') as HTMLElement;
-    userEvent.click(tabButton);
-    const { findByText } = within(slideOut);
-    expect(await findByText('Associated Land')).toBeInTheDocument();
   });
 
   it('when open, clicking the button should close the layers list', async () => {

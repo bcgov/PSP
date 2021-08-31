@@ -3,10 +3,10 @@ import './PointClusterer.scss';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
-import { useApi } from 'hooks/useApi';
+import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IAddress, IBuilding, IParcel, IProperty } from 'interfaces';
+import { IProperty } from 'interfaces';
 import L from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -14,7 +14,7 @@ import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { IPropertyDetail, storeBuildingDetail, storeParcelDetail } from 'store/slices/properties';
+import { IPropertyDetail, storeProperty } from 'store/slices/properties';
 import Supercluster from 'supercluster';
 
 import useSupercluster from '../hooks/useSupercluster';
@@ -50,38 +50,13 @@ export const convertToProperty = (
   property: any,
   latitude?: number,
   longitude?: number,
-): IParcel | IBuilding | null => {
-  if ([PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(property.propertyTypeId)) {
-    return {
-      ...property,
-      evaluations: property.evaluations ?? [],
-      fiscals: property.fiscals ?? [],
-      latitude: latitude,
-      longitude: longitude,
-      address: {
-        line1: property.address,
-        administrativeArea: property.administrativeArea,
-        province: property.province,
-        postal: property.postal,
-      } as IAddress,
-    } as IParcel;
+): IProperty | null => {
+  if ([PropertyTypes.Land, PropertyTypes.Subdivision].includes(property.propertyTypeId)) {
+    return property;
   } else if (property.propertyTypeId === PropertyTypes.Building) {
-    return {
-      ...property,
-      totalArea: property.totalArea ?? 0,
-      latitude: latitude,
-      longitude: longitude,
-      evaluations: property.evaluations ?? [],
-      fiscals: property.fiscals ?? [],
-      address: {
-        line1: property.address,
-        administrativeArea: property.administrativeArea,
-        province: property.province,
-        postal: property.postal,
-      } as IAddress,
-    } as IBuilding;
+    return property;
   } else if (
-    [PropertyTypes.DraftBuilding, PropertyTypes.DraftParcel].includes(property.propertyTypeId)
+    [PropertyTypes.DraftBuilding, PropertyTypes.DraftLand].includes(property.propertyTypeId)
   ) {
     return property;
   }
@@ -152,11 +127,14 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
 
   //Optionally create a new pin to represent the active property if not already displayed in a spiderfied cluster.
   useDeepCompareEffect(() => {
-    if (!currentClusterIds.includes(+(selected?.parcelDetail?.id ?? 0))) {
+    if (!currentClusterIds.includes(+(selected?.propertyDetail?.id ?? 0))) {
       setCurrentSelected(selected);
-      if (!!parcelId && !!selected?.parcelDetail) {
+      if (!!parcelId && !!selected?.propertyDetail) {
         mapInstance.setView(
-          [selected?.parcelDetail?.latitude as number, selected?.parcelDetail?.longitude as number],
+          [
+            selected?.propertyDetail?.latitude as number,
+            selected?.propertyDetail?.longitude as number,
+          ],
           Math.max(MAX_ZOOM, mapInstance.getZoom()),
         );
       }
@@ -244,7 +222,12 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       const group: L.FeatureGroup = featureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && filterState.changed && !selected?.parcelDetail && tilesLoaded) {
+      if (
+        groupBounds.isValid() &&
+        filterState.changed &&
+        !selected?.propertyDetail &&
+        tilesLoaded
+      ) {
         filterState.setChanged(false);
         mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
@@ -258,38 +241,22 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const popUpContext = React.useContext(PropertyPopUpContext);
 
   const dispatch = useDispatch();
-  const { getParcel, getBuilding } = useApi();
+  const { getProperty } = useApiProperties();
   const fetchProperty = React.useCallback(
     (propertyTypeId: number, id: number) => {
       popUpContext.setLoading(true);
-      if ([PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(propertyTypeId)) {
-        getParcel(id as number)
-          .then(parcel => {
-            popUpContext.setPropertyInfo(parcel);
-          })
-          .catch(() => {
-            toast.error('Unable to load property details, refresh the page and try again.');
-          })
-          .finally(() => {
-            popUpContext.setLoading(false);
-          });
-      } else if (propertyTypeId === PropertyTypes.Building) {
-        getBuilding(id as number)
-          .then(building => {
-            popUpContext.setPropertyInfo(building);
-            if (!!building.parcels.length) {
-              dispatch(storeBuildingDetail(building));
-            }
-          })
-          .catch(() => {
-            toast.error('Unable to load property details, refresh the page and try again.');
-          })
-          .finally(() => {
-            popUpContext.setLoading(false);
-          });
-      }
+      getProperty(id as number)
+        .then(parcel => {
+          popUpContext.setPropertyInfo(parcel.data);
+        })
+        .catch(() => {
+          toast.error('Unable to load property details, refresh the page and try again.');
+        })
+        .finally(() => {
+          popUpContext.setLoading(false);
+        });
     },
-    [getParcel, popUpContext, getBuilding, dispatch],
+    [getProperty, popUpContext],
   );
 
   const keycloak = useKeycloakWrapper();
@@ -349,14 +316,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                     longitude,
                   );
                   //sets this pin as currently selected
-                  if (
-                    cluster.properties.propertyTypeId === PropertyTypes.Parcel ||
-                    cluster.properties.propertyTypeId === PropertyTypes.Subdivision
-                  ) {
-                    dispatch(storeParcelDetail(convertedProperty as IParcel));
-                  } else {
-                    dispatch(storeBuildingDetail(convertedProperty as IBuilding));
-                  }
+                  dispatch(storeProperty(convertedProperty as IProperty));
                   onMarkerClick(); //open information slideout
                   if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
                     fetchProperty(cluster.properties.propertyTypeId, cluster.properties.id);
@@ -380,7 +340,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
             //highlight pin if currently selected
             icon={getMarkerIcon(
               m,
-              (m.properties.id as number) === (selected?.parcelDetail?.id as number),
+              (m.properties.id as number) === (selected?.propertyDetail?.id as number),
             )}
             eventHandlers={{
               click: () => {
@@ -390,14 +350,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   m.geometry.coordinates[1],
                   m.geometry.coordinates[0],
                 );
-                if (
-                  m.properties.propertyTypeId === PropertyTypes.Parcel ||
-                  m.properties.propertyTypeId === PropertyTypes.Subdivision
-                ) {
-                  dispatch(storeParcelDetail(convertedProperty));
-                } else {
-                  dispatch(storeBuildingDetail(convertedProperty));
-                }
+                dispatch(storeProperty(convertedProperty));
                 onMarkerClick(); //open information slideout
                 if (keycloak.canUserViewProperty(m.properties as IProperty)) {
                   fetchProperty(m.properties.propertyTypeId, m.properties.id);
@@ -420,26 +373,26 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
         {/**
          * render selected property marker, auto opens the property popup
          */}
-        {!!selected?.parcelDetail &&
-          selected?.parcelDetail?.id === currentSelected?.parcelDetail?.id &&
-          !currentClusterIds.includes(+selected?.parcelDetail?.id) && (
+        {!!selected?.propertyDetail &&
+          selected?.propertyDetail?.id === currentSelected?.propertyDetail?.id &&
+          !currentClusterIds.includes(+(selected?.propertyDetail?.id as number)) && (
             <SelectedPropertyMarker
-              {...selected.parcelDetail}
+              {...selected.propertyDetail}
               icon={getMarkerIcon({ properties: selected } as any, true)}
               className={
-                Number(parcelId ?? buildingId) === selected?.parcelDetail?.id
+                Number(parcelId ?? buildingId) === selected?.propertyDetail?.id
                   ? 'active-selected'
                   : ''
               }
               position={[
-                selected.parcelDetail!.latitude as number,
-                selected.parcelDetail!.longitude as number,
+                selected.propertyDetail!.latitude as number,
+                selected.propertyDetail!.longitude as number,
               ]}
               map={mapInstance}
               eventHandlers={{
                 click: () => {
-                  popUpContext.setPropertyInfo(selected.parcelDetail);
-                  popUpContext.setPropertyTypeId(selected.propertyTypeId ?? 0);
+                  popUpContext.setPropertyInfo(selected.propertyDetail);
+                  popUpContext.setPropertyTypeId(selected.propertyTypeId ?? PropertyTypes.Land);
                   onMarkerClick();
                 },
               }}

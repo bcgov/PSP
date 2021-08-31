@@ -4,7 +4,7 @@ import { TableSort } from 'components/Table/TableSort';
 import { FormikProps, getIn } from 'formik';
 import _ from 'lodash';
 import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
-import moment from 'moment-timezone';
+import moment, { Moment } from 'moment-timezone';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
@@ -176,7 +176,7 @@ export const getCurrentFiscalYear = (): number => {
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
-export const formatDate = (date?: string | Date) => {
+export const formatDate = (date?: string | Date | Moment) => {
   return !!date ? moment(date).format('YYYY-MM-DD') : '';
 };
 
@@ -185,7 +185,12 @@ export const formatDate = (date?: string | Date) => {
  * Returns a date formatted for display in the current time zone of the user.
  * @param date utc date/time string.
  */
-export const formatApiDateTime = (date: string | undefined) => {
+export const formatApiDateTime = (date?: string | Date | Moment) => {
+  if (typeof date === 'string')
+    return moment
+      .utc(date)
+      .local()
+      .format('YYYY-MM-DD hh:mm a');
   return !!date
     ? moment
         .utc(date)

@@ -1,7 +1,6 @@
 import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
 import Claims from 'constants/claims';
-import { Classifications } from 'constants/classifications';
 import { useCallback } from 'react';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -15,9 +14,9 @@ import { useKeycloakWrapper } from './useKeycloakWrapper';
 export function useLookupCodeHelpers() {
   const keycloak = useKeycloakWrapper();
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
-  const getCodeById = (type: string, id: number): string | undefined => {
+  const getCodeById = (type: string, id: number | string): string | undefined => {
     return lookupCodes
-      .filter((code: { type: string; id: number }) => code.type === type && code.id === id)
+      .filter((code: { type: string; id: number | string }) => code.type === type && code.id === id)
       ?.find((x: any) => x)?.code;
   };
 
@@ -46,27 +45,20 @@ export function useLookupCodeHelpers() {
    * @param filter - A filter to determine which classifications will be returned.
    * @returns An array of SelectOptions for property classifications.
    */
-  const getPropertyClassificationOptions = (
+  const getPropertyClassificationTypeOptions = (
     filter?: (value: SelectOption, index: number, array: SelectOption[]) => unknown,
   ) => {
     const classifications = getByType(API.PROPERTY_CLASSIFICATION_CODE_SET_NAME);
     return filter
       ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c)).filter(filter)
       : !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)
-      ? (classifications ?? [])
-          .map((c: ILookupCode) => mapLookupCode(c))
-          .filter(
-            (c: { value: string | number }) =>
-              +c.value !== Classifications.Demolished &&
-              +c.value !== Classifications.Subdivided &&
-              +c.value !== Classifications.Disposed,
-          )
+      ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c))
       : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
   };
 
   return {
     getOptionsByType,
-    getPropertyClassificationOptions,
+    getPropertyClassificationTypeOptions,
     getCodeById,
     getByType,
     getPublicByType,

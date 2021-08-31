@@ -102,12 +102,12 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('addAccessRequest action creator', () => {
-    const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
+    const newMockAccessRequest = mockAccessRequest;
     const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 
     it('calls the api with the expected url', () => {
-      mockAxios.onPost(url).reply(200, mockResponse);
+      mockAxios.onPost(`${url}/${newMockAccessRequest.id}`).reply(200, mockResponse);
       renderHook(
         () =>
           useAccessRequests()
@@ -125,7 +125,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .addAccessRequest(newMockAccessRequest)
+            .addAccessRequest({ ...mockAccessRequest, id: undefined })
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -325,7 +325,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(mockAxios.history.delete[0]).toMatchObject({ url: url });
             }),
@@ -339,7 +339,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -361,7 +361,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

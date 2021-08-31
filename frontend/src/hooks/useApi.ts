@@ -1,10 +1,7 @@
-import { IGeoSearchParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import CustomAxios from 'customAxios';
-import { IApiProperty, IBuilding, IParcel } from 'interfaces';
 import { LatLngLiteral } from 'leaflet';
 import * as _ from 'lodash';
-import queryString from 'query-string';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -26,7 +23,7 @@ export interface IGeocoderPidsResponse {
   pids: string[];
 }
 
-export interface PimsAPI {
+export interface IPimsAPI {
   isPidAvailable: (
     parcelId: number | '' | undefined,
     pid: string | undefined,
@@ -39,14 +36,13 @@ export interface PimsAPI {
   getSitePids: (siteId: string) => Promise<IGeocoderPidsResponse>;
   getNearAddresses: (latLng: LatLngLiteral) => Promise<IGeocoderResponse[]>;
   getNearestAddress: (latLng: LatLngLiteral) => Promise<IGeocoderResponse>;
-  loadProperties: (params?: IGeoSearchParams) => Promise<any[]>;
-  getBuilding: (id: number) => Promise<IBuilding>;
-  getParcel: (id: number) => Promise<IParcel>;
-  updateBuilding: (id: number, data: IApiProperty) => Promise<IBuilding>;
-  updateParcel: (id: number, data: IApiProperty) => Promise<IParcel>;
 }
 
-export const useApi = (): PimsAPI => {
+/**
+ * TODO: This hook needs to get deleted.
+ * @deprecatedThe /hooks/pims-api hooks should be used instead.
+ */
+export const useApi = (): IPimsAPI => {
   const dispatch = useDispatch();
 
   const getAxios = useCallback(() => {
@@ -158,101 +154,9 @@ export const useApi = (): PimsAPI => {
     [],
   );
 
-  const loadProperties = useCallback(
-    async (params?: IGeoSearchParams): Promise<any[]> => {
-      try {
-        const { data } = await getAxios().get<any[]>(
-          `${ENVIRONMENT.apiUrl}/properties/search/wfs?${
-            params ? queryString.stringify(params) : ''
-          }`,
-        );
-        return data;
-      } catch (error) {
-        throw new Error(
-          `${(error as any).message}: An error occured while fetching properties in inventory.`,
-        );
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  /**
-   * Make an AJAX request to fetch the specified building.
-   * @param id The building primary key 'id' value.
-   * @returns A promise containing the building.
-   */
-  const getBuilding = useCallback(
-    async (id: number) => {
-      const { data } = await getAxios().get<IBuilding>(
-        `${ENVIRONMENT.apiUrl}/properties/buildings/${id}`,
-      );
-      return data;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  /**
-   * Make an AJAX request to fetch the specified parcel.
-   * @param id The parcel primary key 'id' value.
-   * @returns A promise containing the parcel.
-   */
-  const getParcel = useCallback(
-    async (id: number) => {
-      const { data } = await getAxios().get<IParcel>(
-        `${ENVIRONMENT.apiUrl}/properties/parcels/${id}`,
-      );
-      return data;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  /**
-   * Make an AJAX request to update the specified parcel financials.
-   * @param id The parcel primary key 'id' value.
-   * @param parcel - the parcel data to be update
-   * @returns A promise containing the parcel.
-   */
-  const updateParcel = useCallback(
-    async (id: number, parcel: IApiProperty) => {
-      const { data } = await getAxios().put<IParcel>(
-        `${ENVIRONMENT.apiUrl}/properties/parcels/${id}/financials`,
-        parcel,
-      );
-      return data;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  /**
-   * Make an AJAX request to update the specified building financials.
-   * @param id The building primary key 'id' value.
-   * @param building - the building data to be update
-   * @returns A promise containing the building.
-   */
-  const updateBuilding = useCallback(
-    async (id: number, building: IApiProperty) => {
-      const { data } = await getAxios().put<IBuilding>(
-        `${ENVIRONMENT.apiUrl}/properties/buildings/${id}/financials`,
-        building,
-      );
-      return data;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
   // The below memo is only intended to run once, at startup. Or when the jwt is updated.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return {
-    updateBuilding,
-    updateParcel,
-    getParcel,
-    getBuilding,
-    loadProperties,
     getSitePids,
     searchAddress,
     isPinAvailable,
