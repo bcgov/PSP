@@ -1,7 +1,5 @@
 import { AccessRequestStatus } from 'constants/index';
 import { IOrganization, IRole, IUser } from 'interfaces';
-import { IOrganization } from './organization';
-import { IRole } from './role';
 
 export interface IAccessRequest {
   id?: number;

@@ -64,7 +64,8 @@ const AccessRequestPage = () => {
     status: AccessRequestStatus.Received,
     note: accessRequest?.note ?? '',
     organizationId:
-      accessRequest?.organizationId ?? organizations?.find(a => a.code === 'MOTI2')?.id, // Select TRAN as the default organization for all access requests.
+      accessRequest?.organizationId ??
+      (organizations?.find(a => a.code === 'MOTI2')?.id as number | undefined), // Select TRAN as the default organization for all access requests.
     roleId: accessRequest?.roleId,
     rowVersion: accessRequest?.rowVersion,
   };
