@@ -31,14 +31,14 @@ import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { decimalOrUndefined, mapLookupCode } from 'utils';
+import { mapLookupCode } from 'utils';
 import download from 'utils/download';
 
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import service from '../service';
-import { IPropertyQueryParams } from '.';
 import { columns as cols } from './columns';
+import { IPropertyQueryParams } from './IPropertyQueryParams';
 
 const getPropertyReportUrl = (filter: IPropertyQueryParams) =>
   `${ENVIRONMENT.apiUrl}/reports/properties?${filter ? queryString.stringify(filter) : ''}`;
@@ -75,13 +75,9 @@ const initialQuery: IPropertyQueryParams = {
 const defaultFilterValues: IPropertyFilter = {
   searchBy: 'address',
   pid: '',
+  pin: '',
   address: '',
-  municipality: '',
-  name: '',
-  organizations: '',
-  minLotSize: '',
-  maxLotSize: '',
-  propertyType: PropertyTypes.Land,
+  location: '',
 };
 
 export const flattenProperty = (property: IProperty): IProperty => {
@@ -103,45 +99,13 @@ const getServerQuery = (state: {
   organizationIds: number[];
 }) => {
   const {
-    pageIndex,
-    pageSize,
-    filter: {
-      pid,
-      address,
-      municipality,
-      classificationId,
-      name,
-      organizations,
-      minLotSize,
-      maxLotSize,
-      propertyType,
-    },
+    filter: { pid, address },
   } = state;
-
-  let parsedOrganizations: number[] = [];
-  if (organizations !== null && organizations !== undefined && organizations !== '') {
-    parsedOrganizations = Array.isArray(organizations)
-      ? (organizations as any)
-          .filter((x: any) => !!x)
-          .map((a: any) => {
-            return parseInt(typeof a === 'string' ? a : a.value, 10);
-          })
-      : [parseInt(organizations, 10)];
-  }
 
   const query: IPropertyQueryParams = {
     ...initialQuery,
     address,
     pid,
-    municipality,
-    classificationId: classificationId,
-    propertyType: propertyType,
-    organizations: parsedOrganizations,
-    minLandArea: decimalOrUndefined(minLotSize),
-    maxLandArea: decimalOrUndefined(maxLotSize),
-    page: pageIndex + 1,
-    quantity: pageSize,
-    name: name,
   };
   return query;
 };
@@ -236,16 +200,6 @@ const PropertyListView: React.FC = () => {
 
   const parsedFilter = useMemo(() => {
     const data = { ...filter };
-    if (data.organizations) {
-      data.organizations = Array.isArray(data.organizations)
-        ? (data.organizations as any)
-            .filter((x: any) => !!x)
-            .map((a: any) => {
-              return parseInt(typeof a === 'string' ? a : a.value, 10);
-            })
-        : [parseInt(data.organizations, 10)];
-    }
-
     return data;
   }, [filter]);
 
@@ -350,14 +304,6 @@ const PropertyListView: React.FC = () => {
   };
 
   const appliedFilter = { ...filter };
-  if (appliedFilter.organizations && typeof appliedFilter.organizations === 'string') {
-    const organizationSelections = organizations.map(mapLookupCode);
-    appliedFilter.organizations = filter.organizations
-      .split(',')
-      .map(
-        value => organizationSelections.find(organization => organization.value === value) || '',
-      ) as any;
-  }
 
   const onRowClick = useCallback((row: IProperty) => {
     window.open(

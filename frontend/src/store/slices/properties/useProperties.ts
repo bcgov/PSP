@@ -25,34 +25,26 @@ export const useProperties = () => {
    */
   const fetchProperties = useCallback(
     async (propertyBounds: API.IPropertySearchParams | null) => {
-      if (
-        !propertyBounds ||
-        (propertyBounds?.neLatitude !== propertyBounds?.swLatitude &&
-          propertyBounds?.neLongitude !== propertyBounds?.swLongitude)
-      ) {
-        dispatch(logRequest(actionTypes.GET_PARCELS));
-        dispatch(showLoading());
-        return getProperties(propertyBounds)
-          .then((response: AxiosResponse) => {
-            dispatch(logSuccess({ name: actionTypes.GET_PARCELS }));
-            dispatch(storeProperties(response.data));
-            dispatch(hideLoading());
-            return Promise.resolve(response);
-          })
-          .catch((axiosError: AxiosError) => {
-            dispatch(
-              logError({
-                name: actionTypes.GET_PARCELS,
-                status: axiosError?.response?.status,
-                error: axiosError,
-              }),
-            );
-            return Promise.reject(axiosError);
-          })
-          .finally(() => dispatch(hideLoading()));
-      }
-
-      return Promise.resolve();
+      dispatch(logRequest(actionTypes.GET_PARCELS));
+      dispatch(showLoading());
+      return getProperties(propertyBounds)
+        .then((response: AxiosResponse) => {
+          dispatch(logSuccess({ name: actionTypes.GET_PARCELS }));
+          dispatch(storeProperties(response.data));
+          dispatch(hideLoading());
+          return Promise.resolve(response);
+        })
+        .catch((axiosError: AxiosError) => {
+          dispatch(
+            logError({
+              name: actionTypes.GET_PARCELS,
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
+          return Promise.reject(axiosError);
+        })
+        .finally(() => dispatch(hideLoading()));
     },
     [dispatch, getProperties],
   );

@@ -363,3 +363,18 @@ export const asProperty = (point: PointFeature): IProperty => {
     name,
   } as IProperty;
 };
+
+/**
+ * Convert any object to a cql filter string, assuming the object's keys should be used as CQL filter properties.
+ * AND all object keys together within the generated cql filter string.
+ * @param object an object to convert to a cql filter string.
+ */
+export const toCqlFilter = (object: any) => {
+  const cql: string[] = [];
+  Object.keys(object).forEach((key: string) => {
+    if (object[key]) {
+      cql.push(`${key} ilike '%25${object[key]}%25'`);
+    }
+  });
+  return cql.length ? `cql_filter=${cql.join(' AND ')}` : '';
+};

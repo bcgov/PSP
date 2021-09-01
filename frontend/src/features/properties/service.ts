@@ -1,5 +1,5 @@
 import { TableSort } from 'components/Table/TableSort';
-import { ENVIRONMENT, PropertyTypes } from 'constants/index';
+import { ENVIRONMENT } from 'constants/index';
 import CustomAxios from 'customAxios';
 import { IPagedItems, IProperty } from 'interfaces';
 import { isEmpty } from 'lodash';
@@ -31,25 +31,12 @@ const getPropertyList = async (
   return response.data;
 };
 
-const loadBuildings = async (parcelId: number): Promise<IPagedItems<IProperty>> => {
-  const filter: IPropertyQueryParams = {
-    page: 1,
-    quantity: 10,
-    parcelId: parcelId,
-    propertyType: PropertyTypes.Land,
-  };
-  const url = API_ENDPOINTS.propertiesSearch(filter);
-  const response = await CustomAxios().get<IPagedItems<IProperty>>(url);
-  return response.data;
-};
-
 // TODO: Refactor later
 const getPropertyReport = async (filter: IPropertyQueryParams): Promise<any> => {
   return Promise.reject('Not implemented yet');
 };
 
 const Service = {
-  loadBuildings,
   getPropertyList,
   getPropertyReport,
 };
