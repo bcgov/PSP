@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { wait, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Footer, Header } from 'components/layout';
@@ -12,8 +12,6 @@ import Login from 'features/account/Login';
 import ManageAccessRequests from 'features/admin/access/ManageAccessRequests';
 import AccessRequestPage from 'features/admin/access-request/AccessRequestPage';
 import EditUserPage from 'features/admin/edit-user/EditUserPage';
-import EditOrganizationPage from 'features/admin/organizations/EditOrganizationPage';
-import ManageOrganizations from 'features/admin/organizations/ManageOrganizations';
 import ManageUsers from 'features/admin/users/ManageUsers';
 import { PropertyListView } from 'features/properties/list';
 import { Formik } from 'formik';
@@ -46,7 +44,7 @@ describe('PSP routing', () => {
         history={history}
         store={{
           network: {},
-          properties: { parcels: [], draftParcels: [] },
+          properties: { parcels: [], draftProperties: [] },
           keycloakReady: true,
           loadingBar: {},
           lookupCode: { lookupCodes: [] },
@@ -207,30 +205,6 @@ describe('PSP routing', () => {
       await waitFor(async () => {
         wrapper.update();
         expect(wrapper.find(EditUserPage)).toHaveLength(1);
-      });
-    });
-
-    it('displays the admin organizations page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/organizations'));
-      await wait(async () => {
-        wrapper.update();
-        expect(wrapper.find(ManageOrganizations)).toHaveLength(1);
-      });
-    });
-
-    it('displays the edit organizations page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/organization/1'));
-      await wait(async () => {
-        wrapper.update();
-        expect(wrapper.find(EditOrganizationPage)).toHaveLength(1);
-      });
-    });
-
-    it('displays the add organizations page at the expected route', async () => {
-      const wrapper = mount(getRouter('/admin/organization/new'));
-      await wait(async () => {
-        wrapper.update();
-        expect(wrapper.find(EditOrganizationPage)).toHaveLength(1);
       });
     });
   });

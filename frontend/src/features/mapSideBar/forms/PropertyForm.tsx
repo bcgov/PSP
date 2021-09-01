@@ -70,7 +70,7 @@ export const PropertyForm: React.FunctionComponent<IPropertyFormProps> = ({ form
                 <SmallInput label="Title Number:" field="titleNumber" disabled />
                 <FormGroup>
                   <Label>Legal Description:</Label>
-                  <TextField>{values.legalDescription}</TextField>
+                  <TextField>{values.landLegalDescription}</TextField>
                 </FormGroup>
               </InlineFormFields>
               <InlineFormFields md={6}>

@@ -2,7 +2,7 @@ import { ParentSelect } from 'components/common/form/ParentSelect';
 import { Claims } from 'constants/claims';
 import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Select, SelectOption } from '../../../components/common/form';
 import { IPropertyFilter } from './IPropertyFilter';
@@ -25,17 +25,8 @@ export const PropertyFilterOrganizationOptions: React.FC<IPropertyFilterOrganiza
       { label: 'All Government', value: true },
     ],
   };
-  const {
-    setFieldValue,
-    values: { includeAllProperties },
-  } = useFormikContext<IPropertyFilter>();
+  const { setFieldValue } = useFormikContext<IPropertyFilter>();
   const keycloak = useKeycloakWrapper();
-
-  useEffect(() => {
-    if (includeAllProperties === false) {
-      setFieldValue('organizations', keycloak.organizationId);
-    }
-  }, [includeAllProperties, keycloak.organizationId, setFieldValue]);
 
   // access the form context values, no need to pass props
 
@@ -56,9 +47,9 @@ export const PropertyFilterOrganizationOptions: React.FC<IPropertyFilterOrganiza
         field="organizations"
         options={organizations}
         filterBy={['code', 'label', 'parent']}
-        placeholder={includeAllProperties ? '' : 'Organization'}
+        placeholder={''}
         selectClosest
-        disabled={(disabled || includeAllProperties) && !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)}
+        disabled={disabled && !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)}
       />
     </>
   );

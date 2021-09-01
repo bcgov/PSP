@@ -1,6 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { Claims } from 'constants/claims';
-import { PropertyTypes } from 'constants/propertyTypes';
 import { Roles } from 'constants/roles';
 import { IProperty } from 'interfaces';
 
@@ -144,8 +143,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
    */
   const canUserEditProperty = (property: IProperty | null): boolean => {
-    const ownsProperty = !!property?.organizationId && hasOrganization(property.organizationId);
-    return !!property && (isAdmin || (canEdit && ownsProperty));
+    return !!property && (isAdmin || canEdit);
   };
 
   /**
@@ -153,12 +151,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
    */
   const canUserDeleteProperty = (property: IProperty | null): boolean => {
-    const ownsProperty = !!property?.organizationId && hasOrganization(property.organizationId);
-    const isSubdivision = property?.propertyTypeId === PropertyTypes.Subdivision;
-    return (
-      !!property &&
-      (isAdmin || (canDelete && ownsProperty) || (isSubdivision && canEdit && ownsProperty))
-    );
+    return !!property && (isAdmin || canDelete);
   };
 
   /**
@@ -166,13 +159,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
    */
   const canUserViewProperty = (property: IProperty | null): boolean => {
-    return (
-      !!property &&
-      (hasClaim(Claims.ADMIN_PROPERTIES) ||
-        (hasClaim(Claims.PROPERTY_VIEW) &&
-          !!property?.organizationId &&
-          hasOrganization(property.organizationId)))
-    );
+    return (!!property && hasClaim(Claims.ADMIN_PROPERTIES)) || hasClaim(Claims.PROPERTY_VIEW);
   };
 
   return {

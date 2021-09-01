@@ -40,7 +40,7 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
     >
       icon-lot.svg
     </svg>
-    Parcel Identification
+    Property Identification
   </p>
   <div
     class="c0 row"
@@ -74,7 +74,33 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
         </div>
       </div>
     </div>
-    
+    <div
+      class="c1 row"
+    >
+      <div
+        class="c2 col"
+      >
+        <div
+          class="left-side list-group-item"
+        >
+          <p
+            class="label"
+          >
+            PIN
+          </p>
+        </div>
+      </div>
+      <div
+        class="c3 col"
+      />
+      <div
+        class="c4 col"
+      >
+        <div
+          class="list-group-item"
+        />
+      </div>
+    </div>
   </div>
   <div
     class="c0 row"
@@ -120,7 +146,7 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
           <p
             class="label"
           >
-            Ministry
+            Organization
           </p>
         </div>
       </div>
@@ -133,7 +159,7 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
         <div
           class="list-group-item"
         >
-          Ministry of Advanced Education
+          Ministry of Transportation
         </div>
       </div>
     </div>
@@ -149,7 +175,7 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
           <p
             class="label"
           >
-            Owning organization
+            Owner
           </p>
         </div>
       </div>
@@ -161,38 +187,7 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
       >
         <div
           class="list-group-item"
-        >
-          Kwantlen Polytechnic University
-        </div>
-      </div>
-    </div>
-    <div
-      class="c1 row"
-    >
-      <div
-        class="c2 col"
-      >
-        <div
-          class="left-side list-group-item"
-        >
-          <p
-            class="label"
-          >
-            Classification
-          </p>
-        </div>
-      </div>
-      <div
-        class="c3 col"
-      />
-      <div
-        class="c4 col"
-      >
-        <div
-          class="list-group-item"
-        >
-          Core Operational
-        </div>
+        />
       </div>
     </div>
   </div>

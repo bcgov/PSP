@@ -1,5 +1,6 @@
+// TODO: This whole file needs to be rethought out and refactored.
 // Network URL's
-import queryString from 'query-string';
+import { PropertyClassificationTypes, PropertyTypes } from 'constants/index';
 
 import { AccessRequestStatus } from './accessStatus';
 
@@ -46,48 +47,21 @@ export interface IPropertySearchParams {
   minLandArea?: number;
   maxLandArea?: number;
 }
-export const PROPERTIES = (params: IPropertySearchParams | null) =>
-  `/properties/search?${params ? queryString.stringify(params) : ''}`; // get filtered properties or all if not specified.
 
 export interface IGeoSearchParams {
   bbox?: string;
   address?: string;
-  administrativeArea?: string;
+  municipality?: string;
   pid?: string;
   organizations?: string; // TODO: Switch to number[]
-  classificationId?: number;
+  classificationId?: PropertyClassificationTypes;
   minLandArea?: number;
   maxLandArea?: number;
   name?: string;
-  bareLandOnly?: boolean;
-  constructionTypeId?: number;
-  predominateUseId?: number;
-  floorCount?: number;
-  rentableArea?: number;
-  propertyType?: string;
-  includeAllProperties?: boolean;
+  propertyType?: PropertyTypes;
 }
-export const PARCELS_DETAIL = (params: IPropertySearchParams | null) => {
-  return `/properties/parcels?${params ? queryString.stringify(params) : ''}`; // get filtered properties or all if not specified.
-};
-export interface IParcelDetailParams {
-  id: number;
-}
-
-export const PARCEL_DETAIL = (params: IParcelDetailParams) => `/properties/parcels/${params.id}`;
-export const PARCEL_ROOT = `/properties/parcels`;
-
-export const BUILDING_ROOT = `/properties/buildings`;
-
-export interface IBuildingDetailParams {
-  id: number;
-}
-export const BUILDING_DETAIL = (params: IBuildingDetailParams) =>
-  `/properties/buildings/${params.id}`;
 
 // Lookup Codes
-export const LOOKUP_CODE = () => `/lookup`;
-export const LOOKUP_CODE_SET = (codeSetName: string) => `/lookup/${codeSetName}`; // get filtered properties or all if not specified.
 export const ORGANIZATION_CODE_SET_NAME = 'Organization';
 export const ROLE_CODE_SET_NAME = 'Role';
 export const PROVINCE_CODE_SET_NAME = 'Province';
@@ -97,11 +71,14 @@ export const CONSTRUCTION_CODE_SET_NAME = 'BuildingConstructionType';
 export const PREDOMINATE_USE_CODE_SET_NAME = 'BuildingPredominateUse';
 export const OCCUPANT_TYPE_CODE_SET_NAME = 'BuildingOccupantType';
 
+// TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations
 export const POST_ORGANIZATIONS = () => `/admin/organizations/filter`; // get paged list of organizations
 
+// TODO: This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
 export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties or all if not specified.
 
+// TODO: This should all be removed from this and moved to the useApi* hooks.
 // User Service
 export const POST_USERS = () => `/admin/users/my/organization`; // get paged list of users

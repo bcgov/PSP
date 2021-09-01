@@ -1,3 +1,5 @@
+import { PropertyClassificationTypes, PropertyTypes } from 'constants/index';
+
 /**
  * Property filter options used by Formik.
  */
@@ -10,38 +12,20 @@ export interface IPropertyFilter {
   quantity?: string;
   /** The unique PID of the parcel. */
   pid: string;
+  /** comma-separated list of organizations to filter by */
+  organizations: string;
   /** The address of the property. */
   address: string;
   /** The location of the property. */
-  administrativeArea: string;
-  /** comma-separated list of organizations to filter by */
-  organizations: string;
+  municipality: string;
   /** The classification of the property. */
-  classificationId: string;
+  classificationId?: PropertyClassificationTypes;
+  /** Select on of the property types [Land, Building]. */
+  propertyType?: PropertyTypes;
   /** The minimum lot size of the property. */
   minLotSize: string;
-  /** The maxium lot size of the property. */
+  /** The maximum lot size of the property. */
   maxLotSize: string;
-  /** Select on of the property types [Land, Building]. */
-  propertyType?: string;
   /** The name of desired target */
   name?: string;
-  /** The building construction type id */
-  constructionTypeId?: string;
-  /** The building predominant use id */
-  predominateUseId?: string;
-  /** The building number of floors */
-  floorCount?: string;
-  /** Flag for whether to include buildings */
-  bareLandOnly?: boolean;
-  /** filter for building rentable area */
-  rentableArea: string;
-  /** The maximum Assesses Value for a property */
-  maxAssessedValue?: string;
-  /** The maximum Net book Value for a property */
-  maxNetBookValue?: '';
-  /** The maximum Market Value for a property */
-  maxMarketValue?: '';
-  /** Whether to return properties owned by other organizations. */
-  includeAllProperties?: boolean;
 }

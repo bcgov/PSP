@@ -26,7 +26,7 @@ export const AccessRequestActions = (props: IAccessRequestActionsProps) => {
   };
 
   const deleteRequests = async () => {
-    await Promise.all(props.selections.map(req => removeAccessRequest(req.id, req)));
+    await Promise.all(props.selections.map(req => removeAccessRequest(req.id ?? 0, req)));
   };
 
   const submit = async (items: IAccessRequest[]) => {

@@ -92,6 +92,7 @@ parameters:
     required: true
     value: "172.51.0.0/16"
 
+    
   - name: API_URL
     description:
       "The default URL to use when proxying requests to the application's
@@ -109,6 +110,14 @@ parameters:
     displayName: "API Path"
     required: true
     value: "pims-api"
+
+  - name: GEOSERVER_URL
+    description:
+      "The URL to use when proxying requests to the application's
+      Geoserver instance."
+    displayName: "GEOSERVER URL"
+    required: false
+    value: ""
 
   - name: REPLICAS
     displayName: "Pod Replicas"

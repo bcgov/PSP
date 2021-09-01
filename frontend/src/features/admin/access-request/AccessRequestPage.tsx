@@ -53,17 +53,17 @@ const AccessRequestPage = () => {
     userId: userInfo?.id,
     user: {
       id: userInfo?.id,
-      key: userInfo?.key,
-      businessIdentifier: userInfo?.username,
+      keycloakUserId: userInfo?.keycloakUserId,
+      businessIdentifier: userInfo?.businessIdentifier,
       displayName: userInfo?.name,
       firstName: userInfo?.firstName,
-      surname: userInfo?.lastName,
+      surname: userInfo?.surname,
       email: userInfo?.email,
       position: accessRequest?.user?.position ?? userInfo?.position ?? '',
     },
     status: AccessRequestStatus.Received,
     note: accessRequest?.note ?? '',
-    organizationId: organizations?.find(a => a.code === 'MOTI2')?.id, // Select TRAN as the default organization for all access requests.
+    organizationId: +(organizations?.find(a => a.code === 'MOTI2')?.id ?? 0), // Select TRAN as the default organization for all access requests.
     roleId: accessRequest?.role?.id,
     rowVersion: accessRequest?.rowVersion,
   };
