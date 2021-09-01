@@ -1,8 +1,6 @@
 import './PropertyListView.scss';
 
 import variables from '_variables.module.scss';
-import { ReactComponent as BuildingSvg } from 'assets/images/icon-business.svg';
-import { ReactComponent as LandSvg } from 'assets/images/icon-lot.svg';
 import { SearchToggleOption } from 'components/common/form';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
@@ -27,8 +25,7 @@ import queryString from 'query-string';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { FaEdit, FaFileExport } from 'react-icons/fa';
-import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { FaFileAlt, FaFileExcel, FaFileExport } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -422,35 +419,8 @@ const PropertyListView: React.FC = () => {
       </Container>
       <div className="ScrollContainer">
         <Container fluid className="TableToolbar">
-          <h3>View Inventory</h3>
-          <div className="menu">
-            <div>
-              <TooltipWrapper toolTipId="show-parcels" toolTip="Show Parcels">
-                <div
-                  className={
-                    filter.propertyType === PropertyTypes.Land ? 'svg-btn active' : 'svg-btn'
-                  }
-                  onClick={() => changePropertyType(PropertyTypes.Land)}
-                >
-                  <LandSvg className="svg" />
-                  Parcels view
-                </div>
-              </TooltipWrapper>
-            </div>
-            <div>
-              <TooltipWrapper toolTipId="show-buildings" toolTip="Show Buildings">
-                <div
-                  className={
-                    filter.propertyType === PropertyTypes.Building ? 'svg-btn active' : 'svg-btn'
-                  }
-                  onClick={() => changePropertyType(PropertyTypes.Building)}
-                >
-                  <BuildingSvg className="svg" />
-                  Buildings View
-                </div>
-              </TooltipWrapper>
-            </div>
-          </div>
+          <h3>Property Information</h3>
+          <div className="menu"></div>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
             <FileIcon>
               <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
@@ -472,51 +442,6 @@ const PropertyListView: React.FC = () => {
               </FileIcon>
             </TooltipWrapper>
           )}
-          <VerticalDivider />
-
-          {!editable && (
-            <TooltipWrapper toolTipId="edit-financial-values" toolTip={'Edit financial values'}>
-              <EditIconButton>
-                <FaEdit data-testid="edit-icon" size={36} onClick={() => setEditable(!editable)} />
-              </EditIconButton>
-            </TooltipWrapper>
-          )}
-          {editable && (
-            <>
-              <TooltipWrapper toolTipId="cancel-edited-financial-values" toolTip={'Cancel edits'}>
-                <Button
-                  data-testid="cancel-changes"
-                  variant="outline-primary"
-                  style={{ marginRight: 10 }}
-                  onClick={() => {
-                    if (tableFormRef.current?.dirty) {
-                      tableFormRef.current.resetForm();
-                    }
-                    setEditable(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </TooltipWrapper>
-              <TooltipWrapper
-                toolTipId="save-edited-financial-values"
-                toolTip={'Save financial values'}
-              >
-                <Button
-                  data-testid="save-changes"
-                  onClick={async () => {
-                    if (tableFormRef.current?.dirty && dirtyRows.length > 0) {
-                      const values = tableFormRef.current.values;
-                      const actions = tableFormRef.current;
-                      await submitTableChanges(values, actions);
-                    }
-                  }}
-                >
-                  Save edits
-                </Button>
-              </TooltipWrapper>
-            </>
-          )}
         </Container>
 
         <Table<IProperty>
@@ -530,11 +455,6 @@ const PropertyListView: React.FC = () => {
           pageIndex={pageIndex}
           onRequestData={handleRequestData}
           onRowClick={onRowClick}
-          tableToolbarText={
-            filter.propertyType === PropertyTypes.Building
-              ? undefined
-              : '* Assessed value per building'
-          }
           pageCount={pageCount}
           onSortChange={(column: string, direction: SortDirection) => {
             if (!!direction) {

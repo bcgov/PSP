@@ -1,10 +1,8 @@
 import { Input, SelectOption } from 'components/common/form';
 import { TypeaheadField } from 'components/common/form/Typeahead';
 import { ColumnWithProps } from 'components/Table';
-import { PropertyTypeCell } from 'components/Table/PropertyTypeCell';
 import { PropertyTypes } from 'constants/index';
 import { IProperty } from 'interfaces';
-import { isEqual } from 'lodash';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
@@ -44,53 +42,6 @@ export const columns = (
   editable?: boolean,
 ): ColumnWithProps<IProperty>[] => [
   {
-    Header: 'Property Name',
-    accessor: 'name',
-    align: 'left',
-    clickable: true,
-    responsive: true,
-    width: spacing.medium,
-    minWidth: 140,
-    sortable: true,
-  },
-  {
-    Header: 'Classification',
-    accessor: 'classification',
-    align: 'left',
-    responsive: false,
-    width: spacing.small,
-    minWidth: 90,
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: TypeaheadField,
-      props: {
-        field: 'classificationId',
-        name: 'classificationId',
-        placeholder: 'Filter by class',
-        className: 'location-search',
-        options: propertyClassifications,
-        labelKey: (option: SelectOption) => {
-          return `${option.label}`;
-        },
-        clearButton: true,
-        getOptionByValue: (value: number | string) => {
-          return propertyClassifications.filter(a => isEqual(a.value, value));
-        },
-      },
-    },
-  },
-  {
-    Header: 'Type',
-    accessor: 'propertyTypeId',
-    Cell: PropertyTypeCell,
-    clickable: true,
-    responsive: true,
-    width: spacing.xsmall,
-    minWidth: 60,
-  },
-  {
     Header: 'PID',
     accessor: 'pid',
     width: spacing.medium,
@@ -98,7 +49,14 @@ export const columns = (
     align: 'left',
   },
   {
-    Header: 'Street Address',
+    Header: 'PIN',
+    accessor: 'pin',
+    width: spacing.medium,
+    responsive: true,
+    align: 'left',
+  },
+  {
+    Header: 'Civic Address',
     accessor: 'address',
     align: 'left',
     clickable: true,
@@ -150,5 +108,15 @@ export const columns = (
         type: 'number',
       },
     },
+  },
+  // TODO: FIXME: Find out how to get registered owner of properties!
+  {
+    Header: 'Registered Owner',
+    accessor: p => null,
+    align: 'left',
+    responsive: true,
+    width: spacing.medium,
+    minWidth: 100,
+    sortable: true,
   },
 ];
