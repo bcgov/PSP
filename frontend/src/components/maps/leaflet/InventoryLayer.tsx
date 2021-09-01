@@ -192,7 +192,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
         .getCenter();
       return [latLng.lng, latLng.lat];
     }
-    console.log(feature);
     return feature.geometry.coordinates;
   };
 
