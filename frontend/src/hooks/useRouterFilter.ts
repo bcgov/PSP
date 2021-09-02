@@ -49,7 +49,7 @@ const defaultFilter = {
   pid: '',
   propertyType: '',
   rentableArea: '',
-  searchBy: 'address',
+  searchBy: 'pid',
 };
 
 /**

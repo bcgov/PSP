@@ -1,7 +1,5 @@
 // TODO: This whole file needs to be rethought out and refactored.
 // Network URL's
-import { PropertyClassificationTypes, PropertyTypes } from 'constants/index';
-
 import { AccessRequestStatus } from './accessStatus';
 
 // Generic Params
@@ -35,30 +33,16 @@ export interface IPaginateAccessRequests extends IPaginateParams {
 // Parcels
 export interface IPropertySearchParams {
   pid?: string;
-  neLatitude: number;
-  neLongitude: number;
-  swLatitude: number;
-  swLongitude: number;
+  pin?: string;
+  location?: string;
   address?: string;
-  administrativeArea?: string;
-  /** comma-separated list of organizations to filter by */
-  organizations?: string;
-  classificationId?: number;
-  minLandArea?: number;
-  maxLandArea?: number;
 }
 
 export interface IGeoSearchParams {
-  bbox?: string;
-  address?: string;
-  municipality?: string;
-  pid?: string;
-  organizations?: string; // TODO: Switch to number[]
-  classificationId?: PropertyClassificationTypes;
-  minLandArea?: number;
-  maxLandArea?: number;
-  name?: string;
-  propertyType?: PropertyTypes;
+  STREET_ADDRESS_1?: string;
+  PID?: string;
+  PIN?: string;
+  BBOX?: string;
 }
 
 // Lookup Codes

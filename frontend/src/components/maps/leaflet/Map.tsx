@@ -28,7 +28,6 @@ import { ILookupCode } from 'store/slices/lookupCodes';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { IPropertyDetail, storeProperty } from 'store/slices/properties';
-import { floatOrUndefined } from 'utils';
 
 import { Claims } from '../../../constants';
 import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
@@ -86,26 +85,14 @@ export type LayerPopupInformation = PopupContentConfig & {
 };
 
 const defaultFilterValues: IPropertyFilter = {
-  searchBy: 'address',
+  searchBy: 'pid',
   pid: '',
+  pin: '',
   address: '',
-  municipality: '',
-  organizations: '',
-  minLotSize: '',
-  maxLotSize: '',
-  name: '',
+  location: '',
 };
 
-const whitelistedFilterKeys = [
-  'pid',
-  'address',
-  'municipality',
-  'classificationId',
-  'organizations',
-  'minLandArea',
-  'maxLandArea',
-  'name',
-];
+const whitelistedFilterKeys = ['PID', 'PIN', 'ADDRESS', 'LOCATION'];
 
 /**
  * Converts the map filter to a geo search filter.
@@ -113,14 +100,9 @@ const whitelistedFilterKeys = [
  */
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   return {
-    pid: filter.pid,
-    address: filter.address,
-    municipality: filter.municipality,
-    classificationId: filter.classificationId,
-    organizations: filter.organizations,
-    minLandArea: floatOrUndefined(filter.minLotSize),
-    maxLandArea: floatOrUndefined(filter.maxLotSize),
-    name: filter.name,
+    PID: filter.pid,
+    PIN: filter.pin,
+    STREET_ADDRESS_1: filter.address,
   };
 };
 
@@ -200,7 +182,7 @@ const Map: React.FC<MapProps> = ({
       }, true);
     };
     // Search button will always trigger filter changed (triggerFilterChanged is set to true when search button is clicked)
-    if (!isEqualWith(geoFilter, filter, compareValues) || triggerFilterChanged) {
+    if (!isEqualWith(geoFilter, getQueryParams(filter), compareValues) || triggerFilterChanged) {
       dispatch(storeProperty(null));
       setGeoFilter(getQueryParams(filter));
       setChanged(true);

@@ -18,6 +18,7 @@ import {
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import { useApiProperties } from 'hooks/pims-api';
+import { useApi } from 'hooks/useApi';
 import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import configureMockStore from 'redux-mock-store';
@@ -162,10 +163,16 @@ describe('MapView', () => {
         },
       },
     });
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      getPropertiesWfs: jest.fn(async () => {
-        return createPoints(mockParcels);
+    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+      loadProperties: jest.fn(async () => {
+        return {
+          features: createPoints(mockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        };
       }),
+    });
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getProperty: async () => {
         return {} as IProperty;
       },
@@ -268,10 +275,16 @@ describe('MapView', () => {
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
-    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      getPropertiesWfs: jest.fn(async () => {
-        return createPoints(smallMockParcels);
+    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+      loadProperties: jest.fn(async () => {
+        return {
+          features: createPoints(smallMockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        };
       }),
+    });
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
       getParcel: async () => {
         return {} as IProperty;
       },
@@ -369,12 +382,18 @@ describe('MapView', () => {
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      getPropertiesWfs: jest.fn(async () => {
-        return createPoints(largeMockParcels);
-      }),
       getProperty: async () => {
         return {} as IProperty;
       },
+    });
+    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+      loadProperties: jest.fn(async () => {
+        return {
+          features: createPoints(largeMockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        };
+      }),
     });
     const { container } = render(getMap());
     await waitFor(() => {

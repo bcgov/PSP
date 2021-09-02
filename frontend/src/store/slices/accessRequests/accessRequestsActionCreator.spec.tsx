@@ -102,7 +102,7 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('addAccessRequest action creator', () => {
-    const newMockAccessRequest = mockAccessRequest;
+    const newMockAccessRequest = { ...mockAccessRequest, id: undefined };
     const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 

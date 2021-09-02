@@ -1,4 +1,4 @@
-import { PropertyClassificationTypes, PropertyTypes } from 'constants/index';
+import { PropertyTypes } from 'constants/index';
 
 /**
  * Property filter options used by Formik.
@@ -12,20 +12,12 @@ export interface IPropertyFilter {
   quantity?: string;
   /** The unique PID of the parcel. */
   pid: string;
-  /** comma-separated list of organizations to filter by */
-  organizations: string;
+  /** The unique PID of the parcel. */
+  pin: string;
   /** The address of the property. */
   address: string;
   /** The location of the property. */
-  municipality: string;
-  /** The classification of the property. */
-  classificationId?: PropertyClassificationTypes;
+  location: string;
   /** Select on of the property types [Land, Building]. */
   propertyType?: PropertyTypes;
-  /** The minimum lot size of the property. */
-  minLotSize: string;
-  /** The maximum lot size of the property. */
-  maxLotSize: string;
-  /** The name of desired target */
-  name?: string;
 }

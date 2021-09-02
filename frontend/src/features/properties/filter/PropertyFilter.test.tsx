@@ -2,7 +2,6 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import * as API from 'constants/API';
-import { PropertyClassificationTypes } from 'constants/propertyClassificationTypes';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import * as MOCK from 'mocks/filterDataMock';
@@ -93,14 +92,11 @@ const getStore = (filter: any) =>
   });
 
 const defaultFilter: IPropertyFilter = {
-  searchBy: 'name',
+  searchBy: 'pid',
   pid: '',
   address: '',
-  municipality: '',
-  organizations: '',
-  minLotSize: '',
-  maxLotSize: '',
-  name: '',
+  pin: '',
+  location: '',
 };
 
 const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
@@ -140,32 +136,16 @@ describe('MapFilterBar', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('renders only my organizations if showAllOrganizations not set', () => {
-    mockKeycloak(['property-view']);
-    // Capture any changes
-    const { getByPlaceholderText } = render(getUiElement(defaultFilter, false));
-    expect(getByPlaceholderText('My Organizations')).toBeVisible();
-  });
-
   it('submits correct values', async () => {
     // Arrange
     mockKeycloak(['admin-properties']);
 
     const { container } = render(getUiElement(defaultFilter));
-    const classificationId = container.querySelector('select[name="classificationId"]');
     const submit = container.querySelector('button[type="submit"]');
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'administrativeArea', 'Victoria', 'typeahead'));
-
-    await waitFor(() => {
-      fireEvent.change(classificationId!, {
-        target: {
-          value: `${PropertyClassificationTypes.CoreOperational}`,
-        },
-      });
-    });
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
 
     await waitFor(() => {
       fireEvent.click(submit!);
@@ -175,14 +155,9 @@ describe('MapFilterBar', () => {
     expect(onFilterChange).toBeCalledWith({
       pid: '',
       address: '',
-      administrativeArea: 'Victoria',
-      municipality: '',
-      organizations: '',
-      minLotSize: '',
-      maxLotSize: '',
-      name: '',
-      classificationId: '',
-      searchBy: 'name',
+      pin: '',
+      location: '',
+      searchBy: 'pid',
     });
   });
 
@@ -191,88 +166,28 @@ describe('MapFilterBar', () => {
       pid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
-      municipality: 'mockAdministrativeArea',
-      organizations: '2',
-      classificationId: PropertyClassificationTypes.CoreStrategic,
-      minLotSize: '10',
-      maxLotSize: '20',
+      pin: '',
+      location: '',
     };
     const { getByText } = render(getUiElement(providedFilter));
     expect(getByText('Address')).toBeVisible();
-    expect(getByText('Core Operational')).toBeVisible();
-  });
-
-  it('loads filter values if array based organizations is provided', () => {
-    const providedFilter: IPropertyFilter = {
-      pid: 'mockPid',
-      searchBy: 'address',
-      address: 'mockaddress',
-      municipality: 'mockAdministrativeArea',
-      organizations: ['2'] as any,
-      classificationId: PropertyClassificationTypes.CoreStrategic,
-      minLotSize: '10',
-      maxLotSize: '20',
-    };
-    const { getByDisplayValue } = render(getUiElement(providedFilter));
-    expect(getByDisplayValue('HTLH')).toBeVisible();
-  });
-
-  it('loads filter values if empty organizations array is provided', () => {
-    const providedFilter: IPropertyFilter = {
-      pid: 'mockPid',
-      searchBy: 'address',
-      address: 'mockaddress',
-      municipality: 'mockAdministrativeArea',
-      organizations: [] as any,
-      classificationId: PropertyClassificationTypes.CoreStrategic,
-      minLotSize: '10',
-      maxLotSize: '20',
-    };
-    const { container } = render(getUiElement(providedFilter));
-    const organizations = container.querySelector('input[name="organizations"]');
-    expect(organizations).toHaveValue('');
   });
 
   it('resets values when reset button is clicked', async () => {
     const { container, getByTestId } = render(getUiElement(defaultFilter));
-    const classificationId = container.querySelector('select[name="classificationId"]');
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'administrativeArea', 'Victoria', 'typeahead'));
-
-    await waitFor(() => {
-      fireEvent.change(classificationId!, {
-        target: {
-          value: '1',
-        },
-      });
-    });
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
     await waitFor(() => {
       fireEvent.click(getByTestId('reset-button'));
     });
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
       pid: '',
       address: '',
-      municipality: '',
-      organizations: '',
-      minLotSize: '',
-      maxLotSize: '',
-      name: '',
-      searchBy: 'name',
-    });
-  });
-
-  it('searches for property names', async () => {
-    const { container } = render(getUiElement({ ...defaultFilter }));
-    const nameField = container.querySelector('input[id="name-field"]');
-    fireEvent.change(nameField!, {
-      target: {
-        value: 'test',
-      },
-    });
-    await waitFor(() => {
-      expect(fetchPropertyNames).toHaveBeenCalled();
+      pin: '',
+      location: '',
+      searchBy: 'pid',
     });
   });
 });

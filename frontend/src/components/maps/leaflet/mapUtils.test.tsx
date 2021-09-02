@@ -219,6 +219,7 @@ describe('mapUtils tests', () => {
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: {
+              PROPERTY_ID: 1,
               address: {
                 addressTypeId: AddressTypes.Physical,
                 streetAddress1: '1243 St',
@@ -249,6 +250,7 @@ describe('mapUtils tests', () => {
           {
             geometry: { coordinates: [2, 1], type: 'Point' },
             properties: {
+              PROPERTY_ID: 1,
               address: {
                 addressTypeId: AddressTypes.Physical,
                 streetAddress1: '1243 St',

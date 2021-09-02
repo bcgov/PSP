@@ -79,15 +79,6 @@ const setupTests = (items?: IProperty[], buildingItems?: IProperty[]) => {
     pageIndex: 0,
     items: items ?? [],
   });
-  if (!!buildingItems) {
-    mockedService.loadBuildings.mockResolvedValueOnce({
-      quantity: 0,
-      total: 0,
-      page: 1,
-      pageIndex: 0,
-      items: buildingItems ?? [],
-    });
-  }
   (useApiProperties as jest.Mock).mockReturnValue({
     updateProperty: jest.fn(),
     putProperty: jest.fn(),

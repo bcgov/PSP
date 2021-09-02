@@ -4,7 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
+import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
+import { useApi } from 'hooks/useApi';
 import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
@@ -13,7 +15,6 @@ import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import { PointFeature } from '../types';
 import Map from './Map';
 import { createPoints } from './mapUtils';
 
@@ -128,7 +129,7 @@ function setup(props: Omit<TestProps, 'done'>) {
     findLayerListButton: () => document.querySelector('#layersControlButton') as HTMLElement,
     findLayerListContainer: () => document.querySelector('#layersContainer') as HTMLElement,
     findFilterBar: () => document.querySelector('.map-filter-bar') as HTMLElement,
-    findNameField: () => document.querySelector('#name-field') as HTMLElement,
+    findPidField: () => document.querySelector('#input-pid') as HTMLElement,
     findSearchButton: () => document.querySelector('#search-button') as HTMLElement,
     findResetButton: () => document.querySelector('#reset-button') as HTMLElement,
     findZoomInButton: () => document.querySelector('.leaflet-control-zoom-in') as HTMLElement,
@@ -141,7 +142,7 @@ function setup(props: Omit<TestProps, 'done'>) {
 }
 
 describe('MapProperties View', () => {
-  let mockLoadProperties: jest.Mock<Promise<PointFeature[]>>;
+  let mockLoadProperties: jest.Mock<Promise<FeatureCollection>>;
   let mockGetParcel: jest.Mock<Promise<IProperty>>;
 
   beforeEach(() => {
@@ -156,11 +157,22 @@ describe('MapProperties View', () => {
       disconnect: jest.fn(),
     }));
 
-    mockLoadProperties = jest.fn(async () => createPoints(mockParcels));
+    mockLoadProperties = jest.fn(
+      async () =>
+        ({
+          features: createPoints(mockParcels),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        } as FeatureCollection),
+    );
     mockGetParcel = jest.fn(async () => ({} as IProperty));
 
+    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+      loadProperties: mockLoadProperties,
+      getProperty: mockGetParcel,
+    });
+
     ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-      getPropertiesWfs: mockLoadProperties,
       getProperty: mockGetParcel,
     });
   });
@@ -243,7 +255,11 @@ describe('MapProperties View', () => {
   });
 
   it(`should render 0 markers when there are no parcels`, async () => {
-    mockLoadProperties.mockResolvedValue([]);
+    mockLoadProperties.mockResolvedValue({
+      features: [],
+      type: 'FeatureCollection',
+      bbox: undefined,
+    });
     const props = createProps();
     const { ready, findMapMarker } = setup({
       ...props,
@@ -264,19 +280,19 @@ describe('MapProperties View', () => {
 
   it('makes the correct calls to load map data when filter is updated', async () => {
     const props = createProps();
-    const { ready, findNameField, findSearchButton } = setup({
+    const { ready, findPidField, findSearchButton } = setup({
       ...props,
       properties: noParcels,
       selectedProperty: null,
     });
     await waitFor(() => ready);
     // type something in the filter bar
-    const nameInput = findNameField();
+    const nameInput = findPidField();
     const searchButton = findSearchButton();
-    userEvent.type(nameInput, 'testname');
+    userEvent.type(nameInput, '123-456-789');
     await waitFor(() => userEvent.click(searchButton));
     // check API call params...
-    const filter = expect.objectContaining({ name: 'testname' });
+    const filter = expect.objectContaining({ PID: '123-456-789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
   });
 
@@ -295,23 +311,23 @@ describe('MapProperties View', () => {
 
   it('makes the correct calls to load the map data when the reset filter is clicked', async () => {
     const props = createProps();
-    const { ready, findNameField, findSearchButton, findResetButton } = setup({
+    const { ready, findPidField, findSearchButton, findResetButton } = setup({
       ...props,
       properties: noParcels,
       selectedProperty: null,
     });
     await waitFor(() => ready);
     // type something in the filter bar
-    const nameInput = findNameField();
+    const nameInput = findPidField();
     const searchButton = findSearchButton();
-    userEvent.type(nameInput, 'testname');
+    userEvent.type(nameInput, '123-456-789');
     await waitFor(() => userEvent.click(searchButton));
     // check API call params...
-    const filter = expect.objectContaining({ name: 'testname' });
+    const filter = expect.objectContaining({ PID: '123-456-789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
     const resetButton = findResetButton();
     await waitFor(() => userEvent.click(resetButton));
-    const defaultFilter = expect.objectContaining({ name: '' });
+    const defaultFilter = expect.objectContaining({ PID: '' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(defaultFilter));
   });
 });

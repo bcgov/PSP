@@ -14,14 +14,11 @@ const getPropertyNames = (filter: IGeoSearchParams) =>
 
 export const usePropertyNames = () => {
   const dispatch = useDispatch();
-  const fetchPropertyNames = useCallback(
-    async (organizationId: number): Promise<string[]> => {
-      const axiosResponse = CustomAxios()
-        .get(ENVIRONMENT.apiUrl + getPropertyNames({ organizations: organizationId?.toString() }))
-        .then(response => dispatch(savePropertyNames(response.data)));
-      return handleAxiosResponse(dispatch, STORE_PROPERTY_NAMES, axiosResponse);
-    },
-    [dispatch],
-  );
+  const fetchPropertyNames = useCallback(async (): Promise<string[]> => {
+    const axiosResponse = CustomAxios()
+      .get(ENVIRONMENT.apiUrl + getPropertyNames({}))
+      .then(response => dispatch(savePropertyNames(response.data)));
+    return handleAxiosResponse(dispatch, STORE_PROPERTY_NAMES, axiosResponse);
+  }, [dispatch]);
   return { fetchPropertyNames };
 };

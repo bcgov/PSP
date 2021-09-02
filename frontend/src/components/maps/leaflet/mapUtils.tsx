@@ -237,16 +237,17 @@ export const subdivisionErpIconSelect = L.icon({
  * Creates map points (in GeoJSON format) for further clustering by `supercluster`
  * @param properties
  */
-export const createPoints = (properties: IProperty[]) =>
+export const createPoints = (properties: IProperty[], type: string = 'Point') =>
   properties.map(x => {
     return {
       type: 'Feature',
       properties: {
         ...x,
         cluster: false,
+        PROPERTY_ID: x.id,
       },
       geometry: {
-        type: 'Point',
+        type: type,
         coordinates: [x.longitude, x.latitude],
       },
     } as PointFeature;
@@ -362,4 +363,19 @@ export const asProperty = (point: PointFeature): IProperty => {
     longitude: latlng.lng,
     name,
   } as IProperty;
+};
+
+/**
+ * Convert any object to a cql filter string, assuming the object's keys should be used as CQL filter properties.
+ * AND all object keys together within the generated cql filter string.
+ * @param object an object to convert to a cql filter string.
+ */
+export const toCqlFilter = (object: any) => {
+  const cql: string[] = [];
+  Object.keys(object).forEach((key: string) => {
+    if (object[key]) {
+      cql.push(`${key} ilike '%25${object[key]}%25'`);
+    }
+  });
+  return cql.length ? `cql_filter=${cql.join(' AND ')}` : '';
 };
