@@ -1,5 +1,7 @@
 PSP_PIMS S09.01 Sprint 9 2021-Sep-01
-- Added view PIMS_PROPERTY_LOCATION_VW
+- Added views:
+  - PIMS_PROPERTY_BOUNDARY_VW
+  - PIMS_PROPERTY_LOCATION_VW
 - Requires additional metadata to meet standards
 
 PSP_PIMS S09.00 Sprint 9 2021-Aug-19
