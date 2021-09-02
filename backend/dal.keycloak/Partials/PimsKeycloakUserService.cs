@@ -341,6 +341,8 @@ namespace Pims.Dal.Keycloak
                 user.RolesManyToMany.Clear();
                 user.Roles.Clear();
                 user.RolesManyToMany.Add(new Entity.UserRole(user.Id, update.RoleId));
+                user.Organizations.Clear();
+                user.OrganizationsManyToMany.Clear();
                 update.Organizations.Clear();
                 update.OrganizationsManyToMany.ForEach(aro =>
                 {
