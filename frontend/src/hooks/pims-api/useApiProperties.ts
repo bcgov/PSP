@@ -1,77 +1,64 @@
-import { IPropertySearchParams } from 'constants/API';
+import { IGeoSearchParams, IPropertySearchParams } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
-import { IBuilding, IPagedItems, IParcel } from 'interfaces';
+import { IPagedItems, IProperty } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
 import { useApi } from '.';
 
-/**
- * PIMS API wrapper to centralize all AJAX requests to the property endpoints.
- * @returns Object containing functions to make requests to the PIMS API.
- */
-
-const parcelCreatingToasts: LifecycleToasts = {
+const propertyCreatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.parcel.PARCEL_CREATING,
   successToast: pimsToasts.parcel.PARCEL_CREATED,
   errorToast: pimsToasts.parcel.PARCEL_CREATING_ERROR,
 };
 
-const parcelDeletingToasts: LifecycleToasts = {
-  loadingToast: pimsToasts.parcel.PARCEL_DELETING,
-  successToast: pimsToasts.parcel.PARCEL_DELETED,
-  errorToast: pimsToasts.parcel.PARCEL_DELETING_ERROR,
-};
-
-const parcelUpdatingToasts: LifecycleToasts = {
+const propertyUpdatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.parcel.PARCEL_UPDATING,
   successToast: pimsToasts.parcel.PARCEL_UPDATED,
   errorToast: pimsToasts.parcel.PARCEL_UPDATING_ERROR,
 };
 
-const buildingDeletingToasts: LifecycleToasts = {
-  loadingToast: pimsToasts.building.BUILDING_DELETING,
-  successToast: pimsToasts.building.BUILDING_DELETED,
-  errorToast: pimsToasts.building.BUILDING_DELETING_ERROR,
+const propertyDeletingToasts: LifecycleToasts = {
+  loadingToast: pimsToasts.parcel.PARCEL_DELETING,
+  successToast: pimsToasts.parcel.PARCEL_DELETED,
+  errorToast: pimsToasts.parcel.PARCEL_DELETING_ERROR,
 };
 
+/**
+ * PIMS API wrapper to centralize all AJAX requests to the property endpoints.
+ * @returns Object containing functions to make requests to the PIMS API.
+ */
 export const useApiProperties = () => {
   const api = useApi();
-  const apiWithParcelCreatingToasts = useApi({ lifecycleToasts: parcelCreatingToasts });
-  const apiWithParcelDeletingToasts = useApi({ lifecycleToasts: parcelDeletingToasts });
-  const apiWithParcelUpdatingToasts = useApi({ lifecycleToasts: parcelUpdatingToasts });
-  const apiWithBuildingDeletingToasts = useApi({ lifecycleToasts: buildingDeletingToasts });
+  const apiWithPropertyCreatingToasts = useApi({ lifecycleToasts: propertyCreatingToasts });
+  const apiWithPropertyUpdatingToasts = useApi({ lifecycleToasts: propertyUpdatingToasts });
+  const apiWithPropertyDeletingToasts = useApi({ lifecycleToasts: propertyDeletingToasts });
 
   return React.useMemo(
     () => ({
-      getParcelDetail: (id: number) => api.get<IParcel>(`/properties/parcels/${id}`),
-      getParcelsDetail: (params: IPropertySearchParams) =>
-        api.get<IPagedItems<IParcel>>(
-          `/properties/parcels?${params ? queryString.stringify(params) : ''}`,
-        ),
-      getParcels: (params: IPropertySearchParams | null) =>
-        api.get<IPagedItems<IParcel>>(
+      // TODO: Remove fake endpoint used by the map.
+      getPropertiesWfs: (params?: IGeoSearchParams): Promise<any[]> => Promise.resolve([]),
+      getProperties: (params: IPropertySearchParams | null) =>
+        api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      postParcel: (parcel: IParcel) =>
-        apiWithParcelCreatingToasts.post<IParcel>(`/properties/parcels`, parcel),
-      putParcel: (parcel: IParcel) =>
-        apiWithParcelUpdatingToasts.put<IParcel>(`/properties/parcels/${parcel.id}`, parcel),
-      deleteParcel: (parcel: IParcel) =>
-        apiWithParcelDeletingToasts.delete<IParcel>(`/properties/parcels/${parcel.id}`, {
-          data: parcel,
+      getPropertyWithPid: (pid: string) => api.get<IProperty>(`/properties/${pid}`),
+      getProperty: (id: number) => api.get<IProperty>(`/properties/${id}`),
+      postProperty: (property: IProperty) =>
+        apiWithPropertyCreatingToasts.post<IProperty>(`/properties`, property),
+      putProperty: (property: IProperty) =>
+        apiWithPropertyUpdatingToasts.put<IProperty>(`/properties/${property.id}`, property),
+      deleteProperty: (property: IProperty) =>
+        apiWithPropertyDeletingToasts.delete<IProperty>(`/properties/${property.id}`, {
+          data: property,
         }),
-      getBuilding: (id: number) => api.get<IBuilding>(`/properties/buildings/${id}`),
-      deleteBuilding: (building: IBuilding) =>
-        apiWithBuildingDeletingToasts.delete<IBuilding>(`/properties/buildings/${building.id}`),
     }),
     [
       api,
-      apiWithParcelCreatingToasts,
-      apiWithParcelUpdatingToasts,
-      apiWithParcelDeletingToasts,
-      apiWithBuildingDeletingToasts,
+      apiWithPropertyCreatingToasts,
+      apiWithPropertyUpdatingToasts,
+      apiWithPropertyDeletingToasts,
     ],
   );
 };

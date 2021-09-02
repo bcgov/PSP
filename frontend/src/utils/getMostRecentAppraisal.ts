@@ -1,7 +1,6 @@
-import { EvaluationKeys } from 'constants/index';
-import { IEvaluation } from 'interfaces';
+import { IPropertyEvaluation } from 'interfaces';
 import _ from 'lodash';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { getMostRecentEvaluation } from 'utils';
 
 /**
@@ -10,9 +9,9 @@ import { getMostRecentEvaluation } from 'utils';
  * @param disposedOn the date the project was disposed on, may be undefined.
  */
 export const getMostRecentAppraisal = (
-  evaluations: IEvaluation[],
-  disposedOn?: Date | string,
-): IEvaluation | undefined => {
+  evaluations: IPropertyEvaluation[],
+  disposedOn?: Date | string | Moment,
+): IPropertyEvaluation | undefined => {
   let targetDate = moment();
   if (disposedOn) {
     targetDate = moment(disposedOn, 'YYYY-MM-DD');
@@ -20,10 +19,10 @@ export const getMostRecentAppraisal = (
   const evaluationsForYear = _.filter(evaluations ?? [], evaluation => {
     return (
       moment
-        .duration(moment(evaluation.date, 'YYYY-MM-DD').diff(targetDate))
+        .duration(moment(evaluation.evaluatedOn, 'YYYY-MM-DD').diff(targetDate))
         .abs()
         .asYears() < 1
     );
   });
-  return getMostRecentEvaluation(evaluationsForYear, EvaluationKeys.Appraised);
+  return getMostRecentEvaluation(evaluationsForYear, 3);
 };

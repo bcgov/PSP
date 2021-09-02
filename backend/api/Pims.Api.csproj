@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
     <LangVersion>8.0</LangVersion>
-    <Version>0.2.0-8.0</Version>
+    <Version>0.2.0-8.1</Version>
     <AssemblyVersion>0.2.0.8</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
@@ -22,7 +22,7 @@
     <PackageReference Include="DotNetEnv" Version="2.1.1" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Mapster.EFCore" Version="5.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
@@ -43,6 +43,10 @@
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.0.0" />
     <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="2.0.4" />
+    <PackageReference Include="NuGet.CommandLine" Version="5.10.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="prometheus-net.AspNetCore" Version="4.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />

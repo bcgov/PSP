@@ -5,8 +5,9 @@ import { useKeycloak } from '@react-keycloak/web';
 import { render } from '@testing-library/react';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { createMemoryHistory } from 'history';
-import { IBuilding, IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
+import { mockParcel } from 'mocks/filterDataMock';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -14,7 +15,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import HeaderActions from './HeaderActions';
-import { mockParcel } from './InfoContent.test';
 
 jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
@@ -32,7 +32,7 @@ const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 
 const HeaderComponent = (
-  propertyInfo: IParcel | IBuilding | null,
+  propertyInfo: IProperty | null,
   propertyTypeId: PropertyTypes | null,
   canViewDetails: boolean,
   canEditDetails: boolean,
@@ -55,12 +55,12 @@ const HeaderComponent = (
 
 describe('HeaderActions View', () => {
   it('HeaderActions renders correctly', () => {
-    const { container } = render(HeaderComponent(mockParcel, PropertyTypes.Parcel, true, true));
+    const { container } = render(HeaderComponent(mockParcel, PropertyTypes.Land, true, true));
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('Shows all three actions when user has all permissions', () => {
-    const { getByText } = render(HeaderComponent(mockParcel, PropertyTypes.Parcel, true, true));
+    const { getByText } = render(HeaderComponent(mockParcel, PropertyTypes.Land, true, true));
     expect(getByText('Zoom map')).toBeVisible();
   });
 });

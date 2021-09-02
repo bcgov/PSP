@@ -41,7 +41,7 @@ export const RowActions = (props: CellProps<IAccessRequestModel>) => {
   const deleteRequest = () => {
     if (originalAccessRequest) {
       originalAccessRequest.status = AccessRequestStatus.Denied;
-      removeAccessRequest(originalAccessRequest.id, originalAccessRequest);
+      removeAccessRequest(originalAccessRequest.id ?? 0, originalAccessRequest);
     }
   };
 
