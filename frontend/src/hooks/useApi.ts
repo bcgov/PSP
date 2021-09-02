@@ -164,7 +164,7 @@ export const useApi = (): IPimsAPI => {
   > => {
     const { BBOX, ...rest } = params;
     const { data } = await CustomAxios().get<FeatureCollection>(
-      `ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_V&outputformat=json&srsName=EPSG:4326&version=2.0.0&${
+      `ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&${
         rest ? toCqlFilter(rest) : ''
       }`,
     );
