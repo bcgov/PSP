@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// Role class, provides an entity for the datamodel to manage roles.
     /// </summary>
     [MotiTable("PIMS_ROLE", "ROLE")]
-    public class Role : BaseAppEntity, ILookupEntity
+    public class Role : BaseAppEntity
     {
         #region Properties
         /// <summary>
@@ -32,23 +32,11 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The name of the role.
         /// </summary>
-        [Column("NAME", Order = 93)]
+        [Column("NAME")]
         public string Name { get; set; }
 
         /// <summary>
-        /// get/set - Whether this role is disabled.
-        /// </summary>
-        [Column("IS_DISABLED", Order = 95)]
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
-        /// get/set - The sort order of the role.
-        /// </summary>
-        [Column("DISPLAY_ORDER", Order = 96)]
-        public int SortOrder { get; set; }
-
-        /// <summary>
-        /// get/set - The roles first name.
+        /// get/set - A description of the type.
         /// </summary>
         [Column("DESCRIPTION")]
         public string Description { get; set; }
@@ -61,6 +49,18 @@ namespace Pims.Dal.Entities
         public bool IsPublic { get; set; } = false;
 
         /// <summary>
+        /// get/set - Whether this code is disabled.
+        /// </summary>
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
+
+        /// <summary>
+        /// get/set - The sort order of the lookup item.
+        /// </summary>
+        [Column("SORT_ORDER")]
+        public int DisplayOrder { get; set; }
+
+        /// <summary>
         /// get - A collection of users that have this role.
         /// </summary>
         public ICollection<User> Users { get; } = new List<User>();
@@ -69,6 +69,11 @@ namespace Pims.Dal.Entities
         /// get - Collection of many-to-many relational entities to support the relationship to users.
         /// </summary>
         public ICollection<UserRole> UsersManyToMany { get; } = new List<UserRole>();
+
+        /// <summary>
+        /// get - A collection of user organizations.
+        /// </summary>
+        public ICollection<UserOrganization> OrganizationsManyToMany { get; } = new List<UserOrganization>();
 
         /// <summary>
         /// get - A collection of claims for this role.
@@ -84,11 +89,6 @@ namespace Pims.Dal.Entities
         /// get - A collection of access requests for this role.
         /// </summary>
         public ICollection<AccessRequest> AccessRequests { get; } = new List<AccessRequest>();
-
-        /// <summary>
-        /// get - Collection of many-to-many relational entities to support the relationship to access requests.
-        /// </summary>
-        public ICollection<AccessRequestRole> AccessRequestsManyToMany { get; } = new List<AccessRequestRole>();
         #endregion
 
         #region Constructors

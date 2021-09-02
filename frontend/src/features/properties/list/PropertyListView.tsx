@@ -7,18 +7,14 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import * as API from 'constants/API';
-import { ENVIRONMENT } from 'constants/environment';
-import { EvaluationKeys } from 'constants/evaluationKeys';
-import { FiscalKeys } from 'constants/fiscalKeys';
-import { PropertyTypes } from 'constants/index';
-import { Roles } from 'constants/roles';
+import { ENVIRONMENT, PropertyTypes, Roles } from 'constants/index';
 import { Form, Formik, FormikProps, getIn, useFormikContext } from 'formik';
-import { useApi } from 'hooks/useApi';
+import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useRouterFilter } from 'hooks/useRouterFilter';
-import { IApiProperty } from 'interfaces';
+import { IProperty } from 'interfaces';
 import fill from 'lodash/fill';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
@@ -30,28 +26,19 @@ import queryString from 'query-string';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { FaEdit, FaFileExport, FaFolder, FaFolderOpen } from 'react-icons/fa';
+import { FaEdit, FaFileExport } from 'react-icons/fa';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import {
-  decimalOrUndefined,
-  getCurrentFiscal,
-  getCurrentYearEvaluation,
-  mapLookupCode,
-  toApiProperty,
-} from 'utils';
+import { mapLookupCode } from 'utils';
 import download from 'utils/download';
-import * as Yup from 'yup';
 
-import { PropertyTypeNames } from '../../../constants/propertyTypeNames';
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import service from '../service';
-import { IProperty, IPropertyQueryParams } from '.';
-import { Buildings } from './buildings';
-import { buildingColumns as buildingCols, columns as cols } from './columns';
+import { columns as cols } from './columns';
+import { IPropertyQueryParams } from './IPropertyQueryParams';
 
 const getPropertyReportUrl = (filter: IPropertyQueryParams) =>
   `${ENVIRONMENT.apiUrl}/reports/properties?${filter ? queryString.stringify(filter) : ''}`;
@@ -82,72 +69,22 @@ const VerticalDivider = styled.div`
 const initialQuery: IPropertyQueryParams = {
   page: 1,
   quantity: 10,
-  agencies: [],
+  organizations: [],
 };
 
 const defaultFilterValues: IPropertyFilter = {
   searchBy: 'address',
   pid: '',
+  pin: '',
   address: '',
-  administrativeArea: '',
-  name: '',
-  agencies: '',
-  classificationId: '',
-  minLotSize: '',
-  maxLotSize: '',
-  rentableArea: '',
-  propertyType: PropertyTypeNames.Land,
-  maxAssessedValue: '',
-  maxNetBookValue: '',
-  maxMarketValue: '',
+  location: '',
 };
 
-export const flattenProperty = (apiProperty: IApiProperty): IProperty => {
-  const assessedLand = getCurrentYearEvaluation(apiProperty.evaluations, EvaluationKeys.Assessed);
-  const assessedBuilding = apiProperty.parcelId
-    ? getCurrentYearEvaluation(apiProperty.evaluations, EvaluationKeys.Improvements)
-    : getCurrentYearEvaluation(apiProperty.evaluations, EvaluationKeys.Assessed);
-  const netBook = getCurrentFiscal(apiProperty.fiscals, FiscalKeys.NetBook);
-  const market = getCurrentFiscal(apiProperty.fiscals, FiscalKeys.Market);
-  const property: any = {
-    id: apiProperty.id,
-    parcelId: apiProperty.parcelId ?? apiProperty.id,
-    pid: apiProperty.pid ?? '',
-    name: apiProperty.name,
-    description: apiProperty.description,
-    landLegalDescription: apiProperty.landLegalDescription,
-    zoning: apiProperty.zoning,
-    zoningPotential: apiProperty.zoningPotential,
-    isSensitive: apiProperty.isSensitive,
-    latitude: apiProperty.latitude,
-    longitude: apiProperty.longitude,
-    agencyId: apiProperty.agencyId,
-    agency: apiProperty.agency ?? '',
-    agencyCode: apiProperty.agency ?? '',
-    subAgency: apiProperty.subAgency,
-    classification: apiProperty.classification ?? '',
-    classificationId: apiProperty.classificationId,
-    addressId: apiProperty.address?.id as number,
-    address: `${apiProperty.address?.line1 ?? ''} , ${apiProperty.address?.administrativeArea ??
-      ''}`,
-    administrativeArea: apiProperty.address?.administrativeArea ?? '',
-    province: apiProperty.address?.province ?? '',
-    postal: apiProperty.address?.postal ?? '',
-    assessedLand: (assessedLand?.value as number) ?? 0,
-    assessedLandDate: assessedLand?.date,
-    assessedBuilding: (assessedBuilding?.value as number) ?? 0,
-    assessedBuildingDate: assessedBuilding?.date,
-    assessedFirm: assessedLand?.firm,
-    assessedRowVersion: assessedLand?.rowVersion,
-    netBook: (netBook?.value as number) ?? 0,
-    netBookFiscalYear: netBook?.fiscalYear as number,
-    netBookRowVersion: netBook?.rowVersion,
-    market: (market?.value as number) ?? 0,
-    marketFiscalYear: market?.fiscalYear as number,
-    marketRowVersion: market?.rowVersion,
-    rowVersion: apiProperty.rowVersion,
-    landArea: apiProperty.landArea,
-  };
+export const flattenProperty = (property: IProperty): IProperty => {
+  return property;
+};
+
+const toApiProperty = (property: any): IProperty => {
   return property;
 };
 
@@ -159,56 +96,16 @@ const getServerQuery = (state: {
   pageIndex: number;
   pageSize: number;
   filter: IPropertyFilter;
-  agencyIds: number[];
+  organizationIds: number[];
 }) => {
   const {
-    pageIndex,
-    pageSize,
-    filter: {
-      pid,
-      address,
-      administrativeArea,
-      classificationId,
-      bareLandOnly,
-      name,
-      agencies,
-      minLotSize,
-      maxLotSize,
-      propertyType,
-      maxAssessedValue,
-      maxMarketValue,
-      maxNetBookValue,
-    },
+    filter: { pid, address },
   } = state;
-
-  let parsedAgencies: number[] = [];
-  if (agencies !== null && agencies !== undefined && agencies !== '') {
-    parsedAgencies = Array.isArray(agencies)
-      ? (agencies as any)
-          .filter((x: any) => !!x)
-          .map((a: any) => {
-            return parseInt(typeof a === 'string' ? a : a.value, 10);
-          })
-      : [parseInt(agencies, 10)];
-  }
 
   const query: IPropertyQueryParams = {
     ...initialQuery,
     address,
     pid,
-    administrativeArea,
-    classificationId: decimalOrUndefined(classificationId),
-    agencies: parsedAgencies,
-    minLandArea: decimalOrUndefined(minLotSize),
-    maxLandArea: decimalOrUndefined(maxLotSize),
-    bareLandOnly: bareLandOnly,
-    page: pageIndex + 1,
-    quantity: pageSize,
-    propertyType: propertyType,
-    name: name,
-    maxAssessedValue,
-    maxMarketValue,
-    maxNetBookValue,
   };
   return query;
 };
@@ -245,82 +142,54 @@ const DirtyRowsTracker: React.FC<{ setDirtyRows: (changes: IChangedRow[]) => voi
 
 const PropertyListView: React.FC = () => {
   const lookupCodes = useLookupCodeHelpers();
-  const { updateBuilding, updateParcel } = useApi();
+  const { putProperty } = useApiProperties();
   const [editable, setEditable] = useState(false);
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
   /** maintains state of table's propertyType when user switches via tabs  */
-  const [propertyType, setPropertyType] = useState<PropertyTypeNames>(PropertyTypeNames.Land);
+  const [propertyType, setPropertyType] = useState<PropertyTypes>(PropertyTypes.Land);
   const [dirtyRows, setDirtyRows] = useState<IChangedRow[]>([]);
   const keycloak = useKeycloakWrapper();
   const municipalities = useMemo(
     () => lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME),
     [lookupCodes],
   );
-  const agencies = useMemo(() => lookupCodes.getByType(API.AGENCY_CODE_SET_NAME), [lookupCodes]);
-
-  const agenciesList = agencies.filter(a => !a.parentId).map(mapLookupCode);
-  const subAgencies = agencies.filter(a => !!a.parentId).map(mapLookupCode);
-
-  const propertyClassifications = useMemo(() => lookupCodes.getPropertyClassificationOptions(), [
+  const organizations = useMemo(() => lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME), [
     lookupCodes,
   ]);
+
+  const organizationsList = organizations.filter(a => !a.parentId).map(mapLookupCode);
+  const subOrganizations = organizations.filter(a => !!a.parentId).map(mapLookupCode);
+
+  const propertyClassifications = useMemo(
+    () => lookupCodes.getPropertyClassificationTypeOptions(),
+    [lookupCodes],
+  );
   const administrativeAreas = useMemo(
     () => lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME),
     [lookupCodes],
   );
 
-  const agencyIds = useMemo(() => agencies.map(x => x.id), [agencies]);
+  const organizationIds = useMemo(() => organizations.map(x => +x.id), [organizations]);
   const [sorting, setSorting] = useState<TableSort<IProperty>>({ description: 'asc' });
 
   // We'll start our table without any data
   const [data, setData] = useState<IProperty[] | undefined>();
   // For getting the buildings on parcel folder click
-  const [expandData, setExpandData] = useState<any>({});
 
   // Filtering and pagination state
   const [filter, setFilter] = useState<IPropertyFilter>(defaultFilterValues);
-  const isParcel =
-    !filter ||
-    [PropertyTypeNames.Land.toString(), PropertyTypeNames.Subdivision.toString()].includes(
-      filter?.propertyType ?? '',
-    );
-  const parcelColumns = useMemo(
+
+  const propertyColumns = useMemo(
     () =>
       cols(
-        agenciesList,
-        subAgencies,
+        organizationsList,
+        subOrganizations,
         municipalities,
         propertyClassifications,
-        PropertyTypes.Parcel,
+        PropertyTypes.Land,
         editable,
       ),
-    [agenciesList, subAgencies, municipalities, propertyClassifications, editable],
-  );
-
-  const buildingExpandColumns = useMemo(
-    () =>
-      cols(
-        agenciesList,
-        subAgencies,
-        municipalities,
-        propertyClassifications,
-        PropertyTypes.Building,
-        false,
-      ),
-    [agenciesList, subAgencies, municipalities, propertyClassifications],
-  );
-
-  const buildingColumns = useMemo(
-    () =>
-      buildingCols(
-        agenciesList,
-        subAgencies,
-        municipalities,
-        propertyClassifications,
-        PropertyTypes.Building,
-        editable,
-      ),
-    [agenciesList, subAgencies, municipalities, propertyClassifications, editable],
+    [organizationsList, subOrganizations, municipalities, propertyClassifications, editable],
   );
 
   const [pageSize, setPageSize] = useState(10);
@@ -331,16 +200,6 @@ const PropertyListView: React.FC = () => {
 
   const parsedFilter = useMemo(() => {
     const data = { ...filter };
-    if (data.agencies) {
-      data.agencies = Array.isArray(data.agencies)
-        ? (data.agencies as any)
-            .filter((x: any) => !!x)
-            .map((a: any) => {
-              return parseInt(typeof a === 'string' ? a : a.value, 10);
-            })
-        : [parseInt(data.agencies, 10)];
-    }
-
     return data;
   }, [filter]);
 
@@ -373,13 +232,13 @@ const PropertyListView: React.FC = () => {
       pageIndex,
       pageSize,
       filter,
-      agencyIds,
+      organizationIds,
       sorting,
     }: {
       pageIndex: number;
       pageSize: number;
       filter: IPropertyFilter;
-      agencyIds: number[];
+      organizationIds: number[];
       sorting: TableSort<IProperty>;
     }) => {
       // Give this fetch an ID
@@ -389,9 +248,9 @@ const PropertyListView: React.FC = () => {
       // setLoading(true);
 
       // Only update the data if this is the latest fetch
-      if (agencyIds?.length > 0) {
+      if (organizationIds?.length > 0) {
         setData(undefined);
-        const query = getServerQuery({ pageIndex, pageSize, filter, agencyIds });
+        const query = getServerQuery({ pageIndex, pageSize, filter, organizationIds });
         const data = await service.getPropertyList(query, sorting);
         // The server could send back total page count.
         // For now we'll just calculate it.
@@ -408,8 +267,8 @@ const PropertyListView: React.FC = () => {
 
   // Listen for changes in pagination and use the state to fetch our new data
   useDeepCompareEffect(() => {
-    fetchData({ pageIndex, pageSize, filter, agencyIds, sorting });
-  }, [fetchData, pageIndex, pageSize, filter, agencyIds, sorting]);
+    fetchData({ pageIndex, pageSize, filter, organizationIds, sorting });
+  }, [fetchData, pageIndex, pageSize, filter, organizationIds, sorting]);
 
   const dispatch = useDispatch();
 
@@ -418,7 +277,7 @@ const PropertyListView: React.FC = () => {
    * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
    */
   const fetch = (accept: 'csv' | 'excel', getAllFields?: boolean) => {
-    const query = getServerQuery({ pageIndex, pageSize, filter, agencyIds });
+    const query = getServerQuery({ pageIndex, pageSize, filter, organizationIds });
     return dispatch(
       download({
         url: getAllFields
@@ -433,28 +292,7 @@ const PropertyListView: React.FC = () => {
     );
   };
 
-  const checkExpanded = (row: IProperty, property: IProperty) => {
-    return row.id === property.id;
-  };
-
-  const loadBuildings = async (expandedRows: IProperty[]) => {
-    if (expandedRows.length > 0) {
-      await Promise.all(
-        expandedRows.map(async property => {
-          if (property.propertyTypeId === PropertyTypes.Parcel) {
-            if (expandData[property.id] === undefined) {
-              setExpandData({
-                ...expandData,
-                [property.id]: (await service.loadBuildings(property.id)).items,
-              });
-            }
-          }
-        }),
-      );
-    }
-  };
-
-  const changePropertyType = (type: PropertyTypeNames) => {
+  const changePropertyType = (type: PropertyTypes) => {
     setPropertyType(type);
     setPageIndex(0);
     setFilter(state => {
@@ -466,12 +304,6 @@ const PropertyListView: React.FC = () => {
   };
 
   const appliedFilter = { ...filter };
-  if (appliedFilter.agencies && typeof appliedFilter.agencies === 'string') {
-    const agencySelections = agencies.map(mapLookupCode);
-    appliedFilter.agencies = filter.agencies
-      .split(',')
-      .map(value => agencySelections.find(agency => agency.value === value) || '') as any;
-  }
 
   const onRowClick = useCallback((row: IProperty) => {
     window.open(
@@ -479,7 +311,7 @@ const PropertyListView: React.FC = () => {
         sidebar: true,
         disabled: true,
         loadDraft: false,
-        parcelId: [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(row.propertyTypeId)
+        parcelId: [PropertyTypes.Land, PropertyTypes.Subdivision].includes(row.propertyTypeId)
           ? row.id
           : undefined,
         buildingId: row.propertyTypeId === PropertyTypes.Building ? row.id : undefined,
@@ -525,10 +357,9 @@ const PropertyListView: React.FC = () => {
         }
       } else {
         for (const change of changedRows) {
-          const apiProperty = toApiProperty(change.data as any, true);
-          const callApi = apiProperty.parcelId ? updateParcel : updateBuilding;
+          const apiProperty = toApiProperty(change.data as any);
           try {
-            const response: any = await callApi(apiProperty.id, apiProperty);
+            const response: any = await putProperty(apiProperty);
             nextProperties = nextProperties.map((item, index: number) => {
               if (index === change.rowId) {
                 item = {
@@ -540,7 +371,8 @@ const PropertyListView: React.FC = () => {
             });
 
             toast.info(
-              `Successfully saved changes for ${apiProperty.name || apiProperty.address?.line1}`,
+              `Successfully saved changes for ${apiProperty.name ||
+                apiProperty.address?.streetAddress1}`,
             );
           } catch (error) {
             const errorMessage = (error as Error).message;
@@ -548,7 +380,7 @@ const PropertyListView: React.FC = () => {
             touched[change.rowId] = pick(change, ['assessedLand', 'netBook', 'market']);
             toast.error(
               `Failed to save changes for ${apiProperty.name ||
-                apiProperty.address?.line1}. ${errorMessage}`,
+                apiProperty.address?.streetAddress1}. ${errorMessage}`,
             );
             errors[change.rowId] = {
               assessedLand: change.assessedland && (errorMessage || 'Save request failed.'),
@@ -578,7 +410,7 @@ const PropertyListView: React.FC = () => {
         <Container className="px-0">
           <PropertyFilter
             defaultFilter={defaultFilterValues}
-            agencyLookupCodes={agencies}
+            organizationLookupCodes={organizations}
             adminAreaLookupCodes={administrativeAreas}
             onChange={handleFilterChange}
             sort={sorting}
@@ -594,9 +426,9 @@ const PropertyListView: React.FC = () => {
               <TooltipWrapper toolTipId="show-parcels" toolTip="Show Parcels">
                 <div
                   className={
-                    filter.propertyType === PropertyTypeNames.Land ? 'svg-btn active' : 'svg-btn'
+                    filter.propertyType === PropertyTypes.Land ? 'svg-btn active' : 'svg-btn'
                   }
-                  onClick={() => changePropertyType(PropertyTypeNames.Land)}
+                  onClick={() => changePropertyType(PropertyTypes.Land)}
                 >
                   <LandSvg className="svg" />
                   Parcels view
@@ -607,14 +439,12 @@ const PropertyListView: React.FC = () => {
               <TooltipWrapper toolTipId="show-buildings" toolTip="Show Buildings">
                 <div
                   className={
-                    filter.propertyType === PropertyTypeNames.Building
-                      ? 'svg-btn active'
-                      : 'svg-btn'
+                    filter.propertyType === PropertyTypes.Building ? 'svg-btn active' : 'svg-btn'
                   }
-                  onClick={() => changePropertyType(PropertyTypeNames.Building)}
+                  onClick={() => changePropertyType(PropertyTypes.Building)}
                 >
                   <BuildingSvg className="svg" />
-                  Buildings view
+                  Buildings View
                 </div>
               </TooltipWrapper>
             </div>
@@ -690,7 +520,7 @@ const PropertyListView: React.FC = () => {
         <Table<IProperty>
           name="propertiesTable"
           lockPageSize={true}
-          columns={isParcel ? parcelColumns : buildingColumns}
+          columns={propertyColumns}
           data={data || []}
           loading={data === undefined}
           filterable
@@ -699,7 +529,7 @@ const PropertyListView: React.FC = () => {
           onRequestData={handleRequestData}
           onRowClick={onRowClick}
           tableToolbarText={
-            filter.propertyType === PropertyTypeNames.Building
+            filter.propertyType === PropertyTypes.Building
               ? undefined
               : '* Assessed value per building'
           }
@@ -713,28 +543,6 @@ const PropertyListView: React.FC = () => {
               setSorting(data);
             }
           }}
-          canRowExpand={(val: any) => val.values.propertyTypeId === PropertyTypes.Parcel}
-          detailsPanel={{
-            render: val => {
-              if (expandData[val.id]) {
-                return (
-                  <Buildings
-                    hideHeaders={true}
-                    data={expandData[val.id]}
-                    columns={buildingExpandColumns}
-                    onRowClick={onRowClick}
-                  />
-                );
-              }
-            },
-            icons: {
-              open: <FaFolderOpen color="black" size={20} />,
-              closed: <FaFolder color="black" size={20} />,
-            },
-            checkExpanded: (row, state) => !!state.find(x => checkExpanded(x, row)),
-            onExpand: loadBuildings,
-            getRowId: row => row.id,
-          }}
           filter={appliedFilter}
           onFilterChange={values => {
             setFilter({ ...filter, ...values });
@@ -743,24 +551,6 @@ const PropertyListView: React.FC = () => {
             <Formik
               innerRef={tableFormRef as any}
               initialValues={{ properties: data || [] }}
-              validationSchema={Yup.object().shape({
-                properties: Yup.array().of(
-                  Yup.object().shape({
-                    assessedLand: Yup.number()
-                      .min(0, 'Minimum value is $0')
-                      .max(1000000000, 'Maximum value is $1,000,000,000')
-                      .required('Required'),
-                    market: Yup.number()
-                      .min(0, 'Minimum value is $0')
-                      .max(1000000000, 'Maximum value is $1,000,000,000')
-                      .required('Required'),
-                    netBook: Yup.number()
-                      .min(0, 'Minimum value is $0')
-                      .max(1000000000, 'Maximum value is $1,000,000,000')
-                      .required('Required'),
-                  }),
-                ),
-              })}
               onSubmit={noop}
             >
               <Form>

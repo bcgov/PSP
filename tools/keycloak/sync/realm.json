@@ -1,12 +1,12 @@
 {
   "Realm": {
     "Name": "72x8v9rw",
-    "DisplayName": "MoTI PIMS Production Environment",
-    "DisplayNameHtml": "<a>MoTI PIMS Production Environment</a>",
+    "DisplayName": "MoTI PIMS PRODUCTION Environment",
+    "DisplayNameHtml": "<a>MoTI PIMS PRODUCTION Environment</a>",
     "Roles": [
       {
-        "Name": "admin-agencies",
-        "Description": "Ability to administrate agencies.",
+        "Name": "admin-organizations",
+        "Description": "Ability to administrate organizations.",
         "Composite": false
       },
       {
@@ -55,8 +55,8 @@
         "Composite": false
       },
       {
-        "Name": "agency-administrator",
-        "Description": "Agency Administrator of the users agency.",
+        "Name": "organization-administrator",
+        "Description": "Organization Administrator of the users organization.",
         "Composite": true,
         "RealmRoles": [
           "admin-users",
@@ -68,12 +68,12 @@
       },
       {
         "Name": "system-administrator",
-        "Description": "Agency Administrator of the users agency.",
+        "Description": "Organization Administrator of the users organization.",
         "Composite": true,
         "RealmRoles": [
-          "agency-administrator",
+          "organization-administrator",
           "admin-roles",
-          "admin-agencies",
+          "admin-organizations",
           "admin-properties",
           "admin-projects",
           "property-delete"
@@ -82,8 +82,8 @@
     ],
     "Groups": [
       {
-        "Name": "Agency Administrator",
-        "RealmRoles": ["agency-administrator"]
+        "Name": "Organization Administrator",
+        "RealmRoles": ["organization-administrator"]
       },
       {
         "Name": "Real Estate Analyst",
@@ -160,17 +160,17 @@
         ],
         "ProtocolMappers": [
           {
-            "Name": "agencies",
+            "Name": "organizations",
             "Protocol": "openid-connect",
             "ProtocolMapper": "oidc-usermodel-attribute-mapper",
             "ConsentRequired": false,
             "Config": {
               "userinfo.token.claim": "true",
               "multivalued": "true",
-              "user.attribute": "agencies",
+              "user.attribute": "organizations",
               "id.token.claim": "false",
               "access.token.claim": "true",
-              "claim.name": "agencies",
+              "claim.name": "organizations",
               "jsonType.label": "int"
             }
           },
@@ -384,17 +384,17 @@
         "WebOrigins": ["*"],
         "ProtocolMappers": [
           {
-            "Name": "agencies",
+            "Name": "organizations",
             "Protocol": "openid-connect",
             "ProtocolMapper": "oidc-usermodel-attribute-mapper",
             "ConsentRequired": false,
             "Config": {
               "userinfo.token.claim": "true",
               "multivalued": "true",
-              "user.attribute": "agencies",
+              "user.attribute": "organizations",
               "id.token.claim": "false",
               "access.token.claim": "true",
-              "claim.name": "agencies",
+              "claim.name": "organizations",
               "jsonType.label": "int"
             }
           },

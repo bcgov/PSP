@@ -42,7 +42,7 @@ describe('useApiAccessRequests api hook', () => {
   });
   it('Gets current access request', () => {
     renderHook(async () => {
-      mockAxios.onGet('/users/access/requests').reply(200, mockAccessRequest);
+      mockAxios.onGet('/access/requests').reply(200, mockAccessRequest);
 
       const api = useApiAccessRequests();
       const response = await api.getAccessRequest();
@@ -54,7 +54,7 @@ describe('useApiAccessRequests api hook', () => {
 
   it('Puts an updated access request', () => {
     renderHook(async () => {
-      mockAxios.onPut('/keycloak/users/access/request').reply(200, mockAccessRequest);
+      mockAxios.onPut('/keycloak/access/requests').reply(200, mockAccessRequest);
       const api = useApiAccessRequests();
       const response = await api.putAccessRequest(mockAccessRequest);
 
@@ -64,22 +64,20 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Posts a new access request', () => {
-    const newAccessRequest = { ...mockAccessRequest, id: 0 };
+    const newAccessRequest = { ...mockAccessRequest, id: undefined };
     renderHook(async () => {
-      mockAxios.onPost(`/users/access/requests`).reply(201, newAccessRequest);
+      mockAxios.onPost(`/access/requests`).reply(201, newAccessRequest);
       const api = useApiAccessRequests();
       const response = await api.postAccessRequest(newAccessRequest);
 
       expect(response.status).toBe(201);
-      expect(response.data).toStrictEqual(newAccessRequest);
+      expect(response.data).toEqual(newAccessRequest);
     });
   });
 
   it('Puts an existing access request', () => {
     renderHook(async () => {
-      mockAxios
-        .onPut(`/users/access/requests/${mockAccessRequest.id}`)
-        .reply(200, mockAccessRequest);
+      mockAxios.onPut(`/access/requests/${mockAccessRequest.id}`).reply(200, mockAccessRequest);
       const api = useApiAccessRequests();
       const response = await api.postAccessRequest(mockAccessRequest);
 

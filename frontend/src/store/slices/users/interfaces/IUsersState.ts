@@ -1,6 +1,6 @@
 import { TableSort } from 'components/Table/TableSort';
 import { IUserRecord } from 'features/admin/users/interfaces/IUserRecord';
-import { IPagedItems, IUser, IUserDetails, IUsersFilter } from 'interfaces';
+import { IPagedItems, IUser, IUsersFilter } from 'interfaces';
 
 export interface IUsersState {
   pagedUsers: IPagedItems<IUser>;
@@ -8,5 +8,5 @@ export interface IUsersState {
   filter: IUsersFilter;
   sort: TableSort<IUserRecord>;
   pageIndex: number;
-  userDetail: IUserDetails;
+  userDetail: IUser;
 }

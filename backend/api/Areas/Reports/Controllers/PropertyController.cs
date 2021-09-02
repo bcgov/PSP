@@ -48,7 +48,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         #region Export Properties
         /// <summary>
         /// Exports properties as CSV or Excel file.
-        /// Include 'Accept' header to request the appropriate expor -
+        /// Include 'Accept' header to request the appropriate export -
         ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
         /// </summary>
         /// <param name="all"></param>
@@ -88,7 +88,7 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
 
             filter.Quantity = all ? _pimsService.Property.Count() : filter.Quantity;
-            var page = _pimsService.Property.GetPage((AllPropertyFilter)filter);
+            var page = _pimsService.Property.GetPage((PropertyFilter)filter);
             var report = _mapper.Map<Api.Models.PageModel<Models.Property.PropertyModel>>(page);
 
             return accept.ToString() switch
@@ -121,7 +121,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <summary>
         /// Exports properties as Excel file. Has more fields than default export.
         /// Only available for SRES
-        /// Include 'Accept' header to request the appropriate expor
+        /// Include 'Accept' header to request the appropriate export
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="all"></param>
@@ -141,7 +141,7 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{accept}'.");
 
             filter.Quantity = all ? _pimsService.Property.Count() : filter.Quantity;
-            var page = _pimsService.Property.GetPage((AllPropertyFilter)filter);
+            var page = _pimsService.Property.GetPage((PropertyFilter)filter);
             var report = _mapper.Map<Api.Models.PageModel<Models.AllPropertyFields.AllFieldsPropertyModel>>(page);
 
             return ReportHelper.GenerateExcel(report.Items, "PIMS");

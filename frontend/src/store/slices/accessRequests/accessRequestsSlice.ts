@@ -16,22 +16,23 @@ export const toAccessRequest = (values: any): IAccessRequest => {
     userId: values.userId,
     user: {
       id: values.userId,
-      username: values.user.username,
+      businessIdentifier: values.user.businessIdentifier,
       email: values.user.email,
       position: values.user.position,
     },
-    agencies: isNaN(values.agency) ? [] : [{ id: parseInt(values.agency) }],
-    roles: [{ id: values.role }],
+    organizationId: values.organizationId,
+    roleId: values.roleId,
     status: values.status,
     note: values.note,
     rowVersion: values.rowVersion,
+    position: values.position,
   };
 };
 
 export const initialState: IAccessRequestsState = {
   pagedAccessRequests: { page: 1, pageIndex: 0, total: 0, quantity: 0, items: [] },
-  filter: { agency: '', role: '', searchText: '' },
-  sorting: { column: 'username', direction: 'desc' },
+  filter: { organization: '', role: '', searchText: '' },
+  sorting: { column: 'businessIdentifier', direction: 'desc' },
   selections: [],
   accessRequest: null,
   pageSize: MAX_ACCESS_RESULTS_PER_PAGE,
@@ -55,12 +56,12 @@ export const accessRequestsSlice = createSlice({
     },
     deleteAccessRequest(state: IAccessRequestsState, action: PayloadAction<number>) {
       state.pagedAccessRequests.items = state.pagedAccessRequests.items.filter(
-        (accessRequest: { id: number }) => accessRequest.id !== action.payload,
+        (accessRequest: { id?: number }) => accessRequest.id !== action.payload,
       );
     },
     updateAccessRequestsAdmin(state: IAccessRequestsState, action: PayloadAction<IAccessRequest>) {
       state.pagedAccessRequests.items = state.pagedAccessRequests.items.filter(
-        (accessRequest: { id: number }) => accessRequest.id !== action.payload.id,
+        (accessRequest: { id?: number }) => accessRequest.id !== action.payload.id,
       );
     },
     updateAccessRequestPageSize(state: IAccessRequestsState, action: PayloadAction<number>) {

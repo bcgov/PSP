@@ -2,8 +2,8 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Dal;
 using Pims.Dal.Security;
-using Pims.Dal.Services.Admin;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using EModel = Pims.Dal.Entities.Models;
@@ -24,7 +24,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class UserController : ControllerBase
     {
         #region Variables
-        private readonly IPimsAdminService _pimsAdminService;
+        private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,11 +32,11 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new instance of a UserController class.
         /// </summary>
-        /// <param name="pimsAdminService"></param>
+        /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public UserController(IPimsAdminService pimsAdminService, IMapper mapper)
+        public UserController(IPimsService pimsService, IMapper mapper)
         {
-            _pimsAdminService = pimsAdminService;
+            _pimsService = pimsService;
             _mapper = mapper;
         }
         #endregion
@@ -70,17 +70,17 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUsers(EModel.UserFilter filter)
         {
-            var page = _pimsAdminService.User.Get(filter);
+            var page = _pimsService.User.Get(filter);
             var result = _mapper.Map<Api.Models.PageModel<Model.UserModel>>(page);
             return new JsonResult(result);
         }
 
         /// <summary>
-        /// GET - Returns a paged array of users from the datasource that belong to the same agency (or sub-agency) as the current user.
+        /// GET - Returns a paged array of users from the datasource that belong to the same organization (or sub-organization) as the current user.
         /// </summary>
         /// <param name="filter"></param>
         /// <returns>Paged object with an array of users.</returns>
-        [HttpPost("my/agency")]
+        [HttpPost("my/organization")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Api.Models.PageModel<Model.UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
@@ -102,7 +102,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUser(long id)
         {
-            var entity = _pimsAdminService.User.Get(id);
+            var entity = _pimsService.User.Get(id);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }
@@ -119,7 +119,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         public IActionResult GetUser(Guid key)
         {
-            var entity = _pimsAdminService.User.Get(key);
+            var entity = _pimsService.User.Get(key);
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
         }
@@ -137,11 +137,11 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult AddUser([FromBody] Model.UserModel model)
         {
             var entity = _mapper.Map<Entity.User>(model);
-            _pimsAdminService.User.Add(entity);
+            _pimsService.User.Add(entity);
 
             var user = _mapper.Map<Model.UserModel>(entity);
 
-            return CreatedAtAction(nameof(GetUser), new { key = user.Key }, user);
+            return CreatedAtAction(nameof(GetUser), new { key = user.KeycloakUserId }, user);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult UpdateUser(Guid key, [FromBody] Model.UserModel model)
         {
             var entity = _mapper.Map<Entity.User>(model);
-            _pimsAdminService.User.Update(entity);
+            _pimsService.User.Update(entity);
 
             var user = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(user);
@@ -180,7 +180,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public IActionResult DeleteUser(Guid key, [FromBody] Model.UserModel model)
         {
             var entity = _mapper.Map<Entity.User>(model);
-            _pimsAdminService.User.Remove(entity);
+            _pimsService.User.Delete(entity);
 
             return new JsonResult(model);
         }

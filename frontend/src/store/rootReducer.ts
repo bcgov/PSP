@@ -1,7 +1,6 @@
 import propertyNameSlice from 'features/properties/common/slices/propertyNameSlice';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
-import { agenciesSlice } from 'store/slices/agencies/agenciesSlice';
 import filterSlice from 'store/slices/filter/filterSlice';
 import jwtSlice from 'store/slices/jwt/JwtSlice';
 import keycloakReadySlice from 'store/slices/keycloakReady/keycloakReadySlice';
@@ -21,7 +20,6 @@ export const reducer = {
   [usersSlice.name]: usersSlice.reducer,
   [accessRequestsSlice.name]: accessRequestsSlice.reducer,
   [lookupCodesSlice.name]: lookupCodesSlice.reducer,
-  [agenciesSlice.name]: agenciesSlice.reducer,
   [networkSlice.name]: networkSlice.reducer,
   [leafletMouseSlice.name]: leafletMouseSlice.reducer,
   [parcelLayerDataSlice.name]: parcelLayerDataSlice.reducer,

@@ -65,7 +65,7 @@ parameters:
   - name: GIT_URL
     displayName: "Git Repository URL"
     description: "The URL of the repository containing the Jenkinsfile the pipeline buildconfig will use."
-    value: https://github.com/bcgov/PIMS.git
+    value: https://github.com/bcgov/PSP.git
     required: true
   - name: GIT_REF
     displayName: "Git Reference"

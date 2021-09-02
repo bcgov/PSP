@@ -1,20 +1,17 @@
 import './InfoSlideOut.scss';
 
 import { Label } from 'components/common/Label';
-import { EvaluationKeys } from 'constants/evaluationKeys';
-import { IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { getCurrentYearEvaluation } from 'utils';
-import { formatMoney } from 'utils/numberFormatUtils';
 
 import { OuterRow } from './InfoContent';
 import { ThreeColumnItem } from './ThreeColumnItem';
 
 interface IParcelAttributes {
   /** the selected parcel information */
-  parcelInfo: IParcel;
-  /** whether the user has the correct agency/permissions to view all the details */
+  parcelInfo: IProperty;
+  /** whether the user has the correct organization/permissions to view all the details */
   canViewDetails: boolean;
 }
 
@@ -24,25 +21,6 @@ interface IParcelAttributes {
  * @param canViewDetails user can view all property details
  */
 export const ParcelAttributes: React.FC<IParcelAttributes> = ({ parcelInfo, canViewDetails }) => {
-  let formatAssessed;
-  if (parcelInfo?.assessedLand) {
-    formatAssessed = formatMoney(parcelInfo?.assessedLand);
-  } else if (!!getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Assessed)) {
-    formatAssessed = formatMoney(
-      getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Assessed)?.value,
-    );
-  } else {
-    formatAssessed = '';
-  }
-  let improvements = '';
-  if (parcelInfo?.assessedBuilding) {
-    improvements = formatMoney(parcelInfo?.assessedBuilding);
-  } else if (!!getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Improvements)) {
-    improvements = formatMoney(
-      getCurrentYearEvaluation(parcelInfo?.evaluations, EvaluationKeys.Improvements)?.value,
-    );
-  }
-
   return (
     <>
       <ListGroup>
@@ -50,36 +28,18 @@ export const ParcelAttributes: React.FC<IParcelAttributes> = ({ parcelInfo, canV
         <OuterRow>
           <ThreeColumnItem
             leftSideLabel={'Lot size:'}
-            rightSideItem={parcelInfo?.landArea + ' hectares'}
+            rightSideItem={(parcelInfo?.landArea ?? '') + ` ${parcelInfo?.areaUnit ?? ''}`}
           />
         </OuterRow>
       </ListGroup>
-      {canViewDetails && (
-        <>
-          {parcelInfo?.landLegalDescription && (
-            <ListGroup>
-              <Label className="header">Legal description</Label>
-              <OuterRow>
-                <ListGroup.Item className="legal">
-                  {parcelInfo?.landLegalDescription}
-                </ListGroup.Item>
-              </OuterRow>
-            </ListGroup>
-          )}
-          <ListGroup>
-            <Label className="header">Valuation</Label>
-            <OuterRow>
-              <ThreeColumnItem leftSideLabel={'Assessed Land:'} rightSideItem={formatAssessed} />
-              {!!improvements && (
-                <ThreeColumnItem
-                  leftSideLabel={'Assessed Building(s):'}
-                  rightSideItem={improvements}
-                />
-              )}
-            </OuterRow>
-          </ListGroup>
-        </>
-      )}
+      <ListGroup>
+        <Label className="header">Legal description</Label>
+        <OuterRow>
+          <ListGroup.Item className="legal">
+            {parcelInfo?.landLegalDescription ?? ''}
+          </ListGroup.Item>
+        </OuterRow>
+      </ListGroup>
     </>
   );
 };

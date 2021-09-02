@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using Model = Pims.Api.Models.Parcel;
+using Model = Pims.Api.Areas.Property.Models.Search;
 
 namespace Pims.Api.Test.Helpers
 {
@@ -48,7 +48,7 @@ namespace Pims.Api.Test.Helpers
             // Arrange
             var helper = new TestHelper();
             var mapper = helper.GetMapper();
-            var model = mapper.Map<Model.ParcelModel>(EntityHelper.CreateParcel(1));
+            var model = mapper.Map<Model.PropertyModel>(EntityHelper.CreateProperty(1));
             var json = System.Text.Json.JsonSerializer.Serialize(model);
             var response = new HttpResponseMessage
             {
@@ -57,12 +57,12 @@ namespace Pims.Api.Test.Helpers
             };
 
             // Act
-            var actionResult = await response.HandleResponseAsync<Model.ParcelModel>();
+            var actionResult = await response.HandleResponseAsync<Model.PropertyModel>();
 
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
             Assert.Equal((int)code, jsonResult.StatusCode);
-            var actualResult = Assert.IsType<Model.ParcelModel>(jsonResult.Value);
+            var actualResult = Assert.IsType<Model.PropertyModel>(jsonResult.Value);
             Assert.Equal(model, actualResult, new DeepPropertyCompare());
         }
 
@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Helpers
             };
 
             // Act
-            var actionResult = await response.HandleResponseAsync<Model.ParcelModel>();
+            var actionResult = await response.HandleResponseAsync<Model.PropertyModel>();
 
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
@@ -108,7 +108,7 @@ namespace Pims.Api.Test.Helpers
             response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             // Act
-            var actionResult = await response.HandleResponseAsync<Model.ParcelModel>();
+            var actionResult = await response.HandleResponseAsync<Model.PropertyModel>();
 
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);

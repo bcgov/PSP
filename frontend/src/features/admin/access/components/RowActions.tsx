@@ -26,22 +26,22 @@ export const RowActions = (props: CellProps<IAccessRequestModel>) => {
   };
   const decline = () => {
     if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.Declined;
+      originalAccessRequest.status = AccessRequestStatus.Denied;
       updateAccessRequest(originalAccessRequest);
     }
   };
 
   const hold = () => {
     if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.OnHold;
+      originalAccessRequest.status = AccessRequestStatus.Received;
       updateAccessRequest(originalAccessRequest);
     }
   };
 
   const deleteRequest = () => {
     if (originalAccessRequest) {
-      originalAccessRequest.status = AccessRequestStatus.OnHold;
-      removeAccessRequest(originalAccessRequest.id, originalAccessRequest);
+      originalAccessRequest.status = AccessRequestStatus.Denied;
+      removeAccessRequest(originalAccessRequest.id ?? 0, originalAccessRequest);
     }
   };
 
@@ -59,12 +59,12 @@ export const RowActions = (props: CellProps<IAccessRequestModel>) => {
         },
         {
           label: 'Hold',
-          disabled: isStatusMatch(AccessRequestStatus.OnHold),
+          disabled: isStatusMatch(AccessRequestStatus.Received),
           onClick: hold,
         },
         {
           label: 'Decline',
-          disabled: isStatusMatch(AccessRequestStatus.Declined),
+          disabled: isStatusMatch(AccessRequestStatus.Denied),
           onClick: decline,
         },
         { label: 'Delete', onClick: deleteRequest },

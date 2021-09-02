@@ -13,7 +13,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="context"></param>
-        /// <param name="source"></param>
+        /// <param name="source">The original source entity from the database.</param>
         public static void SetOriginalRowVersion<T>(this DbContext context, T source) where T : BaseEntity
         {
             context.Entry(source).OriginalValues[nameof(BaseEntity.RowVersion)] = source.RowVersion;

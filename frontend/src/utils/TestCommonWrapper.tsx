@@ -1,7 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { MemoryHistory } from 'history';
 import { IRole } from 'interfaces';
-import { IAgency } from 'interfaces/agency';
+import { IOrganization } from 'interfaces';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -14,7 +14,7 @@ jest.mock('@react-keycloak/web');
 
 interface TestProviderWrapperParams {
   store?: any;
-  agencies?: IAgency[];
+  organizations?: IOrganization[];
   roles?: IRole[];
   history?: MemoryHistory;
 }
@@ -27,14 +27,14 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
   children,
   store,
   roles,
-  agencies,
+  organizations,
   history,
 }) => {
-  if (!!roles || !!agencies) {
+  if (!!roles || !!organizations) {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         userInfo: {
-          agencies: agencies ?? [1],
+          organizations: organizations ?? [1],
           roles: roles ?? [],
           email: 'test@test.com',
           name: 'Chester Tester',

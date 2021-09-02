@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import { TicketTypes } from '../constants/HelpText';
 import HelpSubmitBox from './HelpSubmitBox';
@@ -16,25 +16,31 @@ const renderHelpBox = (ticketType: TicketTypes) =>
   );
 
 describe('Help Box tests..', () => {
-  it('renders properly', () => {
-    const { container } = renderHelpBox(TicketTypes.QUESTION);
-    expect(container).toMatchSnapshot();
+  it('renders properly', async () => {
+    const { asFragment } = renderHelpBox(TicketTypes.QUESTION);
+    const fragment = await waitFor(() => asFragment());
+    expect(fragment).toMatchSnapshot();
   });
 
-  it('contains question field and option when question selected', () => {
+  it('contains question field and option when question selected', async () => {
     const { getAllByText } = renderHelpBox(TicketTypes.QUESTION);
-    expect(getAllByText('Question')).toHaveLength(2);
+    const question = await waitFor(() => getAllByText('Question'));
+    expect(question).toHaveLength(2);
   });
 
-  it('displays appropriate fields when switching to bug type', () => {
+  it('displays appropriate fields when switching to bug type', async () => {
     const { getByText } = renderHelpBox(TicketTypes.BUG);
-    expect(getByText('Steps to Reproduce')).toBeInTheDocument();
-    expect(getByText('Expected Result')).toBeInTheDocument();
-    expect(getByText('Actual Result')).toBeInTheDocument();
+    const reproduce = await waitFor(() => getByText('Steps to Reproduce'));
+    const expected = await waitFor(() => getByText('Expected Result'));
+    const result = await waitFor(() => getByText('Actual Result'));
+    expect(reproduce).toBeInTheDocument();
+    expect(expected).toBeInTheDocument();
+    expect(result).toBeInTheDocument();
   });
 
-  it('displays appropriate fields when switching to feature request ticket type', () => {
+  it('displays appropriate fields when switching to feature request ticket type', async () => {
     const { getByText } = renderHelpBox(TicketTypes.FEATURE_REQUEST);
-    expect(getByText('Description')).toBeInTheDocument();
+    const desc = await waitFor(() => getByText('Description'));
+    expect(desc).toBeInTheDocument();
   });
 });

@@ -10,7 +10,7 @@ import { CellProps } from 'react-table';
  * Display an icon based on the property type.
  * @param {CellProps<IProperty, number>} param0
  */
-export const PropertyTypeCell = ({ cell: { value } }: CellProps<IProperty, number>) => {
+export const PropertyTypeCell = ({ cell: { value } }: CellProps<IProperty, PropertyTypes>) => {
   switch (value) {
     case PropertyTypes.Subdivision:
       return <SubdivisionSvg className="svg" />;

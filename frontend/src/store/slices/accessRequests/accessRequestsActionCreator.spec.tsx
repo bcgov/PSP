@@ -28,7 +28,7 @@ const getWrapper = (store: any) => ({ children }: any) => (
 
 describe('useAccessRequests functionality', () => {
   describe('fetchCurrentAccessRequest', () => {
-    const url = `/users/access/requests`;
+    const url = `/access/requests`;
     const mockResponse = {
       data: mockAccessRequest,
     };
@@ -102,12 +102,12 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('addAccessRequest action creator', () => {
-    const newMockAccessRequest = { ...mockAccessRequest, id: 0 };
-    const url = `/users/access/requests`;
+    const newMockAccessRequest = { ...mockAccessRequest, id: undefined };
+    const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 
     it('calls the api with the expected url', () => {
-      mockAxios.onPost(url).reply(200, mockResponse);
+      mockAxios.onPost(`${url}/${newMockAccessRequest.id}`).reply(200, mockResponse);
       renderHook(
         () =>
           useAccessRequests()
@@ -125,7 +125,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .addAccessRequest(newMockAccessRequest)
+            .addAccessRequest({ ...mockAccessRequest, id: undefined })
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -170,7 +170,7 @@ describe('useAccessRequests functionality', () => {
   });
 
   describe('updateAccessRequest action creator', () => {
-    const url = `/keycloak/users/access/request`;
+    const url = `/keycloak/access/requests`;
     const mockResponse = { data: mockAccessRequest };
     it('calls the api with the expected url', () => {
       mockAxios.onPut(url).reply(200, mockResponse);
@@ -325,7 +325,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(mockAxios.history.delete[0]).toMatchObject({ url: url });
             }),
@@ -339,7 +339,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),
@@ -361,7 +361,7 @@ describe('useAccessRequests functionality', () => {
       renderHook(
         () =>
           useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id, mockAccessRequest)
+            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
             .then(() => {
               expect(
                 find(currentStore.getActions(), { type: 'network/logRequest' }),

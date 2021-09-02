@@ -20,13 +20,13 @@ export const AccessRequestActions = (props: IAccessRequestActionsProps) => {
 
   const declineRequests = async () => {
     const items = props.selections.map(
-      x => ({ ...x, status: AccessRequestStatus.Declined } as IAccessRequest),
+      x => ({ ...x, status: AccessRequestStatus.Denied } as IAccessRequest),
     );
     await submit(items);
   };
 
   const deleteRequests = async () => {
-    await Promise.all(props.selections.map(req => removeAccessRequest(req.id, req)));
+    await Promise.all(props.selections.map(req => removeAccessRequest(req.id ?? 0, req)));
   };
 
   const submit = async (items: IAccessRequest[]) => {

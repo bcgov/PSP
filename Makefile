@@ -34,6 +34,22 @@ help:
 .PHONY: help
 
 ##############################################################################
+# Release Management
+##############################################################################
+VERSION := $(shell node -pe "require('./frontend/package.json').version")
+
+.PHONY: version
+version: ## Prints the current version number
+	@echo "v$(VERSION)"
+
+.PHONY: bump
+bump: ## Bumps the version number
+ifndef $(ARGS)
+	$(eval ARGS := --build)
+endif
+	@node ./build/bump-version.js $(ARGS) --apply
+
+##############################################################################
 # Docker Development
 ##############################################################################
 

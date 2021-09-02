@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// RoleClaim class, provides an entity for the datamodel to manage role agencies.
+    /// RoleClaim class, provides an entity for the datamodel to manage role organizations.
     /// </summary>
     [MotiTable("PIMS_ROLE_CLAIM", "ROLCLM")]
     public class RoleClaim : BaseAppEntity
@@ -37,6 +37,12 @@ namespace Pims.Dal.Entities
         /// get/set - The claim the role belongs to.
         /// </summary>
         public Claim Claim { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this role claim is disabled.
+        /// </summary>
+        [Column("IS_DISABLED")]
+        public bool IsDisabled { get; set; }
         #endregion
 
         #region Constructors

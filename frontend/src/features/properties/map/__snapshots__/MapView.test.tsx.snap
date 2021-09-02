@@ -70,22 +70,6 @@ exports[`MapView Renders the map 1`] = `
   justify-content: center;
 }
 
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c6 .form-control {
-  width: 165px;
-  height: 35px;
-}
-
-.c6 .form-group .rbt .rbt-menu {
-  width: 370px !important;
-}
-
 <div
     class="d-flex"
   >
@@ -153,141 +137,16 @@ exports[`MapView Renders the map 1`] = `
               class="map-filter-bar form-row"
             >
               <div
-                class="c6 col"
+                class="bar-item filter-options col"
               >
-                <div
-                  class="form-group"
+                <p
+                  class="m-0"
                 >
-                  <select
-                    class="form-select form-control"
-                    id="input-includeAllProperties"
-                    name="includeAllProperties"
-                  >
-                    <option
-                      class="option"
-                      value="false"
-                    >
-                      My Agencies
-                    </option>
-                    <option
-                      class="option"
-                      value="true"
-                    >
-                      All Government
-                    </option>
-                  </select>
-                </div>
-                <div
-                  class="form-group"
-                >
-                  <div
-                    class="rbt"
-                    style="outline: none; position: relative;"
-                    tabindex="-1"
-                  >
-                    <div
-                      style="display: flex; flex: 1; height: 100%; position: relative;"
-                    >
-                      <input
-                        aria-autocomplete="both"
-                        aria-expanded="false"
-                        aria-haspopup="listbox"
-                        autocomplete="off"
-                        class="rbt-input-main form-control rbt-input"
-                        id="agencies-field"
-                        name="agencies"
-                        placeholder="Agency"
-                        role="combobox"
-                        type="text"
-                        value=""
-                      />
-                      <input
-                        aria-hidden="true"
-                        class="rbt-input-hint"
-                        readonly=""
-                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
-                        tabindex="-1"
-                        value=""
-                      />
-                    </div>
-                  </div>
-                </div>
+                  Search: 
+                </p>
               </div>
               <div
-                class="map-filter-typeahead col"
-              >
-                <div
-                  class="rbt"
-                  style="outline: none; position: relative;"
-                  tabindex="-1"
-                >
-                  <div
-                    style="display: flex; flex: 1; height: 100%; position: relative;"
-                  >
-                    <input
-                      aria-autocomplete="both"
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      autocomplete="off"
-                      class="rbt-input-main form-control rbt-input"
-                      id="name-field"
-                      placeholder="Property name"
-                      role="combobox"
-                      type="text"
-                      value=""
-                    />
-                    <input
-                      aria-hidden="true"
-                      class="rbt-input-hint"
-                      readonly=""
-                      style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
-                      tabindex="-1"
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="map-filter-typeahead col"
-              >
-                <div
-                  class="form-group"
-                >
-                  <div
-                    class="rbt"
-                    style="outline: none; position: relative;"
-                    tabindex="-1"
-                  >
-                    <div
-                      style="display: flex; flex: 1; height: 100%; position: relative;"
-                    >
-                      <input
-                        aria-autocomplete="both"
-                        aria-expanded="false"
-                        aria-haspopup="listbox"
-                        autocomplete="off"
-                        class="rbt-input-main form-control rbt-input"
-                        id="administrativeArea-field"
-                        name="administrativeArea"
-                        placeholder="Location"
-                        role="combobox"
-                        type="text"
-                        value=""
-                      />
-                      <input
-                        aria-hidden="true"
-                        class="rbt-input-hint"
-                        readonly=""
-                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
-                        tabindex="-1"
-                        value=""
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="bar-item col"
+                class="bar-item filter-options col"
               >
                 <div
                   class="input-group"
@@ -305,15 +164,15 @@ exports[`MapView Renders the map 1`] = `
                       >
                         <option
                           class="option"
-                          value="address"
-                        >
-                          Address
-                        </option>
-                        <option
-                          class="option"
                           value="pid"
                         >
                           PID/PIN
+                        </option>
+                        <option
+                          class="option"
+                          value="address"
+                        >
+                          Address
                         </option>
                       </select>
                     </div>
@@ -326,9 +185,9 @@ exports[`MapView Renders the map 1`] = `
                     >
                       <input
                         class="form-control"
-                        id="input-address"
-                        name="address"
-                        placeholder="Enter an address"
+                        id="input-pid"
+                        name="pid"
+                        placeholder="Enter a PID or PIN"
                         value=""
                       />
                     </div>
@@ -338,27 +197,8 @@ exports[`MapView Renders the map 1`] = `
               <div
                 class="bar-item col"
               >
-                <div
-                  class="form-group"
-                >
-                  <select
-                    class="form-select form-control"
-                    id="input-classificationId"
-                    name="classificationId"
-                  >
-                    <option
-                      value=""
-                    >
-                      Classification
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div
-                class="bar-item flex-grow-0 col"
-              >
                 <button
-                  class="Button Button--icon-only bg-warning btn btn-primary"
+                  class="Button Button--icon-only primary btn btn-primary"
                   id="search-button"
                   type="submit"
                 >
@@ -382,7 +222,7 @@ exports[`MapView Renders the map 1`] = `
                 </button>
               </div>
               <div
-                class="bar-item flex-grow-0 col"
+                class="bar-item col"
               >
                 <button
                   class="Button Button--icon-only btn btn-info"

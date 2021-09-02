@@ -5,5 +5,5 @@ export * from './getMostRecentEvaluation';
 export * from './mapLookupCode';
 export * from './mockKeycloak';
 export * from './numberFormatUtils';
-export * from './toApiProperty';
+export * from './propertyUtils';
 export * from './utils';

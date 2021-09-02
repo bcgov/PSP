@@ -57,8 +57,8 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         >
           <input
             class="form-control"
-            id="input-username"
-            name="username"
+            id="input-businessIdentifier"
+            name="businessIdentifier"
             placeholder="IDIR/BCeID"
             value=""
           />
@@ -87,8 +87,8 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         >
           <input
             class="form-control"
-            id="input-lastName"
-            name="lastName"
+            id="input-surname"
+            name="surname"
             placeholder="Last name"
             value=""
           />
@@ -144,9 +144,9 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 aria-haspopup="listbox"
                 autocomplete="off"
                 class="rbt-input-main form-control rbt-input"
-                id="agency-field"
-                name="agency"
-                placeholder="Enter an Agency"
+                id="organization-field"
+                name="organization"
+                placeholder="Enter an Organization"
                 role="combobox"
                 type="text"
                 value=""
@@ -568,7 +568,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="sortable-column"
             >
-              Agency
+              Organization
               <span
                 style="flex: 1 1 auto;"
               />

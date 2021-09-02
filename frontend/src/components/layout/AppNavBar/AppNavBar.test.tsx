@@ -20,7 +20,7 @@ jest.mock('@react-keycloak/web');
 (useKeycloak as jest.Mock).mockReturnValue({
   keycloak: {
     userInfo: {
-      agencies: ['1'],
+      organizations: ['1'],
     },
     subject: 'test',
   },
@@ -140,16 +140,6 @@ describe('AppNavBar', () => {
         fireEvent.click(link);
         expect(history.location.pathname).toBe('/admin/access/requests');
       });
-
-      it('should include Admin Agencies link', () => {
-        const { getByText } = renderNavBar();
-        fireEvent.click(getByText('Administration'));
-        const link = getByText('Agencies');
-
-        expect(link).toBeVisible();
-        fireEvent.click(link);
-        expect(history.location.pathname).toBe('/admin/agencies');
-      });
     });
 
     it('Submit Property Link should NOT render', () => {
@@ -164,52 +154,6 @@ describe('AppNavBar', () => {
       const { queryByText } = renderNavBar();
       const link = queryByText('Submit Property');
       expect(link).not.toBeInTheDocument();
-    });
-
-    it('Add a Property Link should render', () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          userInfo: {
-            roles: [Claims.PROPERTY_ADD, Claims.PROPERTY_VIEW],
-          },
-        },
-      });
-      const { queryByText } = renderNavBar();
-      const link = queryByText('Add a Property');
-      expect(link).toBeInTheDocument();
-    });
-
-    it('Add a Property Link should render with active styling', async () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          userInfo: {
-            roles: [Claims.PROPERTY_ADD, Claims.PROPERTY_VIEW],
-          },
-        },
-      });
-      history.push('/mapview?sidebar=true');
-      const { queryByText } = renderNavBar();
-      const link = queryByText('Add a Property');
-      expect(link).toBeInTheDocument();
-      expect(link).toHaveClass('active');
-    });
-
-    it('Add a Property Link navigates to the expected page', async () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          userInfo: {
-            roles: [Claims.PROPERTY_ADD, Claims.PROPERTY_VIEW],
-          },
-        },
-      });
-      const { queryByText } = renderNavBar();
-      const link = queryByText('Add a Property');
-      fireEvent.click(link!);
-      expect(link).toBeInTheDocument();
-      expect(history.location.pathname).toBe('/mapview');
     });
 
     it('View Inventory Link should render', () => {

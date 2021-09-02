@@ -1,12 +1,12 @@
 import { ColumnWithProps } from 'components/Table';
-import { IAgency, IAgencyRecord } from 'interfaces';
+import { IOrganization, IOrganizationRecord } from 'interfaces';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-export const columnDefinitions: ColumnWithProps<IAgencyRecord>[] = [
+export const columnDefinitions: ColumnWithProps<IOrganizationRecord>[] = [
   {
-    Header: 'Agency name',
+    Header: 'Organization name',
     accessor: 'name',
     align: 'left',
     clickable: true,
@@ -24,13 +24,15 @@ export const columnDefinitions: ColumnWithProps<IAgencyRecord>[] = [
     clickable: true,
   },
   {
-    Header: 'Parent Agency',
+    Header: 'Parent Organization',
     accessor: 'parent',
     align: 'left',
     clickable: true,
-    Cell: (props: CellProps<IAgency>) => {
+    Cell: (props: CellProps<IOrganization>) => {
       return (
-        <Link to={`/admin/agency/${props.row.original.parentId}`}>{props.row.original.parent}</Link>
+        <Link to={`/admin/organization/${props.row.original.parentId}`}>
+          {props.row.original.parent}
+        </Link>
       );
     },
   },
