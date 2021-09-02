@@ -1,5 +1,6 @@
 import './PointClusterer.scss';
 
+import { AddressTypes } from 'constants/index';
 import { PropertyTypes } from 'constants/propertyTypes';
 import { MAX_ZOOM } from 'constants/strings';
 import { BBox } from 'geojson';
@@ -52,9 +53,38 @@ export const convertToProperty = (
   longitude?: number,
 ): IProperty | null => {
   if ([PropertyTypes.Land, PropertyTypes.Subdivision].includes(property.propertyTypeId)) {
-    return property;
-  } else if (property.propertyTypeId === PropertyTypes.Building) {
-    return property;
+    return {
+      pid: property.PID,
+      latitude: latitude,
+      longitude: longitude,
+      propertyTypeId: property.propertyTypeId,
+      address: {
+        id: property.ADDRESS,
+        addressTypeId: AddressTypes.Physical,
+        municipality: '',
+        provinceId: 0,
+        streetAddress1: '',
+        postal: '',
+      },
+      pin: property.PIN,
+      landArea: property.LAND_AREA,
+      landLegalDescription: property.LAND_LEGAL_DESCRIPTION,
+      name: property.NAME,
+      description: property.DESCRIPTION,
+      isSensitive: property.IS_SENSITIVE,
+      isOwned: property.IS_OWNED,
+      encumbranceReason: property.ENCUMBRANCE_REASON,
+      isPropertyOfInterest: property.IS_PROPERTY_OF_INTEREST,
+      isVisibleToOtherAgencies: property.IS_VISIBLE_TO_OTHER_AGENCIES,
+      areaUnit: property.PROPERTY_AREA_UNIT_TYPE_CODE,
+      classificationId: property.PROPERTY_CLASSIFICATION_TYPE_CODE,
+      id: property.PROPERTY_ID,
+      status: property.PROPERTY_STATUS_TYPE_CODE,
+      tenure: property.PROPERTY_TENURE_TYPE_CODE,
+      regionId: property.REGION_CODE,
+      zoning: property.ZONING,
+      zoningPotential: property.ZONING_POTENTIAL,
+    };
   } else if (
     [PropertyTypes.DraftBuilding, PropertyTypes.DraftLand].includes(property.propertyTypeId)
   ) {
@@ -319,7 +349,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   dispatch(storeProperty(convertedProperty as IProperty));
                   onMarkerClick(); //open information slideout
                   if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
-                    fetchProperty(cluster.properties.propertyTypeId, cluster.properties.id);
+                    convertedProperty?.id
+                      ? fetchProperty(cluster.properties.propertyTypeId, convertedProperty.id)
+                      : toast.dark('This property is invalid, unable to view details');
                   } else {
                     popUpContext.setPropertyInfo(convertedProperty);
                   }
