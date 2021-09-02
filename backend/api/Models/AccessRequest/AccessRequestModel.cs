@@ -9,8 +9,8 @@ namespace Pims.Api.Models.AccessRequest
         public string Note { get; set; }
         public string Status { get; set; }
         public UserModel User { get; set; }
-        public RoleModel Role { get; set; }
-        public AccessRequestOrganizationModel Organization { get; set; }
+        public long? RoleId { get; set; }
+        public long? OrganizationId { get; set; }
         #endregion
     }
 }
