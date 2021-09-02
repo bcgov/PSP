@@ -92,7 +92,7 @@ const defaultFilterValues: IPropertyFilter = {
   location: '',
 };
 
-const whitelistedFilterKeys = ['pid', 'pin', 'address', 'location'];
+const whitelistedFilterKeys = ['PID', 'PIN', 'ADDRESS', 'LOCATION'];
 
 /**
  * Converts the map filter to a geo search filter.
@@ -182,7 +182,7 @@ const Map: React.FC<MapProps> = ({
       }, true);
     };
     // Search button will always trigger filter changed (triggerFilterChanged is set to true when search button is clicked)
-    if (!isEqualWith(geoFilter, filter, compareValues) || triggerFilterChanged) {
+    if (!isEqualWith(geoFilter, getQueryParams(filter), compareValues) || triggerFilterChanged) {
       dispatch(storeProperty(null));
       setGeoFilter(getQueryParams(filter));
       setChanged(true);

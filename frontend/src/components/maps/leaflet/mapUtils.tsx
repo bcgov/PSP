@@ -237,16 +237,17 @@ export const subdivisionErpIconSelect = L.icon({
  * Creates map points (in GeoJSON format) for further clustering by `supercluster`
  * @param properties
  */
-export const createPoints = (properties: IProperty[]) =>
+export const createPoints = (properties: IProperty[], type: string = 'Point') =>
   properties.map(x => {
     return {
       type: 'Feature',
       properties: {
         ...x,
         cluster: false,
+        PROPERTY_ID: x.id,
       },
       geometry: {
-        type: 'Point',
+        type: type,
         coordinates: [x.longitude, x.latitude],
       },
     } as PointFeature;
