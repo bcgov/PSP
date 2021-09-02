@@ -127,7 +127,7 @@ describe('AccessRequestPage', () => {
           .first()
           .prop('initialValues'),
       ).toEqual({
-        organizationId: 0,
+        organizationId: undefined,
         id: undefined,
         status: 'RECEIVED',
         note: '',

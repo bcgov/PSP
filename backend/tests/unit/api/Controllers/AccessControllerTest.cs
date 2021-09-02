@@ -54,8 +54,8 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organization, actualResult.Organization, new DeepPropertyCompare());
-            Assert.Equal(model.Role, actualResult.Role, new DeepPropertyCompare());
+            Assert.Equal(model.OrganizationId, actualResult.OrganizationId, new DeepPropertyCompare());
+            Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(), Times.Once());
         }
@@ -103,8 +103,8 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organization, actualResult.Organization, new DeepPropertyCompare());
-            Assert.Equal(model.Role, actualResult.Role, new DeepPropertyCompare());
+            Assert.Equal(model.OrganizationId, actualResult.OrganizationId, new DeepPropertyCompare());
+            Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(1), Times.Once());
         }
@@ -133,8 +133,8 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organization.Id, actualResult.Organization.Id);
-            Assert.Equal(model.Role.Id, actualResult.Role.Id);
+            Assert.Equal(model.OrganizationId, actualResult.OrganizationId);
+            Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Add(It.IsAny<Entity.AccessRequest>()), Times.Once());
         }
@@ -171,8 +171,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = null,
-                Role = new Model.RoleModel()
+                OrganizationId = null,
+                RoleId = new Model.RoleModel().Id
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -196,8 +196,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = new Model.AccessRequestOrganizationModel(),
-                Role = null
+                OrganizationId = new Model.AccessRequestOrganizationModel().Id,
+                RoleId = null
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -221,8 +221,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = new Model.AccessRequestOrganizationModel(),
-                Role = new Model.RoleModel()
+                OrganizationId = new Model.AccessRequestOrganizationModel().Id,
+                RoleId = new Model.RoleModel().Id
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -246,8 +246,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = new Model.AccessRequestOrganizationModel(),
-                Role = new Model.RoleModel()
+                OrganizationId = new Model.AccessRequestOrganizationModel().Id,
+                RoleId = new Model.RoleModel().Id
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -281,8 +281,8 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.Organization.Id, actualResult.Organization.Id);
-            Assert.Equal(model.Role.Id, actualResult.Role.Id);
+            Assert.Equal(model.OrganizationId, actualResult.OrganizationId);
+            Assert.Equal(model.RoleId, actualResult.RoleId);
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Update(It.IsAny<Entity.AccessRequest>()), Times.Once());
         }
@@ -319,8 +319,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = null,
-                Role = new Model.RoleModel()
+                OrganizationId = null,
+                RoleId = new Model.RoleModel().Id
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -344,8 +344,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = new Model.AccessRequestOrganizationModel(),
-                Role = null
+                OrganizationId = new Model.AccessRequestOrganizationModel().Id,
+                RoleId = null
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -369,8 +369,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = new Model.AccessRequestOrganizationModel(),
-                Role = new Model.RoleModel()
+                OrganizationId = new Model.AccessRequestOrganizationModel().Id,
+                RoleId = new Model.RoleModel().Id
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
@@ -394,8 +394,8 @@ namespace PimsApi.Test.Controllers
 
             var accessRequest = new Model.AccessRequestModel()
             {
-                Organization = new Model.AccessRequestOrganizationModel(),
-                Role = new Model.RoleModel()
+                OrganizationId = new Model.AccessRequestOrganizationModel().Id,
+                RoleId = new Model.RoleModel().Id
             };
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 

@@ -12,7 +12,7 @@ const csprojLoc = './backend/api/Pims.Api.csproj';
  * To print the next version without releasing anything, add the '--release-version' flag.
  *
  * USAGE:
- * node ./build/bump-version.js [<new-version> | major | minor | patch | is | build] [--apply] [--print-version]
+ * node ./build/bump-version.js [<new-version> | --major | --minor | --patch | --is | --build] [--apply] [--print-version]
  *
  */
 
@@ -100,25 +100,25 @@ function bumpVersion(releaseType, version) {
     [major, minor, patch, isNumber, build] = parse(version);
 
     switch (releaseType) {
-      case 'major':
+      case '--major':
         major = parseInt(major, 10) + 1;
         minor = 0;
         patch = 0;
         build = 0;
         break;
 
-      case 'minor':
+      case '--minor':
         minor = parseInt(minor, 10) + 1;
         patch = 0;
         build = 0;
         break;
 
-      case 'patch':
+      case '--patch':
         patch = parseInt(patch, 10) + 1;
         build = 0;
         break;
 
-      case 'is':
+      case '--is':
         isNumber = parseInt(isNumber, 10) + 1;
         build = 0;
         break;

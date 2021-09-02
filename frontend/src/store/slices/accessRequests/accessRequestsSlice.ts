@@ -21,7 +21,7 @@ export const toAccessRequest = (values: any): IAccessRequest => {
       position: values.user.position,
     },
     organizationId: values.organizationId,
-    role: values.roleId !== undefined ? { id: +values.roleId } : undefined,
+    roleId: values.roleId,
     status: values.status,
     note: values.note,
     rowVersion: values.rowVersion,
