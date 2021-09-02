@@ -10,7 +10,8 @@ const InventoryNavigationHelpText = () => {
       <br />
       <strong>Home:</strong> Shows the map to view and find properties.
       <br />
-      <strong>Administration:</strong> Manage users, agencies and Access Requests. (SRES users only)
+      <strong>Administration:</strong> Manage users, organizations and Access Requests. (SRES users
+      only)
       <br />
       <strong>Submit Property:</strong> View Inventory or Submit a new property to inventory.
       <br />

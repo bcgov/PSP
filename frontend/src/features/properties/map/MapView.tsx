@@ -31,10 +31,10 @@ interface MapViewProps {
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
   const lookupCodes = useLookupCodeHelpers();
-  const properties = useAppSelector(state => [...state.properties.parcels]);
+  const properties = useAppSelector(state => [...(state.properties?.properties ?? [])]);
   const [loadedProperties, setLoadedProperties] = useState(false);
   const propertyDetail = useAppSelector(state => state.properties.propertyDetail);
-  const agencies = lookupCodes.getByType(API.AGENCY_CODE_SET_NAME);
+  const organizations = lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME);
   const administrativeAreas = lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME);
 
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
           lng={defaultLatLng.lng}
           properties={properties}
           selectedProperty={propertyDetail}
-          agencies={agencies}
+          organizations={organizations}
           administrativeAreas={administrativeAreas}
           onViewportChanged={(mapFilterModel: MapViewportChangeEvent) => {
             if (!loadedProperties) {

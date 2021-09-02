@@ -18,11 +18,11 @@ namespace Pims.Api.Test.Helpers
         public void ThrowBadRequestIfNull_WithNull()
         {
             // Arrange
-            Entity.Parcel parcel = null;
+            Entity.Property property = null;
 
             // Act
             // Assert
-            Assert.Throws<BadRequestException>(() => parcel.ThrowBadRequestIfNull("test"));
+            Assert.Throws<BadRequestException>(() => property.ThrowBadRequestIfNull("test"));
         }
 
         [Theory]
@@ -32,24 +32,24 @@ namespace Pims.Api.Test.Helpers
         public void ThrowBadRequestIfNull_ArgumentException(string message)
         {
             // Arrange
-            Entity.Parcel parcel = null;
+            Entity.Property property = null;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => parcel.ThrowBadRequestIfNull(message));
+            Assert.Throws<ArgumentException>(() => property.ThrowBadRequestIfNull(message));
         }
 
         [Fact]
         public void ThrowBadRequestIfNull_WithObject()
         {
             // Arrange
-            var parcel = new Entity.Parcel();
+            var property = new Entity.Property();
 
             // Act
-            parcel.ThrowBadRequestIfNull("test");
+            property.ThrowBadRequestIfNull("test");
 
             // Assert
-            Assert.NotNull(parcel);
+            Assert.NotNull(property);
         }
         #endregion
     }

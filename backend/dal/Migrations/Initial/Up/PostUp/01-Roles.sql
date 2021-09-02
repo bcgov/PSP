@@ -7,7 +7,7 @@ INSERT INTO dbo.[PIMS_ROLE] (
     , [DESCRIPTION]
     , [IS_PUBLIC]
     , [IS_DISABLED]
-    , [DISPLAY_ORDER]
+    , [SORT_ORDER]
     , [APP_CREATE_USERID]
     , [APP_CREATE_USER_DIRECTORY]
     , [APP_LAST_UPDATE_USERID]
@@ -30,8 +30,8 @@ VALUES
 (
     2
     , '6ae8448d-5f0a-4607-803a-df0bc4efdc0f'
-    , 'Agency Administrator'
-    , 'Agency Administrator of the users agency.'
+    , 'Organization Administrator'
+    , 'Organization Administrator of the users organization.'
     , 0
     , 0
     , 0
@@ -44,7 +44,7 @@ VALUES
     3
     , 'aad8c03d-892c-4cc3-b992-5b41c4f2392c'
     , 'Real Estate Manager'
-    , 'Real Estate Manager can manage properties within their agencies.'
+    , 'Real Estate Manager can manage properties within their organizations.'
     , 1
     , 0
     , 0
@@ -57,8 +57,21 @@ VALUES
     4
     , '7a7b2549-ae85-4ad6-a8d3-3a5f8d4f9ca5'
     , 'Real Estate Analyst'
-    , 'Real Estate Analyst can manage properties within their agencies.'
+    , 'Real Estate Analyst can manage properties within their organizations.'
     , 1
+    , 0
+    , 0
+    , 'migration'
+    , ''
+    , 'migration'
+    , ''
+),
+(
+    5
+    , '57726C45-BEE0-4C60-9E93-98E84B4AD136'
+    , 'Undetermined'
+    , 'The user has an undetermined role with their organization.'
+    , 0
     , 0
     , 0
     , 'migration'

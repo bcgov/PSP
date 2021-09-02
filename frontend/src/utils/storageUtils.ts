@@ -1,4 +1,4 @@
-export const PARCEL_STORAGE_NAME = 'parcelDetailForm';
+export const PARCEL_STORAGE_NAME = 'propertyDetailForm';
 export const PIN_MOVEMENT_CONFIRM = 'pinMoveConfirm';
 export const isStorageInUse = (storageName: string): boolean =>
   !!window.localStorage.getItem(storageName);

@@ -23,12 +23,12 @@ import { UserUpdateSchema } from 'utils/YupSchema';
 import { Form, Input, Select, SelectOption } from '../../../components/common/form';
 
 interface IEditUserPageProps {
-  key: string;
+  userKey: string;
   match?: any;
 }
 
 const EditUserPage = (props: IEditUserPageProps) => {
-  const userId = props?.match?.params?.key || props.key;
+  const userId = props?.match?.params?.key || props.userKey;
   const history = useHistory();
   const { updateUser, fetchUserDetail } = useUsers();
 
@@ -37,32 +37,32 @@ const EditUserPage = (props: IEditUserPageProps) => {
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
-  const agencies = getByType(API.AGENCY_CODE_SET_NAME);
+  const organizations = getByType(API.ORGANIZATION_CODE_SET_NAME);
   const roles = getByType(API.ROLE_CODE_SET_NAME);
 
   const user = useAppSelector(state => state.users.userDetail);
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
     label: code.name,
     value: code.id,
-    selected: !!user?.roles?.find(x => x.id === code.id.toString()) ?? [],
+    selected: !!user?.roles?.find(x => x.id === code.id) ?? [],
   });
 
-  const selectAgencies = agencies.map(c => mapLookupCode(c));
+  const selectOrganizations = organizations.map(c => mapLookupCode(c));
   const selectRoles = roles.map(c => mapLookupCode(c));
 
-  // Arrays below are used to add the role/agency from the dropdown later in code
-  let agenciesToUpdate: any[];
+  // Arrays below are used to add the role/organization from the dropdown later in code
+  let organizationsToUpdate: any[];
   let rolesToUpdate: any[];
 
-  const checkAgencies = (
+  const checkOrganizations = (
     <Select
-      label="Agency"
-      field="agency"
-      data-testid="agency"
+      label="Organization"
+      field="organization"
+      data-testid="organization"
       required={true}
-      options={selectAgencies}
+      options={selectOrganizations}
       placeholder={
-        user?.agencies?.length && user?.agencies?.length > 0 ? undefined : 'Please Select'
+        user?.organizations?.length && user?.organizations?.length > 0 ? undefined : 'Please Select'
       }
     />
   );
@@ -96,18 +96,19 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    username: user.username ?? '',
+    businessIdentifier: user.businessIdentifier ?? '',
     firstName: user.firstName ?? '',
-    lastName: user.lastName ?? '',
+    surname: user.surname ?? '',
     email: user.email ?? '',
     displayName: user.displayName ?? '',
     isDisabled: !!user.isDisabled ?? '',
     rowVersion: user.rowVersion ?? '',
     emailVerified: false,
-    agencies: user.agencies ?? [],
+    organizations: user.organizations ?? [],
     roles: user?.roles?.map(x => x.id) ?? [],
     note: user.note ?? '',
-    agency: user.agencies && user.agencies.length !== 0 ? user.agencies[0].id : '',
+    organization:
+      user.organizations && user.organizations.length !== 0 ? user.organizations[0].id : '',
     role: user.roles && user.roles.length !== 0 ? user.roles[0].id : '',
     position: user.position ?? '',
     lastLogin: formatApiDateTime(user.lastLogin),
@@ -125,10 +126,10 @@ const EditUserPage = (props: IEditUserPageProps) => {
             initialValues={initialValues}
             validationSchema={UserUpdateSchema}
             onSubmit={async (values, { setSubmitting, setValues }) => {
-              if (values.agency !== '') {
-                agenciesToUpdate = [{ id: Number(values.agency) }];
+              if (values.organization !== '') {
+                organizationsToUpdate = [{ id: Number(values.organization) }];
               } else {
-                agenciesToUpdate = user.agencies ?? [];
+                organizationsToUpdate = user.organizations ?? [];
               }
               if (values.roles) {
                 rolesToUpdate = values.roles.map(r => ({ id: r }));
@@ -138,16 +139,15 @@ const EditUserPage = (props: IEditUserPageProps) => {
 
               await updateUser({
                 id: user.id,
-                key: user.key,
-                username: user.username,
+                keycloakUserId: user.keycloakUserId,
+                businessIdentifier: user.businessIdentifier,
                 displayName: values.displayName,
                 firstName: values.firstName,
-                lastName: values.lastName,
+                surname: values.surname,
                 email: values.email,
                 isDisabled: values.isDisabled,
-                rowVersion: values.rowVersion,
-                emailVerified: values.emailVerified,
-                agencies: agenciesToUpdate,
+                rowVersion: +values.rowVersion,
+                organizations: organizationsToUpdate,
                 roles: rolesToUpdate,
                 position: values.position ?? undefined,
                 note: values.note,
@@ -159,9 +159,9 @@ const EditUserPage = (props: IEditUserPageProps) => {
               <Form className="userInfo">
                 <Label>IDIR/BCeID</Label>
                 <Input
-                  data-testid="username"
-                  field="username"
-                  value={props.values.username}
+                  data-testid="businessIdentifier"
+                  field="businessIdentifier"
+                  value={props.values.businessIdentifier}
                   readOnly={true}
                   type="text"
                 />
@@ -187,9 +187,9 @@ const EditUserPage = (props: IEditUserPageProps) => {
                   <Col>
                     <Label>Last Name</Label>
                     <Input
-                      data-testid="lastName"
-                      field="lastName"
-                      placeholder={props.values.lastName}
+                      data-testid="surname"
+                      field="surname"
+                      placeholder={props.values.surname}
                       type="text"
                     />
                   </Col>
@@ -203,7 +203,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                   type="email"
                 />
 
-                {checkAgencies}
+                {checkOrganizations}
 
                 <Label>Position</Label>
                 <Input

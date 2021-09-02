@@ -1,17 +1,14 @@
-import { FastCurrencyInput, Input, Select, SelectOption } from 'components/common/form';
+import { Input, SelectOption } from 'components/common/form';
 import { TypeaheadField } from 'components/common/form/Typeahead';
 import { ColumnWithProps } from 'components/Table';
-import { AsterixMoneyCell, EditableMoneyCell, MoneyCell } from 'components/Table/MoneyCell';
 import { PropertyTypeCell } from 'components/Table/PropertyTypeCell';
 import { PropertyTypes } from 'constants/index';
+import { IProperty } from 'interfaces';
 import { isEqual } from 'lodash';
-import React from 'react';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 import { formatNumber, mapLookupCode } from 'utils';
-
-import { IProperty } from '.';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -39,67 +36,13 @@ const spacing = {
 };
 
 export const columns = (
-  agencyOptions: SelectOption[],
-  subAgencies: SelectOption[],
+  organizationOptions: SelectOption[],
+  subOrganizations: SelectOption[],
   municipalities: ILookupCode[],
   propertyClassifications: SelectOption[],
-  propertyType: number,
+  propertyType: PropertyTypes,
   editable?: boolean,
 ): ColumnWithProps<IProperty>[] => [
-  {
-    Header: 'Agency',
-    accessor: 'agencyCode', // accessor is the "key" in the data
-    align: 'left',
-    responsive: true,
-    width: spacing.xsmall,
-    minWidth: 80, // px
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: TypeaheadField,
-      props: {
-        className: 'agency-search',
-        name: 'agencies[0]',
-        options: agencyOptions.map(a => ({ ...a, parentId: a.value })),
-        inputSize: 'large',
-        placeholder: 'Filter by agency',
-        filterBy: ['code'],
-        hideParent: true,
-        clearButton: true,
-        getOptionByValue: (value: number | string) => {
-          return agencyOptions.filter(a => Number(a.value) === Number(value));
-        },
-      },
-    },
-  },
-  {
-    Header: 'Sub Agency',
-    accessor: 'subAgency',
-    align: 'left',
-    responsive: true,
-    width: spacing.medium,
-    minWidth: 80,
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: TypeaheadField,
-      props: {
-        name: 'agencies[1]',
-        placeholder: 'Filter by sub agency',
-        className: 'agency-search',
-        options: subAgencies,
-        clearButton: true,
-        labelKey: (option: SelectOption) => {
-          return `${option.label}`;
-        },
-        getOptionByValue: (value: number | string) => {
-          return subAgencies.filter(a => Number(a.value) === Number(value));
-        },
-      },
-    },
-  },
   {
     Header: 'Property Name',
     accessor: 'name',
@@ -166,7 +109,7 @@ export const columns = (
   },
   {
     Header: 'Location',
-    accessor: 'administrativeArea',
+    accessor: p => p.address.municipality,
     align: 'left',
     responsive: true,
     width: spacing.medium,
@@ -177,340 +120,12 @@ export const columns = (
     filter: {
       component: TypeaheadField,
       props: {
-        name: 'administrativeArea',
+        name: 'municipality',
         placeholder: 'Filter by location',
         className: 'location-search',
         options: municipalities.map(mapLookupCode).map(x => x.label),
         clearButton: true,
         hideValidation: true,
-      },
-    },
-  },
-  {
-    Header: 'Assessed Land',
-    accessor: 'assessedLand',
-    Cell: !editable
-      ? MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxAssessedValue',
-        name: 'maxAssessedValue',
-        placeholder: 'Max Assessed value',
-        tooltip: 'Filter by max assessed value',
-        className: 'filter-input-control',
-      },
-    },
-  },
-  {
-    Header: 'Assessed Building(s)',
-    accessor: 'assessedBuilding',
-    Cell: !editable
-      ? propertyType === PropertyTypes.Building
-        ? AsterixMoneyCell
-        : MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxAssessedValue',
-        name: 'maxAssessedValue',
-        placeholder: 'Max Assessed value',
-        tooltip: 'Filter by max assessed value',
-        className: 'filter-input-control',
-      },
-    },
-  },
-  {
-    Header: 'Net Book Value',
-    accessor: 'netBook',
-    Cell: !editable
-      ? MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxNetBookValue',
-        name: 'maxNetBookValue',
-        placeholder: 'Max Net Book Value',
-        tooltip: 'Filter by max net book value',
-        className: 'filter-input-control',
-      },
-    },
-  },
-  {
-    Header: 'Market Value',
-    accessor: 'market',
-    Cell: !editable
-      ? MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxMarketValue',
-        name: 'maxMarketValue',
-        placeholder: 'Max Market Value',
-        tooltip: 'Filter by max market value',
-        className: 'filter-input-control',
-      },
-    },
-  },
-  {
-    Header: 'Lot Size (in\u00A0ha)',
-    accessor: 'landArea',
-    Cell: NumberCell,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 120,
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: Input,
-      props: {
-        field: 'maxLotSize',
-        name: 'maxLotSize',
-        placeholder: 'Filter by Lot Size',
-        className: 'filter-input-control',
-        type: 'number',
-      },
-    },
-  },
-];
-
-export const buildingColumns = (
-  agencyOptions: SelectOption[],
-  subAgencies: SelectOption[],
-  municipalities: ILookupCode[],
-  propertyClassifications: SelectOption[],
-  propertyType: number,
-  editable?: boolean,
-): ColumnWithProps<IProperty>[] => [
-  {
-    Header: 'Agency',
-    accessor: 'agencyCode', // accessor is the "key" in the data
-    align: 'left',
-    responsive: true,
-    width: spacing.xsmall,
-    minWidth: 80, // px
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: TypeaheadField,
-      props: {
-        className: 'agency-search',
-        name: 'agencies[0]',
-        options: agencyOptions.map(a => ({ ...a, parentId: a.value })),
-        inputSize: 'large',
-        placeholder: 'Filter by agency',
-        filterBy: ['code'],
-        hideParent: true,
-        clearButton: true,
-      },
-    },
-  },
-  {
-    Header: 'Sub Agency',
-    accessor: 'subAgency',
-    align: 'left',
-    responsive: true,
-    width: spacing.medium,
-    minWidth: 80,
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: TypeaheadField,
-      props: {
-        name: 'agencies[1]',
-        placeholder: 'Filter by sub agency',
-        className: 'agency-search',
-        options: subAgencies,
-        labelKey: (option: SelectOption) => {
-          return `${option.label}`;
-        },
-      },
-    },
-  },
-  {
-    Header: 'Property Name',
-    accessor: 'name',
-    align: 'left',
-    clickable: true,
-    responsive: true,
-    width: spacing.medium,
-    minWidth: 140,
-    sortable: true,
-  },
-  {
-    Header: 'Classification',
-    accessor: 'classification',
-    align: 'left',
-    responsive: false,
-    width: spacing.small,
-    minWidth: 90,
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: Select,
-      props: {
-        field: 'classificationId',
-        name: 'classificationId',
-        placeholder: 'Filter by class',
-        className: 'location-search',
-        options: propertyClassifications,
-      },
-    },
-  },
-  {
-    Header: 'Type',
-    accessor: 'propertyTypeId',
-    Cell: PropertyTypeCell,
-    clickable: true,
-    responsive: true,
-    width: spacing.xsmall,
-    minWidth: 60,
-  },
-  {
-    Header: 'Street Address',
-    accessor: 'address',
-    align: 'left',
-    clickable: true,
-    responsive: true,
-    width: spacing.medium,
-    minWidth: 100,
-    sortable: true,
-  },
-  {
-    Header: 'Location',
-    accessor: 'administrativeArea',
-    align: 'left',
-    responsive: true,
-    width: spacing.medium,
-    minWidth: 80,
-    clickable: true,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: TypeaheadField,
-      props: {
-        name: 'administrativeArea',
-        placeholder: 'Filter by location',
-        className: 'location-search',
-        options: municipalities.map(mapLookupCode).map(x => x.label),
-        clearButton: true,
-        hideValidation: true,
-      },
-    },
-  },
-  {
-    Header: 'Assessed Building(s)',
-    accessor: 'assessedBuilding',
-    Cell: !editable
-      ? MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxAssessedValue',
-        name: 'maxAssessedValue',
-        placeholder: 'Max Assessed value',
-        tooltip: 'Filter by max assessed value',
-        className: 'filter-input-control',
-      },
-    },
-  },
-  {
-    Header: 'Net Book Value',
-    accessor: 'netBook',
-    Cell: !editable
-      ? MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxNetBookValue',
-        name: 'maxNetBookValue',
-        placeholder: 'Max Net Book Value',
-        tooltip: 'Filter by max net book value',
-        className: 'filter-input-control',
-      },
-    },
-  },
-  {
-    Header: 'Market Value',
-    accessor: 'market',
-    Cell: !editable
-      ? MoneyCell
-      : (props: any) => <EditableMoneyCell {...props} suppressValidation />,
-    align: 'right',
-    responsive: true,
-    width: spacing.small,
-    minWidth: 100,
-    clickable: !editable,
-    sortable: true,
-    filterable: true,
-    filter: {
-      component: FastCurrencyInput,
-      props: {
-        injectFormik: true,
-        field: 'maxMarketValue',
-        name: 'maxMarketValue',
-        placeholder: 'Max Market Value',
-        tooltip: 'Filter by max market value',
-        className: 'filter-input-control',
       },
     },
   },

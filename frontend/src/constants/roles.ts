@@ -3,7 +3,7 @@
  */
 export enum Roles {
   SYSTEM_ADMINISTRATOR = 'System Administrator',
-  AGENCY_ADMINISTRATOR = 'Agency Administrator',
+  ORGANIZATION_ADMINISTRATOR = 'Organization Administrator',
   REAL_ESTATE_MANAGER = 'Real Estate Manager',
   ASSISTANT_DEPUTY_MINISTER = 'Assistant Deputy Minister',
   ASSISTANT_DEPUTY_MINISTER_ASSISTANT = 'Assistant Deputy Minister Assistant',

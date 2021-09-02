@@ -16,11 +16,11 @@ import { ToastContainer } from 'react-toastify';
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';
 
-export const mockKeycloak = (claims: string[], agencies: number[], authenticated = false) => {
+export const mockKeycloak = (claims: string[], organizations: number[], authenticated = false) => {
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
       userInfo: {
-        agencies: agencies,
+        organizations: organizations,
         roles: claims,
         email: 'test@test.com',
         name: 'Chester Tester',
@@ -167,7 +167,7 @@ export interface RenderOptions extends RtlRenderOptions {
   store?: any;
   history?: MemoryHistory;
   useMockAuthentication?: boolean;
-  agencies?: number[];
+  organizations?: number[];
   roles?: string[];
 }
 
@@ -179,15 +179,15 @@ function render(
     store,
     history,
     useMockAuthentication = false,
-    agencies,
+    organizations,
     roles,
     ...renderOptions
   } = options;
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
-  if (!!useMockAuthentication || !!roles || !!agencies) {
+  if (!!useMockAuthentication || !!roles || !!organizations) {
     if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
-      mockKeycloak(roles ?? [], agencies ?? [1], true);
+      mockKeycloak(roles ?? [], organizations ?? [1], true);
     }
   }
 

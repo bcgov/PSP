@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
 import { TableSort } from 'components/Table/TableSort';
 import { IUserRecord } from 'features/admin/users/interfaces/IUserRecord';
-import { IPagedItems, IUser, IUserDetails, IUsersFilter } from 'interfaces';
+import { IPagedItems, IUser, IUsersFilter } from 'interfaces';
 
 import { IUsersState } from '.';
 
@@ -10,18 +10,18 @@ export const initialState: IUsersState = {
   pagedUsers: { page: 1, pageIndex: 0, total: 0, quantity: 0, items: [] },
   rowsPerPage: DEFAULT_PAGE_SIZE,
   filter: {},
-  sort: { username: 'asc' },
+  sort: { businessIdentifier: 'asc' },
   pageIndex: 0,
   userDetail: {
     id: 0,
-    key: '',
-    username: '',
+    keycloakUserId: '',
+    businessIdentifier: '',
     displayName: '',
     firstName: '',
-    lastName: '',
+    surname: '',
     email: '',
     isDisabled: false,
-    agencies: [],
+    organizations: [],
     roles: [],
     createdOn: '',
     rowVersion: 1,
@@ -37,7 +37,7 @@ export const usersSlice = createSlice({
     storeUsers(state: IUsersState, action: PayloadAction<IPagedItems<IUser>>) {
       state.pagedUsers = action.payload;
     },
-    storeUserDetails(state: IUsersState, action: PayloadAction<IUserDetails>) {
+    storeUserDetails(state: IUsersState, action: PayloadAction<IUser>) {
       state.userDetail = action.payload;
     },
     updateUser(state: IUsersState, action: PayloadAction<IUser>) {

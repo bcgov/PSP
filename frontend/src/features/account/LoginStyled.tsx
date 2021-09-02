@@ -13,7 +13,7 @@ export const LoginStyled = styled(Container)`
       ? `url("${props.theme.tenant.login.backgroundImage}")`
       : ''};
   background-size: cover;
-  background-position: center top;
+  background-position: center;
   overflow: auto;
 
   .unauth {

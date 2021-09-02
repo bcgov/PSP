@@ -44,7 +44,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                   className="Menu-button"
                   onClick={[Function]}
                 >
-                  Agency: Show all
+                  Organization: Show all
                     
                   <svg
                     fill="currentColor"
@@ -76,7 +76,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                   <input
                     className="Menu-filter form-control form-control-sm"
                     onChange={[Function]}
-                    placeholder="Filter agencies"
+                    placeholder="Filter organizations"
                     style={
                       Object {
                         "width": "calc(260px - 10px)",
@@ -94,7 +94,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                       disabled={false}
                       onClick={[Function]}
                     >
-                      agencyVal
+                      organizationVal
                     </div>
                   </div>
                 </div>
@@ -479,7 +479,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
             <div
               className="sortable-column"
             >
-              Agency
+              Organization
               <span
                 style={
                   Object {
@@ -630,7 +630,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              lastName
+              surname
             </div>
             <div
               className="td clickable"
@@ -690,7 +690,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              On Hold
+              Received
             </div>
             <div
               className="td clickable"
@@ -710,7 +710,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              agency 1
+              
             </div>
             <div
               className="td clickable"
@@ -730,7 +730,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               }
               title="Click user IDIR/BCeID to view User Information. Click row to open Access Request details."
             >
-              role1
+              
             </div>
             <div
               className="td"

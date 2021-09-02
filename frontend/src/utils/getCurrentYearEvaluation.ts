@@ -1,5 +1,4 @@
-import { EvaluationKeys } from 'constants/index';
-import { IEvaluation } from 'interfaces';
+import { IPropertyEvaluation } from 'interfaces';
 import moment from 'moment';
 import { getMostRecentEvaluation } from 'utils';
 
@@ -11,11 +10,12 @@ const currentYear = moment().year();
  * @param key only return evaluations matching this key
  */
 export const getCurrentYearEvaluation = (
-  evaluations: IEvaluation[],
-  key: EvaluationKeys,
-): IEvaluation | undefined => {
+  evaluations: IPropertyEvaluation[],
+  key: number,
+): IPropertyEvaluation | undefined => {
   const currentYearEvaluations = (evaluations ?? []).filter(
-    (evaluation: IEvaluation) => moment(evaluation.date, 'YYYY-MM-DD').year() === currentYear,
+    (evaluation: IPropertyEvaluation) =>
+      moment(evaluation.evaluatedOn, 'YYYY-MM-DD').year() === currentYear,
   );
   return getMostRecentEvaluation(currentYearEvaluations, key);
 };

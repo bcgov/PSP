@@ -8,7 +8,6 @@ using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
-using Pims.Dal.Services.Admin;
 using Pims.Keycloak;
 using Pims.Keycloak.Configuration;
 using System.Diagnostics.CodeAnalysis;
@@ -77,8 +76,6 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var mockPimsService = new Mock<IPimsService>();
             services.AddScoped((s) => mockPimsService.Object);
-            var mockPimsAdminService = new Mock<IPimsAdminService>();
-            services.AddScoped((s) => mockPimsAdminService.Object);
             var mockMapper = new Mock<IMapper>();
             services.AddScoped((s) => mockMapper.Object);
             var mockLogger = new Mock<ILogger<IPimsKeycloakService>>();
@@ -122,7 +119,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             // Assert
             result.Should().NotBeNull();
-            result.Count.Should().Be(9);
+            result.Count.Should().Be(8);
             provider.Should().NotBeNull();
             service.Should().NotBeNull();
         }

@@ -1,11 +1,4 @@
 @import './colors.scss';
-.error {
-  color: $danger-color;
-}
-
-ul.pagination li {
-  cursor: pointer;
-}
 
 .modal-dialog.modal-xl {
   max-width: 1000px;
@@ -42,51 +35,66 @@ ul.pagination li {
   background-color: $danger-color;
 }
 
-.tooltip {
-  pointer-events: none;
-}
+.App {
+  .error {
+    color: $danger-color;
+  }
 
-//React table global styling
-.table .tr .td {
-  word-break: break-word;
-}
+  ul.pagination li {
+    cursor: pointer;
+  }
 
-.table .th.reset-filter.svg-btn {
-  display: none;
-}
+  .tooltip {
+    pointer-events: none;
+  }
 
-select.form-control.is-invalid {
-  background-image: none;
-  padding-right: 12px;
-}
+  //React table global styling
+  .table .tr .td {
+    word-break: break-word;
+  }
 
-//by default highlight required fields in blue.
-.form-group.required input:not(.is-invalid) {
-  border: 1px solid $secondary-variant-color;
-}
+  .table .th.reset-filter.svg-btn {
+    display: none;
+  }
 
-.form-group.required select:not(.is-invalid) {
-  border: 1px solid $secondary-variant-color;
-}
+  select.form-control.is-invalid {
+    background-image: none;
+    padding-right: 12px;
+  }
 
-.input-group.required input:not(.is-invalid) {
-  border: 1px solid $secondary-variant-color;
-}
+  //by default highlight required fields in blue.
+  .form-group.required input:not(.is-invalid) {
+    border: 1px solid $secondary-variant-color;
+  }
 
-.form-check.required input:not(.is-invalid) {
-  border: 1px solid $secondary-variant-color;
-}
+  .form-group.required select:not(.is-invalid) {
+    border: 1px solid $secondary-variant-color;
+  }
 
-.form-group.required textarea:not(.is-invalid) {
-  border: 1px solid $secondary-variant-color;
-}
+  .input-group.required input:not(.is-invalid) {
+    border: 1px solid $secondary-variant-color;
+  }
 
-//by default, highlight dropdown options blue
-.dropdown-item,
-.dropdown-header {
-  color: $text-color;
-  &:hover {
-    color: #fff;
-    background-color: $active-color;
+  .form-check.required input:not(.is-invalid) {
+    border: 1px solid $secondary-variant-color;
+  }
+
+  .form-group.required textarea:not(.is-invalid) {
+    border: 1px solid $secondary-variant-color;
+  }
+
+  .form-select,
+  .form-control {
+    border: 1px solid #606060;
+  }
+
+  //by default, highlight dropdown options blue
+  .dropdown-item,
+  .dropdown-header {
+    color: $text-color;
+    &:hover {
+      color: #fff;
+      background-color: $active-color;
+    }
   }
 }

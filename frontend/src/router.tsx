@@ -19,8 +19,6 @@ const MapView = lazy(() => import('./features/properties/map/MapView'));
 const AccessRequestPage = lazy(() => import('./features/admin/access-request/AccessRequestPage'));
 const EditUserPage = lazy(() => import('./features/admin/edit-user/EditUserPage'));
 const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAccessRequests'));
-const ManageAgencies = lazy(() => import('features/admin/agencies/ManageAgencies'));
-const EditAgencyPage = lazy(() => import('features/admin/agencies/EditAgencyPage'));
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
 const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
 
@@ -128,30 +126,6 @@ const AppRouter: React.FC = () => {
           layout={AuthLayout}
           claim={Claims.ADMIN_USERS}
           title={getTitle('Edit User')}
-        />
-        <AppRoute
-          protected
-          path="/admin/agencies"
-          component={ManageAgencies}
-          layout={AuthLayout}
-          claim={Claims.ADMIN_USERS}
-          title={getTitle('Agency Management')}
-        />
-        <AppRoute
-          protected
-          path="/admin/agency/:id"
-          component={EditAgencyPage}
-          layout={AuthLayout}
-          claim={Claims.ADMIN_USERS}
-          title={getTitle('Edit Agency')}
-        />
-        <AppRoute
-          protected
-          path="/admin/agency/new"
-          component={EditAgencyPage}
-          layout={AuthLayout}
-          claim={Claims.ADMIN_USERS}
-          title={getTitle('Edit Agency')}
         />
         <AppRoute title="*" path="*" component={() => <Redirect to="/page-not-found" />} />
       </Switch>

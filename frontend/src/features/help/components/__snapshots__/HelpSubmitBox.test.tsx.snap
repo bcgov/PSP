@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Help Box tests.. renders properly 1`] = `
-.c0 {
+<DocumentFragment>
+  .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-<div>
-  <div
+<div
     class="c0 help-submit-box"
   >
     <span
@@ -78,8 +78,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-label"
             for="input-user"
           >
-            User
-             
+            User 
           </label>
           <input
             class="form-control"
@@ -95,8 +94,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-label"
             for="input-email"
           >
-            Email
-             
+            Email 
           </label>
           <input
             class="form-control"
@@ -112,8 +110,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-label"
             for="input-page"
           >
-            Page
-             
+            Page 
           </label>
           <input
             class="form-control"
@@ -129,8 +126,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-label"
             for="input-question"
           >
-            Question
-             
+            Question 
           </label>
           <textarea
             class="form-control"
@@ -141,5 +137,5 @@ exports[`Help Box tests.. renders properly 1`] = `
       </form>
     </span>
   </div>
-</div>
+</DocumentFragment>
 `;

@@ -30,7 +30,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
   height: calc(100vh - undefined - undefined);
   background-image: url("/tenants/CITZ/background-image.png");
   background-size: cover;
-  background-position: center top;
+  background-position: center;
   overflow: auto;
 }
 
@@ -173,7 +173,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
           PIMS enables you to search properties owned by the Government of British Columbia
         </h6>
         <p>
-          The data provided can assist your agency in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.
+          The data provided can assist your organization in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.
         </p>
         <button
           class="btn btn-primary"
@@ -227,7 +227,7 @@ exports[`Empty Header MOTI Login Loading 1`] = `
   height: calc(100vh - undefined - undefined);
   background-image: url("/tenants/MOTI/background-image.jpg");
   background-size: cover;
-  background-position: center top;
+  background-position: center;
   overflow: auto;
 }
 

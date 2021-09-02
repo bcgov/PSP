@@ -7,15 +7,15 @@ import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { storeSettings, tenantsSlice } from '.';
 
 /**
- * hook that wraps calls to the agencies api.
+ * hook that wraps calls to the organizations api.
  */
 export const useTenants = () => {
   const dispatch = useAppDispatch();
   const api = useApiTenants();
 
   /**
-   * fetch all of the agencies from the server based on a filter.
-   * @return the filtered, paged list of agencies.
+   * fetch all of the organizations from the server based on a filter.
+   * @return the filtered, paged list of organizations.
    */
   const getSettings = React.useCallback(async () => {
     dispatch(logRequest(tenantsSlice.name));

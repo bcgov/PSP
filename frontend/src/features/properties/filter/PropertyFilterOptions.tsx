@@ -14,8 +14,8 @@ interface IPropertyFilterOptions {
 export const PropertyFilterOptions: React.FC<IPropertyFilterOptions> = ({ disabled }) => {
   const state: { options: any[]; placeholders: Record<string, string> } = {
     options: [
-      { label: 'Address', value: 'address' },
       { label: 'PID/PIN', value: 'pid' },
+      { label: 'Address', value: 'address' },
     ],
     placeholders: {
       address: 'Enter an address',
@@ -31,7 +31,7 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions> = ({ disabl
   const desc = state.placeholders[searchBy] || '';
 
   const reset = () => {
-    setFieldValue('address', '');
+    setFieldValue('pid', '');
   };
 
   return (

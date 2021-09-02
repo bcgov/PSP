@@ -9,39 +9,32 @@ import { mapLookupCodeWithParentString } from 'utils';
 
 interface IProps {
   value: IUsersFilter;
-  agencyLookups: ILookupCode[];
+  organizationLookups: ILookupCode[];
   rolesLookups: ILookupCode[];
   onChange: (value: IUsersFilter) => void;
 }
 
 export const UsersFilterBar: React.FC<IProps> = ({
   value,
-  agencyLookups,
+  organizationLookups,
   rolesLookups,
   onChange,
 }) => {
-  const agencyOptions = (agencyLookups ?? []).map(c =>
-    mapLookupCodeWithParentString(c, agencyLookups),
+  const organizationOptions = (organizationLookups ?? []).map(c =>
+    mapLookupCodeWithParentString(c, organizationLookups),
   );
   const roleOptions = rolesLookups.map(rl => ({ label: rl.name, value: rl.name } as SelectOption));
 
   return (
-    <FilterBar<IUsersFilter>
-      initialValues={value}
-      onChange={onChange}
-      customReset={() => {
-        onChange?.({ agency: '' });
-      }}
-      customResetField="agency"
-    >
+    <FilterBar<IUsersFilter> initialValues={value} onChange={onChange}>
       <Col className="bar-item">
-        <Input field="username" placeholder="IDIR/BCeID" />
+        <Input field="businessIdentifier" placeholder="IDIR/BCeID" />
       </Col>
       <Col className="bar-item">
         <Input field="firstName" placeholder="First name" />
       </Col>
       <Col className="bar-item">
-        <Input field="lastName" placeholder="Last name" />
+        <Input field="surname" placeholder="Last name" />
       </Col>
       <Col className="bar-item">
         <Input field="email" placeholder="Email" />
@@ -51,10 +44,10 @@ export const UsersFilterBar: React.FC<IProps> = ({
       </Col>
       <Col className="bar-item">
         <ParentSelect
-          field="agency"
-          options={agencyOptions}
+          field="organization"
+          options={organizationOptions}
           filterBy={['code', 'label', 'parent']}
-          placeholder="Enter an Agency"
+          placeholder="Enter an Organization"
         />
       </Col>
       <Col className="bar-item">

@@ -40,7 +40,7 @@ describe('users action creator', () => {
     jest.restoreAllMocks();
   });
   describe('fetchUsers action creator', () => {
-    const url = '/admin/users/my/agency';
+    const url = '/admin/users/my/organization';
     const mockResponse = {
       data: {
         items: [mockUser],
@@ -59,7 +59,7 @@ describe('users action creator', () => {
             .fetchUsers({} as any)
             .then(() => {
               expect(mockAxios.history.post[0]).toMatchObject({
-                url: '/admin/users/my/agency',
+                url: '/admin/users/my/organization',
               });
             }),
         {

@@ -13,6 +13,6 @@ export type ICluster<
 export type PointFeature = Supercluster.PointFeature<{
   id: number;
   propertyTypeId: PropertyTypes;
-  agencyId?: number;
+  organizationId?: number;
   name?: string;
 }>;

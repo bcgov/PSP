@@ -15,52 +15,51 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// get - The organization service.
+        /// </summary>
+        public IOrganizationService Organization { get { return _serviceProvider.GetService<IOrganizationService>(); } }
+
         /// <summary>
         /// get - The user calling the service.
         /// </summary>
         public ClaimsPrincipal Principal { get; }
 
         /// <summary>
-        /// get - The property services.
+        /// get - The property service.
         /// </summary>
         public IPropertyService Property { get { return _serviceProvider.GetService<IPropertyService>(); } }
 
         /// <summary>
-        /// get - The building services.
-        /// </summary>
-        public IBuildingService Building { get { return _serviceProvider.GetService<IBuildingService>(); } }
-
-        /// <summary>
-        /// get - The lookup services.
+        /// get - The lookup service.
         /// </summary>
         public ILookupService Lookup { get { return _serviceProvider.GetService<ILookupService>(); } }
 
         /// <summary>
-        /// get - The parcel services.
-        /// </summary>
-        public IParcelService Parcel { get { return _serviceProvider.GetService<IParcelService>(); } }
-
-        /// <summary>
-        /// get - The user services.
+        /// get - The user service.
         /// </summary>
         public IUserService User { get { return _serviceProvider.GetService<IUserService>(); } }
 
         /// <summary>
-        /// get - The notification template services.
+        /// get - The role service.
         /// </summary>
-        public INotificationTemplateService NotificationTemplate { get { return _serviceProvider.GetService<INotificationTemplateService>(); } }
+        public IRoleService Role { get { return _serviceProvider.GetService<IRoleService>(); } }
 
         /// <summary>
-        /// get - The notification queue services.
+        /// get - The claim service.
         /// </summary>
-        public INotificationQueueService NotificationQueue { get { return _serviceProvider.GetService<INotificationQueueService>(); } }
+        public IClaimService Claim { get { return _serviceProvider.GetService<IClaimService>(); } }
+
+        /// <summary>
+        /// get - The access request service.
+        /// </summary>
+        public IAccessRequestService AccessRequest { get { return _serviceProvider.GetService<IAccessRequestService>(); } }
 
         /// <summary>
         /// get - The tenant service.
         /// </summary>
-        /// <typeparam name="ITenantService"></typeparam>
         public ITenantService Tenant { get { return _serviceProvider.GetService<ITenantService>(); } }
-
         #endregion
 
         #region Constructors
@@ -86,9 +85,14 @@ namespace Pims.Dal
         {
             return this.User.OriginalValue<T>(entity, propertyName);
         }
-        #endregion
 
-        #region Methods
+        /// <summary>
+        /// Commit all saved changes as a single transaction.
+        /// </summary>
+        public void CommitTransaction()
+        {
+            this.User.CommitTransaction();
+        }
         #endregion
     }
 }
