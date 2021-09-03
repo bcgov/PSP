@@ -12,7 +12,6 @@ import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import { FilterBarSchema } from 'utils/YupSchema';
 
 import { PropertyFilterOptions } from './';
@@ -24,10 +23,6 @@ import { IPropertyFilter } from './IPropertyFilter';
 export interface IPropertyFilterProps {
   /** The default filter to apply if a different one hasn't been set in the URL or stored in redux. */
   defaultFilter: IPropertyFilter;
-  /** An array of organization lookup codes. */
-  organizationLookupCodes: ILookupCode[];
-  /** An array of administrative area codes. */
-  adminAreaLookupCodes: ILookupCode[];
   /** Callback event when the filter is changed during Mount. */
   onChange: (filter: IPropertyFilter) => void;
   /** Comma separated list of column names to sort by. */
@@ -48,8 +43,6 @@ export interface IPropertyFilterProps {
  */
 export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   defaultFilter,
-  organizationLookupCodes,
-  adminAreaLookupCodes,
   onChange,
   sort,
   onSorting,

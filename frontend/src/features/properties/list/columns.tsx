@@ -1,7 +1,6 @@
-import { Input, SelectOption } from 'components/common/form';
+import { Input } from 'components/common/form';
 import { TypeaheadField } from 'components/common/form/Typeahead';
 import { ColumnWithProps } from 'components/Table';
-import { PropertyTypes } from 'constants/index';
 import { IProperty } from 'interfaces';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -33,14 +32,11 @@ const spacing = {
   xxlarge: unit * 8,
 };
 
-export const columns = (
-  organizationOptions: SelectOption[],
-  subOrganizations: SelectOption[],
-  municipalities: ILookupCode[],
-  propertyClassifications: SelectOption[],
-  propertyType: PropertyTypes,
-  editable?: boolean,
-): ColumnWithProps<IProperty>[] => [
+type Props = {
+  municipalities: ILookupCode[];
+};
+
+export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[] => [
   {
     Header: 'PID',
     accessor: 'pid',

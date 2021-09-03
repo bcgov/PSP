@@ -13,7 +13,7 @@ import { storeProperties, storeProperty } from './propertiesSlice';
 export const useProperties = () => {
   const dispatch = useDispatch();
   const {
-    getProperties,
+    getPropertiesPaged,
     getProperty,
     postProperty,
     putProperty,
@@ -24,10 +24,10 @@ export const useProperties = () => {
    * fetch properties, passing the current bounds of the map.
    */
   const fetchProperties = useCallback(
-    async (propertyBounds: API.IPropertySearchParams | null) => {
+    async (propertyBounds: API.IPaginateProperties | null) => {
       dispatch(logRequest(actionTypes.GET_PARCELS));
       dispatch(showLoading());
-      return getProperties(propertyBounds)
+      return getPropertiesPaged(propertyBounds)
         .then((response: AxiosResponse) => {
           dispatch(logSuccess({ name: actionTypes.GET_PARCELS }));
           dispatch(storeProperties(response.data));
@@ -46,7 +46,7 @@ export const useProperties = () => {
         })
         .finally(() => dispatch(hideLoading()));
     },
-    [dispatch, getProperties],
+    [dispatch, getPropertiesPaged],
   );
 
   /**

@@ -31,7 +31,7 @@ export interface IPaginateAccessRequests extends IPaginateParams {
 }
 
 // Parcels
-export interface IPropertySearchParams {
+export interface IPaginateProperties extends IPaginateParams {
   pid?: string;
   pin?: string;
   location?: string;
