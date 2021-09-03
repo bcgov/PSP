@@ -23,7 +23,7 @@ namespace Pims.Dal.Test.Services
         public static IEnumerable<object[]> UserFilterData =>
             new List<object[]>
             {
-                new object[] { new UserFilter(1, 1, null, "ttester", "McTest", "Test", "test@test.com", false, null, null), 1 },
+                new object[] { new UserFilter(1, 1, null, "ttester", "McTest", "Test", "test@test.com", false, null, null, "position"), 1 },
                 new object[] { new UserFilter() { BusinessIdentifier = "ttester" }, 1 },
                 new object[] { new UserFilter() { IsDisabled = true }, 0 },
                 new object[] { new UserFilter() { Organization = "Test" }, 0 },
@@ -97,6 +97,7 @@ namespace Pims.Dal.Test.Services
             euser.Person.FirstName = "Test";
             euser.Person.Surname = "McTest";
             euser.BusinessIdentifier = "ttester";
+            euser.Position = "position";
             euser.Person.ContactMethods.Add(EntityHelper.CreateContactMethod(1, "test@test.com", euser.Person, euser.Organizations.First()));
             euser.IsDisabled = false;
 

@@ -1,12 +1,10 @@
 import { IGeoSearchParams } from 'constants/API';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { BBox } from 'geojson';
+import { BBox, Feature } from 'geojson';
 import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IBuilding, IParcel } from 'interfaces';
-import { GeoJSON, LatLngBounds } from 'leaflet';
-import { flatten, uniqBy } from 'lodash';
+import { geoJSON, LatLngBounds } from 'leaflet';
+import { uniqBy } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { toast } from 'react-toastify';
@@ -17,7 +15,6 @@ import { tilesInBbox } from 'tiles-in-bbox';
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { PointFeature } from '../types';
-import { MUNICIPALITY_LAYER_URL, useLayerQuery } from './LayerPopup';
 import PointClusterer from './PointClusterer';
 
 export type InventoryLayerProps = {
@@ -114,7 +111,7 @@ export const getTiles = (bounds: LatLngBounds, zoom: number): ITile[] => {
 
     return {
       key: `${x}:${y}:${z}`,
-      bbox: SW_long + ',' + NE_long + ',' + SW_lat + ',' + NE_lat,
+      bbox: SW_long + ',' + SW_lat + ',' + NE_long + ',' + NE_lat + ',EPSG:4326',
       point: { x, y, z },
       datum: [],
       latlngBounds: new LatLngBounds({ lat: SW_lat, lng: SW_long }, { lat: NE_lat, lng: NE_long }),
@@ -142,15 +139,13 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   selected,
   onRequestData,
 }) => {
-  const keycloak = useKeycloakWrapper();
   const mapInstance = useMap();
   const [features, setFeatures] = useState<PointFeature[]>([]);
   const [loadingTiles, setLoadingTiles] = useState(false);
   const { loadProperties } = useApi();
   const { changed: filterChanged } = useFilterContext();
-  const municipalitiesService = useLayerQuery(MUNICIPALITY_LAYER_URL);
 
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
+  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftProperties);
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -174,21 +169,10 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     const tiles = getTiles(defaultBounds, 5);
 
     return tiles.map(tile => ({
-      bbox: tile.bbox,
-      address: filter?.address,
-      administrativeArea: filter?.administrativeArea,
-      pid: filter?.pid,
-      organizations: filter?.organizations,
-      classificationId: filter?.classificationId,
-      minLandArea: filter?.minLandArea,
-      maxLandArea: filter?.maxLandArea,
-      floorCount: filter?.floorCount,
-      predominateUseId: Number(filter?.predominateUseId),
-      constructionTypeId: filter?.constructionTypeId,
-      name: filter?.name,
-      bareLandOnly: filter?.bareLandOnly,
-      rentableArea: filter?.rentableArea,
-      includeAllProperties: filter?.includeAllProperties,
+      STREET_ADDRESS_1: filter?.STREET_ADDRESS_1,
+      PID: filter?.PID,
+      PIN: filter?.PIN,
+      BBOX: tile.bbox,
     }));
   }, [filter]);
 
@@ -196,45 +180,41 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     return loadProperties(filter);
   };
 
+  /**
+   * TODO: convert polygon features into lat/lng coordinates, remove this when new Point Geoserver layer available.
+   * @param feature the feature to obtain lat/lng coordinates for.
+   * @returns [lat, lng]
+   */
+  const getLatLng = (feature: any) => {
+    if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+      const latLng = geoJSON(feature.geometry)
+        .getBounds()
+        .getCenter();
+      return [latLng.lng, latLng.lat];
+    }
+    return feature.geometry.coordinates;
+  };
+
   const search = async (filters: IGeoSearchParams[]) => {
+    //TODO: currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
     try {
       onRequestData(true);
-      const data = flatten(await Promise.all(filters.map(x => loadTile(x)))).map(f => {
+      const tileData = await loadTile(filters[0]);
+      const data = tileData.features.map((feature: Feature) => {
+        //TODO: this converts all polygons to points, this should be changed to a View that returns the POINT instead of the POLYGON (psp-1859)
         return {
-          ...f,
-        } as PointFeature;
+          ...feature,
+          geometry: { type: 'Point', coordinates: getLatLng(feature) },
+          properties: {
+            ...feature.properties,
+            propertyTypeId: PropertyTypes.Land,
+          },
+        } as Feature;
       });
 
-      const items = uniqBy(
-        data,
-        point => `${point?.properties?.id}-${point?.properties?.propertyTypeId}`,
-      );
+      const results = uniqBy(data, (point: Feature) => `${point?.properties?.PROPERTY_ID}`);
 
-      /**
-       * Whether the land has buildings on it.
-       * @param property PIMS property
-       */
-      const hasBuildings = (property: IParcel | IBuilding) => false;
-
-      let results = items.filter(({ properties }: any) => {
-        return (
-          properties?.propertyTypeId === PropertyTypes.Building ||
-          !hasBuildings(properties) ||
-          (properties?.propertyTypeId === PropertyTypes.Subdivision &&
-            keycloak.canUserEditProperty(properties))
-        );
-      }) as any;
-
-      // Fit to municipality bounds
-      const administrativeArea = filter?.administrativeArea;
-      if (results.length === 0 && !!administrativeArea) {
-        const municipality = await municipalitiesService.findByAdministrative(administrativeArea);
-        if (municipality) {
-          const bounds = (GeoJSON.geometryToLayer(municipality) as any)._bounds;
-          mapInstance.fitBounds(bounds, { maxZoom: 11 });
-        }
-      }
-      setFeatures(results);
+      setFeatures(results as any);
       setLoadingTiles(false);
       if (results.length === 0) {
         toast.info('No search results found');
