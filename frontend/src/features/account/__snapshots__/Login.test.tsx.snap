@@ -2,11 +2,12 @@
 
 exports[`login login renders correctly 1`] = `
 .c0 {
-  height: calc(100vh - undefined - undefined);
+  position: relative;
   background-image: url("/tenants/MOTI/background-image.jpg");
   background-size: cover;
   background-position: center;
   overflow: auto;
+  grid-area: content;
 }
 
 .c0 .unauth {

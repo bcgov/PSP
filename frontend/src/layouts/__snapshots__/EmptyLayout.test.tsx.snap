@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Empty Layout renders 1`] = `
-.c4 {
-  bottom: 0;
-  padding: 10px 0;
+.c5 {
+  padding: 10px 20%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -11,28 +10,14 @@ exports[`Empty Layout renders 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  -webkit-align-content: flex-start;
-  -ms-flex-line-pack: start;
-  align-content: flex-start;
 }
 
-.c4 a {
+.c5 a {
   display: inline;
 }
 
-.c4 a:link,
-.c4 a:visited {
+.c5 a:link,
+.c5 a:visited {
   color: #ffffff;
   font-size: 16px;
   font-family: 'BCSans',Fallback,sans-serif;
@@ -40,54 +25,54 @@ exports[`Empty Layout renders 1`] = `
   border-right: 1px solid #666;
 }
 
-.c4 a:hover,
-.c4 a:focus {
+.c5 a:hover,
+.c5 a:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c4 div.version {
+.c5 div.version {
   color: #ffffff;
   font-size: 12px;
   font-family: 'BCSans',Fallback,sans-serif;
   padding: 0 0 0 10px;
-  -webkit-box-flex: 2;
-  -webkit-flex-grow: 2;
-  -ms-flex-positive: 2;
-  flex-grow: 2;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   text-align: right;
 }
 
-.c2 {
+.c3 {
   border-left: 2px solid white;
   font-size: 34px;
   margin: 0 15px 0 25px;
   vertical-align: top;
 }
 
-.c1 {
+.c2 {
   padding: 0 10px;
   min-height: 70px;
   color: #ffffff;
 }
 
-.c1 .longAppName {
+.c2 .longAppName {
   display: none;
 }
 
-.c1 .shortAppName {
+.c2 .shortAppName {
   display: block;
 }
 
-.c1 .brand-box {
+.c2 .brand-box {
   padding: 10px 0;
 }
 
-.c1 .brand-box .pims-logo {
+.c2 .brand-box .pims-logo {
   margin: 0 10px;
 }
 
-.c1 .title h1 {
+.c2 .title h1 {
   margin-top: 10px;
   padding-left: 0px;
   text-align: center;
@@ -99,7 +84,7 @@ exports[`Empty Layout renders 1`] = `
   white-space: normal;
 }
 
-.c1 .other {
+.c2 .other {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -114,148 +99,143 @@ exports[`Empty Layout renders 1`] = `
   padding: 0;
 }
 
-.c1 .other:hover {
+.c2 .other:hover {
   color: red;
   cursor: pointer;
 }
 
-.c1 .modal-content .label {
+.c2 .modal-content .label {
   font-weight: 700;
 }
 
-.c3 {
+.c4 {
   background-color: #003366;
   border: none;
   border-top: 2px solid;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+  grid-area: footer;
 }
 
-.c3 a,
-.c3 h2 {
+.c4 a,
+.c4 h2 {
   color: #fff;
 }
 
-.c0 {
+.c1 {
   background-color: #003366;
   border: none;
   border-bottom: 2px solid;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+  grid-area: header;
+  padding: 0 20%;
+}
+
+.c0 {
+  grid: 4.5rem auto 3rem / 1fr;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  overflow-y: hidden;
+  grid-template-areas: 'header' 'content' 'footer';
 }
 
 @media (min-width:992px) {
-  .c1 .longAppName {
+  .c2 .longAppName {
     display: block;
     text-align: left;
     padding-left: 40px;
   }
 
-  .c1 .shortAppName {
+  .c2 .shortAppName {
     display: none;
   }
 }
 
 <div>
   <div
-    class="App container-fluid"
+    class="c0 App"
   >
     <header
-      class="c0 header-layout fixed-top"
+      class="c1"
     >
-      <div
-        class="px-0 container"
+      <nav
+        class="c2 App-header navbar navbar-expand navbar-light"
       >
-        <nav
-          class="c1 App-header navbar navbar-expand navbar-light"
+        <span
+          class="brand-box navbar-brand"
         >
-          <span
-            class="brand-box navbar-brand"
+          <a
+            href="https://www2.gov.bc.ca/gov/content/home"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            <a
-              href="https://www2.gov.bc.ca/gov/content/home"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <img
-                alt="Government of BC logo"
-                class="bc-gov-icon"
-                height="43"
-                src="logo-banner.svg"
-                width="156"
-              />
-            </a>
-            <span
-              class="c2"
-            />
             <img
-              alt="PIMS logo"
-              class="pims-logo"
-              height="50"
-              src="/tenants/MOTI/PIMS-logo.png"
+              alt="Government of BC logo"
+              class="bc-gov-icon"
+              height="43"
+              src="logo-banner.svg"
+              width="156"
             />
-          </span>
+          </a>
+          <span
+            class="c3"
+          />
+          <img
+            alt="PIMS logo"
+            class="pims-logo"
+            height="50"
+            src="/tenants/MOTI/PIMS-logo.png"
+          />
+        </span>
+        <div
+          class="title mr-auto navbar-nav"
+        >
           <div
-            class="title mr-auto navbar-nav"
+            class="nav-item"
           >
-            <div
-              class="nav-item"
+            <h1
+              class="longAppName"
             >
-              <h1
-                class="longAppName"
-              >
-                Property Information Management System
-              </h1>
-              <h1
-                class="shortAppName"
-              >
-                PIMS
-              </h1>
-            </div>
+              Property Information Management System
+            </h1>
+            <h1
+              class="shortAppName"
+            >
+              PIMS
+            </h1>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
     </header>
-    <main
-      class="App-content"
-    />
     <footer
-      class="c3 footer-layout fixed-bottom"
+      class="c4"
     >
       <div
-        class="px-0 container"
+        class="c5"
       >
-        <div
-          class="c4"
+        <a
+          href="http://www.gov.bc.ca/gov/content/home/disclaimer"
         >
-          <a
-            href="http://www.gov.bc.ca/gov/content/home/disclaimer"
-          >
-            Disclaimer
-          </a>
-          <a
-            href="http://www.gov.bc.ca/gov/content/home/privacy"
-          >
-            Privacy
-          </a>
-          <a
-            href="http://www.gov.bc.ca/gov/content/home/accessible-government"
-          >
-            Accessibility
-          </a>
-          <a
-            href="http://www.gov.bc.ca/gov/content/home/copyright"
-          >
-            Copyright
-          </a>
-          <div
-            class="version"
-            data-testid="version"
-          >
-            api unavailable
-          </div>
+          Disclaimer
+        </a>
+        <a
+          href="http://www.gov.bc.ca/gov/content/home/privacy"
+        >
+          Privacy
+        </a>
+        <a
+          href="http://www.gov.bc.ca/gov/content/home/accessible-government"
+        >
+          Accessibility
+        </a>
+        <a
+          href="http://www.gov.bc.ca/gov/content/home/copyright"
+        >
+          Copyright
+        </a>
+        <div
+          class="version"
+          data-testid="version"
+        >
+          api unavailable
         </div>
       </div>
     </footer>

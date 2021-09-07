@@ -1,6 +1,5 @@
 import { cleanup, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { createMemoryHistory } from 'history';
 import L from 'leaflet';
 import queryString from 'query-string';
@@ -75,7 +74,6 @@ describe('Layer Popup Content', () => {
       disabled: false,
       loadDraft: false,
       sidebar: true,
-      sidebarContext: SidebarContextType.ADD_BUILDING,
     });
     const { getByText } = renderPopup(mockLayer);
     const link = getByText(/Populate property details/i);
@@ -87,7 +85,6 @@ describe('Layer Popup Content', () => {
       disabled: false,
       loadDraft: false,
       sidebar: true,
-      sidebarContext: SidebarContextType.ADD_BUILDING,
     });
     // render popup
     const { getByText } = renderPopup(mockLayer);

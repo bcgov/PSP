@@ -21,9 +21,8 @@ const HeaderStyled = styled.header<IHeaderProps>`
   background-color: ${props => props.backgroundColor};
   border: none;
   border-bottom: 2px solid ${props => props.theme.css.accentColor};
-
-  // sizing
-  flex-shrink: 0;
+  grid-area: header;
+  padding: 0 20%;
 `;
 
 export default Header;

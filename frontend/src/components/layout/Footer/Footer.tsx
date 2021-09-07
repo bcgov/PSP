@@ -22,14 +22,9 @@ function Footer() {
  * Styled footer component.
  */
 const FooterStyled = styled('div')`
-  bottom: 0;
-  padding: 10px 0;
+  padding: 10px 20%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: flex-start;
 
   a {
     display: inline;
@@ -52,7 +47,7 @@ const FooterStyled = styled('div')`
     font-size: 12px;
     font-family: 'BCSans', Fallback, sans-serif;
     padding: 0 0 0 10px;
-    flex-grow: 2;
+    flex-grow: 1;
     text-align: right;
   }
 `;
