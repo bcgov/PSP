@@ -64,14 +64,14 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Posts a new access request', () => {
-    const newAccessRequest = { ...mockAccessRequest, id: 0 };
+    const newAccessRequest = { ...mockAccessRequest, id: undefined };
     renderHook(async () => {
       mockAxios.onPost(`/access/requests`).reply(201, newAccessRequest);
       const api = useApiAccessRequests();
       const response = await api.postAccessRequest(newAccessRequest);
 
       expect(response.status).toBe(201);
-      expect(response.data).toStrictEqual(newAccessRequest);
+      expect(response.data).toEqual(newAccessRequest);
     });
   });
 

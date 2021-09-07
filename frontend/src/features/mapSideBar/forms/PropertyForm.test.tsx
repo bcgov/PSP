@@ -33,7 +33,7 @@ const defaultStore = mockStore({
       },
     ],
   },
-  [propertiesSlice.name]: { parcels: [], draftParcels: [] },
+  [propertiesSlice.name]: { parcels: [], draftProperties: [] },
 });
 
 describe('Property Form functionality', () => {

@@ -1,6 +1,6 @@
-import { IBuilding, IParcel } from 'interfaces';
+import { IProperty } from 'interfaces';
 
 export interface IStorePropertyDetail {
-  property: IParcel | IBuilding | null;
+  property: IProperty | null;
   position?: [number, number];
 }

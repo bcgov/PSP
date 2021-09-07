@@ -1,12 +1,13 @@
-import { IBuilding, IParcel } from 'interfaces';
+import { PropertyTypes } from 'constants/index';
+import { IProperty } from 'interfaces';
 import { noop } from 'lodash';
 import React from 'react';
 
 export interface IPopUpContext {
-  propertyInfo: IParcel | IBuilding | null;
-  setPropertyInfo: (propertyInfo: IParcel | IBuilding | null) => void;
-  propertyTypeId: number | null;
-  setPropertyTypeId: (propertyTypeId: number) => void;
+  propertyInfo: IProperty | null;
+  setPropertyInfo: (propertyInfo: IProperty | null) => void;
+  propertyTypeId: PropertyTypes | null;
+  setPropertyTypeId: (propertyTypeId: PropertyTypes) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
 }
@@ -32,10 +33,10 @@ export const PropertyPopUpContextProvider: React.FC<IPopUpContextComponent> = ({
   children,
   values,
 }) => {
-  const [propertyInfo, setPropertyInfo] = React.useState<IParcel | IBuilding | null>(
+  const [propertyInfo, setPropertyInfo] = React.useState<IProperty | null>(
     values?.propertyInfo ?? null,
   );
-  const [propertyTypeId, setPropertyTypeId] = React.useState<number | null>(
+  const [propertyTypeId, setPropertyTypeId] = React.useState<PropertyTypes | null>(
     values?.propertyTypeId ?? null,
   );
   const [loading, setLoading] = React.useState<boolean>(values?.loading ?? false);

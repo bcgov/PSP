@@ -1,41 +1,29 @@
+import { AddressTypes, PropertyTypes } from 'constants/index';
 import { IAddress } from 'interfaces';
 
-export interface IProperty {
-  address: IAddress;
-  titleNumber: string;
-  legalDescription: string;
-  Region: string;
-  classification: string;
-  purpose: string;
-  regionalDistrict: string;
-  ruralArea: string;
-  electoralDistrict: string;
-  municipality: string;
-  zoning: string;
-  ocpDesignation: string;
-  pid: string;
-  latitude?: number;
-  longitude?: number;
-}
-
-export const defaultPropertyValues: IProperty = {
+export const defaultPropertyValues = {
   address: {
-    line1: '',
-    administrativeArea: '',
+    addressTypeId: AddressTypes.Physical,
+    streetAddress1: '',
+    municipality: '',
     postal: '',
     province: '',
-    provinceId: 'BC',
-  },
-  titleNumber: '',
-  legalDescription: '',
-  Region: '',
-  classification: '',
-  purpose: '',
-  regionalDistrict: '',
-  ruralArea: '',
-  electoralDistrict: '',
-  municipality: '',
-  zoning: '',
-  ocpDesignation: '',
+    provinceId: 1,
+    region: '',
+    district: '',
+  } as IAddress,
   pid: '',
+  propertyTypeId: PropertyTypes.Land,
+  classification: '',
+  region: '',
+  district: '',
+  zoning: '',
+  landArea: '',
+  landLegalDescription: '',
+
+  // TODO: Theses properties probably should be replaced or updated.
+  titleNumber: '',
+  purpose: '',
+  ruralArea: '',
+  ocpDesignation: '',
 };

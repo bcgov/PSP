@@ -1,5 +1,5 @@
 export interface ILookupCode {
-  id: number;
+  id: number | string;
   code?: string;
   name: string;
   isDisabled: boolean;

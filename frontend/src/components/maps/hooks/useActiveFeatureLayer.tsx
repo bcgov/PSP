@@ -35,7 +35,7 @@ const useActiveFeatureLayer = ({
 }: IUseActiveParcelMapLayer) => {
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftParcels);
+  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftProperties);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -95,24 +95,14 @@ const useActiveFeatureLayer = ({
     };
     if (
       !!activeFeatureLayer &&
-      !!selectedProperty?.parcelDetail?.latitude &&
-      !!selectedProperty?.parcelDetail?.longitude
+      !!selectedProperty?.propertyDetail?.latitude &&
+      !!selectedProperty?.propertyDetail?.longitude
     ) {
       activeFeatureLayer.clearLayers();
       highlightSelectedProperty({
-        lat: selectedProperty.parcelDetail?.latitude as number,
-        lng: selectedProperty.parcelDetail?.longitude as number,
+        lat: selectedProperty.propertyDetail?.latitude as number,
+        lng: selectedProperty.propertyDetail?.longitude as number,
       } as LatLng);
-      if (!!selectedProperty.parcelDetail?.parcels?.length) {
-        selectedProperty.parcelDetail.parcels.forEach(parcel => {
-          if (!!parcel?.longitude && !!parcel.latitude) {
-            highlightSelectedProperty({
-              lat: parcel?.latitude as number,
-              lng: parcel?.longitude as number,
-            } as LatLng);
-          }
-        });
-      }
     }
   }, [selectedProperty, activeFeatureLayer]);
 

@@ -14,7 +14,7 @@ const SearchButton: React.FC<ButtonProps> = ({ ...props }) => {
       <Button
         id="search-button"
         type="submit"
-        className={props.className ?? 'bg-warning'}
+        className={props.className ?? 'primary'}
         {...props}
         icon={<FaSearch size={20} />}
       />

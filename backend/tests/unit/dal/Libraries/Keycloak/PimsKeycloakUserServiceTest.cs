@@ -186,7 +186,9 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 }).ToArray());
 
             var pimsServiceMock = helper.GetMock<IPimsService>();
+            pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.User>())).Returns(euser);
             pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
             pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
 
@@ -233,6 +235,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
 
             var pimsServiceMock = helper.GetMock<IPimsService>();
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
+            pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.User>())).Returns(euser);
             pimsServiceMock.Setup(m => m.Role.Find(removeRole.Id)).Returns<Entity.Role>(null);
             pimsServiceMock.Setup(m => m.Organization.GetChildren(It.IsAny<long>())).Returns(Array.Empty<Entity.Organization>());
 
