@@ -47,6 +47,12 @@ namespace Pims.Dal.Entities.Models
         public string Role { get; set; }
 
         /// <summary>
+        /// get/set - user job title.
+        /// </summary>
+        /// <value></value>
+        public string Position { get; set; }
+
+        /// <summary>
         /// get/set - account status
         /// </summary>
         /// <value></value>
@@ -83,7 +89,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="sort"></param>
         /// <returns></returns>
         public UserFilter(int page, int quantity, string organization, string businessIdentifier, string surname,
-            string firstName, string email, bool? isDisabled, string role, string[] sort) : base(page, quantity, sort)
+            string firstName, string email, bool? isDisabled, string role, string[] sort, string position) : base(page, quantity, sort)
         {
             this.Organization = organization;
             this.BusinessIdentifier = businessIdentifier;
@@ -92,6 +98,7 @@ namespace Pims.Dal.Entities.Models
             this.Email = email;
             this.IsDisabled = isDisabled;
             this.Role = role;
+            this.Position = position;
         }
 
         /// <summary>
@@ -113,6 +120,7 @@ namespace Pims.Dal.Entities.Models
             this.Role = filter.GetStringValue(nameof(this.Role));
             this.IsDisabled = filter.GetValue<bool?>(nameof(this.IsDisabled));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+            this.Position = filter.GetStringValue(nameof(this.Position));
         }
         #endregion
     }

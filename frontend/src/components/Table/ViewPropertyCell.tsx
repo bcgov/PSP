@@ -21,8 +21,8 @@ const ViewPropertyCell = (props: CellProps<IProperty, number>) => {
           sidebar: true,
           disabled: true,
           loadDraft: false,
-          parcelId: [PropertyTypes.Parcel, PropertyTypes.Subdivision].includes(
-            property.propertyTypeId ?? PropertyTypes.Parcel,
+          parcelId: [PropertyTypes.Land, PropertyTypes.Subdivision].includes(
+            property.propertyTypeId ?? PropertyTypes.Land,
           )
             ? property.id
             : undefined,

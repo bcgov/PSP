@@ -1,22 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MapFilterBar renders correctly 1`] = `
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c0 .form-control {
-  width: 165px;
-  height: 35px;
-}
-
-.c0 .form-group .rbt .rbt-menu {
-  width: 370px !important;
-}
-
 <form
   class=""
   novalidate=""
@@ -25,141 +9,16 @@ exports[`MapFilterBar renders correctly 1`] = `
     class="map-filter-bar form-row"
   >
     <div
-      class="c0 col"
+      class="bar-item filter-options col"
     >
-      <div
-        class="form-group"
+      <p
+        class="m-0"
       >
-        <select
-          class="form-select form-control"
-          id="input-includeAllProperties"
-          name="includeAllProperties"
-        >
-          <option
-            class="option"
-            value="false"
-          >
-            My Organizations
-          </option>
-          <option
-            class="option"
-            value="true"
-          >
-            All Government
-          </option>
-        </select>
-      </div>
-      <div
-        class="form-group"
-      >
-        <div
-          class="rbt"
-          style="outline: none; position: relative;"
-          tabindex="-1"
-        >
-          <div
-            style="display: flex; flex: 1; height: 100%; position: relative;"
-          >
-            <input
-              aria-autocomplete="both"
-              aria-expanded="false"
-              aria-haspopup="listbox"
-              autocomplete="off"
-              class="rbt-input-main form-control rbt-input"
-              id="organizations-field"
-              name="organizations"
-              placeholder="Organization"
-              role="combobox"
-              type="text"
-              value=""
-            />
-            <input
-              aria-hidden="true"
-              class="rbt-input-hint"
-              readonly=""
-              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; height: 35px; line-height: normal; padding: 1px 1px 1px 1px;"
-              tabindex="-1"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
+        Search: 
+      </p>
     </div>
     <div
-      class="map-filter-typeahead col"
-    >
-      <div
-        class="rbt"
-        style="outline: none; position: relative;"
-        tabindex="-1"
-      >
-        <div
-          style="display: flex; flex: 1; height: 100%; position: relative;"
-        >
-          <input
-            aria-autocomplete="both"
-            aria-expanded="false"
-            aria-haspopup="listbox"
-            autocomplete="off"
-            class="rbt-input-main form-control rbt-input"
-            id="name-field"
-            placeholder="Property name"
-            role="combobox"
-            type="text"
-            value=""
-          />
-          <input
-            aria-hidden="true"
-            class="rbt-input-hint"
-            readonly=""
-            style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
-            tabindex="-1"
-            value=""
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="map-filter-typeahead col"
-    >
-      <div
-        class="form-group"
-      >
-        <div
-          class="rbt"
-          style="outline: none; position: relative;"
-          tabindex="-1"
-        >
-          <div
-            style="display: flex; flex: 1; height: 100%; position: relative;"
-          >
-            <input
-              aria-autocomplete="both"
-              aria-expanded="false"
-              aria-haspopup="listbox"
-              autocomplete="off"
-              class="rbt-input-main form-control rbt-input"
-              id="administrativeArea-field"
-              name="administrativeArea"
-              placeholder="Location"
-              role="combobox"
-              type="text"
-              value=""
-            />
-            <input
-              aria-hidden="true"
-              class="rbt-input-hint"
-              readonly=""
-              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
-              tabindex="-1"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="bar-item col"
+      class="bar-item filter-options col"
     >
       <div
         class="input-group"
@@ -177,15 +36,15 @@ exports[`MapFilterBar renders correctly 1`] = `
             >
               <option
                 class="option"
-                value="address"
-              >
-                Address
-              </option>
-              <option
-                class="option"
                 value="pid"
               >
                 PID/PIN
+              </option>
+              <option
+                class="option"
+                value="address"
+              >
+                Address
               </option>
             </select>
           </div>
@@ -198,9 +57,9 @@ exports[`MapFilterBar renders correctly 1`] = `
           >
             <input
               class="form-control"
-              id="input-name"
-              name="name"
-              placeholder=""
+              id="input-pid"
+              name="pid"
+              placeholder="Enter a PID or PIN"
               value=""
             />
           </div>
@@ -210,39 +69,8 @@ exports[`MapFilterBar renders correctly 1`] = `
     <div
       class="bar-item col"
     >
-      <div
-        class="form-group"
-      >
-        <select
-          class="form-select form-control"
-          id="input-classificationId"
-          name="classificationId"
-        >
-          <option
-            value=""
-          >
-            Classification
-          </option>
-          <option
-            class="option"
-            value="1"
-          >
-            Core Operational
-          </option>
-          <option
-            class="option"
-            value="2"
-          >
-            Core Strategic
-          </option>
-        </select>
-      </div>
-    </div>
-    <div
-      class="bar-item flex-grow-0 col"
-    >
       <button
-        class="Button Button--icon-only bg-warning btn btn-primary"
+        class="Button Button--icon-only primary btn btn-primary"
         id="search-button"
         type="submit"
       >
@@ -266,7 +94,7 @@ exports[`MapFilterBar renders correctly 1`] = `
       </button>
     </div>
     <div
-      class="bar-item flex-grow-0 col"
+      class="bar-item col"
     >
       <button
         class="Button Button--icon-only btn btn-info"

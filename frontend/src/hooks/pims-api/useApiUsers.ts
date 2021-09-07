@@ -1,7 +1,7 @@
 import { IPaginateParams } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
-import { IPagedItems, IUser, IUserDetails } from 'interfaces';
+import { IPagedItems, IUser } from 'interfaces';
 import React from 'react';
 
 import { useApi } from '.';
@@ -24,10 +24,10 @@ export const useApiUsers = () => {
   return React.useMemo(
     () => ({
       activateUser: () => api.post('/auth/activate'),
-      getUser: (key: string) => api.get<IUserDetails>(`/admin/users/${key}`),
+      getUser: (key: string) => api.get<IUser>(`/admin/users/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
         api.post<IPagedItems<IUser>>(`/admin/users/my/organization`, params),
-      putUser: (user: IUserDetails) =>
+      putUser: (user: IUser) =>
         apiWithToasts.put<IUser>(`/keycloak/users/${user.keycloakUserId}`, user),
     }),
     [api, apiWithToasts],

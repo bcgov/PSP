@@ -114,7 +114,7 @@ export const ManageUsers = () => {
   let userList = pagedUsers.items.map(
     (u: IUser): IUserRecord => ({
       id: u.id,
-      key: u.key,
+      keycloakUserId: u.keycloakUserId,
       email: u.email,
       businessIdentifier: u.businessIdentifier,
       firstName: u.firstName,

@@ -141,9 +141,9 @@ describe('AccessRequestPage', () => {
           surname: undefined,
           position: '',
           businessIdentifier: undefined,
+          keycloakUserId: undefined,
         },
         userId: undefined,
-        key: undefined,
       });
     });
 
