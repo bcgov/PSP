@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Edit user page EditUserPage renders 1`] = `
+.c0 {
+  display: inline;
+}
+
+.c0 .req {
+  color: red;
+  font-weight: bold;
+}
+
 <div>
   <nav
     class="navBar navbar navbar-expand-sm navbar-light bg-light"
@@ -23,7 +32,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
         novalidate=""
       >
         <p
-          class="label"
+          class="c0 label"
         >
           IDIR/BCeID
         </p>
@@ -41,7 +50,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           />
         </div>
         <p
-          class="label"
+          class="c0 label"
         >
           Last Login
         </p>
@@ -65,7 +74,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             class="col"
           >
             <p
-              class="label"
+              class="c0 label"
             >
               First Name
             </p>
@@ -87,7 +96,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             class="col"
           >
             <p
-              class="label"
+              class="c0 label"
             >
               Last Name
             </p>
@@ -107,7 +116,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           </div>
         </div>
         <p
-          class="label"
+          class="c0 label"
         >
           Email
         </p>
@@ -154,7 +163,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           </select>
         </div>
         <p
-          class="label"
+          class="c0 label"
         >
           Position
         </p>
@@ -213,7 +222,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           </div>
         </div>
         <p
-          class="label"
+          class="c0 label"
         >
           Notes
         </p>
