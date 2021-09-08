@@ -2,8 +2,10 @@
 @import '../../../variables';
 @import '../../../colors';
 .map-filter-container {
-  height: $mapfilter-height;
+  grid-area: filter;
   background-color: $filter-background-color;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+  z-index: 500;
   .map-filter-bar {
     align-items: center;
     justify-content: center;
@@ -18,6 +20,7 @@
     .bar-item {
       flex-grow: 0;
       .input-group {
+        flex-wrap: nowrap;
         .input-group-prepend {
           .form-group {
             width: 110px;
@@ -36,6 +39,7 @@
       height: 35px;
       width: 35px;
       min-height: unset;
+      padding: 0;
     }
     .form-control {
       font-size: 14px;

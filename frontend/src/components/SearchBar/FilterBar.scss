@@ -1,6 +1,7 @@
 @import '../../fonts.scss';
 @import '../../colors.scss';
 .search-bar {
+  margin: 0;
   padding: 12px;
   background-color: $filter-background-color;
   .bar-item {

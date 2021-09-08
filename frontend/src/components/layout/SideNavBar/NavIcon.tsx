@@ -1,3 +1,4 @@
+import clsx from 'classnames';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Roles } from 'constants/index';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -22,27 +23,43 @@ export const NavIcon = ({ icon, text, showText, onClick, roles }: INavIconProps)
   const displayIcon = _.find(roles, (role: Roles) => hasRole(role));
 
   return !roles?.length || displayIcon ? (
-    <Nav.Item onClick={onClick} data-testid={`nav-tooltip-${text}`}>
+    <StyledNav onClick={onClick} data-testid={`nav-tooltip-${text.replace(' ', '').toLowerCase()}`}>
       <StyledLink>
         <TooltipWrapper toolTipId={`nav-tooltip-${text}`} toolTip={text}>
           {icon}
         </TooltipWrapper>
-        {showText && <p>{text}</p>}
+        <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>
       </StyledLink>
-    </Nav.Item>
+    </StyledNav>
   ) : null;
 };
+
+const StyledNav = styled(Nav.Item)`
+  width: 100%;
+`;
 
 const StyledLink = styled(Nav.Link)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  p {
-    margin-left: 0.25rem;
-    margin-bottom: 0;
-    font-size: 12px;
-    color: white;
-    white-space: nowrap;
+  svg {
+    min-width: max-content;
+  }
+`;
+
+const StyledLabel = styled.label`
+  margin-left: 0.25rem;
+  margin-bottom: 0;
+  font-size: 12px;
+  color: white;
+  white-space: nowrap;
+  transition: width 0.25s;
+  width: 0;
+  overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  &.show {
+    width: 100%;
   }
 `;
 

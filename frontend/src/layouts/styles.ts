@@ -1,24 +1,5 @@
 import styled from 'styled-components';
 
-export const SideNavBar = styled.div`
-  align-items: center;
-  grid-area: iconbar;
-  background-color: ${props => props.theme.css.primaryColor};
-  transition: 0.5s width;
-  width: 3rem;
-  &.expanded {
-    width: 8rem;
-  }
-  svg {
-    fill: white;
-  }
-  .chevron {
-    margin-top: auto;
-    align-self: flex-end;
-    cursor: pointer;
-  }
-`;
-
 export const AppGridContainer = styled.div`
   padding: 0;
   text-align: center;
