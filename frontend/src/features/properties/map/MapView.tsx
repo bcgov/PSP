@@ -1,8 +1,6 @@
 import './MapView.scss';
 
 import { FilterProvider } from 'components/maps/providers/FIlterProvider';
-import * as API from 'constants/API';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { LeafletMouseEvent } from 'leaflet';
 import queryString from 'query-string';
 import React, { useState } from 'react';
@@ -27,12 +25,8 @@ interface MapViewProps {
 }
 
 const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
-  const lookupCodes = useLookupCodeHelpers();
-  const properties = useAppSelector(state => [...(state.properties?.properties ?? [])]);
   const [loadedProperties, setLoadedProperties] = useState(false);
   const propertyDetail = useAppSelector(state => state.properties.propertyDetail);
-  const organizations = lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME);
-  const administrativeAreas = lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME);
 
   const dispatch = useDispatch();
 
@@ -53,10 +47,7 @@ const MapView: React.FC<MapViewProps> = (props: MapViewProps) => {
       <Map
         lat={defaultLatLng.lat}
         lng={defaultLatLng.lng}
-        properties={properties}
         selectedProperty={propertyDetail}
-        organizations={organizations}
-        administrativeAreas={administrativeAreas}
         onViewportChanged={(mapFilterModel: MapViewportChangeEvent) => {
           if (!loadedProperties) {
             setLoadedProperties(true);

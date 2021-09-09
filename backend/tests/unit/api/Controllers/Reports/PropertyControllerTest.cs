@@ -28,13 +28,10 @@ namespace Pims.Api.Test.Controllers.Reports
         #region Variables
         public static IEnumerable<object[]> PropertyFilters = new List<object[]>()
         {
-            new object [] { new PropertyFilterModel(100, 0, 0, 0) },
-            new object [] { new PropertyFilterModel(0, 100, 0, 0) },
-            new object [] { new PropertyFilterModel(0, 0, 10, 0) },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { Address = "Address" } },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { Organizations = new long[] { 1 } } },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { ClassificationId = "class" } },
+            new object [] { new PropertyFilterModel() },
+            new object [] { new PropertyFilterModel() { Address = "Address" } },
+            new object [] { new PropertyFilterModel() { PIN = 999999 } },
+            new object [] { new PropertyFilterModel() { PID = "foobar" } },
         };
 
         public static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
@@ -290,7 +287,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
             var service = helper.GetService<Mock<IPimsService>>();
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
+            var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert
@@ -311,7 +308,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var service = helper.GetService<Mock<IPimsService>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
+            var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert
@@ -429,7 +426,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
             var service = helper.GetService<Mock<IPimsService>>();
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
+            var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert
@@ -450,7 +447,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var service = helper.GetService<Mock<IPimsService>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
+            var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert

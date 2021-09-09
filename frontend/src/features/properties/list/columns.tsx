@@ -5,7 +5,7 @@ import { IProperty } from 'interfaces';
 import { CellProps } from 'react-table';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
-import { formatNumber, mapLookupCode } from 'utils';
+import { formatNumber, formatStreetAddress, mapLookupCode } from 'utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
   },
   {
     Header: 'Civic Address',
-    accessor: 'address',
+    accessor: p => formatStreetAddress(p.address),
     align: 'left',
     clickable: true,
     responsive: true,

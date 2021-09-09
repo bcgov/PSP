@@ -29,8 +29,6 @@ export interface IPropertyFilterProps {
   sort?: TableSort<any>;
   /** Event fire when sorting changes. */
   onSorting?: (sort: TableSort<any>) => void;
-  /** Show select with my organizations/All Government dropdown */
-  showAllOrganizationSelect?: boolean;
   /** Override to trigger filterchanged in the parent */
   setTriggerFilterChanged?: (used: boolean) => void;
   /** Which toggle view is currently active */
@@ -49,7 +47,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   setTriggerFilterChanged,
   toggle = SearchToggleOption.Map,
 }) => {
-  const [propertyFilter, setPropertyFilter] = React.useState<IPropertyFilter>(defaultFilter);
+  const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
   useRouterFilter({
     filter: propertyFilter,
     setFilter: filter => {
@@ -77,8 +75,6 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
 
   const handlePageToggle = () => {};
 
-  const [findMoreOpen] = useState<boolean>(false);
-
   return (
     <Formik<IPropertyFilter>
       initialValues={{ ...initialValues }}
@@ -97,16 +93,16 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
               <p className="m-0">Search: </p>
             </Col>
             <Col className="bar-item filter-options">
-              <PropertyFilterOptions disabled={findMoreOpen} />
+              <PropertyFilterOptions />
             </Col>
             <Col className="bar-item">
               <SearchButton
-                disabled={isSubmitting || findMoreOpen}
+                disabled={isSubmitting}
                 onClick={() => setTriggerFilterChanged && setTriggerFilterChanged(true)}
               />
             </Col>
             <Col className="bar-item">
-              <ResetButton disabled={isSubmitting || findMoreOpen} onClick={resetFilter} />
+              <ResetButton disabled={isSubmitting} onClick={resetFilter} />
             </Col>
             <Col className="bar-item">
               <SearchToggle onClick={handlePageToggle} toolId={'toggle'} toggle={toggle} />
