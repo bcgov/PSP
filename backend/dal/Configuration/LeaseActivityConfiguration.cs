@@ -43,9 +43,9 @@ namespace Pims.Dal.Configuration
             builder.HasOne(m => m.Period).WithMany(m => m.Activities).HasForeignKey(m => m.PeriodId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSACPR_PIM_LSACTV_FK");
 
             builder.HasIndex(m => m.PeriodId).HasDatabaseName("LSACTV_LEASE_ACTIVITY_PERIOD_ID_IDX");
-            builder.HasIndex(m => m.LeaseId).HasDatabaseName("LSEACT_LEASE_ID_IDX");
-            builder.HasIndex(m => m.SubtypeId).HasDatabaseName("LSEACT_LEASE_SUBTYPE_CODE_ID_IDX");
-            builder.HasIndex(m => m.LeaseTypeId).HasDatabaseName("LSEACT_LEASE_TYPE_CODE_ID_IDX");
+            builder.HasIndex(m => m.LeaseId).HasDatabaseName("LSACTV_LEASE_ID_IDX");
+            builder.HasIndex(m => m.SubtypeId).HasDatabaseName("LSACTV_LEASE_SUBTYPE_CODE_ID_IDX");
+            builder.HasIndex(m => m.LeaseTypeId).HasDatabaseName("LSACTV_LEASE_TYPE_CODE_ID_IDX");
 
             base.Configure(builder);
         }
