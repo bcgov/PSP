@@ -156,6 +156,11 @@ namespace Pims.Dal.Entities
         /// get - Collection of many-to-many properties.
         /// </summary>
         public ICollection<PropertyOrganization> PropertiesManyToMany { get; } = new List<PropertyOrganization>();
+
+        /// <summary>
+        /// get - Collection of leases.
+        /// </summary>
+        public ICollection<Lease> Leases { get; } = new List<Lease>();
         #endregion
 
         #region Constructors
