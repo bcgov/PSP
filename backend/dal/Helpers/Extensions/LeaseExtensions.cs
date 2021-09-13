@@ -110,7 +110,7 @@ namespace Pims.Dal.Helpers.Extensions
             if(lease.Tenant != null)
             {
                 string[] names = { lease.Tenant.Surname, lease.Tenant.FirstName, lease.Tenant.MiddleNames };
-                return String.Join(", ", names.Select(n => n != null && n.Trim() != String.Empty));
+                return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
             }
             return null;
         }
