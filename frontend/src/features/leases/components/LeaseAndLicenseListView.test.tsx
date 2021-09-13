@@ -1,6 +1,7 @@
 import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
+import { defaultTenant } from 'tenants';
 import { fillInput } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
@@ -19,9 +20,15 @@ const renderContainer = ({ store }: any) =>
     </TestCommonWrapper>,
   );
 
+const mockFetch = () =>
+  Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
+    Response
+  >;
+
 describe('Lease and License List View', () => {
   beforeEach(() => {
     getLeases.mockResolvedValue({ data: { items: [] } });
+    global.fetch = mockFetch as any;
   });
   it('searches by pid/pin', async () => {
     const { container, getByTestId } = renderContainer({});

@@ -193,6 +193,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
       >
         <button
           class="Button Button--icon-only bg-warning btn btn-primary"
+          data-testid="search"
           id="search-button"
           type="submit"
         >
