@@ -90,5 +90,15 @@ namespace Pims.Dal.Helpers.Extensions
 
             return query;
         }
+
+        /// <summary>
+        /// Return the pid (if valued) or pin of the property.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static int? GetPidOrPin(this Pims.Dal.Entities.Property property)
+        {
+            return property.PID != 0 ? property.PID : property.PIN;
+        }
     }
 }
