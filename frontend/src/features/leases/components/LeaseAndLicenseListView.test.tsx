@@ -19,9 +19,15 @@ const renderContainer = ({ store }: any) =>
       <LeaseAndLicenseListView />
     </TestCommonWrapper>,
   );
+const mockFetch = () =>
+  Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
+    Response
+  >;
+
 describe('Lease and License List View', () => {
   beforeEach(() => {
     getLeases.mockResolvedValue({ data: { items: [] } });
+    global.fetch = mockFetch as any;
   });
   it('searches by pid/pin', async () => {
     const { container, getByTestId } = renderContainer({});
