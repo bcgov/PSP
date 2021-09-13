@@ -1,0 +1,2572 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/12/2021 4:06:04 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MSI"
+  DTS:CreatorName="MSI\fiera"
+  DTS:DTSID="{B1D09D9E-6292-47D3-8E6B-E90F414CF532}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="4105"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{7437E1B6-BBC7-4D9E-9C2D-1C060CEEC192}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[lizzard.th.gov.bc.ca:20208/TST11.fmasonbl]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{88CD8DDF-39DF-4D1B-91BD-0A203441A486}"
+      DTS:ObjectName="lizzard.th.gov.bc.ca:20208/TST11.fmasonbl">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/TST11;User ID=fmasonbl;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArm8XOD0CeUS/uBmaglrsdAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADr70vIFai80M/NrcTiGnp84TwFp4gWVqQzR3+5aOMoQAAAAAAOgAAAAAIAACAAAAB+hZN2Shnc4aTg3RsdAKis3hIIIKLzvpPmNSGAxDDtDyAAAAAiVKJJd0DFmm13rBhGK+i3mIqhw3OvTXQQyDRIAWUAf0AAAAAYokqKF6n2etgB/ERQAOillpg4nuLBz45Qq9dvkzG4aNfgcw/oLowYWItzbT/72p8KYTTsQXSxFNdaDjs20rsG</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[MatchOutput]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{36B6ADFA-A683-4242-B5AF-077804206E81}"
+      DTS:ObjectName="MatchOutput">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="4105"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\fiera\source\repos\PSP\etl\PAIMS_PIMS\PAIMS_PIMS\out\AddressAndCityMatch.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PAIMS_ADDRESS.CIVIC_ADDRESS"
+              DTS:DTSID="{FF7CBFEB-9CF3-4651-94B1-19E57CFFDD7F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="40"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PAIMS_ADDRESS.CITY"
+              DTS:DTSID="{2A6BC097-2F82-4361-BF05-06BCB42AD966}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Data Conversion.CIVIC_ADDRESS"
+              DTS:DTSID="{A78A1B62-D09E-41CB-BA27-8EB7FE3DC07B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="40"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Data Conversion.CITY"
+              DTS:DTSID="{F93FFA2B-738D-477C-BA55-6BD7556F0C0F}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="20"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ADDRESS_ID"
+              DTS:DTSID="{BCCE218B-BBD9-4056-BDF4-F0D21584487B}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="200"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="STREET_ADDRESS_1"
+              DTS:DTSID="{C7EC56BC-1288-4F35-B5A5-D9A9915D1AAA}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="200"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="MUNICIPALITY_NAME"
+              DTS:DTSID="{C879A04A-C6A7-4FB7-8EC4-F75A83BEAA03}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[NoMatchOutput]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{C0C88905-A80E-4E25-9A40-975A5092BB06}"
+      DTS:ObjectName="NoMatchOutput">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="4105"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Users\fiera\source\repos\PSP\etl\PAIMS_PIMS\PAIMS_PIMS\out\AddressAndCityNoMatch.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PAIMS_ADDRESS.CIVIC_ADDRESS"
+              DTS:DTSID="{DC6DBDE8-9259-4590-9425-BEEC3BB9E614}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="40"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="PAIMS_ADDRESS.CITY"
+              DTS:DTSID="{A94ED822-B3DA-4307-B860-6A32DFE15618}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Data Conversion.CIVIC_ADDRESS"
+              DTS:DTSID="{CB0ECEE3-3EBD-42FF-A42A-24BC6DA22191}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="40"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Data Conversion.CITY"
+              DTS:DTSID="{D7CD568A-F143-426A-A3C6-30A64DEF7800}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorCode"
+              DTS:DTSID="{0BA0A42E-EBA1-4CA8-A67A-7D5FF203203A}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ErrorColumn"
+              DTS:DTSID="{F8FBBBAC-7AE5-4901-92BA-B2B83AEF3218}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{EB5A1011-A532-4BE0-B642-942DA149A048}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input].Columns[CIVIC_ADDRESS]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="CIVIC_ADDRESS"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CIVIC_ADDRESS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input].Columns[CITY]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="40"
+                      cachedName="CITY"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CITY]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CIVIC_ADDRESS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CIVIC_ADDRESS]"
+                      name="CIVIC_ADDRESS"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CIVIC_ADDRESS]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="40"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CITY]"
+                      name="CITY"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CITY]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [dbo].[PIMS_ADDRESS]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_ADDRESS]) [refTable]
+where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[MUNICIPALITY_NAME] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ADDRESS_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ADDRESS_USAGE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="REGION_CODE" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DISTRICT_CODE" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PROVINCE_STATE_ID" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="COUNTRY_ID" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="STREET_ADDRESS_1" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="STREET_ADDRESS_2" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="STREET_ADDRESS_3" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MUNICIPALITY_NAME" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="POSTAL_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LATITUDE" dataType="DT_NUMERIC" length="0" precision="8" scale="6" codePage="0"/&gt;&lt;referenceColumn name="LONGITUDE" dataType="DT_NUMERIC" length="0" precision="9" scale="6" codePage="0"/&gt;&lt;referenceColumn name="CONCURRENCY_CONTROL_NUMBER" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CIVIC_ADDRESS]};#{Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CITY]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="{837B6F4A-B93A-4646-B41B-2D4928B68B7D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MSI_MSSQLSERVER2_PIMSS09.00]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Lookup.Inputs[Lookup Input].Columns[CIVIC_ADDRESS]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CIVIC_ADDRESS"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CIVIC_ADDRESS]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">STREET_ADDRESS_1</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Lookup.Inputs[Lookup Input].Columns[CITY]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="CITY"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CITY]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">MUNICIPALITY_NAME</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[ADDRESS_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[ADDRESS_ID]"
+                      name="ADDRESS_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ADDRESS_ID</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[STREET_ADDRESS_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="200"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[STREET_ADDRESS_1]"
+                      name="STREET_ADDRESS_1"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">STREET_ADDRESS_1</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[MUNICIPALITY_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="200"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[MUNICIPALITY_NAME]"
+                      name="MUNICIPALITY_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">MUNICIPALITY_NAME</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[PROVINCE_STATE_ID]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[PROVINCE_STATE_ID]"
+                      name="PROVINCE_STATE_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">PROVINCE_STATE_ID</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[COUNTRY_ID]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[COUNTRY_ID]"
+                      name="COUNTRY_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">COUNTRY_ID</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[POSTAL_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[POSTAL_CODE]"
+                      name="POSTAL_CODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">POSTAL_CODE</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[LATITUDE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[LATITUDE]"
+                      name="LATITUDE"
+                      precision="8"
+                      scale="6"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">LATITUDE</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[LONGITUDE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[LONGITUDE]"
+                      name="LONGITUDE"
+                      precision="9"
+                      scale="6"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">LONGITUDE</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Lookup 1"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup 1"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml"></property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Lookup 1.Connections[OleDbConnection]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Lookup 1.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Lookup 1.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Lookup 1.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task\Lookup 1.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Lookup 1.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task\Lookup 1.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Lookup 1.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Match Output"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="4105"
+              name="Match Output">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Match Output.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[MatchOutput]"
+                  connectionManagerRefId="Package.ConnectionManagers[MatchOutput]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[CIVIC_ADDRESS]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="CIVIC_ADDRESS"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[PAIMS_ADDRESS.CIVIC_ADDRESS]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CIVIC_ADDRESS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[CITY]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="40"
+                      cachedName="CITY"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[PAIMS_ADDRESS.CITY]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CITY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[CIVIC_ADDRESS1]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CIVIC_ADDRESS"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[Data Conversion.CIVIC_ADDRESS]"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CIVIC_ADDRESS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[CITY1]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="CITY"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[Data Conversion.CITY]"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CITY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[ADDRESS_ID]"
+                      cachedDataType="i8"
+                      cachedName="ADDRESS_ID"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[ADDRESS_ID]"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[ADDRESS_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[STREET_ADDRESS_1]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="STREET_ADDRESS_1"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[STREET_ADDRESS_1]"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[STREET_ADDRESS_1]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].Columns[MUNICIPALITY_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="MUNICIPALITY_NAME"
+                      externalMetadataColumnId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[MUNICIPALITY_NAME]"
+                      lineageId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output].Columns[MUNICIPALITY_NAME]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[PAIMS_ADDRESS.CIVIC_ADDRESS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="PAIMS_ADDRESS.CIVIC_ADDRESS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[PAIMS_ADDRESS.CITY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="40"
+                      name="PAIMS_ADDRESS.CITY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[Data Conversion.CIVIC_ADDRESS]"
+                      dataType="wstr"
+                      length="100"
+                      name="Data Conversion.CIVIC_ADDRESS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[Data Conversion.CITY]"
+                      dataType="wstr"
+                      length="40"
+                      name="Data Conversion.CITY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[ADDRESS_ID]"
+                      dataType="i8"
+                      name="ADDRESS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[STREET_ADDRESS_1]"
+                      dataType="wstr"
+                      length="200"
+                      name="STREET_ADDRESS_1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input].ExternalColumns[MUNICIPALITY_NAME]"
+                      dataType="wstr"
+                      length="200"
+                      name="MUNICIPALITY_NAME" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PIMS_ADDRESS]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{837B6F4A-B93A-4646-B41B-2D4928B68B7D}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[MSI_MSSQLSERVER2_PIMSS09.00]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CIVIC_ADDRESS]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CIVIC_ADDRESS"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STREET_ADDRESS_1]"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CIVIC_ADDRESS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CITY]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="CITY"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MUNICIPALITY_NAME]"
+                      lineageId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output].Columns[CITY]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_ID]"
+                      dataType="i8"
+                      name="ADDRESS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_USAGE_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="ADDRESS_USAGE_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[REGION_CODE]"
+                      dataType="i2"
+                      name="REGION_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DISTRICT_CODE]"
+                      dataType="i2"
+                      name="DISTRICT_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PROVINCE_STATE_ID]"
+                      dataType="i2"
+                      name="PROVINCE_STATE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COUNTRY_ID]"
+                      dataType="i2"
+                      name="COUNTRY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STREET_ADDRESS_1]"
+                      dataType="wstr"
+                      length="200"
+                      name="STREET_ADDRESS_1" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STREET_ADDRESS_2]"
+                      dataType="wstr"
+                      length="200"
+                      name="STREET_ADDRESS_2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STREET_ADDRESS_3]"
+                      dataType="wstr"
+                      length="200"
+                      name="STREET_ADDRESS_3" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MUNICIPALITY_NAME]"
+                      dataType="wstr"
+                      length="200"
+                      name="MUNICIPALITY_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[POSTAL_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="POSTAL_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LATITUDE]"
+                      dataType="numeric"
+                      name="LATITUDE"
+                      precision="8"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LONGITUDE]"
+                      dataType="numeric"
+                      name="LONGITUDE"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONCURRENCY_CONTROL_NUMBER]"
+                      dataType="i8"
+                      name="CONCURRENCY_CONTROL_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_CREATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_LAST_UPDATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_LAST_UPDATE_USERID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\PAIMS_ADDRESS"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="PAIMS_ADDRESS"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">"APP_PAM"."PAM_PROPERTY"</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT CIVIC_ADDRESS, CITY
+FROM APP_PAM.PAM_PROPERTY</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\PAIMS_ADDRESS.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[lizzard.th.gov.bc.ca:20208/TST11.fmasonbl]"
+                  connectionManagerRefId="Package.ConnectionManagers[lizzard.th.gov.bc.ca:20208/TST11.fmasonbl]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CIVIC_ADDRESS]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CIVIC_ADDRESS]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CIVIC_ADDRESS]"
+                      name="CIVIC_ADDRESS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CITY]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CITY]"
+                      length="40"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CITY]"
+                      name="CITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[REGION_NO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[REGION_NO]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[REGION_NO]"
+                      name="REGION_NO"
+                      precision="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[DISTRICT_NO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[DISTRICT_NO]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[DISTRICT_NO]"
+                      name="DISTRICT_NO"
+                      precision="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[ELECTORAL_DISTRICT_NO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[ELECTORAL_DISTRICT_NO]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[ELECTORAL_DISTRICT_NO]"
+                      name="ELECTORAL_DISTRICT_NO"
+                      precision="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CREATION_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CREATION_DATE]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CREATION_DATE]"
+                      name="CREATION_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CONTAMINATION_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CONTAMINATION_FLAG]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CONTAMINATION_FLAG]"
+                      name="CONTAMINATION_FLAG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[IMPROVEMENTS_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[IMPROVEMENTS_FLAG]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[IMPROVEMENTS_FLAG]"
+                      name="IMPROVEMENTS_FLAG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[IMPROVEMENTS_DESCRIPTION_TEXT]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[IMPROVEMENTS_DESCRIPTION_TEXT]"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[IMPROVEMENTS_DESCRIPTION_TEXT]"
+                      name="IMPROVEMENTS_DESCRIPTION_TEXT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TAX_EXEMPT_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TAX_EXEMPT_FLAG]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TAX_EXEMPT_FLAG]"
+                      name="TAX_EXEMPT_FLAG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[DESCRIPTION]"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[DESCRIPTION]"
+                      name="DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[FULL_LEGAL_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[FULL_LEGAL_DESCRIPTION]"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[FULL_LEGAL_DESCRIPTION]"
+                      name="FULL_LEGAL_DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[FILE_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER"
+                      precision="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[FILE_NUMBER_SUFFIX]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER_SUFFIX]"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[FILE_NUMBER_SUFFIX]"
+                      name="FILE_NUMBER_SUFFIX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PID_NO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PID_NO]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PID_NO]"
+                      name="PID_NO"
+                      precision="9"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PIN]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PIN]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PIN]"
+                      name="PIN"
+                      precision="9"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_SUBDIVISION_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_SUBDIVISION_CODE]"
+                      length="6"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_SUBDIVISION_CODE]"
+                      name="RAILWAY_SUBDIVISION_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_COMPANY_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_COMPANY_CODE]"
+                      length="6"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_COMPANY_CODE]"
+                      name="RAILWAY_COMPANY_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[ACTUAL_LAND_USE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[ACTUAL_LAND_USE_CODE]"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[ACTUAL_LAND_USE_CODE]"
+                      name="ACTUAL_LAND_USE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PROPERTY_TENURE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_TENURE_TYPE_CODE]"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[PROPERTY_TENURE_TYPE_CODE]"
+                      name="PROPERTY_TENURE_TYPE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_ASSESSMENT_COMMENTS]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_ASSESSMENT_COMMENTS]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_ASSESSMENT_COMMENTS]"
+                      name="BCAA_ASSESSMENT_COMMENTS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_BLDG_ASSESSMT_VALUE_YEAR]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_BLDG_ASSESSMT_VALUE_YEAR]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_BLDG_ASSESSMT_VALUE_YEAR]"
+                      name="BCAA_BLDG_ASSESSMT_VALUE_YEAR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_BLDG_ASSESSMT_ROLL_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_BLDG_ASSESSMT_ROLL_NUMBER]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_BLDG_ASSESSMT_ROLL_NUMBER]"
+                      name="BCAA_BLDG_ASSESSMT_ROLL_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_BLDG_ASSESSMENT_VALUE_AMT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_BLDG_ASSESSMENT_VALUE_AMT]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_BLDG_ASSESSMENT_VALUE_AMT]"
+                      name="BCAA_BLDG_ASSESSMENT_VALUE_AMT"
+                      precision="12"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_LAND_ASSESSMT_VALUE_YEAR]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_LAND_ASSESSMT_VALUE_YEAR]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_LAND_ASSESSMT_VALUE_YEAR]"
+                      name="BCAA_LAND_ASSESSMT_VALUE_YEAR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_LAND_ASSESSMT_ROLL_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_LAND_ASSESSMT_ROLL_NUMBER]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_LAND_ASSESSMT_ROLL_NUMBER]"
+                      name="BCAA_LAND_ASSESSMT_ROLL_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_LAND_ASSESSMENT_VALUE_AMT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_LAND_ASSESSMENT_VALUE_AMT]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[BCAA_LAND_ASSESSMENT_VALUE_AMT]"
+                      name="BCAA_LAND_ASSESSMENT_VALUE_AMT"
+                      precision="12"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[COMMENTS]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[COMMENTS]"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[COMMENTS]"
+                      name="COMMENTS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_MILEPOST_START_NO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_MILEPOST_START_NO]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_MILEPOST_START_NO]"
+                      name="RAILWAY_MILEPOST_START_NO"
+                      precision="5"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_MILEPOST_END_NO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_MILEPOST_END_NO]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[RAILWAY_MILEPOST_END_NO]"
+                      name="RAILWAY_MILEPOST_END_NO"
+                      precision="5"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TENURE_ISSUE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TENURE_ISSUE]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TENURE_ISSUE]"
+                      name="TENURE_ISSUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TAX_EXEMPT_NOTIFICATION_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TAX_EXEMPT_NOTIFICATION_DATE]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TAX_EXEMPT_NOTIFICATION_DATE]"
+                      name="TAX_EXEMPT_NOTIFICATION_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_START_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_START_DATE]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_START_DATE]"
+                      name="CROWN_LAND_RESERVE_START_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_END_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_END_DATE]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_END_DATE]"
+                      name="CROWN_LAND_RESERVE_END_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_FILE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_FILE_NO]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_FILE_NO]"
+                      name="CROWN_LAND_RESERVE_FILE_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_NO]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_NO]"
+                      name="CROWN_LAND_RESERVE_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_USE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_USE]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CROWN_LAND_RESERVE_USE]"
+                      name="CROWN_LAND_RESERVE_USE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[GEOTECH_FILE_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[GEOTECH_FILE_NUMBER]"
+                      length="15"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[GEOTECH_FILE_NUMBER]"
+                      name="GEOTECH_FILE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CRWN_LND_RSRV_RFRNC_PLAN_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CRWN_LND_RSRV_RFRNC_PLAN_NO]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CRWN_LND_RSRV_RFRNC_PLAN_NO]"
+                      name="CRWN_LND_RSRV_RFRNC_PLAN_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CRWN_LND_RSRV_SURVEY_PLAN_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CRWN_LND_RSRV_SURVEY_PLAN_NO]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[CRWN_LND_RSRV_SURVEY_PLAN_NO]"
+                      name="CRWN_LND_RSRV_SURVEY_PLAN_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[AGGREGATE_SOURCE_NAME]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[AGGREGATE_SOURCE_NAME]"
+                      length="40"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[AGGREGATE_SOURCE_NAME]"
+                      name="AGGREGATE_SOURCE_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[VEHICULAR_ACCESS]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[VEHICULAR_ACCESS]"
+                      length="7"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[VEHICULAR_ACCESS]"
+                      name="VEHICULAR_ACCESS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[VEHICULAR_ACCESS_REMARKS]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[VEHICULAR_ACCESS_REMARKS]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[VEHICULAR_ACCESS_REMARKS]"
+                      name="VEHICULAR_ACCESS_REMARKS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[LAND_USE_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[LAND_USE_DESCRIPTION]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[LAND_USE_DESCRIPTION]"
+                      name="LAND_USE_DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[METES_BOUNDS_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[METES_BOUNDS_DESCRIPTION]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[METES_BOUNDS_DESCRIPTION]"
+                      name="METES_BOUNDS_DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TUBE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TUBE_NO]"
+                      length="7"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[TUBE_NO]"
+                      name="TUBE_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[EXTERNAL_OWNED_AREA]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[EXTERNAL_OWNED_AREA]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[EXTERNAL_OWNED_AREA]"
+                      name="EXTERNAL_OWNED_AREA"
+                      precision="8"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[EXTERNAL_OWNED_AREA_UNIT_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[EXTERNAL_OWNED_AREA_UNIT_CODE]"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[EXTERNAL_OWNED_AREA_UNIT_CODE]"
+                      name="EXTERNAL_OWNED_AREA_UNIT_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[LAST_UPDATE_DATETIME]"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_DATETIME]"
+                      name="LAST_UPDATE_DATETIME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_USERID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[LAST_UPDATE_USERID]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_USERID]"
+                      name="LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CIVIC_ADDRESS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="CIVIC_ADDRESS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CITY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="40"
+                      name="CITY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="numeric"
+                      name="PROPERTY_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[REGION_NO]"
+                      dataType="numeric"
+                      name="REGION_NO"
+                      precision="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[DISTRICT_NO]"
+                      dataType="numeric"
+                      name="DISTRICT_NO"
+                      precision="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[ELECTORAL_DISTRICT_NO]"
+                      dataType="numeric"
+                      name="ELECTORAL_DISTRICT_NO"
+                      precision="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CREATION_DATE]"
+                      dataType="dbTimeStamp"
+                      name="CREATION_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CONTAMINATION_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="CONTAMINATION_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[IMPROVEMENTS_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="IMPROVEMENTS_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[IMPROVEMENTS_DESCRIPTION_TEXT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="IMPROVEMENTS_DESCRIPTION_TEXT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TAX_EXEMPT_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="TAX_EXEMPT_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[FULL_LEGAL_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="FULL_LEGAL_DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER]"
+                      dataType="numeric"
+                      name="FILE_NUMBER"
+                      precision="6" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER_SUFFIX]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="FILE_NUMBER_SUFFIX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PID_NO]"
+                      dataType="numeric"
+                      name="PID_NO"
+                      precision="9" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PIN]"
+                      dataType="numeric"
+                      name="PIN"
+                      precision="9" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_SUBDIVISION_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="RAILWAY_SUBDIVISION_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_COMPANY_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="RAILWAY_COMPANY_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[ACTUAL_LAND_USE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="ACTUAL_LAND_USE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_TENURE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="PROPERTY_TENURE_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_ASSESSMENT_COMMENTS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="BCAA_ASSESSMENT_COMMENTS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_BLDG_ASSESSMT_VALUE_YEAR]"
+                      dataType="dbTimeStamp"
+                      name="BCAA_BLDG_ASSESSMT_VALUE_YEAR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_BLDG_ASSESSMT_ROLL_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="BCAA_BLDG_ASSESSMT_ROLL_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_BLDG_ASSESSMENT_VALUE_AMT]"
+                      dataType="numeric"
+                      name="BCAA_BLDG_ASSESSMENT_VALUE_AMT"
+                      precision="12"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_LAND_ASSESSMT_VALUE_YEAR]"
+                      dataType="dbTimeStamp"
+                      name="BCAA_LAND_ASSESSMT_VALUE_YEAR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_LAND_ASSESSMT_ROLL_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="BCAA_LAND_ASSESSMT_ROLL_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[BCAA_LAND_ASSESSMENT_VALUE_AMT]"
+                      dataType="numeric"
+                      name="BCAA_LAND_ASSESSMENT_VALUE_AMT"
+                      precision="12"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[COMMENTS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      name="COMMENTS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_MILEPOST_START_NO]"
+                      dataType="numeric"
+                      name="RAILWAY_MILEPOST_START_NO"
+                      precision="5"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[RAILWAY_MILEPOST_END_NO]"
+                      dataType="numeric"
+                      name="RAILWAY_MILEPOST_END_NO"
+                      precision="5"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TENURE_ISSUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="TENURE_ISSUE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TAX_EXEMPT_NOTIFICATION_DATE]"
+                      dataType="dbTimeStamp"
+                      name="TAX_EXEMPT_NOTIFICATION_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_START_DATE]"
+                      dataType="dbTimeStamp"
+                      name="CROWN_LAND_RESERVE_START_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_END_DATE]"
+                      dataType="dbTimeStamp"
+                      name="CROWN_LAND_RESERVE_END_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_FILE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="CROWN_LAND_RESERVE_FILE_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="CROWN_LAND_RESERVE_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CROWN_LAND_RESERVE_USE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="CROWN_LAND_RESERVE_USE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[GEOTECH_FILE_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="GEOTECH_FILE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CRWN_LND_RSRV_RFRNC_PLAN_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="CRWN_LND_RSRV_RFRNC_PLAN_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[CRWN_LND_RSRV_SURVEY_PLAN_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="CRWN_LND_RSRV_SURVEY_PLAN_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[AGGREGATE_SOURCE_NAME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="40"
+                      name="AGGREGATE_SOURCE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[VEHICULAR_ACCESS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      name="VEHICULAR_ACCESS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[VEHICULAR_ACCESS_REMARKS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="VEHICULAR_ACCESS_REMARKS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[LAND_USE_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="LAND_USE_DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[METES_BOUNDS_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="METES_BOUNDS_DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[TUBE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      name="TUBE_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[EXTERNAL_OWNED_AREA]"
+                      dataType="numeric"
+                      name="EXTERNAL_OWNED_AREA"
+                      precision="8"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[EXTERNAL_OWNED_AREA_UNIT_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="EXTERNAL_OWNED_AREA_UNIT_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="LAST_UPDATE_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output].ExternalColumns[LAST_UPDATE_USERID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="LAST_UPDATE_USERID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      precision="10" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[REGION_NO]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[REGION_NO]"
+                      name="REGION_NO"
+                      precision="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[DISTRICT_NO]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[DISTRICT_NO]"
+                      name="DISTRICT_NO"
+                      precision="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ELECTORAL_DISTRICT_NO]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ELECTORAL_DISTRICT_NO]"
+                      name="ELECTORAL_DISTRICT_NO"
+                      precision="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CREATION_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CREATION_DATE]"
+                      name="CREATION_DATE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CONTAMINATION_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CONTAMINATION_FLAG]"
+                      name="CONTAMINATION_FLAG" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[IMPROVEMENTS_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[IMPROVEMENTS_FLAG]"
+                      name="IMPROVEMENTS_FLAG" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[IMPROVEMENTS_DESCRIPTION_TEXT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[IMPROVEMENTS_DESCRIPTION_TEXT]"
+                      name="IMPROVEMENTS_DESCRIPTION_TEXT" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TAX_EXEMPT_FLAG]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TAX_EXEMPT_FLAG]"
+                      name="TAX_EXEMPT_FLAG" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[DESCRIPTION]"
+                      name="DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[FULL_LEGAL_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[FULL_LEGAL_DESCRIPTION]"
+                      name="FULL_LEGAL_DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[FILE_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER"
+                      precision="6" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[FILE_NUMBER_SUFFIX]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[FILE_NUMBER_SUFFIX]"
+                      name="FILE_NUMBER_SUFFIX" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PID_NO]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PID_NO]"
+                      name="PID_NO"
+                      precision="9" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PIN]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PIN]"
+                      name="PIN"
+                      precision="9" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CIVIC_ADDRESS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CIVIC_ADDRESS]"
+                      name="CIVIC_ADDRESS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CITY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="40"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CITY]"
+                      name="CITY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_SUBDIVISION_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_SUBDIVISION_CODE]"
+                      name="RAILWAY_SUBDIVISION_CODE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_COMPANY_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_COMPANY_CODE]"
+                      name="RAILWAY_COMPANY_CODE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ACTUAL_LAND_USE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ACTUAL_LAND_USE_CODE]"
+                      name="ACTUAL_LAND_USE_CODE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PROPERTY_TENURE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[PROPERTY_TENURE_TYPE_CODE]"
+                      name="PROPERTY_TENURE_TYPE_CODE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_ASSESSMENT_COMMENTS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_ASSESSMENT_COMMENTS]"
+                      name="BCAA_ASSESSMENT_COMMENTS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_BLDG_ASSESSMT_VALUE_YEAR]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_BLDG_ASSESSMT_VALUE_YEAR]"
+                      name="BCAA_BLDG_ASSESSMT_VALUE_YEAR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_BLDG_ASSESSMT_ROLL_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_BLDG_ASSESSMT_ROLL_NUMBER]"
+                      name="BCAA_BLDG_ASSESSMT_ROLL_NUMBER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_BLDG_ASSESSMENT_VALUE_AMT]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_BLDG_ASSESSMENT_VALUE_AMT]"
+                      name="BCAA_BLDG_ASSESSMENT_VALUE_AMT"
+                      precision="12"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_LAND_ASSESSMT_VALUE_YEAR]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_LAND_ASSESSMT_VALUE_YEAR]"
+                      name="BCAA_LAND_ASSESSMT_VALUE_YEAR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_LAND_ASSESSMT_ROLL_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_LAND_ASSESSMT_ROLL_NUMBER]"
+                      name="BCAA_LAND_ASSESSMT_ROLL_NUMBER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_LAND_ASSESSMENT_VALUE_AMT]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[BCAA_LAND_ASSESSMENT_VALUE_AMT]"
+                      name="BCAA_LAND_ASSESSMENT_VALUE_AMT"
+                      precision="12"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[COMMENTS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2000"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[COMMENTS]"
+                      name="COMMENTS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_MILEPOST_START_NO]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_MILEPOST_START_NO]"
+                      name="RAILWAY_MILEPOST_START_NO"
+                      precision="5"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_MILEPOST_END_NO]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[RAILWAY_MILEPOST_END_NO]"
+                      name="RAILWAY_MILEPOST_END_NO"
+                      precision="5"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TENURE_ISSUE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TENURE_ISSUE]"
+                      name="TENURE_ISSUE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TAX_EXEMPT_NOTIFICATION_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TAX_EXEMPT_NOTIFICATION_DATE]"
+                      name="TAX_EXEMPT_NOTIFICATION_DATE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_START_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_START_DATE]"
+                      name="CROWN_LAND_RESERVE_START_DATE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_END_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_END_DATE]"
+                      name="CROWN_LAND_RESERVE_END_DATE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_FILE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_FILE_NO]"
+                      name="CROWN_LAND_RESERVE_FILE_NO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_NO]"
+                      name="CROWN_LAND_RESERVE_NO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_USE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CROWN_LAND_RESERVE_USE]"
+                      name="CROWN_LAND_RESERVE_USE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[GEOTECH_FILE_NUMBER]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[GEOTECH_FILE_NUMBER]"
+                      name="GEOTECH_FILE_NUMBER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CRWN_LND_RSRV_RFRNC_PLAN_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CRWN_LND_RSRV_RFRNC_PLAN_NO]"
+                      name="CRWN_LND_RSRV_RFRNC_PLAN_NO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CRWN_LND_RSRV_SURVEY_PLAN_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[CRWN_LND_RSRV_SURVEY_PLAN_NO]"
+                      name="CRWN_LND_RSRV_SURVEY_PLAN_NO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[AGGREGATE_SOURCE_NAME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="40"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[AGGREGATE_SOURCE_NAME]"
+                      name="AGGREGATE_SOURCE_NAME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[VEHICULAR_ACCESS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[VEHICULAR_ACCESS]"
+                      name="VEHICULAR_ACCESS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[VEHICULAR_ACCESS_REMARKS]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[VEHICULAR_ACCESS_REMARKS]"
+                      name="VEHICULAR_ACCESS_REMARKS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[LAND_USE_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[LAND_USE_DESCRIPTION]"
+                      name="LAND_USE_DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[METES_BOUNDS_DESCRIPTION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[METES_BOUNDS_DESCRIPTION]"
+                      name="METES_BOUNDS_DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TUBE_NO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="7"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[TUBE_NO]"
+                      name="TUBE_NO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[EXTERNAL_OWNED_AREA]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[EXTERNAL_OWNED_AREA]"
+                      name="EXTERNAL_OWNED_AREA"
+                      precision="8"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[EXTERNAL_OWNED_AREA_UNIT_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[EXTERNAL_OWNED_AREA_UNIT_CODE]"
+                      name="EXTERNAL_OWNED_AREA_UNIT_CODE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[LAST_UPDATE_DATETIME]"
+                      name="LAST_UPDATE_DATETIME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[LAST_UPDATE_USERID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[LAST_UPDATE_USERID]"
+                      name="LAST_UPDATE_USERID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[Data Conversion Output]"
+              endId="Package\Data Flow Task\Lookup.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Data Flow Task\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup Match Output]"
+              endId="Package\Data Flow Task\Match Output.Inputs[Flat File Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Lookup No Match Output]"
+              endId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Data Flow Task\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\PAIMS_ADDRESS.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Data Flow Task"
+          TopLeft="119.166661931409,122.200000971158" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="166.4,41.6"
+          Id="Package\Data Flow Task\PAIMS_ADDRESS"
+          TopLeft="427.399983112018,101.400000805855" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Data Flow Task\Data Conversion"
+          TopLeft="434.999982714654,243.533335268762" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="511.799982913336,143.000000805855">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,100.533334462908"
+              Start="0,0"
+              End="0,93.0333344629077">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,93.0333344629077" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="112.8,41.6"
+          Id="Package\Data Flow Task\Lookup"
+          TopLeft="459.999981721243,358.800002851486" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Data Conversion Output]"
+          TopLeft="514.699982217948,285.133335268762">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,73.6666675827235"
+              Start="0,0"
+              End="0,66.1666675827235">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.1666675827235" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Data Flow Task\Match Output"
+          TopLeft="401.666650705868,482.400003471374" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup Match Output]"
+          TopLeft="516.399981721243,400.400002851486">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-25.1333310153747,82.0000006198884"
+              Start="0,0"
+              End="-25.1333310153747,74.5000006198884">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.0000003099442" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.0000003099442"
+                    Point2="0,41.0000003099442"
+                    Point3="-4,41.0000003099442" />
+                  <mssgle:LineSegment
+                    End="-21.1333310153747,41.0000003099442" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-21.1333310153747,41.0000003099442"
+                    Point2="-25.1333310153747,41.0000003099442"
+                    Point3="-25.1333310153747,45.0000003099442" />
+                  <mssgle:LineSegment
+                    End="-25.1333310153747,74.5000006198884" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-60.7580522264373,46.0000003099442,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Data Flow Task\OLE DB Destination"
+          TopLeft="668.333306776154,486.200003863971" />
+        <NodeLayout
+          Size="120.8,41.6"
+          Id="Package\Data Flow Task\Lookup 1"
+          TopLeft="916.666630241607,432.466670103603" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Lookup No Match Output]"
+          TopLeft="533.866648387909,400.400002851486">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="220.066658388244,85.8000010124846"
+              Start="0,0"
+              End="220.066658388244,78.3000010124846">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.0400004134902" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.0400004134902"
+                    Point2="0,35.0400004134902"
+                    Point3="4,35.0400004134902" />
+                  <mssgle:LineSegment
+                    End="216.066658388244,35.0400004134902" />
+                  <mssgle:CubicBezierSegment
+                    Point1="216.066658388244,35.0400004134902"
+                    Point2="220.066658388244,35.0400004134902"
+                    Point3="220.066658388244,39.0400004134902" />
+                  <mssgle:LineSegment
+                    End="220.066658388244,78.3000010124846" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="54.2269424753722,40.0400004134902,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\PAIMS_ADDRESS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_ADDRESS]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
