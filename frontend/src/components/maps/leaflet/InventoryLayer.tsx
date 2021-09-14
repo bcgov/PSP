@@ -225,7 +225,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       }
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 7000 });
-      console.error(error);
     } finally {
       onRequestData(false);
     }
