@@ -35,6 +35,10 @@
   background-color: $danger-color;
 }
 
+.tooltip {
+  pointer-events: none;
+}
+
 #root {
   .error {
     color: $danger-color;
@@ -42,10 +46,6 @@
 
   ul.pagination li {
     cursor: pointer;
-  }
-
-  .tooltip {
-    pointer-events: none;
   }
 
   //React table global styling
