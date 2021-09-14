@@ -9,15 +9,18 @@ export const TrayHeader = styled.h3`
 `;
 
 export const SideNavBar = styled.div`
+  height: calc(
+    100vh - ${props => props.theme.css.headerHeight} - ${props => props.theme.css.footerHeight}
+  );
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 100%;
   align-items: center;
   grid-area: iconbar;
   background-color: ${props => props.theme.css.primaryColor};
   transition: 0.5s width;
-  width: 3rem;
+  width: 3.8rem;
   &.expanded {
     width: 10rem;
   }
@@ -57,18 +60,25 @@ export const CloseButton = styled(FaWindowClose)`
 `;
 
 export const SideTray = styled.div`
+  height: 100%;
+  overflow-y: auto;
   position: absolute;
   top: 0;
   right: 0;
   background-color: white;
   z-index: -1;
   width: 40rem;
-  height: 100%;
   padding: 0.5rem 1rem;
   text-align: left;
   transition: transform 0.5s ease-in-out;
   box-shadow: 3px 0 4px rgba(0, 0, 0, 0.2);
   &.show {
     transform: translateX(40rem);
+  }
+  @media (max-width: 765px) {
+    width: 20rem;
+    &.show {
+      transform: translateX(20rem);
+    }
   }
 `;

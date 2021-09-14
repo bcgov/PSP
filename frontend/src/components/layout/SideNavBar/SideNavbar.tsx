@@ -79,8 +79,8 @@ export const SideNavBar = () => {
             onClick={() => setExpanded(true)}
           />
         )}
-        <SideTray context={trayPage} setContext={setTrayPage} />
       </Styled.SideNavBar>
+      <SideTray context={trayPage} setContext={setTrayPage} />
     </Styled.ZIndexWrapper>
   );
 };
