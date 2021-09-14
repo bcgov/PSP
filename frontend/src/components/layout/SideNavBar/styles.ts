@@ -31,6 +31,7 @@ export const SideNavBar = styled.div`
     margin-top: auto;
     align-self: flex-end;
     cursor: pointer;
+    flex-shrink: 0;
   }
 `;
 
