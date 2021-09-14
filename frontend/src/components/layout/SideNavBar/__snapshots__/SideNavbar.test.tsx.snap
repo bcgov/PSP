@@ -2,6 +2,8 @@
 
 exports[`SideNavbar display and logic renders 1`] = `
 .c1 {
+  height: calc( 100vh - -  );
+  overflow-y: auto;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10,7 +12,6 @@ exports[`SideNavbar display and logic renders 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   position: relative;
-  height: 100%;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -18,7 +19,7 @@ exports[`SideNavbar display and logic renders 1`] = `
   grid-area: iconbar;
   -webkit-transition: 0.5s width;
   transition: 0.5s width;
-  width: 3rem;
+  width: 3.8rem;
 }
 
 .c1.expanded {
@@ -62,13 +63,14 @@ exports[`SideNavbar display and logic renders 1`] = `
 }
 
 .c5 {
+  height: 100%;
+  overflow-y: auto;
   position: absolute;
   top: 0;
   right: 0;
   background-color: white;
   z-index: -1;
   width: 40rem;
-  height: 100%;
   padding: 0.5rem 1rem;
   text-align: left;
   -webkit-transition: -webkit-transform 0.5s ease-in-out;
@@ -123,6 +125,18 @@ exports[`SideNavbar display and logic renders 1`] = `
 
 .c4.show {
   width: 100%;
+}
+
+@media (max-width:765px) {
+  .c5 {
+    width: 20rem;
+  }
+
+  .c5.show {
+    -webkit-transform: translateX(20rem);
+    -ms-transform: translateX(20rem);
+    transform: translateX(20rem);
+  }
 }
 
 <div>
@@ -343,32 +357,32 @@ exports[`SideNavbar display and logic renders 1`] = `
           d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
         />
       </svg>
-      <div
-        class="c5"
-        data-testid="side-tray"
+    </div>
+    <div
+      class="c5"
+      data-testid="side-tray"
+    >
+      <svg
+        class="c6"
+        fill="currentColor"
+        height="32"
+        id="close-tray"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 512 512"
+        width="32"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <svg
-          class="c6"
-          fill="currentColor"
-          height="32"
-          id="close-tray"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-        <div
-          class="c7"
+        <title>
+          close
+        </title>
+        <path
+          d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
         />
-      </div>
+      </svg>
+      <div
+        class="c7"
+      />
     </div>
   </div>
 </div>
