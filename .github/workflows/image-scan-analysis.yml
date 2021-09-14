@@ -1,0 +1,133 @@
+name: Security CI
+
+on:
+  push:
+    branches: [master, test, dev]
+  pull_request:
+    branches: [master, test, dev]
+  schedule:
+    - cron: '42 15 * * 5'
+
+jobs:
+
+  build_frontend:
+
+    name: pims-frontend
+    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./frontend
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build PIMS Frontend
+      run: |
+        docker build -t docker.io/pims-frontend:${{ github.sha }} .   
+      working-directory: ${{env.working-directory}}
+    - name: Scan PIMS Frontend Image with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'docker.io/pims-frontend:${{ github.sha }}'
+        format: 'template'
+        template: '@/contrib/sarif.tpl'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: 'pims-frontend.sarif'
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: always()
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'pims-frontend.sarif'
+    - if: always()
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name:  frontend Image Scan report
+        path: 'pims-frontend.sarif'
+        
+    
+  build_backend:
+    
+    if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
+    needs: build_frontend 
+    name: pims-backend
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./backend
+      
+      
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build PIMS Backend
+      run: |
+        docker build -t docker.io/pims-backend:${{ github.sha }} .   
+      working-directory: ${{env.working-directory}}
+    - name: Scan PIMS Backend Image with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'docker.io/pims-backend:${{ github.sha }}'
+        format: 'template'
+        template: '@/contrib/sarif.tpl'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: 'pims-backend.sarif'
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: always()
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'pims-backend.sarif'
+    - if: always()
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: backend image scan report
+        path: 'pims-backend.sarif'    
+        
+  build_logging:
+  
+    if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
+    needs: [build_frontend, build_backend] 
+    name: logging
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./openshift/4.0/templates/Logging
+      
+      
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build PIMS Logging
+      run: |
+        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
+      working-directory: ${{env.working-directory}}
+    - name: Scan PIMS Logging Image with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+        format: 'template'
+        template: '@/contrib/sarif.tpl'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: 'pims-logging.sarif'
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: always()
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'pims-logging.sarif'

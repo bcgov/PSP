@@ -1095,6 +1095,902 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_DISTRICT");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<string>("Amount")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_AMOUNT")
+                        .HasComment("The amount of the lease");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("EXPIRY_DATE")
+                        .HasComment("The date this lease expires");
+
+                    b.Property<bool>("HasDigitalFile")
+                        .HasColumnType("bit")
+                        .HasColumnName("HAS_DIGITAL_FILE")
+                        .HasComment("Whether this lease has a digital file");
+
+                    b.Property<bool>("HasDigitalLicense")
+                        .HasColumnType("bit")
+                        .HasColumnName("HAS_DIGITAL_LICENSE")
+                        .HasComment("Whether this lease has a digital license");
+
+                    b.Property<bool>("HasPhysicalFile")
+                        .HasColumnType("bit")
+                        .HasColumnName("HAS_PHYSICAL_FILE")
+                        .HasComment("Whether this lease has a physical file");
+
+                    b.Property<bool>("HasPhysicalLicense")
+                        .HasColumnType("bit")
+                        .HasColumnName("HAS_PHYSICAL_LICENSE")
+                        .HasComment("Whether this lease has a physical license");
+
+                    b.Property<DateTime?>("InspectionDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("INSPECTION_DATE")
+                        .HasComment("The date the property will be inspected");
+
+                    b.Property<string>("InspectionNote")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnName("INSPECTION_NOTES")
+                        .HasComment("A note on the inspection");
+
+                    b.Property<DateTime?>("InsuranceEndDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("INSURANCE_END_DATE")
+                        .HasComment("The date this lease insurance ends");
+
+                    b.Property<DateTime?>("InsuranceStartDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("INSURANCE_START_DATE")
+                        .HasComment("The date this lease insurance starts");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("bit")
+                        .HasColumnName("EXPIRED")
+                        .HasComment("Whether this lease has expired");
+
+                    b.Property<string>("LFileNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("L_FILE_NO")
+                        .HasComment("The LIS File #");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnName("LEASE_NOTES")
+                        .HasComment("A note on the lease");
+
+                    b.Property<string>("PaymentFrequencyTypeId")
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE")
+                        .HasComment("Foreign key to lease payment frequency type");
+
+                    b.Property<string>("ProgramTypeId")
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_PROGRAM_TYPE_CODE")
+                        .HasComment("Foreign key to lease program type");
+
+                    b.Property<long?>("PropertyManagementOrganizationId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PROP_MGMT_ORG_ID")
+                        .HasComment("Foreign key to property management organization");
+
+                    b.Property<long?>("PropertyManagerId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PROPERTY_MANAGER_ID")
+                        .HasComment("Foreign key to lease property manager person");
+
+                    b.Property<string>("PsFileNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("PS_FILE_NO")
+                        .HasComment("The PS File #");
+
+                    b.Property<short>("PurposeSubtypeId")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("LEASE_PURPOSE_SUBTYPE_CODE")
+                        .HasComment("Foreign key to lease purpose subtype");
+
+                    b.Property<short>("PurposeTypeId")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("LEASE_PURPOSE_TYPE_CODE")
+                        .HasComment("Foreign key to lease purpose type");
+
+                    b.Property<DateTime?>("RenewalDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("RENEWAL_DATE")
+                        .HasComment("The date this lease renews");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<DateTime?>("SecurityEndDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("SECURITY_END_DATE")
+                        .HasComment("The date this lease security ends");
+
+                    b.Property<DateTime?>("SecurityStartDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("SECURITY_START_DATE")
+                        .HasComment("The date this lease security starts");
+
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("START_DATE")
+                        .HasComment("The date this lease starts");
+
+                    b.Property<string>("StatusTypeId")
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_STATUS_TYPE_CODE")
+                        .HasComment("Foreign key to lease status type");
+
+                    b.Property<long?>("TenantId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("TENANT_ID")
+                        .HasComment("Foreign key to lease tenant person");
+
+                    b.Property<int?>("TfaFileNo")
+                        .HasColumnType("int")
+                        .HasColumnName("TFA_FILE_NO")
+                        .HasComment("The TFA File #");
+
+                    b.Property<string>("Unit")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnName("UNIT")
+                        .HasComment("A description of the unit");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("LEASE_PK");
+
+                    b.HasIndex("PaymentFrequencyTypeId")
+                        .HasDatabaseName("LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX");
+
+                    b.HasIndex("ProgramTypeId")
+                        .HasDatabaseName("LEASE_LEASE_PROGRAM_TYPE_CODE_IDX");
+
+                    b.HasIndex("PropertyManagementOrganizationId")
+                        .HasDatabaseName("LEASE_PROP_MGMT_ORG_ID_IDX");
+
+                    b.HasIndex("PropertyManagerId")
+                        .HasDatabaseName("LEASE_PROPERTY_MANAGER_ID_IDX");
+
+                    b.HasIndex("PurposeSubtypeId")
+                        .HasDatabaseName("LEASE_LEASE_PURPOSE_SUBTYPE_CODE_IDX");
+
+                    b.HasIndex("PurposeTypeId")
+                        .HasDatabaseName("LEASE_LEASE_PURPOSE_TYPE_CODE_IDX");
+
+                    b.HasIndex("StatusTypeId")
+                        .HasDatabaseName("LEASE_LEASE_STATUS_TYPE_CODE_IDX");
+
+                    b.HasIndex("TenantId")
+                        .HasDatabaseName("LEASE_TENANT_ID_IDX");
+
+                    b.ToTable("PIMS_LEASE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ACTIVITY_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_ACTIVITY_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("AMOUNT")
+                        .HasComment("The lease activity amount");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("COMMENT")
+                        .HasComment("A comment related to the activity");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ACTIVITY_DATE")
+                        .HasComment("When the activity occurred");
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to lease");
+
+                    b.Property<short>("LeaseTypeId")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("LEASE_TYPE_CODE")
+                        .HasComment("Foreign key to lease type");
+
+                    b.Property<long>("PeriodId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ACTIVITY_PERIOD_ID")
+                        .HasComment("Foreign key to lease activity period");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<string>("SubtypeId")
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_SUBTYPE_CODE")
+                        .HasComment("Foreign key to lease subtype");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("LSACTV_PK");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("LSEACT_LEASE_ID_IDX");
+
+                    b.HasIndex("LeaseTypeId")
+                        .HasDatabaseName("LSEACT_LEASE_TYPE_CODE_ID_IDX");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("LSACTV_LEASE_ACTIVITY_PERIOD_ID_IDX");
+
+                    b.HasIndex("SubtypeId")
+                        .HasDatabaseName("LSEACT_LEASE_SUBTYPE_CODE_ID_IDX");
+
+                    b.ToTable("PIMS_LEASE_ACTIVITY");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivityPeriod", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ACTIVITY_PERIOD_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_ACTIVITY_PERIOD_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("PERIOD_DATE")
+                        .HasComment("The date of the activity period");
+
+                    b.Property<bool?>("IsClosed")
+                        .HasColumnType("bit")
+                        .HasColumnName("IS_CLOSED")
+                        .HasComment("Whether this lease activity period is closed");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("LSACPR_PK");
+
+                    b.ToTable("PIMS_LEASE_ACTIVITY_PERIOD");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseExpectedAmount", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("EXPECTED_AMOUNT_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_EXPECTED_AMOUNT_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("EXPECTED_AMOUNT")
+                        .HasComment("The expected amount for this lease period");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to lease");
+
+                    b.Property<long>("PeriodId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ACTIVITY_PERIOD_ID")
+                        .HasComment("Foreign key to lease activity period");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("EXPAMT_PK");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("EXPAMT_LEASE_ID_IDX");
+
+                    b.HasIndex("PeriodId")
+                        .HasDatabaseName("EXPAMT_LEASE_ACTIVITY_PERIOD_ID_IDX");
+
+                    b.ToTable("PIMS_EXPECTED_AMOUNT");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePaymentFrequencyType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSPMTF_PK");
+
+                    b.ToTable("PIMS_LEASE_PMT_FREQ_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseProgramType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_PROGRAM_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSPRGT_PK");
+
+                    b.ToTable("PIMS_LEASE_PROGRAM_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeSubtype", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("LEASE_PURPOSE_SUBTYPE_CODE")
+                        .HasComment("Primary key code to identify record")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSPRST_PK");
+
+                    b.ToTable("PIMS_LEASE_PURPOSE_SUBTYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeType", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("LEASE_PURPOSE_TYPE_CODE")
+                        .HasComment("Primary key code to identify record")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSPRTY_PK");
+
+                    b.ToTable("PIMS_LEASE_PURPOSE_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseStatusType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("LEASE_STATUS_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSSTSY_PK");
+
+                    b.ToTable("PIMS_LEASE_STATUS_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseSubtype", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_SUBTYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSSTYP_PK");
+
+                    b.ToTable("PIMS_LEASE_SUBTYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseType", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("LEASE_TYPE_CODE")
+                        .HasComment("Primary key code to identify record")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSTYPE_PK");
+
+                    b.ToTable("PIMS_LEASE_TYPE");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Organization", b =>
                 {
                     b.Property<long>("Id")
@@ -2941,6 +3837,106 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_PROPERTY_EVALUATION");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.PropertyLease", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PROPERTY_LEASE_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROPERTY_LEASE_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to lease");
+
+                    b.Property<long>("PropertyId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PROPERTY_ID")
+                        .HasComment("Foreign key to property");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("PROPLS_PK");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("PROPLS_LEASE_ID_IDX");
+
+                    b.HasIndex("PropertyId")
+                        .HasDatabaseName("PROPLS_PROPERTY_ID_IDX");
+
+                    b.ToTable("PIMS_PROPERTY_LEASE");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.PropertyOrganization", b =>
                 {
                     b.Property<long>("Id")
@@ -4751,6 +5747,134 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Region");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.LeasePaymentFrequencyType", "PaymentFrequencyType")
+                        .WithMany("Leases")
+                        .HasForeignKey("PaymentFrequencyTypeId")
+                        .HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pims.Dal.Entities.LeaseProgramType", "ProgramType")
+                        .WithMany("Leases")
+                        .HasForeignKey("ProgramTypeId")
+                        .HasConstraintName("PIM_LSPRGT_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pims.Dal.Entities.Organization", "PropertyManagementOrganization")
+                        .WithMany("Leases")
+                        .HasForeignKey("PropertyManagementOrganizationId")
+                        .HasConstraintName("PIM_ORG_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Pims.Dal.Entities.Person", "PropertyManager")
+                        .WithMany()
+                        .HasForeignKey("PropertyManagerId")
+                        .HasConstraintName("PIM_PERSON_PIM_LEASE_PM_CONTACT_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pims.Dal.Entities.LeasePurposeSubtype", "PurposeSubtype")
+                        .WithMany("Leases")
+                        .HasForeignKey("PurposeSubtypeId")
+                        .HasConstraintName("PIM_LSPRST_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeasePurposeType", "PurposeType")
+                        .WithMany("Leases")
+                        .HasForeignKey("PurposeTypeId")
+                        .HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeaseStatusType", "StatusType")
+                        .WithMany("Leases")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("PIM_LSSTSY_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pims.Dal.Entities.Person", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .HasConstraintName("PIM_PERSON_PIM_LEASE_TENANT_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("PaymentFrequencyType");
+
+                    b.Navigation("ProgramType");
+
+                    b.Navigation("PropertyManagementOrganization");
+
+                    b.Navigation("PropertyManager");
+
+                    b.Navigation("PurposeSubtype");
+
+                    b.Navigation("PurposeType");
+
+                    b.Navigation("StatusType");
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivity", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("Activities")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_LEASE_PIM_LSACTV_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeaseType", "LeaseType")
+                        .WithMany("Activities")
+                        .HasForeignKey("LeaseTypeId")
+                        .HasConstraintName("PIM_LSTYPE_PIM_LSACTV_FK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeaseActivityPeriod", "Period")
+                        .WithMany("Activities")
+                        .HasForeignKey("PeriodId")
+                        .HasConstraintName("PIM_LSACPR_PIM_LSACTV_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeaseSubtype", "Subtype")
+                        .WithMany("Activities")
+                        .HasForeignKey("SubtypeId")
+                        .HasConstraintName("PIM_LSSTYP_PIM_LSACTV_FK")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Lease");
+
+                    b.Navigation("LeaseType");
+
+                    b.Navigation("Period");
+
+                    b.Navigation("Subtype");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseExpectedAmount", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("ExpectedAmounts")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_LEASE_PIM_EXPAMT_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeaseActivityPeriod", "Period")
+                        .WithMany("ExpectedAmounts")
+                        .HasForeignKey("PeriodId")
+                        .HasConstraintName("PIM_LSACPR_PIM_EXPAMT_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Lease");
+
+                    b.Navigation("Period");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Organization", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Address", "Address")
@@ -5080,6 +6204,27 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Property");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.PropertyLease", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("PropertiesManyToMany")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_LEASE_PIM_PROPLS_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.Property", "Property")
+                        .WithMany("LeasesManyToMany")
+                        .HasForeignKey("PropertyId")
+                        .HasConstraintName("PIM_PRPRTY_PIM_PROPLS_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Lease");
+
+                    b.Navigation("Property");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.PropertyOrganization", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Organization", "Organization")
@@ -5330,6 +6475,57 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Properties");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("ExpectedAmounts");
+
+                    b.Navigation("PropertiesManyToMany");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivityPeriod", b =>
+                {
+                    b.Navigation("Activities");
+
+                    b.Navigation("ExpectedAmounts");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePaymentFrequencyType", b =>
+                {
+                    b.Navigation("Leases");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseProgramType", b =>
+                {
+                    b.Navigation("Leases");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeSubtype", b =>
+                {
+                    b.Navigation("Leases");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeType", b =>
+                {
+                    b.Navigation("Leases");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseStatusType", b =>
+                {
+                    b.Navigation("Leases");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseSubtype", b =>
+                {
+                    b.Navigation("Activities");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseType", b =>
+                {
+                    b.Navigation("Activities");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Organization", b =>
                 {
                     b.Navigation("AccessRequestsManyToMany");
@@ -5337,6 +6533,8 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Children");
 
                     b.Navigation("ContactMethods");
+
+                    b.Navigation("Leases");
 
                     b.Navigation("PersonsManyToMany");
 
@@ -5410,6 +6608,8 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.Property", b =>
                 {
                     b.Navigation("Evaluations");
+
+                    b.Navigation("LeasesManyToMany");
 
                     b.Navigation("OrganizationsManyToMany");
 

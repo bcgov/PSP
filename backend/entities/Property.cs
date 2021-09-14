@@ -268,6 +268,16 @@ namespace Pims.Dal.Entities
         /// get - A collection of property evaluations.
         /// </summary>
         public ICollection<PropertyEvaluation> Evaluations { get; } = new List<PropertyEvaluation>();
+
+        /// <summary>
+        /// get - A collection of property leases.
+        /// </summary>
+        public ICollection<Lease> Leases { get; } = new List<Lease>();
+
+        /// <summary>
+        /// get - A collection of many-to-many entities that link properties and leases.
+        /// </summary>
+        public ICollection<PropertyLease> LeasesManyToMany { get; } = new List<PropertyLease>();
         #endregion
 
         #region Constructors
