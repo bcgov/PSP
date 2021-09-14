@@ -4,7 +4,7 @@ import { IOrganization } from 'interfaces';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
-import { TenantConsumer, TenantProvider } from 'tenants';
+import { defaultTenant, TenantConsumer, TenantProvider } from 'tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';
@@ -46,6 +46,11 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
       },
     });
   }
+  const mockFetch = () =>
+    Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
+      Response
+    >;
+  global.fetch = mockFetch as any;
 
   return (
     <TenantProvider>
