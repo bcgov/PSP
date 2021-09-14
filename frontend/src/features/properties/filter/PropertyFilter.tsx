@@ -90,7 +90,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     >
       {({ isSubmitting, setFieldValue, values }) => (
         <Form>
-          <Form.Row className="map-filter-bar">
+          <Form.Row className="map-filter-bar m-0">
             <Col className="bar-item filter-options">
               <p className="m-0">Search: </p>
             </Col>

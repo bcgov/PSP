@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideNavbar display and logic renders 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 p {
+  margin-left: 0.25rem;
+  margin-bottom: 0;
+  font-size: 12px;
+  color: white;
+  white-space: nowrap;
+}
+
+.c0 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-area: iconbar;
+  -webkit-transition: 0.5s width;
+  transition: 0.5s width;
+  width: 3rem;
+}
+
+.c0.expanded {
+  width: 8rem;
+}
+
+.c0 svg {
+  fill: white;
+}
+
+.c0 .chevron {
+  margin-top: auto;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+<div>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="c0 d-flex flex-column"
+  >
+    <div
+      class="nav-item"
+      data-testid="nav-tooltip-Management"
+    >
+      <a
+        class="c1 nav-link"
+        href="#"
+        role="button"
+      >
+        <svg>
+          fence.svg
+        </svg>
+      </a>
+    </div>
+    <svg
+      class="chevron"
+      fill="currentColor"
+      height="24"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>
+        expand
+      </title>
+      <path
+        d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+      />
+    </svg>
+  </div>
+</div>
+`;

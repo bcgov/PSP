@@ -1,11 +1,9 @@
 import './Map.scss';
 
 import axios from 'axios';
-import classNames from 'classnames';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
-import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { Feature } from 'geojson';
@@ -71,7 +69,6 @@ export type MapProps = {
   disableMapFilterBar?: boolean;
   interactive?: boolean;
   showParcelBoundaries?: boolean;
-  sidebarSize?: SidebarSize;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
 };
@@ -121,7 +118,6 @@ const Map: React.FC<MapProps> = ({
   selectedProperty,
   onMapClick,
   disableMapFilterBar,
-  sidebarSize,
   whenReady,
   whenCreated,
 }) => {
@@ -282,26 +278,20 @@ const Map: React.FC<MapProps> = ({
   const [infoOpen, setInfoOpen] = React.useState(!!property);
   const [layersOpen, setLayersOpen] = React.useState(false);
   return (
-    <Container
-      ref={resizeRef}
-      fluid
-      className={classNames('px-0 map', { narrow: sidebarSize === 'narrow' })}
-    >
+    <Container ref={resizeRef} fluid className="px-0 map">
       <FilterBackdrop show={showFilterBackdrop} />
       {!disableMapFilterBar ? (
         <Container fluid className="px-0 map-filter-container">
-          <Container className="px-0">
-            <PropertyFilter
-              defaultFilter={{
-                ...defaultFilterValues,
-              }}
-              organizationLookupCodes={organizations}
-              adminAreaLookupCodes={administrativeAreas}
-              onChange={handleMapFilterChange}
-              setTriggerFilterChanged={setTriggerFilterChanged}
-              showAllOrganizationSelect={true}
-            />
-          </Container>
+          <PropertyFilter
+            defaultFilter={{
+              ...defaultFilterValues,
+            }}
+            organizationLookupCodes={organizations}
+            adminAreaLookupCodes={administrativeAreas}
+            onChange={handleMapFilterChange}
+            setTriggerFilterChanged={setTriggerFilterChanged}
+            showAllOrganizationSelect={true}
+          />
         </Container>
       ) : null}
       <Row noGutters>
