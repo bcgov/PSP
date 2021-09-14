@@ -1,7 +1,12 @@
 import './PropertyFilter.scss';
 
-import ResetButton from 'components/common/form/ResetButton';
-import SearchButton from 'components/common/form/SearchButton';
+import {
+  Form,
+  ResetButton,
+  SearchButton,
+  SearchToggle,
+  SearchToggleOption,
+} from 'components/common/form';
 import { TableSort } from 'components/Table/TableSort';
 import { Formik } from 'formik';
 import { useRouterFilter } from 'hooks/useRouterFilter';
@@ -10,7 +15,6 @@ import Col from 'react-bootstrap/Col';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { FilterBarSchema } from 'utils/YupSchema';
 
-import { Form } from '../../../components/common/form';
 import { PropertyFilterOptions } from './';
 import { IPropertyFilter } from './IPropertyFilter';
 
@@ -34,6 +38,8 @@ export interface IPropertyFilterProps {
   showAllOrganizationSelect?: boolean;
   /** Override to trigger filterchanged in the parent */
   setTriggerFilterChanged?: (used: boolean) => void;
+  /** Which toggle view is currently active */
+  toggle?: SearchToggleOption;
 }
 
 /**
@@ -48,6 +54,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
   sort,
   onSorting,
   setTriggerFilterChanged,
+  toggle = SearchToggleOption.Map,
 }) => {
   const [propertyFilter, setPropertyFilter] = React.useState<IPropertyFilter>(defaultFilter);
   useRouterFilter({
@@ -75,6 +82,8 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     changeFilter(defaultFilter);
   };
 
+  const handlePageToggle = () => {};
+
   const [findMoreOpen] = useState<boolean>(false);
 
   return (
@@ -90,7 +99,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
     >
       {({ isSubmitting, setFieldValue, values }) => (
         <Form>
-          <Form.Row className="map-filter-bar">
+          <Form.Row className="map-filter-bar m-0">
             <Col className="bar-item filter-options">
               <p className="m-0">Search: </p>
             </Col>
@@ -105,6 +114,9 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
             </Col>
             <Col className="bar-item">
               <ResetButton disabled={isSubmitting || findMoreOpen} onClick={resetFilter} />
+            </Col>
+            <Col className="bar-item">
+              <SearchToggle onClick={handlePageToggle} toolId={'toggle'} toggle={toggle} />
             </Col>
           </Form.Row>
         </Form>

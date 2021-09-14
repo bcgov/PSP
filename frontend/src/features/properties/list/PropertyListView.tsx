@@ -3,6 +3,7 @@ import './PropertyListView.scss';
 import variables from '_variables.module.scss';
 import { ReactComponent as BuildingSvg } from 'assets/images/icon-business.svg';
 import { ReactComponent as LandSvg } from 'assets/images/icon-lot.svg';
+import { SearchToggleOption } from 'components/common/form';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
@@ -407,7 +408,7 @@ const PropertyListView: React.FC = () => {
   return (
     <Container fluid className="PropertyListView">
       <Container fluid className="filter-container border-bottom">
-        <Container className="px-0">
+        <Container fluid className="px-0 map-filter-container">
           <PropertyFilter
             defaultFilter={defaultFilterValues}
             organizationLookupCodes={organizations}
@@ -415,6 +416,7 @@ const PropertyListView: React.FC = () => {
             onChange={handleFilterChange}
             sort={sorting}
             onSorting={setSorting}
+            toggle={SearchToggleOption.List}
           />
         </Container>
       </Container>

@@ -1,11 +1,9 @@
 import './Map.scss';
 
 import axios from 'axios';
-import classNames from 'classnames';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
-import { SidebarSize } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { Feature } from 'geojson';
@@ -16,9 +14,7 @@ import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
 import React, { useEffect, useRef, useState } from 'react';
-import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import { MapContainer as ReactLeafletMap, Popup, TileLayer } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
@@ -51,6 +47,7 @@ import {
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
 import { MapEvents } from './MapEvents/MapEvents';
+import * as Styled from './styles';
 import { ZoomOutButton } from './ZoomOut/ZoomOutButton';
 
 export type MapViewportChangeEvent = {
@@ -71,7 +68,6 @@ export type MapProps = {
   disableMapFilterBar?: boolean;
   interactive?: boolean;
   showParcelBoundaries?: boolean;
-  sidebarSize?: SidebarSize;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
 };
@@ -121,7 +117,6 @@ const Map: React.FC<MapProps> = ({
   selectedProperty,
   onMapClick,
   disableMapFilterBar,
-  sidebarSize,
   whenReady,
   whenCreated,
 }) => {
@@ -278,126 +273,119 @@ const Map: React.FC<MapProps> = ({
     }
   };
 
-  const property = useAppSelector(state => state.properties.propertyDetail);
+  const property = useAppSelector(state => state.properties?.propertyDetail);
   const [infoOpen, setInfoOpen] = React.useState(!!property);
   const [layersOpen, setLayersOpen] = React.useState(false);
+
   return (
-    <Container
-      ref={resizeRef}
-      fluid
-      className={classNames('px-0 map', { narrow: sidebarSize === 'narrow' })}
-    >
+    <Styled.MapGrid ref={resizeRef} className="px-0 map">
       <FilterBackdrop show={showFilterBackdrop} />
       {!disableMapFilterBar ? (
         <Container fluid className="px-0 map-filter-container">
-          <Container className="px-0">
-            <PropertyFilter
-              defaultFilter={{
-                ...defaultFilterValues,
-              }}
-              organizationLookupCodes={organizations}
-              adminAreaLookupCodes={administrativeAreas}
-              onChange={handleMapFilterChange}
-              setTriggerFilterChanged={setTriggerFilterChanged}
-              showAllOrganizationSelect={true}
-            />
-          </Container>
+          <PropertyFilter
+            defaultFilter={{
+              ...defaultFilterValues,
+            }}
+            organizationLookupCodes={organizations}
+            adminAreaLookupCodes={administrativeAreas}
+            onChange={handleMapFilterChange}
+            setTriggerFilterChanged={setTriggerFilterChanged}
+            showAllOrganizationSelect={true}
+          />
         </Container>
       ) : null}
-      <Row noGutters>
-        <Col>
-          {baseLayers?.length > 0 && (
-            <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
-          )}
-          <PropertyPopUpContextProvider>
-            <ReactLeafletMap
-              center={[lat, lng]}
-              zoom={lastZoom}
-              maxZoom={MAP_MAX_ZOOM}
-              closePopupOnClick={true}
-              whenCreated={handleMapCreated}
-              whenReady={handleMapReady}
-            >
-              <MapEvents
-                click={showLocationDetails}
-                zoomend={e => setZoom(e.sourceTarget.getZoom())}
-                moveend={handleBounds}
+      <Styled.MapContainer>
+        {baseLayers?.length > 0 && (
+          <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
+        )}
+        <PropertyPopUpContextProvider>
+          <ReactLeafletMap
+            center={[lat, lng]}
+            zoom={lastZoom}
+            maxZoom={MAP_MAX_ZOOM}
+            closePopupOnClick={true}
+            whenCreated={handleMapCreated}
+            whenReady={handleMapReady}
+          >
+            <MapEvents
+              click={showLocationDetails}
+              zoomend={e => setZoom(e.sourceTarget.getZoom())}
+              moveend={handleBounds}
+            />
+            {activeBasemap && (
+              <TileLayer
+                attribution={activeBasemap.attribution}
+                url={activeBasemap.url}
+                zIndex={0}
               />
-              {activeBasemap && (
-                <TileLayer
-                  attribution={activeBasemap.attribution}
-                  url={activeBasemap.url}
-                  zIndex={0}
-                />
-              )}
-              {!!layerPopup && (
-                <Popup
-                  position={layerPopup.latlng}
-                  offset={[0, -25]}
-                  onClose={() => {
-                    setLayerPopup(undefined);
-                    dispatch(storeProperty(null));
+            )}
+            {!!layerPopup && (
+              <Popup
+                position={layerPopup.latlng}
+                offset={[0, -25]}
+                onClose={() => {
+                  setLayerPopup(undefined);
+                  dispatch(storeProperty(null));
+                }}
+                closeButton={true}
+                autoPan={false}
+              >
+                <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
+                <LayerPopupContent
+                  data={layerPopup.data as any}
+                  config={layerPopup.config as any}
+                  center={layerPopup.center}
+                  onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
+                    dispatch(
+                      saveParcelLayerData({
+                        e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
+                        data: {
+                          ...data,
+                          CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
+                        },
+                      }),
+                    );
                   }}
-                  closeButton={true}
-                  autoPan={false}
-                >
-                  <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
-                  <LayerPopupContent
-                    data={layerPopup.data as any}
-                    config={layerPopup.config as any}
-                    center={layerPopup.center}
-                    onAddToParcel={(e: MouseEvent, data: { [key: string]: any }) => {
-                      dispatch(
-                        saveParcelLayerData({
-                          e: { timeStamp: document?.timeline?.currentTime ?? 0 } as any,
-                          data: {
-                            ...data,
-                            CENTER: { lat: data?.CENTER.lat, lng: data?.CENTER.lng },
-                          },
-                        }),
-                      );
-                    }}
-                    bounds={layerPopup.bounds}
-                  />
-                </Popup>
-              )}
-              <LegendControl />
-              <ZoomOutButton bounds={defaultBounds} />
-              <LayersControl
-                open={layersOpen}
-                setOpen={() => {
-                  setLayersOpen(!layersOpen);
-                  setInfoOpen(false);
-                }}
-              />
-              <InfoSlideOut
-                open={infoOpen}
-                setOpen={(state: boolean) => {
-                  setInfoOpen(state);
+                  bounds={layerPopup.bounds}
+                />
+              </Popup>
+            )}
+            <LegendControl />
+            <ZoomOutButton bounds={defaultBounds} />
+            <LayersControl
+              open={layersOpen}
+              setOpen={() => {
+                setLayersOpen(!layersOpen);
+                setInfoOpen(false);
+              }}
+            />
+            <InfoSlideOut
+              open={infoOpen}
+              setOpen={(state: boolean) => {
+                setInfoOpen(state);
+                setLayersOpen(false);
+              }}
+              onHeaderActionClick={() => {
+                setInfoOpen(false);
+              }}
+            />
+            <InventoryLayer
+              zoom={zoom}
+              bounds={bounds}
+              onMarkerClick={() => {
+                if (!infoOpen) {
                   setLayersOpen(false);
-                }}
-                onHeaderActionClick={() => {
-                  setInfoOpen(false);
-                }}
-              />
-              <InventoryLayer
-                zoom={zoom}
-                bounds={bounds}
-                onMarkerClick={() => {
-                  if (!infoOpen) {
-                    setLayersOpen(false);
-                    setInfoOpen(true);
-                  }
-                }}
-                selected={selectedProperty}
-                filter={geoFilter}
-                onRequestData={setShowFilterBackdrop}
-              ></InventoryLayer>
-            </ReactLeafletMap>
-          </PropertyPopUpContextProvider>
-        </Col>
-      </Row>
-    </Container>
+                  setInfoOpen(true);
+                }
+              }}
+              selected={selectedProperty}
+              filter={geoFilter}
+              onRequestData={setShowFilterBackdrop}
+            ></InventoryLayer>
+          </ReactLeafletMap>
+        </PropertyPopUpContextProvider>
+      </Styled.MapContainer>
+    </Styled.MapGrid>
   );
 };
 

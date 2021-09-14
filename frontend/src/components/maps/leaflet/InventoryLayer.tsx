@@ -145,7 +145,9 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const { loadProperties } = useApi();
   const { changed: filterChanged } = useFilterContext();
 
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftProperties);
+  const draftProperties: PointFeature[] = useAppSelector(
+    state => state.properties?.draftProperties ?? [],
+  );
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -223,7 +225,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       }
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 7000 });
-      console.error(error);
     } finally {
       onRequestData(false);
     }
