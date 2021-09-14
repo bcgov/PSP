@@ -20,9 +20,6 @@ exclude: # exclude matching issues
   - message: Ignore lockfiles
     paths:
       - package-lock.json
-  - message: Ignore auto-generated files (db-schema)
-    paths:
-      - "*.dez"
   - message: Ignore local .env files
     paths:
       - "*.env"
@@ -44,6 +41,10 @@ exclude: # exclude matching issues
     paths:
       - index.html
       - nginx.conf.template
+  - message: Ignore hashes on badge urls
+    pattern: https://img\.shields\.io/.*
+  - message: Ignore hashes on github gists
+    pattern: https://gist\.github\.com/.*
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
