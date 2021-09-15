@@ -8,6 +8,12 @@ exports[`Tenant Header Header CITZ background 1`] = `
   grid-area: header;
 }
 
+@media (max-width:600px) {
+  .c0 {
+    padding: 0;
+  }
+}
+
 <div>
   <header
     class="c0"
@@ -21,6 +27,12 @@ exports[`Tenant Header Header MOTI background 1`] = `
   border: none;
   border-bottom: 2px solid;
   grid-area: header;
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 0;
+  }
 }
 
 <div>
@@ -38,6 +50,12 @@ exports[`Tenant Header Header black background 1`] = `
   grid-area: header;
 }
 
+@media (max-width:600px) {
+  .c0 {
+    padding: 0;
+  }
+}
+
 <div>
   <header
     class="c0"
@@ -51,6 +69,12 @@ exports[`Tenant Header Header default background 1`] = `
   border: none;
   border-bottom: 2px solid;
   grid-area: header;
+}
+
+@media (max-width:600px) {
+  .c0 {
+    padding: 0;
+  }
 }
 
 <div>
