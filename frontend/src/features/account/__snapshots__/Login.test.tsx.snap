@@ -10,6 +10,10 @@ exports[`login login renders correctly 1`] = `
   grid-area: content;
 }
 
+.c0 .btn.btn-primary {
+  display: inline-block;
+}
+
 .c0 .unauth {
   font-size: 24px;
   margin: 91px auto;
