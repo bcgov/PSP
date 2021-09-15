@@ -54,19 +54,24 @@ endif
 ##############################################################################
 # python is required for DevSecOps tools
 PYTHON := $(shell command -v python 2> /dev/null)
+JQ := $(shell command -v jq 2> /dev/null)
 
 .PHONY: devops-install
 devops-install: ## Installs software required by DevSecOps tooling (e.g. python, etc)
 	@if [ -z $(PYTHON) ]; then echo "Python could not be found. See See https://docs.python.org/3/"; exit 2; fi
+	@if [ -z $(JQ) ]; then echo "JQ could not be found. See See https://stedolan.github.io/jq/"; exit 2; fi
 	@python -m ensurepip --upgrade
-	@pip install trufflehog3
+	@pip install trufflehog3 jtbl
 
 .PHONY: devops-scan
 devops-scan: | devops-install ## Scans the repo for accidental leaks of passwords/secrets
 	@echo "$(P) Scanning codebase for leaked passwords and secrets..."
-	-@trufflehog3 -vv --no-history --config .github/.trufflehog3.yml --format json --output trufflehog_report.json
+	-@trufflehog3 --no-history --config .github/.trufflehog3.yml --format json --output trufflehog_report.json
 	@echo "$(P) Generating HTML report..."
 	@trufflehog3 -R trufflehog_report.json --output trufflehog_report.html
+	@echo "$(P) HTML report saved to trufflehog_report.html"
+	@echo
+	@./build/secops_report.sh trufflehog_report.json
 
 ##############################################################################
 # Docker Development
