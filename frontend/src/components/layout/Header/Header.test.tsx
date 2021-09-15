@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
 import renderer from 'react-test-renderer';
@@ -54,29 +54,35 @@ describe('Header tests', () => {
     process.env = OLD_ENV;
   });
 
-  it('Header renders correctly', () => {
+  it('Header renders correctly', async () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const tree = renderer.create(getHeader()).toJSON();
-    expect(tree).toMatchSnapshot();
+    await waitFor(async () => {
+      expect(tree).toMatchSnapshot();
+    });
   });
 
   it('Header renders for MOTI tenant', async () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const header = render(getHeader());
-    const result = await header.findByText(config['MOTI'].title);
-    expect(result.innerHTML).toBe(config['MOTI'].title);
+    await waitFor(async () => {
+      const result = await header.findByText(config['MOTI'].title);
+      expect(result.innerHTML).toBe(config['MOTI'].title);
+    });
   });
 
   it('Header renders for CITZ tenant', async () => {
     process.env.REACT_APP_TENANT = 'CITZ';
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const header = render(getHeader());
-    const result = await header.findByText(config['CITZ'].title);
-    expect(result.innerHTML).toBe(config['CITZ'].title);
+    await waitFor(async () => {
+      const result = await header.findByText(config['CITZ'].title);
+      expect(result.innerHTML).toBe(config['CITZ'].title);
+    });
   });
 
-  it('User displays default if no user name information found', () => {
+  it('User displays default if no user name information found', async () => {
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: {
         subject: 'test',
@@ -88,12 +94,14 @@ describe('Header tests', () => {
     });
 
     const { getByText } = render(getHeader());
-    const name = getByText('default');
-    expect(name).toBeVisible();
+    await waitFor(async () => {
+      const name = getByText('default');
+      expect(name).toBeVisible();
+    });
   });
 
   describe('UserProfile user name display', () => {
-    it('Displays keycloak display name if available', () => {
+    it('Displays keycloak display name if available', async () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
@@ -107,11 +115,13 @@ describe('Header tests', () => {
       });
 
       const { getByText } = render(getHeader());
-      const name = getByText('display name');
-      expect(name).toBeVisible();
+      await waitFor(async () => {
+        const name = getByText('display name');
+        expect(name).toBeVisible();
+      });
     });
 
-    it('Displays first last name if no display name', () => {
+    it('Displays first last name if no display name', async () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
@@ -125,11 +135,13 @@ describe('Header tests', () => {
       });
 
       const { getByText } = render(getHeader());
-      const name = getByText('firstName surname');
-      expect(name).toBeVisible();
+      await waitFor(async () => {
+        const name = getByText('firstName surname');
+        expect(name).toBeVisible();
+      });
     });
 
-    it('displays appropriate organization', () => {
+    it('displays appropriate organization', async () => {
       (useKeycloak as jest.Mock).mockReturnValue({
         keycloak: {
           subject: 'test',
@@ -143,7 +155,9 @@ describe('Header tests', () => {
       });
       const { getByText } = render(getHeader());
       fireEvent.click(getByText(/test user/i));
-      expect(getByText(/organizationVal/i)).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText(/organizationVal/i)).toBeInTheDocument();
+      });
     });
   });
 });

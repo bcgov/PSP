@@ -292,7 +292,7 @@ describe('MapProperties View', () => {
     userEvent.type(nameInput, '123-456-789');
     await waitFor(() => userEvent.click(searchButton));
     // check API call params...
-    const filter = expect.objectContaining({ PID: '123-456-789' });
+    const filter = expect.objectContaining({ PID: 123456789 });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
   });
 
@@ -323,11 +323,11 @@ describe('MapProperties View', () => {
     userEvent.type(nameInput, '123-456-789');
     await waitFor(() => userEvent.click(searchButton));
     // check API call params...
-    const filter = expect.objectContaining({ PID: '123-456-789' });
+    const filter = expect.objectContaining({ PID: 123456789 });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
     const resetButton = findResetButton();
     await waitFor(() => userEvent.click(resetButton));
-    const defaultFilter = expect.objectContaining({ PID: '' });
+    const defaultFilter = expect.objectContaining({ PID: undefined });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(defaultFilter));
   });
 });

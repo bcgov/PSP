@@ -3,14 +3,14 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { ILeaseAndLicenseFilter } from './../../features/leases/interfaces';
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease endpoints.
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiLeases = () => {
-  const api = useApi();
+  const api = useAxiosApi();
 
   return React.useMemo(
     () => ({
