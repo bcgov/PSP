@@ -24,10 +24,21 @@ exports[`Empty Header renders 1`] = `
 
 .c0 .brand-box {
   padding: 10px 0;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c0 .brand-box .pims-logo {
   margin: 0 10px;
+}
+
+.c0 .title {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
 }
 
 .c0 .title h1 {
@@ -43,6 +54,10 @@ exports[`Empty Header renders 1`] = `
 }
 
 .c0 .other {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

@@ -22,7 +22,6 @@ const HeaderStyled = styled.header<IHeaderProps>`
   border: none;
   border-bottom: 2px solid ${props => props.theme.css.accentColor};
   grid-area: header;
-  padding: 0 20%;
 `;
 
 export default Header;

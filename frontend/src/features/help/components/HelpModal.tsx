@@ -36,7 +36,7 @@ const HelpModal: FunctionComponent<IModalProps> = ({ handleCancel, handleSubmit,
   const tenantsState = useAppSelector(state => state.tenants);
   const { getSettings } = useTenants();
   const [mailto, setMailto] = React.useState<IMailMessage | undefined>(undefined);
-  const config = tenantsState.config;
+  const config = tenantsState?.config;
 
   React.useEffect(() => {
     const update = async () => {
