@@ -2,14 +2,14 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { config, TenantProvider } from 'tenants';
+import { tenantsSlice } from 'store/slices/tenants';
+import { config } from 'tenants';
+import { defaultTenant } from 'tenants';
+import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import Header from './Header';
 
@@ -30,7 +30,14 @@ const lCodes = {
 
 const store = mockStore({
   [lookupCodesSlice.name]: lCodes,
+  [tenantsSlice.name]: { defaultTenant },
 });
+
+const getHeader = () => (
+  <TestCommonWrapper store={store} history={history}>
+    <Header />
+  </TestCommonWrapper>
+);
 
 describe('Header tests', () => {
   const OLD_ENV = process.env;
@@ -49,32 +56,14 @@ describe('Header tests', () => {
 
   it('Header renders correctly', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const tree = renderer
-      .create(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      )
-      .toJSON();
+    const tree = renderer.create(getHeader()).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('Header renders for MOTI tenant', async () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const header = render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
+    const header = render(getHeader());
     const result = await header.findByText(config['MOTI'].title);
     expect(result.innerHTML).toBe(config['MOTI'].title);
   });
@@ -82,15 +71,7 @@ describe('Header tests', () => {
   it('Header renders for CITZ tenant', async () => {
     process.env.REACT_APP_TENANT = 'CITZ';
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const header = render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
+    const header = render(getHeader());
     const result = await header.findByText(config['CITZ'].title);
     expect(result.innerHTML).toBe(config['CITZ'].title);
   });
@@ -106,15 +87,7 @@ describe('Header tests', () => {
       },
     });
 
-    const { getByText } = render(
-      <TenantProvider>
-        <Provider store={store}>
-          <Router history={history}>
-            <Header />
-          </Router>
-        </Provider>
-      </TenantProvider>,
-    );
+    const { getByText } = render(getHeader());
     const name = getByText('default');
     expect(name).toBeVisible();
   });
@@ -133,15 +106,7 @@ describe('Header tests', () => {
         },
       });
 
-      const { getByText } = render(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      );
+      const { getByText } = render(getHeader());
       const name = getByText('display name');
       expect(name).toBeVisible();
     });
@@ -159,15 +124,7 @@ describe('Header tests', () => {
         },
       });
 
-      const { getByText } = render(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      );
+      const { getByText } = render(getHeader());
       const name = getByText('firstName surname');
       expect(name).toBeVisible();
     });
@@ -184,15 +141,7 @@ describe('Header tests', () => {
           },
         },
       });
-      const { getByText } = render(
-        <TenantProvider>
-          <Provider store={store}>
-            <Router history={history}>
-              <Header />
-            </Router>
-          </Provider>
-        </TenantProvider>,
-      );
+      const { getByText } = render(getHeader());
       fireEvent.click(getByText(/test user/i));
       expect(getByText(/organizationVal/i)).toBeInTheDocument();
     });

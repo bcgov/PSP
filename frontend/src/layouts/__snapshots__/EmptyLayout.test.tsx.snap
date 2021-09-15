@@ -66,10 +66,21 @@ exports[`Empty Layout renders 1`] = `
 
 .c2 .brand-box {
   padding: 10px 0;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c2 .brand-box .pims-logo {
   margin: 0 10px;
+}
+
+.c2 .title {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
 }
 
 .c2 .title h1 {
@@ -85,6 +96,10 @@ exports[`Empty Layout renders 1`] = `
 }
 
 .c2 .other {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -125,7 +140,6 @@ exports[`Empty Layout renders 1`] = `
   border: none;
   border-bottom: 2px solid;
   grid-area: header;
-  padding: 0 20%;
 }
 
 .c0 {
