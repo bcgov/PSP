@@ -177,6 +177,7 @@ exports[`MapView Renders the map 1`] = `
           >
             <button
               class="Button Button--icon-only primary btn btn-primary"
+              data-testid="search"
               id="search-button"
               type="submit"
             >

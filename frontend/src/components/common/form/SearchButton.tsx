@@ -14,6 +14,7 @@ export const SearchButton: React.FC<ButtonProps> = ({ ...props }) => {
       <Button
         id="search-button"
         type="submit"
+        data-testid="search"
         className={props.className ?? 'primary'}
         {...props}
         icon={<FaSearch size={20} />}

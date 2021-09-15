@@ -2,6 +2,7 @@ import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
+import { LeaseAndLicenseListView } from 'features/leases/components/LeaseAndLicenseListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -118,6 +119,14 @@ const AppRouter: React.FC = () => {
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('View Inventory')}
+        />
+        <AppRoute
+          protected
+          path="/lease/list"
+          component={LeaseAndLicenseListView}
+          layout={AuthLayout}
+          claim={Claims.PROPERTY_VIEW}
+          title={getTitle('View Lease & Licenses')}
         />
         <AppRoute
           protected

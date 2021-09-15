@@ -2,7 +2,6 @@ import clsx from 'classnames';
 import { AdminTools, LeaseAndLicenses } from 'components/layout';
 import { useEffect, useState } from 'react';
 import { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import * as Styled from './styles';
@@ -23,16 +22,19 @@ export interface ISideTrayPageProps {
 
 export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   const [show, setShow] = useState(false);
-  const {
-    location: { pathname },
-  } = useHistory();
+
+  const sideTrayPages: Map<SidebarContextType, ReactElement> = new Map<
+    SidebarContextType,
+    ReactElement
+  >([
+    [SidebarContextType.ADMIN, <AdminTools onLinkClick={() => setShow(false)} />],
+    [SidebarContextType.LEASE, <LeaseAndLicenses onLinkClick={() => setShow(false)} />],
+  ]);
 
   useEffect(() => {
     setShow(!!context);
   }, [context, setShow]);
-  useEffect(() => {
-    setShow(false);
-  }, [pathname, setContext]);
+  const TrayPage = () => (context ? sideTrayPages.get(context) ?? <></> : <></>);
   return (
     <ReactVisibilitySensor
       onChange={isVisible => {
@@ -46,16 +48,10 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
           size={32}
           onClick={() => setShow(false)}
         />
-        <Styled.SideTrayPage>{context ? sideTrayPages.get(context) : null}</Styled.SideTrayPage>
+        <Styled.SideTrayPage>
+          <TrayPage />
+        </Styled.SideTrayPage>
       </Styled.SideTray>
     </ReactVisibilitySensor>
   );
 };
-
-const sideTrayPages: Map<SidebarContextType, ReactElement> = new Map<
-  SidebarContextType,
-  ReactElement
->([
-  [SidebarContextType.ADMIN, <AdminTools />],
-  [SidebarContextType.LEASE, <LeaseAndLicenses />],
-]);
