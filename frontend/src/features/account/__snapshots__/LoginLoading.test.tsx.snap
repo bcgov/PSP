@@ -34,6 +34,10 @@ exports[`Empty Header CITZ Login Loading 1`] = `
   overflow: auto;
 }
 
+.c0 .btn.btn-primary {
+  display: inline-block;
+}
+
 .c0 .unauth {
   font-size: 24px;
   margin: 91px auto;
@@ -229,6 +233,10 @@ exports[`Empty Header MOTI Login Loading 1`] = `
   background-size: cover;
   background-position: center;
   overflow: auto;
+}
+
+.c0 .btn.btn-primary {
+  display: inline-block;
 }
 
 .c0 .unauth {

@@ -16,6 +16,10 @@ export const LoginStyled = styled(Container)`
   background-position: center;
   overflow: auto;
 
+  .btn.btn-primary {
+    display: inline-block;
+  }
+
   .unauth {
     font-size: 24px;
     margin: 91px auto;

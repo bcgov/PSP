@@ -5,7 +5,7 @@ import { IPagedItems, IProperty } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 const propertyCreatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.parcel.PARCEL_CREATING,
@@ -30,10 +30,10 @@ const propertyDeletingToasts: LifecycleToasts = {
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiProperties = () => {
-  const api = useApi();
-  const apiWithPropertyCreatingToasts = useApi({ lifecycleToasts: propertyCreatingToasts });
-  const apiWithPropertyUpdatingToasts = useApi({ lifecycleToasts: propertyUpdatingToasts });
-  const apiWithPropertyDeletingToasts = useApi({ lifecycleToasts: propertyDeletingToasts });
+  const api = useAxiosApi();
+  const apiWithPropertyCreatingToasts = useAxiosApi({ lifecycleToasts: propertyCreatingToasts });
+  const apiWithPropertyUpdatingToasts = useAxiosApi({ lifecycleToasts: propertyUpdatingToasts });
+  const apiWithPropertyDeletingToasts = useAxiosApi({ lifecycleToasts: propertyDeletingToasts });
 
   return React.useMemo(
     () => ({
