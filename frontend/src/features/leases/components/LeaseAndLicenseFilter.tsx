@@ -36,13 +36,19 @@ const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilterProps
         setFilter(values);
       }}
     >
-      {({ values }) => (
+      {({ values, resetForm }) => (
         <Styled.InlineForm>
           <b>Search for a Lease or License:</b>
           <PropertyFilterOptions options={options} placeholders={placeholders} />
           <Styled.InlineInput field="tenantName" label="Tenant Name" />
           <SearchButton disabled={isSubmitting} onClick={() => search(values)} />
-          <ResetButton disabled={isSubmitting} onClick={resetFilter} />
+          <ResetButton
+            disabled={isSubmitting}
+            onClick={() => {
+              resetForm();
+              resetFilter();
+            }}
+          />
         </Styled.InlineForm>
       )}
     </Formik>
