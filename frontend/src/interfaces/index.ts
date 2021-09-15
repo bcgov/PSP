@@ -3,6 +3,7 @@ export * from './IAccessRequestOrganization';
 export * from './IAccessRequestRole';
 export * from './IAddress';
 export * from './ILease';
+export * from './ILease';
 export * from './IOrganization';
 export * from './IPagedItems';
 export * from './IParentParcel';

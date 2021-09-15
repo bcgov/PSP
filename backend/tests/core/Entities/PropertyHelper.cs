@@ -29,11 +29,15 @@ namespace Pims.Core.Test
             tenure ??= EntityHelper.CreatePropertyTenureType("Tenure");
             areaUnit ??= EntityHelper.CreatePropertyAreaUnitType("Sqft");
             dataSource ??= EntityHelper.CreatePropertyDataSourceType("LIS");
-            return new Entity.Property(pid, type, classification, address, tenure, areaUnit, dataSource, DateTime.UtcNow)
+            var property = new Entity.Property(pid, type, classification, address, tenure, areaUnit, dataSource, DateTime.UtcNow)
             {
                 Id = pid,
                 RowVersion = 1,
             };
+            var lease = EntityHelper.CreateLease(1);
+            lease.Properties.Add(property);
+            property.Leases.Add(lease);
+            return property;
         }
 
         /// <summary>

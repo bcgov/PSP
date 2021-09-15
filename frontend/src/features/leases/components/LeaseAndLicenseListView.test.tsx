@@ -19,7 +19,6 @@ const renderContainer = ({ store }: any) =>
       <LeaseAndLicenseListView />
     </TestCommonWrapper>,
   );
-
 const mockFetch = () =>
   Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
     Response
