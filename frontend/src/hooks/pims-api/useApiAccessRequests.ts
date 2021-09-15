@@ -3,7 +3,7 @@ import { IAccessRequest, IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the access requests endpoints.
@@ -11,7 +11,7 @@ import { useApi } from '.';
  */
 
 export const useApiAccessRequests = () => {
-  const api = useApi();
+  const api = useAxiosApi();
 
   return React.useMemo(
     () => ({
