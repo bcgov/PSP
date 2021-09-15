@@ -112,7 +112,6 @@ namespace Pims.Dal.Services
                 .ThenInclude(a => a.Country)
                 .Include(p => p.Leases)
                 .ThenInclude(l => l.Tenant)
-                .Where(p => p.Id == 153)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return property;
         }
