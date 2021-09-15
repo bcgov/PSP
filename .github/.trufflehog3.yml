@@ -28,6 +28,8 @@ exclude: # exclude matching issues
       - "*.jpg"
       - "*.png"
       - "*.svg"
+      - "*.webp"
+      - "*.ico"
       - "*.css"
       - "*.scss"
   - message: Ignore integrity hashes on Openshift config files
