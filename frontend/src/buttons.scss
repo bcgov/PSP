@@ -35,6 +35,8 @@
 
 .btn {
   min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .btn:hover {
