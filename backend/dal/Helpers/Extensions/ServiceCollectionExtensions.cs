@@ -31,6 +31,7 @@ namespace Pims.Dal
             services.AddScoped<Services.IClaimService, Services.ClaimService>();
             services.AddScoped<Services.IAccessRequestService, Services.AccessRequestService>();
             services.AddScoped<Services.ITenantService, Services.TenantService>();
+            services.AddScoped<Services.ILeaseService, Services.LeaseService>();
             return services; // TODO: Use reflection to find all services.
         }
 

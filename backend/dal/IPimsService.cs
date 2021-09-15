@@ -24,6 +24,10 @@ namespace Pims.Dal
         IPropertyService Property { get; }
         #endregion
 
+        #region Leases
+        ILeaseService Lease { get; }
+        #endregion
+
         #region Configuration
         ITenantService Tenant { get; }
         #endregion
