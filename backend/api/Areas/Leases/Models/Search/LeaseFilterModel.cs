@@ -26,12 +26,12 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string LFileNo { get; set; }
         #endregion
 
+        #region Constructors
+
         /// <summary>
         /// Creates a new instance of a LeaseFilterModel class.
         /// </summary>
         public LeaseFilterModel() { }
-
-        #region Constructors
 
         /// <summary>
         /// Creates a new instance of a LeaseFilterModel class, initializes with the specified arguments.

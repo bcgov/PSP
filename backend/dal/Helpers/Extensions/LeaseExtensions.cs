@@ -46,7 +46,6 @@ namespace Pims.Dal.Helpers.Extensions
 
             return query.Include(l => l.Properties)
                 .ThenInclude(p => p.Address)
-                .Include(l => l.PropertiesManyToMany)
                 .Include(l => l.ProgramType)
                 .Include(l => l.Tenant);
         }
@@ -60,6 +59,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static IQueryable<Entity.Lease> GenerateLeaseQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
         {
+            if (context == null) throw new ArgumentNullException("GenerateLeaseQuery context cannot be null");
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
@@ -77,7 +77,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string GetAddress(this Pims.Dal.Entities.Lease lease)
         {
-            return lease.Properties.FirstOrDefault()?.Address?.StreetAddress1;
+            return lease?.Properties?.FirstOrDefault()?.Address?.StreetAddress1;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static int? GetPidOrPin(this Pims.Dal.Entities.Lease lease)
         {
-            return lease.Properties.FirstOrDefault()?.PID ?? lease.Properties.FirstOrDefault()?.PIN;
+            return lease?.Properties?.FirstOrDefault()?.PID ?? lease?.Properties.FirstOrDefault()?.PIN;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string GetProgramName(this Pims.Dal.Entities.Lease lease)
         {
-            return lease.ProgramType?.Description;
+            return lease?.ProgramType?.Description;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string GetFullName(this Pims.Dal.Entities.Lease lease)
         {
-            if(lease.Tenant != null)
+            if(lease?.Tenant != null)
             {
                 string[] names = { lease.Tenant.Surname, lease.Tenant.FirstName, lease.Tenant.MiddleNames };
                 return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));

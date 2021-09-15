@@ -56,6 +56,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable< LeaseModel>), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         public IActionResult GetLeases()
         {
@@ -73,6 +74,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         public IActionResult GetLeases([FromBody] LeaseFilterModel filter)
         {
