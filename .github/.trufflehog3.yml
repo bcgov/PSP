@@ -47,6 +47,10 @@ exclude: # exclude matching issues
     pattern: https://img\.shields\.io/.*
   - message: Ignore hashes on github gists
     pattern: https://gist\.github\.com/.*
+  - message: Ignore local keycloak configuration (for local development only)
+    id: high-entropy
+    paths:
+      - realm-export.json
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
