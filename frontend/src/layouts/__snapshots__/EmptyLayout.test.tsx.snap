@@ -156,17 +156,10 @@ exports[`Empty Layout renders 1`] = `
     display: block;
     text-align: left;
     padding-left: 40px;
-    white-space: nowrap;
   }
 
   .c2 .shortAppName {
     display: none;
-  }
-}
-
-@media (max-width:600px) {
-  .c1 {
-    padding: 0;
   }
 }
 

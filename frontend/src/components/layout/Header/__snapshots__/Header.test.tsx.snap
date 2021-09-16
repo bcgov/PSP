@@ -94,7 +94,6 @@ Array [
     display: block;
     text-align: left;
     padding-left: 40px;
-    white-space: nowrap;
   }
 
   .c0 .shortAppName {
