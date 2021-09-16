@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="MSI_MSSQLSERVER2_PIMSS09.00"
+  DTS:DTSID="{E702F506-3FC7-4E33-A8A8-8639313CE7EB}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=MSI\MSSQLSERVER2;Initial Catalog=PIMSS09.00;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-MOTI_Legacy_PAIMS_PIMS_Data_Migration-{E702F506-3FC7-4E33-A8A8-8639313CE7EB}MSI\MSSQLSERVER2\PIMSS09.00;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
