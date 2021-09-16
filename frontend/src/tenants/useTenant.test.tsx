@@ -41,7 +41,10 @@ describe('useTenant hook', () => {
     await act(async () => {
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
-      expect(title).toContainHTML(JSON.stringify(defaultTenant));
+      expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+        ...defaultTenant,
+        propertiesUrl: undefined,
+      });
     });
   });
 
@@ -50,7 +53,10 @@ describe('useTenant hook', () => {
       process.env.REACT_APP_TENANT = 'FAKE';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
-      expect(title).toContainHTML(JSON.stringify(defaultTenant));
+      expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+        ...defaultTenant,
+        propertiesUrl: undefined,
+      });
     });
   });
 
@@ -59,7 +65,11 @@ describe('useTenant hook', () => {
       process.env.REACT_APP_TENANT = 'MOTI';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
-      expect(title).toContainHTML(JSON.stringify({ ...defaultTenant, ...config['MOTI'] }));
+      expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+        ...defaultTenant,
+        ...config['MOTI'],
+        propertiesUrl: undefined,
+      });
     });
   });
 
@@ -68,7 +78,11 @@ describe('useTenant hook', () => {
       process.env.REACT_APP_TENANT = 'CITZ';
       const { container } = testRender();
       const title = getByTestId(container, 'tenant');
-      expect(title).toContainHTML(JSON.stringify({ ...defaultTenant, ...config['CITZ'] }));
+      expect({ ...JSON.parse(title.innerHTML), propertiesUrl: undefined }).toStrictEqual({
+        ...defaultTenant,
+        ...config['CITZ'],
+        propertiesUrl: undefined,
+      });
     });
   });
 });
