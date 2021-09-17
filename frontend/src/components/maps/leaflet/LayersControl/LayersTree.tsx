@@ -5,13 +5,15 @@ import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
 import L from 'leaflet';
 import flatten from 'lodash/flatten';
 import noop from 'lodash/noop';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import TreeMenu, { TreeMenuItem, TreeNode } from 'react-simple-tree-menu';
 import styled from 'styled-components';
+import { TenantContext } from 'tenants';
 
 import { layersTree } from './data';
 import { ILayerItem } from './types';
@@ -239,27 +241,38 @@ const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
   );
 };
 
-const layers = layersTree.map((parent, parentIndex) => {
-  return {
-    ...parent,
-    nodes: parent.nodes?.map((node: any, index) => ({
-      ...node,
-      zIndex: (parentIndex + 1) * index,
-      opacity: 0.3,
-    })),
-  };
-});
-
 /**
  * This component displays the layers group menu
  */
 const LayersMenu: React.FC = () => {
+  const {
+    tenant: { layers: confLayers },
+  } = useContext(TenantContext);
+  const layers = useMemo(
+    () =>
+      layersTree.map((parent, parentIndex) => {
+        //add any layers defined in the configuration.
+        const layer = confLayers?.find(cl => cl.key === parent.key);
+
+        const allNodes = [...(parent.nodes ?? []), ...(layer?.nodes ?? [])];
+        return {
+          ...parent,
+          nodes: allNodes?.map((node: any, index) => ({
+            ...node,
+            zIndex: (parentIndex + 1) * index,
+            opacity: 0.3,
+          })),
+        };
+      }),
+    [confLayers],
+  );
+
   return (
     <Formik initialValues={{ layers }} onSubmit={noop}>
       {({ values }) => (
         <FormikForm>
           <LeafletListenerComp />
-          <TreeMenu hasSearch={false} data={layersTree}>
+          <TreeMenu hasSearch={false} data={layers}>
             {({ items }) => {
               return <LayersTree items={items} />;
             }}

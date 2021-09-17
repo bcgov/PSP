@@ -1,3 +1,5 @@
+import { ILayerItem } from 'components/maps/leaflet/LayersControl/types';
+
 /**
  * Interface for tenant configuration settings.
  */
@@ -14,6 +16,10 @@ export interface ITenantConfig {
   logo: ITenantLogoConfig;
   // Login page settings.
   login: ITenantLoginConfig;
+  // optional additional layers to add using config.
+  layers: ILayerItem[];
+  // the url that should be used to query the PSP properties layer.
+  propertiesUrl?: string;
 }
 
 export interface ITenantLoginConfig {
