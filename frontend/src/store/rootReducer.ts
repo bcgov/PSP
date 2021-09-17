@@ -7,7 +7,6 @@ import keycloakReadySlice from 'store/slices/keycloakReady/keycloakReadySlice';
 import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import mapViewZoomSlice from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import { networkSlice } from 'store/slices/network/networkSlice';
-import { organizationsSlice } from 'store/slices/organizations/organizationsSlice';
 import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import { lookupCodesSlice } from './slices/lookupCodes/lookupCodesSlice';
@@ -21,7 +20,6 @@ export const reducer = {
   [usersSlice.name]: usersSlice.reducer,
   [accessRequestsSlice.name]: accessRequestsSlice.reducer,
   [lookupCodesSlice.name]: lookupCodesSlice.reducer,
-  [organizationsSlice.name]: organizationsSlice.reducer,
   [networkSlice.name]: networkSlice.reducer,
   [leafletMouseSlice.name]: leafletMouseSlice.reducer,
   [parcelLayerDataSlice.name]: parcelLayerDataSlice.reducer,

@@ -13,8 +13,7 @@ import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import TestProviderWrapper from './TestProviderWrapper';
-import TestRouterWrapper from './TestRouterWrapper';
+import TestCommonWrapper from './TestCommonWrapper';
 
 export const mockKeycloak = (claims: string[], organizations: number[], authenticated = false) => {
   (useKeycloak as jest.Mock).mockReturnValue({
@@ -191,22 +190,19 @@ function render(
     }
   }
 
-  // IMPORTANT: new context providers need to be added here
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
-      <TestProviderWrapper store={store}>
-        <TestRouterWrapper history={history}>
-          <ToastContainer
-            autoClose={5000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss={false}
-          />
-          <FilterProvider>{children}</FilterProvider>
-        </TestRouterWrapper>
-      </TestProviderWrapper>
+      <TestCommonWrapper store={store} history={history}>
+        <ToastContainer
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+        />
+        <FilterProvider>{children}</FilterProvider>
+      </TestCommonWrapper>
     );
   }
   return rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });

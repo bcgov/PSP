@@ -8,13 +8,14 @@ import { Button, ButtonProps } from '.';
  * SearchButton displaying a magnifying glass icon, used to initiate search/filter actions.
  * @param param0
  */
-const SearchButton: React.FC<ButtonProps> = ({ ...props }) => {
+export const SearchButton: React.FC<ButtonProps> = ({ ...props }) => {
   return (
     <TooltipWrapper toolTipId="map-filter-search-tooltip" toolTip="Search">
       <Button
         id="search-button"
         type="submit"
-        className={props.className ?? 'bg-warning'}
+        data-testid="search"
+        className={props.className ?? 'primary'}
         {...props}
         icon={<FaSearch size={20} />}
       />

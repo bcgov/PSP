@@ -90,5 +90,35 @@ namespace Pims.Dal.Helpers.Extensions
 
             return query;
         }
+
+        /// <summary>
+        /// Return the pid (if valued) or pin of the property.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static int? GetPidOrPin(this Pims.Dal.Entities.Property property)
+        {
+            return property.PID != 0 ? property.PID : property.PIN;
+        }
+
+        /// <summary>
+        /// Get the Tenant Name of the first associated lease to this property.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetTenantName(this Pims.Dal.Entities.Property property)
+        {
+            return property.Leases.FirstOrDefault()?.GetFullName();
+        }
+
+        /// <summary>
+        /// Get the Tenant Name of the first associated lease to this property.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.Property property)
+        {
+            return property.Leases.FirstOrDefault()?.ExpiryDate;
+        }
     }
 }

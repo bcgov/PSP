@@ -18,15 +18,15 @@ exports[`renders correctly... 1`] = `
         >
           <option
             class="option"
-            value="address"
-          >
-            Address
-          </option>
-          <option
-            class="option"
             value="pid"
           >
             PID/PIN
+          </option>
+          <option
+            class="option"
+            value="address"
+          >
+            Address
           </option>
         </select>
       </div>

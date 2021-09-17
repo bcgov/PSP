@@ -21,5 +21,6 @@ export const config: ITenantConfig = {
         'WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.',
       backgroundImage: '/tenants/MOTI/background-image.jpg',
     },
+    layers: [],
   },
 };

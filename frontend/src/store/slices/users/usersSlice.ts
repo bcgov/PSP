@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_PAGE_SIZE } from 'components/Table/constants';
 import { TableSort } from 'components/Table/TableSort';
 import { IUserRecord } from 'features/admin/users/interfaces/IUserRecord';
-import { IPagedItems, IUser, IUserDetails, IUsersFilter } from 'interfaces';
+import { IPagedItems, IUser, IUsersFilter } from 'interfaces';
 
 import { IUsersState } from '.';
 
@@ -37,7 +37,7 @@ export const usersSlice = createSlice({
     storeUsers(state: IUsersState, action: PayloadAction<IPagedItems<IUser>>) {
       state.pagedUsers = action.payload;
     },
-    storeUserDetails(state: IUsersState, action: PayloadAction<IUserDetails>) {
+    storeUserDetails(state: IUsersState, action: PayloadAction<IUser>) {
       state.userDetail = action.payload;
     },
     updateUser(state: IUsersState, action: PayloadAction<IUser>) {

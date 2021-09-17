@@ -17,7 +17,7 @@ const renderComponent = () =>
 it('HelpContainer renders correctly...', async () => {
   process.env.REACT_APP_TENANT = 'MOTI';
   const { asFragment } = render(
-    <TestCommonWrapper store={store} roles={[{ id: 1, name: 'test' }]}>
+    <TestCommonWrapper store={store} claims={['test']}>
       <HelpModalContentContainer setMailto={jest.fn()} />
     </TestCommonWrapper>,
   );

@@ -161,6 +161,8 @@ namespace Pims.Dal.Services
                     query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Surname))
                     query = query.Where(u => EF.Functions.Like(u.Person.Surname, $"%{filter.Surname}%"));
+                if (!string.IsNullOrWhiteSpace(filter.Position))
+                    query = query.Where(u => EF.Functions.Like(u.Position, $"%{filter.Position}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Email))
                     query = query.Where(u => u.Person.ContactMethods.Any(cm => EF.Functions.Like(cm.Value, $"%{filter.Email}%")));
                 if (filter.IsDisabled != null)

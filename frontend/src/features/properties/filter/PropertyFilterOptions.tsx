@@ -6,18 +6,24 @@ import { IPropertyFilter } from './IPropertyFilter';
 
 interface IPropertyFilterOptions {
   disabled?: boolean;
+  options?: { label: string; value: string }[];
+  placeholders?: Record<string, string>;
 }
 
 /**
  * Provides a dropdown with list of search options for properties.
  */
-export const PropertyFilterOptions: React.FC<IPropertyFilterOptions> = ({ disabled }) => {
-  const state: { options: any[]; placeholders: Record<string, string> } = {
-    options: [
-      { label: 'Address', value: 'address' },
+export const PropertyFilterOptions: React.FC<IPropertyFilterOptions &
+  React.HTMLAttributes<HTMLElement>> = ({ disabled, options, placeholders, ...rest }) => {
+  const state: {
+    options: { label: string; value: string }[];
+    placeholders: Record<string, string>;
+  } = {
+    options: options ?? [
       { label: 'PID/PIN', value: 'pid' },
+      { label: 'Address', value: 'address' },
     ],
-    placeholders: {
+    placeholders: placeholders ?? {
       address: 'Enter an address',
       pid: 'Enter a PID or PIN',
     },
@@ -31,7 +37,7 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions> = ({ disabl
   const desc = state.placeholders[searchBy] || '';
 
   const reset = () => {
-    setFieldValue('address', '');
+    setFieldValue(options ? options[0].value : 'pid', '');
   };
 
   return (
@@ -44,6 +50,7 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions> = ({ disabl
       field={searchBy}
       placeholder={desc}
       disabled={disabled}
+      {...rest}
     ></InputGroup>
   );
 };

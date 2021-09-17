@@ -18,6 +18,7 @@ exports[`Filter Bar Snapshot matches 1`] = `
       >
         <button
           className="Button Button--icon-only bg-warning btn btn-primary"
+          data-testid="search"
           disabled={false}
           id="search-button"
           onBlur={[Function]}

@@ -20,24 +20,28 @@ export const HeaderStyled = styled(Navbar)`
 
   .brand-box {
     padding: 10px 0;
-
+    flex-grow: 1;
     .pims-logo {
       margin: 0 10px;
     }
   }
 
-  .title h1 {
-    margin-top: 10px;
-    padding-left: 0px;
-    text-align: center;
-    font-size: 24px;
-    text-decoration: none solid rgb(255, 255, 255);
-    font-family: 'BCSans', Fallback, sans-serif;
-    font-weight: 700;
-    white-space: normal;
+  .title {
+    flex-grow: 2;
+    h1 {
+      margin-top: 10px;
+      padding-left: 0px;
+      text-align: center;
+      font-size: 24px;
+      text-decoration: none solid rgb(255, 255, 255);
+      font-family: 'BCSans', Fallback, sans-serif;
+      font-weight: 700;
+      white-space: normal;
+    }
   }
 
   .other {
+    flex-grow: 1;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;

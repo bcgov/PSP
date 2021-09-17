@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { ENVIRONMENT } from 'constants/environment';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -16,7 +16,7 @@ describe('useApi testing suite', () => {
 
   it('useApi uses custom axios with baseURL', () => {
     renderHook(() => {
-      const api = useApi();
+      const api = useAxiosApi();
 
       expect(api.defaults.baseURL).toBe(ENVIRONMENT.apiUrl);
     });
@@ -27,7 +27,7 @@ describe('useApi testing suite', () => {
 
     var api = {} as any;
     renderHook(() => {
-      api = useApi();
+      api = useAxiosApi();
     });
 
     await waitFor(async () => {
@@ -43,7 +43,7 @@ describe('useApi testing suite', () => {
     mockAxios.onGet('failure').reply(400, 'failure');
 
     renderHook(async () => {
-      const api = useApi();
+      const api = useAxiosApi();
       try {
         await api.get('failure');
       } catch (error) {

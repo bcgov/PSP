@@ -1,8 +1,8 @@
 {
   "Realm": {
-    "Name": "72x8v9rw",
-    "DisplayName": "MoTI PIMS PRODUCTION Environment",
-    "DisplayNameHtml": "<a>MoTI PIMS PRODUCTION Environment</a>",
+    "Name": "mfwxg8g4",
+    "DisplayName": "MoTI PIMS UAT Environment",
+    "DisplayNameHtml": "<a>MoTI PIMS UAT Environment</a>",
     "Roles": [
       {
         "Name": "admin-organizations",
@@ -126,8 +126,8 @@
         "BearerOnly": true,
         "AuthorizationServicesEnabled": false,
         "RedirectUris": [
-          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*",
-          "https://pims.th.gov.bc.ca/api/*"
+          "https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/*",
+          "https://uat-pims.th.gov.bc.ca/api/*"
         ],
         "WebOrigins": ["*"],
         "Attributes": {
@@ -148,15 +148,15 @@
         "ImplicitFlowEnabled": false,
         "DirectAccessGrantsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
+        "RootUrl": "https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca",
         "RedirectUris": [
-          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/*",
-          "https://pims.th.gov.bc.ca/*"
+          "https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/*",
+          "https://uat-pims.th.gov.bc.ca/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": [
-          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca",
-          "https://pims.th.gov.bc.ca"
+          "https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca",
+          "https://uat-pims.th.gov.bc.ca"
         ],
         "ProtocolMappers": [
           {
@@ -344,9 +344,9 @@
         "DirectAccessGrantsEnabled": true,
         "ServiceAccountsEnabled": true,
         "AuthorizationServicesEnabled": false,
-        "RootUrl": "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api",
+        "RootUrl": "https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api",
         "RedirectUris": [
-          "https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/*"
+          "https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/*"
         ],
         "BaseUrl": "/",
         "WebOrigins": ["*"],

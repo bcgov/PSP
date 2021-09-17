@@ -20,5 +20,6 @@ export const config: ITenantConfig = {
         'The data provided can assist your organization in making informed, timely, and strategic decisions on the optimal use of real property assets on behalf of the people and priorities of British Columbia.',
       backgroundImage: '/tenants/CITZ/background-image.png',
     },
+    layers: [],
   },
 };
