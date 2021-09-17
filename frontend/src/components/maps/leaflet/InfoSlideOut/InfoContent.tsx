@@ -103,7 +103,7 @@ export const InfoContent: React.FC<IInfoContent> = ({
           />
           <ThreeColumnItem
             leftSideLabel={'Regional District'}
-            rightSideItem={propertyInfo?.address?.region}
+            rightSideItem={propertyInfo?.region}
           />
         </OuterRow>
       </ListGroup>
