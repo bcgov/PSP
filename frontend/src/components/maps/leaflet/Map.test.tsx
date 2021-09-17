@@ -103,16 +103,7 @@ function createProps(): TestProps {
 function Template(props: Omit<TestProps, 'renderOptions'>) {
   const { done, setMap, zoom = 6, ...rest } = props;
   return (
-    <Map
-      lat={48.43}
-      lng={-123.37}
-      zoom={zoom}
-      organizations={[]}
-      administrativeAreas={[]}
-      whenReady={done}
-      whenCreated={setMap}
-      {...rest}
-    />
+    <Map lat={48.43} lng={-123.37} zoom={zoom} whenReady={done} whenCreated={setMap} {...rest} />
   );
 }
 

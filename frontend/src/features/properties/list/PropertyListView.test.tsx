@@ -16,15 +16,12 @@ import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { TenantProvider } from 'tenants';
 
-import service from '../service';
 import PropertyListView from './PropertyListView';
 
 // Set all module functions to jest.fn
 jest.mock('../service');
 jest.mock('@react-keycloak/web');
 jest.mock('hooks/pims-api');
-
-const mockedService = service as jest.Mocked<typeof service>;
 
 const mockStore = configureMockStore([thunk]);
 

@@ -212,7 +212,6 @@ const PropertyListView: React.FC = () => {
           columns={columns}
           data={data || []}
           loading={data === undefined}
-          filterable
           sort={sort}
           pageIndex={pageIndex}
           onRequestData={onRequestData}
