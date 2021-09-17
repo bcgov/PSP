@@ -94,7 +94,7 @@ function createProps(): TestProps {
       useMockAuthentication: true,
       organizations: [0],
       store: storeState,
-      roles: [Claims.PROPERTY_EDIT],
+      claims: [Claims.PROPERTY_EDIT],
     },
   };
 }
