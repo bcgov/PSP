@@ -27,7 +27,7 @@ export const PidLink = ({ data }: { data: any }) => {
       } as IProperty),
     );
   };
-  return !!data.PID ? (
+  return !!data?.PID ? (
     <Button variant="link" size="sm" onClick={clickPid} style={{ minHeight: '0px' }}>
       {pidFormatter(data.PID)}
     </Button>
