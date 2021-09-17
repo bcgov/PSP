@@ -41,7 +41,7 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.AddressId, src => src.AddressId)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.RegionId, src => src.RegionId)
-                .Map(dest => dest.Region, src => src.Region)
+                .Map(dest => dest.Region, src => src.Region != null ? src.Region.Name : null)
                 .Map(dest => dest.DistrictId, src => src.DistrictId)
                 .Map(dest => dest.District, src => src.District);
         }

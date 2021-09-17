@@ -64,7 +64,7 @@ const mockParcel = {
     district: 'a district',
   },
   regionId: 1,
-  region: 'region',
+  region: 'a region',
   districtId: 1,
   district: 'district',
   areaUnitId: PropertyAreaUnitTypes.Hectare,
