@@ -35,7 +35,9 @@ const useActiveFeatureLayer = ({
 }: IUseActiveParcelMapLayer) => {
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftProperties);
+  const draftProperties: PointFeature[] = useAppSelector(
+    state => state.properties?.draftProperties ?? [],
+  );
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {

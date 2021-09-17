@@ -1,4 +1,6 @@
 using Mapster;
+using Pims.Dal.Helpers.Extensions;
+using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Property.Models.Property;
 
@@ -43,7 +45,8 @@ namespace Pims.Api.Areas.Property.Mapping.Property
                 .Map(dest => dest.RegionId, src => src.RegionId)
                 .Map(dest => dest.Region, src => src.Region)
                 .Map(dest => dest.DistrictId, src => src.DistrictId)
-                .Map(dest => dest.District, src => src.District);
+                .Map(dest => dest.District, src => src.District)
+                .Map(dest => dest.Leases, src => src.Leases);
         }
     }
 }

@@ -5,7 +5,10 @@ exports[`MapProperties View renders correctly 1`] = `
   <div
     class="Toastify"
   />
-  .c9 {
+  <div
+    class="Toastify"
+  />
+  .c11 {
   margin-right: -10px;
   width: 341px;
   min-height: 52px;
@@ -17,12 +20,12 @@ exports[`MapProperties View renders correctly 1`] = `
   z-index: 1000;
 }
 
-.c9.closed {
+.c11.closed {
   width: 0px;
   height: 0px;
 }
 
-.c10 {
+.c12 {
   width: 100%;
   height: 52px;
   background-color: slideOutBlue;
@@ -47,23 +50,23 @@ exports[`MapProperties View renders correctly 1`] = `
   border-top-left-radius: 4px;
 }
 
-.c14 {
+.c16 {
   width: 100%;
   padding-left: 10px;
   padding: 0px 10px 5px 10px;
   position: relative;
 }
 
-.c14.open {
+.c16.open {
   overflow-y: scroll;
   max-height: calc(100vh - 380px);
 }
 
-.c13 {
+.c15 {
   font-size: 30px;
 }
 
-.c12 {
+.c14 {
   width: 52px;
   height: 52px;
   position: absolute;
@@ -74,13 +77,13 @@ exports[`MapProperties View renders correctly 1`] = `
   box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
 }
 
-.c12.open {
+.c14.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   top: 0px;
 }
 
-.c11 {
+.c13 {
   font-size: 18px;
   color: #ffffff;
   -webkit-text-decoration: none solid rgb(255,255,255);
@@ -89,7 +92,7 @@ exports[`MapProperties View renders correctly 1`] = `
   font-weight: bold;
 }
 
-.c6 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -104,22 +107,22 @@ exports[`MapProperties View renders correctly 1`] = `
   padding-bottom: 5px;
 }
 
-.c6 .form-group .form-check label {
+.c8 .form-group .form-check label {
   font-weight: bold;
   color: textColor;
   font-size: 13px;
 }
 
-.c7 {
+.c9 {
   margin-right: 10px;
   font-size: 15px;
 }
 
-.c8 {
+.c10 {
   margin-bottom: 0px;
 }
 
-.c8 .form-check {
+.c10 .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -130,11 +133,11 @@ exports[`MapProperties View renders correctly 1`] = `
   align-items: center;
 }
 
-.c8 .form-check input {
+.c10 .form-check input {
   margin-top: 0px;
 }
 
-.c8 .form-check label {
+.c10 .form-check label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -145,7 +148,7 @@ exports[`MapProperties View renders correctly 1`] = `
   align-items: center;
 }
 
-.c2 {
+.c4 {
   margin-right: -10px;
   width: 341px;
   min-height: 52px;
@@ -158,26 +161,26 @@ exports[`MapProperties View renders correctly 1`] = `
   z-index: 1000;
 }
 
-.c2.closed {
+.c4.closed {
   width: 0px;
   height: 0px;
 }
 
-.c5 {
+.c7 {
   width: 100%;
   height: calc(100% - 80px);
   padding: 16px;
 }
 
-.c5.open {
+.c7.open {
   overflow-y: scroll;
 }
 
-.c4 {
+.c6 {
   font-size: 30px;
 }
 
-.c3 {
+.c5 {
   width: 52px;
   height: 52px;
   position: absolute;
@@ -189,13 +192,13 @@ exports[`MapProperties View renders correctly 1`] = `
   box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
 }
 
-.c3.open {
+.c5.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   top: 26px;
 }
 
-.c0 {
+.c2 {
   background-color: #ffffff !important;
   color: darkVariantColor !important;
   width: 40px;
@@ -212,6 +215,16 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c1 {
+  grid-area: map;
+}
+
+.c0 {
+  display: grid;
+  grid: 1fr / min-content 1fr;
+  grid-template-areas: 'filter filter' 'sidetray map';
+}
+
+.c3 {
   background-color: #ffffff !important;
   color: darkVariantColor !important;
   width: 40px;
@@ -219,510 +232,506 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 <div
-    class="px-0 map container-fluid"
+    class="c0 px-0 map"
   >
     <div
-      class="row no-gutters"
+      class="c1"
     >
       <div
-        class="col"
+        class="basemap-container"
+      >
+        <button
+          class="basemap-item current"
+        />
+        <label
+          class="caption"
+        >
+          Satellite
+        </label>
+        <div
+          class="basemap-item basemap-item-button secondary"
+        >
+          <img
+            alt="Map Thumbnail"
+            role="presentation"
+            src="/satellite.jpg"
+          />
+        </div>
+      </div>
+      <div
+        class="leaflet-container leaflet-grab leaflet-touch-drag"
+        style="position: relative;"
+        tabindex="0"
       >
         <div
-          class="basemap-container"
+          class="leaflet-pane leaflet-map-pane"
+          style="left: 0px; top: 0px;"
         >
-          <button
-            class="basemap-item current"
-          />
-          <label
-            class="caption"
-          >
-            Satellite
-          </label>
           <div
-            class="basemap-item basemap-item-button secondary"
+            class="leaflet-pane leaflet-tile-pane"
+          >
+            <div
+              class="leaflet-layer "
+              style="z-index: 18; opacity: 0.3;"
+            >
+              <div
+                class="leaflet-tile-container leaflet-zoom-animated"
+                style="z-index: 18; left: 0px; top: 0px;"
+              >
+                <img
+                  alt=""
+                  class="leaflet-tile"
+                  role="presentation"
+                  src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23ff9800&width=256&height=256&srs=EPSG%3A3857&bbox=-13775786.985667607,5635549.221409476,-13149614.849955443,6261721.357121641"
+                  style="width: 256px; height: 256px; left: -34px; top: -63px;"
+                />
+              </div>
+            </div>
+            <div
+              class="leaflet-layer "
+              style="z-index: 0;"
+            >
+              <div
+                class="leaflet-tile-container leaflet-zoom-animated"
+                style="z-index: 18; left: 0px; top: 0px;"
+              >
+                <img
+                  alt=""
+                  class="leaflet-tile"
+                  role="presentation"
+                  src="https://c.tile.openstreetmap.org/6/10/22.png"
+                  style="width: 256px; height: 256px; left: -34px; top: -63px;"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="leaflet-pane leaflet-shadow-pane"
           >
             <img
-              alt="Map Thumbnail"
-              role="presentation"
-              src="/satellite.jpg"
+              alt=""
+              class="leaflet-marker-shadow leaflet-zoom-hide"
+              src="marker-shadow.png"
+              style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; left: 0px; top: 0px;"
             />
           </div>
+          <div
+            class="leaflet-pane leaflet-overlay-pane"
+          />
+          <div
+            class="leaflet-pane leaflet-marker-pane"
+          >
+            <img
+              alt=""
+              class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
+              src="assets/images/pins/land-reg-highlight.png"
+              style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; left: 0px; top: 0px; z-index: 9;"
+              tabindex="0"
+            />
+            <div
+              class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
+              style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 12px; top: -428px; z-index: -428;"
+              tabindex="0"
+            >
+              <div>
+                <span>
+                  2
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="leaflet-pane leaflet-tooltip-pane"
+          />
+          <div
+            class="leaflet-pane leaflet-popup-pane"
+          />
         </div>
         <div
-          class="leaflet-container leaflet-grab leaflet-touch-drag"
-          style="position: relative;"
-          tabindex="0"
+          class="leaflet-control-container"
         >
           <div
-            class="leaflet-pane leaflet-map-pane"
-            style="left: 0px; top: 0px;"
+            class="leaflet-top leaflet-left"
           >
             <div
-              class="leaflet-pane leaflet-tile-pane"
+              class="leaflet-control-zoom leaflet-bar leaflet-control"
             >
-              <div
-                class="leaflet-layer "
-                style="z-index: 18; opacity: 0.3;"
+              <a
+                aria-label="Zoom in"
+                class="leaflet-control-zoom-in"
+                href="#"
+                role="button"
+                title="Zoom in"
               >
-                <div
-                  class="leaflet-tile-container leaflet-zoom-animated"
-                  style="z-index: 18; left: 0px; top: 0px;"
-                >
-                  <img
-                    alt=""
-                    class="leaflet-tile"
-                    role="presentation"
-                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23ff9800&width=256&height=256&srs=EPSG%3A3857&bbox=-13775786.985667607,5635549.221409476,-13149614.849955443,6261721.357121641"
-                    style="width: 256px; height: 256px; left: -34px; top: -63px;"
-                  />
-                </div>
-              </div>
-              <div
-                class="leaflet-layer "
-                style="z-index: 0;"
+                +
+              </a>
+              <a
+                aria-label="Zoom out"
+                class="leaflet-control-zoom-out"
+                href="#"
+                role="button"
+                title="Zoom out"
               >
-                <div
-                  class="leaflet-tile-container leaflet-zoom-animated"
-                  style="z-index: 18; left: 0px; top: 0px;"
-                >
-                  <img
-                    alt=""
-                    class="leaflet-tile"
-                    role="presentation"
-                    src="https://c.tile.openstreetmap.org/6/10/22.png"
-                    style="width: 256px; height: 256px; left: -34px; top: -63px;"
-                  />
-                </div>
-              </div>
+                −
+              </a>
             </div>
             <div
-              class="leaflet-pane leaflet-shadow-pane"
+              class="leaflet-control"
             >
-              <img
-                alt=""
-                class="leaflet-marker-shadow leaflet-zoom-hide"
-                src="marker-shadow.png"
-                style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; left: 0px; top: 0px;"
-              />
-            </div>
-            <div
-              class="leaflet-pane leaflet-overlay-pane"
-            />
-            <div
-              class="leaflet-pane leaflet-marker-pane"
-            >
-              <img
-                alt=""
-                class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
-                src="assets/images/pins/land-reg-highlight.png"
-                style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; left: 0px; top: 0px; z-index: 9;"
-                tabindex="0"
-              />
-              <div
-                class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
-                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 12px; top: -428px; z-index: -428;"
-                tabindex="0"
-              >
-                <div>
-                  <span>
-                    2
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="leaflet-pane leaflet-tooltip-pane"
-            />
-            <div
-              class="leaflet-pane leaflet-popup-pane"
-            />
-          </div>
-          <div
-            class="leaflet-control-container"
-          >
-            <div
-              class="leaflet-top leaflet-left"
-            >
-              <div
-                class="leaflet-control-zoom leaflet-bar leaflet-control"
-              >
-                <a
-                  aria-label="Zoom in"
-                  class="leaflet-control-zoom-in"
-                  href="#"
-                  role="button"
-                  title="Zoom in"
-                >
-                  +
-                </a>
-                <a
-                  aria-label="Zoom out"
-                  class="leaflet-control-zoom-out"
-                  href="#"
-                  role="button"
-                  title="Zoom out"
-                >
-                  −
-                </a>
-              </div>
-              <div
-                class="leaflet-control"
-              >
-                <div>
-                  <button
-                    class="c0 btn btn-primary"
-                    type="button"
-                  >
-                    <svg
-                      fill="none"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                      />
-                      <circle
-                        cx="12"
-                        cy="10"
-                        r="3"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div
-                class="leaflet-control"
-              >
+              <div>
                 <button
-                  class="c1 btn btn-primary"
+                  class="c2 btn btn-primary"
                   type="button"
                 >
                   <svg
-                    fill="currentColor"
+                    fill="none"
                     height="1em"
                     stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M448 344v112a23.94 23.94 0 0 1-24 24H312c-21.39 0-32.09-25.9-17-41l36.2-36.2L224 295.6 116.77 402.9 153 439c15.09 15.1 4.39 41-17 41H24a23.94 23.94 0 0 1-24-24V344c0-21.4 25.89-32.1 41-17l36.19 36.2L184.46 256 77.18 148.7 41 185c-15.1 15.1-41 4.4-41-17V56a23.94 23.94 0 0 1 24-24h112c21.39 0 32.09 25.9 17 41l-36.2 36.2L224 216.4l107.23-107.3L295 73c-15.09-15.1-4.39-41 17-41h112a23.94 23.94 0 0 1 24 24v112c0 21.4-25.89 32.1-41 17l-36.19-36.2L263.54 256l107.28 107.3L407 327.1c15.1-15.2 41-4.5 41 16.9z"
+                      d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                    />
+                    <circle
+                      cx="12"
+                      cy="10"
+                      r="3"
                     />
                   </svg>
                 </button>
               </div>
             </div>
             <div
-              class="leaflet-top leaflet-right"
+              class="leaflet-control"
+            >
+              <button
+                class="c3 btn btn-primary"
+                type="button"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 448 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M448 344v112a23.94 23.94 0 0 1-24 24H312c-21.39 0-32.09-25.9-17-41l36.2-36.2L224 295.6 116.77 402.9 153 439c15.09 15.1 4.39 41-17 41H24a23.94 23.94 0 0 1-24-24V344c0-21.4 25.89-32.1 41-17l36.19 36.2L184.46 256 77.18 148.7 41 185c-15.1 15.1-41 4.4-41-17V56a23.94 23.94 0 0 1 24-24h112c21.39 0 32.09 25.9 17 41l-36.2 36.2L224 216.4l107.23-107.3L295 73c-15.09-15.1-4.39-41 17-41h112a23.94 23.94 0 0 1 24 24v112c0 21.4-25.89 32.1-41 17l-36.19-36.2L263.54 256l107.28 107.3L407 327.1c15.1-15.2 41-4.5 41 16.9z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="leaflet-top leaflet-right"
+          >
+            <div
+              class="leaflet-control"
             >
               <div
-                class="leaflet-control"
+                class="c4 closed"
+                id="layersContainer"
               >
-                <div
-                  class="c2 closed"
-                  id="layersContainer"
+                <button
+                  class="c5 btn btn-outline-secondary"
+                  id="layersControlButton"
+                  type="button"
                 >
-                  <button
-                    class="c3 btn btn-outline-secondary"
-                    id="layersControlButton"
-                    type="button"
+                  <svg
+                    class="c6"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      class="c4"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
-                      />
-                    </svg>
-                  </button>
-                  <div
-                    class="c5"
+                    <path
+                      d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="c7"
+                >
+                  <form
+                    action="#"
                   >
-                    <form
-                      action="#"
+                    <div
+                      tabindex="0"
                     >
                       <div
-                        tabindex="0"
+                        class="list-group"
                       >
                         <div
-                          class="list-group"
+                          class="c8 list-group-item"
+                          id="Administrative Boundaries"
                         >
-                          <div
-                            class="c6 list-group-item"
-                            id="Administrative Boundaries"
+                          <svg
+                            class="c9"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="c7"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 256 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                              />
-                            </svg>
+                            <path
+                              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                            />
+                          </svg>
+                          <div
+                            class="c10 form-group"
+                          >
                             <div
-                              class="c8 form-group"
+                              class="form-check"
                             >
-                              <div
-                                class="form-check"
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                              />
+                              <label
+                                class="form-check-label"
+                                title=""
                               >
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                />
-                                <label
-                                  class="form-check-label"
-                                  title=""
-                                >
-                                  Administrative Boundaries
-                                </label>
-                              </div>
+                                Administrative Boundaries
+                              </label>
                             </div>
                           </div>
-                          <div
-                            class="c6 list-group-item"
-                            id="firstNations"
+                        </div>
+                        <div
+                          class="c8 list-group-item"
+                          id="firstNations"
+                        >
+                          <svg
+                            class="c9"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="c7"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 256 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                              />
-                            </svg>
+                            <path
+                              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                            />
+                          </svg>
+                          <div
+                            class="c10 form-group"
+                          >
                             <div
-                              class="c8 form-group"
+                              class="form-check"
                             >
-                              <div
-                                class="form-check"
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                              />
+                              <label
+                                class="form-check-label"
+                                title=""
                               >
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                />
-                                <label
-                                  class="form-check-label"
-                                  title=""
-                                >
-                                  First Nations
-                                </label>
-                              </div>
+                                First Nations
+                              </label>
                             </div>
                           </div>
-                          <div
-                            class="c6 list-group-item"
-                            id="landOwnership"
+                        </div>
+                        <div
+                          class="c8 list-group-item"
+                          id="landOwnership"
+                        >
+                          <svg
+                            class="c9"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="c7"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 256 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                              />
-                            </svg>
+                            <path
+                              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                            />
+                          </svg>
+                          <div
+                            class="c10 form-group"
+                          >
                             <div
-                              class="c8 form-group"
+                              class="form-check"
                             >
-                              <div
-                                class="form-check"
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                              />
+                              <label
+                                class="form-check-label"
+                                title=""
                               >
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                />
-                                <label
-                                  class="form-check-label"
-                                  title=""
-                                >
-                                  Land Ownership
-                                </label>
-                              </div>
+                                Land Ownership
+                              </label>
                             </div>
                           </div>
-                          <div
-                            class="c6 list-group-item"
-                            id="zoning"
+                        </div>
+                        <div
+                          class="c8 list-group-item"
+                          id="zoning"
+                        >
+                          <svg
+                            class="c9"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="c7"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 256 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                              />
-                            </svg>
+                            <path
+                              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                            />
+                          </svg>
+                          <div
+                            class="c10 form-group"
+                          >
                             <div
-                              class="c8 form-group"
+                              class="form-check"
                             >
-                              <div
-                                class="form-check"
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                              />
+                              <label
+                                class="form-check-label"
+                                title=""
                               >
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                />
-                                <label
-                                  class="form-check-label"
-                                  title=""
-                                >
-                                  Zoning
-                                </label>
-                              </div>
+                                Zoning
+                              </label>
                             </div>
                           </div>
-                          <div
-                            class="c6 list-group-item"
-                            id="electoral"
+                        </div>
+                        <div
+                          class="c8 list-group-item"
+                          id="electoral"
+                        >
+                          <svg
+                            class="c9"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="c7"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 256 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                              />
-                            </svg>
+                            <path
+                              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+                            />
+                          </svg>
+                          <div
+                            class="c10 form-group"
+                          >
                             <div
-                              class="c8 form-group"
+                              class="form-check"
                             >
-                              <div
-                                class="form-check"
+                              <input
+                                class="form-check-input"
+                                type="checkbox"
+                              />
+                              <label
+                                class="form-check-label"
+                                title=""
                               >
-                                <input
-                                  class="form-check-input"
-                                  type="checkbox"
-                                />
-                                <label
-                                  class="form-check-label"
-                                  title=""
-                                >
-                                  Electoral
-                                </label>
-                              </div>
+                                Electoral
+                              </label>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="leaflet-control"
-              >
-                <div
-                  class="c9"
-                  id="infoContainer"
-                >
-                  <div
-                    class="c10"
-                  >
-                    <p
-                      class="c11"
-                    >
-                      Property Info
-                    </p>
-                  </div>
-                  <button
-                    class="c12 open btn btn-outline-secondary"
-                    id="slideOutInfoButton"
-                    type="button"
-                  >
-                    <svg
-                      class="c13"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 192 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"
-                      />
-                    </svg>
-                  </button>
-                  <div
-                    class="c14 open"
-                  >
-                    <p
-                      id="emptySlideOut"
-                    >
-                      Click a pin to view the property details
-                    </p>
-                  </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
             <div
-              class="leaflet-bottom leaflet-left"
-            />
-            <div
-              class="leaflet-bottom leaflet-right"
+              class="leaflet-control"
             >
               <div
-                class="leaflet-control-attribution leaflet-control"
+                class="c11"
+                id="infoContainer"
               >
-                <a
-                  href="https://leafletjs.com"
-                  title="A JS library for interactive maps"
+                <div
+                  class="c12"
                 >
-                  Leaflet
-                </a>
-                 | © 
-                <a
-                  href="http://osm.org/copyright"
+                  <p
+                    class="c13"
+                  >
+                    Property Info
+                  </p>
+                </div>
+                <button
+                  class="c14 open btn btn-outline-secondary"
+                  id="slideOutInfoButton"
+                  type="button"
                 >
-                  OpenStreetMap
-                </a>
-                 contributors
+                  <svg
+                    class="c15"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 192 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="c16 open"
+                >
+                  <p
+                    id="emptySlideOut"
+                  >
+                    Click a pin to view the property details
+                  </p>
+                </div>
               </div>
+            </div>
+          </div>
+          <div
+            class="leaflet-bottom leaflet-left"
+          />
+          <div
+            class="leaflet-bottom leaflet-right"
+          >
+            <div
+              class="leaflet-control-attribution leaflet-control"
+            >
+              <a
+                href="https://leafletjs.com"
+                title="A JS library for interactive maps"
+              >
+                Leaflet
+              </a>
+               | © 
+              <a
+                href="http://osm.org/copyright"
+              >
+                OpenStreetMap
+              </a>
+               contributors
             </div>
           </div>
         </div>

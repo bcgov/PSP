@@ -1,12 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MapFilterBar renders correctly 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c0 div:nth-child(1) div:nth-child(1) {
+  cursor: auto;
+}
+
+.c0 div:nth-child(1) div:nth-child(1) svg {
+  fill: #909090;
+}
+
+.c0 div:nth-child(2) div:nth-child(1) {
+  cursor: pointer;
+}
+
+.c0 div:nth-child(2) div:nth-child(1) svg {
+  fill: #003366;
+}
+
+.c1 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 svg {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
 <form
   class=""
   novalidate=""
 >
   <div
-    class="map-filter-bar form-row"
+    class="map-filter-bar m-0 form-row"
   >
     <div
       class="bar-item filter-options col"
@@ -71,6 +124,7 @@ exports[`MapFilterBar renders correctly 1`] = `
     >
       <button
         class="Button Button--icon-only primary btn btn-primary"
+        data-testid="search"
         id="search-button"
         type="submit"
       >
@@ -120,6 +174,36 @@ exports[`MapFilterBar renders correctly 1`] = `
           </svg>
         </div>
       </button>
+    </div>
+    <div
+      class="bar-item col"
+    >
+      <div
+        class="c0"
+      >
+        <div
+          class="c1"
+        >
+          <div
+            class="c2"
+          >
+            <svg>
+              icon-map.svg
+            </svg>
+          </div>
+        </div>
+        <div
+          class="c1"
+        >
+          <div
+            class="c2"
+          >
+            <svg>
+              icon-table.svg
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </form>

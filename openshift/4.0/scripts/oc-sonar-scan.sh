@@ -31,14 +31,20 @@ SONAR_PROJECT_NAME=${SONAR_PROJECT_NAME:-PIMS Frontend [${TARGET}]}
 SONAR_URL=${SONAR_URL:-https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca}
 ZAP_REPORT=${ZAP_REPORT:-}
 HTML_ZAP_REPORT=${HTML_ZAP_REPORT:-}
-SONAR_TOKEN=${SONAR_TOKEN:-0320aceb277c6767538f1873240e753b25019edb}
+SONAR_TOKEN=${SONAR_TOKEN:-}
 
 FRONTEND_DIR="${FRONTEND_DIR:-../../../frontend}"
 
 # Check requirements
 #
+[ "${SONAR_TOKEN}" ] || {
+  fatal_error "SONAR_TOKEN environment value is not set"
+}
+[ "${SONAR_URL}" ] || {
+  fatal_error "SONAR_URL environment value is not set"
+}
 which sonar-scanner >/dev/null 2>&1 || {
-  fatal_error "sonar-scanner not installed on not in PATH"
+  fatal_error "sonar-scanner not installed on the PATH"
 }
 
 # Clean up any previous test run

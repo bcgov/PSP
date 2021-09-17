@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Property.Models.Property
 {
@@ -174,6 +176,8 @@ namespace Pims.Api.Areas.Property.Models.Property
         /// </summary>
         public string ZoningPotential { get; set; }
         #endregion
+
+        public IEnumerable<LeaseModel> Leases { get; set; } = new List<LeaseModel>();
         #endregion
     }
 }

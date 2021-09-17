@@ -82,6 +82,20 @@ namespace Pims.Dal
         public DbSet<Workflow> Workflows { get; set; }
         public DbSet<WorkflowType> WorkflowTypes { get; set; }
         #endregion
+
+        #region Leases
+        public DbSet<Lease> Leases { get; set; }
+        public DbSet<LeaseActivity> LeaseActivityTypes { get; set; }
+        public DbSet<LeaseActivityPeriod> LeaseActivityPeriods { get; set; }
+        public DbSet<LeaseExpectedAmount> LeaseExpectedAmounts { get; set; }
+        public DbSet<LeasePaymentFrequencyType> LeasePaymentFrequencyTypes { get; set; }
+        public DbSet<LeaseProgramType> LeaseProgramTypes { get; set; }
+        public DbSet<LeasePurposeSubtype> LeasePurposeSubtypes { get; set; }
+        public DbSet<LeasePurposeType> LeasePurposeTypes { get; set; }
+        public DbSet<LeaseStatusType> LeaseStatusTypes { get; set; }
+        public DbSet<LeaseSubtype> LeaseSubtypes { get; set; }
+        public DbSet<LeaseType> LeaseTypes { get; set; }
+        #endregion
         #endregion
 
         #region Views

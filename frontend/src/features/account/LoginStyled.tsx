@@ -6,8 +6,7 @@ import styled from 'styled-components';
  * Provides css for the login page and applies the tenant configuration styling (background image and color).
  */
 export const LoginStyled = styled(Container)`
-  height: ${props =>
-    `calc(100vh - ${props.theme.css.footerHeight} - ${props.theme.css.headerHeight})`};
+  position: relative;
   background-image: ${props =>
     props.theme.tenant.login.backgroundImage
       ? `url("${props.theme.tenant.login.backgroundImage}")`
@@ -15,6 +14,11 @@ export const LoginStyled = styled(Container)`
   background-size: cover;
   background-position: center;
   overflow: auto;
+  grid-area: content;
+
+  .btn.btn-primary {
+    display: inline-block;
+  }
 
   .unauth {
     font-size: 24px;

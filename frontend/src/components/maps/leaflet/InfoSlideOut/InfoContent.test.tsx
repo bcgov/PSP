@@ -163,4 +163,33 @@ describe('InfoContent View functionality', () => {
     const { getByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
     expect(getByText('123 hectares')).toBeVisible();
   });
+
+  it('Does not display lease section when there are no leases', () => {
+    const { queryByText } = render(ContentComponent(mockParcel, PropertyTypes.Land, true));
+    expect(queryByText('Active Leases')).toBeNull();
+  });
+
+  it('Displays lease information when there are leases', () => {
+    const { getByText } = render(
+      ContentComponent(
+        { ...mockParcel, leases: [{ tenantName: 'tenantName1' }] },
+        PropertyTypes.Land,
+        true,
+      ),
+    );
+    expect(getByText('Active Leases')).toBeVisible();
+    expect(getByText('tenantName1')).toBeVisible();
+  });
+
+  it('Displays all lease information when there are multiple leases', () => {
+    const { getByText } = render(
+      ContentComponent(
+        { ...mockParcel, leases: [{ tenantName: 'tenantName1' }, { tenantName: 'tenantName2' }] },
+        PropertyTypes.Land,
+        true,
+      ),
+    );
+    expect(getByText('tenantName1')).toBeVisible();
+    expect(getByText('tenantName2')).toBeVisible();
+  });
 });
