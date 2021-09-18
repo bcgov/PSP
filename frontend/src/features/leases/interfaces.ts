@@ -3,4 +3,7 @@ export interface ILeaseAndLicenseFilter {
   lFileNo: string;
   searchBy: string;
   tenantName: string;
+  address: string;
+  expiryDate: string;
+  municipality: string;
 }

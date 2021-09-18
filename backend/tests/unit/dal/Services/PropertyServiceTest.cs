@@ -29,6 +29,12 @@ namespace Pims.Dal.Test.Services
                 new object[] { new LeaseFilter() { LFileNo = "fake" }, 0 },
                 new object[] { new LeaseFilter() { PidOrPin = "456" }, 1 },
                 new object[] { new LeaseFilter() { PidOrPin = "789" }, 0 },
+                new object[] { new LeaseFilter() { Address = "address" }, 1 },
+                new object[] { new LeaseFilter() { Address = "fake" }, 0 },
+                new object[] { new LeaseFilter() { Municipality = "municipality" }, 1 },
+                new object[] { new LeaseFilter() { Municipality = "fake" }, 0 },
+                new object[] { new LeaseFilter() { ExpiryDate = new DateTime(2021, 1,1) }, 1 },
+                new object[] { new LeaseFilter() { ExpiryDate = new DateTime(2021, 1, 2) }, 0 },
                 new object[] { new LeaseFilter(), 1 },
             };
         #endregion

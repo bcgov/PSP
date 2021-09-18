@@ -12,30 +12,37 @@ exports[`MapView Renders the map 1`] = `
   display: flex;
 }
 
-.c2 div:nth-child(1) div:nth-child(1) {
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 div:nth-child(1) div:nth-child(1) {
   cursor: auto;
 }
 
-.c2 div:nth-child(1) div:nth-child(1) svg {
+.c3 div:nth-child(1) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c2 div:nth-child(2) div:nth-child(1) {
+.c3 div:nth-child(2) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c2 div:nth-child(2) div:nth-child(1) svg {
+.c3 div:nth-child(2) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c3 {
+.c4 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -52,7 +59,7 @@ exports[`MapView Renders the map 1`] = `
   align-items: center;
 }
 
-.c4 svg {
+.c5 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
@@ -83,7 +90,7 @@ exports[`MapView Renders the map 1`] = `
   justify-content: center;
 }
 
-.c5 {
+.c6 {
   grid-area: map;
 }
 
@@ -130,44 +137,48 @@ exports[`MapView Renders the map 1`] = `
               class="input-group"
             >
               <div
-                class="input-group-prepend"
+                class="c2"
               >
                 <div
-                  class="form-group"
+                  class="input-group-prepend"
                 >
-                  <select
-                    class="form-select form-control"
-                    id="input-searchBy"
-                    name="searchBy"
+                  <div
+                    class="form-group"
                   >
-                    <option
-                      class="option"
-                      value="pid"
+                    <select
+                      class="form-select form-control"
+                      id="input-searchBy"
+                      name="searchBy"
                     >
-                      PID/PIN
-                    </option>
-                    <option
-                      class="option"
-                      value="address"
-                    >
-                      Address
-                    </option>
-                  </select>
+                      <option
+                        class="option"
+                        value="pid"
+                      >
+                        PID/PIN
+                      </option>
+                      <option
+                        class="option"
+                        value="address"
+                      >
+                        Address
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="input-group-content"
-              >
                 <div
-                  class="form-group"
+                  class="input-group-content"
                 >
-                  <input
-                    class="form-control"
-                    id="input-pid"
-                    name="pid"
-                    placeholder="Enter a PID or PIN"
-                    value=""
-                  />
+                  <div
+                    class="form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-pid"
+                      name="pid"
+                      placeholder="Enter a PID or PIN"
+                      value=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -232,13 +243,13 @@ exports[`MapView Renders the map 1`] = `
             class="bar-item col"
           >
             <div
-              class="c2"
+              class="c3"
             >
               <div
-                class="c3"
+                class="c4"
               >
                 <div
-                  class="c4"
+                  class="c5"
                 >
                   <svg>
                     icon-map.svg
@@ -246,10 +257,10 @@ exports[`MapView Renders the map 1`] = `
                 </div>
               </div>
               <div
-                class="c3"
+                class="c4"
               >
                 <div
-                  class="c4"
+                  class="c5"
                 >
                   <svg>
                     icon-table.svg
@@ -262,7 +273,7 @@ exports[`MapView Renders the map 1`] = `
       </form>
     </div>
     <div
-      class="c5"
+      class="c6"
     >
       <div />
     </div>

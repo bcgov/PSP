@@ -7,6 +7,7 @@ import { FormControlProps } from 'react-bootstrap/FormControl';
 import BootstrapInputGroup from 'react-bootstrap/InputGroup';
 
 import { Label } from '../Label';
+import { FlexDiv } from '../styles';
 import { FastInput } from './FastInput';
 import { Input } from './Input';
 
@@ -36,7 +37,7 @@ type OptionalAttributes = {
   prepend?: React.ReactNode;
   postText?: string;
   fast?: boolean;
-  outerClassName?: string;
+  innerClassName?: string;
   displayErrorTooltips?: boolean;
   /** style to pass down to the FastInput or Input */
   style?: CSSProperties;
@@ -64,7 +65,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   preText,
   prepend: PrependComponent,
   postText,
-  outerClassName,
+  innerClassName,
   className,
   fast,
   formikProps,
@@ -78,52 +79,53 @@ export const InputGroup: React.FC<InputGroupProps> = ({
       className={classNames(
         'input-group',
         !!required ? 'required' : '',
-        outerClassName,
+        className,
         disabled ? 'disabled' : '',
       )}
     >
       {!!label && !required && <Label>{label}</Label>}
       {!!label && required && <Label required>{label}</Label>}
-
-      {preText && (
-        <BootstrapInputGroup.Prepend>
-          <BootstrapInputGroup.Text>{preText}</BootstrapInputGroup.Text>
-        </BootstrapInputGroup.Prepend>
-      )}
-      {PrependComponent && (
-        <BootstrapInputGroup.Prepend>{PrependComponent}</BootstrapInputGroup.Prepend>
-      )}
-      <div className="input-group-content">
-        {fast ? (
-          <FastInput
-            formikProps={formikProps}
-            disabled={disabled}
-            style={style}
-            field={field}
-            className={className}
-            placeholder={placeholder}
-            displayErrorTooltips={displayErrorTooltips}
-            {...rest}
-          />
-        ) : (
-          <Input
-            disabled={disabled}
-            field={field}
-            className={className}
-            style={style}
-            placeholder={placeholder}
-            displayErrorTooltips={displayErrorTooltips}
-            {...rest}
-          />
+      <FlexDiv>
+        {preText && (
+          <BootstrapInputGroup.Prepend>
+            <BootstrapInputGroup.Text>{preText}</BootstrapInputGroup.Text>
+          </BootstrapInputGroup.Prepend>
         )}
-      </div>
-      {postText && (
-        <BootstrapInputGroup.Append>
-          <BootstrapInputGroup.Text className={disabled ? 'append-disabled' : ''}>
-            {postText}
-          </BootstrapInputGroup.Text>
-        </BootstrapInputGroup.Append>
-      )}
+        {PrependComponent && (
+          <BootstrapInputGroup.Prepend>{PrependComponent}</BootstrapInputGroup.Prepend>
+        )}
+        <div className="input-group-content">
+          {fast ? (
+            <FastInput
+              formikProps={formikProps}
+              disabled={disabled}
+              style={style}
+              field={field}
+              className={innerClassName}
+              placeholder={placeholder}
+              displayErrorTooltips={displayErrorTooltips}
+              {...rest}
+            />
+          ) : (
+            <Input
+              disabled={disabled}
+              field={field}
+              className={className}
+              style={style}
+              placeholder={placeholder}
+              displayErrorTooltips={displayErrorTooltips}
+              {...rest}
+            />
+          )}
+        </div>
+        {postText && (
+          <BootstrapInputGroup.Append>
+            <BootstrapInputGroup.Text className={disabled ? 'append-disabled' : ''}>
+              {postText}
+            </BootstrapInputGroup.Text>
+          </BootstrapInputGroup.Append>
+        )}
+      </FlexDiv>
     </div>
   );
 };

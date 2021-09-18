@@ -2,47 +2,58 @@
 
 exports[`renders correctly... 1`] = `
 <DocumentFragment>
-  <div
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<div
     class="input-group"
   >
     <div
-      class="input-group-prepend"
+      class="c0"
     >
       <div
-        class="form-group"
+        class="input-group-prepend"
       >
-        <select
-          class="form-select form-control"
-          id="input-searchBy"
-          name="searchBy"
+        <div
+          class="form-group"
         >
-          <option
-            class="option"
-            value="pid"
+          <select
+            class="form-select form-control"
+            id="input-searchBy"
+            name="searchBy"
           >
-            PID/PIN
-          </option>
-          <option
-            class="option"
-            value="address"
-          >
-            Address
-          </option>
-        </select>
+            <option
+              class="option"
+              value="pid"
+            >
+              PID/PIN
+            </option>
+            <option
+              class="option"
+              value="address"
+            >
+              Address
+            </option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div
-      class="input-group-content"
-    >
       <div
-        class="form-group"
+        class="input-group-content"
       >
-        <input
-          class="form-control"
-          id="input-undefined"
-          placeholder=""
-          value=""
-        />
+        <div
+          class="form-group"
+        >
+          <input
+            class="form-control"
+            id="input-undefined"
+            placeholder=""
+            value=""
+          />
+        </div>
       </div>
     </div>
   </div>

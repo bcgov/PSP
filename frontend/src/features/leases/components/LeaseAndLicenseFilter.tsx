@@ -1,9 +1,10 @@
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
 import * as Styled from 'components/common/form/styles';
-import { PropertyFilterOptions } from 'features/properties/filter';
+import { FlexDiv } from 'components/common/styles';
 import { Formik } from 'formik';
 import * as React from 'react';
+import styled from 'styled-components';
 
 import { ILeaseAndLicenseFilter } from '../interfaces';
 
@@ -36,30 +37,43 @@ const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilterProps
         setFilter(values);
       }}
     >
-      {({ values, resetForm }) => (
-        <Styled.InlineForm>
-          <b>Search for a Lease or License:</b>
-          <PropertyFilterOptions options={options} placeholders={placeholders} />
-          <Styled.InlineInput field="tenantName" label="Tenant Name" />
-          <SearchButton disabled={isSubmitting} onClick={() => search(values)} />
-          <ResetButton
-            disabled={isSubmitting}
-            onClick={() => {
-              resetForm();
-              resetFilter();
-            }}
-          />
-        </Styled.InlineForm>
+      {formikProps => (
+        <StyledFilter>
+          <Styled.StackedInlineForm>
+            <Styled.StackedPropertyFilterOptions
+              options={options}
+              placeholders={placeholders}
+              label="Search for a Lease or License:"
+            />
+            <Styled.StackedInput field="tenantName" label="Tenant Name" />
+            <Styled.StackedInput field="address" label="Civic Address" />
+            <Styled.StackedInput field="municipality" label="Municipality" />
+            <Styled.StackedDate field="expiryDate" label="Expiry Date" formikProps={formikProps} />
+          </Styled.StackedInlineForm>
+          <StyledButtonHolder>
+            <SearchButton disabled={isSubmitting} onClick={() => search(formikProps.values)} />
+            <ResetButton
+              disabled={isSubmitting}
+              onClick={() => {
+                formikProps.resetForm();
+                resetFilter();
+              }}
+            />
+          </StyledButtonHolder>
+        </StyledFilter>
       )}
     </Formik>
   );
 };
 
-const defaultFilter: ILeaseAndLicenseFilter = {
+export const defaultFilter: ILeaseAndLicenseFilter = {
   pidOrPin: '',
   lFileNo: '',
   searchBy: 'pidOrPin',
   tenantName: '',
+  address: '',
+  expiryDate: '',
+  municipality: '',
 };
 
 const options = [
@@ -77,5 +91,22 @@ const placeholders = {
   pid: 'Enter a PID or PIN',
   lFileNumber: 'Enter an LIS File Number',
 };
+
+const StyledFilter = styled(FlexDiv)`
+  .form-control {
+    background-image: none;
+    padding-right: 0.75rem;
+  }
+`;
+
+const StyledButtonHolder = styled(FlexDiv)`
+  margin-left: 0.5rem;
+  align-items: flex-end;
+  column-gap: 0.5rem;
+  .btn {
+    min-height: 40px;
+    max-height: 40px;
+  }
+`;
 
 export default LeaseAndLicenseFilter;

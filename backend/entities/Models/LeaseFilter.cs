@@ -26,6 +26,24 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The Civic address (concatenated with ,)
+        /// </summary>
+        /// <value></value>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// get/set - The Municipality name
+        /// </summary>
+        /// <value></value>
+        public string Municipality { get; set; }
+
+        /// <summary>
+        /// get/set - The Expiry Date of the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? ExpiryDate { get; set; }
         #endregion
 
         #region Constructors

@@ -8,13 +8,15 @@ interface IPropertyFilterOptions {
   disabled?: boolean;
   options?: { label: string; value: string }[];
   placeholders?: Record<string, string>;
+  label?: string;
+  className?: string;
 }
 
 /**
  * Provides a dropdown with list of search options for properties.
  */
 export const PropertyFilterOptions: React.FC<IPropertyFilterOptions &
-  React.HTMLAttributes<HTMLElement>> = ({ disabled, options, placeholders, ...rest }) => {
+  React.HTMLAttributes<HTMLElement>> = ({ disabled, options, placeholders, label, ...rest }) => {
   const state: {
     options: { label: string; value: string }[];
     placeholders: Record<string, string>;
@@ -50,6 +52,7 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions &
       field={searchBy}
       placeholder={desc}
       disabled={disabled}
+      label={label}
       {...rest}
     ></InputGroup>
   );

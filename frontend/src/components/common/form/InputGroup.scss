@@ -11,23 +11,10 @@
     }
   }
 
-  & > .input-group-content {
-    &:not(:first-child) {
-      .form-control {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
-
+  & .input-group-content {
     .form-control {
-      position: relative;
-      flex: 1 1;
-      min-width: 0;
-      margin-bottom: 0;
-
-      &:hover {
-        z-index: 3;
-      }
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }

@@ -17,7 +17,9 @@ namespace Pims.Api.Areas.Lease.Mapping.Property
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
                 .Map(dest => dest.TenantName, src => src.GetFullName())
-                .Map(dest => dest.Address, src => src.GetAddress());
+                .Map(dest => dest.Address, src => src.GetAddress())
+                .Map(dest => dest.Municipality, src => src.GetMunicipality())
+                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate);
         }
     }
 }

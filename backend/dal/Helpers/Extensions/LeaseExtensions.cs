@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Entity = Pims.Dal.Entities;
@@ -39,6 +41,17 @@ namespace Pims.Dal.Helpers.Extensions
             if (!String.IsNullOrWhiteSpace(filter.LFileNo))
                 query = query.Where(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
 
+            if (!String.IsNullOrWhiteSpace(filter.Address))
+                query = query.Where(l => l.Properties.FirstOrDefault() != null && l.Properties.FirstOrDefault().Address != null &&
+                    EF.Functions.Like(l.Properties.FirstOrDefault().Address.StreetAddress1 + ", " + l.Properties.FirstOrDefault().Address.StreetAddress2 + ", " + l.Properties.FirstOrDefault().Address.StreetAddress3, $"%{filter.Address}%"));
+
+            if (!String.IsNullOrWhiteSpace(filter.Municipality))
+                query = query.Where(l => l.Properties.FirstOrDefault() != null && l.Properties.FirstOrDefault().Address != null &&
+                    EF.Functions.Like(l.Properties.FirstOrDefault().Address.Municipality, $"%{filter.Municipality}%"));
+
+            if (filter.ExpiryDate != null)
+                query = query.Where(l => l.ExpiryDate == filter.ExpiryDate);
+
             if (filter.Sort?.Any() == true)
                 query = query.OrderByProperty(filter.Sort);
             else
@@ -59,7 +72,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static IQueryable<Entity.Lease> GenerateLeaseQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
         {
-            if (context == null) throw new ArgumentNullException("GenerateLeaseQuery context cannot be null");
+            if (context == null) throw new ArgumentNullException(nameof(context), "GenerateLeaseQuery context cannot be null");
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
@@ -77,7 +90,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string GetAddress(this Pims.Dal.Entities.Lease lease)
         {
-            return lease?.Properties?.FirstOrDefault()?.Address?.StreetAddress1;
+            Entity.Address address = lease?.Properties?.FirstOrDefault()?.Address;
+            ICollection<string> addresses = new List<string>() { address?.StreetAddress1, address?.StreetAddress2, address?.StreetAddress3 };
+
+            return String.Join(", ", addresses.Where(a => !String.IsNullOrWhiteSpace(a)));
         }
 
         /// <summary>
@@ -88,6 +104,16 @@ namespace Pims.Dal.Helpers.Extensions
         public static int? GetPidOrPin(this Pims.Dal.Entities.Lease lease)
         {
             return lease?.Properties?.FirstOrDefault()?.PID ?? lease?.Properties.FirstOrDefault()?.PIN;
+        }
+
+        /// <summary>
+        /// Get the municipality from the lease's first associated property.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetMunicipality(this Pims.Dal.Entities.Lease lease)
+        {
+            return lease?.Properties?.FirstOrDefault()?.Address?.Municipality;
         }
 
         /// <summary>
@@ -110,7 +136,7 @@ namespace Pims.Dal.Helpers.Extensions
             if(lease?.Tenant != null)
             {
                 string[] names = { lease.Tenant.Surname, lease.Tenant.FirstName, lease.Tenant.MiddleNames };
-                return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
+                return String.Join(", ", names.Where(n => String.IsNullOrWhiteSpace(n)));
             }
             return null;
         }

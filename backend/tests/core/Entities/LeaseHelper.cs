@@ -24,9 +24,11 @@ namespace Pims.Core.Test
             {
                 Id = 1,
                 LFileNo = lFileNo,
+                ExpiryDate = new DateTime(2021, 1, 1),
                 RowVersion = 1,
             };
-            lease.Properties.Add(new Entity.Property() { PID = pidOrPin });
+            Entity.Address address = new() { Municipality = "municipality", StreetAddress1="address" };
+            lease.Properties.Add(new Entity.Property() { PID = pidOrPin, Address = address });
             lease.Tenant = new Entity.Person() { FirstName = $"{tenantLastName}, {tenantFirstName}" };
             return lease;
         }

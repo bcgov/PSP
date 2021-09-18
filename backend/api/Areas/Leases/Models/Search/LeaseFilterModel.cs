@@ -24,6 +24,24 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - Civic Address.
+        /// </summary>
+        /// <value></value>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// get/set - Municipality.
+        /// </summary>
+        /// <value></value>
+        public string Municipality { get; set; }
+
+        /// <summary>
+        /// get/set - Civic Address.
+        /// </summary>
+        /// <value></value>
+        public DateTime? ExpiryDate { get; set; }
         #endregion
 
         #region Constructors
@@ -45,6 +63,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.PidOrPin = filter.GetStringValue(nameof(this.PidOrPin));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
+            this.Address = filter.GetStringValue(nameof(this.Address));
+            this.Municipality = filter.GetStringValue(nameof(this.Municipality));
+            this.ExpiryDate = filter.GetDateTimeNullValue(nameof(this.ExpiryDate));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion
@@ -64,6 +85,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 PidOrPin = model.PidOrPin,
                 TenantName = model.TenantName,
                 LFileNo = model.LFileNo,
+                Address = model.Address,
+                Municipality = model.Municipality,
+                ExpiryDate = model.ExpiryDate,
                 
                 Sort = model.Sort
             };
@@ -80,7 +104,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
             return base.IsValid()
                 || !String.IsNullOrWhiteSpace(this.PidOrPin)
                 || !String.IsNullOrWhiteSpace(this.TenantName)
-                || !String.IsNullOrWhiteSpace(this.LFileNo);
+                || !String.IsNullOrWhiteSpace(this.LFileNo)
+                || !String.IsNullOrWhiteSpace(this.Address)
+                || !String.IsNullOrWhiteSpace(this.Municipality);
         }
         #endregion
     }

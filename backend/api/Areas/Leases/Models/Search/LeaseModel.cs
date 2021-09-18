@@ -42,6 +42,18 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string Address { get; set; }
 
         /// <summary>
+        /// get/set - The string value of the municipality of the first property associated to the lease.
+        /// </summary>
+        /// <value></value>
+        public string Municipality { get; set; }
+
+        /// <summary>
+        /// get/set - The expiry date of this lease.
+        /// </summary>
+        /// <value></value>
+        public DateTime? ExpiryDate { get; set; }
+
+        /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
         /// <value></value>

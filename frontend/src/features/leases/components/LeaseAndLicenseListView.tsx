@@ -7,22 +7,6 @@ import { ILeaseAndLicenseFilter } from '../interfaces';
 import LeaseAndLicenseFilter from './LeaseAndLicenseFilter';
 
 /**
- * Get an error message corresponding to what filter fields have been entered.
- * @param {ILeaseAndLicenseFilter} filter
- */
-const getNoResultErrorMessage = (filter: ILeaseAndLicenseFilter) => {
-  let message = 'Unable to find any records';
-  if (filter.lFileNo) {
-    message = 'There is no record for this L-File #';
-  } else if (filter.pidOrPin) {
-    message = 'There is no record for this PID/ PIN';
-  } else if (filter.tenantName) {
-    message = 'There is no record for this Tenant Name';
-  }
-  return message;
-};
-
-/**
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
 export const LeaseAndLicenseListView = () => {
@@ -31,7 +15,7 @@ export const LeaseAndLicenseListView = () => {
   const search = async (filter: ILeaseAndLicenseFilter) => {
     const { data } = await getLeases(filter);
     if (!data.items?.length) {
-      toast.warn(getNoResultErrorMessage(filter));
+      toast.warn('There are no records for your search criteria.');
     }
   };
   return (

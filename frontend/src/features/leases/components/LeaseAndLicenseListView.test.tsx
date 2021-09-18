@@ -5,6 +5,7 @@ import { defaultTenant } from 'tenants';
 import { fillInput } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
+import { defaultFilter } from './LeaseAndLicenseFilter';
 import { LeaseAndLicenseListView } from './LeaseAndLicenseListView';
 
 jest.mock('hooks/pims-api/useApiLeases');
@@ -36,10 +37,8 @@ describe('Lease and License List View', () => {
     await act(async () => {
       userEvent.click(searchButton);
       expect(getLeases).toHaveBeenCalledWith({
-        lFileNo: '',
+        ...defaultFilter,
         pidOrPin: '123',
-        searchBy: 'pidOrPin',
-        tenantName: '',
       });
     });
   });
@@ -52,10 +51,35 @@ describe('Lease and License List View', () => {
     await act(async () => {
       userEvent.click(searchButton);
       expect(getLeases).toHaveBeenCalledWith({
+        ...defaultFilter,
         lFileNo: '123',
-        pidOrPin: '',
         searchBy: 'lFileNo',
-        tenantName: '',
+      });
+    });
+  });
+
+  it('searches address name', async () => {
+    const { container, getByTestId } = renderContainer({});
+    fillInput(container, 'address', 'address');
+    const searchButton = getByTestId('search');
+    await act(async () => {
+      userEvent.click(searchButton);
+      expect(getLeases).toHaveBeenCalledWith({
+        ...defaultFilter,
+        address: 'address',
+      });
+    });
+  });
+
+  it('searches expiry date', async () => {
+    const { container, getByTestId } = renderContainer({});
+    fillInput(container, 'expiryDate', '09/07/2021', 'datepicker');
+    const searchButton = getByTestId('search');
+    await act(async () => {
+      userEvent.click(searchButton);
+      expect(getLeases).toHaveBeenCalledWith({
+        ...defaultFilter,
+        expiryDate: '2021-09-07',
       });
     });
   });
@@ -67,60 +91,58 @@ describe('Lease and License List View', () => {
     await act(async () => {
       userEvent.click(searchButton);
       expect(getLeases).toHaveBeenCalledWith({
-        lFileNo: '',
-        pidOrPin: '',
-        searchBy: 'pidOrPin',
+        ...defaultFilter,
         tenantName: 'tenant',
       });
     });
   });
 
-  it('displays on error for now results when searching by pid/pin', async () => {
+  it('searches municipality', async () => {
+    const { container, getByTestId } = renderContainer({});
+    fillInput(container, 'municipality', 'municipality');
+    const searchButton = getByTestId('search');
+    await act(async () => {
+      userEvent.click(searchButton);
+      expect(getLeases).toHaveBeenCalledWith({
+        ...defaultFilter,
+        municipality: 'municipality',
+      });
+    });
+  });
+
+  it('searches multiple fields', async () => {
+    const { container, getByTestId } = renderContainer({});
+    fillInput(container, 'municipality', 'municipality');
+    fillInput(container, 'tenantName', 'tenant');
+    fillInput(container, 'expiryDate', '09/07/2021', 'datepicker');
+    fillInput(container, 'address', 'address');
+    fillInput(container, 'pidOrPin', '123');
+    const searchButton = getByTestId('search');
+    await act(async () => {
+      userEvent.click(searchButton);
+      expect(getLeases).toHaveBeenCalledWith({
+        ...defaultFilter,
+        municipality: 'municipality',
+        tenantName: 'tenant',
+        expiryDate: '2021-09-07',
+        address: 'address',
+        pidOrPin: '123',
+      });
+    });
+  });
+
+  it('displays on error for no results', async () => {
     const { container, getByTestId, findByText } = renderContainer({});
     fillInput(container, 'pidOrPin', '123');
     const searchButton = getByTestId('search');
     await act(async () => {
       userEvent.click(searchButton);
       expect(getLeases).toHaveBeenCalledWith({
-        lFileNo: '',
+        ...defaultFilter,
+        searchBy: 'pidOrPin',
         pidOrPin: '123',
-        searchBy: 'pidOrPin',
-        tenantName: '',
       });
-      await findByText('There is no record for this PID/ PIN');
-    });
-  });
-
-  it('displays on error for now results when searching l file number', async () => {
-    const { container, getByTestId, findByText } = renderContainer({});
-    fillInput(container, 'searchBy', 'lFileNo', 'select');
-    fillInput(container, 'lFileNo', '123');
-    const searchButton = getByTestId('search');
-    await act(async () => {
-      userEvent.click(searchButton);
-      expect(getLeases).toHaveBeenCalledWith({
-        lFileNo: '123',
-        pidOrPin: '',
-        searchBy: 'lFileNo',
-        tenantName: '',
-      });
-      await findByText('There is no record for this L-File #');
-    });
-  });
-
-  it('displays on error for now results when searching tenant name', async () => {
-    const { container, getByTestId, findByText } = renderContainer({});
-    fillInput(container, 'tenantName', 'tenant');
-    const searchButton = getByTestId('search');
-    await act(async () => {
-      userEvent.click(searchButton);
-      expect(getLeases).toHaveBeenCalledWith({
-        lFileNo: '',
-        pidOrPin: '',
-        searchBy: 'pidOrPin',
-        tenantName: 'tenant',
-      });
-      await findByText('There is no record for this Tenant Name');
+      await findByText('There are no records for your search criteria.');
     });
   });
 });

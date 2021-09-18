@@ -8,30 +8,37 @@ exports[`MapFilterBar renders correctly 1`] = `
   display: flex;
 }
 
-.c0 div:nth-child(1) div:nth-child(1) {
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 div:nth-child(1) div:nth-child(1) {
   cursor: auto;
 }
 
-.c0 div:nth-child(1) div:nth-child(1) svg {
+.c1 div:nth-child(1) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c0 div:nth-child(2) div:nth-child(1) {
+.c1 div:nth-child(2) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c0 div:nth-child(2) div:nth-child(1) svg {
+.c1 div:nth-child(2) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c1 {
+.c2 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -48,7 +55,7 @@ exports[`MapFilterBar renders correctly 1`] = `
   align-items: center;
 }
 
-.c2 svg {
+.c3 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
@@ -77,44 +84,48 @@ exports[`MapFilterBar renders correctly 1`] = `
         class="input-group"
       >
         <div
-          class="input-group-prepend"
+          class="c0"
         >
           <div
-            class="form-group"
+            class="input-group-prepend"
           >
-            <select
-              class="form-select form-control"
-              id="input-searchBy"
-              name="searchBy"
+            <div
+              class="form-group"
             >
-              <option
-                class="option"
-                value="pid"
+              <select
+                class="form-select form-control"
+                id="input-searchBy"
+                name="searchBy"
               >
-                PID/PIN
-              </option>
-              <option
-                class="option"
-                value="address"
-              >
-                Address
-              </option>
-            </select>
+                <option
+                  class="option"
+                  value="pid"
+                >
+                  PID/PIN
+                </option>
+                <option
+                  class="option"
+                  value="address"
+                >
+                  Address
+                </option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div
-          class="input-group-content"
-        >
           <div
-            class="form-group"
+            class="input-group-content"
           >
-            <input
-              class="form-control"
-              id="input-pid"
-              name="pid"
-              placeholder="Enter a PID or PIN"
-              value=""
-            />
+            <div
+              class="form-group"
+            >
+              <input
+                class="form-control"
+                id="input-pid"
+                name="pid"
+                placeholder="Enter a PID or PIN"
+                value=""
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -179,13 +190,13 @@ exports[`MapFilterBar renders correctly 1`] = `
       class="bar-item col"
     >
       <div
-        class="c0"
+        class="c1"
       >
         <div
-          class="c1"
+          class="c2"
         >
           <div
-            class="c2"
+            class="c3"
           >
             <svg>
               icon-map.svg
@@ -193,10 +204,10 @@ exports[`MapFilterBar renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="c1"
+          class="c2"
         >
           <div
-            class="c2"
+            class="c3"
           >
             <svg>
               icon-table.svg
