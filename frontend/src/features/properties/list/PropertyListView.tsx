@@ -31,14 +31,13 @@ import * as Styled from './PropertyListView.styled';
 import { defaultFilterValues, getAllFieldsPropertyReportUrl, getPropertyReportUrl } from './utils';
 
 const PropertyListView: React.FC = () => {
-  const lookupCodes = useLookupCodeHelpers();
+  const { getByType } = useLookupCodeHelpers();
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
   const keycloak = useKeycloakWrapper();
 
-  const municipalities = useMemo(
-    () => lookupCodes.getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME),
-    [lookupCodes],
-  );
+  const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME), [
+    getByType,
+  ]);
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
@@ -161,7 +160,6 @@ const PropertyListView: React.FC = () => {
         parcelId: [PropertyTypes.Land, PropertyTypes.Subdivision].includes(row.propertyTypeId)
           ? row.id
           : undefined,
-        buildingId: row.propertyTypeId === PropertyTypes.Building ? row.id : undefined,
       })}`,
       '_blank',
     );
