@@ -38,7 +38,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string Municipality { get; set; }
 
         /// <summary>
-        /// get/set - Civic Address.
+        /// get/set - Expiry Date.
         /// </summary>
         /// <value></value>
         public DateTime? ExpiryDate { get; set; }
