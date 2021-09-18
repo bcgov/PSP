@@ -40,8 +40,8 @@ export interface IPropertySearchParams {
 
 export interface IGeoSearchParams {
   STREET_ADDRESS_1?: string;
-  PID?: string;
-  PIN?: string;
+  PID?: number;
+  PIN?: number;
   BBOX?: string;
 }
 

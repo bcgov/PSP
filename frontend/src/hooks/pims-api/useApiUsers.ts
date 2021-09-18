@@ -4,7 +4,7 @@ import { LifecycleToasts } from 'customAxios';
 import { IPagedItems, IUser } from 'interfaces';
 import React from 'react';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the user endpoints.
@@ -18,8 +18,8 @@ const userToasts: LifecycleToasts = {
 };
 
 export const useApiUsers = () => {
-  const api = useApi();
-  const apiWithToasts = useApi({ lifecycleToasts: userToasts });
+  const api = useAxiosApi();
+  const apiWithToasts = useAxiosApi({ lifecycleToasts: userToasts });
 
   return React.useMemo(
     () => ({

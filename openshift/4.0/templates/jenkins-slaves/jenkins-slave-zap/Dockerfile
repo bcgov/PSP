@@ -1,7 +1,7 @@
 FROM centos:centos7
 LABEL maintainer="Deven Phillips <deven.phillips@redhat.com>"
 
-ARG ZAPROXY_VERSION="2.9.0"
+ARG ZAPROXY_VERSION="2.10.0"
 ARG WEBSWING_VERSION="2.5.10"
 
 RUN yum install -y epel-release && \

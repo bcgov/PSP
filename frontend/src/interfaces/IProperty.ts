@@ -16,6 +16,8 @@ import {
 } from 'interfaces';
 import { Moment } from 'moment';
 
+import { ILease } from './ILease';
+
 /**
  * A property entity represents a land, building, subdivision, or other type of property.
  */
@@ -69,4 +71,5 @@ export interface IProperty {
   updatedByEmail?: string;
   updatedByName?: string;
   rowVersion?: number;
+  leases?: ILease[];
 }

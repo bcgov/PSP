@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Roles } from 'constants/index';
 import { createMemoryHistory } from 'history';
@@ -19,117 +19,139 @@ const renderComponent = (props?: IRenderProps) =>
   );
 
 describe('SideNavbar display and logic', () => {
-  it('renders', () => {
+  it('renders', async () => {
     const { container } = renderComponent();
-    expect(container).toMatchSnapshot();
+    await waitFor(async () => {
+      expect(container).toMatchSnapshot();
+    });
   });
 
-  it('By default, the sidebar is collapsed', () => {
+  it('By default, the sidebar is collapsed', async () => {
     const { getByTitle } = renderComponent();
-    expect(getByTitle('expand')).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(getByTitle('expand')).toBeInTheDocument();
+    });
   });
 
-  it('The collapsed sidebar only displays icons', () => {
+  it('The collapsed sidebar only displays icons', async () => {
     const { getByTitle, queryByText, getByTestId } = renderComponent();
-    expect(getByTitle('expand')).toBeInTheDocument();
-    expect(queryByText('Management')?.clientWidth).toBe(0);
-    expect(getByTestId('nav-tooltip-management')).toContainHTML('svg');
+    await waitFor(async () => {
+      expect(getByTitle('expand')).toBeInTheDocument();
+      expect(queryByText('Management')?.clientWidth).toBe(0);
+      expect(getByTestId('nav-tooltip-management')).toContainHTML('svg');
+    });
   });
 
-  it('The sidebar can be expanded', () => {
+  it('The sidebar can be expanded', async () => {
     const { getByTitle } = renderComponent();
     const expandButton = getByTitle('expand');
-    act(() => {
+    await act(async () => {
       userEvent.click(expandButton);
     });
-    expect(getByTitle('collapse')).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(getByTitle('collapse')).toBeInTheDocument();
+    });
   });
 
-  it('The expanded sidebars displays an icon and text.', () => {
+  it('The expanded sidebars displays an icon and text.', async () => {
     const { getByTitle, getByText, getByTestId } = renderComponent();
     const expandButton = getByTitle('expand');
-    act(() => {
+    await act(async () => {
       userEvent.click(expandButton);
     });
-    expect(getByTestId('nav-tooltip-management')).toContainHTML('svg');
-    expect(getByText('Management')).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(getByTestId('nav-tooltip-management')).toContainHTML('svg');
+      expect(getByText('Management')).toBeInTheDocument();
+    });
   });
 
-  it('The sidebar restricts nav items by role.', () => {
+  it('The sidebar restricts nav items by role.', async () => {
     const { getByTitle, queryByText } = renderComponent();
     const expandButton = getByTitle('expand');
-    act(() => {
+    await act(async () => {
       userEvent.click(expandButton);
     });
-    expect(queryByText('Admin Tools')).toBeNull();
+    await waitFor(async () => {
+      expect(queryByText('Admin Tools')).toBeNull();
+    });
   });
 
-  it('The sidebar displays restricted items if the user has the required role.', () => {
+  it('The sidebar displays restricted items if the user has the required role.', async () => {
     const { getByTitle, getByText } = renderComponent({
       roles: [Roles.SYSTEM_ADMINISTRATOR],
     });
     const expandButton = getByTitle('expand');
-    act(() => {
+    await act(async () => {
       userEvent.click(expandButton);
     });
-    expect(getByText('Admin Tools')).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(getByText('Admin Tools')).toBeInTheDocument();
+    });
   });
 
   describe('side tray tests', () => {
-    it('Opens the side tray when an icon is clicked.', () => {
+    it('Opens the side tray when an icon is clicked.', async () => {
       const { getByText, getByTestId } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
       const managementButton = getByTestId('nav-tooltip-management');
-      act(() => {
+      await act(async () => {
         userEvent.click(managementButton);
       });
-      expect(getByText('Leases & Licenses')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText('Leases & Licenses')).toBeInTheDocument();
+      });
     });
 
-    it('closes the side tray when the close button is clicked.', () => {
+    it('closes the side tray when the close button is clicked.', async () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
       const managementButton = getByTestId('nav-tooltip-management');
-      act(() => {
+      await act(async () => {
         userEvent.click(managementButton);
       });
       const closeButton = getByTitle('close');
-      act(() => {
+      await act(async () => {
         userEvent.click(closeButton);
       });
-      expect(getByTestId('side-tray')).not.toHaveClass('show');
+      await waitFor(async () => {
+        expect(getByTestId('side-tray')).not.toHaveClass('show');
+      });
     });
 
-    it('closes the side tray when the close button is clicked.', () => {
+    it('closes the side tray when the close button is clicked.', async () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
       const managementButton = getByTestId('nav-tooltip-management');
-      act(() => {
+      await act(async () => {
         userEvent.click(managementButton);
       });
       const closeButton = getByTitle('close');
-      act(() => {
+      await act(async () => {
         userEvent.click(closeButton);
       });
-      expect(getByTestId('side-tray')).not.toHaveClass('show');
+      await waitFor(async () => {
+        expect(getByTestId('side-tray')).not.toHaveClass('show');
+      });
     });
 
-    it('Changes to the expected page when tray item is clicked', () => {
+    it('Changes to the expected page when tray item is clicked', async () => {
       const { getByTestId, getByText } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
       const adminToolsButton = getByTestId('nav-tooltip-admintools');
-      act(() => {
+      await act(async () => {
         userEvent.click(adminToolsButton);
       });
       const manageUsersLink = getByText('Manage Users');
-      act(() => {
+      await act(async () => {
         userEvent.click(manageUsersLink);
       });
-      expect(history.location.pathname).toBe('/admin/users');
+      await waitFor(async () => {
+        expect(history.location.pathname).toBe('/admin/users');
+      });
     });
   });
 });

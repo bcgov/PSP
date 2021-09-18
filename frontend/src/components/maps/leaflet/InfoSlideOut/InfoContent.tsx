@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 import { formatAddress, pidFormatter } from 'utils';
 
+import LeaseAttributes from './LeaseAttributes';
 import ParcelAttributes from './ParcelAttributes';
 import { ThreeColumnItem } from './ThreeColumnItem';
 
@@ -108,6 +109,7 @@ export const InfoContent: React.FC<IInfoContent> = ({
         </OuterRow>
       </ListGroup>
       <ParcelAttributes parcelInfo={propertyInfo as IProperty} canViewDetails={canViewDetails} />
+      <LeaseAttributes leases={propertyInfo?.leases} />
     </>
   );
 };

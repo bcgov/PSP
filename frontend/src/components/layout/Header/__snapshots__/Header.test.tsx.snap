@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header tests Header renders correctly 1`] = `
-.c1 {
+Array [
+  @media (min-width:992px) {
+
+}
+
+<div
+    className="Toastify"
+  />,
+  .c1 {
   border-left: 2px solid white;
   font-size: 34px;
   margin: 0 15px 0 25px;
@@ -24,10 +32,21 @@ exports[`Header tests Header renders correctly 1`] = `
 
 .c0 .brand-box {
   padding: 10px 0;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c0 .brand-box .pims-logo {
   margin: 0 10px;
+}
+
+.c0 .title {
+  -webkit-box-flex: 2;
+  -webkit-flex-grow: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
 }
 
 .c0 .title h1 {
@@ -43,6 +62,10 @@ exports[`Header tests Header renders correctly 1`] = `
 }
 
 .c0 .other {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -79,56 +102,57 @@ exports[`Header tests Header renders correctly 1`] = `
 }
 
 <nav
-  className="c0 App-header navbar navbar-expand navbar-light"
->
-  <span
-    className="brand-box navbar-brand"
+    className="c0 App-header navbar navbar-expand navbar-light"
   >
-    <a
-      href="https://www2.gov.bc.ca/gov/content/home"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <img
-        alt="Government of BC logo"
-        className="bc-gov-icon"
-        height={43}
-        src="logo-banner.svg"
-        width={156}
-      />
-    </a>
     <span
-      className="c1"
-    />
-    <img
-      alt="PIMS logo"
-      className="pims-logo"
-      height={50}
-      src=""
-    />
-  </span>
-  <div
-    className="title mr-auto navbar-nav"
-    onKeyDown={[Function]}
-  >
-    <div
-      className="nav-item"
+      className="brand-box navbar-brand"
     >
-      <h1
-        className="longAppName"
+      <a
+        href="https://www2.gov.bc.ca/gov/content/home"
+        rel="noopener noreferrer"
+        target="_blank"
       >
-        Default Tenant Name
-      </h1>
-      <h1
-        className="shortAppName"
+        <img
+          alt="Government of BC logo"
+          className="bc-gov-icon"
+          height={43}
+          src="logo-banner.svg"
+          width={156}
+        />
+      </a>
+      <span
+        className="c1"
+      />
+      <img
+        alt="PIMS logo"
+        className="pims-logo"
+        height={50}
+        src=""
+      />
+    </span>
+    <div
+      className="title mr-auto navbar-nav"
+      onKeyDown={[Function]}
+    >
+      <div
+        className="nav-item"
       >
-        PIMS
-      </h1>
+        <h1
+          className="longAppName"
+        >
+          Default Tenant Name
+        </h1>
+        <h1
+          className="shortAppName"
+        >
+          PIMS
+        </h1>
+      </div>
     </div>
-  </div>
-  <div
-    className="other navbar-nav"
-    onKeyDown={[Function]}
-  />
-</nav>
+    <div
+      className="other navbar-nav"
+      onKeyDown={[Function]}
+    />
+  </nav>,
+]
 `;

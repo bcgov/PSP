@@ -16,6 +16,10 @@ export const LoginStyled = styled(Container)`
   overflow: auto;
   grid-area: content;
 
+  .btn.btn-primary {
+    display: inline-block;
+  }
+
   .unauth {
     font-size: 24px;
     margin: 91px auto;
