@@ -24,13 +24,13 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     Header: 'PID',
     accessor: 'pid',
     align: 'left',
-    sortable: true,
+    sortable: false,
   },
   {
     Header: 'PIN',
     accessor: 'pin',
     align: 'left',
-    sortable: true,
+    sortable: false,
   },
   {
     Header: 'Civic Address',
@@ -38,7 +38,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     align: 'left',
     clickable: true,
     minWidth: 100,
-    sortable: true,
+    sortable: false,
   },
   {
     Header: 'Location',
@@ -46,7 +46,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     align: 'left',
     minWidth: 80,
     clickable: true,
-    sortable: true,
+    sortable: false,
     filter: {
       component: TypeaheadField,
       props: {
@@ -66,7 +66,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     align: 'right',
     minWidth: 120,
     clickable: true,
-    sortable: true,
+    sortable: false,
     filter: {
       component: Input,
       props: {
