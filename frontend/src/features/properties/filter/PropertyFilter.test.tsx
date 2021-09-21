@@ -4,8 +4,6 @@ import axios from 'axios';
 import * as API from 'constants/API';
 import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
-import * as MOCK from 'mocks/filterDataMock';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
@@ -103,13 +101,7 @@ const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true)
   <TenantProvider>
     <Provider store={getStore(filter)}>
       <Router history={history}>
-        <PropertyFilter
-          defaultFilter={filter}
-          organizationLookupCodes={MOCK.mockOrganizationLookups}
-          adminAreaLookupCodes={MOCK.mockAdministrativeAreaLookups}
-          onChange={onFilterChange}
-          showAllOrganizationSelect={showAllOrganizationSelect}
-        />
+        <PropertyFilter defaultFilter={filter} onChange={onFilterChange} />
       </Router>
     </Provider>
   </TenantProvider>
