@@ -138,9 +138,7 @@ export const useProperties = () => {
         return data;
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
-          if (axios.isAxiosError(axiosError)) {
-            catchAxiosError(axiosError, dispatch, actionTypes.UPDATE_PARCEL);
-          }
+          catchAxiosError(axiosError, dispatch, actionTypes.UPDATE_PARCEL);
         }
       }
     },
