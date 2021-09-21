@@ -28,11 +28,6 @@ pipeline {
     MAINTENANCE_DIRECTORY = 'maintenance'
     DEVOPS_DIRECTORY = 'openshift/4.0'
 
-    // SonarQube configuration
-    SONARQUBE_URL_INT = 'http://sonarqube:9000'
-    SONARQUBE_TOKEN_SECRET = 'sonarqube-token'
-    SONARQUBE_TOKEN_KEY = 'token'
-
     // Rocket.Chat Configuration
     ROCKET_CHAT_SECRET = 'rocket-chat-secrets'
     ROCKET_CHAT_WEBHOOK_KEY = 'rocket-deploy-webhook'
@@ -106,7 +101,6 @@ pipeline {
           // [add more secrets here if needed...]
           // env.ROCKET_DEPLOY_WEBHOOK = sh(script: "oc extract --to=- --keys=${ROCKET_CHAT_WEBHOOK_KEY} secret/${ROCKET_CHAT_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
           env.NOTIFICATION_WEBHOOK_URL = sh(script: "oc extract --to=- --keys=${MS_TEAMS_WEBHOOK_KEY} secret/${MS_TEAMS_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
-          env.SONAR_TOKEN = sh(script: "oc extract --to=- --keys=${SONARQUBE_TOKEN_KEY} secret/${SONARQUBE_TOKEN_SECRET} 2>&1 | sed -n 2p", returnStdout: true).trim()
 
           // initialize CI environment values
           env.CHANGELOG = commonPipeline.getChangeLog()
@@ -159,33 +153,7 @@ pipeline {
       }
     }
 
-    // The ZAP scripts are installed on the root of the jenkins-slave-zap image.
-    // When running ZAP from there the reports will be created in /zap/wrk/ by default.
-    // ZAP has problems with creating the reports directly in the Jenkins
-    // working directory, so they have to be copied over after the fact.
-
-    stage('OWASP Scan') {
-      agent { label 'owasp-zap' }
-      steps {
-        script {
-          sh 'mkdir -p zap-output'
-          def return_code = sh returnStatus: true, script: "/zap/zap-baseline.py -x zap-report.xml -r zap-report.html -t $VANITY_URL -j"
-          sh 'cp /zap/wrk/zap-report.* ./zap-output/'
-          echo "Exit value was - $return_code"
-        }
-      }
-      post {
-        always {
-          publishHTML([
-            allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true,
-            reportDir: '/zap/wrk', reportFiles: 'zap-report.html', reportName: 'OWASP ZAP Scan', reportTitles: 'OWASP ZAP Scan'
-          ])
-          stash name: 'zap', includes: 'zap-output/*'
-        }
-      }
-    }
-
-//Test stage is perform using github action
+    //Test stage is perform using github action
     stage('Build') {
       when {
         expression { new Boolean(env.SKIP_BUILD) == false }

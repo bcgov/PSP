@@ -8,7 +8,6 @@ import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { Feature } from 'geojson';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IProperty } from 'interfaces';
 import { geoJSON, LatLng, LatLngBounds, LeafletMouseEvent, Map as LeafletMap } from 'leaflet';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
@@ -20,7 +19,6 @@ import { useDispatch } from 'react-redux';
 import { useResizeDetector } from 'react-resize-detector';
 import { useMediaQuery } from 'react-responsive';
 import { useAppSelector } from 'store/hooks';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import { DEFAULT_MAP_ZOOM, setMapViewZoom } from 'store/slices/mapViewZoom/mapViewZoomSlice';
 import { saveParcelLayerData } from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 import { IPropertyDetail, storeProperty } from 'store/slices/properties';
@@ -59,9 +57,6 @@ export type MapProps = {
   lat: number;
   lng: number;
   zoom?: number;
-  properties: IProperty[];
-  organizations: ILookupCode[];
-  administrativeAreas: ILookupCode[];
   selectedProperty?: IPropertyDetail | null;
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
   onMapClick?: (e: LeafletMouseEvent) => void;
@@ -112,8 +107,6 @@ const Map: React.FC<MapProps> = ({
   lat,
   lng,
   zoom: zoomProp,
-  organizations,
-  administrativeAreas,
   selectedProperty,
   onMapClick,
   disableMapFilterBar,
@@ -286,11 +279,8 @@ const Map: React.FC<MapProps> = ({
             defaultFilter={{
               ...defaultFilterValues,
             }}
-            organizationLookupCodes={organizations}
-            adminAreaLookupCodes={administrativeAreas}
             onChange={handleMapFilterChange}
             setTriggerFilterChanged={setTriggerFilterChanged}
-            showAllOrganizationSelect={true}
           />
         </Container>
       ) : null}

@@ -1,4 +1,3 @@
-import { useKeycloak } from '@react-keycloak/web';
 import { waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -33,7 +32,6 @@ jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 describe('PSP routing', () => {
   beforeEach(() => {
-    mockKeycloak([], []);
     fetchMock.mockResponse(JSON.stringify({ status: 200, body: {} }));
   });
 
@@ -66,6 +64,7 @@ describe('PSP routing', () => {
   describe('unauth routes', () => {
     let wrapper: any;
     beforeEach(() => {
+      mockKeycloak({ authenticated: false });
       mockAxios.onAny().reply(200, {});
     });
     afterEach(() => {
@@ -138,18 +137,10 @@ describe('PSP routing', () => {
 
   describe('auth routes', () => {
     beforeEach(() => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          userInfo: {
-            organizations: [1],
-            groups: [Claims.PROPERTY_VIEW],
-            roles: [Claims.PROPERTY_VIEW, Claims.ADMIN_USERS],
-          },
-          subject: 'test',
-          authenticated: true,
-
-          loadUserInfo: jest.fn().mockResolvedValue({}),
-        },
+      mockKeycloak({
+        claims: [Claims.PROPERTY_VIEW, Claims.ADMIN_USERS],
+        roles: [Claims.PROPERTY_VIEW],
+        authenticated: true,
       });
       mockAxios.onAny().reply(200, {});
       delete (window as any).ResizeObserver;
