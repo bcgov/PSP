@@ -51,6 +51,16 @@ export const useApiProperties = () => {
         apiWithPropertyDeletingToasts.delete<IProperty>(`/properties/${property.id}`, {
           data: property,
         }),
+      exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
+        api.get(
+          `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
     }),
     [
       api,

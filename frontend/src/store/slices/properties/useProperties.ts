@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { useApiProperties } from 'hooks/pims-api';
@@ -6,9 +6,27 @@ import { IProperty } from 'interfaces';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { Dispatch } from 'redux';
+import { downloadFile } from 'utils/download';
 
+import { IGenericNetworkAction } from '../network/interfaces';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { storeProperties, storeProperty } from './propertiesSlice';
+
+const catchAxiosError = (
+  axiosError: AxiosError,
+  dispatch: Dispatch<any>,
+  errorNetworkAction: string,
+) => {
+  const payload: IGenericNetworkAction = {
+    name: errorNetworkAction,
+    status: axiosError?.response?.status,
+    error: axiosError,
+  };
+  dispatch(logError(payload));
+  dispatch(hideLoading());
+  throw Error(axiosError.response?.data.details);
+};
 
 export const useProperties = () => {
   const dispatch = useDispatch();
@@ -18,6 +36,7 @@ export const useProperties = () => {
     postProperty,
     putProperty,
     deleteProperty,
+    exportProperties: rawApiExportProperties,
   } = useApiProperties();
 
   /**
@@ -95,15 +114,9 @@ export const useProperties = () => {
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(
-          logError({
-            name: actionTypes.ADD_PARCEL,
-            status: axiosError?.response?.status,
-            error: axiosError,
-          }),
-        );
-        dispatch(hideLoading());
-        throw Error(axiosError.response?.data.details);
+        if (axios.isAxiosError(axiosError)) {
+          catchAxiosError(axiosError, dispatch, actionTypes.ADD_PARCEL);
+        }
       }
     },
     [dispatch, postProperty],
@@ -124,15 +137,11 @@ export const useProperties = () => {
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(
-          logError({
-            name: actionTypes.UPDATE_PARCEL,
-            status: axiosError?.response?.status,
-            error: axiosError,
-          }),
-        );
-        dispatch(hideLoading());
-        throw Error(axiosError.response?.data.details);
+        if (axios.isAxiosError(axiosError)) {
+          if (axios.isAxiosError(axiosError)) {
+            catchAxiosError(axiosError, dispatch, actionTypes.UPDATE_PARCEL);
+          }
+        }
       }
     },
     [dispatch, putProperty],
@@ -153,18 +162,44 @@ export const useProperties = () => {
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
-        dispatch(
-          logError({
-            name: actionTypes.DELETE_PARCEL,
-            status: axiosError.response?.status,
-            error: axiosError,
-          }),
-        );
-        dispatch(hideLoading());
-        throw Error(axiosError.response?.data.details);
+        if (axios.isAxiosError(axiosError)) {
+          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+        }
       }
     },
     [dispatch, deleteProperty],
+  );
+
+  /**
+   * Make and AJAX request to export properties that match the specified filter.
+   * Upon receiving data stream from server it triggers a download prompt on client browser.
+   * Currently supports CSV and Excel output formats.
+   * @param filter The filter to match for exported properties.
+   * @param requestId The name/id of this network request. The state is tracked in redux [loading -> success -> error]
+   * @param outputFormat The output format (csv or excel).
+   */
+  const exportProperties = useCallback(
+    async (
+      filter: API.IPaginateProperties,
+      outputFormat: 'csv' | 'excel' = 'excel',
+      fileName = `pims-inventory.${outputFormat === 'csv' ? 'csv' : 'xlsx'}`,
+      requestId = 'properties-report',
+    ) => {
+      dispatch(logRequest(requestId));
+      dispatch(showLoading());
+      try {
+        const { data, status } = await rawApiExportProperties(filter, outputFormat);
+        dispatch(logSuccess({ name: requestId, status }));
+        dispatch(hideLoading());
+        // trigger file download in client browser
+        downloadFile(fileName, data);
+      } catch (axiosError) {
+        if (axios.isAxiosError(axiosError)) {
+          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+        }
+      }
+    },
+    [dispatch, rawApiExportProperties],
   );
 
   return {
@@ -173,5 +208,6 @@ export const useProperties = () => {
     createProperty,
     updateProperty,
     deleteProperty: removeProperty,
+    exportProperties,
   };
 };

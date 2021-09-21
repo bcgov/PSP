@@ -132,9 +132,9 @@ exports[`Property list view matches snapshot 1`] = `
                   >
                     <input
                       class="form-control"
-                      id="input-address"
-                      name="address"
-                      placeholder="Enter an address"
+                      id="input-pid"
+                      name="pid"
+                      placeholder="Enter a PID or PIN"
                       value=""
                     />
                   </div>

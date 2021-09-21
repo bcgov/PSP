@@ -36,7 +36,6 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     Header: 'Civic Address',
     accessor: p => formatStreetAddress(p.address),
     align: 'left',
-    clickable: true,
     minWidth: 100,
     sortable: false,
   },
@@ -45,7 +44,6 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     accessor: p => p.address.municipality,
     align: 'left',
     minWidth: 80,
-    clickable: true,
     sortable: false,
     filter: {
       component: TypeaheadField,
@@ -65,7 +63,6 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     Cell: NumberCell,
     align: 'right',
     minWidth: 120,
-    clickable: true,
     sortable: false,
     filter: {
       component: Input,

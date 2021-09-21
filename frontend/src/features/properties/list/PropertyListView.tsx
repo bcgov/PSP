@@ -5,35 +5,37 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import * as API from 'constants/API';
-import { PropertyTypes, Roles } from 'constants/index';
 import { Form, Formik, FormikProps } from 'formik';
 import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
-import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useRouterFilter } from 'hooks/useRouterFilter';
 import { IProperty } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
-import queryString from 'query-string';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { FaFileAlt, FaFileExcel, FaFileExport } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { useProperties } from 'store/slices/properties';
 import { generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
-import download from 'utils/download';
 
 import { PropertyFilter } from '../filter';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import { columns as columnDefinitions } from './columns';
 import * as Styled from './PropertyListView.styled';
-import { defaultFilterValues, getAllFieldsPropertyReportUrl, getPropertyReportUrl } from './utils';
+
+const defaultFilterValues: IPropertyFilter = {
+  searchBy: 'pid',
+  pid: '',
+  pin: '',
+  address: '',
+  location: '',
+};
 
 const PropertyListView: React.FC = () => {
   const { getByType } = useLookupCodeHelpers();
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
-  const keycloak = useKeycloakWrapper();
 
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME), [
     getByType,
@@ -123,13 +125,13 @@ const PropertyListView: React.FC = () => {
     fetchData({ pageIndex, pageSize, filter, sort });
   }, [fetchData, pageIndex, pageSize, filter, sort]);
 
-  const dispatch = useDispatch();
+  const { exportProperties } = useProperties();
 
   /**
    * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
    * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
    */
-  const fetch = (accept: 'csv' | 'excel', getAllFields?: boolean) => {
+  const fetch = (accept: 'csv' | 'excel') => {
     // Call API with appropriate search parameters
     const query = toFilteredApiPaginateParams<IPropertyFilter>(
       pageIndex,
@@ -137,33 +139,11 @@ const PropertyListView: React.FC = () => {
       sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
       filter,
     );
-    return dispatch(
-      download({
-        url: getAllFields ? getAllFieldsPropertyReportUrl(query) : getPropertyReportUrl(query),
-        fileName: `pims-inventory.${accept === 'csv' ? 'csv' : 'xlsx'}`,
-        actionType: 'properties-report',
-        headers: {
-          Accept: accept === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
-        },
-      }),
-    );
+
+    exportProperties(query, accept);
   };
 
   const appliedFilter = { ...filter };
-
-  const onRowClick = useCallback((row: IProperty) => {
-    window.open(
-      `/mapview?${queryString.stringify({
-        sidebar: true,
-        disabled: true,
-        loadDraft: false,
-        parcelId: [PropertyTypes.Land, PropertyTypes.Subdivision].includes(row.propertyTypeId)
-          ? row.id
-          : undefined,
-      })}`,
-      '_blank',
-    );
-  }, []);
 
   return (
     <Container fluid className="PropertyListView">
@@ -192,17 +172,6 @@ const PropertyListView: React.FC = () => {
               <FaFileAlt data-testid="csv-icon" size={36} onClick={() => fetch('csv')} />
             </Styled.FileIcon>
           </TooltipWrapper>
-          {(keycloak.hasRole(Roles.SRES_FINANCIAL_MANAGER) || keycloak.hasRole(Roles.SRES)) && (
-            <TooltipWrapper toolTipId="export-to-excel" toolTip="Export all properties and fields">
-              <Styled.FileIcon>
-                <FaFileExport
-                  data-testid="file-icon"
-                  size={36}
-                  onClick={() => fetch('excel', true)}
-                />
-              </Styled.FileIcon>
-            </TooltipWrapper>
-          )}
         </Container>
 
         <Table<IProperty>
@@ -213,7 +182,6 @@ const PropertyListView: React.FC = () => {
           sort={sort}
           pageIndex={pageIndex}
           onRequestData={onRequestData}
-          onRowClick={onRowClick}
           pageCount={pageCount}
           onSortChange={(column: string, direction: SortDirection) => {
             if (!!direction) {

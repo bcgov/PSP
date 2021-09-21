@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import axios, { AxiosResponse } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as API from 'constants/API';
@@ -21,8 +20,6 @@ const mockApiGetPropertiesPaged = jest.fn<Promise<AxiosResponse<IPagedItems<IPro
 ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
   getPropertiesPaged: mockApiGetPropertiesPaged,
 });
-
-window.open = jest.fn();
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -48,8 +45,6 @@ const setup = (renderOptions: RenderOptions = {}) => {
   return {
     component,
     findSpinner: () => component.queryByRole('status'),
-    findClickableTableCells: () =>
-      document.querySelectorAll('.td.clickable') as NodeListOf<HTMLElement>,
   };
 };
 
@@ -104,7 +99,6 @@ describe('Property list view', () => {
       component: { findByText },
     } = setup();
 
-    // default table message when there is no data to display
     const results = await findByText(/1234 mock Street/i);
     expect(results).toBeInTheDocument();
   });
@@ -121,20 +115,5 @@ describe('Property list view', () => {
 
     expect(getByTestId('excel-icon')).toBeInTheDocument();
     expect(getByTestId('csv-icon')).toBeInTheDocument();
-  });
-
-  it('rows act as clickable links to the property details page.', async () => {
-    setupMockApi([mockParcel]);
-    const {
-      component: { container },
-      findSpinner,
-    } = setup();
-
-    // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
-
-    const tableCells = container.querySelectorAll('.td.clickable');
-    userEvent.click(tableCells[0]);
-    await waitFor(async () => expect(window.open).toHaveBeenCalled());
   });
 });
