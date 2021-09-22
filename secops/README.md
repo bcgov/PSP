@@ -165,6 +165,57 @@ Click on the link will redirect you the Sonarque Scanner Quality Gate reports as
           reactions: eyes
 ```
 
+#### Scan Repo for Secrets and Passwords 
+
+PIMS Project uses [trufflehog3](https://github.com/feeltheajf/truffleHog3) an enhanced version of the [truffleHog](https://github.com/trufflesecurity/truffleHog) scanner to Searche through our git repositories for secrets, digging deep into commit history and branches. 
+This is effective at finding secrets accidentally committed. If any secrets or password is found in a PR, a notification will be send to the developer/user and the Merge will be blocked for that PR. 
+
+GitHub Action for Credentials Scanner
+```
+   - name: Cache python dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip # This path is specific to Ubuntu
+          key: ${{ runner.os }}-pip
+
+      - name: Install requirements
+        run: pip install trufflehog3 jtbl
+
+      - name: Scan with trufflehog3
+        id: scan
+        run: trufflehog3 --no-history --config .github/.trufflehog3.yml --format json --output trufflehog_report.json
+
+      # need to save these as artifacts so the comment-pr workflow can pick it up because
+      # this action has no write access to pull requests (even adding comments)
+      - name: Save PR number and scan results
+        if: always()
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.pull_request.number }} > ./pr/NR
+          ./build/secops_report.sh trufflehog_report.json > ./pr/PRBODY
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: pr
+          path: pr/
+
+      - name: Human readable scan report
+        if: always()
+        run: ./build/secops_report.sh trufflehog_report.json
+
+      - name: Generate HTML report only if secrets were found
+        if: failure()
+        run: trufflehog3 -R trufflehog_report.json --output trufflehog_report.html
+
+      - name: Upload HTML report
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Security Scan Report
+          path: trufflehog_report.html
+          retention-days: 7
+```
+
 ### BUILD
 
 Once the software is built in the CI process, initiate a Vulnerability Scan to scan the build software artifacts. This can be performed in real-time as well. Open Source tools used to scan for Vulnerability in source or built image are
