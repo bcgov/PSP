@@ -272,3 +272,12 @@ The Vulnerability report will be uploaded back to the PR for analysis by the Dev
 ### Workflow
 
 ![](../Screenshots/workflow.png)
+
+
+```
+> Repeatable, 
+>> consistent, 
+>>> Embedded Approach
+>>>>        =
+>>>>> SUSTAINABILITY
+```
