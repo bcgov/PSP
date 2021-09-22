@@ -28,24 +28,15 @@ const getWrapper = (store: any) => ({ children }: any) => (
 const emptyFilter = {
   searchBy: 'address',
   pid: '',
+  pin: '',
   address: '',
-  administrativeArea: '',
-  organizations: '',
-  classificationId: '',
-  minLotSize: '',
-  maxLotSize: '',
   propertyType: PropertyTypes.Land,
-  rentableArea: '',
-  includeAllProperties: '',
-  maxAssessedValue: '',
-  maxMarketValue: '',
-  maxNetBookValue: '',
-  name: '',
 };
 
 const defaultFilter = {
   searchBy: 'address',
   pid: '1',
+  pin: '',
   address: '2',
   administrativeArea: '3',
   organizations: '5',

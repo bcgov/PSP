@@ -1,4 +1,4 @@
-import { IGeoSearchParams, IPropertySearchParams } from 'constants/API';
+import { IPaginateProperties } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
 import { IPagedItems, IProperty } from 'interfaces';
@@ -37,9 +37,7 @@ export const useApiProperties = () => {
 
   return React.useMemo(
     () => ({
-      // TODO: Remove fake endpoint used by the map.
-      getPropertiesWfs: (params?: IGeoSearchParams): Promise<any[]> => Promise.resolve([]),
-      getProperties: (params: IPropertySearchParams | null) =>
+      getPropertiesPaged: (params: IPaginateProperties | null) =>
         api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
@@ -53,6 +51,16 @@ export const useApiProperties = () => {
         apiWithPropertyDeletingToasts.delete<IProperty>(`/properties/${property.id}`, {
           data: property,
         }),
+      exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
+        api.get(
+          `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
     }),
     [
       api,

@@ -12,6 +12,23 @@ export interface IDownloadConfig extends AxiosRequestConfig {
 }
 
 /**
+ * Programmatically triggers a file download with content generated through an API
+ * @param filename the file name
+ * @param blobData Raw blob data as returned by a file export API
+ */
+export const downloadFile = (filename: string, blobData: any) => {
+  const uri = window.URL.createObjectURL(new Blob([blobData]));
+  const link = document.createElement('a');
+  link.href = uri;
+  link.setAttribute('download', filename ?? new Date().toDateString());
+  document.body.appendChild(link);
+  link.click();
+  // release the object URL after the link has been clicked
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(link.href);
+};
+
+/**
  * Make an AJAX request to download content from the specified endpoint.
  * @param config - Configuration options to make an AJAX request to download content.
  * @param config.url - The url to the endpoint.

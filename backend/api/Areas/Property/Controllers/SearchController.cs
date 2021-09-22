@@ -13,6 +13,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BModel = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Controllers
 {
@@ -47,7 +48,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Endpoints
-        #region Landing Page Endpoints
+        #region Property Paging Endpoints (for list view)
         /// <summary>
         /// Get all the properties that satisfy the filter parameters.
         /// </summary>
@@ -55,7 +56,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Search.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(BModel.PageModel<Models.Search.PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties()
         {
@@ -72,15 +73,16 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Models.Search.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(BModel.PageModel<Models.Search.PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties([FromBody] PropertyFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid()) throw new BadRequestException("Property filter must contain valid values.");
 
-            var properties = _pimsService.Property.Get((PropertyFilter)filter).ToArray();
-            return new JsonResult(_mapper.Map<Models.Search.PropertyModel[]>(properties).ToArray());
+            var page = _pimsService.Property.GetPage((PropertyFilter)filter);
+            var result = _mapper.Map<BModel.PageModel<Models.Search.PropertyModel>>(page);
+            return new JsonResult(result);
         }
         #endregion
         #endregion

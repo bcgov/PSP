@@ -84,7 +84,18 @@ namespace Pims.Dal.Helpers.Extensions
             filter.ThrowIfNull(nameof(user));
 
             // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning organization.
-            var query = context.Properties.AsNoTracking();
+            var query = context.Properties
+                .Include(p => p.Address)
+                .ThenInclude(a => a.AddressType)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Region)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.District)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Province)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Country)
+                .AsNoTracking();
 
             query = query.GenerateCommonPropertyQuery(user, filter);
 

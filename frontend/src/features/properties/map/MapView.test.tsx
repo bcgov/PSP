@@ -264,7 +264,7 @@ describe('MapView', () => {
   });
 
   it('Rendered markers can be clicked and displayed with permissions', async () => {
-    mockKeycloak([Claims.ADMIN_PROPERTIES], []);
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
     await waitFor(() => render(getMap()));
     const cluster = document.querySelector('.leaflet-marker-icon');
     fireEvent.click(cluster!);
