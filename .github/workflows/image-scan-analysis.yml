@@ -21,35 +21,38 @@ jobs:
       security-events: write
     env:
       working-directory: ./frontend
+      image-name: pims-frontend
+      output-filename: pims-frontend.txt
 
     steps:
     - uses: actions/checkout@v1
     - name: Build PIMS Frontend
       run: |
-        docker build -t docker.io/pims-frontend:${{ github.sha }} .   
+        docker build -t ${{env.image-name}} .   
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Frontend Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'docker.io/pims-frontend:${{ github.sha }}'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
+        image-ref: ${{env.image-name}}
+        format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: 'pims-frontend.sarif'
-    - name: Upload Trivy scan results to GitHub Security tab
+        output: ${{env.output-filename}}
+    - name: Save PR number and scan results
       if: always()
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: 'pims-frontend.sarif'
+      run: |
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
     - if: always()
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name:  frontend Image Scan report
-        path: 'pims-frontend.sarif'
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
+        retention-days: 5
         
     
   build_backend:
@@ -131,3 +134,50 @@ jobs:
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: 'pims-logging.sarif'
+        
+  build_zap:
+
+    name: pims-zap
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      pull-requests: write
+    env:
+      working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
+      image-name: owasp-zap
+      output-filename: owasp-zap.txt
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build PIMS OWASP ZAP Image
+      run: |
+        docker build -t {{env.image-name}} .   
+        #docker pull registry.access.redhat.com/ubi8/nodejs-14:1-35
+        #docker tag registry.access.redhat.com/ubi8/nodejs-14:1-35 noejs-14:latest
+        docker image ls
+      working-directory: ${{env.working-directory}}
+    - name: Scan jenkins-agent-zap with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: {{env.image-name}}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: {{env.output-filename}}
+    - name: Save PR number and scan results
+      if: always()
+      run: |
+          mkdir -p ./pr_{{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_{{env.image-name}}/NR
+          cp {{env.output-filename}} ./pr_{{env.image-name}}/PRBODY.txt
+    - if: always()
+      name: Upload OWASP ZAP scan artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: {{env.image-name}}_Scan_Report
+        path: pr_{{env.image-name}}/
+        retention-days: 3
