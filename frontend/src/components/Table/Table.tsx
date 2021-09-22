@@ -566,12 +566,12 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
               )}
             {props.canRowExpand && !props.canRowExpand(row) ? (
               <div className="td">
-                <div style={{ width: '20px' }}>&nbsp;</div>
+                <div style={{ width: '2.0rem' }}>&nbsp;</div>
               </div>
             ) : null}
             {filterable ? (
               <div className="td">
-                <div style={{ width: '30px' }}>&nbsp;</div>
+                <div style={{ width: '3.0rem' }}>&nbsp;</div>
               </div>
             ) : null}
             {/* Expansion button shown on every row by default */}

@@ -7,8 +7,8 @@ import styled from 'styled-components';
  * Displays the page header background, title, and logo.
  */
 export const HeaderStyled = styled(Navbar)`
-  padding: 0 10px;
-  min-height: 70px;
+  padding: 0 1rem;
+  min-height: 7rem;
   color: #ffffff;
 
   .longAppName {
@@ -22,17 +22,17 @@ export const HeaderStyled = styled(Navbar)`
     padding: 10px 0;
     flex-grow: 1;
     .pims-logo {
-      margin: 0 10px;
+      margin: 0 1rem;
     }
   }
 
   .title {
     flex-grow: 2;
     h1 {
-      margin-top: 10px;
+      margin-top: 1rem;
       padding-left: 0px;
       text-align: center;
-      font-size: 24px;
+      font-size: 2.4rem;
       text-decoration: none solid rgb(255, 255, 255);
       font-family: 'BCSans', Fallback, sans-serif;
       font-weight: 700;
@@ -61,7 +61,7 @@ export const HeaderStyled = styled(Navbar)`
     .longAppName {
       display: block;
       text-align: left;
-      padding-left: 40px;
+      padding-left: 4rem;
     }
     .shortAppName {
       display: none;

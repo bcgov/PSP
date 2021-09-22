@@ -6,26 +6,26 @@ import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 
 const InnerRow = styled(Row)`
-  margin: 0px;
-  width: 300px;
+  margin: 0rem;
+  width: 30rem;
 `;
 
 const LeftCol = styled(Col)`
-  width: 110px;
-  max-width: 135px;
-  padding-right: 10px;
-  padding-left: 0px;
+  width: 11rem;
+  max-width: 13.5rem;
+  padding-right: 1rem;
+  padding-left: 0rem;
 `;
 
 const CenterCol = styled(Col)`
-  max-width: 1px;
-  padding: 0px;
+  max-width: 0.1rem;
+  padding: 0rem;
   background-color: rgba(96, 96, 96, 0.2);
 `;
 
 const RightCol = styled(Col)`
-  padding-left: 10px;
-  padding-right: 0px;
+  padding-left: 1rem;
+  padding-right: 0rem;
 `;
 
 interface IThreeColItem {

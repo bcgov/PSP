@@ -11,7 +11,7 @@ import * as Styled from './styles';
 const PublicLayout: React.FC<React.HTMLAttributes<HTMLElement>> = ({ children, ...rest }) => {
   return (
     <>
-      <LoadingBar style={{ zIndex: 9999, backgroundColor: '#fcba19', height: '3px' }} />
+      <LoadingBar style={{ zIndex: 9999, backgroundColor: '#fcba19', height: '.3rem' }} />
       <Styled.AppGridContainer className="App" {...rest}>
         <HeaderStyled>
           <Header />

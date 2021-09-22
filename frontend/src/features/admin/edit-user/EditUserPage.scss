@@ -8,7 +8,7 @@
   }
 
   .notes {
-    padding-bottom: 30px;
+    padding-bottom: 3rem;
   }
 
   .is-disabled {
@@ -16,14 +16,14 @@
     flex-direction: row;
     align-items: center;
     :first-child {
-      margin-right: 10px;
-      margin-bottom: 0px;
+      margin-right: 1rem;
+      margin-bottom: 0rem;
     }
   }
 
   .cancelSave {
-    padding-top: 15px;
-    padding-bottom: 10px;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
   }
 
   .navBar {

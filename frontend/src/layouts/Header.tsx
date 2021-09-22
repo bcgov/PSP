@@ -20,7 +20,7 @@ interface IHeaderProps {
 const HeaderStyled = styled.header<IHeaderProps>`
   background-color: ${props => props.backgroundColor};
   border: none;
-  border-bottom: 2px solid ${props => props.theme.css.accentColor};
+  border-bottom: 0.2rem solid ${props => props.theme.css.accentColor};
   grid-area: header;
 `;
 

@@ -7,13 +7,13 @@ import styled from 'styled-components';
 
 const LinkMenu = styled(Row)`
   background-color: ${variables.filterBackgroundColor};
-  height: 35px;
-  width: 322px;
-  margin: 0px 0px 5px -10px;
-  font-size: 14px;
-  padding: 10px;
+  height: 3.5rem;
+  width: 32.2rem;
+  margin: 0rem 0rem 0.5rem -1rem;
+  font-size: 1.4rem;
+  padding: 1rem;
   a {
-    padding: 0px 10px;
+    padding: 0rem 1rem;
     color: ${variables.slideOutBlue};
   }
 `;

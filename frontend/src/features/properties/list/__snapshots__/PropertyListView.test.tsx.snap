@@ -64,7 +64,7 @@ exports[`Property list view matches snapshot 1`] = `
 .c3 {
   background-color: #fff !important;
   color: primaryColor !important;
-  padding: 6px 5px;
+  padding: 6px .5rem;
 }
 
 <div
@@ -292,13 +292,13 @@ exports[`Property list view matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 360px;"
+            style="display: flex; flex: 1 0 auto; min-width: 36.0rem"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -313,7 +313,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -328,7 +328,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -343,7 +343,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 8.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -358,7 +358,7 @@ exports[`Property list view matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 120 0 auto; min-width: 120px; width: 120px; justify-content: flex-end; text-align: right; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 120 0 auto; min-width: 12.0rem width: 12.0rem justify-content: flex-end; text-align: right; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"

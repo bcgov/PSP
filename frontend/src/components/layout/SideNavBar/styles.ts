@@ -2,10 +2,10 @@ import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 export const TrayHeader = styled.h3`
-  font-size: 32px;
-  padding-bottom: 0.5rem;
-  border-bottom: 4px solid ${props => props.theme.css.primaryColor};
-  margin-bottom: 2rem;
+  font-size: 5.1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 0.4rem solid ${props => props.theme.css.primaryColor};
+  margin-bottom: 3.2rem;
 `;
 
 export const SideNavBar = styled.div`
@@ -20,9 +20,12 @@ export const SideNavBar = styled.div`
   grid-area: iconbar;
   background-color: ${props => props.theme.css.primaryColor};
   transition: 0.5s width;
-  width: 3.8rem;
+  width: 6rem;
+  label {
+    color: white;
+  }
   &.expanded {
-    width: 10rem;
+    width: 16rem;
   }
   svg {
     fill: white;
@@ -45,7 +48,7 @@ export const SideTrayPage = styled.div`
   display: flex;
   flex-direction: column;
   a {
-    font-size: 17px;
+    font-size: 2.7rem;
   }
 `;
 
@@ -68,18 +71,18 @@ export const SideTray = styled.div`
   right: 0;
   background-color: white;
   z-index: -1;
-  width: 40rem;
-  padding: 0.5rem 1rem;
+  width: 64rem;
+  padding: 0.8rem 1.6rem;
   text-align: left;
   transition: transform 0.5s ease-in-out;
-  box-shadow: 3px 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0.3rem 0 0.4rem rgba(0, 0, 0, 0.2);
   &.show {
-    transform: translateX(40rem);
+    transform: translateX(64rem);
   }
-  @media (max-width: 765px) {
-    width: 20rem;
+  @media (max-width: 76.5rem) {
+    width: 32rem;
     &.show {
-      transform: translateX(20rem);
+      transform: translateX(32rem);
     }
   }
 `;

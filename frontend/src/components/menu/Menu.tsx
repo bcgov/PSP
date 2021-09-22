@@ -82,7 +82,7 @@ export const Menu: React.FC<IProps> = ({
           (option.label as string).toLowerCase().includes(filterText.toLowerCase()),
         );
 
-  const menuWidth = width || '100px';
+  const menuWidth = width || '10.0rem';
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <div className="Menu-root">
@@ -95,7 +95,7 @@ export const Menu: React.FC<IProps> = ({
         >
           {filter && (
             <Form.Control
-              style={{ width: `calc(${menuWidth} - 10px)` }}
+              style={{ width: `calc(${menuWidth} - 1.0rem)` }}
               className="Menu-filter"
               onChange={handleFilterTextChange}
               size="sm"

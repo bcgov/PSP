@@ -15,7 +15,7 @@
   display: flex;
   background-color: lightgreen;
   margin: auto;
-  padding: 5px;
+  padding: 0.5rem;
 }
 
 .success p {
@@ -28,7 +28,7 @@
   display: flex;
   background-color: lightskyblue;
   margin: auto;
-  padding: 5px;
+  padding: 0.5rem;
 }
 
 .info p {
@@ -38,16 +38,16 @@
 }
 
 .notes {
-  padding-bottom: 30px;
+  padding-bottom: 3rem;
 }
 
 .isDisabled {
-  padding-bottom: 10px;
+  padding-bottom: 1rem;
 }
 
 .cancelSave {
-  padding-top: 15px;
-  padding-bottom: 10px;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .navBar {

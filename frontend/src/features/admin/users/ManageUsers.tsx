@@ -33,19 +33,19 @@ import { columnDefinitions } from './constants';
 import { IUserRecord } from './interfaces/IUserRecord';
 
 const TableContainer = styled(Container)`
-  margin-top: 10px;
-  margin-bottom: 40px;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
 `;
 
 const FileIcon = styled(Button)`
   background-color: #fff !important;
   color: ${variables.primaryColor} !important;
-  padding: 6px 5px;
+  padding: 0.6rem 0.5rem;
 `;
 
 const Ribbon = styled('div')`
   text-align: right;
-  margin-right: 50px;
+  margin-right: 5rem;
 `;
 
 const downloadUsers = (filter: IPaginateParams) =>

@@ -20,7 +20,7 @@ export const AccessRequestDetails: React.FC<IProps> = ({ request, onClose }) => 
           <Modal.Title>Access Request Details</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body style={{ maxHeight: '500px' }}>
+        <Modal.Body style={{ maxHeight: '50.0rem' }}>
           <Form>
             <Form.Group as={Row} controlId="businessIdentifier">
               <Form.Label column sm="4">

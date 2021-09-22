@@ -44,7 +44,7 @@ interface IInfoContent {
 }
 
 export const OuterRow = styled(Row)`
-  margin: 0px 0px 10px 0px;
+  margin: 0rem 0rem 1rem 0rem;
 `;
 
 /**

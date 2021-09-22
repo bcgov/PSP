@@ -10,12 +10,12 @@ exports[`MapProperties View renders correctly 1`] = `
   />
   .c11 {
   margin-right: -10px;
-  width: 341px;
-  min-height: 52px;
+  width: 34.1rem;
+  min-height: 5.2rem;
   height: auto;
   background-color: #fff;
   position: relative;
-  border-radius: 4px;
+  border-radius: .4rem;
   box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
   z-index: 1000;
 }
@@ -27,7 +27,7 @@ exports[`MapProperties View renders correctly 1`] = `
 
 .c12 {
   width: 100%;
-  height: 52px;
+  height: 5.2rem;
   background-color: slideOutBlue;
   color: #fff;
   display: -webkit-box;
@@ -45,15 +45,15 @@ exports[`MapProperties View renders correctly 1`] = `
   -webkit-justify-content: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
-  padding-top: 16px;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
+  padding-top: 1.6rem;
+  border-top-right-radius: .4rem;
+  border-top-left-radius: .4rem;
 }
 
 .c16 {
   width: 100%;
-  padding-left: 10px;
-  padding: 0px 10px 5px 10px;
+  padding-left: 1.0rem;
+  padding: 0px 10px 5px 1.0rem;
   position: relative;
 }
 
@@ -63,12 +63,12 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c15 {
-  font-size: 30px;
+  font-size: 3.0rem;
 }
 
 .c14 {
-  width: 52px;
-  height: 52px;
+  width: 5.2rem;
+  height: 5.2rem;
   position: absolute;
   left: -51px;
   background-color: #fff;
@@ -84,11 +84,11 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c13 {
-  font-size: 18px;
+  font-size: 1.8rem;
   color: #ffffff;
   -webkit-text-decoration: none solid rgb(255,255,255);
   text-decoration: none solid rgb(255,255,255);
-  line-height: 18px;
+  line-height: 1.8rem;
   font-weight: bold;
 }
 
@@ -103,19 +103,19 @@ exports[`MapProperties View renders correctly 1`] = `
   align-items: center;
   padding-left: 0px;
   border: none;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 }
 
 .c8 .form-group .form-check label {
   font-weight: bold;
   color: textColor;
-  font-size: 13px;
+  font-size: 1.3rem;
 }
 
 .c9 {
-  margin-right: 10px;
-  font-size: 15px;
+  margin-right: 1.0rem;
+  font-size: 1.5rem;
 }
 
 .c10 {
@@ -150,13 +150,13 @@ exports[`MapProperties View renders correctly 1`] = `
 
 .c4 {
   margin-right: -10px;
-  width: 341px;
-  min-height: 52px;
-  height: 500px;
-  max-height: 500px;
+  width: 34.1rem;
+  min-height: 5.2rem;
+  height: 50.0rem;
+  max-height: 50.0rem;
   background-color: #fff;
   position: relative;
-  border-radius: 4px;
+  border-radius: .4rem;
   box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
   z-index: 1000;
 }
@@ -169,7 +169,7 @@ exports[`MapProperties View renders correctly 1`] = `
 .c7 {
   width: 100%;
   height: calc(100% - 80px);
-  padding: 16px;
+  padding: 1.6rem;
 }
 
 .c7.open {
@@ -177,12 +177,12 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c6 {
-  font-size: 30px;
+  font-size: 3.0rem;
 }
 
 .c5 {
-  width: 52px;
-  height: 52px;
+  width: 5.2rem;
+  height: 5.2rem;
   position: absolute;
   top: 0;
   left: -51px;
@@ -195,15 +195,15 @@ exports[`MapProperties View renders correctly 1`] = `
 .c5.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  top: 26px;
+  top: 2.6rem;
 }
 
 .c2 {
   background-color: #ffffff !important;
   color: darkVariantColor !important;
-  width: 40px;
-  height: 40px;
-  font-size: 25px;
+  width: 4.0rem;
+  height: 4.0rem;
+  font-size: 2.5rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -227,8 +227,8 @@ exports[`MapProperties View renders correctly 1`] = `
 .c3 {
   background-color: #ffffff !important;
   color: darkVariantColor !important;
-  width: 40px;
-  height: 40px;
+  width: 4.0rem;
+  height: 4.0rem;
 }
 
 <div
@@ -283,7 +283,7 @@ exports[`MapProperties View renders correctly 1`] = `
                   class="leaflet-tile"
                   role="presentation"
                   src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23ff9800&width=256&height=256&srs=EPSG%3A3857&bbox=-13775786.985667607,5635549.221409476,-13149614.849955443,6261721.357121641"
-                  style="width: 256px; height: 256px; left: -34px; top: -63px;"
+                  style="width: 25.6rem height: 25.6rem left: -34px; top: -63px;"
                 />
               </div>
             </div>
@@ -300,7 +300,7 @@ exports[`MapProperties View renders correctly 1`] = `
                   class="leaflet-tile"
                   role="presentation"
                   src="https://c.tile.openstreetmap.org/6/10/22.png"
-                  style="width: 256px; height: 256px; left: -34px; top: -63px;"
+                  style="width: 25.6rem height: 25.6rem left: -34px; top: -63px;"
                 />
               </div>
             </div>
@@ -312,7 +312,7 @@ exports[`MapProperties View renders correctly 1`] = `
               alt=""
               class="leaflet-marker-shadow leaflet-zoom-hide"
               src="marker-shadow.png"
-              style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; left: 0px; top: 0px;"
+              style="margin-left: -12px; margin-top: -41px; width: 4.1rem height: 4.1rem left: 0px; top: 0px;"
             />
           </div>
           <div
@@ -325,12 +325,12 @@ exports[`MapProperties View renders correctly 1`] = `
               alt=""
               class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
               src="assets/images/pins/land-reg-highlight.png"
-              style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; left: 0px; top: 0px; z-index: 9;"
+              style="margin-left: -12px; margin-top: -41px; width: 2.5rem height: 4.1rem left: 0px; top: 0px; z-index: 9;"
               tabindex="0"
             />
             <div
               class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
-              style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 12px; top: -428px; z-index: -428;"
+              style="margin-left: -20px; margin-top: -20px; width: 4.0rem height: 4.0rem left: 1.2rem top: -428px; z-index: -428;"
               tabindex="0"
             >
               <div>

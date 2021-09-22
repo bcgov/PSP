@@ -67,7 +67,7 @@ interface ModalProps {
   setDisplay?: (display: boolean) => void;
   /** optional override to control the x button in the top right of the modal. Default is to show. */
   closeButton?: boolean;
-  /** provide the size of the modal, default width is 500px */
+  /** provide the size of the modal, default width is 50.0rem */
   size?: ModalSize;
 }
 
@@ -111,7 +111,7 @@ const GenericModal = (props: ModalProps) => {
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body style={{ maxHeight: '500px' }}>{props.message}</Modal.Body>
+        <Modal.Body style={{ maxHeight: '50.0rem' }}>{props.message}</Modal.Body>
 
         <Modal.Footer>
           <Button variant={props.okButtonVariant ?? 'primary'} onClick={ok}>

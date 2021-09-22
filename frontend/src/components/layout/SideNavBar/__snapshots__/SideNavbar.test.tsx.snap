@@ -57,7 +57,7 @@ exports[`SideNavbar display and logic renders 1`] = `
 }
 
 .c7 a {
-  font-size: 17px;
+  font-size: 1.7rem;
 }
 
 .c6#close-tray {
@@ -115,7 +115,7 @@ exports[`SideNavbar display and logic renders 1`] = `
 .c4 {
   margin-left: 0.25rem;
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: white;
   white-space: nowrap;
   -webkit-transition: width 0.25s;
