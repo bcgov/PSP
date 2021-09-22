@@ -184,9 +184,9 @@ The PIMS Project uses 5 sets of container images
 - Alpine for Logging
 - CentOS for Zap Runtime (Jenkins agent)
 - Base Images
--- [Dotnet 5.0](https://catalog.redhat.com/software/containers/ubi8/dotnet-50-runtime/5f6276d4b4f9bc9206b91c8a?tag=5.0-14.1621419100&container-tabs=overview) (SDK and Runtime)
--- [NodeJs-14](https://catalog.redhat.com/software/containers/ubi8/nodejs-14/5ed7887dd70cc50e69c2fabb?tag=1-46&push_date=1632226439000&container-tabs=gti)
--- [Nginx Runtime](https://github.com/nginxinc/docker-nginx/tree/master/mainline) (mainline)
+	* [Dotnet 5.0](https://catalog.redhat.com/software/containers/ubi8/dotnet-50-runtime/5f6276d4b4f9bc9206b91c8a?tag=5.0-14.1621419100&container-tabs=overview) (SDK and Runtime)
+	* [NodeJs-14](https://catalog.redhat.com/software/containers/ubi8/nodejs-14/5ed7887dd70cc50e69c2fabb?tag=1-46&push_date=1632226439000&container-tabs=gti)
+	* [Nginx Runtime](https://github.com/nginxinc/docker-nginx/tree/master/mainline) (mainline)
 
 The workflow or CI pipeline will fail on push or Pull_request when a high or critical vulnerabilities are detected in the container images before getting pushed into the openshift image stream for use.
 
