@@ -365,6 +365,17 @@ This Github Action run Full Scan of the Web app to perform Dynamic Application S
             -Dsonar.zaproxy.htmlReportPath=${{ env.HTML_ZAP_REPORT }}
 ```
 
+### DEPLOY
+
+Ensure that what we deployed is the code or software that was built, scan and tested. This can be accomplished by introducing Code/Image Signing Validation.
+Openshift Image Signing and Validation can be done using an OpenPGP encryption and signing tool [Gpg2](https://cloud.redhat.com/blog/signing-and-verifying-container-images)
+
+### OPERATE 
+
+This is where security can provide added value. Monitoring, Detecting, Respond and Recover. PIMS Project uses Kibana to visualize logs and a Dedicated Logging Framework that Downloads both the Frontend APP and Backend API Logs every 1 hour and exports these logs into our S3 Storage location outside of the container
+
+Go to [Logging](/openshift/4.0/templates/Logging) for more details.
+
 ### Workflow Overview
 
 ![](../Screenshots/workflow.png)
