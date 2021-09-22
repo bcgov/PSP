@@ -25,6 +25,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to the workflow model");
 
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this project workflow is disabled");
 
             builder.HasOne(m => m.Project).WithMany(m => m.WorkflowsManyToMany).HasForeignKey(m => m.ProjectId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_PROJCT_PIM_PRWKMD_FK");

@@ -27,6 +27,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to the role");
 
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this user organization relationship is disabled");
 
             builder.HasOne(m => m.User).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PIM_USER_PIM_USRORG_FK");
