@@ -215,13 +215,13 @@ GitHub Action for Credentials Scanner
 
 ### BUILD
 
-Once the software is built in the CI process, initiate a Vulnerability Scan to scan the build software artifacts. This can be performed in real-time as well. Open Source tools used to scan for Vulnerability in source or built image are
+Once the software is built in the CI process, initiate a Vulnerability Scan to scan the build software artifacts. This can be performed in real-time as well. Open Source tools used to scan for Vulnerability in source or container image are
 
 - [Aqua Trivy](https://github.com/marketplace/actions/aqua-security-trivy)
 - [Anchore](https://github.com/anchore/scan-action) 
 - [Clair](https://github.com/arminc/clair-scanner)
 
-Within this project, we use Aqua Trivy an open-source tool by AquaSec as a comprehensive scanner for vulnerabilities in container images, file systems, and Git repositories
+Within this project, we use Aqua Trivy an open-source tool by [AquaSec](https://www.aquasec.com/news/microscanner-new-free-image-vulnerability-scanner-for-developers/) as a comprehensive scanner for vulnerabilities in container images, file systems, and Git repositories
 Trivy detects vulnerabilities of OS packages (Alpine, RHEL, CentOS, etc.) and language-specific packages (Bundler, Composer, npm, yarn, etc.).
 
 
@@ -281,7 +281,7 @@ GitHub Action to Scan the docker image in **/openshift/4.0/templates/jenkins-sla
         path: pr_${{env.image-name}}/
 ```
 
-If any **CRITICAL** OR **HIGH** Vulnerability are found in the image, the workflow will fail with exit code 1. 
+If any **CRITICAL** OR **HIGH** Vulnerability are detected in the image, the workflow will fail with an exit code 1. 
 The Vulnerability report will be uploaded back to the PR for analysis by the Dev team
 
 
@@ -331,12 +331,12 @@ The Vulnerability report will be uploaded back to the PR for analysis by the Dev
 
 ### TEST
 
-PIMS Project uses [Katalon Studio](https://docs.katalon.com/katalon-studio/docs/katalon-studio-github-action.html#variables) as an Automated Testing tool. This tool has not yet be implemented in our CI/CD pipeline and it is currently done outside the pipeline using the free version. To Use Katalon Studio as an automated process, it requires Katalon Runtime Engine license that is require.
+PIMS Project uses free [Katalon Studio](https://docs.katalon.com/katalon-studio/docs/katalon-studio-github-action.html#variables) as an Automated Testing tool. This tool has not yet be implemented in our CI/CD pipeline and it is currently done outside the pipeline using the free version. To Use Katalon Studio as an automated process, it requires Katalon Runtime Engine license that is require.
 
 At this stage, traditional DevOps will test the Functionality and Performance of the system. Once the Functional and Performance test is on the way, we can introduce a Penetration Test in parallel. With that in place, we can be sure to identify any security problem early while the Dev teams are still working on that particular release. Open-source Penetration test tools that can be used in the CD process are:
 - [ZAP Scanner](https://github.com/marketplace/actions/owasp-zap-full-scan) OWASP ZAP Full Scan to perform Dynamic Application Security Testing (DAST).
 - [Nettacker](https://github.com/OWASP/Nettacker) OWASP Nettacker project is created to automate information gathering, vulnerability scanning and eventually generating a report for networks, including services, bugs, vulnerabilities, misconfigurations, and other information.
-- [Gauntlt](https://github.com/gauntlt/gauntlt)Gauntlt is a ruggedization framework that enables security testing that is usable by devs, ops and security. This has not been implemented but implementation details are found in the link
+- [Gauntlt](https://github.com/gauntlt/gauntlt) Gauntlt is a ruggedization framework that enables security testing that is usable by devs, ops and security. This framework has not been implementedin the PIMS Project but implementation details are found in the link and will be updated shortly
 
 ZAP Scan Github Action 
 
@@ -347,12 +347,11 @@ This Github Action run Full Scan of the Web app to perform Dynamic Application S
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.2.0
         with:
-          target: "https://dev-pims.th.gov.bc.ca/"
+          target: ${{env.appUrl}}
           cmd_options: "-r ${{ env.HTML_ZAP_REPORT }} -x ${{ env.ZAP_REPORT }}"
           fail_action: true
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
-        if: ${{ github.event_name == 'push' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
