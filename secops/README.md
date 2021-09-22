@@ -26,7 +26,7 @@ The Project uses Sonarque as a Static Code Analysis and Quality Assurance Tool t
 ```
   - name: SonarQube Scan
         id: scan
-        uses: philips-software/sonar-scanner-action@v1.2.0
+        uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
@@ -34,14 +34,11 @@ The Project uses Sonarque as a Static Code Analysis and Quality Assurance Tool t
           PROJECT_NAME: PIMS-APP
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          baseDir: ${{env.working-directory}}
-          token: ${{ env.SONAR_TOKEN }}
-          projectName: ${{env.PROJECT_NAME}}
-          url: ${{env.SONAR_HOST_URL}}
-          isCommunityEdition: true
-          projectKey: ${{env.PROJECT_KEY}}
-          enablePullRequestDecoration: true
-          runQualityGate: true
+          projectBaseDir: ${{env.working-directory}}
+          args: >
+            -Dsonar.projectKey=${{env.PROJECT_KEY}}
+            -Dsonar.projectName=${{env.PROJECT_NAME}}
+            -Dsonar.qualitygate.wait=true
        
       - name: Find Comment
         if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request'
@@ -332,11 +329,48 @@ The Vulnerability report will be uploaded back to the PR for analysis by the Dev
 
 ```
 
-### Workflow
+### TEST
+
+PIMS Project uses [Katalon Studio](https://docs.katalon.com/katalon-studio/docs/katalon-studio-github-action.html#variables) as an Automated Testing tool. This tool has not yet be implemented in our CI/CD pipeline and it is currently done outside the pipeline using the free version. To Use Katalon Studio as an automated process, it requires Katalon Runtime Engine license that is require.
+
+At this stage, traditional DevOps will test the Functionality and Performance of the system. Once the Functional and Performance test is on the way, we can introduce a Penetration Test in parallel. With that in place, we can be sure to identify any security problem early while the Dev teams are still working on that particular release. Open-source Penetration test tools that can be used in the CD process are:
+- [ZAP Scanner](https://github.com/marketplace/actions/owasp-zap-full-scan) OWASP ZAP Full Scan to perform Dynamic Application Security Testing (DAST).
+- [Nettacker](https://github.com/OWASP/Nettacker) OWASP Nettacker project is created to automate information gathering, vulnerability scanning and eventually generating a report for networks, including services, bugs, vulnerabilities, misconfigurations, and other information.
+- [Gauntlt](https://github.com/gauntlt/gauntlt)Gauntlt is a ruggedization framework that enables security testing that is usable by devs, ops and security. This has not been implemented but implementation details are found in the link
+
+ZAP Scan Github Action 
+
+This Github Action run Full Scan of the Web app to perform Dynamic Application Security test and publish the result to Github Issues and Sonaque for Visibility. If the Security Testing Failed, the Action and pipeline should fail
+
+```
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.2.0
+        with:
+          target: "https://dev-pims.th.gov.bc.ca/"
+          cmd_options: "-r ${{ env.HTML_ZAP_REPORT }} -x ${{ env.ZAP_REPORT }}"
+          fail_action: true
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        if: ${{ github.event_name == 'push' }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          PROJECT_KEY: PIMS-ZAP
+          PROJECT_NAME: PIMS-ZAP
+        with:
+          args: >
+            -Dsonar.projectKey=${{ env.PROJECT_KEY }}
+            -Dsonar.projectName=${{ env.PROJECT_NAME }}
+            -Dsonar.zaproxy.reportPath=${{ env.ZAP_REPORT }}
+            -Dsonar.zaproxy.htmlReportPath=${{ env.HTML_ZAP_REPORT }}
+```
+
+### Workflow Overview
 
 ![](../Screenshots/workflow.png)
 
-
+The goal is to embed security visibility and control in the development lifecycle. This can be implemented as Security as Code as demonstrated above using open-sourced tools. With this process in place
 
 > **Repeatable**, 
 >> **Consistent,**
