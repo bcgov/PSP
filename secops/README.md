@@ -2,7 +2,7 @@
 
 The purpose and intent of DevSecOps is to build on the mindset that “everyone is responsible for security” to safely distribute security decisions at speed and scale to those who hold the highest level of context without sacrificing the safety required. – Shannon Lietz
 
-![Design Pattern](../Screenshots/DevSecOps.PNG)
+![](../Screenshots/DevSecOps.PNG)
 
 The PIMS Project undertake vulnerability scan as part of our software release pipeline, and do not release if "HIGH RISK" vulnerabilities are identified (Automated, Continous process)
 
@@ -23,7 +23,7 @@ The Project uses Sonarque as a Static Code Analysis and Quality Assurance Tool t
 
 *GitHub Actions for PIMS Frontend Static Code Analysis*
 
-![Design Pattern](../Screenshots/sonareact.png)
+![](../Screenshots/sonareact.png)
 
 ***Set Quality Gate to TRUE to failed merge on PR***
 
@@ -34,14 +34,14 @@ If this is set, sonar scan quality gate must be passed before merge into the mas
 - Live update in any issue chanage
 - PR status update (merge block)
 
-![Design Pattern](../Screenshots/pr.PNG)
+![](../Screenshots/pr.PNG)
 
 Click on the link will redirect you the Sonarque Scanner Quality Gate reports as below
 
-![Design Pattern](../Screenshots/qgate.PNG)
+![](../Screenshots/qgate.PNG)
 
 
 
 ### Workflow
 
-![Design Pattern](../Screenshots/workflow.png)
+![](../Screenshots/workflow.png)
