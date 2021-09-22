@@ -371,6 +371,9 @@ This Github Action run Full Scan of the Web app to perform Dynamic Application S
 
 The goal is to embed security visibility and control in the development lifecycle. This can be implemented as Security as Code as demonstrated above using open-sourced tools. With this process in place
 
+- Code review becomes code preview using the static analysis tools
+- Patching becomes build a new environment and deploy using infrastructure-as-code like Ansible, Terraform, Pulumi or ArgoCD
+
 > **Repeatable**, 
 >> **Consistent,**
 >>> **Embedded Approach**
