@@ -6,7 +6,7 @@ The purpose and intent of DevSecOps is to build on the mindset that “everyone 
 
 The PIMS Project undertake vulnerability scan as part of our software release pipeline, and do not release if "HIGH RISK" vulnerabilities are identified (Automated, Continous process)
 
-**CODE:** 
+### CODE:
 Run Static Code Analysis in Real-time to address vulnerabilities in the code at real-time. We do not have to wait once per quarter or wait until the release to production before scanning. Open-source tools for Static Code Analysis can be used within the CI pipeline and Git Actions:
 
 - [Sonarque](https://docs.sonarqube.org/latest/analysis/github-integration/)
@@ -86,8 +86,6 @@ The Project uses Sonarque as a Static Code Analysis and Quality Assurance Tool t
           reactions: eyes
 ```
 
-![](../Screenshots/sonareact.png)
-
 ***Set Quality Gate to TRUE to failed merge on PR***
 
 If this is set, sonar scan quality gate must be passed before merge into the master branch
@@ -165,6 +163,110 @@ Click on the link will redirect you the Sonarque Scanner Quality Gate reports as
             [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
           edit-mode: replace
           reactions: eyes
+```
+
+### BUILD
+
+Once the software is built in the CI process, initiate a Vulnerability Scan to scan the build software artifacts. This can be performed in real-time as well. Open Source tools used to scan for Vulnerability in source or built image are
+
+- [Aqua Trivy](https://github.com/marketplace/actions/aqua-security-trivy)
+- [Anchore](https://github.com/anchore/scan-action) 
+- [Clair](https://github.com/arminc/clair-scanner)
+
+Within this project, we use Aqua Trivy an open-source tool by AquaSec as a comprehensive scanner for vulnerabilities in container images, file systems, and Git repositories
+Trivy detects vulnerabilities of OS packages (Alpine, RHEL, CentOS, etc.) and language-specific packages (Bundler, Composer, npm, yarn, etc.).
+
+The workflow or CI pipeline will fail on push or Pull_request when a high or critical vulnerabilities are detected in the container images before getting pushed into the openshift image stream for use.
+
+**Example**
+#### ZAP Jenkins Agent
+
+This Jenkins agent provide a docker image of the zap runtime for use. Because this image might have some vulnerabilities, this have to be scan for productuction ready deployment
+
+GitHub Action to Scan the docker image in **/openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap**
+
+```
+    env:
+      working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
+      image-name: owasp-zap
+      output-filename: owasp-zap.txt
+	  
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build PIMS OWASP ZAP Image
+      run: |  
+        docker build -t ${{env.image-name}} . 
+      working-directory: ${{env.working-directory}}
+    - name: Scan jenkins-agent-zap with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{env.image-name}}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: ${{env.output-filename}}
+    - name: Save PR number and scan results
+      if: always()
+      run: |
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
+    - if: always()
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
+```
+
+If any **CRITICAL** OR **HIGH** Vulnerability are found in the image, the workflow will fail with exit code 1. 
+The Vulnerability report will be uploaded back to the PR for analysis by the Dev team
+
+
+```
++----------------+------------------+----------+----------------------+-------------------------+---------------------------------------+
+|    LIBRARY     | VULNERABILITY ID | SEVERITY |  INSTALLED VERSION   |      FIXED VERSION      |                 TITLE                 |
++----------------+------------------+----------+----------------------+-------------------------+---------------------------------------+
+| bind-license   | CVE-2020-8625    | HIGH     | 32:9.11.4-26.P2.el7  | 32:9.11.4-26.P2.el7_9.4 | bind: Buffer overflow in the SPNEGO   |
+|                |                  |          |                      |                         | implementation affecting GSSAPI       |
+|                |                  |          |                      |                         | security policy negotiation...        |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2020-8625  |
++                +------------------+          +                      +-------------------------+---------------------------------------+
+|                | CVE-2021-25215   |          |                      | 32:9.11.4-26.P2.el7_9.5 | bind: An assertion check              |
+|                |                  |          |                      |                         | can fail while answering              |
+|                |                  |          |                      |                         | queries for DNAME records...          |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2021-25215 |
++----------------+------------------+          +----------------------+-------------------------+---------------------------------------+
+| firefox        | CVE-2021-38493   |          | 78.14.0-1.el7.centos | 78.14.0-1.el7_9         | Mozilla: Memory safety bugs fixed in  |
+|                |                  |          |                      |                         | Firefox 92, Firefox ESR 78.14 and...  |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2021-38493 |
++----------------+------------------+          +----------------------+-------------------------+---------------------------------------+
+| glib2          | CVE-2021-27219   |          | 2.56.1-7.el7         | 2.56.1-9.el7_9          | glib: integer overflow in             |
+|                |                  |          |                      |                         | g_bytes_new function on               |
+|                |                  |          |                      |                         | 64-bit platforms due to an...         |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2021-27219 |
++----------------+------------------+          +----------------------+-------------------------+---------------------------------------+
+| kernel-headers | CVE-2016-5195    |          | 3.10.0-1160.42.2.el7 | 4.5.0-15.2.1.el7        | kernel: mm: privilege escalation      |
+|                |                  |          |                      |                         | via MAP_PRIVATE COW breakage          |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2016-5195  |
++                +------------------+          +                      +                         +---------------------------------------+
+|                | CVE-2016-7039    |          |                      |                         | kernel: remotely triggerable          |
+|                |                  |          |                      |                         | unbounded recursion in the            |
+|                |                  |          |                      |                         | vlan gro code leading to...           |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2016-7039  |
++                +------------------+          +                      +                         +---------------------------------------+
+|                | CVE-2016-8666    |          |                      |                         | kernel: Remotely triggerable          |
+|                |                  |          |                      |                         | recursion in GRE code                 |
+|                |                  |          |                      |                         | leading to kernel crash               |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2016-8666  |
++----------------+------------------+          +----------------------+-------------------------+---------------------------------------+
+| openssl-libs   | CVE-2020-1971    |          | 1:1.0.2k-19.el7      | 1:1.0.2k-21.el7_9       | openssl: EDIPARTYNAME                 |
+|                |                  |          |                      |                         | NULL pointer de-reference             |
+|                |                  |          |                      |                         | -->avd.aquasec.com/nvd/cve-2020-1971  |
++----------------+------------------+----------+----------------------+-------------------------+---------------------------------------+
+
 ```
 
 ### Workflow
