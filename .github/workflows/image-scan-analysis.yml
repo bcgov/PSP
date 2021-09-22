@@ -2,18 +2,250 @@ name: Security CI
 
 on:
   push:
-    branches: [master, test, dev]
+    branches: [master, test, pims-sookeke, sookeke-patch-1]
   pull_request:
-    branches: [master, test, dev]
+    branches: [master, test, pims-sookeke, sookeke-patch-1]
   schedule:
     - cron: '42 15 * * 5'
 
 jobs:
 
+  nodejs-base-image:
+
+    name: nodejs-base-image
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./openshift/4.0/templates/base-images
+      image-name: nodejs-14
+      tag: 1-35
+      output-filename: nodejs14.txt
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build nodejs Base Image
+      run: |
+        docker pull ${{env.image-name}}:${{env.tag}}   
+      working-directory: ${{env.working-directory}}
+    - name: Scan nodejs Base Image with Aqua Trivy
+      id: scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{env.image-name}}:${{env.tag}}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: ${{env.output-filename}}
+    - name: Save PR number and scan results
+      if: failure() && steps.scan.output == 'failure'
+      run: |
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
+    - if: failure() && steps.scan.output == 'failure'
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
+        retention-days: 3
+  
+  comment_nodejs_pr:
+  # this action will leave a comment in response to vulnerability scans performed on cotnainer image
+    if: always() && needs.nodejs-base-image.result == 'failure' && github.event_name == 'pull_request'
+    needs: nodejs-base-image
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+      image-name: nodejs-14
+      tag: 1-35
+      output-filename: nodejs14.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: pr_${{env.image-name}}/
+      - name: Get comment body
+        id: get-comment-body
+        run: |
+          cd pr_${{env.image-name}}/
+          if [ -s PRBODY.txt ]; then
+          body=$(cat PRBODY.txt)
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo ::set-output name=body::$body 
+          fi          
+      - name: Find Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{env.image-name}}:${{env.tag}} vulnerability report
+          
+      - name: Comment on PR
+        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd pr_${{env.image-name}}/
+          ls
+          cat ./NR
+          if [ -s PRBODY.txt ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=$(cat ./NR)
+          PRBODY=$(cat ./PRBODY.txt)
+          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability detected in this image"
+          fi  
+          
+      - name: Update PR Comment
+        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+            
+            ```${{ steps.get-comment-body.outputs.body }}```
+          edit-mode: replace
+          reactions: confused
+  
+  nginx-base-image:
+
+    name: nginx-base-image
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./openshift/s2i/nginx-runtime
+      image-name: nginx
+      tag: mainline
+      output-filename: nginx.txt
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build nginx runtime Base Image
+      run: |
+        docker pull ${{env.image-name}}:${{env.tag}}   
+      working-directory: ${{env.working-directory}}
+    - name: Scan nginx runtime Base Image with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{env.image-name}}:${{env.tag}}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: ${{env.output-filename}}
+    - name: Save PR number and scan results
+      if: always()
+      run: |
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
+    - if: always()
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
+        retention-days: 3
+
+  comment_nginx_pr:
+  # this action will leave a comment in response to vulnerability scans performed on cotnainer image
+    if: always() && needs.nginx-base-image.result == 'failure' && github.event_name == 'pull_request'
+    needs: nodejs-base-image
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+      image-name: nginx
+      tag: mainline
+      output-filename: nodejs14.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: pr_${{env.image-name}}/
+
+      - name: Get comment body
+        id: get-comment-body
+        run: |
+          cd pr_${{env.image-name}}/
+          if [ -s PRBODY.txt ]; then
+          body=$(cat PRBODY.txt)
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo ::set-output name=body::$body 
+          fi          
+      - name: Find Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{env.image-name}}:${{env.tag}} vulnerability report
+          
+      - name: Comment on PR
+        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd pr_${{env.image-name}}/
+          ls
+          cat ./NR
+          if [ -s PRBODY.txt ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=$(cat ./NR)
+          PRBODY=$(cat ./PRBODY.txt)
+          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability detected in this image"
+          fi  
+          
+      - name: Update PR Comment
+        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+            
+            ```${{ steps.get-comment-body.outputs.body }}```
+          edit-mode: replace
+          reactions: confused 
+
   build_frontend:
 
+    needs: [nodejs-base-image,nginx-base-image]
     name: pims-frontend
-    if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -26,11 +258,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build PIMS Frontend
+    - name: Build PIMS React Frontend
       run: |
         docker build -t ${{env.image-name}} .   
       working-directory: ${{env.working-directory}}
-    - name: Scan PIMS Frontend Image with Aqua Trivy
+    - name: Scan PIMS React Frontend Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: ${{env.image-name}}
@@ -52,13 +284,166 @@ jobs:
       with:
         name: ${{env.image-name}}_Scan_Report
         path: pr_${{env.image-name}}/
-        retention-days: 5
-        
-    
+        retention-days: 3
+  
+  comment_app_pr:
+  # this action will leave a comment in response to credential scans performed on pull requests
+    if: always() && needs.build_frontend.result == 'failure' && github.event_name == 'pull_request'
+    needs: build_frontend 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
+      image-name: pims-frontend
+      output-filename: pims-frontend.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: pr_${{env.image-name}}/
+
+      - name: Get comment body
+        id: get-comment-body
+        run: |
+          cd pr_${{env.image-name}}/
+          if [ -s PRBODY.txt ]; then
+          body=$(cat PRBODY.txt)
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo ::set-output name=body::$body 
+          fi          
+      - name: Find Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{env.image-name}}:${{env.tag}} vulnerability report
+          
+      - name: Comment on PR
+        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd pr_${{env.image-name}}/
+          ls
+          cat ./NR
+          if [ -s PRBODY.txt ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=$(cat ./NR)
+          PRBODY=$(cat ./PRBODY.txt)
+          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability detected in this image"
+          fi  
+          
+      - name: Update PR Comment
+        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+            
+            ```${{ steps.get-comment-body.outputs.body }}```
+          edit-mode: replace
+          reactions: confused 
+   
+  dotnet5-runtime:
+
+    name: dotnet5-runtime
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      image-name: dotnet-50
+      tag: 5.0-23
+      output-filename: dotnet50.txt
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build dotnet5 sdk and runtime Base Image
+      run: |
+        docker build -t ${{env.image-name}}:${{env.tag}} .   
+      working-directory: ${{env.working-directory}}
+    - name: Scan dotnet5 SDK and runtime Image with Aqua Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{env.image-name}}:${{env.tag}}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: ${{env.output-filename}}
+    - name: Save PR number and scan results
+      if: always()
+      run: |
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
+    - if: always()
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
+        retention-days: 3
+  
+  comment_sdk_pr:
+  # this action will leave a comment in response to credential scans performed on pull requests
+    if: always() && needs.dotnet5-runtime.result == 'failure' && github.event_name == 'pull_request'
+    needs: dotnet5-runtime 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      image-name: dotnet-50
+      tag: 5.0-23
+      output-filename: dotnet50.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: pr_${{env.image-name}}/
+
+      - name: Comment on PR
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd pr_${{env.image-name}}/
+          ls
+          cat ./NR
+          if [ -s PRBODY.txt ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=$(cat ./NR)
+          PRBODY=$(cat ./PRBODY.txt)
+          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Dockerfile)
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability"
+          fi 
+
+  
   build_backend:
     
-    if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
-    needs: build_frontend 
+    if: always() 
+    needs: dotnet5-runtime 
     name: pims-backend
     runs-on: ubuntu-latest
     permissions:
@@ -67,37 +452,80 @@ jobs:
       security-events: write
     env:
       working-directory: ./backend
+      image-name: pims-backend
+      tag: latest
+      output-filename: pims-backend.txt
       
       
     steps:
     - uses: actions/checkout@v1
-    - name: Build PIMS Backend
+    - name: Build PIMS Backend API .Net 5 Image
       run: |
-        docker build -t docker.io/pims-backend:${{ github.sha }} .   
+        docker build -t ${{env.image-name}}:${{env.tag}} .  
       working-directory: ${{env.working-directory}}
-    - name: Scan PIMS Backend Image with Aqua Trivy
+    - name: Scan PIMS Backend API Image with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'docker.io/pims-backend:${{ github.sha }}'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
+        image-ref: ${{env.image-name}}
+        format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: 'pims-backend.sarif'
-    - name: Upload Trivy scan results to GitHub Security tab
+        output: ${{env.output-filename}}
+    - name: Save PR number and scan results
       if: always()
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: 'pims-backend.sarif'
+      run: |
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
     - if: always()
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: backend image scan report
-        path: 'pims-backend.sarif'    
-        
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
+        retention-days: 3
+   
+  comment_api_pr:
+  # this action will leave a comment in response to credential scans performed on pull requests
+    if: always() && needs.build_backend.result == 'failure' && github.event_name == 'pull_request'
+    needs: build_backend 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./backend
+      image-name: pims-backend
+      tag: latest
+      output-filename: pims-backend.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: pr_${{env.image-name}}/
+
+      - name: Comment on PR
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd pr_${{env.image-name}}/
+          ls
+          cat ./NR
+          if [ -s PRBODY.txt ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=$(cat ./NR)
+          PRBODY=$(cat ./PRBODY.txt)
+          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Dockerfile)
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability detected"
+          fi 
+
+   
   build_logging:
   
     if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
@@ -153,31 +581,65 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build PIMS OWASP ZAP Image
       run: |
-        docker build -t {{env.image-name}} .   
-        #docker pull registry.access.redhat.com/ubi8/nodejs-14:1-35
-        #docker tag registry.access.redhat.com/ubi8/nodejs-14:1-35 noejs-14:latest
-        docker image ls
+        docker build -t ${{env.image-name}} .   
       working-directory: ${{env.working-directory}}
     - name: Scan jenkins-agent-zap with Aqua Trivy
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: {{env.image-name}}
+        image-ref: ${{env.image-name}}
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: {{env.output-filename}}
+        output: ${{env.output-filename}}
     - name: Save PR number and scan results
       if: always()
       run: |
-          mkdir -p ./pr_{{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_{{env.image-name}}/NR
-          cp {{env.output-filename}} ./pr_{{env.image-name}}/PRBODY.txt
+          mkdir -p ./pr_${{env.image-name}}
+          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
+          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
     - if: always()
       name: Upload OWASP ZAP scan artifact
       uses: actions/upload-artifact@v2
       with:
-        name: {{env.image-name}}_Scan_Report
-        path: pr_{{env.image-name}}/
+        name: ${{env.image-name}}_Scan_Report
+        path: pr_${{env.image-name}}/
         retention-days: 3
+        
+   
+  comment_zap_pr:
+  # this action will leave a comment in response to credential scans performed on pull requests
+    if: always() && needs.build_zap.result == 'failure' && github.event_name == 'pull_request'
+    needs: build_zap 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
+      image-name: owasp-zap
+      output-filename: owasp-zap.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: pr_${{env.image-name}}/
+      - name: Comment on PR
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd pr_${{env.image-name}}/
+          ls
+          cat ./NR
+          if [ -s PRBODY.txt ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=$(cat ./NR)
+          PRBODY=$(cat ./PRBODY.txt)
+          INDENTED='## ${{env.image-name}} vulnerability report (built from Dockerfile)
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability"
+          fi
