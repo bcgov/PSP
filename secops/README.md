@@ -276,7 +276,7 @@ The Vulnerability report will be uploaded back to the PR for analysis by the Dev
 
 
 > **Repeatable**, 
->> **consistent,**
+>> **Consistent,**
 >>> **Embedded Approach**
->>>>       ***=***
+>>>>       ==
 >>>>> ****SUSTAINABILITY****
