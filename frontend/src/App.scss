@@ -37,12 +37,21 @@
 
 .tooltip {
   pointer-events: none;
+  font-size: 1.4rem;
 }
 
 #root {
   .spinner-border {
     width: 3.2rem;
     height: 3.2rem;
+  }
+
+  .page-link {
+    padding: 0.8rem 1.2rem;
+  }
+
+  .nav-link {
+    padding: 0.8rem 1.6rem;
   }
 
   .error {

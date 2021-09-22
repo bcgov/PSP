@@ -19,7 +19,7 @@ export const HeaderStyled = styled(Navbar)`
   }
 
   .brand-box {
-    padding: 10px 0;
+    padding: 1rem 0;
     flex-grow: 1;
     .pims-logo {
       margin: 0 1rem;
@@ -57,7 +57,7 @@ export const HeaderStyled = styled(Navbar)`
   }
 
   // show long App Name when space allows
-  @media (min-width: 992px) {
+  @media (min-width: 99.2rem) {
     .longAppName {
       display: block;
       text-align: left;

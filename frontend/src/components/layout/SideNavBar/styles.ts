@@ -48,7 +48,7 @@ export const SideTrayPage = styled.div`
   display: flex;
   flex-direction: column;
   a {
-    font-size: 2.7rem;
+    font-size: 1.7rem;
   }
 `;
 

@@ -4,7 +4,7 @@ exports[`React Leaflet Control renders correctly 1`] = `
 <DocumentFragment>
   <div
     id="mapid"
-    style="width: 50.0rem height: 50.0rem"
+    style="width: 500px; height: 500px;"
   >
     <div
       class="leaflet-container leaflet-grab leaflet-touch-drag"

@@ -1,4 +1,7 @@
 @import './colors.scss';
+#root .btn {
+  padding: 0.6rem 1.2rem;
+}
 
 .svg {
   fill: none;
@@ -34,7 +37,7 @@
 }
 
 .btn {
-  min-height: 44px;
+  min-height: 4.4rem;
   display: flex;
   align-items: center;
 }

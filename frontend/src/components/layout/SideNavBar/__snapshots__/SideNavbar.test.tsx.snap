@@ -19,11 +19,15 @@ exports[`SideNavbar display and logic renders 1`] = `
   grid-area: iconbar;
   -webkit-transition: 0.5s width;
   transition: 0.5s width;
-  width: 3.8rem;
+  width: 6rem;
+}
+
+.c1 label {
+  color: white;
 }
 
 .c1.expanded {
-  width: 10rem;
+  width: 16rem;
 }
 
 .c1 svg {
@@ -73,19 +77,19 @@ exports[`SideNavbar display and logic renders 1`] = `
   right: 0;
   background-color: white;
   z-index: -1;
-  width: 40rem;
-  padding: 0.5rem 1rem;
+  width: 64rem;
+  padding: 0.8rem 1.6rem;
   text-align: left;
   -webkit-transition: -webkit-transform 0.5s ease-in-out;
   -webkit-transition: transform 0.5s ease-in-out;
   transition: transform 0.5s ease-in-out;
-  box-shadow: 3px 0 4px rgba(0,0,0,0.2);
+  box-shadow: 0.3rem 0 0.4rem rgba(0,0,0,0.2);
 }
 
 .c5.show {
-  -webkit-transform: translateX(40rem);
-  -ms-transform: translateX(40rem);
-  transform: translateX(40rem);
+  -webkit-transform: translateX(64rem);
+  -ms-transform: translateX(64rem);
+  transform: translateX(64rem);
 }
 
 .c2 {
@@ -113,7 +117,7 @@ exports[`SideNavbar display and logic renders 1`] = `
 }
 
 .c4 {
-  margin-left: 0.25rem;
+  margin-left: 0.4rem;
   margin-bottom: 0;
   font-size: 1.2rem;
   color: white;
@@ -130,15 +134,15 @@ exports[`SideNavbar display and logic renders 1`] = `
   width: 100%;
 }
 
-@media (max-width:765px) {
+@media (max-width:76.5rem) {
   .c5 {
-    width: 20rem;
+    width: 32rem;
   }
 
   .c5.show {
-    -webkit-transform: translateX(20rem);
-    -ms-transform: translateX(20rem);
-    transform: translateX(20rem);
+    -webkit-transform: translateX(32rem);
+    -ms-transform: translateX(32rem);
+    transform: translateX(32rem);
   }
 }
 

@@ -9,20 +9,20 @@ exports[`MapProperties View renders correctly 1`] = `
     class="Toastify"
   />
   .c11 {
-  margin-right: -10px;
+  margin-right: -1rem;
   width: 34.1rem;
   min-height: 5.2rem;
   height: auto;
   background-color: #fff;
   position: relative;
-  border-radius: .4rem;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
   z-index: 1000;
 }
 
 .c11.closed {
-  width: 0px;
-  height: 0px;
+  width: 0rem;
+  height: 0rem;
 }
 
 .c12 {
@@ -46,41 +46,41 @@ exports[`MapProperties View renders correctly 1`] = `
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
   padding-top: 1.6rem;
-  border-top-right-radius: .4rem;
-  border-top-left-radius: .4rem;
+  border-top-right-radius: 0.4rem;
+  border-top-left-radius: 0.4rem;
 }
 
 .c16 {
   width: 100%;
-  padding-left: 1.0rem;
-  padding: 0px 10px 5px 1.0rem;
+  padding-left: 1rem;
+  padding: 0rem 1rem 0.5rem 1rem;
   position: relative;
 }
 
 .c16.open {
   overflow-y: scroll;
-  max-height: calc(100vh - 380px);
+  max-height: calc(100vh - 38rem);
 }
 
 .c15 {
-  font-size: 3.0rem;
+  font-size: 3rem;
 }
 
 .c14 {
   width: 5.2rem;
   height: 5.2rem;
   position: absolute;
-  left: -51px;
+  left: -5.1rem;
   background-color: #fff;
   color: slideOutBlue;
   border-color: slideOutBlue;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
 .c14.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  top: 0px;
+  top: 0rem;
 }
 
 .c13 {
@@ -101,10 +101,10 @@ exports[`MapProperties View renders correctly 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding-left: 0px;
+  padding-left: 0rem;
   border: none;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .c8 .form-group .form-check label {
@@ -114,12 +114,12 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c9 {
-  margin-right: 1.0rem;
+  margin-right: 1rem;
   font-size: 1.5rem;
 }
 
 .c10 {
-  margin-bottom: 0px;
+  margin-bottom: 0rem;
 }
 
 .c10 .form-check {
@@ -134,7 +134,7 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c10 .form-check input {
-  margin-top: 0px;
+  margin-top: 0rem;
 }
 
 .c10 .form-check label {
@@ -149,26 +149,26 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c4 {
-  margin-right: -10px;
+  margin-right: -1rem;
   width: 34.1rem;
   min-height: 5.2rem;
-  height: 50.0rem;
-  max-height: 50.0rem;
+  height: 50rem;
+  max-height: 50rem;
   background-color: #fff;
   position: relative;
-  border-radius: .4rem;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
   z-index: 1000;
 }
 
 .c4.closed {
-  width: 0px;
-  height: 0px;
+  width: 0rem;
+  height: 0rem;
 }
 
 .c7 {
   width: 100%;
-  height: calc(100% - 80px);
+  height: calc(100% - 8rem);
   padding: 1.6rem;
 }
 
@@ -177,7 +177,7 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c6 {
-  font-size: 3.0rem;
+  font-size: 3rem;
 }
 
 .c5 {
@@ -185,11 +185,11 @@ exports[`MapProperties View renders correctly 1`] = `
   height: 5.2rem;
   position: absolute;
   top: 0;
-  left: -51px;
+  left: -5.1rem;
   background-color: #fff;
   color: slideOutBlue;
   border-color: slideOutBlue;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
 .c5.open {
@@ -201,8 +201,8 @@ exports[`MapProperties View renders correctly 1`] = `
 .c2 {
   background-color: #ffffff !important;
   color: darkVariantColor !important;
-  width: 4.0rem;
-  height: 4.0rem;
+  width: 4rem;
+  height: 4rem;
   font-size: 2.5rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -227,8 +227,8 @@ exports[`MapProperties View renders correctly 1`] = `
 .c3 {
   background-color: #ffffff !important;
   color: darkVariantColor !important;
-  width: 4.0rem;
-  height: 4.0rem;
+  width: 4rem;
+  height: 4rem;
 }
 
 <div
@@ -283,7 +283,7 @@ exports[`MapProperties View renders correctly 1`] = `
                   class="leaflet-tile"
                   role="presentation"
                   src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23ff9800&width=256&height=256&srs=EPSG%3A3857&bbox=-13775786.985667607,5635549.221409476,-13149614.849955443,6261721.357121641"
-                  style="width: 25.6rem height: 25.6rem left: -34px; top: -63px;"
+                  style="width: 256px; height: 256px; left: -34px; top: -63px;"
                 />
               </div>
             </div>
@@ -300,7 +300,7 @@ exports[`MapProperties View renders correctly 1`] = `
                   class="leaflet-tile"
                   role="presentation"
                   src="https://c.tile.openstreetmap.org/6/10/22.png"
-                  style="width: 25.6rem height: 25.6rem left: -34px; top: -63px;"
+                  style="width: 256px; height: 256px; left: -34px; top: -63px;"
                 />
               </div>
             </div>
@@ -312,7 +312,7 @@ exports[`MapProperties View renders correctly 1`] = `
               alt=""
               class="leaflet-marker-shadow leaflet-zoom-hide"
               src="marker-shadow.png"
-              style="margin-left: -12px; margin-top: -41px; width: 4.1rem height: 4.1rem left: 0px; top: 0px;"
+              style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; left: 0px; top: 0px;"
             />
           </div>
           <div
@@ -325,12 +325,12 @@ exports[`MapProperties View renders correctly 1`] = `
               alt=""
               class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
               src="assets/images/pins/land-reg-highlight.png"
-              style="margin-left: -12px; margin-top: -41px; width: 2.5rem height: 4.1rem left: 0px; top: 0px; z-index: 9;"
+              style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; left: 0px; top: 0px; z-index: 9;"
               tabindex="0"
             />
             <div
               class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
-              style="margin-left: -20px; margin-top: -20px; width: 4.0rem height: 4.0rem left: 1.2rem top: -428px; z-index: -428;"
+              style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 12px; top: -428px; z-index: -428;"
               tabindex="0"
             >
               <div>

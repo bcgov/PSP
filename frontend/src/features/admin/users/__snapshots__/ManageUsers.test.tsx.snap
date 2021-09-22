@@ -282,13 +282,13 @@ exports[`Manage Users Component Snapshot matches 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 98.0rem"
+          style="display: flex; flex: 1 0 auto; min-width: 980px;"
         >
           <div
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -334,7 +334,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -380,7 +380,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -426,7 +426,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -472,7 +472,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -518,7 +518,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -564,7 +564,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -610,7 +610,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -625,7 +625,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -640,7 +640,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -686,7 +686,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 75 0 auto; min-width: 3.0rem width: 7.5rem justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 75 0 auto; min-width: 30px; width: 75px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -709,12 +709,12 @@ exports[`Manage Users Component Snapshot matches 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 98.0rem"
+            style="display: flex; flex: 1 0 auto; min-width: 980px;"
           >
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title=""
             >
               <a
@@ -726,7 +726,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               testUserFirst1
@@ -734,7 +734,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               testUserLast1
@@ -742,7 +742,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               
@@ -750,7 +750,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               tester position
@@ -758,7 +758,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               <svg
@@ -778,7 +778,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               HLTH
@@ -786,7 +786,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               admin
@@ -794,7 +794,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               
@@ -802,7 +802,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               
@@ -810,7 +810,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 75 0 auto; min-width: 3.0rem width: 7.5rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 75 0 auto; min-width: 30px; width: 75px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title=""
             >
               <div>
@@ -885,12 +885,12 @@ exports[`Manage Users Component Snapshot matches 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 98.0rem"
+            style="display: flex; flex: 1 0 auto; min-width: 980px;"
           >
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title=""
             >
               <a
@@ -902,7 +902,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               testUser
@@ -910,7 +910,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               testUser
@@ -918,7 +918,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               
@@ -926,7 +926,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               tester
@@ -934,7 +934,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 3.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               <svg
@@ -954,7 +954,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               HLTH
@@ -962,7 +962,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 20.0rem width: 20.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               admin
@@ -970,7 +970,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               
@@ -978,7 +978,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td clickable"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 10.0rem width: 10.0rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title="Click IDIR/BCeID link to view User Information page"
             >
               
@@ -986,7 +986,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 75 0 auto; min-width: 3.0rem width: 7.5rem justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+              style="box-sizing: border-box; flex: 75 0 auto; min-width: 30px; width: 75px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
               title=""
             >
               <div>
@@ -1122,7 +1122,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               </span>
               <input
                 class="form-control form-control-sm"
-                style="width: 5.0rem margin-left: 1.0rem margin-right: 1.0rem"
+                style="width: 50px; margin-left: 10px; margin-right: 10px;"
                 type="number"
                 value="10"
               />
