@@ -4,7 +4,6 @@ import { Table } from 'components/Table';
 import { AccessRequestStatus } from 'constants/accessStatus';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
-import { IAccessRequest } from 'interfaces';
 import * as React from 'react';
 import Container from 'react-bootstrap/Container';
 import { useDispatch } from 'react-redux';
@@ -15,7 +14,6 @@ import {
   updateAccessRequestPageIndex,
   useAccessRequests,
 } from 'store/slices/accessRequests';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { useTenant } from 'tenants';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 
@@ -32,7 +30,7 @@ const ManageAccessRequests = () => {
   );
   const columns = React.useMemo(() => columnDefinitions, []);
   const updateRequestAccessAdmin = useAppSelector(
-    state => state.network[actionTypes.UPDATE_REQUEST_ACCESS_ADMIN] as IGenericNetworkAction,
+    state => state.network[actionTypes.UPDATE_REQUEST_ACCESS_ADMIN],
   );
 
   const pagedAccessRequests = useAppSelector(state => state.accessRequests.pagedAccessRequests);
@@ -52,7 +50,7 @@ const ManageAccessRequests = () => {
     }
   }, [updateRequestAccessAdmin, pageSize, filter, pageIndex, fetchAccessRequests]);
 
-  const requests = (pagedAccessRequests.items as IAccessRequest[]).map(
+  const requests = pagedAccessRequests.items.map(
     ar =>
       ({
         id: ar.id as number,
@@ -82,7 +80,9 @@ const ManageAccessRequests = () => {
         <div className="search-bar">
           <AccessRequestFilter
             initialValues={filter}
-            applyFilter={filter => dispatch(filterAccessRequestsAdmin(filter))}
+            applyFilter={accessRequestfilter =>
+              dispatch(filterAccessRequestsAdmin(accessRequestfilter))
+            }
           />
         </div>
         {!!selectedRequest && (

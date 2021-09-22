@@ -28,10 +28,10 @@ const getNoResultErrorMessage = (filter: ILeaseAndLicenseFilter) => {
 export const LeaseAndLicenseListView = () => {
   const [filter, setFilter] = useState<ILeaseAndLicenseFilter | undefined>(undefined);
   const { getLeases } = useApiLeases();
-  const search = async (filter: ILeaseAndLicenseFilter) => {
-    const { data } = await getLeases(filter);
+  const search = async (searchFilter: ILeaseAndLicenseFilter) => {
+    const { data } = await getLeases(searchFilter);
     if (!data.items?.length) {
-      toast.warn(getNoResultErrorMessage(filter));
+      toast.warn(getNoResultErrorMessage(searchFilter));
     }
   };
   return (

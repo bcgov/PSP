@@ -35,7 +35,7 @@ export const LegendControl: React.FC = () => {
             <FiMapPin />
           </LegendButton>
         </TooltipWrapper>
-        <Overlay target={target.current!} show={visible} placement="right">
+        <Overlay target={target.current} show={visible} placement="right">
           {(props: any) => {
             return (
               <Tooltip id="overlay-legend" {...props} show={`${visible}`} className="legendTooltip">

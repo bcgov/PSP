@@ -425,7 +425,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     }
                   }
 
-                  actions!.resetForm(nextState);
+                  actions.resetForm(nextState);
                   if (!!props.onFilterChange) {
                     props.onFilterChange(nextState);
                   }
@@ -533,18 +533,18 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       return <div className="no-rows-message">{props.noRowsMessage || 'No rows to display'}</div>;
     }
 
-    const handleExpandClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data: T) => {
+    const handleExpandClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, rowData: T) => {
       e.preventDefault();
-      let expanded = expandedRows;
+      let expanded;
       if (
         props.detailsPanel !== undefined &&
-        props.detailsPanel.checkExpanded(data, expandedRows)
+        props.detailsPanel.checkExpanded(rowData, expandedRows)
       ) {
         expanded = expandedRows.filter(
-          x => props.detailsPanel?.getRowId(x) !== props.detailsPanel?.getRowId(data),
+          x => props.detailsPanel?.getRowId(x) !== props.detailsPanel?.getRowId(rowData),
         );
       } else {
-        expanded = [...expandedRows, data];
+        expanded = [...expandedRows, rowData];
       }
       setExpandedRows(expanded);
       if (props.detailsPanel && props.detailsPanel.onExpand && expanded.length > 0) {

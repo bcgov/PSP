@@ -157,12 +157,12 @@ const LeafletListenerComp = () => {
         .map(k => (featureGroup as any)._layers[k])
         .map(l => l.options)
         .filter(x => !!x);
-      const layers = flatten(values.layers.map(l => l.nodes)).filter((x: any) => x.on);
-      const layersToAdd = layers.filter(
+      const mapLayers = flatten(values.layers.map(l => l.nodes)).filter((x: any) => x.on);
+      const layersToAdd = mapLayers.filter(
         (layer: any) => !currentLayers.find(x => x.key === layer.key),
       );
       const layersToRemove = currentLayers.filter(
-        (layer: any) => !layers.find((x: any) => x.key === layer.key),
+        (layer: any) => !mapLayers.find((x: any) => x.key === layer.key),
       );
 
       layersToAdd.forEach((node: any) => {
@@ -187,12 +187,12 @@ const LeafletListenerComp = () => {
 const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
   const { values } = useFormikContext<any>();
 
-  const getParentIndex = (key: string, layers: TreeNode[]) => {
-    return layers.findIndex(node => node.key === key);
+  const getParentIndex = (key: string, mapLayers: TreeNode[]) => {
+    return mapLayers.findIndex(node => node.key === key);
   };
 
-  const getLayerNodeIndex = (nodeKey: string, parentKey: string, layers: TreeNode[]) => {
-    const parent = layers.find(node => node.key === parentKey);
+  const getLayerNodeIndex = (nodeKey: string, parentKey: string, mapLayers: TreeNode[]) => {
+    const parent = mapLayers.find(node => node.key === parentKey);
 
     return (parent!.nodes as any).findIndex((node: TreeNode) => node.key === nodeKey);
   };
@@ -225,11 +225,11 @@ const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
                 label={node.label}
                 name={`layers[${getParentIndex(
                   node.parent,
-                  values.layers as any,
+                  values.layers,
                 )}].nodes[${getLayerNodeIndex(
                   node.key.split('/')[1],
                   node.parent,
-                  values.layers as any,
+                  values.layers,
                 )}].on`}
                 color={node.color}
               />
