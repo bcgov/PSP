@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -39,6 +40,11 @@ describe('users action creator', () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
+
+  const setup = () => {
+    const { result } = renderHook(useUsers, { wrapper: getWrapper(getStore()) });
+    return result.current;
+  };
   describe('fetchUsers action creator', () => {
     const url = '/admin/users/my/organization';
     const mockResponse = {
@@ -51,65 +57,43 @@ describe('users action creator', () => {
       },
       pageIndex: null,
     };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .fetchUsers({} as any)
-            .then(() => {
-              expect(mockAxios.history.post[0]).toMatchObject({
-                url: '/admin/users/my/organization',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchUsers } = setup();
+      fetchUsers({} as any);
+      await waitFor(async () => {
+        expect(mockAxios.history.post[0]).toMatchObject({
+          url: '/admin/users/my/organization',
+        });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .fetchUsers({} as any)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: mockResponse,
-                type: 'users/storeUsers',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchUsers } = setup();
+      fetchUsers({} as any);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: mockResponse,
+          type: 'users/storeUsers',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       const mockResponse = { data: [mockUser] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useUsers()
-            .fetchUsers({} as any)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: mockResponse,
-                type: 'users/storeUsers',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchUsers } = setup();
+      fetchUsers({} as any);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(currentStore.getActions()).not.toContainEqual({
+          payload: mockResponse,
+          type: 'users/storeUsers',
+        });
+      });
     });
   });
 
@@ -118,65 +102,43 @@ describe('users action creator', () => {
     const mockResponse = {
       data: [mockUser],
     };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f')
-            .then(() => {
-              expect(mockAxios.history.get[0]).toMatchObject({
-                url: '/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchUserDetail } = setup();
+      fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f');
+      await waitFor(async () => {
+        expect(mockAxios.history.get[0]).toMatchObject({
+          url: '/admin/users/14c9a273-6f4a-4859-8d59-9264d3cee53f',
+        });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f')
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: mockResponse,
-                type: 'users/storeUserDetails',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchUserDetail } = setup();
+      fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f');
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: mockResponse,
+          type: 'users/storeUserDetails',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       const mockResponse = { data: [mockUser] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useUsers()
-            .fetchUserDetail({ id: mockUser.id } as any)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: mockResponse,
-                type: 'users/storeUserDetails',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchUserDetail } = setup();
+      fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f');
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(currentStore.getActions()).not.toContainEqual({
+          payload: mockResponse,
+          type: 'users/storeUserDetails',
+        });
+      });
     });
   });
 
@@ -185,65 +147,43 @@ describe('users action creator', () => {
     const mockResponse = {
       data: [mockUser],
     };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .updateUser(mockUser)
-            .then(() => {
-              expect(mockAxios.history.put[0]).toMatchObject({
-                url: '/keycloak/users/14c9a273-6f4a-4859-8d59-9264d3cee53f',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { updateUser } = setup();
+      updateUser(mockUser);
+      await waitFor(async () => {
+        expect(mockAxios.history.put[0]).toMatchObject({
+          url: '/keycloak/users/14c9a273-6f4a-4859-8d59-9264d3cee53f',
+        });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPut(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .updateUser(mockUser)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: mockResponse,
-                type: 'users/updateUser',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { updateUser } = setup();
+      updateUser(mockUser);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: mockResponse,
+          type: 'users/updateUser',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       const mockResponse = { data: [mockUser] };
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useUsers()
-            .updateUser(mockUser)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: mockResponse,
-                type: 'users/updateUser',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { updateUser } = setup();
+      updateUser(mockUser);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(currentStore.getActions()).not.toContainEqual({
+          payload: mockResponse,
+          type: 'users/updateUser',
+        });
+      });
     });
   });
 
@@ -252,56 +192,34 @@ describe('users action creator', () => {
     const mockResponse = {
       data: mockUser,
     };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .activateUser()
-            .then(() => {
-              expect(mockAxios.history.post[0]).toMatchObject({
-                url: '/auth/activate',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { activateUser } = setup();
+      activateUser();
+      await waitFor(async () => {
+        expect(mockAxios.history.post[0]).toMatchObject({
+          url: '/auth/activate',
+        });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useUsers()
-            .activateUser()
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { activateUser } = setup();
+      activateUser();
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useUsers()
-            .activateUser()
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { activateUser } = setup();
+      activateUser();
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+      });
     });
   });
 });
