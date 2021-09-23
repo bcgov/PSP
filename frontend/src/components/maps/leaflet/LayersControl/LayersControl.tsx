@@ -8,7 +8,7 @@ import { FaLayerGroup } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import Control from '../Control/Control';
-import LayersTree from './LayersTree';
+import LayersTree from './LayersMenu';
 
 const LayersContainer = styled.div`
   margin-right: -10px;
@@ -96,7 +96,7 @@ const LayersControl: React.FC<ILayersControl> = ({ open, setOpen }) => {
   useEffect(() => {
     const elem = L.DomUtil.get('layersContainer');
     if (elem) {
-      L.DomEvent.on(elem!, 'mousewheel', L.DomEvent.stopPropagation);
+      L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
     }
   });
 

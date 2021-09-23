@@ -93,14 +93,14 @@ export const fillInput = async (
     fireEvent.click(input);
     fireEvent.focusOut(input);
   } else {
-    fireEvent.change(input!, {
+    fireEvent.change(input, {
       target: {
         value: value,
       },
     });
     fireEvent.focusOut(input);
   }
-  fireEvent.blur(input!);
+  fireEvent.blur(input);
 
   return { input };
 };

@@ -63,7 +63,7 @@ const ColumnFilter: React.FC<IColumnFilterProps> = ({ column, onFilter, children
   }
 
   const hasValue = !!getIn(context.values, (column.filter.props || {}).name);
-  const Control = column.filter!.component as any;
+  const Control = column.filter.component as any;
 
   const filter = (
     <Wrapper className={clsx('filter-wrapper', { active: hasValue })}>

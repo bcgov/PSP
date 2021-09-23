@@ -1,4 +1,5 @@
 import { waitFor } from '@testing-library/react';
+import AppRouter from 'AppRouter';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Footer, Header } from 'components/layout';
@@ -21,7 +22,6 @@ import AccessDenied from 'pages/401/AccessDenied';
 import { NotFoundPage } from 'pages/404/NotFoundPage';
 import Test from 'pages/Test.ignore';
 import { act } from 'react-dom/test-utils';
-import AppRouter from 'router';
 import { flushPromises, mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 

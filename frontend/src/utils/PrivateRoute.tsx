@@ -21,7 +21,7 @@ const PrivateRoute = (props: IPrivateRouteProps) => {
   return (
     <Route
       {...rest}
-      render={props => {
+      render={routeProps => {
         if (!!keycloak.obj?.authenticated) {
           if (
             (!rest.role && !rest.claim) ||
@@ -30,14 +30,16 @@ const PrivateRoute = (props: IPrivateRouteProps) => {
           ) {
             return (
               <Layout>
-                <Component {...props} {...rest.componentProps} />
+                <Component {...routeProps} {...rest.componentProps} />
               </Layout>
             );
           } else {
-            return <Redirect to={{ pathname: '/forbidden', state: { referer: props.location } }} />;
+            return (
+              <Redirect to={{ pathname: '/forbidden', state: { referer: routeProps.location } }} />
+            );
           }
         } else {
-          if (props.location.pathname !== '/login') {
+          if (routeProps.location.pathname !== '/login') {
             const redirectTo = encodeURI(`${location.pathname}${location.search}`);
             return <Redirect to={`/login?redirect=${redirectTo}`} />;
           }

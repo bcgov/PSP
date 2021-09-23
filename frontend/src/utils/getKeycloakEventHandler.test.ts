@@ -3,7 +3,7 @@ import { clearJwt, saveJwt } from 'store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from 'store/slices/keycloakReady/keycloakReadySlice';
 import { store } from 'store/store';
 
-import getKeycloakEventHandler from './KeycloakEventHandler';
+import getKeycloakEventHandler from './getKeycloakEventHandler';
 
 jest.mock('store/slices/jwt/JwtSlice', () => ({
   saveJwt: jest.fn(),
