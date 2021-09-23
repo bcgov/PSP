@@ -222,7 +222,7 @@ const Map: React.FC<MapProps> = ({
 
     let properties = {};
     let center: LatLng | undefined;
-    let bounds: LatLngBounds | undefined;
+    let mapBounds: LatLngBounds | undefined;
     let displayConfig = {};
     let title = 'Municipality Information';
     let feature = {};
@@ -230,7 +230,7 @@ const Map: React.FC<MapProps> = ({
       properties = municipality.features[0].properties!;
       displayConfig = municipalityLayerPopupConfig;
       feature = municipality.features[0];
-      bounds = municipality.features[0]?.geometry
+      mapBounds = municipality.features[0]?.geometry
         ? geoJSON(municipality.features[0].geometry).getBounds()
         : undefined;
     }
@@ -239,10 +239,10 @@ const Map: React.FC<MapProps> = ({
       title = 'Parcel Information';
       properties = parcel.features[0].properties!;
       displayConfig = parcelLayerPopupConfig;
-      bounds = parcel.features[0]?.geometry
+      mapBounds = parcel.features[0]?.geometry
         ? geoJSON(parcel.features[0].geometry).getBounds()
         : undefined;
-      center = bounds?.getCenter();
+      center = mapBounds?.getCenter();
       feature = parcel.features[0];
     }
 

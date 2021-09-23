@@ -102,8 +102,8 @@ const useActiveFeatureLayer = ({
     ) {
       activeFeatureLayer.clearLayers();
       highlightSelectedProperty({
-        lat: selectedProperty.propertyDetail?.latitude as number,
-        lng: selectedProperty.propertyDetail?.longitude as number,
+        lat: selectedProperty.propertyDetail?.latitude,
+        lng: selectedProperty.propertyDetail?.longitude,
       } as LatLng);
     }
   }, [selectedProperty, activeFeatureLayer]);

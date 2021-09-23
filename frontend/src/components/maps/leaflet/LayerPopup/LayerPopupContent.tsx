@@ -101,7 +101,7 @@ export const LayerPopupContent: React.FC<IPopupContentProps> = ({
               Populate property details
             </StyledLink>
           ) : null}
-          {bounds && curZoom! !== boundZoom ? (
+          {bounds && curZoom !== boundZoom ? (
             <StyledLink
               to={{ ...location }}
               onClick={() => mapInstance.flyToBounds(bounds, { animate: false })}

@@ -32,17 +32,17 @@ export const Header = () => {
   const tenant = useTenant();
 
   const errors = useAppSelector(state => {
-    const errors: IGenericNetworkAction[] = [];
+    const networkErrors: IGenericNetworkAction[] = [];
     values(state).forEach(reducer => {
       values(reducer)
         .filter(x => x instanceof Object)
         .forEach(action => {
           if (isNetworkError(action)) {
-            errors.push(action);
+            networkErrors.push(action);
           }
         });
     });
-    return errors;
+    return networkErrors;
   });
   return (
     <HeaderStyled expand className="App-header">

@@ -132,8 +132,6 @@ export const defaultBounds = new LatLngBounds(
 export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   bounds,
   zoom,
-  minZoom,
-  maxZoom,
   filter,
   onMarkerClick,
   selected,
@@ -164,9 +162,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     fit();
   }, [mapInstance, filter, filterChanged]);
 
-  minZoom = minZoom ?? 0;
-  maxZoom = maxZoom ?? 18;
-
   const params = useMemo((): any => {
     const tiles = getTiles(defaultBounds, 5);
 
@@ -178,8 +173,8 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     }));
   }, [filter]);
 
-  const loadTile = async (filter: IGeoSearchParams) => {
-    return loadProperties(filter);
+  const loadTile = async (mapFilter: IGeoSearchParams) => {
+    return loadProperties(mapFilter);
   };
 
   /**
