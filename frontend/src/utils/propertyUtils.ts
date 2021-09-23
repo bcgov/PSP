@@ -6,7 +6,7 @@ import { IAddress } from 'interfaces';
  */
 export const pidFormatter = (pid?: string) => {
   if (!!pid) {
-    let result = pid.padStart(9, '0');
+    let result = pid.toString().padStart(9, '0');
     const regex = /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d)/;
     const format = result.match(regex);
     if (format !== null && format.length === 4) {
