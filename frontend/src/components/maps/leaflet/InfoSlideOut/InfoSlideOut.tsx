@@ -123,7 +123,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   useEffect(() => {
     const elem = L.DomUtil.get('infoContainer');
     if (elem) {
-      L.DomEvent.on(elem!, 'mousewheel', L.DomEvent.stopPropagation);
+      L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
     }
   });
 
@@ -177,7 +177,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
             onClick={() => {
               if (popUpContext.propertyInfo?.id && !open) {
                 popUpContext.setLoading(true);
-                getProperty(popUpContext.propertyInfo.id as number)
+                getProperty(popUpContext.propertyInfo.id)
                   .then(property => {
                     popUpContext.setPropertyInfo(property);
                   })
