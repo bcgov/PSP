@@ -278,6 +278,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       getProperty(id as number)
         .then(parcel => {
           popUpContext.setPropertyInfo(parcel.data);
+          storeProperty(parcel.data);
         })
         .catch(() => {
           toast.error('Unable to load property details, refresh the page and try again.');
@@ -345,14 +346,14 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                     latitude,
                     longitude,
                   );
-                  //sets this pin as currently selected
-                  dispatch(storeProperty(convertedProperty as IProperty));
                   onMarkerClick(); //open information slideout
                   if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
                     convertedProperty?.id
                       ? fetchProperty(cluster.properties.propertyTypeId, convertedProperty.id)
                       : toast.dark('This property is invalid, unable to view details');
                   } else {
+                    //sets this pin as currently selected
+                    dispatch(storeProperty(convertedProperty as IProperty));
                     popUpContext.setPropertyInfo(convertedProperty);
                   }
                   popUpContext.setPropertyTypeId(cluster.properties.propertyTypeId);
