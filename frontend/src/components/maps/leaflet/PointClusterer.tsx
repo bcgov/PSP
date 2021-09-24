@@ -386,7 +386,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 dispatch(storeProperty(convertedProperty));
                 onMarkerClick(); //open information slideout
                 if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                  fetchProperty(m.properties.propertyTypeId, m.properties.id);
+                  convertedProperty?.id && convertedProperty.propertyTypeId
+                    ? fetchProperty(m.properties.propertyTypeId, convertedProperty.id)
+                    : toast.dark('This property is invalid, unable to view details');
                 } else {
                   popUpContext.setPropertyInfo(
                     convertToProperty(m.properties, m.position.lat, m.position.lng),
