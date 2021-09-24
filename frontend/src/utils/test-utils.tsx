@@ -15,17 +15,30 @@ import { ToastContainer } from 'react-toastify';
 
 import TestCommonWrapper from './TestCommonWrapper';
 
-export const mockKeycloak = (claims: string[], organizations: number[], authenticated = false) => {
+export const mockKeycloak = (
+  props: {
+    claims?: string[];
+    roles?: string[];
+    organizations?: number[];
+    authenticated?: boolean;
+  } = {},
+) => {
+  const { claims, roles, organizations, authenticated = true } = props;
+  // mock what would be returned by keycloak userinfo endpoint
+  const userInfo = {
+    organizations: organizations ?? [1],
+    roles: claims ?? [],
+    groups: roles ?? [],
+    email: 'test@test.com',
+    name: 'Chester Tester',
+  };
+
   (useKeycloak as jest.Mock).mockReturnValue({
     keycloak: {
-      userInfo: {
-        organizations: organizations,
-        roles: claims,
-        email: 'test@test.com',
-        name: 'Chester Tester',
-      },
+      userInfo,
       subject: 'test',
       authenticated,
+      loadUserInfo: jest.fn().mockResolvedValue(userInfo),
     },
   });
 };
@@ -80,14 +93,14 @@ export const fillInput = async (
     fireEvent.click(input);
     fireEvent.focusOut(input);
   } else {
-    fireEvent.change(input!, {
+    fireEvent.change(input, {
       target: {
         value: value,
       },
     });
     fireEvent.focusOut(input);
   }
-  fireEvent.blur(input!);
+  fireEvent.blur(input);
 
   return { input };
 };
@@ -167,6 +180,7 @@ export interface RenderOptions extends RtlRenderOptions {
   history?: MemoryHistory;
   useMockAuthentication?: boolean;
   organizations?: number[];
+  claims?: string[];
   roles?: string[];
 }
 
@@ -179,14 +193,20 @@ function render(
     history,
     useMockAuthentication = false,
     organizations,
+    claims,
     roles,
     ...renderOptions
   } = options;
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
-  if (!!useMockAuthentication || !!roles || !!organizations) {
+  if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
     if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
-      mockKeycloak(roles ?? [], organizations ?? [1], true);
+      mockKeycloak({
+        claims: claims ?? [],
+        roles: roles ?? [],
+        organizations: organizations ?? [1],
+        authenticated: true,
+      });
     }
   }
 

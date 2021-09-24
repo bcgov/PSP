@@ -70,14 +70,19 @@ const useDraftMarkerSynchronizer = (nameSpace: string) => {
 
   /**
    * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers as drafts.
-   * @param values the current form values
-   * @param initialValues the initial form values
+   * @param formValues the current form values
+   * @param initialFormValues the initial form values
    * @param dbProperties the currently displayed list of (DB) map properties.
-   * @param nameSpace the path to extract lat/lng values from
+   * @param formNameSpace the path to extract lat/lng values from
    */
   const synchronizeMarkers = React.useMemo(
-    () => (values: any, initialValues: any, dbProperties: PointFeature[], nameSpace: string) => {
-      const draftMarkers = getDraftMarkers(values, initialValues, nameSpace);
+    () => (
+      formValues: any,
+      initialFormValues: any,
+      dbProperties: PointFeature[],
+      formNameSpace: string,
+    ) => {
+      const draftMarkers = getDraftMarkers(formValues, initialFormValues, formNameSpace);
       if (draftMarkers.length) {
         const newDraftMarkers = _.filter(
           draftMarkers,
@@ -98,13 +103,28 @@ const useDraftMarkerSynchronizer = (nameSpace: string) => {
   );
 
   const synchronize = useCallback(
-    (values: any, initialValues: any, properties: PointFeature[], nameSpace: string) => {
+    (
+      formValues: any,
+      initialFormValues: any,
+      dbProperties: PointFeature[],
+      formNameSpace: string,
+    ) => {
       return debounce(
-        (values: any, initialValues: any, properties: PointFeature[], nameSpace: string) => {
-          synchronizeMarkers(values, initialValues, properties, nameSpace);
+        (
+          debouncedFormValues: any,
+          debouncedinitialFormValues: any,
+          dbProperties: PointFeature[],
+          debouncedformNameSpace: string,
+        ) => {
+          synchronizeMarkers(
+            debouncedFormValues,
+            debouncedinitialFormValues,
+            dbProperties,
+            debouncedformNameSpace,
+          );
         },
         400,
-      )(values, initialValues, properties, nameSpace);
+      )(formValues, initialFormValues, dbProperties, formNameSpace);
     },
     [synchronizeMarkers],
   );

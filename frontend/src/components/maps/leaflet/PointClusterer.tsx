@@ -147,9 +147,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       return [];
     }
     try {
-      const points =
+      const clusteredPoints =
         supercluster?.getLeaves(currentCluster?.properties?.cluster_id, Infinity) ?? [];
-      return points.map(p => p.properties.id);
+      return clusteredPoints.map(p => p.properties.id);
     } catch (error) {
       return [];
     }
@@ -237,7 +237,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       const group: L.FeatureGroup = draftFeatureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && isDraft) {
+      if (groupBounds.isValid()) {
         filterState.setChanged(false);
         mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
@@ -275,7 +275,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const fetchProperty = React.useCallback(
     (propertyTypeId: number, id: number) => {
       popUpContext.setLoading(true);
-      getProperty(id as number)
+      getProperty(id)
         .then(parcel => {
           popUpContext.setPropertyInfo(parcel.data);
         })
@@ -366,7 +366,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
          */}
         {spider.markers?.map((m: any, index: number) => (
           <Marker
-            {...(m.properties as any)}
+            {...m.properties}
             key={index}
             position={m.position}
             //highlight pin if currently selected
@@ -417,8 +417,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   : ''
               }
               position={[
-                selected.propertyDetail!.latitude as number,
-                selected.propertyDetail!.longitude as number,
+                selected.propertyDetail.latitude as number,
+                selected.propertyDetail.longitude as number,
               ]}
               map={mapInstance}
               eventHandlers={{

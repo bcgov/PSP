@@ -1,7 +1,7 @@
+import { InputGroup, Select } from 'components/common/form';
 import { useFormikContext } from 'formik';
 import React from 'react';
 
-import { InputGroup, Select } from '../../../components/common/form';
 import { IPropertyFilter } from './IPropertyFilter';
 
 interface IPropertyFilterOptions {
