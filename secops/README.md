@@ -4,7 +4,7 @@ The purpose and intent of DevSecOps is to build on the mindset that “everyone 
 
 ![](../Screenshots/DevSecOps.PNG)
 
-The PIMS Project undertake vulnerability scan as part of our software release pipeline, and do not release if "HIGH RISK" vulnerabilities are identified (Automated, Continous process)
+The PIMS Project undertake a number of scan (Static and Vulnerability) as part of our software release pipeline, and do not release if "HIGH RISK" vulnerabilities are identified (Automated, Continous process)
 
 ### CODE:
 Run Static Code Analysis in Real-time to address vulnerabilities in the code at real-time. We do not have to wait once per quarter or wait until the release to production before scanning. Open-source tools for Static Code Analysis can be used within the CI pipeline and Git Actions:
@@ -161,6 +161,10 @@ Click on the link will redirect you the Sonarque Scanner Quality Gate reports as
           edit-mode: replace
           reactions: eyes
 ```
+**Requirement**
+- [Sonarque Server](/openshift/4.0/templates/sonarqube) (community version 8.2 or above - free)
+- PostgreSQL to store Sonar Users
+- Sonar CLI for dotnet 5
 
 #### Scan Repo for Secrets and Passwords 
 
@@ -329,6 +333,29 @@ The Vulnerability report will be uploaded back to the PR for analysis by the Dev
 
 ```
 
+#### Filter or Ignore Vulnerability by ID
+
+- Edit the .trivyignore file
+- Add the Vulnerability ID of the LIBRARY you want to Ignore
+- Save or commit the file
+
+```
+$ cat .trivyignore
+# Accept the risk
+CVE-2018-14618
+
+# No impact in our settings
+CVE-2019-1543
+```
+
+#### Vulnerability resolution tricks
+
+- Update or rebuild all base images to their latest build
+- Check out base image catalog or hub for resolution tips
+- If container image from dockerfile, ensure to run update and upgrade in the dockerfile
+- Schedule rebuild of base image in other to fetch the latest image tag.
+
+
 ### TEST
 
 PIMS Project uses free [Katalon Studio](https://docs.katalon.com/katalon-studio/docs/katalon-studio-github-action.html#variables) as an Automated Testing tool. This tool has not yet be implemented in our CI/CD pipeline and it is currently done outside the pipeline using the free version. To Use Katalon Studio as an automated process, it requires Katalon Runtime Engine license that is require.
@@ -372,9 +399,9 @@ Openshift Image Signing and Validation can be done using an OpenPGP encryption a
 
 ### OPERATE 
 
-This is where security can provide added value. Monitoring, Detecting, Respond and Recover. PIMS Project uses Kibana to visualize logs and a Dedicated Logging Framework that Downloads both the Frontend APP and Backend API Logs every 1 hour and exports these logs into our S3 Storage location outside of the container
+This is where security can provide added value. Monitoring, Detecting, Respond and Recover. PIMS Project uses Kibana to visualize logs and a Dedicated Logging Framework that Downloads both the Frontend APP and Backend API Logs every 1 hour and exports these logs into our S3 Storage location outside of the container for storage and data analysis purpose
 
-Go to [Logging](/openshift/4.0/templates/Logging) for more details.
+Go to [PIMS Logging](/openshift/4.0/templates/Logging) for more details.
 
 ### Workflow Overview
 

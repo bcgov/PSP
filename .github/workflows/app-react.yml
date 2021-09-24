@@ -59,15 +59,59 @@ jobs:
           fail_ci_if_error: true
 
       - name: SonarQube Scan
+        id: scan
         uses: sonarsource/sonarqube-scan-action@master
-        if: ${{ github.event_name == 'push' }}
+        #if: ${{ github.event_name == 'push' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
+          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
           PROJECT_NAME: PIMS-APP
         with:
           projectBaseDir: ${{env.working-directory}}
           args: >
             -Dsonar.projectKey=${{env.PROJECT_KEY}}
             -Dsonar.projectName=${{env.PROJECT_NAME}}
+            -Dsonar.qualitygate.wait=true
+      
+      - name: Find Comment
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: QUALITY GATE STATUS FOR APP-REACT
+       
+      - name: Check Quality Gate and Create Comment
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            QUALITY GATE STATUS FOR APP-REACT: FAILED.
+            
+            [View and resolve details on][1]
+            [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
+          reactions: confused
+      - name: Check Quality Gate and Update Comment
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            QUALITY GATE STATUS FOR APP-REACT: FAILED.
+            
+            [View and resolve details on][1]
+            [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
+          edit-mode: replace
+          reactions: eyes

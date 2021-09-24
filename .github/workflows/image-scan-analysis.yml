@@ -1,12 +1,10 @@
 name: Security CI
 
 on:
-  push:
-    branches: [master, test, pims-sookeke, sookeke-patch-1]
   pull_request:
     branches: [master, test, pims-sookeke, sookeke-patch-1]
   schedule:
-    - cron: '42 15 * * 5'
+    - cron: '30 5 14 * *' # Run this scan every sprint release cycle 14th of every month at 5:30 UTC
 
 jobs:
 
@@ -20,41 +18,65 @@ jobs:
       security-events: write
     env:
       working-directory: ./openshift/4.0/templates/base-images
-      image-name: registry.access.redhat.com/ubi8/nodejs-14
-      tag: 1-35
+      image-name: nodejs-14-ubi8
+      tag: ${{secrets.NODEJS14_BASE_TAG}} # 1-35 
+      OPENSHIFT_NAMESPACE: 3cd915-tools
       output-filename: nodejs14.txt
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build nodejs Base Image
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Pull nodejs Base Image
+      env:
+        OPENSHIFT_NAMESPACE: 3cd915-tools
       run: |
-        docker pull ${{env.image-name}}:${{env.tag}}   
+        #docker login -u ${{env.OPENSHIFT_USER}} -p $(oc whoami -t) ${{env.OPENSHIFT_REGISTRY}}   
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}} 
+        #docker image ls
       working-directory: ${{env.working-directory}}
-    - name: Scan nodejs Base Image with Aqua Trivy
+    - name: Scan nodejs14 Base Image with Aqua Trivy
       id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{env.image-name}}:${{env.tag}}
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
-    - name: Save PR number and scan results
-      id: scan-result
-      if: failure() && steps.scan.output == 'failure'
-      run: |
-          mkdir -p ./pr_${{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
-          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
-    - if: failure() && steps.scan.output == 'failure' && steps.scan-result.output != 'failure' 
+    - if: failure() && steps.scan.outcome == 'failure'
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_Scan_Report
-        path: pr_${{env.image-name}}/
+        path: ./${{env.output-filename}}
         retention-days: 3
+        if-no-files-found: error
   
   comment_nodejs_pr:
   # this action will leave a comment in response to vulnerability scans performed on cotnainer image
@@ -63,26 +85,29 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./frontend
-      image-name: nodejs-14
-      tag: 1-35
+      image-name: nodejs-14-ubi8
+      tag: ${{secrets.NODEJS14_BASE_TAG}}
+      OPENSHIFT_NAMESPACE: 3cd915-tools
       output-filename: nodejs14.txt
     steps:
       - uses: actions/checkout@v2
       - name: Download artifact
+        id: artifact
         uses: actions/download-artifact@master
         with:
          name: ${{env.image-name}}_Scan_Report
-         path: pr_${{env.image-name}}/
+         path: ./${{env.image-name}}
       - name: Get comment body
         id: get-comment-body
+        if: steps.artifact.outcome == 'success'
         run: |
-          cd pr_${{env.image-name}}/
-          if [ -s PRBODY.txt ]; then
-          body=$(cat PRBODY.txt)
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
-          echo ::set-output name=body::$body 
+          echo "::set-output name=body::$body"
           fi          
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -91,23 +116,21 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: ${{env.image-name}}:${{env.tag}} vulnerability report
+          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           
       - name: Comment on PR
         if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          cd pr_${{env.image-name}}/
-          ls
-          cat ./NR
-          if [ -s PRBODY.txt ]; then
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
           commentPR () {
             gh pr comment $PRNUM -b "${1}"
           }
-          PRNUM=$(cat ./NR)
-          PRBODY=$(cat ./PRBODY.txt)
-          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           ```'${PRBODY}'```';
             commentPR "$INDENTED"
           else
@@ -121,9 +144,8 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
-            
-            ```${{ steps.get-comment-body.outputs.body }}```
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
           edit-mode: replace
           reactions: confused
   
@@ -137,68 +159,91 @@ jobs:
       security-events: write
     env:
       working-directory: ./openshift/s2i/nginx-runtime
-      image-name: nginx
-      tag: mainline
-      output-filename: nginx.txt
+      image-name: nginx-base
+      tag: ${{secrets.NGINX_BASE_TAG}} # mainline
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: nginx-base.txt
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build nginx runtime Base Image
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Pull Nginx Runtime Base Image
       run: |
-        docker pull ${{env.image-name}}:${{env.tag}}   
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}    
       working-directory: ${{env.working-directory}}
-    - name: Scan nginx runtime Base Image with Aqua Trivy
+    - name: Scan Nginx Runtime Base Image with Aqua Trivy
+      id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{env.image-name}}:${{env.tag}}
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
-    - name: Save PR number and scan results
-      if: always()
-      run: |
-          mkdir -p ./pr_${{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
-          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
-    - if: always()
+    - if: failure() && steps.scan.outcome == 'failure'
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_Scan_Report
-        path: pr_${{env.image-name}}/
+        path: ./${{env.output-filename}}
         retention-days: 3
 
-  comment_nginx_pr:
+  comment_nginx_pr: 
   # this action will leave a comment in response to vulnerability scans performed on cotnainer image
     if: always() && needs.nginx-base-image.result == 'failure' && github.event_name == 'pull_request'
-    needs: nodejs-base-image
+    needs: nginx-base-image
     runs-on: ubuntu-latest
     env:
       working-directory: ./frontend
-      image-name: nginx
-      tag: mainline
-      output-filename: nodejs14.txt
+      image-name: nginx-base
+      tag: ${{secrets.NGINX_BASE_TAG}}
+      output-filename: nginx-base.txt
     steps:
       - uses: actions/checkout@v2
       - name: Download artifact
+        id: artifact
         uses: actions/download-artifact@master
         with:
          name: ${{env.image-name}}_Scan_Report
-         path: pr_${{env.image-name}}/
+         path: ./${{env.image-name}}
 
       - name: Get comment body
         id: get-comment-body
+        if: steps.artifact.outcome == 'success'
         run: |
-          cd pr_${{env.image-name}}/
-          if [ -s PRBODY.txt ]; then
-          body=$(cat PRBODY.txt)
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
-          echo ::set-output name=body::$body 
+          echo "::set-output name=body::$body" 
           fi          
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -207,23 +252,21 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: ${{env.image-name}}:${{env.tag}} vulnerability report
+          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           
       - name: Comment on PR
         if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          cd pr_${{env.image-name}}/
-          ls
-          cat ./NR
-          if [ -s PRBODY.txt ]; then
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
           commentPR () {
             gh pr comment $PRNUM -b "${1}"
           }
-          PRNUM=$(cat ./NR)
-          PRBODY=$(cat ./PRBODY.txt)
-          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           ```'${PRBODY}'```';
             commentPR "$INDENTED"
           else
@@ -237,14 +280,13 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
-            
-            ```${{ steps.get-comment-body.outputs.body }}```
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
           edit-mode: replace
           reactions: confused 
 
   build_frontend:
-
+    if: always()
     needs: [nodejs-base-image,nginx-base-image]
     name: pims-frontend
     runs-on: ubuntu-latest
@@ -254,37 +296,60 @@ jobs:
       security-events: write
     env:
       working-directory: ./frontend
-      image-name: pims-frontend
-      output-filename: pims-frontend.txt
+      image-name: pims-app
+      tag: latest
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: pims-app.txt
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build PIMS React Frontend
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    - name: Pull PIMS App React Frontend Image
+      env:
+        OPENSHIFT_NAMESPACE: 3cd915-tools
       run: |
-        docker build -t ${{env.image-name}} .   
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}    
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS React Frontend Image with Aqua Trivy
+      id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{env.image-name}}
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
-    - name: Save PR number and scan results
-      if: always()
-      run: |
-          mkdir -p ./pr_${{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
-          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
-    - if: always()
+    - if: failure() && steps.scan.outcome == 'failure'
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_Scan_Report
-        path: pr_${{env.image-name}}/
+        path: ./${{env.output-filename}}
         retention-days: 3
   
   comment_app_pr:
@@ -294,26 +359,29 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./frontend
-      image-name: pims-frontend
-      output-filename: pims-frontend.txt
+      image-name: pims-app
+      tag: latest
+      output-filename: pims-app.txt
     steps:
       - uses: actions/checkout@v2
       - name: Download artifact
+        id: artifact
         uses: actions/download-artifact@master
         with:
          name: ${{env.image-name}}_Scan_Report
-         path: pr_${{env.image-name}}/
+         path: ./${{env.image-name}}
 
       - name: Get comment body
         id: get-comment-body
+        if: steps.artifact.outcome == 'success'
         run: |
-          cd pr_${{env.image-name}}/
-          if [ -s PRBODY.txt ]; then
-          body=$(cat PRBODY.txt)
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
-          echo ::set-output name=body::$body 
+          echo "::set-output name=body::$body" 
           fi          
       - name: Find Comment
         if: github.event_name == 'pull_request'
@@ -322,23 +390,156 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: ${{env.image-name}}:${{env.tag}} vulnerability report
+          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           
       - name: Comment on PR
         if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          cd pr_${{env.image-name}}/
-          ls
-          cat ./NR
-          if [ -s PRBODY.txt ]; then
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
           commentPR () {
             gh pr comment $PRNUM -b "${1}"
           }
-          PRNUM=$(cat ./NR)
-          PRBODY=$(cat ./PRBODY.txt)
-          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability detected in this image"
+          fi   
+          
+      - name: Update PR Comment
+        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
+          edit-mode: replace
+          reactions: confused 
+   
+  aspnet-runtime:
+
+    name: aspnet-runtime
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      image-name: dotnet-aspnet
+      tag: '5.0'
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: dotnet-aspnet.txt
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    - name: Pull aspnet dotnet5 runtime Base Image
+      run: |
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
+      working-directory: ${{env.working-directory}}
+    - name: Scan dotnet5 SDK and runtime Image with Aqua Trivy
+      id: scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: ${{env.output-filename}}
+    - if: failure() && steps.scan.outcome == 'failure'
+      name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{env.image-name}}_Scan_Report
+        path: ./${{env.output-filename}}
+        retention-days: 3
+  
+  comment_aspnet_pr:
+  # this action will leave a comment in response to credential scans performed on pull requests
+    if: always() && needs.aspnet-runtime.result == 'failure' && github.event_name == 'pull_request'
+    needs: aspnet-runtime 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      image-name: dotnet-aspnet
+      tag: '5.0'
+      output-filename: dotnet-aspnet.txt
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        id: artifact
+        uses: actions/download-artifact@master
+        with:
+         name: ${{env.image-name}}_Scan_Report
+         path: ./${{env.image-name}}
+
+      - name: Get comment body
+        id: get-comment-body
+        if: steps.artifact.outcome == 'success'
+        run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo "::set-output name=body::$body" 
+          fi           
+      - name: Find Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          
+      - name: Comment on PR
+        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           ```'${PRBODY}'```';
             commentPR "$INDENTED"
           else
@@ -352,15 +553,14 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Docker pull)
-            
-            ```${{ steps.get-comment-body.outputs.body }}```
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report     
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
           edit-mode: replace
           reactions: confused 
-   
-  dotnet5-runtime:
+  
+  dotnet-sdk:
 
-    name: dotnet5-runtime
+    name: dotnet5-sdk
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -368,89 +568,136 @@ jobs:
       security-events: write
     env:
       working-directory: ./openshift/4.0/templates/base-images/dotnet50
-      image-name: dotnet-50
-      tag: 5.0-23
-      output-filename: dotnet50.txt
+      image-name: dotnet-sdk
+      tag: '5.0'
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: dotnet-sdk.txt
 
     steps:
     - uses: actions/checkout@v1
-    - name: Login to registry.redhat.io
-        uses: docker/login-action@v1
-        with:
-          registry: registry.redhat.io
-          username: pimsmoti
-          password: ${{ secrets.DOCKERPASSWORD }}
-    - name: Build dotnet5 sdk and runtime Base Image
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    - name: Pull aspnet dotnet5 runtime Base Image
       run: |
-        docker build -t ${{env.image-name}}:${{env.tag}} .   
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
       working-directory: ${{env.working-directory}}
     - name: Scan dotnet5 SDK and runtime Image with Aqua Trivy
+      id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{env.image-name}}:${{env.tag}}
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
-    - name: Save PR number and scan results
-      if: always()
-      run: |
-          mkdir -p ./pr_${{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
-          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
-    - if: always()
+    - if: failure() && steps.scan.outcome == 'failure'
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_Scan_Report
-        path: pr_${{env.image-name}}/
+        path: ./${{env.output-filename}}
         retention-days: 3
   
-  comment_sdk_pr:
+  comment_dotnetsdk_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.dotnet5-runtime.result == 'failure' && github.event_name == 'pull_request'
-    needs: dotnet5-runtime 
+    if: always() && needs.dotnet-sdk.result == 'failure' && github.event_name == 'pull_request'
+    needs: dotnet-sdk 
     runs-on: ubuntu-latest
     env:
       working-directory: ./openshift/4.0/templates/base-images/dotnet50
-      image-name: dotnet-50
-      tag: 5.0-23
-      output-filename: dotnet50.txt
+      image-name: dotnet-sdk
+      tag: '5.0'
+      output-filename: dotnet-sdk.txt
     steps:
       - uses: actions/checkout@v2
       - name: Download artifact
+        id: artifact
         uses: actions/download-artifact@master
         with:
          name: ${{env.image-name}}_Scan_Report
-         path: pr_${{env.image-name}}/
+         path: ./${{env.image-name}}
 
+      - name: Get comment body
+        id: get-comment-body
+        if: steps.artifact.outcome == 'success'
+        run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo "::set-output name=body::$body" 
+          fi           
+      - name: Find Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          
       - name: Comment on PR
+        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          cd pr_${{env.image-name}}/
-          ls
-          cat ./NR
-          if [ -s PRBODY.txt ]; then
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
           commentPR () {
             gh pr comment $PRNUM -b "${1}"
           }
-          PRNUM=$(cat ./NR)
-          PRBODY=$(cat ./PRBODY.txt)
-          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Dockerfile)
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           ```'${PRBODY}'```';
             commentPR "$INDENTED"
           else
-            echo "No vulnerability"
-          fi 
-
+            echo "No vulnerability detected in this image"
+          fi  
+          
+      - name: Update PR Comment
+        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report     
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
+          edit-mode: replace
+          reactions: confused 
+  
   
   build_backend:
     
     if: always() 
-    needs: dotnet5-runtime 
+    needs: [aspnet-runtime, dotnet-sdk] 
     name: pims-backend
     runs-on: ubuntu-latest
     permissions:
@@ -459,39 +706,59 @@ jobs:
       security-events: write
     env:
       working-directory: ./backend
-      image-name: pims-backend
+      image-name: pims-api
       tag: latest
-      output-filename: pims-backend.txt
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: pims-api.txt
       
       
     steps:
     - uses: actions/checkout@v1
-    - name: Build PIMS Backend API .Net 5 Image
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    - name: Pull PIMS Backend API Image
       run: |
-        docker build -t ${{env.image-name}}:${{env.tag}} .  
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}  
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Backend API Image with Aqua Trivy
+      id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{env.image-name}}
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
-    - name: Save PR number and scan results
-      if: always()
-      run: |
-          mkdir -p ./pr_${{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
-          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
-    - if: always()
+    - if: failure() && steps.scan.outcome == 'failure'
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_Scan_Report
-        path: pr_${{env.image-name}}/
+        path: ./${{env.output-filename}}
         retention-days: 3
    
   comment_api_pr:
@@ -501,41 +768,74 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./backend
-      image-name: pims-backend
+      image-name: pims-api
       tag: latest
-      output-filename: pims-backend.txt
+      output-filename: pims-api.txt
     steps:
       - uses: actions/checkout@v2
       - name: Download artifact
+        id: artifact
         uses: actions/download-artifact@master
         with:
          name: ${{env.image-name}}_Scan_Report
-         path: pr_${{env.image-name}}/
+         path: ./${{env.image-name}}
 
+      - name: Get comment body
+        id: get-comment-body
+        if: steps.artifact.outcome == 'success'
+        run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo "::set-output name=body::$body" 
+          fi           
+      - name: Find Comment
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/find-comment@v1
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          
       - name: Comment on PR
+        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          cd pr_${{env.image-name}}/
-          ls
-          cat ./NR
-          if [ -s PRBODY.txt ]; then
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
           commentPR () {
             gh pr comment $PRNUM -b "${1}"
           }
-          PRNUM=$(cat ./NR)
-          PRBODY=$(cat ./PRBODY.txt)
-          INDENTED='## ${{env.image-name}}:${{env.tag}} vulnerability report (Built from Dockerfile)
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           ```'${PRBODY}'```';
             commentPR "$INDENTED"
           else
-            echo "No vulnerability detected"
+            echo "No vulnerability detected in this image"
           fi 
+          
+      - name: Update PR Comment
+        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
+          edit-mode: replace
+          reactions: confused 
 
    
-  build_logging:
+  pims_logging:
   
-    if: always() && (github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test')
+    if: always()
     needs: [build_frontend, build_backend] 
     name: logging
     runs-on: ubuntu-latest
@@ -545,34 +845,135 @@ jobs:
       security-events: write
     env:
       working-directory: ./openshift/4.0/templates/Logging
+      image-name: pims-logging
+      tag: latest
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: pims-logging.txt
       
       
     steps:
     - uses: actions/checkout@v1
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:   
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
     - name: Build PIMS Logging
       run: |
-        docker build -t docker.io/my-organization/my-app:${{ github.sha }} .   
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}  
       working-directory: ${{env.working-directory}}
     - name: Scan PIMS Logging Image with Aqua Trivy
+      id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
-        format: 'template'
-        template: '@/contrib/sarif.tpl'
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
+        format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
-        output: 'pims-logging.sarif'
-    - name: Upload Trivy scan results to GitHub Security tab
-      if: always()
-      uses: github/codeql-action/upload-sarif@v1
+        output: ${{env.output-filename}}
+    - if: failure() && steps.scan.outcome == 'failure'
+      name: Upload OWASP ZAP scan artifact
+      uses: actions/upload-artifact@v2
       with:
-        sarif_file: 'pims-logging.sarif'
+        name: ${{env.image-name}}_Scan_Report
+        path: ./${{env.output-filename}}
+        retention-days: 3
+        if-no-files-found: error
+   
+  comment_logging_pr:
+  # this action will leave a comment in response to Image scans performed on pull requests
+    if: always() && needs.pims_logging.result == 'failure' && github.event_name == 'pull_request'
+    needs: pims_logging 
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
+      image-name: pims-logging
+      tag: latest
+      output-filename: pims-logging.txt
+    steps:
+     - uses: actions/checkout@v2
+     - name: Download artifact
+       id: artifact
+       uses: actions/download-artifact@master
+       with:
+         name: ${{env.image-name}}_Scan_Report
+         path: ./${{env.image-name}}
+     - name: Get comment body
+       id: get-comment-body
+       if: steps.artifact.outcome == 'success'
+       run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          body="$(cat ${{env.output-filename}})" 
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo "::set-output name=body::$body"
+          fi            
+     - name: Find Comment
+       if: github.event_name == 'pull_request'
+       uses: peter-evans/find-comment@v1
+       id: fc
+       with:
+         issue-number: ${{ github.event.pull_request.number }}
+         comment-author: 'github-actions[bot]'
+         body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          
+     - name: Comment on PR
+       if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
+       env:
+         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+       run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
+          commentPR () {
+            gh pr comment $PRNUM -b "${1}"
+          }
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          ```'${PRBODY}'```';
+            commentPR "$INDENTED"
+          else
+            echo "No vulnerability detected in this image"
+          fi   
+          
+     - name: Update PR Comment
+       if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+       uses: peter-evans/create-or-update-comment@v1
+       with:
+         comment-id: ${{ steps.fc.outputs.comment-id }}
+         issue-number: ${{ github.event.pull_request.number }}
+         body: |
+            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
+         edit-mode: replace
+         reactions: confused      
         
-  build_zap:
+  jenkins-agent-dotnet:
 
-    name: pims-zap
+    name: jenkins-agent-dotnet
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -581,72 +982,128 @@ jobs:
       pull-requests: write
     env:
       working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
-      image-name: owasp-zap
-      output-filename: owasp-zap.txt
+      image-name: jenkins-agent-dotnet
+      tag: latest
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      output-filename: jenkins-agent-dotnet.txt
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build PIMS OWASP ZAP Image
+    - name: Authenticate and set context
+      uses: redhat-actions/oc-login@v1
+      env:
+      # These can be stored in secrets, if desired.
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_NAMESPACE: 3cd915-tools
+        SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
+        OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
+
+      with:
+      # URL to your OpenShift cluster.
+      # Refer to Step 2.
+        openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+
+      # Authentication Token. Can use username and password instead.
+      # Refer to Step 3.
+        openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+    
+    - name: Login to OpenShift Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        username: ${{ secrets.OC_USERNAME_SA }}
+        password: ${{ secrets.OPENSHIFT_TOKEN }}
+    - name: Pull jenkins-agent-dotnet Image
       run: |
-        docker build -t ${{env.image-name}} .   
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}  
       working-directory: ${{env.working-directory}}
     - name: Scan jenkins-agent-zap with Aqua Trivy
+      id: scan
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: ${{env.image-name}}
+        image-ref: '${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
-    - name: Save PR number and scan results
-      if: always()
-      run: |
-          mkdir -p ./pr_${{env.image-name}}
-          echo ${{ github.event.pull_request.number }} > ./pr_${{env.image-name}}/NR
-          cp ${{env.output-filename}} ./pr_${{env.image-name}}/PRBODY.txt
-    - if: always()
+    - if: failure() && steps.scan.outcome == 'failure'
       name: Upload OWASP ZAP scan artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_Scan_Report
-        path: pr_${{env.image-name}}/
+        path: ./${{env.output-filename}}
         retention-days: 3
+        if-no-files-found: error
         
    
-  comment_zap_pr:
+  comment_agent_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.build_zap.result == 'failure' && github.event_name == 'pull_request'
-    needs: build_zap 
+    if: always() && needs.jenkins-agent-dotnet.result == 'failure' && github.event_name == 'pull_request'
+    needs: jenkins-agent-dotnet 
     runs-on: ubuntu-latest
     env:
       working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
-      image-name: owasp-zap
-      output-filename: owasp-zap.txt
+      image-name: jenkins-agent-dotnet
+      tag: latest
+      output-filename: jenkins-agent-dotnet.txt
     steps:
-      - uses: actions/checkout@v2
-      - name: Download artifact
-        uses: actions/download-artifact@master
-        with:
-         name: ${{env.image-name}}_Scan_Report
-         path: pr_${{env.image-name}}/
-      - name: Comment on PR
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          cd pr_${{env.image-name}}/
-          ls
-          cat ./NR
-          if [ -s PRBODY.txt ]; then
+    - uses: actions/checkout@v2
+    - name: Download artifact
+      id: artifact
+      uses: actions/download-artifact@master
+      with:
+        name: ${{env.image-name}}_Scan_Report
+        path: ./${{env.image-name}}
+    - name: Get comment body
+      id: get-comment-body
+      if: steps.artifact.outcome == 'success'
+      run: |
+        cd ${{env.image-name}}/
+        if [ -s ${{env.output-filename}} ]; then
+        body="$(cat ${{env.output-filename}})" 
+        body="${body//'%'/'%25'}"
+        body="${body//$'\n'/'%0A'}"
+        body="${body//$'\r'/'%0D'}" 
+        echo "::set-output name=body::$body"
+        fi         
+    - name: Find Comment
+      if: github.event_name == 'pull_request'
+      uses: peter-evans/find-comment@v1
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          
+    - name: Comment on PR
+      if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      run: |
+          cd ${{env.image-name}}/
+          if [ -s ${{env.output-filename}} ]; then
           commentPR () {
             gh pr comment $PRNUM -b "${1}"
           }
-          PRNUM=$(cat ./NR)
-          PRBODY=$(cat ./PRBODY.txt)
-          INDENTED='## ${{env.image-name}} vulnerability report (built from Dockerfile)
+          PRNUM=${{ github.event.pull_request.number }}
+          PRBODY=$(cat ${{env.output-filename}})
+          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
           ```'${PRBODY}'```';
             commentPR "$INDENTED"
           else
-            echo "No vulnerability"
-          fi
+            echo "No vulnerability detected in this image"
+          fi 
+          
+    - name: Update PR Comment
+      if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
+          ``` echo "${{ steps.get-comment-body.outputs.body }}"```
+        edit-mode: replace
+        reactions: confused 
