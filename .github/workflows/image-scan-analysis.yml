@@ -29,7 +29,7 @@ jobs:
       uses: redhat-actions/oc-login@v1
       env:
       # These can be stored in secrets, if desired.
-        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
+        OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}} # service account gitaction in openshift will be used here!
         OPENSHIFT_NAMESPACE: 3cd915-tools
         SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
