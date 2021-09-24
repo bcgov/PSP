@@ -374,7 +374,11 @@ export const toCqlFilter = (object: any) => {
   const cql: string[] = [];
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
-      cql.push(`${key} ilike '%25${object[key]}%25'`);
+      if (key === 'PID' && object[key]) {
+        cql.push(`PIN ilike '%25${object[key]}%25' OR PID ilike '%25${object[key]}%25'`);
+      } else {
+        cql.push(`${key} ilike '%25${object[key]}%25'`);
+      }
     }
   });
   return cql.length ? `cql_filter=${cql.join(' AND ')}` : '';
