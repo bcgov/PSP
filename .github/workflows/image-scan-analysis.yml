@@ -1,8 +1,10 @@
 name: Security CI
 
 on:
+  push:
+    branches: [master, test, secops]
   pull_request:
-    branches: [master, test, pims-sookeke, sookeke-patch-1]
+    branches: [master, test, secops]
   schedule:
     - cron: '30 5 14 * *' # Run this scan every sprint release cycle 14th of every month at 5:30 UTC
 
