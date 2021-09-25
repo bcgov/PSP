@@ -1017,7 +1017,8 @@ jobs:
         password: ${{ secrets.OPENSHIFT_TOKEN }}
     - name: Pull jenkins-agent-dotnet Image
       run: |
-        docker pull ${{ secrets.OPENSHIFT_REGISTRY }}/${{ env.OPENSHIFT_NAMESPACE }}/${{ env.image-name }}:${{ env.tag }}  
+        echo "${{secrets.OPENSHIFT_REGISTRY}}"
+        docker pull ${{ secrets.OPENSHIFT_REGISTRY }}/${{ env.OPENSHIFT_NAMESPACE }}/${{ env.image-name }}
       working-directory: ${{env.working-directory}}
     - name: Scan jenkins-agent-dotnet with Aqua Trivy
       id: scan
