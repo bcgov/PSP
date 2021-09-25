@@ -75,7 +75,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
         if-no-files-found: error
@@ -97,7 +97,7 @@ jobs:
         id: artifact
         uses: actions/download-artifact@master
         with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
       - name: Get comment body
         id: get-comment-body
@@ -212,7 +212,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
 
@@ -232,7 +232,7 @@ jobs:
         id: artifact
         uses: actions/download-artifact@master
         with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
 
       - name: Get comment body
@@ -350,7 +350,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
   
@@ -370,7 +370,7 @@ jobs:
         id: artifact
         uses: actions/download-artifact@master
         with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
 
       - name: Get comment body
@@ -485,7 +485,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
   
@@ -505,7 +505,7 @@ jobs:
         id: artifact
         uses: actions/download-artifact@master
         with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
 
       - name: Get comment body
@@ -620,7 +620,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
   
@@ -640,7 +640,7 @@ jobs:
         id: artifact
         uses: actions/download-artifact@master
         with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
 
       - name: Get comment body
@@ -759,7 +759,7 @@ jobs:
       name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
    
@@ -779,7 +779,7 @@ jobs:
         id: artifact
         uses: actions/download-artifact@master
         with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
 
       - name: Get comment body
@@ -898,7 +898,7 @@ jobs:
       name: Upload OWASP ZAP scan artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
         if-no-files-found: error
@@ -919,7 +919,7 @@ jobs:
        id: artifact
        uses: actions/download-artifact@master
        with:
-         name: ${{env.image-name}}_Scan_Report
+         name: ${{env.image-name}}_scan_report
          path: ./${{env.image-name}}
      - name: Get comment body
        id: get-comment-body
@@ -1034,7 +1034,7 @@ jobs:
       name: Upload OWASP ZAP scan artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.output-filename}}
         retention-days: 3
         if-no-files-found: error
@@ -1056,7 +1056,7 @@ jobs:
       id: artifact
       uses: actions/download-artifact@master
       with:
-        name: ${{env.image-name}}_Scan_Report
+        name: ${{env.image-name}}_scan_report
         path: ./${{env.image-name}}
     - name: Get comment body
       id: get-comment-body
