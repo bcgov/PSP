@@ -1,4 +1,4 @@
-name: Security CI
+name: Image Security Scan
 
 on:
   push:
@@ -1017,7 +1017,7 @@ jobs:
         password: ${{ secrets.OPENSHIFT_TOKEN }}
     - name: Pull jenkins-agent-dotnet Image
       run: |
-        docker pull image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/jenkins-agent-dotnet
+        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
       working-directory: ${{env.working-directory}}
     - name: Scan jenkins-agent-dotnet with Aqua Trivy
       id: scan
