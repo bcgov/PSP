@@ -1012,14 +1012,14 @@ jobs:
     - name: Login to OpenShift Container Registry
       uses: docker/login-action@v1
       with:
-        registry: ${{secrets.OPENSHIFT_REGISTRY}}
+        registry: ${{ secrets.OPENSHIFT_REGISTRY }}
         username: ${{ secrets.OC_USERNAME_SA }}
         password: ${{ secrets.OPENSHIFT_TOKEN }}
     - name: Pull jenkins-agent-dotnet Image
       run: |
-        docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}  
+        docker pull ${{ secrets.OPENSHIFT_REGISTRY }}/${{ env.OPENSHIFT_NAMESPACE }}/${{ env.image-name }}:${{ env.tag }}  
       working-directory: ${{env.working-directory}}
-    - name: Scan jenkins-agent-zap with Aqua Trivy
+    - name: Scan jenkins-agent-dotnet with Aqua Trivy
       id: scan
       uses: aquasecurity/trivy-action@master
       with:
@@ -1031,7 +1031,7 @@ jobs:
         severity: 'CRITICAL,HIGH'
         output: ${{env.output-filename}}
     - if: failure() && steps.scan.outcome == 'failure'
-      name: Upload OWASP ZAP scan artifact
+      name: Upload jenkins agent scan artifact
       uses: actions/upload-artifact@v2
       with:
         name: ${{env.image-name}}_scan_report
