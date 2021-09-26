@@ -47,6 +47,9 @@ exclude: # exclude matching issues
     pattern: https://img\.shields\.io/.*
   - message: Ignore hashes on github gists
     pattern: https://gist\.github\.com/.*
+  - message: Ignore hashes on gen-env-files.sh
+    paths: "gen-env-files.sh"
+    pattern: INSTANCE_STRING=.*
   - message: Ignore local keycloak configuration (for local development only)
     id: high-entropy
     paths:
