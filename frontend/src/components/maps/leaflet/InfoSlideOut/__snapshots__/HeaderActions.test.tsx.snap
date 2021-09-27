@@ -19,10 +19,5 @@ exports[`HeaderActions View HeaderActions renders correctly 1`] = `
   class="c0 row"
 >
   Actions:
-  <a
-    href="/"
-  >
-    Zoom map
-  </a>
 </div>
 `;
