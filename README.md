@@ -8,6 +8,7 @@
 [![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 ![Site Security Scan](<https://github.com/bcgov/psp/actions/workflows/zap-scan.yml/badge.svg?branch=dev>)
 [![Image Security Scan](https://github.com/bcgov/PSP/actions/workflows/image-scan-analysis.yml/badge.svg)](https://github.com/bcgov/PSP/actions/workflows/image-scan-analysis.yml)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bcgov/psp/master)
 
 # PIMS
 

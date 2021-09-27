@@ -2,9 +2,9 @@ name: Image Security Scan
 
 on:
   push:
-    branches: [master, test, secops]
+    branches: [master, test]
   pull_request:
-    branches: [master, test, secops]
+    branches: [master, test]
   schedule:
     - cron: '30 5 14 * *' # Run this scan every sprint release cycle 14th of every month at 5:30 UTC
 
