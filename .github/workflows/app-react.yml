@@ -29,7 +29,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
+      - name: sample
+        run: |
+            echo "forked repo: ${{github.event.pull_request.head.repo.full_name }}"
+            echo "repor: ${{github.repository }}"
       - run: npm ci
         working-directory: ${{env.working-directory}}
 

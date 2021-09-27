@@ -20,7 +20,10 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-
+      - name: sample
+        run: |
+            echo "forked repo: ${{github.event.pull_request.head.repo.full_name }}"
+            echo "repor: ${{github.repository }}"
       - name: Setup .NET 5
         uses: actions/setup-dotnet@v1
         with:
@@ -100,7 +103,7 @@ jobs:
       - name: SonarScanner for .NET 5 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@2.0
-        if: github.event.pull_request.head.repo.full_name == github.repository ||  github.event_name == 'push' 
+        if: github.event.pull_request.head.repo.full_name == github.repository 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
