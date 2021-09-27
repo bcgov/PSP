@@ -5,13 +5,15 @@ import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
 import L from 'leaflet';
 import flatten from 'lodash/flatten';
 import noop from 'lodash/noop';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa';
 import { useMap } from 'react-leaflet';
 import TreeMenu, { TreeMenuItem, TreeNode } from 'react-simple-tree-menu';
 import styled from 'styled-components';
+import { TenantContext } from 'tenants';
 
 import { layersTree } from './data';
 import { ILayerItem } from './types';
@@ -155,12 +157,12 @@ const LeafletListenerComp = () => {
         .map(k => (featureGroup as any)._layers[k])
         .map(l => l.options)
         .filter(x => !!x);
-      const layers = flatten(values.layers.map(l => l.nodes)).filter((x: any) => x.on);
-      const layersToAdd = layers.filter(
+      const mapLayers = flatten(values.layers.map(l => l.nodes)).filter((x: any) => x.on);
+      const layersToAdd = mapLayers.filter(
         (layer: any) => !currentLayers.find(x => x.key === layer.key),
       );
       const layersToRemove = currentLayers.filter(
-        (layer: any) => !layers.find((x: any) => x.key === layer.key),
+        (layer: any) => !mapLayers.find((x: any) => x.key === layer.key),
       );
 
       layersToAdd.forEach((node: any) => {
@@ -185,12 +187,12 @@ const LeafletListenerComp = () => {
 const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
   const { values } = useFormikContext<any>();
 
-  const getParentIndex = (key: string, layers: TreeNode[]) => {
-    return layers.findIndex(node => node.key === key);
+  const getParentIndex = (key: string, mapLayers: TreeNode[]) => {
+    return mapLayers.findIndex(node => node.key === key);
   };
 
-  const getLayerNodeIndex = (nodeKey: string, parentKey: string, layers: TreeNode[]) => {
-    const parent = layers.find(node => node.key === parentKey);
+  const getLayerNodeIndex = (nodeKey: string, parentKey: string, mapLayers: TreeNode[]) => {
+    const parent = mapLayers.find(node => node.key === parentKey);
 
     return (parent!.nodes as any).findIndex((node: TreeNode) => node.key === nodeKey);
   };
@@ -223,11 +225,11 @@ const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
                 label={node.label}
                 name={`layers[${getParentIndex(
                   node.parent,
-                  values.layers as any,
+                  values.layers,
                 )}].nodes[${getLayerNodeIndex(
                   node.key.split('/')[1],
                   node.parent,
-                  values.layers as any,
+                  values.layers,
                 )}].on`}
                 color={node.color}
               />
@@ -239,27 +241,38 @@ const LayersTree: React.FC<{ items: TreeMenuItem[] }> = ({ items }) => {
   );
 };
 
-const layers = layersTree.map((parent, parentIndex) => {
-  return {
-    ...parent,
-    nodes: parent.nodes?.map((node: any, index) => ({
-      ...node,
-      zIndex: (parentIndex + 1) * index,
-      opacity: 0.3,
-    })),
-  };
-});
-
 /**
  * This component displays the layers group menu
  */
 const LayersMenu: React.FC = () => {
+  const {
+    tenant: { layers: confLayers },
+  } = useContext(TenantContext);
+  const layers = useMemo(
+    () =>
+      layersTree.map((parent, parentIndex) => {
+        //add any layers defined in the configuration.
+        const layer = confLayers?.find(cl => cl.key === parent.key);
+
+        const allNodes = [...(parent.nodes ?? []), ...(layer?.nodes ?? [])];
+        return {
+          ...parent,
+          nodes: allNodes?.map((node: any, index) => ({
+            ...node,
+            zIndex: (parentIndex + 1) * index,
+            opacity: 0.3,
+          })),
+        };
+      }),
+    [confLayers],
+  );
+
   return (
     <Formik initialValues={{ layers }} onSubmit={noop}>
       {({ values }) => (
         <FormikForm>
           <LeafletListenerComp />
-          <TreeMenu hasSearch={false} data={layersTree}>
+          <TreeMenu hasSearch={false} data={layers}>
             {({ items }) => {
               return <LayersTree items={items} />;
             }}
