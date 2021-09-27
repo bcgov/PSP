@@ -116,7 +116,7 @@ jobs:
           sonarHostname: ${{secrets.SONAR_URL}}
           
       - name: Find Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && if: github.event.pull_request.head.repo.full_name == github.repository
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         uses: peter-evans/find-comment@v1
         id: fc
         with:
