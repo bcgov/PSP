@@ -58,6 +58,11 @@ jobs:
           # Specify whether or not CI build should fail if Codecov runs into an error during upload
           fail_ci_if_error: true
 
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: SonarQube Scan
         id: scan
         uses: sonarsource/sonarqube-scan-action@master
@@ -65,9 +70,10 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
+          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
           PROJECT_NAME: PIMS-APP
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           projectBaseDir: ${{env.working-directory}}
           args: >
             -Dsonar.projectKey=${{env.PROJECT_KEY}}
@@ -79,6 +85,7 @@ jobs:
         uses: peter-evans/find-comment@v1
         id: fc
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: QUALITY GATE STATUS FOR APP-REACT
@@ -91,6 +98,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
           PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             QUALITY GATE STATUS FOR APP-REACT: FAILED.
