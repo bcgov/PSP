@@ -103,7 +103,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
             </Col>
             <Col className="bar-item">
               <ResetButton
-                disabled={isSubmitting || findMoreOpen}
+                disabled={isSubmitting}
                 onClick={() => {
                   resetForm();
                   resetFilter();
