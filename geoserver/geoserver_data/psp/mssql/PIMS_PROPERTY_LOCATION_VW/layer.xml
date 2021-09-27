@@ -1,0 +1,22 @@
+<layer>
+  <name>PIMS_PROPERTY_LOCATION_VW</name>
+  <id>LayerInfoImpl--47c96824:17c20b17224:-7ff3</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--47c96824:17c20b17224:-7ffc</id>
+  </defaultStyle>
+  <styles class="linked-hash-set">
+    <style>
+      <id>StyleInfoImpl--47c96824:17c20b17224:-8000</id>
+    </style>
+  </styles>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl--47c96824:17c20b17224:-7ff4</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-09-26 06:36:26.182 UTC</dateCreated>
+  <dateModified>2021-09-26 17:36:47.54 UTC</dateModified>
+</layer>

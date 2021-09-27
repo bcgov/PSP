@@ -210,5 +210,9 @@ frontend-coverage: ## Generate coverage report for frontend
 	@echo "$(P) Generate coverage report for frontend"
 	@cd frontend; npm run coverage;
 
-.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh db-script npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
+env: ## Generate env files
+	@echo "$(P) Generate/Regenerate env files required for application (generated passwords only match if database .env file does not already exist)"
+	@./scripts/gen-env-files.sh;
+
+.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh db-script npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test env
 
