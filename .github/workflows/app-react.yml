@@ -85,6 +85,7 @@ jobs:
           body-includes: QUALITY GATE STATUS FOR APP-REACT
        
       - name: Check Quality Gate and Create Comment
+        uses: peter-evans/create-or-update-comment@v1
         if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == '' 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
