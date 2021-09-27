@@ -15,15 +15,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Extract Branch Name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
-      - name: sample
-        run: |
-            echo "forked repo: ${{github.event.pull_request.head.repo.full_name }}"
-            echo "repor: ${{github.repository }}"
+
       - name: Setup .NET 5
         uses: actions/setup-dotnet@v1
         with:
@@ -103,7 +102,7 @@ jobs:
       - name: SonarScanner for .NET 5 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@2.0
-        if: github.event.pull_request.head.repo.full_name == github.repository 
+        #if: ${{ github.event_name == 'push' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
@@ -119,7 +118,7 @@ jobs:
           sonarHostname: ${{secrets.SONAR_URL}}
           
       - name: Find Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request'
         uses: peter-evans/find-comment@v1
         id: fc
         with:
@@ -128,7 +127,7 @@ jobs:
           body-includes: QUALITY GATE STATUS FOR .NET 5
           
       - name: Check Quality Gate and Create Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == '' && github.event.pull_request.head.repo.full_name == github.repository
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == ''
         uses: peter-evans/create-or-update-comment@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -143,7 +142,7 @@ jobs:
             [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
           reactions: confused
       - name: Check Quality Gate and Update Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != '' && github.event.pull_request.head.repo.full_name == github.repository
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
         uses: peter-evans/create-or-update-comment@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
