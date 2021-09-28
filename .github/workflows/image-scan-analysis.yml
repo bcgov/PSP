@@ -13,8 +13,8 @@ jobs:
   nodejs-base-image:
 
     name: nodejs-base-image
-    runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: read
@@ -147,8 +147,8 @@ jobs:
   nginx-base-image:
 
     name: nginx-base-image
-    runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest 
     permissions:
       actions: read
       contents: read
@@ -411,8 +411,8 @@ jobs:
   aspnet-runtime:
 
     name: aspnet-runtime
-    runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest   
     permissions:
       actions: read
       contents: read
@@ -542,8 +542,8 @@ jobs:
   dotnet-sdk:
 
     name: dotnet5-sdk
-    runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest  
     permissions:
       actions: read
       contents: read
@@ -939,10 +939,9 @@ jobs:
          reactions: confused      
         
   jenkins-agent-dotnet:
-
+    if: github.event.pull_request.head.repo.full_name == github.repository
     name: jenkins-agent-dotnet
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
