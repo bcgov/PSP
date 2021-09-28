@@ -1,8 +1,6 @@
 name: Image Security Scan
 
 on:
-  push:
-    branches: [master, test, dev]
   pull_request_target:
     types: [assigned, opened, synchronize, reopened]
   schedule:
@@ -13,7 +11,6 @@ jobs:
   nodejs-base-image:
 
     name: nodejs-base-image
-    #if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -147,7 +144,6 @@ jobs:
   nginx-base-image:
 
     name: nginx-base-image
-    #if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest 
     permissions:
       actions: read
