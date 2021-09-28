@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./backend
-      GITHUB_TOKEN: ${{ secrets.SSH_PRIVATE_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Extract Branch Name
         shell: bash
@@ -102,7 +100,7 @@ jobs:
       - name: SonarScanner for .NET 5 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@2.0
-        #if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
@@ -118,7 +116,7 @@ jobs:
           sonarHostname: ${{secrets.SONAR_URL}}
           
       - name: Find Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request'
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         uses: peter-evans/find-comment@v1
         id: fc
         with:
@@ -142,7 +140,7 @@ jobs:
             [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
           reactions: confused
       - name: Check Quality Gate and Update Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
+        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != '' && github.event.pull_request.head.repo.full_name == github.repository
         uses: peter-evans/create-or-update-comment@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
