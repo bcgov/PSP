@@ -14,6 +14,7 @@ jobs:
 
     name: nodejs-base-image
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
@@ -30,19 +31,13 @@ jobs:
     - name: Authenticate and set context
       uses: redhat-actions/oc-login@v1
       env:
-      # These can be stored in secrets, if desired.
         OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}} # service account gitaction in openshift will be used here!
         OPENSHIFT_NAMESPACE: 3cd915-tools
         SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -55,10 +50,8 @@ jobs:
     - name: Pull nodejs Base Image
       env:
         OPENSHIFT_NAMESPACE: 3cd915-tools
-      run: |
-        #docker login -u ${{env.OPENSHIFT_USER}} -p $(oc whoami -t) ${{env.OPENSHIFT_REGISTRY}}   
+      run: | 
         docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}} 
-        #docker image ls
       working-directory: ${{env.working-directory}}
     - name: Scan nodejs14 Base Image with Aqua Trivy
       id: scan
@@ -82,7 +75,7 @@ jobs:
   
   comment_nodejs_pr:
   # this action will leave a comment in response to vulnerability scans performed on cotnainer image
-    if: always() && needs.nodejs-base-image.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.nodejs-base-image.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: nodejs-base-image
     runs-on: ubuntu-latest
     env:
@@ -155,6 +148,7 @@ jobs:
 
     name: nginx-base-image
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
@@ -171,19 +165,13 @@ jobs:
     - name: Authenticate and set context
       uses: redhat-actions/oc-login@v1
       env:
-      # These can be stored in secrets, if desired.
         OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
         OPENSHIFT_NAMESPACE: 3cd915-tools
         SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -218,7 +206,7 @@ jobs:
 
   comment_nginx_pr: 
   # this action will leave a comment in response to vulnerability scans performed on cotnainer image
-    if: always() && needs.nginx-base-image.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.nginx-base-image.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: nginx-base-image
     runs-on: ubuntu-latest
     env:
@@ -288,7 +276,7 @@ jobs:
           reactions: confused 
 
   build_frontend:
-    if: always()
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository
     needs: [nodejs-base-image,nginx-base-image]
     name: pims-frontend
     runs-on: ubuntu-latest
@@ -315,12 +303,7 @@ jobs:
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -356,7 +339,7 @@ jobs:
   
   comment_app_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.build_frontend.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.build_frontend.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build_frontend 
     runs-on: ubuntu-latest
     env:
@@ -429,6 +412,7 @@ jobs:
 
     name: aspnet-runtime
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
@@ -452,12 +436,7 @@ jobs:
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -491,7 +470,7 @@ jobs:
   
   comment_aspnet_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.aspnet-runtime.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.aspnet-runtime.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: aspnet-runtime 
     runs-on: ubuntu-latest
     env:
@@ -564,6 +543,7 @@ jobs:
 
     name: dotnet5-sdk
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
@@ -587,12 +567,7 @@ jobs:
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -626,7 +601,7 @@ jobs:
   
   comment_dotnetsdk_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.dotnet-sdk.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.dotnet-sdk.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: dotnet-sdk 
     runs-on: ubuntu-latest
     env:
@@ -698,7 +673,7 @@ jobs:
   
   build_backend:
     
-    if: always() 
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository
     needs: [aspnet-runtime, dotnet-sdk] 
     name: pims-backend
     runs-on: ubuntu-latest
@@ -726,12 +701,7 @@ jobs:
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -765,7 +735,7 @@ jobs:
    
   comment_api_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.build_backend.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.build_backend.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build_backend 
     runs-on: ubuntu-latest
     env:
@@ -837,7 +807,7 @@ jobs:
    
   pims_logging:
   
-    if: always()
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository
     needs: [build_frontend, build_backend] 
     name: logging
     runs-on: ubuntu-latest
@@ -865,12 +835,7 @@ jobs:
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:   
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -905,7 +870,7 @@ jobs:
    
   comment_logging_pr:
   # this action will leave a comment in response to Image scans performed on pull requests
-    if: always() && needs.pims_logging.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.pims_logging.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: pims_logging 
     runs-on: ubuntu-latest
     env:
@@ -977,6 +942,7 @@ jobs:
 
     name: jenkins-agent-dotnet
     runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: read
       contents: read
@@ -1001,12 +967,7 @@ jobs:
         OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}} 
 
       with:
-      # URL to your OpenShift cluster.
-      # Refer to Step 2.
         openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-
-      # Authentication Token. Can use username and password instead.
-      # Refer to Step 3.
         openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
     
     - name: Login to OpenShift Container Registry
@@ -1042,7 +1003,7 @@ jobs:
    
   comment_agent_pr:
   # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.jenkins-agent-dotnet.result == 'failure' && github.event_name == 'pull_request'
+    if: always() && needs.jenkins-agent-dotnet.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: jenkins-agent-dotnet 
     runs-on: ubuntu-latest
     env:
