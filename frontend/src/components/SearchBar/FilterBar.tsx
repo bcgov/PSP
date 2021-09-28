@@ -1,9 +1,7 @@
 import './FilterBar.scss';
 
 import { Form } from 'components/common/form';
-import PlusButton from 'components/common/form/PlusButton';
-import ResetButton from 'components/common/form/ResetButton';
-import SearchButton from 'components/common/form/SearchButton';
+import { PlusButton, ResetButton, SearchButton } from 'components/common/form';
 import { Formik } from 'formik';
 import React, { PropsWithChildren } from 'react';
 import Col from 'react-bootstrap/Col';

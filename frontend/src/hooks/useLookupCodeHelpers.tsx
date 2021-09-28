@@ -1,18 +1,14 @@
 import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
-import Claims from 'constants/claims';
 import { useCallback } from 'react';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { mapLookupCode } from 'utils';
 
-import { useKeycloakWrapper } from './useKeycloakWrapper';
-
 /**
  * Hook to return an array ILookupCode for specific types.
  */
 export function useLookupCodeHelpers() {
-  const keycloak = useKeycloakWrapper();
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
   const getCodeById = (type: string, id: number | string): string | undefined => {
     return lookupCodes
@@ -51,8 +47,6 @@ export function useLookupCodeHelpers() {
     const classifications = getByType(API.PROPERTY_CLASSIFICATION_CODE_SET_NAME);
     return filter
       ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c)).filter(filter)
-      : !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)
-      ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c))
       : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
   };
 

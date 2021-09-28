@@ -60,6 +60,11 @@ namespace Pims.Dal
         /// get - The tenant service.
         /// </summary>
         public ITenantService Tenant { get { return _serviceProvider.GetService<ITenantService>(); } }
+
+        /// <summary>
+        /// get - The lease service.
+        /// </summary>
+        public ILeaseService Lease { get { return _serviceProvider.GetService<ILeaseService>(); } }
         #endregion
 
         #region Constructors

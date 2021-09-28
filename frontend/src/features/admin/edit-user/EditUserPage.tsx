@@ -155,13 +155,13 @@ const EditUserPage = (props: IEditUserPageProps) => {
               setSubmitting(false);
             }}
           >
-            {props => (
+            {formikProps => (
               <Form className="userInfo">
                 <Label>IDIR/BCeID</Label>
                 <Input
                   data-testid="businessIdentifier"
                   field="businessIdentifier"
-                  value={props.values.businessIdentifier}
+                  value={formikProps.values.businessIdentifier}
                   readOnly={true}
                   type="text"
                 />
@@ -169,7 +169,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                 <Input
                   data-testid="lastLogin"
                   field="lastLogin"
-                  value={props.values.lastLogin}
+                  value={formikProps.values.lastLogin}
                   readOnly={true}
                   type="text"
                 />
@@ -180,7 +180,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                     <Input
                       data-testid="firstName"
                       field="firstName"
-                      placeholder={props.values.firstName}
+                      placeholder={formikProps.values.firstName}
                       type="text"
                     />
                   </Col>
@@ -189,7 +189,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                     <Input
                       data-testid="surname"
                       field="surname"
-                      placeholder={props.values.surname}
+                      placeholder={formikProps.values.surname}
                       type="text"
                     />
                   </Col>
@@ -199,7 +199,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                 <Input
                   data-testid="email"
                   field="email"
-                  placeholder={props.values.email}
+                  placeholder={formikProps.values.email}
                   type="email"
                 />
 

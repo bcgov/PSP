@@ -11,7 +11,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Redirect } from 'react-router-dom';
 import { useAppSelector } from 'store/hooks';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import { NEW_PIMS_USER } from 'store/slices/users';
 import { Logo, useTenant } from 'tenants';
 
@@ -27,9 +26,7 @@ const Login = () => {
   const keyCloakWrapper = useKeycloakWrapper();
   const keycloak = keyCloakWrapper.obj;
   const isIE = usingIE();
-  const activated = useAppSelector(
-    state => state.network[actionTypes.ADD_ACTIVATE_USER] as IGenericNetworkAction,
-  );
+  const activated = useAppSelector(state => state.network[actionTypes.ADD_ACTIVATE_USER]);
   const tenant = useTenant();
 
   if (!keycloak) {

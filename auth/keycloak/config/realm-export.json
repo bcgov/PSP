@@ -579,7 +579,7 @@
       "emailVerified": false,
       "firstName": "Admin",
       "lastName": "User",
-      "email": "admin@pims.gov.bc.ca",
+      "email": "admin@test.com",
       "attributes": {
         "displayName": ["User, Admin"],
         "organizations": ["1", "2", "3"]
@@ -611,7 +611,7 @@
       "emailVerified": false,
       "firstName": "Real Estate",
       "lastName": "Manager",
-      "email": "rem@pims.gov.bc.ca",
+      "email": "rem@test.com",
       "attributes": {
         "displayName": ["Manager, Real Estate"],
         "organizations": ["1", "2", "3"]
