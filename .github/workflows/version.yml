@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }} # with this we can bypass branch protection rules here (no-push)
+          ssh-key: ${{ secrets.DEPLOY_KEY }} # with this we can bypass branch protection rules here (no-push)
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
