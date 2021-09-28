@@ -86,7 +86,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, setFieldValue, values }) => (
+      {({ isSubmitting, setFieldValue, values, resetForm }) => (
         <Form>
           <Form.Row className="map-filter-bar m-0">
             <Col className="bar-item filter-options">
@@ -102,7 +102,13 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
               />
             </Col>
             <Col className="bar-item">
-              <ResetButton disabled={isSubmitting} onClick={resetFilter} />
+              <ResetButton
+                disabled={isSubmitting}
+                onClick={() => {
+                  resetForm();
+                  resetFilter();
+                }}
+              />
             </Col>
             <Col className="bar-item">
               <SearchToggle onClick={handlePageToggle} toolId={'toggle'} toggle={toggle} />
