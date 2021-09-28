@@ -13,7 +13,7 @@ jobs:
   nodejs-base-image:
 
     name: nodejs-base-image
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -147,7 +147,7 @@ jobs:
   nginx-base-image:
 
     name: nginx-base-image
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     runs-on: ubuntu-latest 
     permissions:
       actions: read
@@ -276,7 +276,7 @@ jobs:
           reactions: confused 
 
   build_frontend:
-    if: always() && github.event.pull_request.head.repo.full_name == github.repository
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     needs: [nodejs-base-image,nginx-base-image]
     name: pims-frontend
     runs-on: ubuntu-latest
@@ -411,7 +411,7 @@ jobs:
   aspnet-runtime:
 
     name: aspnet-runtime
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     runs-on: ubuntu-latest   
     permissions:
       actions: read
@@ -542,7 +542,7 @@ jobs:
   dotnet-sdk:
 
     name: dotnet5-sdk
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     runs-on: ubuntu-latest  
     permissions:
       actions: read
@@ -673,7 +673,7 @@ jobs:
   
   build_backend:
     
-    if: always() && github.event.pull_request.head.repo.full_name == github.repository
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     needs: [aspnet-runtime, dotnet-sdk] 
     name: pims-backend
     runs-on: ubuntu-latest
@@ -807,7 +807,7 @@ jobs:
    
   pims_logging:
   
-    if: always() && github.event.pull_request.head.repo.full_name == github.repository
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     needs: [build_frontend, build_backend] 
     name: logging
     runs-on: ubuntu-latest
@@ -939,7 +939,7 @@ jobs:
          reactions: confused      
         
   jenkins-agent-dotnet:
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push'
     name: jenkins-agent-dotnet
     runs-on: ubuntu-latest
     permissions:
