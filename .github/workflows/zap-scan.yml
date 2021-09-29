@@ -19,7 +19,7 @@ jobs:
         with:
           target: "https://dev-pims.th.gov.bc.ca/"
           cmd_options: "-r ${{ env.HTML_ZAP_REPORT }} -x ${{ env.ZAP_REPORT }}"
-          fail_action: true
+          fail_action: false
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         if: always() && ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
