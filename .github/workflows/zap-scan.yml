@@ -2,7 +2,9 @@ name: Site Security Scan
 
 on:
   push:
-    branches: [dev]
+    branches: [dev,pims-sookeke, secops]
+  pull_request:
+    branches: [dev, pims-sookeke, secops]
 
 jobs:
   zap_scan:
@@ -17,10 +19,10 @@ jobs:
         with:
           target: "https://dev-pims.th.gov.bc.ca/"
           cmd_options: "-r ${{ env.HTML_ZAP_REPORT }} -x ${{ env.ZAP_REPORT }}"
-          fail_action: false
+          fail_action: true
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
-        if: ${{ github.event_name == 'push' }}
+        if: always() && ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
