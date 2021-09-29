@@ -100,7 +100,7 @@ export const ManageUsers = () => {
   useEffect(() => {
     fetchUsers(
       toFilteredApiPaginateParams<IUsersFilter>(
-        pageIndex,
+        pageIndex ?? 0,
         pageSize,
         sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
         filter,
