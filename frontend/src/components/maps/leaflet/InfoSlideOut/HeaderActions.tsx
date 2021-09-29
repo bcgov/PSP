@@ -3,7 +3,6 @@ import { PropertyTypes } from 'constants/propertyTypes';
 import { IProperty } from 'interfaces';
 import * as React from 'react';
 import Row from 'react-bootstrap/Row';
-import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const LinkMenu = styled(Row)`
@@ -51,14 +50,14 @@ const HeaderActions: React.FC<IHeaderActions> = ({
   canViewDetails,
   canEditDetails,
 }) => {
-  const location = useLocation();
+  //const location = useLocation();
 
   return (
     <LinkMenu>
       Actions:
-      <Link to={{ ...location }} onClick={zoomToView}>
+      {/* TODO: disable this functionality until the frontend supports the new database projection <Link to={{ ...location }} onClick={zoomToView}>
         Zoom map
-      </Link>
+      </Link> */}
     </LinkMenu>
   );
 };
