@@ -27,6 +27,7 @@ const AuthLayout: React.FC = ({ children }) => {
 
 const Content = styled.div`
   grid-area: content;
+  overflow: auto;
 `;
 
 export default AuthLayout;
