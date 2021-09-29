@@ -87,7 +87,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("A description of the reason for encumbrance");
             builder.Property(m => m.IsOwned)
                 .IsRequired()
-                .HasDefaultValue(false)
+                .HasDefaultValue(true)
                 .HasComment("Whether this property is owned by the ministry");
             builder.Property(m => m.IsPropertyOfInterest)
                 .IsRequired()

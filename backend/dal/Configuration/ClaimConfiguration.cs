@@ -31,6 +31,7 @@ namespace Pims.Dal.Configuration
                 .HasMaxLength(500)
                 .HasComment("A description of the claim");
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this claim is disabled");
 
             builder.HasIndex(m => new { m.Name }, "CLAIM_NAME_TUC").IsUnique();

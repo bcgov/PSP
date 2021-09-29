@@ -38,6 +38,7 @@ namespace Pims.Dal.Configuration
                 .HasDefaultValue(false)
                 .HasComment("Whether this record is disabled");
             builder.Property(m => m.IsPublic)
+                .HasDefaultValue(false)
                 .HasComment("Whether this role is publicly available to users");
 
             builder.HasMany(m => m.Claims).WithMany(m => m.Roles).UsingEntity<RoleClaim>(

@@ -25,6 +25,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to the role");
 
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this relationship between user and role is disabled");
 
             builder.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PIM_USER_PIM_USERRL_FK");

@@ -25,6 +25,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to the organization");
 
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this person organization relationship is disabled");
 
             builder.HasOne(m => m.Person).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.PersonId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PIM_PERSON_PIM_PERORG_FK");

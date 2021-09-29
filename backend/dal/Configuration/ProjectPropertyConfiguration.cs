@@ -25,6 +25,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to property");
 
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this record is disabled");
 
             builder.HasOne(m => m.Project).WithMany(m => m.PropertiesManyToMany).HasForeignKey(m => m.ProjectId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_PROJCT_PIM_PRJPRP_FK");

@@ -24,9 +24,10 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.TaskId)
                 .HasComment("Foreign key to task template");
             builder.Property(m => m.IsRequired)
-                .HasDefaultValue(false)
+                .HasDefaultValue(true)
                 .HasComment("Whether this activity task is mandatory");
             builder.Property(m => m.IsDisabled)
+                .HasDefaultValue(false)
                 .HasComment("Whether this task template is disabled");
             builder.Property(m => m.DisplayOrder)
                 .HasDefaultValue(0)
