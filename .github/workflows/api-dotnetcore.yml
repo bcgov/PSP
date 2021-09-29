@@ -100,7 +100,7 @@ jobs:
       - name: SonarScanner for .NET 5 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@2.0
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
+        if: github.event_name == 'push' 
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
@@ -137,7 +137,8 @@ jobs:
             QUALITY GATE STATUS FOR .NET 5: FAILED.
             
             [View and resolve details on][1]
-            [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
+            
+            [1]: ${{env.SONAR_HOST_URL}}/dashboard?id=${{env.PROJECT_KEY}}
           reactions: confused
       - name: Check Quality Gate and Update Comment
         if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != '' && github.event.pull_request.head.repo.full_name == github.repository
@@ -153,6 +154,7 @@ jobs:
             QUALITY GATE STATUS FOR .NET 5: FAILED.
             
             [View and resolve details on][1]
-            [1]: ${{env.SONAR_HOST_URL}}dashboard?id=${{env.PROJECT_KEY}}
+            
+            [1]: ${{env.SONAR_HOST_URL}}/dashboard?id=${{env.PROJECT_KEY}}
           edit-mode: replace
           reactions: eyes
