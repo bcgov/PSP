@@ -22,7 +22,7 @@ function Footer() {
  * Styled footer component.
  */
 const FooterStyled = styled('div')`
-  padding: 1rem 0;
+  padding: 1rem 20%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

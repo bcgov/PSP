@@ -2,7 +2,7 @@
 
 exports[`Empty Layout renders 1`] = `
 .c5 {
-  padding: 1rem 0;
+  padding: 1rem 20%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
