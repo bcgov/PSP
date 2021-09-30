@@ -81,6 +81,11 @@ restart: | stop build up ## Restart local docker environment
 
 refresh: | down build up ## Recreates local docker environment
 
+.PHONY: start-infra
+start-infra: ## Starts infrastructure containers (e.g. keycloak, database, geoserver). Useful for local debugging
+	@echo "$(P) Starting up infrastructure containers..."
+	@"$(MAKE)" start n="keycloak database geoserver"
+
 start up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
 	@docker-compose up -d $(n)
@@ -102,8 +107,8 @@ build: ## Builds the local containers (n=service name)
 	@docker-compose build --no-cache $(n)
 
 rebuild: ## Build the local contains (n=service name) and then start them after building
-	@make build n=$(n)
-	@make up n=$(n)
+	@"$(MAKE)" build n=$(n)
+	@"$(MAKE)" up n=$(n)
 
 clean: ## Removes all local containers, images, volumes, etc
 	@echo "$(P) Removing all containers, images, volumes for solution."
@@ -115,7 +120,7 @@ logs: ## Shows logs for running containers (n=service name)
 	@docker-compose logs -f $(n)
 
 setup: ## Setup local container environment, initialize keycloak and database
-	@make build; make up; make pause-30; make db-update; make db-seed; make keycloak-sync;
+	@"$(MAKE)" build; make up; make pause-30; make db-update; make db-seed; make keycloak-sync;
 
 pause-30:
 	@echo "$(P) Pausing 30 seconds..."
@@ -140,7 +145,7 @@ npm-clean: ## Removes local containers, images, volumes, for frontend applicatio
 	@docker volume rm -f psp-frontend-node-cache
 
 npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packages are changed.
-	@make npm-clean; make build n=frontend; make up;
+	@"$(MAKE)" npm-clean; make build n=frontend; make up;
 
 db-migrations: ## Display a list of migrations.
 	@echo "$(P) Display a list of migrations."
