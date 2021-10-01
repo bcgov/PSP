@@ -181,6 +181,7 @@ const PropertyListView: React.FC = () => {
           loading={data === undefined}
           sort={sort}
           pageIndex={pageIndex}
+          pageSize={pageSize}
           onRequestData={onRequestData}
           pageCount={pageCount}
           onSortChange={(column: string, direction: SortDirection) => {
