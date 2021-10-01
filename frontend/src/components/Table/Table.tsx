@@ -671,7 +671,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       {!props.hideToolbar && (
         <div className="table-toolbar">
           {props.pageSize !== -1 && <TablePagination<T> instance={instance} />}
-          {!props.lockPageSize && props.data.length > 0 && !props.lockPageSize && (
+          {!props.lockPageSize && props.data.length > 0 && (
             <TablePageSizeSelector
               options={props.pageSizeOptions || DEFAULT_PAGE_SELECTOR_OPTIONS}
               value={props.pageSize || DEFAULT_PAGE_SIZE}
