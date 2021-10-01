@@ -5,6 +5,7 @@ $contentheading-height: 6rem;
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   padding: 0;
   .filter-container {
     padding: 0;
@@ -34,8 +35,8 @@ $contentheading-height: 6rem;
   }
   .ScrollContainer {
     padding: 1.6rem 3.2rem;
-    max-height: calc(100vh - #{$header-height} - #{$mapfilter-height} - #{$footer-height});
-    overflow-y: scroll;
+    flex-grow: 1; // because all parents are flex and have flex-grow set to 1 this takes all available space - calc no longer needed!
+    overflow-y: auto;
     table {
       background-color: #fff;
     }
