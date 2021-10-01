@@ -9,41 +9,41 @@ exports[`InfoSlideOut View renders correctly 1`] = `
     class="Toastify"
   />
   .c0 {
-  margin-right: -10px;
-  width: 341px;
-  min-height: 52px;
+  margin-right: -1rem;
+  width: 34.1rem;
+  min-height: 5.2rem;
   height: auto;
   background-color: #fff;
   position: relative;
-  border-radius: 4px;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
   z-index: 1000;
 }
 
 .c0.closed {
-  width: 0px;
-  height: 0px;
+  width: 0rem;
+  height: 0rem;
 }
 
 .c2 {
-  font-size: 30px;
+  font-size: 3rem;
 }
 
 .c1 {
-  width: 52px;
-  height: 52px;
+  width: 5.2rem;
+  height: 5.2rem;
   position: absolute;
-  left: -51px;
+  left: -5.1rem;
   background-color: #fff;
   color: slideOutBlue;
   border-color: slideOutBlue;
-  box-shadow: -2px 1px 4px rgba(0,0,0,0.2);
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
 .c1.open {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  top: 0px;
+  top: 0rem;
 }
 
 <div

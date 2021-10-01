@@ -1,4 +1,7 @@
 @import './colors.scss';
+#root .btn {
+  padding: 0.6rem 1.2rem;
+}
 
 .svg {
   fill: none;
@@ -24,7 +27,7 @@
   color: $icon-light-color;
   border-bottom-style: solid;
   border-bottom-color: $accent-color;
-  border-bottom-width: 1px;
+  border-bottom-width: 0.1rem;
   background-color: transparent !important;
 }
 
@@ -34,7 +37,7 @@
 }
 
 .btn {
-  min-height: 44px;
+  min-height: 4.4rem;
   display: flex;
   align-items: center;
 }
@@ -53,14 +56,14 @@
 .btn.btn-primary {
   background-color: $primary-color;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   color: #ffffff;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   font-family: 'BCSans', 'Noto Sans', Verdana, Arial, sans-serif;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
   cursor: pointer;
 }
 
@@ -81,14 +84,14 @@
 
 .btn.btn.btn-secondary {
   background: none;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   border: 1px solid $primary-color;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   font-family: 'BCSans', 'Noto Sans', Verdana, Arial, sans-serif;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
   cursor: pointer;
   color: $primary-color;
 }
@@ -108,9 +111,9 @@
   color: #909090;
   background-color: rgba(0, 0, 0, 0);
   border: none;
-  border-radius: 4px;
-  padding-left: 6px;
-  padding-right: 6px;
+  border-radius: 0.4rem;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
 }
 
 .btn.btn.btn-info:hover {
@@ -144,7 +147,7 @@
   background-color: $dark-variant-color;
   vertical-align: middle;
   height: 24px;
-  padding: 1px;
+  padding: 0.1rem;
   svg {
     vertical-align: baseline;
   }
@@ -153,14 +156,14 @@
 .btn.btn-danger {
   background-color: $danger-color;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   font-family: 'BCSans', 'Noto Sans', Verdana, Arial, sans-serif;
   font-size: 16px;
   color: #ffffff;
   text-decoration: none;
   text-align: center;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
   cursor: pointer;
 }
 
@@ -172,7 +175,7 @@
 .btn.btn.btn-warning {
   background-color: $accent-color;
   border: 1px solid $accent-color;
-  border-radius: 4px;
+  border-radius: 0.4rem;
   color: #ffffff;
   text-align: center;
   text-decoration: none;
@@ -180,7 +183,7 @@
   font-size: 16px;
   font-family: 'BCSans', 'Noto Sans', Verdana, Arial, sans-serif;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.1rem;
   cursor: pointer;
 }
 

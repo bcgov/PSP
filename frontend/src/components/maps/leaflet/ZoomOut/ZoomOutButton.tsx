@@ -12,8 +12,8 @@ import Control from '../Control/Control';
 const ZoomButton = styled(Button)`
   background-color: #ffffff !important;
   color: ${variables.darkVariantColor} !important;
-  width: 40px;
-  height: 40px;
+  width: 4rem;
+  height: 4rem;
 `;
 
 export type ZoomOutProps = {

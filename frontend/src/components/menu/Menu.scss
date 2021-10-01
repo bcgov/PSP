@@ -1,16 +1,16 @@
 .Menu-root {
   position: relative;
-  border: 1px;
+  border: 0.1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
 
   .Menu-button {
-    font-size: 14px;
+    font-size: 1.4rem;
   }
 
   .Menu-items {
-    box-shadow: 2px 2px 5px #888888;
+    box-shadow: 0.2rem 0.2rem 0.5rem #888888;
     background-color: #fff;
     position: absolute;
     display: none !important;
@@ -29,23 +29,23 @@
     }
 
     .Menu-filter {
-      margin: 5px;
+      margin: 0.5rem;
     }
 
     .Menu-options {
-      box-shadow: 2px 2px 5px #888888;
+      box-shadow: 0.2rem 0.2rem 0.5rem #888888;
       z-index: 1000;
       &.scrollable {
-        max-height: 220px;
+        max-height: 22rem;
         overflow-y: scroll;
       }
     }
 
     .Menu-item {
       width: 100% !important;
-      border-radius: 0px !important;
-      padding: 0.5rem 1.25rem;
-      font-size: 12px;
+      border-radius: 0rem !important;
+      padding: 0.8rem 1.4rem;
+      font-size: 1.2rem;
       text-align: left;
       &:hover {
         background-color: lighten(grey, 45%);

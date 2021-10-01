@@ -5,7 +5,7 @@
  * Licensed under MIT (https://github.com/Johann-S/bs-stepper/blob/master/LICENSE)
  */
 .bs-stepper .step-trigger {
-  min-width: 80px;
+  min-width: 8rem;
   display: -ms-inline-flexbox;
   display: flex;
   flex-direction: column;
@@ -15,8 +15,8 @@
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 20px 0px;
-  font-size: 0.75rem;
+  padding: 2rem 0rem;
+  font-size: 1.2rem;
   font-weight: 700;
   line-height: 1.5;
   color: $light-variant-color;
@@ -30,12 +30,12 @@
   user-select: none;
   background-color: transparent;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.4rem;
   transition: background-color 0.15s ease-out, color 0.15s ease-out;
 }
 
 h6 {
-  font-size: 14px;
+  font-size: 1.4rem;
 }
 
 .bs-stepper .step-trigger:not(:disabled):not(.disabled) {
@@ -60,7 +60,7 @@ h6 {
 
 .bs-stepper-label {
   display: inline-block;
-  margin: 0.25rem;
+  margin: 0.4rem;
 }
 
 .bs-stepper-header {
@@ -70,27 +70,27 @@ h6 {
   align-items: center;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 52rem) {
   .bs-stepper-header {
-    margin: 0 -10px;
+    margin: 0 -1rem;
     text-align: center;
   }
 }
 
 .bs-stepper-line,
 .bs-stepper .line {
-  -ms-flex: 1 0 32px;
-  flex: 1 0 32px;
-  min-width: 1px;
-  min-height: 2px;
+  -ms-flex: 1 0 3.2rem;
+  flex: 1 0 3.2rem;
+  min-width: 0.1rem;
+  min-height: 0.2rem;
   background-color: rgba(0, 0, 0, 0.12);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 40rem) {
   .bs-stepper-line,
   .bs-stepper .line {
-    -ms-flex-preferred-size: 20px;
-    flex-basis: 20px;
+    -ms-flex-preferred-size: 2rem;
+    flex-basis: 2rem;
   }
 }
 
@@ -104,7 +104,7 @@ h6 {
   width: 1.5em;
   height: 1.5em;
   padding: 0.25em 0;
-  margin: 0.25rem;
+  margin: 0.4rem;
   line-height: 1em;
   color: #fff;
   background-color: $light-variant-color;
@@ -124,10 +124,10 @@ h6 {
 }
 
 .bs-stepper-content {
-  padding: 0 20px 20px;
+  padding: 0 2rem 2rem;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 52rem) {
   .bs-stepper-content {
     padding: 0;
   }

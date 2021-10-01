@@ -28,7 +28,7 @@ export const PidLink = ({ data }: { data: any }) => {
     );
   };
   return !!data?.PID ? (
-    <Button variant="link" size="sm" onClick={clickPid} style={{ minHeight: '0px' }}>
+    <Button variant="link" size="sm" onClick={clickPid} style={{ minHeight: '.0rem' }}>
       {pidFormatter(data.PID)}
     </Button>
   ) : null;
