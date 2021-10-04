@@ -10,7 +10,7 @@ import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { useCallback, useEffect, useMemo } from 'react';
-import Container from 'react-bootstrap/esm/Container';
+import Container from 'react-bootstrap/Container';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/hooks';
@@ -154,40 +154,38 @@ export const ManageUsers = () => {
           />
         </Styled.WithShadow>
       </Container>
-      {
-        <Styled.ScrollContainer>
-          <Styled.Ribbon>
-            <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-              <Styled.FileIcon>
-                <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
-              </Styled.FileIcon>
-            </TooltipWrapper>
-          </Styled.Ribbon>
-          <Styled.TableContainer fluid>
-            <Table<IUserRecord>
-              name="usersTable"
-              columns={columns}
-              pageIndex={pageIndex}
-              data={userList}
-              defaultCanSort={true}
-              pageCount={Math.ceil(pagedUsers.total / pageSize)}
-              pageSize={pageSize}
-              onRequestData={onRequestData}
-              onSortChange={(column, direction) => {
-                if (!!direction) {
-                  dispatch(setUsersPageSort({ [column]: direction }));
-                } else {
-                  dispatch(setUsersPageSort({}));
-                }
-              }}
-              sort={sort}
-              onPageSizeChange={size => dispatch(setUsersPageSize(size))}
-              loading={!(users && !users.isFetching)}
-              clickableTooltip="Click IDIR/BCeID link to view User Information page"
-            />
-          </Styled.TableContainer>
-        </Styled.ScrollContainer>
-      }
+      <Styled.ScrollContainer>
+        <Styled.Ribbon>
+          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+            <Styled.FileIcon>
+              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
+            </Styled.FileIcon>
+          </TooltipWrapper>
+        </Styled.Ribbon>
+        <Styled.TableContainer fluid>
+          <Table<IUserRecord>
+            name="usersTable"
+            columns={columns}
+            pageIndex={pageIndex}
+            data={userList}
+            defaultCanSort={true}
+            pageCount={Math.ceil(pagedUsers.total / pageSize)}
+            pageSize={pageSize}
+            onRequestData={onRequestData}
+            onSortChange={(column, direction) => {
+              if (!!direction) {
+                dispatch(setUsersPageSort({ [column]: direction }));
+              } else {
+                dispatch(setUsersPageSort({}));
+              }
+            }}
+            sort={sort}
+            onPageSizeChange={size => dispatch(setUsersPageSize(size))}
+            loading={!(users && !users.isFetching)}
+            clickableTooltip="Click IDIR/BCeID link to view User Information page"
+          />
+        </Styled.TableContainer>
+      </Styled.ScrollContainer>
     </Styled.ListView>
   );
 };

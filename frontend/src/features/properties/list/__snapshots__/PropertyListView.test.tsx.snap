@@ -235,7 +235,7 @@ exports[`Property list view matches snapshot 1`] = `
       class="ScrollContainer"
     >
       <div
-        class="TableToolbar container-fluid"
+        class="TableToolbar px-0 container-fluid"
       >
         <h3>
           Property Information
