@@ -27,7 +27,6 @@ namespace Pims.Dal.Configuration
                 .HasComment("Foreign key to the organization");
 
             builder.Property(m => m.IsDisabled)
-                .HasDefaultValue(false)
                 .HasComment("Whether this access request organization relationship is disabled");
 
             builder.HasOne(m => m.AccessRequest).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.AccessRequestId).OnDelete(DeleteBehavior.ClientCascade).HasConstraintName("PIM_ACRQST_PIM_ACRQOR_FK");

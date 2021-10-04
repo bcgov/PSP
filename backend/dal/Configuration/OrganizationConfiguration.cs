@@ -47,7 +47,6 @@ namespace Pims.Dal.Configuration
                 .HasMaxLength(200)
                 .HasComment("Organization website URI");
             builder.Property(m => m.IsDisabled)
-                .HasDefaultValue(false)
                 .HasComment("Whether the organization is disabled");
 
             builder.HasOne(m => m.Parent).WithMany(m => m.Children).HasForeignKey(m => m.ParentId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("PIM_ORG_PIM_PRNT_ORG_FK");
