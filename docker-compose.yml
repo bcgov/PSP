@@ -46,6 +46,7 @@ services:
     depends_on:
       - database
       - keycloak
+      - geoserver
     networks:
       - psp
 
@@ -68,6 +69,8 @@ services:
     env_file: ./frontend/.env
     networks:
       - psp
+
+  ####################### GeoServer #######################
   geoserver:
     image: kartoza/geoserver:2.19.2
     volumes:
@@ -83,6 +86,7 @@ services:
       retries: 3
     networks:
       - psp
+
 ####################### Networks Definition #######################
 networks:
   psp:

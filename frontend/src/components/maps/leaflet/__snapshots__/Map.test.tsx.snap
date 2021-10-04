@@ -219,6 +219,7 @@ exports[`MapProperties View renders correctly 1`] = `
 }
 
 .c0 {
+  width: 100%;
   display: grid;
   grid: 1fr / min-content 1fr;
   grid-template-areas: 'filter filter' 'sidetray map';
