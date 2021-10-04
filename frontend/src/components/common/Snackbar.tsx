@@ -23,7 +23,7 @@ interface ISnackbar extends ISnackbarState {
 
 export const Snackbar: React.FC<ISnackbar> = ({ onClose, message, show, variant }) => {
   return (
-    <ToastContainer show={show} delay={5000} autohide={true} onClose={onClose}>
+    <ToastContainer show={show} delay={5000} autohide onClose={onClose}>
       {show && <AlertMessage variant={variant}>{message}</AlertMessage>}
     </ToastContainer>
   );
