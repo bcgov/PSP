@@ -38,7 +38,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
         <Modal.Title>Errors</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+      <Modal.Body style={{ maxHeight: '50.0rem', overflowY: 'scroll' }}>
         {errors.map((error: IGenericNetworkAction, index: number) => (
           <Row key={index} style={{ wordBreak: 'break-all' }}>
             {process.env.NODE_ENV === 'development' ? (

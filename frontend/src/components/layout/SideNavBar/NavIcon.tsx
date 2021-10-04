@@ -48,9 +48,9 @@ const StyledLink = styled(Nav.Link)`
 `;
 
 const StyledLabel = styled.label`
-  margin-left: 0.25rem;
+  margin-left: 0.4rem;
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: white;
   white-space: nowrap;
   transition: width 0.25s;

@@ -1,19 +1,19 @@
 @import './styles.scss';
 
 .modal-dialog.modal-xl {
-  max-width: 1000px;
+  max-width: 100rem;
 }
 
 .modal-dialog.modal-l {
-  max-width: 750px;
+  max-width: 75rem;
 }
 
 .modal-dialog.modal-m {
-  max-width: 500px;
+  max-width: 50rem;
 }
 
 .modal-dialog.modal-s {
-  max-width: 400px;
+  max-width: 40rem;
 }
 
 .Toastify__toast .Toastify__toast-body {
@@ -37,9 +37,31 @@
 
 .tooltip {
   pointer-events: none;
+  font-size: 1.4rem;
+}
+
+.dropdown-menu {
+  font-size: 1.6rem;
+}
+
+.h4 {
+  font-size: 2.4rem;
 }
 
 #root {
+  .spinner-border {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .page-link {
+    padding: 0.8rem 1.2rem;
+  }
+
+  .nav-link {
+    padding: 0.8rem 1.6rem;
+  }
+
   .error {
     color: $danger-color;
   }
@@ -59,33 +81,33 @@
 
   select.form-control.is-invalid {
     background-image: none;
-    padding-right: 12px;
+    padding-right: 1.2rem;
   }
 
   //by default highlight required fields in blue.
   .form-group.required input:not(.is-invalid) {
-    border: 1px solid $secondary-variant-color;
+    border: 0.1rem solid $secondary-variant-color;
   }
 
   .form-group.required select:not(.is-invalid) {
-    border: 1px solid $secondary-variant-color;
+    border: 0.1rem solid $secondary-variant-color;
   }
 
   .input-group.required input:not(.is-invalid) {
-    border: 1px solid $secondary-variant-color;
+    border: 0.1rem solid $secondary-variant-color;
   }
 
   .form-check.required input:not(.is-invalid) {
-    border: 1px solid $secondary-variant-color;
+    border: 0.1rem solid $secondary-variant-color;
   }
 
   .form-group.required textarea:not(.is-invalid) {
-    border: 1px solid $secondary-variant-color;
+    border: 0.1rem solid $secondary-variant-color;
   }
 
   .form-select,
   .form-control {
-    border: 1px solid #606060;
+    border: 0.1rem solid #606060;
   }
 
   //by default, highlight dropdown options blue

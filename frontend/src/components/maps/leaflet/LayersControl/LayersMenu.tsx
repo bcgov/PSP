@@ -22,16 +22,16 @@ import { wmsHeaders } from './wmsHeaders';
 const ParentNode = styled(ListGroup.Item)`
   display: flex;
   align-items: center;
-  padding-left: 0px;
+  padding-left: 0rem;
   border: none;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   .form-group {
     .form-check {
       label {
         font-weight: bold;
         color: ${variables.textColor};
-        font-size: 13px;
+        font-size: 1.3rem;
       }
     }
   }
@@ -39,29 +39,29 @@ const ParentNode = styled(ListGroup.Item)`
 
 const LayerNode = styled(ListGroup.Item)`
   display: flex;
-  padding-left: 25px;
+  padding-left: 2.5rem;
   border: none;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 `;
 
 const OpenedIcon = styled(FaAngleDown)`
-  margin-right: 10px;
-  font-size: 15px;
+  margin-right: 1rem;
+  font-size: 1.5rem;
 `;
 
 const ClosedIcon = styled(FaAngleRight)`
-  margin-right: 10px;
-  font-size: 15px;
+  margin-right: 1rem;
+  font-size: 1.5rem;
 `;
 
 const FormGroup = styled(Form.Group)`
-  margin-bottom: 0px;
+  margin-bottom: 0rem;
   .form-check {
     display: flex;
     align-items: center;
     input {
-      margin-top: 0px;
+      margin-top: 0rem;
     }
 
     label {
@@ -72,10 +72,10 @@ const FormGroup = styled(Form.Group)`
 `;
 
 const LayerColor = styled.div<{ color: string }>`
-  width: 14px;
-  height: 14px;
+  width: 1.4rem;
+  height: 1.4rem;
   background-color: ${({ color }) => color};
-  margin-right: 5px;
+  margin-right: 0.5rem;
 `;
 
 /**

@@ -1,6 +1,6 @@
 @import '../../../variables';
 @import '../../../colors';
-$contentheading-height: 60px;
+$contentheading-height: 6rem;
 .PropertyListView {
   background-color: #fff;
   display: flex;
@@ -10,30 +10,30 @@ $contentheading-height: 60px;
     padding: 0;
     background-color: $filter-background-color;
     .container {
-      max-width: 1360px;
+      max-width: 136rem;
     }
     .form-group {
-      margin-bottom: 0rem;
+      margin-bottom: 0;
     }
   }
   .TableToolbar {
     display: flex;
     flex-direction: row;
-    padding-bottom: 1rem;
+    padding-bottom: 1.6rem;
     align-items: center;
   }
   .TableToolbar .menu {
     display: flex;
     flex-direction: row;
-    margin-left: 10px;
+    margin-left: 1rem;
     margin-top: auto;
     margin-right: auto;
   }
   .TableToolbar .menu div {
-    margin-left: 10px;
+    margin-left: 1rem;
   }
   .ScrollContainer {
-    padding: 1rem 2rem;
+    padding: 1.6rem 3.2rem;
     max-height: calc(100vh - #{$header-height} - #{$mapfilter-height} - #{$footer-height});
     overflow-y: scroll;
     table {

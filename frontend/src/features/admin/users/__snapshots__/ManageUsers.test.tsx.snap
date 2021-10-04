@@ -17,23 +17,23 @@ exports[`Manage Users Component Snapshot matches 1`] = `
 }
 
 .c4 {
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 
 .c2 {
-  margin-top: 10px;
-  margin-bottom: 40px;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
 }
 
 .c1 {
   background-color: #fff !important;
   color: primaryColor !important;
-  padding: 6px 5px;
+  padding: 0.6rem 0.5rem;
 }
 
 .c0 {
   text-align: right;
-  margin-right: 50px;
+  margin-right: 5rem;
 }
 
 <div
@@ -850,7 +850,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                   </div>
                   <div
                     class="Menu-items"
-                    style="width: 100px;"
+                    style="width: 10.0rem;"
                   >
                     <div
                       class="Menu-options list-group"
@@ -1026,7 +1026,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                   </div>
                   <div
                     class="Menu-items"
-                    style="width: 100px;"
+                    style="width: 10.0rem;"
                   >
                     <div
                       class="Menu-options list-group"
@@ -1135,7 +1135,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
           </div>
           <div
             class="Menu-items"
-            style="width: 60px;"
+            style="width: 6.0rem;"
           >
             <div
               class="Menu-options scrollable list-group"

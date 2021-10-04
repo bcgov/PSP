@@ -3,10 +3,10 @@
 .nav-tabs .nav-item.nav-link {
   background-color: $primary-color;
   color: white;
-  font-size: 14px;
-  padding: 0.5rem 2rem;
+  font-size: 1.4rem;
+  padding: 0.8rem 3.2rem;
   border: none;
-  border: 1px solid white;
+  border: 0.1rem solid white;
 }
 
 .nav-tabs .nav-item.nav-link.active {
@@ -21,7 +21,7 @@
 }
 
 .tab-content {
-  border: 1px solid $primary-light-color;
-  border-top: 1px solid white;
-  padding: 2rem 0;
+  border: 0.1rem solid $primary-light-color;
+  border-top: 0.1rem solid white;
+  padding: 3.2rem 0;
 }

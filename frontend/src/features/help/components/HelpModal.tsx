@@ -100,11 +100,11 @@ const DraggableModalDialog = (props: any) => {
 const ModalStyled = styled(Modal)`
   .close {
     color: white;
-    text-shadow: 0 1px 0 #000;
+    text-shadow: 0 0.1rem 0 #000;
     opacity: 0.9;
   }
   .modal-body {
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 20rem);
     overflow-y: auto;
   }
 `;
@@ -117,12 +117,12 @@ const DraggableTitle = styled(Modal.Title)`
 
 const ModalHeader = styled(Modal.Header)`
   background-color: ${variables.primaryColor};
-  padding: 5px;
+  padding: 0.5rem;
 `;
 
 const StyledTooltip = styled(TooltipIcon)`
-  margin-left: 5px;
-  margin-bottom: 5px;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 export default HelpModal;
