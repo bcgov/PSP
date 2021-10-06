@@ -8,14 +8,6 @@
 /* Created on:            2021-10-05 16:35                                */
 /* ---------------------------------------------------------------------- */
 
-
-/* ---------------------------------------------------------------------- */
-/* Add etl schema                                                          */
-/* ---------------------------------------------------------------------- */
-
-CREATE SCHEMA etl;
-GO
-
 /* ---------------------------------------------------------------------- */
 /* Add sequences                                                          */
 /* ---------------------------------------------------------------------- */
@@ -2300,40 +2292,6 @@ CREATE TABLE [dbo].[PIMS_WORKFLOW_MODEL_HIST] (
     CONSTRAINT [PIMS_WM29_H_UK] UNIQUE ([_WORKFLOW_MODEL_HIST_ID], [END_DATE_HIST])
 )
 GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Add table "etl.ETL_INTEREST_HOLDER_PERSON_ORG_LOG"                     */
-/* ---------------------------------------------------------------------- */
-
-
-
-CREATE TABLE [etl].[ETL_INTEREST_HOLDER_PERSON_ORG_LOG] (
-    [SURNAME] NVARCHAR(50),
-    [FIRST_NAME] NVARCHAR(50),
-    [MIDDLE_NAME] NVARCHAR(200),
-    [STREET_ADDRESS_1] NVARCHAR(200),
-    [STREET_ADDRESS_2] NVARCHAR(200),
-    [STREET_ADDRESS_3] NVARCHAR(200),
-    [MUNICIPALITY_NAME] NVARCHAR(200),
-    [PROVINCE] SMALLINT,
-    [COUNTRY] SMALLINT,
-    [ORGANIZATION_NAME] NVARCHAR(200),
-    [COUNTRY_ID] SMALLINT,
-    [PROVINCE_STATE_ID] SMALLINT,
-    [ADDRESS_ID] BIGINT,
-    [REGION_CODE] SMALLINT,
-    [DISTRICT_CODE] SMALLINT,
-    [ORGANIZATION_TYPE_CODE] NVARCHAR(20),
-    [ORGANIZATION_IDENTIFIER_TYPE_CODE] NVARCHAR(20),
-    [APP_CREATE_USERID] NVARCHAR(30),
-    [APP_CREATE_USER_DIRECTORY] NVARCHAR(30),
-    [APP_LAST_UPDATE_USERID] NVARCHAR(30),
-    [APP_LAST_UPDATE_USER_DIRECTORY] NVARCHAR(30)
-)
-GO
-
-
 
 
 /* ---------------------------------------------------------------------- */

@@ -23,7 +23,15 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create ETL schema
+-- Drop table etl.ETL_CONTACT_METHOD_LOG
+PRINT N'Drop table etl.ETL_CONTACT_METHOD_LOG'
+GO
+DROP TABLE IF EXISTS [etl].[ETL_CONTACT_METHOD_LOG]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Dtop ETL schema
 IF EXISTS (SELECT * 
            FROM   sys.schemas 
            WHERE  name = N'etl')
