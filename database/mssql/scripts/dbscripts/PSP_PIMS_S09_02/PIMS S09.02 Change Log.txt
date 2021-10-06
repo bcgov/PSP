@@ -1,6 +1,8 @@
 PSP_PIMS S09.02 Sprint 12 2021-Oct-05
+- Added etl schema
 - Added tables:
   - ETL_INTEREST_HOLDER_PERSON_ORG_LOG
+  - ETL_CONTACT_METHOD_LOG
 - Requires additional metadata to meet standards
 
 PSP_PIMS S09.01 Sprint 9 2021-Sep-01
