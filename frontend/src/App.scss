@@ -49,6 +49,11 @@
 }
 
 #root {
+  // React-bootstrap toast global styling
+  .toast {
+    font-size: 1.4rem;
+  }
+
   .spinner-border {
     width: 3.2rem;
     height: 3.2rem;
