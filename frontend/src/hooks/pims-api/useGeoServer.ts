@@ -5,7 +5,7 @@ import { useCallback, useContext } from 'react';
 import { TenantContext } from 'tenants';
 
 function buildUrl(inputUrl: string, id: number) {
-  return `${inputUrl}${id ? toCqlFilter({ PROPERTY_ID: id }) : ''}`;
+  return `${inputUrl}${toCqlFilter({ PROPERTY_ID: id })}`;
 }
 
 /**
@@ -18,6 +18,7 @@ export const useGeoServer = () => {
 
   const getPropertyWfs = useCallback(
     async function(id: number): Promise<Feature<Point> | null> {
+      if (isNaN(Number(id))) return null;
       const { data } = await CustomAxios().get<FeatureCollection>(buildUrl(url, id));
       return data.features?.length ? (data.features[0] as Feature<Point>) : null;
     },
