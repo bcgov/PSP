@@ -4,16 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// LeasePurposeType class, provides an entity for the datamodel to manage a list of lease purpose types.
+    /// LeasePaymentRvblType class, provides an entity for the datamodel to manage a list of lease payment rvbl types.
     /// </summary>
-    [MotiTable("PIMS_LEASE_PURPOSE_TYPE", "LSPRPTY")]
-    public class LeasePurposeType : TypeEntity<string>
+    [MotiTable("PIMS_LEASE_PAY_RVBL_TYPE", "LSPRTY")]
+    public class LeasePaymentReceivableType : TypeEntity<string>
     {
         #region Properties
         /// <summary>
-        /// get/set - Primary key to identify lease purpose type.
+        /// get/set - Primary key to identify lease payment rvbl type.
         /// </summary>
-        [Column("LEASE_PURPOSE_TYPE_CODE")]
+        [Column("LEASE_PAY_RVBL_TYPE_CODE")]
         public override string Id { get; set; }
 
         /// <summary>
@@ -24,16 +24,16 @@ namespace Pims.Dal.Entities
 
         #region Constructors
         /// <summary>
-        /// Create a new instance of a LeasePurposeType class.
+        /// Create a new instance of a LeasePaymentRvblType class.
         /// </summary>
-        public LeasePurposeType() { }
+        public LeasePaymentReceivableType() { }
 
         /// <summary>
-        /// Create a new instance of a LeasePurposeType class.
+        /// Create a new instance of a LeasePaymentRvblType class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public LeasePurposeType(string id, string description) : base(id, description)
+        public LeasePaymentReceivableType(string id, string description) : base(id, description)
         {
         }
         #endregion

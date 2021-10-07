@@ -34,6 +34,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Whether this claim is disabled");
 
             builder.HasIndex(m => new { m.Name }, "CLAIM_NAME_TUC").IsUnique();
+            builder.HasIndex(m => new { m.Key }, "CLMTYP_CLAIM_UID_IDX").IsUnique();
 
             base.Configure(builder);
         }

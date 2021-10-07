@@ -47,6 +47,7 @@ namespace Pims.Dal.Configuration
 
             builder.HasIndex(m => new { m.Key }, "ROLE_ROLE_UID_TUC").IsUnique();
             builder.HasIndex(m => new { m.Name }, "ROLE_NAME_TUC").IsUnique();
+            builder.HasIndex(m => new { m.KeycloakGroupId }, "ROLE_KEYCLOAK_GROUP_ID_IDX").IsUnique();
 
             base.Configure(builder);
         }

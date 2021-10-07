@@ -37,6 +37,27 @@ namespace Pims.Dal.Entities
         [Column("PIN")]
         public int? PIN { get; set; }
 
+        /// get/set - Foreign key to the property management organization.
+         /// </summary>
+        [Column("PROP_MGMT_ORG_ID")]
+        public long? PropertyManagementOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The organization that manages this property.
+        /// </summary>
+        public Organization PropertyManagementOrganization { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the property manager.
+         /// </summary>
+        [Column("PROPERTY_MANAGER_ID")]
+        public long? PropertyManagerId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease property manager.
+         /// </summary>
+        public Person PropertyManager { get; set; }
+
         /// <summary>
         /// get/set - Foreign key to the property type.
         /// </summary>
@@ -164,6 +185,29 @@ namespace Pims.Dal.Entities
         /// </summary>
         [Column("PROPERTY_AREA_UNIT_TYPE_CODE")]
         public string AreaUnitId { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the surplus declaration type.
+        /// </summary>
+        [Column("SURPLUS_DECLARATION_TYPE_CODE")]
+        public string SurplusDeclarationTypeId { get; set; }
+
+        // <summary>
+        /// get/set - Foreign key to the surplus declaration type.
+        /// </summary>
+        public PropertySurplusDeclarationType SurplusDeclarationType { get; set; }
+
+        /// <summary>
+        /// get/set - Comment related to the surplus declaration of this property.
+        /// </summary>
+        [Column("SURPLUS_DECLARATION_COMMENT")]
+        public string SurplusDeclarationComment { get; set; }
+
+        /// <summary>
+        /// get/set - Date of the surplus declaration.
+        /// </summary>
+        [Column("SURPLUS_DECLARATION_DATE")]
+        public DateTime? SurplusDeclarationDate { get; set; }
 
         /// <summary>
         /// get/set - The area unit type.

@@ -22,6 +22,7 @@ namespace Pims.Dal.Configuration
                 .HasAnnotation("ColumnOrder", 88);
             builder.Property(m => m.CreatedBy)
                 .IsRequired()
+                .HasDefaultValueSql("user_name()")
                 .HasMaxLength(30)
                 .HasComment("Reference to the username who created this record")
                 .HasAnnotation("ColumnOrder", 89);
@@ -30,6 +31,7 @@ namespace Pims.Dal.Configuration
                 .HasAnnotation("ColumnOrder", 90);
             builder.Property(m => m.CreatedByDirectory)
                 .IsRequired()
+                .HasDefaultValueSql("user_name()")
                 .HasMaxLength(30)
                 .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                 .HasAnnotation("ColumnOrder", 91);
@@ -42,6 +44,7 @@ namespace Pims.Dal.Configuration
                 .HasAnnotation("ColumnOrder", 92);
             builder.Property(m => m.UpdatedBy)
                 .IsRequired()
+                .HasDefaultValueSql("user_name()")
                 .HasMaxLength(30)
                 .HasComment("Reference to the user who last updated this record")
                 .HasAnnotation("ColumnOrder", 93);
@@ -50,6 +53,7 @@ namespace Pims.Dal.Configuration
                 .HasAnnotation("ColumnOrder", 94);
             builder.Property(m => m.UpdatedByDirectory)
                 .IsRequired()
+                .HasDefaultValueSql("user_name()")
                 .HasMaxLength(30)
                 .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                 .HasAnnotation("ColumnOrder", 95);

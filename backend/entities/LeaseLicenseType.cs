@@ -6,34 +6,34 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// LeaseType class, provides an entity for the datamodel to manage a list of lease types.
     /// </summary>
-    [MotiTable("PIMS_LEASE_TYPE", "LSTYPE")]
-    public class LeaseType : TypeEntity<int>
+    [MotiTable("PIMS_LEASE_LICENSE_TYPE", "LSLITYPE")]
+    public class LeaseLicenseType : TypeEntity<string>
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key to identify lease type.
         /// </summary>
-        [Column("LEASE_TYPE_CODE")]
-        public override int Id { get; set; }
+        [Column("LEASE_LICENSE_TYPE_CODE")]
+        public override string Id { get; set; }
 
         /// <summary>
-        /// get - Collection of lease activities.
+        /// get - Collection of leases.
         /// </summary>
-        public ICollection<LeaseActivity> Activities { get; } = new List<LeaseActivity>();
+        public ICollection<Lease> Leases { get; } = new List<Lease>();
         #endregion
 
         #region Constructors
         /// <summary>
         /// Create a new instance of a LeaseType class.
         /// </summary>
-        public LeaseType() { }
+        public LeaseLicenseType() { }
 
         /// <summary>
         /// Create a new instance of a LeaseType class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public LeaseType(int id, string description) : base(id, description)
+        public LeaseLicenseType(string id, string description) : base(id, description)
         {
         }
         #endregion

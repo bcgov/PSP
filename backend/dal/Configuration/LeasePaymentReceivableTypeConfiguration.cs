@@ -6,12 +6,12 @@ using Pims.Dal.Extensions;
 namespace Pims.Dal.Configuration
 {
     /// <summary>
-    /// LeaseSubtypeConfiguration class, provides a way to configure lease subtypes in the database.
+    /// LeasePaymentRvblTypeConfiguration class, provides a way to configure lease payment rvbl types in the database.
     ///</summary>
-    public class LeaseSubtypeConfiguration : TypeEntityConfiguration<LeaseSubtype, string>
+    public class LeasePaymentReceivableTypeConfiguration : TypeEntityConfiguration<LeasePaymentReceivableType, string>
     {
         #region Methods
-        public override void Configure(EntityTypeBuilder<LeaseSubtype> builder)
+        public override void Configure(EntityTypeBuilder<LeasePaymentReceivableType> builder)
         {
             builder.ToMotiTable();
 
