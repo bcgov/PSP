@@ -1,30 +1,22 @@
-import './PublicLayout.scss';
-
 import { EmptyHeader, Footer } from 'components/layout';
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';
+import * as Styled from './styles';
 
-const EmptyLayout: React.FC = ({ children }) => {
+const EmptyLayout: React.FC<React.HTMLAttributes<HTMLElement>> = ({ children, ...rest }) => {
   return (
     <>
-      <Container fluid className="App">
-        <HeaderStyled className="header-layout fixed-top">
-          <Container className="px-0">
-            <EmptyHeader />
-          </Container>
+      <Styled.EmptyAppGridContainer className="App" {...rest}>
+        <HeaderStyled>
+          <EmptyHeader />
         </HeaderStyled>
-
-        <main className="App-content">{children}</main>
-
-        <FooterStyled className="footer-layout fixed-bottom">
-          <Container className="px-0">
-            <Footer />
-          </Container>
+        {children}
+        <FooterStyled>
+          <Footer />
         </FooterStyled>
-      </Container>
+      </Styled.EmptyAppGridContainer>
     </>
   );
 };

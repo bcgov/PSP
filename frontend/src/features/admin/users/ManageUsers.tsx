@@ -16,7 +16,6 @@ import Container from 'react-bootstrap/Container';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store/hooks';
-import { IGenericNetworkAction } from 'store/slices/network/interfaces';
 import {
   setUsersFilter,
   setUsersPageIndex,
@@ -88,13 +87,11 @@ export const ManageUsers = () => {
     return state.users.filter;
   });
 
-  const users = useAppSelector(
-    state => state.network[actionTypes.GET_USERS] as IGenericNetworkAction,
-  );
+  const users = useAppSelector(state => state.network[actionTypes.GET_USERS]);
 
   const onRequestData = useCallback(
-    ({ pageIndex }) => {
-      dispatch(setUsersPageIndex(pageIndex));
+    ({ changedPageIndex }) => {
+      dispatch(setUsersPageIndex(changedPageIndex));
     },
     [dispatch],
   );
@@ -103,7 +100,7 @@ export const ManageUsers = () => {
   useEffect(() => {
     fetchUsers(
       toFilteredApiPaginateParams<IUsersFilter>(
-        pageIndex,
+        pageIndex ?? 0,
         pageSize,
         sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
         filter,

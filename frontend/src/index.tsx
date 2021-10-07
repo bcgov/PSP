@@ -18,7 +18,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { store } from 'store/store';
 import { ThemeProvider } from 'styled-components';
 import { TenantConsumer, TenantProvider } from 'tenants';
-import getKeycloakEventHandler from 'utils/KeycloakEventHandler';
+import getKeycloakEventHandler from 'utils/getKeycloakEventHandler';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';

@@ -36,19 +36,9 @@ const extractProps = (props: string[], source: any): any => {
 
 const defaultFilter = {
   address: '',
-  administrativeArea: '',
-  organizations: '',
-  classificationId: '',
-  includeAllProperties: '',
-  maxAssessedValue: '',
-  maxLotSize: '',
-  maxMarketValue: '',
-  maxNetBookValue: '',
-  minLotSize: '',
-  name: '',
   pid: '',
+  pin: '',
   propertyType: '',
-  rentableArea: '',
   searchBy: 'pid',
 };
 
@@ -69,7 +59,7 @@ export interface IRouterFilterProps<T> {
 /**
  * A generic hook that will extract the query parameters from the URL, store them in a redux store
  * and update the URL any time the specified 'filter' is updated.
- * On Mount it will extract the URL query parameters or pull from the redux store and set the specied 'filter'.
+ * On Mount it will extract the URL query parameters or pull from the redux store and set the specified 'filter'.
  *
  * The filter type of 'T' should be a flat object with properties that are only string.
  * NOTE: URLSearchParams not supported by IE.
@@ -113,11 +103,11 @@ export const useRouterFilter = <T extends object>({
       }
 
       if (params.sorting && setSorting) {
-        const sort = resolveSortCriteriaFromUrl(
+        const urlSort = resolveSortCriteriaFromUrl(
           typeof params.sorting === 'string' ? [params.sorting] : params.sorting,
         );
-        if (!_.isEmpty(sort)) {
-          setSorting(sort as any);
+        if (!_.isEmpty(urlSort)) {
+          setSorting(urlSort as any);
         }
       }
       setLoaded(true);

@@ -28,13 +28,10 @@ namespace Pims.Api.Test.Controllers.Reports
         #region Variables
         public static IEnumerable<object[]> PropertyFilters = new List<object[]>()
         {
-            new object [] { new PropertyFilterModel(100, 0, 0, 0) },
-            new object [] { new PropertyFilterModel(0, 100, 0, 0) },
-            new object [] { new PropertyFilterModel(0, 0, 10, 0) },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { Address = "Address" } },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { Organizations = new long[] { 1 } } },
-            new object [] { new PropertyFilterModel(0, 0, 0, 10) { ClassificationId = "class" } },
+            new object [] { new PropertyFilterModel() },
+            new object [] { new PropertyFilterModel() { Address = "Address" } },
+            new object [] { new PropertyFilterModel() { PIN = 999999 } },
+            new object [] { new PropertyFilterModel() { PID = "foobar" } },
         };
 
         public static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
@@ -290,7 +287,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
             var service = helper.GetService<Mock<IPimsService>>();
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
+            var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert
@@ -311,150 +308,11 @@ namespace Pims.Api.Test.Controllers.Reports
             var service = helper.GetService<Mock<IPimsService>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
+            var filter = new PropertyFilterModel() { };
 
             // Act
             // Assert
             Assert.Throws<BadRequestException>(() => controller.ExportProperties(filter));
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
-        }
-        #endregion
-        #region ExportAllProperties
-        /// <summary>
-        /// Make a successful request that includes the latitude.
-        /// </summary>
-        [Theory]
-        [MemberData(nameof(PropertyFilters))]
-        public void ExportPropertiesAllFields_ExcelX_Success(PropertyFilterModel filter)
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
-
-            var properties = new[] { EntityHelper.CreateProperty(1) };
-
-            var service = helper.GetService<Mock<IPimsService>>();
-            var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.Property>(properties, filter.Page, filter.Quantity);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
-
-            // Act
-            var result = controller.ExportPropertiesAllFields(filter);
-
-            // Assert
-            var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
-            Assert.NotNull(actionResult.FileDownloadName);
-            Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
-        }
-
-        /// <summary>
-        /// Make a successful request that passes the filter in the query string.
-        /// </summary>
-        [Theory]
-        [MemberData(nameof(PropertyQueryFilters))]
-        public void ExportPropertiesAllFields_ExcelX_Query_Success(Uri uri)
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<PropertyController>(Permissions.PropertyView, uri);
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENT_TYPE_EXCELX);
-
-            var properties = new[] { EntityHelper.CreateProperty(1) };
-
-            var service = helper.GetService<Mock<IPimsService>>();
-            var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.Property>(properties);
-            service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
-
-            // Act
-            var result = controller.ExportPropertiesAllFields();
-
-            // Assert
-            var actionResult = Assert.IsType<FileStreamResult>(result);
-            Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
-            Assert.NotNull(actionResult.FileDownloadName);
-            Assert.True(actionResult.FileStream.Length > 0);
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
-        }
-
-        /// <summary>
-        /// Make a failed request because the query doesn't contain filter values.
-        /// </summary>
-        [Fact]
-        public void ExportPropertiesAllFields_Query_NoFilter_BadRequest()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
-
-            var service = helper.GetService<Mock<IPimsService>>();
-
-            // Act
-            // Assert
-            Assert.Throws<BadRequestException>(() => controller.ExportPropertiesAllFields());
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
-        }
-
-        /// <summary>
-        /// Make a failed request because the body doesn't contain a filter object.
-        /// </summary>
-        [Fact]
-        public void ExportPropertiesAllFields_NoFilter_BadRequest()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
-
-            var service = helper.GetService<Mock<IPimsService>>();
-
-            // Act
-            // Assert
-            Assert.Throws<BadRequestException>(() => controller.ExportPropertiesAllFields(null));
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
-        }
-
-        /// <summary>
-        /// Make a failed request because the body doesn't contain a valid accept header.
-        /// </summary>
-        [Fact]
-        public void EExportPropertiesAllFields_NoAcceptHeader_BadRequest()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
-
-            var service = helper.GetService<Mock<IPimsService>>();
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
-
-            // Act
-            // Assert
-            Assert.Throws<BadRequestException>(() => controller.ExportPropertiesAllFields(filter));
-            service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
-        }
-
-        /// <summary>
-        /// Make a failed request because the body doesn't contain a valid accept header.
-        /// </summary>
-        [Fact]
-        public void ExportPropertiesAllFields_InvalidAcceptHeader_BadRequest()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
-
-            var service = helper.GetService<Mock<IPimsService>>();
-            var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
-            headers.Setup(m => m["Accept"]).Returns("invalid");
-            var filter = new PropertyFilterModel(100, 0, 0, 0) { ClassificationId = "class" };
-
-            // Act
-            // Assert
-            Assert.Throws<BadRequestException>(() => controller.ExportPropertiesAllFields(filter));
             service.Verify(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Never());
         }
         #endregion

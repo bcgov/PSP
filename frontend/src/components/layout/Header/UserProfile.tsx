@@ -92,7 +92,7 @@ export const UserProfile: React.FC = () => {
         )}
         <NavDropdown.Item
           onClick={() => {
-            keycloak.obj!.logout({ redirectUri: `${configuration.baseUrl}/logout` });
+            keycloak.obj.logout({ redirectUri: `${configuration.baseUrl}/logout` });
           }}
         >
           <LogoutText>

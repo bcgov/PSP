@@ -27,7 +27,7 @@ describe('useApiProperties api hook', () => {
       } as IPagedItems);
 
       const api = useApiProperties();
-      const response = await api.getProperties({} as any);
+      const response = await api.getPropertiesPaged({} as any);
 
       expect(response.status).toBe(200);
       expect(response.data).toStrictEqual({
@@ -45,7 +45,7 @@ describe('useApiProperties api hook', () => {
       mockAxios.onGet(`/properties/search?`).reply(200, mockParcel);
 
       const api = useApiProperties();
-      const response = await api.getProperties({} as any);
+      const response = await api.getPropertiesPaged({} as any);
 
       expect(response.status).toBe(200);
       expect(response.data).toEqual(mockParcel);

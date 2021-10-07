@@ -5,6 +5,9 @@ exports[`InfoSlideOut View renders correctly 1`] = `
   <div
     class="Toastify"
   />
+  <div
+    class="Toastify"
+  />
   .c0 {
   margin-right: -10px;
   width: 341px;
