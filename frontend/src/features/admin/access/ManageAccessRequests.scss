@@ -4,10 +4,17 @@ $filter-height: 7.6rem;
 $table-fontSize: 1.3rem;
 
 .manage-access-requests {
-  margin: 1rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0;
 
   .ScrollContainer {
-    padding-bottom: 2.5rem;
+    padding: 1.6rem 3.2rem;
+    flex-grow: 1; // because all parents are flex and have flex-grow set to 1 this takes all available space - calc no longer needed!
+    overflow: auto;
+
     .TableToolbar {
       display: flex;
       flex-direction: row;

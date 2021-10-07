@@ -23,7 +23,6 @@ namespace Pims.Dal.Configuration
                 .HasColumnType("DATETIME")
                 .HasComment("The date of the activity period");
             builder.Property(m => m.IsClosed)
-                .HasDefaultValue(false)
                 .HasComment("Whether this lease activity period is closed");
 
             base.Configure(builder);

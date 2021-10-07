@@ -11,8 +11,8 @@ using Pims.Dal;
 namespace Pims.Dal.Migrations
 {
     [DbContext(typeof(PimsContext))]
-    [Migration("20210922163301_v0.2.10.1")]
-    partial class v02101
+    [Migration("20211004172358_v0.2.11.1")]
+    partial class v02111
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,9 +181,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this access request organization relationship is disabled");
 
@@ -440,16 +438,14 @@ namespace Pims.Dal.Migrations
                         .HasComment("The order this activity task should be implemented");
 
                     b.Property<bool?>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this task template is disabled");
 
                     b.Property<bool>("IsRequired")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true)
+                        .HasDefaultValue(false)
                         .HasColumnName("IS_MANDATORY")
                         .HasComment("Whether this activity task is mandatory");
 
@@ -765,9 +761,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("A description of the claim");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this claim is disabled");
 
@@ -1154,30 +1148,22 @@ namespace Pims.Dal.Migrations
                         .HasComment("The date this lease expires");
 
                     b.Property<bool>("HasDigitalFile")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("HAS_DIGITAL_FILE")
                         .HasComment("Whether this lease has a digital file");
 
                     b.Property<bool>("HasDigitalLicense")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("HAS_DIGITAL_LICENSE")
                         .HasComment("Whether this lease has a digital license");
 
                     b.Property<bool>("HasPhysicalFile")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("HAS_PHYSICAL_FILE")
                         .HasComment("Whether this lease has a physical file");
 
                     b.Property<bool>("HasPhysicalLicense")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("HAS_PHYSICAL_LICENSE")
                         .HasComment("Whether this lease has a physical license");
 
@@ -1203,9 +1189,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("The date this lease insurance starts");
 
                     b.Property<bool>("IsExpired")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("EXPIRED")
                         .HasComment("Whether this lease has expired");
 
@@ -1544,9 +1528,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("The date of the activity period");
 
                     b.Property<bool?>("IsClosed")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_CLOSED")
                         .HasComment("Whether this lease activity period is closed");
 
@@ -2067,9 +2049,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("An identifier for the organization");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether the organization is disabled");
 
@@ -2318,9 +2298,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Person's first name.");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this person is disabled");
 
@@ -2431,9 +2409,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool?>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this person organization relationship is disabled");
 
@@ -2979,9 +2955,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool?>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this record is disabled");
 
@@ -3290,9 +3264,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool?>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this project workflow is disabled");
 
@@ -3456,7 +3428,7 @@ namespace Pims.Dal.Migrations
                     b.Property<bool>("IsOwned")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(true)
+                        .HasDefaultValue(false)
                         .HasColumnName("IS_OWNED")
                         .HasComment("Whether this property is owned by the ministry");
 
@@ -4117,9 +4089,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool?>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this record is disabled");
 
@@ -4731,9 +4701,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("Whether this record is disabled");
 
                     b.Property<bool>("IsPublic")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_PUBLIC")
                         .HasComment("Whether this role is publicly available to users");
 
@@ -5299,9 +5267,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool?>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this user organization relationship is disabled");
 
@@ -5414,9 +5380,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 88);
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IS_DISABLED")
                         .HasComment("Whether this relationship between user and role is disabled");
 

@@ -24,6 +24,10 @@ $fc-invalid-bg: #f2f2f2;
   }
 }
 
+.form-check-input {
+  margin-left: -2rem;
+}
+
 .error-states {
   color: $fc-invalid-color;
 }

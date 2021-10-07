@@ -115,11 +115,11 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   return (
-    <div>
+    <Container fluid className="EditUserPage">
       <Navbar className="navBar" expand="sm" variant="light" bg="light">
         <Navbar.Brand href="#">User Information</Navbar.Brand>
       </Navbar>
-      <Container fluid={true}>
+      <Container fluid>
         <Row className="user-edit-form-container">
           <Formik
             enableReinitialize
@@ -249,7 +249,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
           </Formik>
         </Row>
       </Container>
-    </div>
+    </Container>
   );
 };
 

@@ -41,8 +41,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("Person's birdate.");
 
             builder.Property(m => m.IsDisabled)
-                .HasComment("Whether this person is disabled")
-                .HasDefaultValue(false);
+                .HasComment("Whether this person is disabled");
 
             builder.HasOne(m => m.Address).WithMany(m => m.Persons).HasForeignKey(m => m.AddressId).OnDelete(DeleteBehavior.Cascade).HasConstraintName("PIM_ADDRSS_PIM_PERSON_FK");
 

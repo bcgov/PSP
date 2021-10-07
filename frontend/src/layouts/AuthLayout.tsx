@@ -30,7 +30,10 @@ const AuthLayout: React.FC = ({ children }) => {
 
 const Content = styled.div`
   grid-area: content;
-  overflow: auto;
+  overflow: hidden;
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
 `;
 
 export default AuthLayout;

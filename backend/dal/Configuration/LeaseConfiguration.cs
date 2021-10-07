@@ -81,19 +81,14 @@ namespace Pims.Dal.Configuration
                 .HasMaxLength(2000)
                 .HasComment("A description of the unit");
             builder.Property(m => m.IsExpired)
-                .HasDefaultValue(false)
                 .HasComment("Whether this lease has expired");
             builder.Property(m => m.HasPhysicalFile)
-                .HasDefaultValue(false)
                 .HasComment("Whether this lease has a physical file");
             builder.Property(m => m.HasDigitalFile)
-                .HasDefaultValue(false)
                 .HasComment("Whether this lease has a digital file");
             builder.Property(m => m.HasPhysicalLicense)
-                .HasDefaultValue(false)
                 .HasComment("Whether this lease has a physical license");
             builder.Property(m => m.HasDigitalLicense)
-                .HasDefaultValue(false)
                 .HasComment("Whether this lease has a digital license");
 
             builder.HasOne(m => m.PropertyManagementOrganization).WithMany(m => m.Leases).HasForeignKey(m => m.PropertyManagementOrganizationId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_ORG_PIM_LEASE_FK");
