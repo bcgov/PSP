@@ -87,9 +87,14 @@ describe('useProperties functions', () => {
 
   describe('getProperty action creator', () => {
     const url = `/properties/${mockParcel.id}`;
+    const wfsUrl = new RegExp(`ogs-internal/*`);
+
     it('Request successful, dispatches success with correct response', async () => {
       const mockResponse = { data: mockParcelDetail };
+      const mockWfsResponse = { data: MOCK.mockWfsGetPropertyById };
+      // mock API calls
       mockAxios.onGet(url).reply(200, mockResponse);
+      mockAxios.onGet(wfsUrl).reply(200, mockWfsResponse);
 
       const { getProperty } = setup();
       await getProperty(1);

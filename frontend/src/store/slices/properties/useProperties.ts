@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { useApiProperties } from 'hooks/pims-api';
+import { useGeoServer } from 'hooks/pims-api/useGeoServer';
 import { IProperty } from 'interfaces';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
@@ -38,6 +39,8 @@ export const useProperties = () => {
     deleteProperty,
     exportProperties: rawApiExportProperties,
   } = useApiProperties();
+
+  const { getPropertyWfs } = useGeoServer();
 
   /**
    * fetch properties, passing the current bounds of the map.
@@ -77,12 +80,21 @@ export const useProperties = () => {
     async (id: number, position?: [number, number]): Promise<IProperty> => {
       dispatch(logRequest(actionTypes.GET_PARCEL_DETAIL));
       dispatch(showLoading());
-      return getProperty(id)
-        .then((response: AxiosResponse<IProperty>) => {
+      // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
+      //   1. to the REST API to fetch property field attributes (e.g. address, etc)
+      //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
+      return Promise.all([getProperty(id), getPropertyWfs(id)])
+        .then(([apiProperty, wfsResponse]) => {
+          const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
+          const property: IProperty = {
+            ...apiProperty.data,
+            latitude,
+            longitude,
+          };
           dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
-          dispatch(storeProperty({ property: response.data, position }));
+          dispatch(storeProperty({ property, position }));
           dispatch(hideLoading());
-          return response.data;
+          return property;
         })
         .catch((axiosError: AxiosError) => {
           dispatch(
@@ -96,7 +108,7 @@ export const useProperties = () => {
         })
         .finally(() => dispatch(hideLoading()));
     },
-    [dispatch, getProperty],
+    [dispatch, getProperty, getPropertyWfs],
   );
 
   /**

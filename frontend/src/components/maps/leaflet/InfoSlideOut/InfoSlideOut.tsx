@@ -108,11 +108,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   const { getProperty } = useProperties();
   const mapInstance = useMap();
   const { propertyInfo } = popUpContext;
-  const jumpToView = () =>
-    mapInstance.setView(
-      [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
-      Math.max(MAX_ZOOM, mapInstance.getZoom()),
-    );
+
   const zoomToView = () =>
     mapInstance.flyTo(
       [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
@@ -144,7 +140,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
               propertyInfo={popUpContext.propertyInfo}
               propertyTypeId={popUpContext.propertyTypeId}
               onLinkClick={onHeaderActionClick}
-              jumpToView={jumpToView}
               zoomToView={zoomToView}
               canViewDetails={canViewProperty}
               canEditDetails={canEditProperty}
