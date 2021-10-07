@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">XERCES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArm8XOD0CeUS/uBmaglrsdAAAAAACAAAAAAAQZgAAAAEAACAAAACdCk+2uZOZV5GgGk6MH+8iigRMopNFQQeTWW6tGehJuwAAAAAOgAAAAAIAACAAAABU0YV4MQBejCPc0P4vvdQZ1ZCoInF5CPwX97fkcNGdmZAAAAAhYKJHGZQPMNSVVFRIRByRhWJbCfzC6s1SahZDdtgGc8nLqvfk6BLRHoKf4nAKh/cNUBBYz95wRVPondwPwAmAuDu6DIZTMqcnM6UGYaA5GhX8Uc9LqwEtbZrODTGEmK5zvYNxSEPgJn8how1V/xv2L3ByN5Pd+0DUXVqFtI+K+MoURBdilHPDsOPB+BWL869AAAAAhPWLeOj9YnN5jpijhrogNNI6xdQU2ZebRrH4Z3erGYImgDsSUjPno2zj5kljXeZgGouvis//N2GwsleujibPPQ==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArm8XOD0CeUS/uBmaglrsdAAAAAACAAAAAAAQZgAAAAEAACAAAADKntsz4nSfaubv7WG+apTYlB12DbjHzSaOQ/GejLtX0AAAAAAOgAAAAAIAACAAAADIJewMSmzQta6vl68OmH7ieW88dj4GdvDYx5K33yjYGJAAAACJxiNVd+iYBQazL58UvoSBmOfHBHMHQ0sVjs2sR/uRFBPVNBpE3NqWzbmd1MOmpP/mbIzAkO7VxeBDbz+Npv11C6QOVEq1pV/EOOzddXzrqVDWvC4MoZpSkyIMjx9H/H8S4nfeingvooDGP/TG433qbRTWx6/7TTw/otYtDRCQUOUYojm3HJvMuWOdrgWPup5AAAAA/tjvcaek+jp25jD1hGQSoPnlPVzH4zqN5kalCDxV3ZMfCFmBtkXCVooLvxuzAJ8NCuL5tKtEteLksgEVVLV55A==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -323,17 +323,17 @@
                 <SSIS:Property SSIS:Name="Name">Package2</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">92</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">102</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{97BA74CE-6492-4C08-B547-A8B2DF5F1316}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{FB20C63C-78DC-44BD-9FC9-A21A90D6DC6E}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
                 <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.ConnectByProxy">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.ConnectByProxy">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -348,7 +348,7 @@
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.ConnectionString">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.ConnectionString">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -363,7 +363,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.ConnectRetryCount">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.ConnectRetryCount">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -378,7 +378,7 @@
                     <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.ConnectRetryInterval">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.ConnectRetryInterval">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -393,7 +393,7 @@
                     <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.ConnectUsingManagedIdentity">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.ConnectUsingManagedIdentity">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -408,7 +408,7 @@
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.InitialCatalog">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.InitialCatalog">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -422,7 +422,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.Password">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.Password">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -436,7 +436,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.RetainSameConnection">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.RetainSameConnection">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -451,7 +451,7 @@
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.ServerName">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.ServerName">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -466,7 +466,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl.UserName">
+                <SSIS:Parameter SSIS:Name="CM.PAIMS_MASKED.UserName">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -481,7 +481,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.ConnectByProxy">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.ConnectByProxy">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -496,7 +496,7 @@
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.ConnectionString">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.ConnectionString">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -511,7 +511,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.ConnectRetryCount">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.ConnectRetryCount">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -526,7 +526,7 @@
                     <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.ConnectRetryInterval">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.ConnectRetryInterval">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -541,7 +541,7 @@
                     <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.ConnectUsingManagedIdentity">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.ConnectUsingManagedIdentity">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -556,7 +556,7 @@
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.InitialCatalog">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.InitialCatalog">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -571,7 +571,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.Password">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.Password">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -585,7 +585,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.RetainSameConnection">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.RetainSameConnection">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -600,7 +600,7 @@
                     <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.ServerName">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.ServerName">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -615,7 +615,7 @@
                     <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
                   </SSIS:Properties>
                 </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.MSI\MSSQLSERVER2.PIMSS09.00.UserName">
+                <SSIS:Parameter SSIS:Name="CM.PIMSS09.00.UserName">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>

@@ -11,16 +11,16 @@
   DTS:LocaleID="4105"
   DTS:ObjectName="Package2"
   DTS:PackageType="5"
-  DTS:VersionBuild="100"
-  DTS:VersionGUID="{C8DDA00A-62E6-40A2-8FAB-9CF77FD35BE2}">
+  DTS:VersionBuild="103"
+  DTS:VersionGUID="{252D0EF1-3E20-4196-86C2-CB157CDAD1F5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+      DTS:refId="Package.ConnectionManagers[PAIMS_MASKED]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{2CA26938-B681-4221-A68A-6E558882CE8E}"
-      DTS:ObjectName="kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl">
+      DTS:ObjectName="PAIMS_MASKED">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -29,15 +29,15 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArm8XOD0CeUS/uBmaglrsdAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAP/zGbhwaBFIqCsc7JwdGv2UTD4iBnCsjoHoIuiiLhZwAAAAAOgAAAAAIAACAAAAB05DGCy1H5E+XXM9W9ZV77wbpHL0ZA1kY8Si9NjTdzsyAAAACW4lzQwHvv6y7JIvqiKeVLn+SEahwBuhGA7XYALbEeGkAAAAC2OLYfed3Lvb3hENj15vKLfhxlnuUuk8mWt6qv4SOZ9jDCevL1QRw8zWBjvhbsI6J+6X3AITHKu1gqXAuIa3Ga</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArm8XOD0CeUS/uBmaglrsdAAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABM3isFHpSosvU404z+dssP8zP4Sh6+cYRr51tdVWXGBwAAAAAOgAAAAAIAACAAAACqpReEjjghBiFXOHOoptxKrgrquNtihF0cIDZYb7LlBiAAAAA+waOmLM+JVew3Imgr7fV2053bVMx4iT4K1EJgpEXgKEAAAAAnuWiwtI6SOQh+goHrpV5gDW6+JiHiA/LAvJcop3NKh3WLHaJ85Xr1k4e+VmCAwsdJjgUqpr1h1IeH0qEUm/Qz</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+      DTS:refId="Package.ConnectionManagers[PIMSS09.00]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{302942B2-7C84-4CB4-8D74-886178A6FA3A}"
-      DTS:ObjectName="MSI\MSSQLSERVER2.PIMSS09.00">
+      DTS:ObjectName="PIMSS09.00">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -132,8 +132,8 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[STREET_ADDRESS_2] = ? an
               <connections>
                 <connection
                   refId="Package\Load Contact Method\ADDRESS ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -844,8 +844,8 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[STREET_ADDRESS_2] = ? an
               <connections>
                 <connection
                   refId="Package\Load Contact Method\ETL_CONTACT_METHOD_LOG 1.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1107,8 +1107,8 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[STREET_ADDRESS_2] = ? an
               <connections>
                 <connection
                   refId="Package\Load Contact Method\ETL_CONTACT_METHOD_LOG 2.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1387,8 +1387,8 @@ where [refTable].[ADDRESS_ID] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Contact Method\ORGANIZATION ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -1527,8 +1527,8 @@ WHERE FAX_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PAM_INTEREST_HOLDER - CELL_PHONE_NO.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1905,8 +1905,8 @@ WHERE EMAIL_ADDRESS IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PAM_INTEREST_HOLDER - EMAIL.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2283,8 +2283,8 @@ WHERE FAX_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PAM_INTEREST_HOLDER - FAX_NO.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -2661,8 +2661,8 @@ WHERE HOME_PHONE_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PAM_INTEREST_HOLDER - HOME_PHONE_NO.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3039,8 +3039,8 @@ WHERE WORK_PHONE_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PAM_INTEREST_HOLDER - WORK_PHONE_NO.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -3434,8 +3434,8 @@ where [refTable].[SURNAME] = ? and [refTable].[FIRST_NAME] = ? and [refTable].[M
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PERSON ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -3631,8 +3631,8 @@ where [refTable].[SURNAME] = ? and [refTable].[FIRST_NAME] = ? and [refTable].[M
               <connections>
                 <connection
                   refId="Package\Load Contact Method\PIMS_CONTACT_METHOD 3.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5322,8 +5322,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Addresses\COUNTRY_ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -5461,8 +5461,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PAM_INTEREST_HOLDER.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -5783,8 +5783,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PIMS_ADDRESS.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6099,8 +6099,8 @@ where [refTable].[PROVINCE_STATE_CODE] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -6983,8 +6983,8 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[STREET_ADDRESS_2] = ? an
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\ADDRESS_ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -7541,8 +7541,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\COUNTRY_ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -7688,8 +7688,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\ETL_INTEREST_HOLDER_PERSON_ORG_LOG 1.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -7973,8 +7973,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\ETL_INTEREST_HOLDER_PERSON_ORG_LOG 2.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -8318,8 +8318,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\ETL_INTEREST_HOLDER_PERSON_ORG_LOG 3.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -8827,8 +8827,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PAM_INTEREST_HOLDER.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -9197,8 +9197,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PIMS_ORGANIZATIION.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -9474,8 +9474,8 @@ where [refTable].[DESCRIPTION] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -9737,8 +9737,8 @@ where [refTable].[PROVINCE_STATE_CODE] = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -10860,8 +10860,8 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[MUNICIPALITY_NAME] = ?</
               <connections>
                 <connection
                   refId="Package\Load Properties\Address Id, Region and District Code.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -11556,8 +11556,8 @@ where "refTable"."PROPERTY_ID" = ?</property>
               <connections>
                 <connection
                   refId="Package\Load Properties\Lookup.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -11714,8 +11714,8 @@ WHERE PID_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Properties\PAM Property.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -12207,8 +12207,8 @@ WHERE PID_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Properties\PIMS_PROPERTY.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -12262,13 +12262,6 @@ WHERE PID_NO IS NOT NULL</property>
                       cachedName="ZONING_POTENTIAL"
                       externalMetadataColumnId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input].ExternalColumns[ZONING_POTENTIAL]"
                       lineageId="Package\Load Properties\Union All.Outputs[Union All Output 1].Columns[ZONING_POTENTIAL]" />
-                    <inputColumn
-                      refId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input].Columns[PROPERTY_ID]"
-                      cachedDataType="numeric"
-                      cachedName="PROPERTY_ID"
-                      cachedPrecision="10"
-                      externalMetadataColumnId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input].ExternalColumns[PROPERTY_ID]"
-                      lineageId="Package\Load Properties\Union All.Outputs[Union All Output 1].Columns[PROPERTY_ID]" />
                     <inputColumn
                       refId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input].Columns[PROPERTY_TYPE_CODE]"
                       cachedDataType="wstr"
@@ -13778,8 +13771,8 @@ WHERE PID_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Property Addresses\PAM Property.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
-                  connectionManagerRefId="Package.ConnectionManagers[kangaroo.th.gov.bc.ca:20208/DBA05.fmasonbl]"
+                  connectionManagerID="Package.ConnectionManagers[PAIMS_MASKED]"
+                  connectionManagerRefId="Package.ConnectionManagers[PAIMS_MASKED]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -14939,8 +14932,8 @@ WHERE PID_NO IS NOT NULL</property>
               <connections>
                 <connection
                   refId="Package\Load Property Addresses\PIMS ADDRESS.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
-                  connectionManagerRefId="Package.ConnectionManagers[MSI\MSSQLSERVER2.PIMSS09.00]"
+                  connectionManagerID="Package.ConnectionManagers[PIMSS09.00]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMSS09.00]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -16074,7 +16067,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="33.2352799479167,23.9847715736041,111.6127734375,11.609375"
+              BoundingBox="33.2352799479165,23.9847715736041,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -16336,7 +16329,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="38.5269466145834,14.3084479371316,111.6127734375,11.609375"
+              BoundingBox="38.5269466145835,14.3084479371316,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -16702,7 +16695,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="78.8602799479167,20.6229022704837,111.6127734375,11.609375"
+              BoundingBox="78.8602799479165,20.6229022704837,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
