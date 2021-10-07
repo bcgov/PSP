@@ -18,7 +18,7 @@ interface ILeaseAndLicenseFilterProps {
  * Filter bar for leases and license.
  * @param {ILeaseAndLicenseFilterProps} param0
  */
-const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilterProps> = ({
+export const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilterProps> = ({
   isSubmitting,
   filter,
   setFilter,

@@ -2,9 +2,9 @@ using Mapster;
 using Pims.Dal.Helpers.Extensions;
 using System.Linq;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Lease.Models.Search;
+using Model = Pims.Api.Areas.Lease.Models.Lease;
 
-namespace Pims.Api.Areas.Lease.Mapping.Search
+namespace Pims.Api.Areas.Lease.Mapping.Lease
 {
     public class LeaseMap : IRegister
     {

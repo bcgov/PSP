@@ -46,3 +46,5 @@ export const LeasePage = styled.div`
   text-align: left;
   padding: 55px 2.4rem;
 `;
+
+export default LeaseAndLicenseListView;

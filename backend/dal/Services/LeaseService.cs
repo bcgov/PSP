@@ -56,6 +56,17 @@ namespace Pims.Dal.Services
             return leases;
         }
 
+        public Lease Get(int id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            return this.Context.Leases.Include(l => l.Properties)
+                .ThenInclude(p => p.Address)
+                .Include(l => l.ProgramType)
+                .Include(l => l.Tenant)
+                .Where(l => l.Id == id)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
         /// <summary>
         /// Get a page with an array of leases within the specified filters.
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.

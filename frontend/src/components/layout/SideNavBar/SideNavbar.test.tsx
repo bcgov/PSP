@@ -6,6 +6,7 @@ import React from 'react';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import { SideNavBar } from './SideNavbar';
+import { SidebarStateContextProvider } from './SideNavbarContext';
 
 interface IRenderProps {
   roles: string[];
@@ -14,7 +15,9 @@ const history = createMemoryHistory();
 const renderComponent = (props?: IRenderProps) =>
   render(
     <TestCommonWrapper history={history} roles={props?.roles ?? [Roles.REAL_ESTATE_MANAGER]}>
-      <SideNavBar />
+      <SidebarStateContextProvider>
+        <SideNavBar />
+      </SidebarStateContextProvider>
     </TestCommonWrapper>,
   );
 
