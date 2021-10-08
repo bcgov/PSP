@@ -1,4 +1,4 @@
-name: Zap Scan
+name: Site Security Scan
 
 on:
   push:

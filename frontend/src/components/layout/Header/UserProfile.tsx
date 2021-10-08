@@ -13,44 +13,44 @@ import styled from 'styled-components';
 
 /** the styling for the dropdown menu that appears after clicking the user's name */
 const StyleDropDown = styled(NavDropdown)`
-  font-size: 14px;
+  font-size: 1.4rem;
   .dropdown-menu {
-    width: 300px;
-    padding: 0px;
+    width: 30rem;
+    padding: 0rem;
   }
   .nav-link {
     color: #fff;
-    padding: 1px;
+    padding: 0.1rem;
   }
   .dropdown-item {
     background-color: ${variables.primaryLightColor};
-    border-top: 2px solid ${variables.accentColor};
+    border-top: 0.2rem solid ${variables.accentColor};
   }
 `;
 
 /** shaded box the users system roles will be displayed in */
 const RolesBox = styled.div`
   background-color: ${variables.filterBackgroundColor};
-  margin: 5px;
+  margin: 0.5rem;
 `;
 
 /** the text contained in the logout footer  */
 const LogoutText = styled.p`
   color: #fff;
-  margin-top: 0.5rem;
-  margin-left: 120px;
+  margin-top: 0.8rem;
+  margin-left: 12rem;
 `;
 
 /** the styling for the avatar next to user's name */
 const ProfileAvatar = styled(Image)`
-  height: 30px;
-  width: 30px;
+  height: 3rem;
+  width: 3rem;
 `;
 
 /** the styling for the logout icon in the logout footer */
 const LogoutButton = styled(FaSignOutAlt)`
-  margin-bottom: 2px;
-  margin-left: 5px;
+  margin-bottom: 0.2rem;
+  margin-left: 0.5rem;
 `;
 
 /** Component that allows the user to logout, and gives information on current user's organization/roles */

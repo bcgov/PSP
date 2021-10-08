@@ -11,30 +11,30 @@ exports[`InfoContent View functionality InfoContent renders correctly 1`] = `
 }
 
 .c2 {
-  margin: 0px;
-  width: 300px;
+  margin: 0rem;
+  width: 30rem;
 }
 
 .c3 {
-  width: 110px;
-  max-width: 135px;
-  padding-right: 10px;
-  padding-left: 0px;
+  width: 11rem;
+  max-width: 13.5rem;
+  padding-right: 1rem;
+  padding-left: 0rem;
 }
 
 .c4 {
-  max-width: 1px;
-  padding: 0px;
+  max-width: 0.1rem;
+  padding: 0rem;
   background-color: rgba(96,96,96,0.2);
 }
 
 .c5 {
-  padding-left: 10px;
-  padding-right: 0px;
+  padding-left: 1rem;
+  padding-right: 0rem;
 }
 
 .c1 {
-  margin: 0px 0px 10px 0px;
+  margin: 0rem 0rem 1rem 0rem;
 }
 
 <div

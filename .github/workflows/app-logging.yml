@@ -11,7 +11,7 @@ jobs:
 
   build:
 
-    name: pims-logging
+    name: build-logging
     if: github.event.ref == 'refs/heads/master' || github.event.ref == 'refs/heads/test' || github.event.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     env:

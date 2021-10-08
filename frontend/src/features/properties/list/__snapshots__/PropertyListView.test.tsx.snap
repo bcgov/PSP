@@ -64,7 +64,7 @@ exports[`Property list view matches snapshot 1`] = `
 .c3 {
   background-color: #fff !important;
   color: primaryColor !important;
-  padding: 6px 5px;
+  padding: 6px 0.5rem;
 }
 
 <div
@@ -235,7 +235,7 @@ exports[`Property list view matches snapshot 1`] = `
       class="ScrollContainer"
     >
       <div
-        class="TableToolbar container-fluid"
+        class="TableToolbar px-0 container-fluid"
       >
         <h3>
           Property Information

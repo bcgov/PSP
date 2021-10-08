@@ -2,7 +2,7 @@
 
 exports[`Manage access requests Snapshot matches 1`] = `
 .c0 {
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 
 <div
@@ -69,7 +69,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                   className="Menu-items left"
                   style={
                     Object {
-                      "width": "260px",
+                      "width": "26.0rem",
                     }
                   }
                 >
@@ -79,7 +79,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                     placeholder="Filter organizations"
                     style={
                       Object {
-                        "width": "calc(260px - 10px)",
+                        "width": "calc(26.0rem - 1.0rem)",
                       }
                     }
                     type="search"
@@ -140,7 +140,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                   className="Menu-items left"
                   style={
                     Object {
-                      "width": "200px",
+                      "width": "20.0rem",
                     }
                   }
                 >
@@ -150,7 +150,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                     placeholder="Filter roles"
                     style={
                       Object {
-                        "width": "calc(200px - 10px)",
+                        "width": "calc(20.0rem - 1.0rem)",
                       }
                     }
                     type="search"
@@ -798,7 +798,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                     className="Menu-items"
                     style={
                       Object {
-                        "width": "100px",
+                        "width": "10.0rem",
                       }
                     }
                   >
@@ -950,7 +950,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
             className="Menu-items"
             style={
               Object {
-                "width": "60px",
+                "width": "6.0rem",
               }
             }
           >

@@ -1,4 +1,3 @@
-import variables from '_variables.module.scss';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Table } from 'components/Table';
 import * as actionTypes from 'constants/actionTypes';
@@ -11,7 +10,6 @@ import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { useCallback, useEffect, useMemo } from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -23,7 +21,6 @@ import {
   setUsersPageSort,
   useUsers,
 } from 'store/slices/users';
-import styled from 'styled-components';
 import { formatApiDateTime, generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 import download from 'utils/download';
@@ -31,22 +28,7 @@ import download from 'utils/download';
 import { UsersFilterBar } from './components/UsersFilterBar';
 import { columnDefinitions } from './constants';
 import { IUserRecord } from './interfaces/IUserRecord';
-
-const TableContainer = styled(Container)`
-  margin-top: 10px;
-  margin-bottom: 40px;
-`;
-
-const FileIcon = styled(Button)`
-  background-color: #fff !important;
-  color: ${variables.primaryColor} !important;
-  padding: 6px 5px;
-`;
-
-const Ribbon = styled('div')`
-  text-align: right;
-  margin-right: 50px;
-`;
+import * as Styled from './styles';
 
 const downloadUsers = (filter: IPaginateParams) =>
   `${ENVIRONMENT.apiUrl}/reports/users?${
@@ -149,60 +131,62 @@ export const ManageUsers = () => {
   };
 
   return (
-    <div className="users-management-page">
-      <UsersFilterBar
-        value={filter}
-        organizationLookups={organizations}
-        rolesLookups={roles}
-        onChange={value => {
-          (value as any)?.organization
-            ? dispatch(
-                setUsersFilter({
-                  ...value,
-                  organization: (find(organizations, {
-                    id: +(value as any)?.organization,
-                  }) as any)?.name,
-                }),
-              )
-            : dispatch(setUsersFilter({ ...value, organization: '' }));
-          dispatch(setUsersPageIndex(0));
-        }}
-      />
-      {
-        <>
-          <Ribbon>
-            <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-              <FileIcon>
-                <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
-              </FileIcon>
-            </TooltipWrapper>
-          </Ribbon>
-          <TableContainer fluid>
-            <Table<IUserRecord>
-              name="usersTable"
-              columns={columns}
-              pageIndex={pageIndex}
-              data={userList}
-              defaultCanSort={true}
-              pageCount={Math.ceil(pagedUsers.total / pageSize)}
-              pageSize={pageSize}
-              onRequestData={onRequestData}
-              onSortChange={(column, direction) => {
-                if (!!direction) {
-                  dispatch(setUsersPageSort({ [column]: direction }));
-                } else {
-                  dispatch(setUsersPageSort({}));
-                }
-              }}
-              sort={sort}
-              onPageSizeChange={size => dispatch(setUsersPageSize(size))}
-              loading={!(users && !users.isFetching)}
-              clickableTooltip="Click IDIR/BCeID link to view User Information page"
-            />
-          </TableContainer>
-        </>
-      }
-    </div>
+    <Styled.ListView fluid className="users-management-page">
+      <Container fluid className="filter-container p-0 border-bottom">
+        <Styled.WithShadow fluid>
+          <UsersFilterBar
+            value={filter}
+            organizationLookups={organizations}
+            rolesLookups={roles}
+            onChange={value => {
+              (value as any)?.organization
+                ? dispatch(
+                    setUsersFilter({
+                      ...value,
+                      organization: (find(organizations, {
+                        id: +(value as any)?.organization,
+                      }) as any)?.name,
+                    }),
+                  )
+                : dispatch(setUsersFilter({ ...value, organization: '' }));
+              dispatch(setUsersPageIndex(0));
+            }}
+          />
+        </Styled.WithShadow>
+      </Container>
+      <Styled.ScrollContainer>
+        <Styled.Ribbon>
+          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+            <Styled.FileIcon>
+              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
+            </Styled.FileIcon>
+          </TooltipWrapper>
+        </Styled.Ribbon>
+        <Styled.TableContainer fluid>
+          <Table<IUserRecord>
+            name="usersTable"
+            columns={columns}
+            pageIndex={pageIndex}
+            data={userList}
+            defaultCanSort={true}
+            pageCount={Math.ceil(pagedUsers.total / pageSize)}
+            pageSize={pageSize}
+            onRequestData={onRequestData}
+            onSortChange={(column, direction) => {
+              if (!!direction) {
+                dispatch(setUsersPageSort({ [column]: direction }));
+              } else {
+                dispatch(setUsersPageSort({}));
+              }
+            }}
+            sort={sort}
+            onPageSizeChange={size => dispatch(setUsersPageSize(size))}
+            loading={!(users && !users.isFetching)}
+            clickableTooltip="Click IDIR/BCeID link to view User Information page"
+          />
+        </Styled.TableContainer>
+      </Styled.ScrollContainer>
+    </Styled.ListView>
   );
 };
 

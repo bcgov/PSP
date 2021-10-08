@@ -19,72 +19,72 @@ import HeaderActions from './HeaderActions';
 import { InfoContent } from './InfoContent';
 
 const InfoContainer = styled.div`
-  margin-right: -10px;
-  width: 341px;
-  min-height: 52px;
+  margin-right: -1rem;
+  width: 34.1rem;
+  min-height: 5.2rem;
   height: auto;
   background-color: #fff;
   position: relative;
-  border-radius: 4px;
-  box-shadow: -2px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
   z-index: 1000;
   &.closed {
-    width: 0px;
-    height: 0px;
+    width: 0rem;
+    height: 0rem;
   }
 `;
 
 const InfoHeader = styled.div`
   width: 100%;
-  height: 52px;
+  height: 5.2rem;
   background-color: ${variables.slideOutBlue};
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  padding-top: 16px;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
+  padding-top: 1.6rem;
+  border-top-right-radius: 0.4rem;
+  border-top-left-radius: 0.4rem;
 `;
 
 const InfoMain = styled.div`
   width: 100%;
-  padding-left: 10px;
-  padding: 0px 10px 5px 10px;
+  padding-left: 1rem;
+  padding: 0rem 1rem 0.5rem 1rem;
   position: relative;
 
   &.open {
     overflow-y: scroll;
-    max-height: calc(100vh - 380px);
+    max-height: calc(100vh - 38rem);
   }
 `;
 
 const InfoIcon = styled(FaInfo)`
-  font-size: 30px;
+  font-size: 3rem;
 `;
 
 const InfoButton = styled(Button)`
-  width: 52px;
-  height: 52px;
+  width: 5.2rem;
+  height: 5.2rem;
   position: absolute;
-  left: -51px;
+  left: -5.1rem;
   background-color: #fff;
   color: ${variables.slideOutBlue};
   border-color: ${variables.slideOutBlue};
-  box-shadow: -2px 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
   &.open {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    top: 0px;
+    top: 0rem;
   }
 `;
 
 const Title = styled.p`
-  font-size: 18px;
+  font-size: 1.8rem;
   color: #ffffff;
   text-decoration: none solid rgb(255, 255, 255);
-  line-height: 18px;
+  line-height: 1.8rem;
   font-weight: bold;
 `;
 
@@ -108,11 +108,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
   const { getProperty } = useProperties();
   const mapInstance = useMap();
   const { propertyInfo } = popUpContext;
-  const jumpToView = () =>
-    mapInstance.setView(
-      [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
-      Math.max(MAX_ZOOM, mapInstance.getZoom()),
-    );
+
   const zoomToView = () =>
     mapInstance.flyTo(
       [propertyInfo?.latitude as number, propertyInfo?.longitude as number],
@@ -144,7 +140,6 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
               propertyInfo={popUpContext.propertyInfo}
               propertyTypeId={popUpContext.propertyTypeId}
               onLinkClick={onHeaderActionClick}
-              jumpToView={jumpToView}
               zoomToView={zoomToView}
               canViewDetails={canViewProperty}
               canEditDetails={canEditProperty}

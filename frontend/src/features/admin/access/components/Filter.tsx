@@ -66,7 +66,7 @@ export const AccessRequestFilter = (props: IProps) => {
             searchPlaceholder="Filter organizations"
             enableFilter={true}
             alignLeft={true}
-            width="260px"
+            width="26.0rem"
             options={organizations}
             disableScrollToMenuElement={true}
           >
@@ -80,7 +80,7 @@ export const AccessRequestFilter = (props: IProps) => {
             searchPlaceholder="Filter roles"
             enableFilter={true}
             alignLeft={true}
-            width="200px"
+            width="20.0rem"
             options={roles}
           >
             {`Role: ${filterState.role || 'Show all'}`}&nbsp;&nbsp;

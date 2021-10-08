@@ -4,7 +4,7 @@ exports[`Tenant Header Header CITZ background 1`] = `
 .c0 {
   background-color: #003366;
   border: none;
-  border-bottom: 2px solid;
+  border-bottom: 0.2rem solid;
   grid-area: header;
 }
 
@@ -19,7 +19,7 @@ exports[`Tenant Header Header MOTI background 1`] = `
 .c0 {
   background-color: #003366;
   border: none;
-  border-bottom: 2px solid;
+  border-bottom: 0.2rem solid;
   grid-area: header;
 }
 
@@ -34,7 +34,7 @@ exports[`Tenant Header Header black background 1`] = `
 .c0 {
   background-color: black;
   border: none;
-  border-bottom: 2px solid;
+  border-bottom: 0.2rem solid;
   grid-area: header;
 }
 
@@ -49,7 +49,7 @@ exports[`Tenant Header Header default background 1`] = `
 .c0 {
   background-color: #003366;
   border: none;
-  border-bottom: 2px solid;
+  border-bottom: 0.2rem solid;
   grid-area: header;
 }
 
