@@ -6,19 +6,19 @@ using Pims.Dal.Extensions;
 namespace Pims.Dal.Configuration
 {
     /// <summary>
-    /// LeasePurposeSubtypeConfiguration class, provides a way to configure lease purpose subtypes in the database.
+    /// LeaseCategoryTypeConfiguration class, provides a way to configure leases in the database.
     ///</summary>
-    public class LeasePurposeSubtypeConfiguration : TypeEntityConfiguration<LeasePurposeSubtype, int>
+    public class LeaseCategoryTypeConfiguration : TypeEntityConfiguration<LeaseCategoryType, string>
     {
         #region Methods
-        public override void Configure(EntityTypeBuilder<LeasePurposeSubtype> builder)
+        public override void Configure(EntityTypeBuilder<LeaseCategoryType> builder)
         {
             builder.ToMotiTable();
 
             builder.HasMotiKey(m => m.Id);
             builder.Property(m => m.Id)
-                .HasColumnType("SMALLINT")
                 .IsRequired()
+                .HasMaxLength(20)
                 .HasComment("Primary key code to identify record");
 
             base.Configure(builder);

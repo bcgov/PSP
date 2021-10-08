@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// LeasePurposeSubtype class, provides an entity for the datamodel to manage a list of lease purpose subtypes.
+    /// LeaseCategoryType class, provides an entity for the datamodel to manage a list of lease category types.
     /// </summary>
-    [MotiTable("PIMS_LEASE_PURPOSE_SUBTYPE", "LSPRST")]
-    public class LeasePurposeSubtype : TypeEntity<int>
+    [MotiTable("PIMS_LEASE_CATEGORY_TYPE", "LSCATYPE")]
+    public class LeaseCategoryType : TypeEntity<string>
     {
         #region Properties
         /// <summary>
-        /// get/set - Primary key to identify lease purpose subtype.
+        /// get/set - Primary key to identify lease category type.
         /// </summary>
-        [Column("LEASE_PURPOSE_SUBTYPE_CODE")]
-        public override int Id { get; set; }
+        [Column("LEASE_CATEGORY_TYPE_CODE")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// get - Collection of leases.
@@ -24,16 +24,16 @@ namespace Pims.Dal.Entities
 
         #region Constructors
         /// <summary>
-        /// Create a new instance of a LeasePurposeSubtype class.
+        /// Create a new instance of a LeaseType class.
         /// </summary>
-        public LeasePurposeSubtype() { }
+        public LeaseCategoryType() { }
 
         /// <summary>
-        /// Create a new instance of a LeasePurposeSubtype class.
+        /// Create a new instance of a LeaseType class.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public LeasePurposeSubtype(int id, string description) : base(id, description)
+        public LeaseCategoryType(string id, string description) : base(id, description)
         {
         }
         #endregion
