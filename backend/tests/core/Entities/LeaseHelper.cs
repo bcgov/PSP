@@ -27,7 +27,8 @@ namespace Pims.Core.Test
                 RowVersion = 1,
             };
             lease.Properties.Add(new Entity.Property() { PID = pidOrPin });
-            lease.Tenant = new Entity.Person() { FirstName = $"{tenantLastName}, {tenantFirstName}" };
+            lease.Persons.Add(new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName });
+            lease.ProgramType = new Entity.LeaseProgramType() { Id = "test" };
             return lease;
         }
     }

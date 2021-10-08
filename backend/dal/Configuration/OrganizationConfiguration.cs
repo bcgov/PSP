@@ -63,6 +63,11 @@ namespace Pims.Dal.Configuration
             builder.HasIndex(m => m.OrganizationTypeId).HasDatabaseName("ORG_ORGANIZATION_TYPE_CODE_IDX");
             builder.HasIndex(m => m.OrganizationIdentifierTypeId).HasDatabaseName("ORG_ORG_IDENTIFIER_TYPE_CODE_IDX");
 
+            builder.HasMany(m => m.Leases).WithMany(m => m.Organizations).UsingEntity<LeaseTenant>(
+                m => m.HasOne(m => m.Lease).WithMany(m => m.TenantsManyToMany).HasForeignKey(m => m.OrganizationId),
+                m => m.HasOne(m => m.Organization).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.LeaseId)
+            );
+
             base.Configure(builder);
         }
         #endregion

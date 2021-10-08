@@ -50,6 +50,11 @@ namespace Pims.Dal.Configuration
                 m => m.HasOne(m => m.Person).WithMany(m => m.OrganizationsManyToMany).HasForeignKey(m => m.PersonId)
             );
 
+            builder.HasMany(m => m.Leases).WithMany(m => m.Persons).UsingEntity<LeaseTenant>(
+                m => m.HasOne(m => m.Lease).WithMany(m => m.TenantsManyToMany).HasForeignKey(m => m.PersonId),
+                m => m.HasOne(m => m.Person).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.LeaseId)
+            );
+
             builder.HasIndex(m => m.AddressId).HasDatabaseName("PERSON_ADDRESS_ID_IDX");
 
             base.Configure(builder);
