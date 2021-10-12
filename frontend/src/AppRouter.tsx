@@ -2,7 +2,6 @@ import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
-import { LeaseAndLicenseListView } from 'features/leases/components/LeaseAndLicenseListView';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -22,6 +21,8 @@ const EditUserPage = lazy(() => import('./features/admin/edit-user/EditUserPage'
 const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAccessRequests'));
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
 const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
+const LeaseAndLicenseListView = lazy(() => import('features/leases/list/LeaseAndLicenseListView'));
+const LeaseContainer = lazy(() => import('features/leases/detail/LeaseContainer'));
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -124,6 +125,14 @@ const AppRouter: React.FC = () => {
           protected
           path="/lease/list"
           component={LeaseAndLicenseListView}
+          layout={AuthLayout}
+          claim={Claims.PROPERTY_VIEW}
+          title={getTitle('View Lease & Licenses')}
+        />
+        <AppRoute
+          protected
+          path="/lease/:leaseId?"
+          component={LeaseContainer}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('View Lease & Licenses')}

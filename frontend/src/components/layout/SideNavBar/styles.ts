@@ -2,10 +2,11 @@ import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 export const TrayHeader = styled.h3`
-  font-size: 5.1rem;
+  font-size: 3rem;
   padding-bottom: 0.8rem;
   border-bottom: 0.4rem solid ${props => props.theme.css.primaryColor};
   margin-bottom: 3.2rem;
+  max-width: 28rem;
 `;
 
 export const SideNavBar = styled.div`
