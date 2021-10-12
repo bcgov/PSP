@@ -62,7 +62,8 @@ namespace Pims.Dal.Services
             return this.Context.Leases.Include(l => l.Properties)
                 .ThenInclude(p => p.Address)
                 .Include(l => l.ProgramType)
-                .Include(l => l.Tenant)
+                .Include(l => l.Persons)
+                .Include(l => l.Organizations)
                 .Where(l => l.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
