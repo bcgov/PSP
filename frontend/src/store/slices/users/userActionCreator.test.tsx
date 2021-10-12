@@ -72,8 +72,9 @@ describe('users action creator', () => {
       const { fetchUsers } = setup();
       fetchUsers({} as any);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: mockResponse,
           type: 'users/storeUsers',
@@ -87,8 +88,8 @@ describe('users action creator', () => {
       const { fetchUsers } = setup();
       fetchUsers({} as any);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           payload: mockResponse,
           type: 'users/storeUsers',
@@ -117,8 +118,9 @@ describe('users action creator', () => {
       const { fetchUserDetail } = setup();
       fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f');
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: mockResponse,
           type: 'users/storeUserDetails',
@@ -132,8 +134,8 @@ describe('users action creator', () => {
       const { fetchUserDetail } = setup();
       fetchUserDetail('14c9a273-6f4a-4859-8d59-9264d3cee53f');
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           payload: mockResponse,
           type: 'users/storeUserDetails',
@@ -162,8 +164,9 @@ describe('users action creator', () => {
       const { updateUser } = setup();
       updateUser(mockUser);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: mockResponse,
           type: 'users/updateUser',
@@ -177,8 +180,8 @@ describe('users action creator', () => {
       const { updateUser } = setup();
       updateUser(mockUser);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           payload: mockResponse,
           type: 'users/updateUser',
@@ -207,8 +210,9 @@ describe('users action creator', () => {
       const { activateUser } = setup();
       activateUser();
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
       });
     });
 
@@ -217,8 +221,8 @@ describe('users action creator', () => {
       const { activateUser } = setup();
       activateUser();
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
       });
     });
   });

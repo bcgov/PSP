@@ -49,8 +49,9 @@ describe('useAccessRequests functionality', () => {
       const { fetchCurrentAccessRequest } = setup();
       fetchCurrentAccessRequest();
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: mockResponse,
           type: 'accessRequests/storeAccessRequest',
@@ -99,8 +100,9 @@ describe('useAccessRequests functionality', () => {
       const { addAccessRequest } = setup();
       addAccessRequest(newMockAccessRequest);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: {
             data: mockAccessRequest,
@@ -115,8 +117,8 @@ describe('useAccessRequests functionality', () => {
       const { addAccessRequest } = setup();
       addAccessRequest(newMockAccessRequest);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           accessRequest: {
             data: mockAccessRequest,
@@ -143,8 +145,9 @@ describe('useAccessRequests functionality', () => {
       const { updateAccessRequest } = setup();
       updateAccessRequest(mockAccessRequest);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: {
             data: mockAccessRequest,
@@ -159,8 +162,8 @@ describe('useAccessRequests functionality', () => {
       const { updateAccessRequest } = setup();
       updateAccessRequest(mockAccessRequest);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           accessRequest: {
             data: mockAccessRequest,
@@ -195,8 +198,9 @@ describe('useAccessRequests functionality', () => {
       const { fetchAccessRequests } = setup();
       fetchAccessRequests({} as any);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: {
             data: {
@@ -217,8 +221,8 @@ describe('useAccessRequests functionality', () => {
       const { fetchAccessRequests } = setup();
       fetchAccessRequests({} as any);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           accessRequest: {
             data: mockAccessRequest,
@@ -245,8 +249,9 @@ describe('useAccessRequests functionality', () => {
       const { removeAccessRequest } = setup();
       removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
         expect(currentStore.getActions()).toContainEqual({
           payload: 2,
           type: 'accessRequests/deleteAccessRequest',
@@ -259,8 +264,8 @@ describe('useAccessRequests functionality', () => {
       const { removeAccessRequest } = setup();
       removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest);
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           payload: 2,
           type: 'accessRequests/deleteAccessRequest',

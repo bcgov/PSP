@@ -72,8 +72,9 @@ describe('getFetchLookupCodeAction action creator', () => {
     const { fetchLookupCodes } = setup();
     fetchLookupCodes();
     await waitFor(async () => {
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+      expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
       expect(currentStore.getActions()).toContainEqual({
         payload: mockResponse,
         type: 'lookupCode/storeLookupCodes',
@@ -86,8 +87,8 @@ describe('getFetchLookupCodeAction action creator', () => {
     const { fetchLookupCodes } = setup();
     fetchLookupCodes();
     await waitFor(async () => {
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
     });
   });
 });

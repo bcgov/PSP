@@ -238,7 +238,7 @@ describe('MapView', () => {
     await waitFor(() => render(getMap()));
     // find basemap toggle button
     const basemapButton = document.querySelector<HTMLElement>('.basemap-item-button.secondary');
-    expect(basemapButton).not.toBeNull();
+    expect(basemapButton).toBeDefined();
     const { getByAltText } = within(basemapButton!);
     const image = getByAltText('Map Thumbnail');
     expect(image).toHaveAttribute('src', '/satellite.jpg');
