@@ -63,8 +63,8 @@ describe('useAccessRequests functionality', () => {
       const { fetchCurrentAccessRequest } = setup();
       fetchCurrentAccessRequest();
       await waitFor(async () => {
-        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).not.toBeNull();
-        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
         expect(currentStore.getActions()).not.toContainEqual({
           payload: {
             data: {
