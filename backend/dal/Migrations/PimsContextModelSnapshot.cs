@@ -31,17 +31,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -86,17 +90,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -150,17 +158,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -199,17 +211,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -297,17 +313,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -350,17 +370,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -400,17 +424,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -463,17 +491,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -526,17 +558,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -620,17 +656,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -724,17 +764,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -791,17 +835,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -825,6 +873,9 @@ namespace Pims.Dal.Migrations
                     b.HasIndex(new[] { "Name" }, "CLAIM_NAME_TUC")
                         .IsUnique();
 
+                    b.HasIndex(new[] { "Key" }, "CLMTYP_CLAIM_UID_IDX")
+                        .IsUnique();
+
                     b.ToTable("PIMS_CLAIM");
                 });
 
@@ -846,17 +897,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -902,17 +957,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -1104,25 +1163,34 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_ID_SEQ")
                         .HasComment("Auto-sequenced unique key value");
 
-                    b.Property<string>("Amount")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("MONEY")
                         .HasColumnName("LEASE_AMOUNT")
                         .HasComment("The amount of the lease");
 
+                    b.Property<string>("CategoryTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_CATEGORY_TYPE_CODE")
+                        .HasComment("Foreign key to lease category type");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -1140,9 +1208,15 @@ namespace Pims.Dal.Migrations
                         .HasComment("When this record was created")
                         .HasAnnotation("ColumnOrder", 88);
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnName("LEASE_DESCRIPTION")
+                        .HasComment("A description of the lease");
+
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("DATETIME")
-                        .HasColumnName("EXPIRY_DATE")
+                        .HasColumnName("TERM_EXPIRY_DATE")
                         .HasComment("The date this lease expires");
 
                     b.Property<bool>("HasDigitalFile")
@@ -1164,6 +1238,13 @@ namespace Pims.Dal.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("HAS_PHYSICAL_LICENSE")
                         .HasComment("Whether this lease has a physical license");
+
+                    b.Property<short?>("IncludedRenewals")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("SMALLINT")
+                        .HasDefaultValue((short)0)
+                        .HasColumnName("INCLUDED_RENEWALS")
+                        .HasComment("The number of times this lease has been renewed");
 
                     b.Property<DateTime?>("InspectionDate")
                         .HasColumnType("DATETIME")
@@ -1188,8 +1269,13 @@ namespace Pims.Dal.Migrations
 
                     b.Property<bool>("IsExpired")
                         .HasColumnType("bit")
-                        .HasColumnName("EXPIRED")
+                        .HasColumnName("IS_EXPIRED")
                         .HasComment("Whether this lease has expired");
+
+                    b.Property<bool>("IsOrigExpiryRequired")
+                        .HasColumnType("bit")
+                        .HasColumnName("IS_ORIG_EXPIRY_REQUIRED")
+                        .HasComment("Whether thie original expiry on the lease is required");
 
                     b.Property<string>("LFileNo")
                         .HasMaxLength(50)
@@ -1197,31 +1283,56 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("L_FILE_NO")
                         .HasComment("The LIS File #");
 
+                    b.Property<string>("LeasePurposeOtherDesc")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("LEASE_PURPOSE_OTHER_DESC")
+                        .HasComment("A description of the lease");
+
+                    b.Property<string>("LeaseTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_LICENSE_TYPE_CODE")
+                        .HasComment("Foreign key to lease type");
+
+                    b.Property<long>("MotiNameId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("MOTI_NAME_ID")
+                        .HasComment("Foreign key to lease MOTI person");
+
                     b.Property<string>("Note")
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)")
                         .HasColumnName("LEASE_NOTES")
                         .HasComment("A note on the lease");
 
+                    b.Property<DateTime?>("OrigExpiryDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("ORIG_EXPIRY_DATE")
+                        .HasComment("The original date this lease expires");
+
+                    b.Property<DateTime>("OrigStartDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("ORIG_START_DATE")
+                        .HasDefaultValueSql("getdate()")
+                        .HasComment("The original date this lease starts");
+
                     b.Property<string>("PaymentFrequencyTypeId")
-                        .HasColumnType("nvarchar(40)")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE")
                         .HasComment("Foreign key to lease payment frequency type");
 
+                    b.Property<string>("PaymentRvblTypeId")
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
+
                     b.Property<string>("ProgramTypeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(40)")
                         .HasColumnName("LEASE_PROGRAM_TYPE_CODE")
                         .HasComment("Foreign key to lease program type");
-
-                    b.Property<long?>("PropertyManagementOrganizationId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROP_MGMT_ORG_ID")
-                        .HasComment("Foreign key to property management organization");
-
-                    b.Property<long?>("PropertyManagerId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROPERTY_MANAGER_ID")
-                        .HasComment("Foreign key to lease property manager person");
 
                     b.Property<string>("PsFileNo")
                         .HasMaxLength(50)
@@ -1229,20 +1340,28 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("PS_FILE_NO")
                         .HasComment("The PS File #");
 
-                    b.Property<short>("PurposeSubtypeId")
-                        .HasColumnType("SMALLINT")
-                        .HasColumnName("LEASE_PURPOSE_SUBTYPE_CODE")
-                        .HasComment("Foreign key to lease purpose subtype");
-
-                    b.Property<short>("PurposeTypeId")
-                        .HasColumnType("SMALLINT")
+                    b.Property<string>("PurposeTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("LEASE_PURPOSE_TYPE_CODE")
                         .HasComment("Foreign key to lease purpose type");
 
+                    b.Property<short>("RenewalCount")
+                        .HasColumnType("SMALLINT")
+                        .HasColumnName("RENEWAL_COUNT")
+                        .HasComment("The number of times this lease has been renewed");
+
                     b.Property<DateTime?>("RenewalDate")
                         .HasColumnType("DATETIME")
-                        .HasColumnName("RENEWAL_DATE")
+                        .HasColumnName("TERM_RENEWAL_DATE")
                         .HasComment("The date this lease renews");
+
+                    b.Property<short>("RenewalTermMonths")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("SMALLINT")
+                        .HasDefaultValue((short)0)
+                        .HasColumnName("RENEWAL_TERM_MONTHS")
+                        .HasComment("The term in months of each renewal for this lease");
 
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
@@ -1265,18 +1384,13 @@ namespace Pims.Dal.Migrations
 
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("DATETIME")
-                        .HasColumnName("START_DATE")
+                        .HasColumnName("TERM_START_DATE")
                         .HasComment("The date this lease starts");
 
                     b.Property<string>("StatusTypeId")
-                        .HasColumnType("nvarchar(40)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("LEASE_STATUS_TYPE_CODE")
                         .HasComment("Foreign key to lease status type");
-
-                    b.Property<long?>("TenantId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("TENANT_ID")
-                        .HasComment("Foreign key to lease tenant person");
 
                     b.Property<int?>("TfaFileNo")
                         .HasColumnType("int")
@@ -1291,17 +1405,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -1322,213 +1440,69 @@ namespace Pims.Dal.Migrations
                     b.HasKey("Id")
                         .HasName("LEASE_PK");
 
+                    b.HasIndex("CategoryTypeId")
+                        .HasDatabaseName("LEASE_LEASE_CATEGORY_TYPE_CODE_IDX");
+
+                    b.HasIndex("LFileNo")
+                        .HasDatabaseName("LEASE_L_FILE_NO_IDX");
+
+                    b.HasIndex("LeaseTypeId")
+                        .HasDatabaseName("LEASE_LEASE_LICENSE_TYPE_CODE_IDX");
+
+                    b.HasIndex("MotiNameId")
+                        .HasDatabaseName("LEASE_MOTI_NAME_ID_IDX");
+
                     b.HasIndex("PaymentFrequencyTypeId")
                         .HasDatabaseName("LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX");
+
+                    b.HasIndex("PaymentRvblTypeId")
+                        .HasDatabaseName("LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX");
 
                     b.HasIndex("ProgramTypeId")
                         .HasDatabaseName("LEASE_LEASE_PROGRAM_TYPE_CODE_IDX");
 
-                    b.HasIndex("PropertyManagementOrganizationId")
-                        .HasDatabaseName("LEASE_PROP_MGMT_ORG_ID_IDX");
-
-                    b.HasIndex("PropertyManagerId")
-                        .HasDatabaseName("LEASE_PROPERTY_MANAGER_ID_IDX");
-
-                    b.HasIndex("PurposeSubtypeId")
-                        .HasDatabaseName("LEASE_LEASE_PURPOSE_SUBTYPE_CODE_IDX");
+                    b.HasIndex("PsFileNo")
+                        .HasDatabaseName("LEASE_PS_FILE_NO_IDX");
 
                     b.HasIndex("PurposeTypeId")
                         .HasDatabaseName("LEASE_LEASE_PURPOSE_TYPE_CODE_IDX");
 
-                    b.HasIndex("StatusTypeId")
-                        .HasDatabaseName("LEASE_LEASE_STATUS_TYPE_CODE_IDX");
+                    b.HasIndex("StatusTypeId");
 
-                    b.HasIndex("TenantId")
-                        .HasDatabaseName("LEASE_TENANT_ID_IDX");
+                    b.HasIndex("TfaFileNo")
+                        .HasDatabaseName("LEASE_TFA_FILE_NO_IDX");
 
                     b.ToTable("PIMS_LEASE");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivity", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseCategoryType", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("LEASE_ACTIVITY_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_ACTIVITY_ID_SEQ")
-                        .HasComment("Auto-sequenced unique key value");
-
-                    b.Property<decimal?>("Amount")
-                        .HasColumnType("MONEY")
-                        .HasColumnName("AMOUNT")
-                        .HasComment("The lease activity amount");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("COMMENT")
-                        .HasComment("A comment related to the activity");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ACTIVITY_DATE")
-                        .HasComment("When the activity occurred");
-
-                    b.Property<long>("LeaseId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("LEASE_ID")
-                        .HasComment("Foreign key to lease");
-
-                    b.Property<short>("LeaseTypeId")
-                        .HasColumnType("SMALLINT")
-                        .HasColumnName("LEASE_TYPE_CODE")
-                        .HasComment("Foreign key to lease type");
-
-                    b.Property<long>("PeriodId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("LEASE_ACTIVITY_PERIOD_ID")
-                        .HasComment("Foreign key to lease activity period");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<string>("SubtypeId")
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
-                        .HasColumnName("LEASE_SUBTYPE_CODE")
-                        .HasComment("Foreign key to lease subtype");
+                        .HasColumnName("LEASE_CATEGORY_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
 
-                    b.Property<string>("UpdatedBy")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime>("UpdatedOn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
 
-                    b.HasKey("Id")
-                        .HasName("LSACTV_PK");
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
 
-                    b.HasIndex("LeaseId")
-                        .HasDatabaseName("LSEACT_LEASE_ID_IDX");
-
-                    b.HasIndex("LeaseTypeId")
-                        .HasDatabaseName("LSEACT_LEASE_TYPE_CODE_ID_IDX");
-
-                    b.HasIndex("PeriodId")
-                        .HasDatabaseName("LSACTV_LEASE_ACTIVITY_PERIOD_ID_IDX");
-
-                    b.HasIndex("SubtypeId")
-                        .HasDatabaseName("LSEACT_LEASE_SUBTYPE_CODE_ID_IDX");
-
-                    b.ToTable("PIMS_LEASE_ACTIVITY");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivityPeriod", b =>
-                {
-                    b.Property<long>("Id")
+                    b.Property<bool>("IsDisabled")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("LEASE_ACTIVITY_PERIOD_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_ACTIVITY_PERIOD_ID_SEQ")
-                        .HasComment("Auto-sequenced unique key value");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("PERIOD_DATE")
-                        .HasComment("The date of the activity period");
-
-                    b.Property<bool?>("IsClosed")
                         .HasColumnType("bit")
-                        .HasColumnName("IS_CLOSED")
-                        .HasComment("Whether this lease activity period is closed");
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
 
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
@@ -1539,95 +1513,40 @@ namespace Pims.Dal.Migrations
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
                     b.HasKey("Id")
-                        .HasName("LSACPR_PK");
+                        .HasName("LSCATYPE_PK");
 
-                    b.ToTable("PIMS_LEASE_ACTIVITY_PERIOD");
+                    b.ToTable("PIMS_LEASE_CATEGORY_TYPE");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseExpectedAmount", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseLicenseType", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("EXPECTED_AMOUNT_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_EXPECTED_AMOUNT_ID_SEQ")
-                        .HasComment("Auto-sequenced unique key value");
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_LICENSE_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
 
-                    b.Property<decimal?>("Amount")
-                        .HasColumnType("MONEY")
-                        .HasColumnName("EXPECTED_AMOUNT")
-                        .HasComment("The expected amount for this lease period");
-
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
 
-                    b.Property<long>("LeaseId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("LEASE_ID")
-                        .HasComment("Foreign key to lease");
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
 
-                    b.Property<long>("PeriodId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("LEASE_ACTIVITY_PERIOD_ID")
-                        .HasComment("Foreign key to lease activity period");
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
 
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
@@ -1638,53 +1557,17 @@ namespace Pims.Dal.Migrations
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
                     b.HasKey("Id")
-                        .HasName("EXPAMT_PK");
+                        .HasName("LSLITYPE_PK");
 
-                    b.HasIndex("LeaseId")
-                        .HasDatabaseName("EXPAMT_LEASE_ID_IDX");
-
-                    b.HasIndex("PeriodId")
-                        .HasDatabaseName("EXPAMT_LEASE_ACTIVITY_PERIOD_ID_IDX");
-
-                    b.ToTable("PIMS_EXPECTED_AMOUNT");
+                    b.ToTable("PIMS_LEASE_LICENSE_TYPE");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.LeasePaymentFrequencyType", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE")
                         .HasComment("Primary key code to identify record");
 
@@ -1722,6 +1605,50 @@ namespace Pims.Dal.Migrations
                         .HasName("LSPMTF_PK");
 
                     b.ToTable("PIMS_LEASE_PMT_FREQ_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePaymentReceivableType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("LSPRTY_PK");
+
+                    b.ToTable("PIMS_LEASE_PAY_RVBL_TYPE");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.LeaseProgramType", b =>
@@ -1768,59 +1695,13 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_LEASE_PROGRAM_TYPE");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeSubtype", b =>
-                {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("SMALLINT")
-                        .HasColumnName("LEASE_PURPOSE_SUBTYPE_CODE")
-                        .HasComment("Primary key code to identify record")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
-
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.HasKey("Id")
-                        .HasName("LSPRST_PK");
-
-                    b.ToTable("PIMS_LEASE_PURPOSE_SUBTYPE");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeType", b =>
                 {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("SMALLINT")
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("LEASE_PURPOSE_TYPE_CODE")
-                        .HasComment("Primary key code to identify record")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasComment("Primary key code to identify record");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1853,7 +1734,7 @@ namespace Pims.Dal.Migrations
                         .HasAnnotation("ColumnOrder", 100);
 
                     b.HasKey("Id")
-                        .HasName("LSPRTY_PK");
+                        .HasName("LSPRPTY_PK");
 
                     b.ToTable("PIMS_LEASE_PURPOSE_TYPE");
                 });
@@ -1861,75 +1742,93 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.LeaseStatusType", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("LEASE_STATUS_TYPE_CODE")
-                        .HasComment("Primary key code to identify record");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("LEASE_STATUS_TYPE_CODE");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
+                        .HasColumnName("DISPLAY_ORDER");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
+                        .HasColumnName("IS_DISABLED");
 
                     b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
+                        .HasColumnType("bigint")
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER");
 
-                    b.HasKey("Id")
-                        .HasName("LSSTSY_PK");
+                    b.HasKey("Id");
 
                     b.ToTable("PIMS_LEASE_STATUS_TYPE");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseSubtype", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseTenant", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("LEASE_SUBTYPE_CODE")
-                        .HasComment("Primary key code to identify record");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_TENANT_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_LEASE_TENANT_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CreatedBy")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
 
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<bool>("IsDisabled")
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to the lease");
+
+                    b.Property<string>("LessorTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("LESSOR_TYPE_CODE")
+                        .HasComment("Foreign key to the lessor");
+
+                    b.Property<long?>("OrganizationId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("ORGANIZATION_ID")
+                        .HasComment("Foreign key to the organization");
+
+                    b.Property<long?>("PersonId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PERSON_ID")
+                        .HasComment("Foreign key to the person");
 
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
@@ -1940,55 +1839,83 @@ namespace Pims.Dal.Migrations
                         .HasComment("Concurrency control number")
                         .HasAnnotation("ColumnOrder", 100);
 
-                    b.HasKey("Id")
-                        .HasName("LSSTYP_PK");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
 
-                    b.ToTable("PIMS_LEASE_SUBTYPE");
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("LEATEN_PK");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("TENANT_LEASE_ID_IDX");
+
+                    b.HasIndex("LessorTypeId")
+                        .HasDatabaseName("TENANT_LESSOR_TYPE_CODE_IDX");
+
+                    b.HasIndex("OrganizationId")
+                        .HasDatabaseName("TENANT_ORGANIZATION_ID_IDX");
+
+                    b.HasIndex("PersonId")
+                        .HasDatabaseName("TENANT_PERSON_ID_IDX");
+
+                    b.ToTable("PIMS_LEASE_TENANT");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseType", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LessorType", b =>
                 {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("SMALLINT")
-                        .HasColumnName("LEASE_TYPE_CODE")
-                        .HasComment("Primary key code to identify record")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("LESSOR_TYPE_CODE");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
+                        .HasColumnName("DISPLAY_ORDER");
 
                     b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
+                        .HasColumnName("IS_DISABLED");
 
                     b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
+                        .HasColumnType("bigint")
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER");
 
-                    b.HasKey("Id")
-                        .HasName("LSTYPE_PK");
+                    b.HasKey("Id");
 
-                    b.ToTable("PIMS_LEASE_TYPE");
+                    b.ToTable("PIMS_LESSOR_TYPE");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Organization", b =>
@@ -2007,17 +1934,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2093,17 +2024,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2260,17 +2195,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2330,17 +2269,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2378,17 +2321,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2432,17 +2379,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2483,17 +2434,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2550,17 +2505,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2612,17 +2571,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2661,17 +2624,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2715,17 +2682,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2764,17 +2735,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2823,17 +2798,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2867,17 +2846,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -2924,17 +2907,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -2978,17 +2965,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -3233,17 +3224,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -3284,17 +3279,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -3366,17 +3365,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -3482,6 +3485,15 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("PIN")
                         .HasComment("A unique identifier for untitled property");
 
+                    b.Property<long?>("PropertyManagementOrganizationId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PROP_MGMT_ORG_ID")
+                        .HasComment("Foreign key to property management organization");
+
+                    b.Property<long?>("PropertyManagerId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("PROPERTY_MANAGER_ID");
+
                     b.Property<string>("PropertyTypeId")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -3510,6 +3522,21 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("PROPERTY_STATUS_TYPE_CODE")
                         .HasComment("Foreign key to property status type");
 
+                    b.Property<string>("SurplusDeclarationComment")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnName("SURPLUS_DECLARATION_COMMENT")
+                        .HasComment("Comment related to the surplus declaration of this property");
+
+                    b.Property<DateTime?>("SurplusDeclarationDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("SURPLUS_DECLARATION_DATE")
+                        .HasComment("Date of the surplus declaration");
+
+                    b.Property<string>("SurplusDeclarationTypeId")
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SURPLUS_DECLARATION_TYPE_CODE");
+
                     b.Property<string>("TenureId")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -3519,17 +3546,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -3577,6 +3608,12 @@ namespace Pims.Dal.Migrations
                     b.HasIndex("DistrictId")
                         .HasDatabaseName("PRPRTY_DISTRICT_CODE_IDX");
 
+                    b.HasIndex("PropertyManagementOrganizationId")
+                        .HasDatabaseName("PRPRTY_PROP_MGMT_ORG_ID_IDX");
+
+                    b.HasIndex("PropertyManagerId")
+                        .HasDatabaseName("PRPRTY_PROPERTY_MANAGER_ID_IDX");
+
                     b.HasIndex("PropertyTypeId")
                         .HasDatabaseName("PRPRTY_PROPERTY_TYPE_CODE_IDX");
 
@@ -3585,6 +3622,8 @@ namespace Pims.Dal.Migrations
 
                     b.HasIndex("StatusId")
                         .HasDatabaseName("PRPRTY_PROPERTY_STATUS_TYPE_CODE_IDX");
+
+                    b.HasIndex("SurplusDeclarationTypeId");
 
                     b.HasIndex("TenureId")
                         .HasDatabaseName("PRPRTY_PROPERTY_TENURE_TYPE_CODE_IDX");
@@ -3735,17 +3774,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -3795,17 +3838,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -3848,17 +3895,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -3897,17 +3948,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -3948,17 +4003,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4004,17 +4063,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4058,17 +4121,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4112,17 +4179,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4167,17 +4238,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4220,17 +4295,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4274,17 +4353,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4320,17 +4403,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4443,6 +4530,50 @@ namespace Pims.Dal.Migrations
                         .HasName("PRPSTS_PK");
 
                     b.ToTable("PIMS_PROPERTY_STATUS_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.PropertySurplusDeclarationType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SURPLUS_DECLARATION_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("SPDCLT_PK");
+
+                    b.ToTable("PIMS_SURPLUS_DECLARATION_TYPE");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.PropertyTenureType", b =>
@@ -4650,17 +4781,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4731,17 +4866,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4761,6 +4900,10 @@ namespace Pims.Dal.Migrations
 
                     b.HasKey("Id")
                         .HasName("ROLE_PK");
+
+                    b.HasIndex(new[] { "KeycloakGroupId" }, "ROLE_KEYCLOAK_GROUP_ID_IDX")
+                        .IsUnique()
+                        .HasFilter("[KEYCLOAK_GROUP_ID] IS NOT NULL");
 
                     b.HasIndex(new[] { "Name" }, "ROLE_NAME_TUC")
                         .IsUnique();
@@ -4787,17 +4930,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4838,17 +4985,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4892,17 +5043,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -4938,24 +5093,28 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("TaskTypeId")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("TASK_TEMPLATE_TYPE_CODE")
                         .HasComment("Foreign key to task template type");
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -4985,8 +5144,8 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.TaskType", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("TASK_TEMPLATE_TYPE_CODE")
                         .HasComment("Primary key code to identify record");
 
@@ -5104,17 +5263,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -5188,17 +5351,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -5219,6 +5386,12 @@ namespace Pims.Dal.Migrations
                     b.HasKey("Id")
                         .HasName("USER_PK");
 
+                    b.HasIndex("BusinessIdentifier")
+                        .HasDatabaseName("USER_BUSINESS_IDENTIFIER_VALUE_IDX");
+
+                    b.HasIndex("KeycloakUserId")
+                        .HasDatabaseName("USER_GUID_IDENTIFIER_VALUE_IDX");
+
                     b.HasIndex("PersonId")
                         .HasDatabaseName("USER_PERSON_ID_IDX");
 
@@ -5236,17 +5409,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -5290,17 +5467,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -5349,17 +5530,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -5398,17 +5583,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -5457,17 +5646,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the username who created this record")
                         .HasAnnotation("ColumnOrder", 89);
 
                     b.Property<string>("CreatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 91);
 
@@ -5503,17 +5696,21 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user who last updated this record")
                         .HasAnnotation("ColumnOrder", 93);
 
                     b.Property<string>("UpdatedByDirectory")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
                         .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
                         .HasAnnotation("ColumnOrder", 95);
 
@@ -5749,130 +5946,111 @@ namespace Pims.Dal.Migrations
 
             modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
                 {
+                    b.HasOne("Pims.Dal.Entities.LeaseCategoryType", "CategoryType")
+                        .WithMany("Leases")
+                        .HasForeignKey("CategoryTypeId")
+                        .HasConstraintName("PIM_LSCATT_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeaseLicenseType", "LeaseLicenseType")
+                        .WithMany("Leases")
+                        .HasForeignKey("LeaseTypeId")
+                        .HasConstraintName("PIM_LELIST_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.Person", "MotiName")
+                        .WithMany()
+                        .HasForeignKey("MotiNameId")
+                        .HasConstraintName("PIM_PERSON_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Pims.Dal.Entities.LeasePaymentFrequencyType", "PaymentFrequencyType")
                         .WithMany("Leases")
                         .HasForeignKey("PaymentFrequencyTypeId")
                         .HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.LeasePaymentReceivableType", "PaymentRvblType")
+                        .WithMany("Leases")
+                        .HasForeignKey("PaymentRvblTypeId")
+                        .HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Pims.Dal.Entities.LeaseProgramType", "ProgramType")
                         .WithMany("Leases")
                         .HasForeignKey("ProgramTypeId")
                         .HasConstraintName("PIM_LSPRGT_PIM_LEASE_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Pims.Dal.Entities.Organization", "PropertyManagementOrganization")
-                        .WithMany("Leases")
-                        .HasForeignKey("PropertyManagementOrganizationId")
-                        .HasConstraintName("PIM_ORG_PIM_LEASE_FK")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Pims.Dal.Entities.Person", "PropertyManager")
-                        .WithMany()
-                        .HasForeignKey("PropertyManagerId")
-                        .HasConstraintName("PIM_PERSON_PIM_LEASE_PM_CONTACT_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Pims.Dal.Entities.LeasePurposeSubtype", "PurposeSubtype")
-                        .WithMany("Leases")
-                        .HasForeignKey("PurposeSubtypeId")
-                        .HasConstraintName("PIM_LSPRST_PIM_LEASE_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.LeasePurposeType", "PurposeType")
                         .WithMany("Leases")
                         .HasForeignKey("PurposeTypeId")
-                        .HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK")
+                        .HasConstraintName("PIM_LSPRPTY_PIM_LEASE_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Pims.Dal.Entities.LeaseStatusType", "StatusType")
                         .WithMany("Leases")
-                        .HasForeignKey("StatusTypeId")
-                        .HasConstraintName("PIM_LSSTSY_PIM_LEASE_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StatusTypeId");
 
-                    b.HasOne("Pims.Dal.Entities.Person", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .HasConstraintName("PIM_PERSON_PIM_LEASE_TENANT_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("CategoryType");
+
+                    b.Navigation("LeaseLicenseType");
+
+                    b.Navigation("MotiName");
 
                     b.Navigation("PaymentFrequencyType");
 
+                    b.Navigation("PaymentRvblType");
+
                     b.Navigation("ProgramType");
-
-                    b.Navigation("PropertyManagementOrganization");
-
-                    b.Navigation("PropertyManager");
-
-                    b.Navigation("PurposeSubtype");
 
                     b.Navigation("PurposeType");
 
                     b.Navigation("StatusType");
-
-                    b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivity", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseTenant", b =>
                 {
-                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
-                        .WithMany("Activities")
+                    b.HasOne("Pims.Dal.Entities.Organization", "Organization")
+                        .WithMany("LeasesManyToMany")
                         .HasForeignKey("LeaseId")
-                        .HasConstraintName("PIM_LEASE_PIM_LSACTV_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("PIM_ORG_PIM_TENANT_FK")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Pims.Dal.Entities.LeaseType", "LeaseType")
-                        .WithMany("Activities")
-                        .HasForeignKey("LeaseTypeId")
-                        .HasConstraintName("PIM_LSTYPE_PIM_LSACTV_FK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Pims.Dal.Entities.Person", "Person")
+                        .WithMany("LeasesManyToMany")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_PERSON_PIM_TENANT_FK")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Pims.Dal.Entities.LeaseActivityPeriod", "Period")
-                        .WithMany("Activities")
-                        .HasForeignKey("PeriodId")
-                        .HasConstraintName("PIM_LSACPR_PIM_LSACTV_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Pims.Dal.Entities.LessorType", "LessorType")
+                        .WithMany("Leases")
+                        .HasForeignKey("LessorTypeId")
+                        .HasConstraintName("PIM_LSSRTY_PIM_TENANT_FK")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Pims.Dal.Entities.LeaseSubtype", "Subtype")
-                        .WithMany("Activities")
-                        .HasForeignKey("SubtypeId")
-                        .HasConstraintName("PIM_LSSTYP_PIM_LSACTV_FK")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("TenantsManyToMany")
+                        .HasForeignKey("PersonId")
+                        .HasConstraintName("PIM_LEASE_PIM_TENANT_FK")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Lease");
 
-                    b.Navigation("LeaseType");
+                    b.Navigation("LessorType");
 
-                    b.Navigation("Period");
+                    b.Navigation("Organization");
 
-                    b.Navigation("Subtype");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseExpectedAmount", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
-                        .WithMany("ExpectedAmounts")
-                        .HasForeignKey("LeaseId")
-                        .HasConstraintName("PIM_LEASE_PIM_EXPAMT_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.LeaseActivityPeriod", "Period")
-                        .WithMany("ExpectedAmounts")
-                        .HasForeignKey("PeriodId")
-                        .HasConstraintName("PIM_LSACPR_PIM_EXPAMT_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Lease");
-
-                    b.Navigation("Period");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Organization", b =>
@@ -6145,6 +6323,18 @@ namespace Pims.Dal.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Pims.Dal.Entities.Organization", "PropertyManagementOrganization")
+                        .WithMany()
+                        .HasForeignKey("PropertyManagementOrganizationId")
+                        .HasConstraintName("PIM_ORG_PIM_PRPRTY_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Pims.Dal.Entities.Person", "PropertyManager")
+                        .WithMany()
+                        .HasForeignKey("PropertyManagerId")
+                        .HasConstraintName("PIM_PERSON_PIM_PRPRTY_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Pims.Dal.Entities.PropertyType", "PropertyType")
                         .WithMany("Properties")
                         .HasForeignKey("PropertyTypeId")
@@ -6166,6 +6356,12 @@ namespace Pims.Dal.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Pims.Dal.Entities.PropertySurplusDeclarationType", "SurplusDeclarationType")
+                        .WithMany("Properties")
+                        .HasForeignKey("SurplusDeclarationTypeId")
+                        .HasConstraintName("PIM_SPDCLT_PIM_PRPRTY_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Pims.Dal.Entities.PropertyTenureType", "Tenure")
                         .WithMany("Properties")
                         .HasForeignKey("TenureId")
@@ -6183,11 +6379,17 @@ namespace Pims.Dal.Migrations
 
                     b.Navigation("District");
 
+                    b.Navigation("PropertyManagementOrganization");
+
+                    b.Navigation("PropertyManager");
+
                     b.Navigation("PropertyType");
 
                     b.Navigation("Region");
 
                     b.Navigation("Status");
+
+                    b.Navigation("SurplusDeclarationType");
 
                     b.Navigation("Tenure");
                 });
@@ -6477,18 +6679,19 @@ namespace Pims.Dal.Migrations
 
             modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
                 {
-                    b.Navigation("Activities");
-
-                    b.Navigation("ExpectedAmounts");
-
                     b.Navigation("PropertiesManyToMany");
+
+                    b.Navigation("TenantsManyToMany");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseActivityPeriod", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseCategoryType", b =>
                 {
-                    b.Navigation("Activities");
+                    b.Navigation("Leases");
+                });
 
-                    b.Navigation("ExpectedAmounts");
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseLicenseType", b =>
+                {
+                    b.Navigation("Leases");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.LeasePaymentFrequencyType", b =>
@@ -6496,12 +6699,12 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Leases");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseProgramType", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeasePaymentReceivableType", b =>
                 {
                     b.Navigation("Leases");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeSubtype", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LeaseProgramType", b =>
                 {
                     b.Navigation("Leases");
                 });
@@ -6516,14 +6719,9 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Leases");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseSubtype", b =>
+            modelBuilder.Entity("Pims.Dal.Entities.LessorType", b =>
                 {
-                    b.Navigation("Activities");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseType", b =>
-                {
-                    b.Navigation("Activities");
+                    b.Navigation("Leases");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Organization", b =>
@@ -6534,7 +6732,7 @@ namespace Pims.Dal.Migrations
 
                     b.Navigation("ContactMethods");
 
-                    b.Navigation("Leases");
+                    b.Navigation("LeasesManyToMany");
 
                     b.Navigation("PersonsManyToMany");
 
@@ -6556,6 +6754,8 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.Person", b =>
                 {
                     b.Navigation("ContactMethods");
+
+                    b.Navigation("LeasesManyToMany");
 
                     b.Navigation("OrganizationsManyToMany");
 
@@ -6646,6 +6846,11 @@ namespace Pims.Dal.Migrations
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.PropertyStatusType", b =>
+                {
+                    b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.PropertySurplusDeclarationType", b =>
                 {
                     b.Navigation("Properties");
                 });

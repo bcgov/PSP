@@ -10,10 +10,12 @@ import clsx from 'classnames';
 import { NavIcon } from 'components/layout';
 import { Roles } from 'constants/index';
 import noop from 'lodash/noop';
+import { useContext } from 'react';
 import { useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
+import { SidebarStateContext } from './SideNavbarContext';
 import { SidebarContextType, SideTray } from './SideTray';
 import * as Styled from './styles';
 
@@ -23,7 +25,7 @@ import * as Styled from './styles';
  */
 export const SideNavBar = () => {
   const [expanded, setExpanded] = useState(false);
-  const [trayPage, setTrayPage] = useState<SidebarContextType | undefined>();
+  const { setTrayPage, trayPage } = useContext(SidebarStateContext);
   const history = useHistory();
   return (
     <Styled.ZIndexWrapper>

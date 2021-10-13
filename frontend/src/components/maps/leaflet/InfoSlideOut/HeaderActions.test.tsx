@@ -45,7 +45,6 @@ const HeaderComponent = (
           propertyTypeId={propertyTypeId}
           canViewDetails={canViewDetails}
           canEditDetails={canEditDetails}
-          jumpToView={noop}
           zoomToView={noop}
         />
       </Router>

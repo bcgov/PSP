@@ -25,9 +25,10 @@ describe('useApi testing suite', () => {
   it('useApi uses custom axios - success', async () => {
     mockAxios.onGet('success').reply(200, 'success');
 
-    var api = {} as any;
-    renderHook(() => {
-      api = useAxiosApi();
+    const {
+      result: { current: api },
+    } = renderHook(() => {
+      return useAxiosApi();
     });
 
     await waitFor(async () => {
@@ -39,18 +40,20 @@ describe('useApi testing suite', () => {
     });
   });
 
-  it('useApi uses custom axios - failure', () => {
+  it('useApi uses custom axios - failure', async () => {
     mockAxios.onGet('failure').reply(400, 'failure');
-
-    renderHook(async () => {
-      const api = useAxiosApi();
-      try {
-        await api.get('failure');
-      } catch (error) {
-        expect(error.response.status).toBe(400);
-        expect(error.response.data).toBe('failure');
-        expect(mockAxios.history.get).toHaveLength(1);
-      }
+    const {
+      result: { current: api },
+    } = renderHook(() => {
+      return useAxiosApi();
     });
+
+    try {
+      await api.get('failure');
+    } catch (error) {
+      expect(error.response.status).toBe(400);
+      expect(error.response.data).toBe('failure');
+      expect(mockAxios.history.get).toHaveLength(1);
+    }
   });
 });

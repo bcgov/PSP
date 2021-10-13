@@ -8,7 +8,7 @@ namespace Pims.Dal.Configuration
     /// <summary>
     /// LeasePurposeTypeConfiguration class, provides a way to configure lease purpose types in the database.
     ///</summary>
-    public class LeasePurposeTypeConfiguration : TypeEntityConfiguration<LeasePurposeType, int>
+    public class LeasePurposeTypeConfiguration : TypeEntityConfiguration<LeasePurposeType, string>
     {
         #region Methods
         public override void Configure(EntityTypeBuilder<LeasePurposeType> builder)
@@ -17,8 +17,8 @@ namespace Pims.Dal.Configuration
 
             builder.HasMotiKey(m => m.Id);
             builder.Property(m => m.Id)
-                .HasColumnType("SMALLINT")
                 .IsRequired()
+                .HasMaxLength(20)
                 .HasComment("Primary key code to identify record");
 
             base.Configure(builder);

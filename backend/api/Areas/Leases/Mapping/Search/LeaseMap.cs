@@ -4,7 +4,7 @@ using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Search;
 
-namespace Pims.Api.Areas.Lease.Mapping.Property
+namespace Pims.Api.Areas.Lease.Mapping.Search
 {
     public class LeaseMap : IRegister
     {
