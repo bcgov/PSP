@@ -1,4 +1,7 @@
+import { Scrollable } from 'components/Scrollable/Scrollable';
+import { Table } from 'components/Table';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
+import { ILease } from 'interfaces';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -36,15 +39,29 @@ export const LeaseAndLicenseListView = () => {
   };
   return (
     <LeasePage>
-      <h3>Leases and Licenses</h3>
       <LeaseAndLicenseFilter filter={filter} setFilter={setFilter} search={search} />
+      <Scrollable>
+        <Panel>
+          <h3>Leases and Licenses</h3>
+          <Table<ILease> name="leasesTable" columns={[]} data={[]}></Table>
+        </Panel>
+      </Scrollable>
     </LeasePage>
   );
 };
 
-export const LeasePage = styled.div`
+const LeasePage = styled.div`
+  /* padding: 5.5rem 2.4rem; */
   text-align: left;
-  padding: 55px 2.4rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0;
+`;
+
+const Panel = styled.div`
+  padding: 1.6rem 3.2rem;
+  width: 100%;
 `;
 
 export default LeaseAndLicenseListView;
