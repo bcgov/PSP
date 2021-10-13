@@ -92,7 +92,7 @@ namespace Pims.Dal
         public DbSet<LeaseStatusType> LeaseStatusTypes { get; set; }
         public DbSet<LeaseLicenseType> LeaseTypes { get; set; }
         public DbSet<LeaseCategoryType> LeaseCategoryTypes { get; set; }
-        public DbSet<LeasePaymentReceivableType> LeasePaymentRvblTypes { get; set; }
+        public DbSet<LeasePaymentReceivableType> LeasePaymentReceivableTypes { get; set; }
         public DbSet<LeaseTenant> LeaseTenants { get; set; }
         #endregion
         #endregion

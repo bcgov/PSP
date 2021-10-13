@@ -1,6 +1,8 @@
 import { createMemoryHistory } from 'history';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILease } from 'interfaces';
+import { mockOrganization } from 'mocks/filterDataMock';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { ILeaseAndLicenseContainerProps, LeaseContainer } from '..';
@@ -14,7 +16,12 @@ const mockLease: ILease = {
   pidOrPin: '123-456-789',
   lFileNo: '111-222-333',
   properties: [{ pid: '987-654-321' } as any],
-  tenantName: 'tenant name',
+  persons: [{ fullName: 'First Last' }],
+  organizations: [mockOrganization],
+};
+
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: [] },
 };
 
 const getLease = jest.fn();
@@ -43,12 +50,12 @@ describe('LeaseContainer component', () => {
     history.push('/lease/1?leasePageName=details');
   });
   it('renders as expected', () => {
-    const { component } = setup();
+    const { component } = setup({ store: storeState });
     expect(component.asFragment()).toMatchSnapshot();
   });
   it('loads a lease by lease id', async () => {
     getLease.mockResolvedValue({ data: mockLease });
-    setup();
+    setup({ store: storeState });
     await waitFor(async () => {
       expect(getLease).toHaveBeenCalled();
     });
@@ -57,7 +64,7 @@ describe('LeaseContainer component', () => {
   it('throws an error if no lease id is provided', async () => {
     const {
       component: { findByText },
-    } = setup({ match: {} });
+    } = setup({ match: {}, store: storeState });
     expect(
       await findByText(
         'No valid lease id provided, go back to the lease and license list and select a valid lease.',
@@ -69,7 +76,7 @@ describe('LeaseContainer component', () => {
     getLease.mockRejectedValue({});
     const {
       component: { findByText },
-    } = setup();
+    } = setup({ store: storeState });
     expect(await findByText('Failed to load lease, reload this page to try again.')).toBeVisible();
   });
 });

@@ -17,5 +17,15 @@ namespace Pims.Dal.Entities
         {
             return person?.ContactMethods.FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
         }
+
+        /// <summary>
+        /// Get the concatenated full name of this person
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static string GetFullName(this Person person)
+        {
+            return $"{person.FirstName} {person.MiddleNames} {person.Surname}";
+        }
     }
 }

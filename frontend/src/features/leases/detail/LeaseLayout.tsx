@@ -12,6 +12,7 @@ export const LeaseLayout: React.FunctionComponent<ILeaseLayoutProps> = ({ childr
 };
 
 const DetailScreenGrid = styled.div`
+  width: 100%;
   grid: 4rem 7.5rem 5rem 1fr / 22rem 1fr;
   grid-template-areas:
     'breadcrumb breadcrumb'

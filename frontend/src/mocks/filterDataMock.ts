@@ -86,7 +86,7 @@ export const mockOrganization: IOrganization = {
   organizationTypeId: OrganizationTypes.BCMinistry,
   identifierTypeId: OrganizationIdentifierTypes.Government,
   identifier: 'I have no idea what this is',
-  addressId: mockAddress.id,
+  addressId: mockAddress.id ?? 0,
   address: mockAddress,
 };
 

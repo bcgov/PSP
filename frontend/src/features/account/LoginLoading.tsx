@@ -1,4 +1,4 @@
-import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -15,7 +15,7 @@ const LoginLoading = () => {
   const tenant = useTenant();
   return (
     <LoginStyled className="login" fluid={true}>
-      <FilterBackdrop show={true}></FilterBackdrop>
+      <LoadingBackdrop show={true}></LoadingBackdrop>
       <Container className="unauth" fluid={true}>
         <Logo withText={true} />
         <Row className="sign-in">

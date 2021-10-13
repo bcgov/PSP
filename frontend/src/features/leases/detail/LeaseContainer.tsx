@@ -1,11 +1,14 @@
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { ILease } from 'interfaces';
 import queryString from 'query-string';
 import * as React from 'react';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { BackToSearchButton, LeaseBreadCrumb, LeaseIndex, LeaseLayout, useLeaseDetail } from '..';
+import LeaseHeader from './LeaseHeader';
 
 export interface ILeaseAndLicenseContainerProps {
   match?: any;
@@ -38,6 +41,12 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [LeasePageNames.SURPLUS, { component: <></>, title: 'Surplus Declaration' }],
 ]);
 
+export const defaultLease: ILease = {
+  properties: [],
+  persons: [],
+  organizations: [],
+};
+
 /**
  * Top level container for lease details, provides logic for loading and controlling lease display
  * @param {ILeaseAndLicenseContainerProps} props
@@ -55,15 +64,19 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
     throw Error('The requested lease page does not exist');
   }
   return (
-    <LeaseLayout>
-      <LeaseBreadCrumb
-        leaseId={props.match.leaseId}
-        leasePage={leasePage}
-        onClickManagement={onClickManagement}
-      />
-      <BackToSearchButton />
-      <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
-    </LeaseLayout>
+    <>
+      <LeaseLayout>
+        <LeaseBreadCrumb
+          leaseId={props.match.leaseId}
+          leasePage={leasePage}
+          onClickManagement={onClickManagement}
+        />
+        <LeaseHeader lease={lease} />
+        <BackToSearchButton />
+        <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
+      </LeaseLayout>
+      <LoadingBackdrop show={!lease} />
+    </>
   );
 };
 

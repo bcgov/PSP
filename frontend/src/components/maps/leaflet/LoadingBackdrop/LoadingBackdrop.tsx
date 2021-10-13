@@ -2,7 +2,7 @@ import * as React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
 
-export interface FilterBackdropProps {
+export interface LoadingBackdropProps {
   show?: boolean;
 }
 
@@ -20,7 +20,7 @@ const Backdrop = styled.div`
   justify-content: center;
 `;
 
-const FilterBackdrop: React.FC<FilterBackdropProps> = ({ show }) => {
+const LoadingBackdrop: React.FC<LoadingBackdropProps> = ({ show }) => {
   return show ? (
     <Backdrop>
       <Spinner animation="border" variant="warning" data-testid="filter-backdrop-loading" />
@@ -28,4 +28,4 @@ const FilterBackdrop: React.FC<FilterBackdropProps> = ({ show }) => {
   ) : null;
 };
 
-export default FilterBackdrop;
+export default LoadingBackdrop;

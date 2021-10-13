@@ -60,7 +60,7 @@ namespace Pims.Dal.Entities
         /// get/set - Foreign key to the lease payment rvbl type.
         /// </summary>
         [Column("LEASE_PAY_RVBL_TYPE_CODE")]
-        public string PaymentRvblTypeId { get; set; }
+        public string PaymentReceivableTypeId { get; set; }
 
         /// <summary>
         /// get/set - The lease payment rvbl type.
@@ -169,7 +169,7 @@ namespace Pims.Dal.Entities
         /// get/set - The lease expiry date.
         /// </summary>
         [Column("TERM_EXPIRY_DATE")]
-        public DateTime? ExpiryDate { get; set; }
+        public DateTime? TermExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The original lease expiry date.

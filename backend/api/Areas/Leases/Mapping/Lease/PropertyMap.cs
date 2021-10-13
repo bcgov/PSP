@@ -1,0 +1,23 @@
+using Mapster;
+using Pims.Dal.Helpers.Extensions;
+using System.Linq;
+using Entity = Pims.Dal.Entities;
+using Model = Pims.Api.Areas.Lease.Models.Lease;
+
+namespace Pims.Api.Areas.Lease.Mapping.Lease
+{
+    public class PropertyMap : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            config.NewConfig<Entity.Property, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.PID, src => src.PID)
+                .Map(dest => dest.PIN, src => src.PIN)
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.IsSensitive, src => src.IsSensitive)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.RowVersion, src => src.RowVersion);
+        }
+    }
+}

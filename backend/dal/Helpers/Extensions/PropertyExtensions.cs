@@ -121,15 +121,5 @@ namespace Pims.Dal.Helpers.Extensions
         {
             return property.Leases.FirstOrDefault()?.GetFullName();
         }
-
-        /// <summary>
-        /// Get the Tenant Name of the first associated lease to this property.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.Property property)
-        {
-            return property.Leases.FirstOrDefault()?.ExpiryDate;
-        }
     }
 }

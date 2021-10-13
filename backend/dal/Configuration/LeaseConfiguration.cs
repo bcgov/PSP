@@ -71,7 +71,7 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.RenewalDate)
                 .HasColumnType("DATETIME")
                 .HasComment("The date this lease renews");
-            builder.Property(m => m.ExpiryDate)
+            builder.Property(m => m.TermExpiryDate)
                 .HasColumnType("DATETIME")
                 .HasComment("The date this lease expires");
             builder.Property(m => m.OrigExpiryDate)
@@ -125,7 +125,7 @@ namespace Pims.Dal.Configuration
 
             builder.HasOne(m => m.PurposeType).WithMany(m => m.Leases).HasForeignKey(m => m.PurposeTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRPTY_PIM_LEASE_FK");
             builder.HasOne(m => m.PaymentFrequencyType).WithMany(m => m.Leases).HasForeignKey(m => m.PaymentFrequencyTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
-            builder.HasOne(m => m.PaymentRvblType).WithMany(m => m.Leases).HasForeignKey(m => m.PaymentRvblTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK");
+            builder.HasOne(m => m.PaymentRvblType).WithMany(m => m.Leases).HasForeignKey(m => m.PaymentReceivableTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK");
             builder.HasOne(m => m.ProgramType).WithMany(m => m.Leases).HasForeignKey(m => m.ProgramTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRGT_PIM_LEASE_FK");
             builder.HasOne(m => m.MotiName).WithMany().HasForeignKey(m => m.MotiNameId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PERSON_PIM_LEASE_FK");
             builder.HasOne(m => m.CategoryType).WithMany(m => m.Leases).HasForeignKey(m => m.CategoryTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSCATT_PIM_LEASE_FK");
@@ -147,7 +147,7 @@ namespace Pims.Dal.Configuration
             );
 
             builder.HasIndex(m => m.PaymentFrequencyTypeId).HasDatabaseName("LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX");
-            builder.HasIndex(m => m.PaymentRvblTypeId).HasDatabaseName("LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.PaymentReceivableTypeId).HasDatabaseName("LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX");
             builder.HasIndex(m => m.ProgramTypeId).HasDatabaseName("LEASE_LEASE_PROGRAM_TYPE_CODE_IDX");
             builder.HasIndex(m => m.PurposeTypeId).HasDatabaseName("LEASE_LEASE_PURPOSE_TYPE_CODE_IDX");
             builder.HasIndex(m => m.CategoryTypeId).HasDatabaseName("LEASE_LEASE_CATEGORY_TYPE_CODE_IDX");

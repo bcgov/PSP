@@ -172,24 +172,33 @@ describe('InfoContent View functionality', () => {
   it('Displays lease information when there are leases', () => {
     const { getByText } = render(
       ContentComponent(
-        { ...mockParcel, leases: [{ tenantName: 'tenantName1' }] },
+        {
+          ...mockParcel,
+          leases: [{ persons: [{ fullName: 'First Last' }], organizations: [], properties: [] }],
+        },
         PropertyTypes.Land,
         true,
       ),
     );
     expect(getByText('Active Leases')).toBeVisible();
-    expect(getByText('tenantName1')).toBeVisible();
+    expect(getByText('First Last')).toBeVisible();
   });
 
   it('Displays all lease information when there are multiple leases', () => {
     const { getByText } = render(
       ContentComponent(
-        { ...mockParcel, leases: [{ tenantName: 'tenantName1' }, { tenantName: 'tenantName2' }] },
+        {
+          ...mockParcel,
+          leases: [
+            { persons: [{ fullName: 'First Last1' }], organizations: [], properties: [] },
+            { persons: [{ fullName: 'First Last2' }], organizations: [], properties: [] },
+          ],
+        },
         PropertyTypes.Land,
         true,
       ),
     );
-    expect(getByText('tenantName1')).toBeVisible();
-    expect(getByText('tenantName2')).toBeVisible();
+    expect(getByText('First Last1')).toBeVisible();
+    expect(getByText('First Last2')).toBeVisible();
   });
 });

@@ -54,6 +54,7 @@ export const PROPERTY_CLASSIFICATION_CODE_SET_NAME = 'PropertyClassification';
 export const CONSTRUCTION_CODE_SET_NAME = 'BuildingConstructionType';
 export const PREDOMINATE_USE_CODE_SET_NAME = 'BuildingPredominateUse';
 export const OCCUPANT_TYPE_CODE_SET_NAME = 'BuildingOccupantType';
+export const PAYMENT_RECEIVABLE_CODE_SET_NAME = 'LeasePaymentReceivableType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations
