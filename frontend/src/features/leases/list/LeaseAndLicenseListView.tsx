@@ -1,4 +1,4 @@
-import { Scrollable } from 'components/Scrollable/Scrollable';
+import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import { Table } from 'components/Table';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILease } from 'interfaces';
