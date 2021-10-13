@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -108,13 +109,17 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string GetFullName(this Pims.Dal.Entities.Lease lease)
         {
-            var tenant = lease?.TenantsManyToMany.FirstOrDefault(t => t.Person != null);
-            if (tenant != null)
-            {
-                string[] names = { tenant.Person.Surname, tenant.Person.FirstName, tenant.Person.MiddleNames };
-                return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
-            }
-            return null;
+            return lease?.TenantsManyToMany.FirstOrDefault(t => t.Person != null)?.Person?.GetFullName();
+        }
+
+        /// <summary>
+        /// Get the full name from the lease's first tenant (person).
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetMotiName(this Pims.Dal.Entities.Lease lease)
+        {
+            return lease.MotiName?.GetFullName();
         }
 
         /// <summary>

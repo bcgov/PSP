@@ -1,14 +1,21 @@
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import { ILease } from 'interfaces';
 import queryString from 'query-string';
 import * as React from 'react';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { BackToSearchButton, LeaseBreadCrumb, LeaseIndex, LeaseLayout, useLeaseDetail } from '..';
-import LeaseHeader from './LeaseHeader';
+import {
+  BackToSearchButton,
+  LeaseBreadCrumb,
+  LeaseHeader,
+  LeaseIndex,
+  LeaseLayout,
+  LeasePageForm,
+  useLeaseDetail,
+} from '..';
+import Details from './LeasePages/Details';
 
 export interface ILeaseAndLicenseContainerProps {
   match?: any;
@@ -17,6 +24,7 @@ export interface ILeaseAndLicenseContainerProps {
 export interface ILeasePage {
   component: ReactElement;
   title: string;
+  description?: string;
 }
 
 export enum LeasePageNames {
@@ -31,7 +39,7 @@ export enum LeasePageNames {
 }
 
 export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
-  [LeasePageNames.DETAILS, { component: <></>, title: 'Details' }],
+  [LeasePageNames.DETAILS, { component: <Details />, title: 'Details' }],
   [LeasePageNames.TENANT, { component: <></>, title: 'Tenant' }],
   [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
   [LeasePageNames.IMPROVEMENTS, { component: <></>, title: 'Improvements' }],
@@ -40,12 +48,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
   [LeasePageNames.SURPLUS, { component: <></>, title: 'Surplus Declaration' }],
 ]);
-
-export const defaultLease: ILease = {
-  properties: [],
-  persons: [],
-  organizations: [],
-};
 
 /**
  * Top level container for lease details, provides logic for loading and controlling lease display
@@ -74,6 +76,7 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
         <LeaseHeader lease={lease} />
         <BackToSearchButton />
         <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
+        <LeasePageForm leasePage={leasePage} lease={lease}></LeasePageForm>
       </LeaseLayout>
       <LoadingBackdrop show={!lease} />
     </>

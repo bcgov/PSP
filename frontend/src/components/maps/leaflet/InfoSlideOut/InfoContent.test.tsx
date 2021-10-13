@@ -14,7 +14,7 @@ import {
   PropertyTypes,
 } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { IProperty } from 'interfaces';
+import { defaultLease, IProperty } from 'interfaces';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -174,7 +174,14 @@ describe('InfoContent View functionality', () => {
       ContentComponent(
         {
           ...mockParcel,
-          leases: [{ persons: [{ fullName: 'First Last' }], organizations: [], properties: [] }],
+          leases: [
+            {
+              ...defaultLease,
+              persons: [{ fullName: 'First Last' }],
+              organizations: [],
+              properties: [],
+            },
+          ],
         },
         PropertyTypes.Land,
         true,
@@ -190,8 +197,18 @@ describe('InfoContent View functionality', () => {
         {
           ...mockParcel,
           leases: [
-            { persons: [{ fullName: 'First Last1' }], organizations: [], properties: [] },
-            { persons: [{ fullName: 'First Last2' }], organizations: [], properties: [] },
+            {
+              ...defaultLease,
+              persons: [{ fullName: 'First Last1' }],
+              organizations: [],
+              properties: [],
+            },
+            {
+              ...defaultLease,
+              persons: [{ fullName: 'First Last2' }],
+              organizations: [],
+              properties: [],
+            },
           ],
         },
         PropertyTypes.Land,

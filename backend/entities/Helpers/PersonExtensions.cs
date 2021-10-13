@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace Pims.Dal.Entities
@@ -25,7 +26,8 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string GetFullName(this Person person)
         {
-            return $"{person.FirstName} {person.MiddleNames} {person.Surname}";
+            string[] names = { person.Surname, person.FirstName, person.MiddleNames };
+            return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
         }
     }
 }

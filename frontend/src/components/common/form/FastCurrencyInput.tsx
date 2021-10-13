@@ -2,8 +2,8 @@ import './FastCurrencyInput.scss';
 
 import classNames from 'classnames';
 import { ErrorMessage, FormikProps, getIn } from 'formik';
-import React, { memo, useEffect } from 'react';
-import Col, { ColProps } from 'react-bootstrap/Col';
+import { memo, useEffect } from 'react';
+import { ColProps } from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -32,14 +32,16 @@ type RequiredAttributes = {
 };
 
 type OptionalAttributes = {
+  /** optional field label */
+  label?: string;
   /** Specifies that the HTML element should be disabled */
   disabled?: boolean;
   /** The value to display, overrides formik values */
   value?: number | '';
-  /** Adds a custom class to the input element of the <Input> component */
+  /** Adds a custom class to the input element of the wrapper component */
   className?: string;
-  /** Class name of the input wrapper */
-  outerClassName?: string;
+  /** Class name of the input */
+  innerClassName?: string;
   /** formik state used for context and memo calculations */
   formikProps: FormikProps<any>;
   /** Whether the field is required. Makes the field border blue. */
@@ -60,13 +62,14 @@ export type CurrencyInputProps = RequiredAttributes &
 const CurrencyInput = ({
   field,
   className,
-  outerClassName,
+  innerClassName,
   value,
   disabled,
   placeholder,
   tooltip,
   required,
   suppressValidation,
+  label,
   formikProps: {
     handleBlur,
     values,
@@ -104,11 +107,12 @@ const CurrencyInput = ({
   const isValid = !error && touch && value && !disabled ? 'is-valid ' : '';
 
   return (
-    <Form.Group
-      className={classNames(!!required ? 'required' : '', outerClassName)}
-      as={Col}
-      md={rest.md}
-    >
+    <Form.Group className={classNames(!!required ? 'required' : '', className)}>
+      {!!label && (
+        <Form.Label>
+          {label} {!!tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+        </Form.Label>
+      )}
       <div className="input-tooltip-wrapper">
         <MaskedInput
           value={value}
@@ -119,7 +123,7 @@ const CurrencyInput = ({
             setFieldValue(field, cleanValue ? parseFloat(cleanValue) : '');
           }}
           onBlur={handleBlur}
-          className={classNames('form-control input-number', className, isInvalid, isValid)}
+          className={classNames('form-control input-number', innerClassName, isInvalid, isValid)}
           disabled={disabled}
           required={required}
           placeholder={placeholder || ''}

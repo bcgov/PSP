@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
+import { defaultLease } from 'interfaces';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { defaultLease } from '..';
 import StackedPidTenantFields, { IStackedPidTenantFieldsProps } from './StackedPidTenantFields';
 
 const history = createMemoryHistory();

@@ -106,7 +106,7 @@ exports[`MapFilterBar renders correctly 1`] = `
           class="input-group-content"
         >
           <div
-            class="form-group"
+            class="input form-group"
           >
             <input
               class="form-control"

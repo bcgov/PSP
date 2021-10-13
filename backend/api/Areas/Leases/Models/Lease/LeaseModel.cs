@@ -19,16 +19,37 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public long RowVersion { get; set; }
 
         /// <summary>
+        /// get/set - The lease amount.
+        /// </summary>
+        public decimal? Amount { get; set; }
+
+        /// <summary>
         /// get/set - The value of the tenant name.
         /// </summary>
         /// <value></value>
         public string TenantName { get; set; }
 
         /// <summary>
+        /// get/set - The value of the moti resource assigned to this lease.
+        /// </summary>
+        /// <value></value>
+        public string MotiName { get; set; }
+
+        /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
         /// <value></value>
         public string ProgramName { get; set; }
+
+        /// <summary>
+        /// get/set - The lease notes.
+        /// </summary>
+        public string Note { get; set; }
+
+        /// <summary>
+        /// get/set - The lease description.
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// get/set - The string value of the street address.
@@ -43,16 +64,55 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string LFileNo { get; set; }
 
         /// <summary>
+        /// get/set - The LIS TFA File #.
+        /// </summary>
+        /// <value></value>
+        public string TfaFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The LIS Ps File #.
+        /// </summary>
+        /// <value></value>
+        public string PsFileNo { get; set; }
+
+        /// <summary>
         /// get/set - The calculated expiry date of the lease
         /// </summary>
         /// <value></value>
         public DateTime? ExpiryDate { get; set; }
 
         /// <summary>
+        /// get/set - The original start date of the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// get/set - The most recent renewal date on the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? RenewalDate { get; set; }
+
+        /// <summary>
+        /// get/set - The lease renewal count.
+        /// </summary>
+        public int RenewalCount { get; set; }
+
+        /// <summary>
         /// get/set - The receivable payment type code identifier
         /// </summary>
         /// <value></value>
         public string PaymentReceivableTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the lease payment frequency type.
+        /// </summary>
+        public string PaymentFrequencyTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease payment frequency type.
+        /// </summary>
+        public string PaymentFrequencyType { get; set; }
 
         /// <summary>
         /// get/set - A list of persons tenants associated with this lease

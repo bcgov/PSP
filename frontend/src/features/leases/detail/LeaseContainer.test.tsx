@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { ILease } from 'interfaces';
+import { defaultLease, ILease } from 'interfaces';
 import { mockOrganization } from 'mocks/filterDataMock';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from 'utils/test-utils';
@@ -10,10 +10,9 @@ import { ILeaseAndLicenseContainerProps, LeaseContainer } from '..';
 const history = createMemoryHistory();
 
 const mockLease: ILease = {
+  ...defaultLease,
   id: 1,
-  address: '123 fake st',
   expiryDate: '2000-01-01',
-  pidOrPin: '123-456-789',
   lFileNo: '111-222-333',
   properties: [{ pid: '987-654-321' } as any],
   persons: [{ fullName: 'First Last' }],

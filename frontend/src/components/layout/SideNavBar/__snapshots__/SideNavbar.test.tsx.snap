@@ -134,7 +134,7 @@ exports[`SideNavbar display and logic renders 1`] = `
   width: 100%;
 }
 
-@media (max-width:76.5rem) {
+@media (max-width:1225px) {
   .c5 {
     width: 32rem;
   }
