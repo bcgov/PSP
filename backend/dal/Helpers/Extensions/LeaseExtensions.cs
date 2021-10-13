@@ -116,5 +116,23 @@ namespace Pims.Dal.Helpers.Extensions
             }
             return null;
         }
+
+        /// <summary>
+        /// Get the calculated expiry date.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.Lease lease)
+        {
+            if(lease.OrigExpiryDate != null)
+            {
+                if(lease.TermExpiryDate != null)
+                {
+                    return lease.OrigExpiryDate > lease.TermExpiryDate ? lease.OrigExpiryDate : lease.TermExpiryDate;
+                }
+                return lease.OrigExpiryDate;
+            }
+            return lease.TermExpiryDate;
+        }
     }
 }

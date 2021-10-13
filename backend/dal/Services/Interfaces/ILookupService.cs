@@ -19,5 +19,6 @@ namespace Pims.Dal.Services
         IEnumerable<PropertyAreaUnitType> GetPropertyAreaUnitTypes();
         IEnumerable<PropertyTenureType> GetPropertyTenureTypes();
         IEnumerable<Role> GetRoles();
+        IEnumerable<LeasePaymentReceivableType> GetPaymentReceivableTypes();
     }
 }

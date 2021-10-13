@@ -8,14 +8,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
   <div
     class="Toastify"
   />
-  .c2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-
-.c0 {
+  .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -23,6 +16,13 @@ exports[`StackedPidTenantFields component renders as expected when provided data
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .c1 {
@@ -46,14 +46,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
       111-111-111
     </div>
   </div>
-  .c2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-
-.c0 {
+  .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -61,6 +54,13 @@ exports[`StackedPidTenantFields component renders as expected when provided data
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .c1 {
@@ -81,7 +81,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
     <div
       class="c2"
     >
-      tenant
+      first last
     </div>
   </div>
 </DocumentFragment>
@@ -95,14 +95,7 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
   <div
     class="Toastify"
   />
-  .c2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-
-.c0 {
+  .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -110,6 +103,13 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .c1 {
@@ -131,14 +131,7 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
       class="c2"
     />
   </div>
-  .c2 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-
-.c0 {
+  .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -146,6 +139,13 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .c1 {

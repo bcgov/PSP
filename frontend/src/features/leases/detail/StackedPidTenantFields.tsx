@@ -3,6 +3,9 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ILease } from 'interfaces/ILease';
 import * as React from 'react';
 import styled from 'styled-components';
+import { pidFormatter } from 'utils';
+
+import { getAllNames } from '../leaseUtils';
 export interface IStackedPidTenantFieldsProps {
   lease?: ILease;
 }
@@ -15,7 +18,7 @@ export const StackedPidTenantFields: React.FunctionComponent<IStackedPidTenantFi
   lease,
 }) => {
   const properties = lease?.properties ?? [];
-  const pids = properties.map(property => property.pid);
+  const pids = properties.map(property => pidFormatter(property.pid));
   return (
     <>
       <StyledStackedDivs>
@@ -24,7 +27,7 @@ export const StackedPidTenantFields: React.FunctionComponent<IStackedPidTenantFi
       </StyledStackedDivs>
       <StyledStackedDivs>
         <label>Tenant:</label>
-        <OverflowTip title="tenant" fullText={lease?.tenant?.name} />
+        <OverflowTip title="tenant" fullText={getAllNames(lease)} />
       </StyledStackedDivs>
     </>
   );

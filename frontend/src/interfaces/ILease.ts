@@ -1,4 +1,4 @@
-import { IProperty, ITenant } from '.';
+import { IOrganization, IPerson, IProperty } from '.';
 export interface ILease {
   id?: number;
   lFileNo?: string;
@@ -7,6 +7,8 @@ export interface ILease {
   tenantName?: string;
   address?: string;
   expiryDate?: string;
-  properties?: IProperty[];
-  tenant?: ITenant;
+  properties: IProperty[];
+  persons: IPerson[];
+  organizations: IOrganization[];
+  paymentReceivableTypeId?: string;
 }

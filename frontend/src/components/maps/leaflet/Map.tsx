@@ -28,7 +28,6 @@ import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { PropertyPopUpContextProvider } from '../providers/PropertyPopUpProvider';
-import FilterBackdrop from './FilterBackdrop';
 import InfoSlideOut from './InfoSlideOut/InfoSlideOut';
 import { InventoryLayer } from './InventoryLayer';
 import {
@@ -44,6 +43,7 @@ import {
 } from './LayerPopup/LayerPopupContent';
 import LayersControl from './LayersControl';
 import { LegendControl } from './Legend/LegendControl';
+import LoadingBackdrop from './LoadingBackdrop/LoadingBackdrop';
 import { MapEvents } from './MapEvents/MapEvents';
 import * as Styled from './styles';
 import { ZoomOutButton } from './ZoomOut/ZoomOutButton';
@@ -146,7 +146,7 @@ const Map: React.FC<MapProps> = ({
     parcelLayerFeature,
     setLayerPopup,
   });
-  const [showFilterBackdrop, setShowFilterBackdrop] = useState(true);
+  const [showLoadingBackdrop, setShowLoadingBackdrop] = useState(true);
 
   const lastZoom = useAppSelector(state => state.mapViewZoom) ?? zoomProp;
   const [zoom, setZoom] = useState(lastZoom);
@@ -272,7 +272,7 @@ const Map: React.FC<MapProps> = ({
 
   return (
     <Styled.MapGrid ref={resizeRef} className="px-0 map">
-      <FilterBackdrop show={showFilterBackdrop} />
+      <LoadingBackdrop show={showLoadingBackdrop} />
       {!disableMapFilterBar ? (
         <Container fluid className="px-0 map-filter-container">
           <PropertyFilter
@@ -370,7 +370,7 @@ const Map: React.FC<MapProps> = ({
               }}
               selected={selectedProperty}
               filter={geoFilter}
-              onRequestData={setShowFilterBackdrop}
+              onRequestData={setShowLoadingBackdrop}
             ></InventoryLayer>
           </ReactLeafletMap>
         </PropertyPopUpContextProvider>

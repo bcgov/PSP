@@ -2,28 +2,97 @@
 
 exports[`LeaseContainer component renders as expected 1`] = `
 <DocumentFragment>
-  @media (max-width:35rem) {
+  @media only screen and (max-width:715px) {
+
+}
+
+@media (max-width:35rem) {
 
 }
 
 <div
     class="Toastify"
   />
-  @media (max-width:35rem) {
+  @media only screen and (max-width:715px) {
+
+}
+
+@media (max-width:35rem) {
 
 }
 
 <div
     class="Toastify"
   />
-  .c2 {
+  .c10 {
   grid-area: backbutton;
   margin: 0.5rem;
 }
 
-.c2:hover {
+.c10:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c4 {
+  padding: 2rem;
+}
+
+.c7 {
+  white-space: nowrap;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  min-width: 2rem;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c6 {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.c3 {
+  border-radius: 1rem 1rem 0 0;
+  grid-area: leaseheader;
+  color: white;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3 label {
+  padding-right: 1rem;
+  margin: 0;
 }
 
 .c1 {
@@ -44,16 +113,58 @@ exports[`LeaseContainer component renders as expected 1`] = `
   background-color: white;
 }
 
-.c4:hover {
+.c5 {
+  max-width: 11rem;
+  max-height: 100%;
+  white-space: nowrap;
+  border-radius: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+}
+
+.c5 b {
+  padding: 0.25rem 0;
+  color: black;
+}
+
+.c5.active {
+  border: 1px solid;
+}
+
+.c9 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.c8 {
+  width: 100%;
+  text-align: left;
+}
+
+.c8 div {
+  font-weight: 700;
+}
+
+.c12:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c4.active {
+.c12.active {
   font-weight: 700;
 }
 
-.c4.active:before {
+.c12.active:before {
   content: '';
   -webkit-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
@@ -68,7 +179,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   border-right: 0.5rem solid transparent;
 }
 
-.c3 {
+.c11 {
   grid-area: leaseindex;
   display: -webkit-box;
   display: -webkit-flex;
@@ -85,11 +196,18 @@ exports[`LeaseContainer component renders as expected 1`] = `
 }
 
 .c0 {
+  width: 100%;
   grid: 4rem 7.5rem 5rem 1fr / 22rem 1fr;
   grid-template-areas: 'breadcrumb breadcrumb' 'leaseheader  leaseheader' 'backbutton .' 'leaseindex leasecontent';
   display: grid;
   height: 100%;
   padding: 1rem;
+}
+
+@media only screen and (max-width:715px) {
+  .c7 {
+    display: none;
+  }
 }
 
 @media (max-width:35rem) {
@@ -143,8 +261,62 @@ exports[`LeaseContainer component renders as expected 1`] = `
         </li>
       </ol>
     </nav>
+    <div
+      class="c2 c3 lease-header"
+    >
+      <h3
+        class="c4"
+      >
+        Lease / License
+      </h3>
+      <div
+        class="c5 inactive"
+      >
+        <b>
+          Inactive
+        </b>
+        <b />
+      </div>
+      <div
+        class="c2 c6"
+      >
+        <label>
+          Expiry:
+        </label>
+        <b />
+      </div>
+      <div
+        class="c2 c6"
+      >
+        <b />
+      </div>
+      <div
+        class="c7"
+      >
+        <div
+          class="c2 c8"
+        >
+          <label>
+            PID:
+          </label>
+          <div
+            class="c9"
+          />
+        </div>
+        <div
+          class="c2 c8"
+        >
+          <label>
+            Tenant:
+          </label>
+          <div
+            class="c9"
+          />
+        </div>
+      </div>
+    </div>
     <a
-      class="c2 btn"
+      class="c10 btn"
       href="/lease/list"
     >
       <svg
@@ -167,57 +339,98 @@ exports[`LeaseContainer component renders as expected 1`] = `
       </i>
     </a>
     <div
-      class="c3"
+      class="c11"
     >
       <a
-        class="c4 active"
+        class="c12 active"
         href="/lease/undefined/?leasePageName=details"
       >
         Details
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=tenant"
       >
         Tenant
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=payments"
       >
         Payments
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=improvements"
       >
         Improvements
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=insurance"
       >
         Insurance
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=deposit"
       >
         Deposit
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=security"
       >
         Physical Security
       </a>
       <a
-        class="c4"
+        class="c12"
         href="/lease/undefined/?leasePageName=surplus"
       >
         Surplus Declaration
       </a>
     </div>
+  </div>
+  .c0 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width:715px) {
+
+}
+
+@media (max-width:35rem) {
+
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="spinner-border text-warning"
+      data-testid="filter-backdrop-loading"
+    />
   </div>
 </DocumentFragment>
 `;

@@ -19,11 +19,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public long RowVersion { get; set; }
 
         /// <summary>
-        /// get/set - The unique identifier for titled property, either pid or pin.
-        /// </summary>
-        public string PidOrPin { get; set; }
-
-        /// <summary>
         /// get/set - The value of the tenant name.
         /// </summary>
         /// <value></value>
@@ -46,6 +41,33 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The calculated expiry date of the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? ExpiryDate { get; set; }
+
+        /// <summary>
+        /// get/set - The receivable payment type code identifier
+        /// </summary>
+        /// <value></value>
+        public string PaymentReceivableTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - A list of persons tenants associated with this lease
+        /// </summary>
+        public IEnumerable<PersonModel> Persons { get; set; }
+
+        /// <summary>
+        /// get/set - A list of organization tenants associated with this lease
+        /// </summary>
+        public IEnumerable<OrganizationModel> Organizations { get; set; }
+
+        /// <summary>
+        /// get/set - A list of properties associated with this lease
+        /// </summary>
+        public IEnumerable<PropertyModel> Properties { get; set; }
         #endregion
     }
 }

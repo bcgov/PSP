@@ -1,4 +1,4 @@
-import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
@@ -38,12 +38,12 @@ const AppRouter: React.FC = () => {
       fallback={
         keycloak.obj.authenticated ? (
           <AuthLayout>
-            <FilterBackdrop show={true}></FilterBackdrop>
+            <LoadingBackdrop show={true}></LoadingBackdrop>
           </AuthLayout>
         ) : (
           <PublicLayout>
             <Col>
-              <FilterBackdrop show={true}></FilterBackdrop>
+              <LoadingBackdrop show={true}></LoadingBackdrop>
             </Col>
           </PublicLayout>
         )

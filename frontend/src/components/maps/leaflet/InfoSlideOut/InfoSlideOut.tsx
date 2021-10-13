@@ -14,7 +14,7 @@ import { useProperties } from 'store/slices/properties';
 import styled from 'styled-components';
 
 import Control from '../Control/Control';
-import FilterBackdrop from '../FilterBackdrop';
+import LoadingBackdrop from '../LoadingBackdrop/LoadingBackdrop';
 import HeaderActions from './HeaderActions';
 import { InfoContent } from './InfoContent';
 
@@ -135,7 +135,7 @@ const InfoControl: React.FC<InfoControlProps> = ({ open, setOpen, onHeaderAction
       if (generalInfoOpen) {
         return (
           <>
-            <FilterBackdrop show={open && popUpContext.loading}></FilterBackdrop>
+            <LoadingBackdrop show={open && popUpContext.loading}></LoadingBackdrop>
             <HeaderActions
               propertyInfo={popUpContext.propertyInfo}
               propertyTypeId={popUpContext.propertyTypeId}

@@ -1,4 +1,6 @@
 import { Label } from 'components/common/Label';
+import OverflowTip from 'components/common/OverflowTip';
+import { getAllNames } from 'features/leases/leaseUtils';
 import { ILease } from 'interfaces';
 import * as React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -28,7 +30,7 @@ export const LeaseAttributes: React.FC<ILeaseAttributes> = ({ leases }) => {
             />
             <ThreeColumnItem
               leftSideLabel={'Tenant Name:'}
-              rightSideItem={lease?.tenantName ?? ''}
+              rightSideItem={<OverflowTip title="tenant" fullText={getAllNames(lease)} />}
             />
           </OuterRow>
         ))}
