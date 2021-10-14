@@ -176,52 +176,8 @@ exports[`Tenant component renders as expected 1`] = `
             <input
               class="form-control"
               disabled=""
-              id="input-persons.0.address.streetAddress1"
-              name="persons.0.address.streetAddress1"
-              value=""
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.address.municipality"
-              name="persons.0.address.municipality"
-              value=""
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.address.postal"
-              name="persons.0.address.postal"
-              value=""
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
               id="input-persons.0.address.province"
               name="persons.0.address.province"
-              value=""
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.address.country"
-              name="persons.0.address.country"
               value=""
             />
           </div>
@@ -388,17 +344,6 @@ exports[`Tenant component renders as expected 1`] = `
               id="input-organizations.0.address.province"
               name="organizations.0.address.province"
               value="BC"
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.address.country"
-              name="organizations.0.address.country"
-              value=""
             />
           </div>
           <br />

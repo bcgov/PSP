@@ -79,48 +79,8 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
       >
         <input
           class="form-control"
-          id="input-properties.address.streetAddress1"
-          name="properties.address.streetAddress1"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.address.municipality"
-          name="properties.address.municipality"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.address.postal"
-          name="properties.address.postal"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
           id="input-properties.address.province"
           name="properties.address.province"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.address.country"
-          name="properties.address.country"
           value=""
         />
       </div>
@@ -232,48 +192,8 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-properties.address.streetAddress1"
-          name="properties.address.streetAddress1"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.address.municipality"
-          name="properties.address.municipality"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.address.postal"
-          name="properties.address.postal"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
           id="input-properties.address.province"
           name="properties.address.province"
-          value=""
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.address.country"
-          name="properties.address.country"
           value=""
         />
       </div>

@@ -124,16 +124,6 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           value="BC"
         />
       </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.0.address.country"
-          name="properties.0.address.country"
-          value=""
-        />
-      </div>
       <br />
       <label
         class="form-label"
