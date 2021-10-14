@@ -22,4 +22,6 @@ export interface IOrganization {
   website?: string;
   isDisabled?: boolean;
   rowVersion?: number;
+  landline?: string;
+  mobile?: string;
 }

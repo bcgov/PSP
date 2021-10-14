@@ -1,11 +1,10 @@
 import clsx from 'classnames';
 import { Form } from 'components/common/form';
 import { InlineFlexDiv } from 'components/common/styles';
+import * as Styled from 'features/leases/detail/styles';
 import * as React from 'react';
 import styled from 'styled-components';
 import { prettyFormatDate } from 'utils';
-
-import * as Styled from '../styles';
 
 export interface IDetailTermInformationBoxProps {
   title: string;
@@ -48,7 +47,7 @@ const StyledDate = styled.div`
 
 const StyledTermInformationBox = styled.div`
   width: 25.5rem;
-  background-color: ${props => props.theme.css.primaryColor};
+  background: rgba(0, 33, 66, 0.73);
   color: white;
   padding: 1rem 2rem;
   border-radius: 0.4rem;

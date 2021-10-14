@@ -1,8 +1,7 @@
 import { TextArea } from 'components/common/form';
+import * as Styled from 'features/leases/detail/styles';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
-
-import * as Styled from '../styles';
 
 export interface IDetailNotesProps {
   nameSpace?: string;

@@ -7,3 +7,23 @@
 export const withNameSpace: Function = (nameSpace?: string, name?: string, index?: number) => {
   return [nameSpace ?? '', `${index ?? ''}`, name].filter(x => x).join('.');
 };
+
+/**
+ * The phoneFormatter is used to format the specified phone number value
+ * @param {string} phoneNumber This is the target phone number to be formatted
+ */
+export const phoneFormatter = (phoneNumber?: string) => {
+  if (!!phoneNumber) {
+    let result = phoneNumber;
+    const regex =
+      phoneNumber.length === 10
+        ? /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d\d)/
+        : /\d(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d\d)/;
+    const format = phoneNumber.match(regex);
+    if (format !== null && format.length === 4) {
+      result = `1 ${format[1]}-${format[2]}-${format[3]}`;
+    }
+    return result;
+  }
+  return '';
+};

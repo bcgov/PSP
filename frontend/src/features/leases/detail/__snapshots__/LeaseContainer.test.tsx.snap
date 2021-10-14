@@ -216,7 +216,8 @@ exports[`LeaseContainer component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c26 > .textarea {
+.c26 > .textarea,
+.c26 > h3 {
   grid-column: span 2;
   border-left: none;
 }
@@ -292,6 +293,18 @@ exports[`LeaseContainer component renders as expected 1`] = `
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
+}
+
+.c20 {
+  -webkit-column-gap: 5rem;
+  column-gap: 5rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c19 {
@@ -427,6 +440,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c21 {
   width: 25.5rem;
+  background: rgba(0,33,66,0.73);
   color: white;
   padding: 1rem 2rem;
   border-radius: 0.4rem;
@@ -437,18 +451,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-}
-
-.c20 {
-  -webkit-column-gap: 5rem;
-  column-gap: 5rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
 }
 
 .c16#leaseForm {
