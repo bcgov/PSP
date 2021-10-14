@@ -14,23 +14,31 @@ export const AddressSubForm: React.FunctionComponent<IAddressSubFormProps> = ({
   nameSpace,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
+  const municipality = getIn(formikProps.values, withNameSpace(nameSpace, 'municipality'));
+  const postal = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));
+  const country = getIn(formikProps.values, withNameSpace(nameSpace, 'country'));
+  const streetAddress1 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress1'));
   const streetAddress2 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress2'));
   const streetAddress3 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress3'));
 
   return (
     <>
       <Form.Label>Address</Form.Label>
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress1')} />
+      {streetAddress1 && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress1')} />
+      )}
       {streetAddress2 && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress2')} />
       )}
       {streetAddress3 && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress3')} />
       )}
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'municipality')} />
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />
+      {municipality && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'municipality')} />
+      )}
+      {postal && <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />}
       <Input disabled={disabled} field={withNameSpace(nameSpace, 'province')} />
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'country')} />
+      {country && <Input disabled={disabled} field={withNameSpace(nameSpace, 'country')} />}
     </>
   );
 };
