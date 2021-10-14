@@ -3,11 +3,11 @@ import { ILease, IPagedItems } from 'interfaces';
 // import queryString from 'query-string';
 import React from 'react';
 
-import { ILeaseAndLicenseFilter } from './../../features/leases/interfaces';
+import { ILeaseFilter } from './../../features/leases/interfaces';
 import { useAxiosApi } from '.';
 
 // TODO: remove mocked API when backend is functional
-const mockGetLeases = (params: ILeaseAndLicenseFilter | null) => {
+const mockGetLeases = (params: ILeaseFilter | null) => {
   const testJson = {
     page: 1,
     pageIndex: 0,

@@ -5,13 +5,11 @@ import { PropertyFilterOptions } from 'features/properties/filter';
 import { Formik } from 'formik';
 import * as React from 'react';
 
-import { ILeaseAndLicenseFilter } from '../interfaces';
+import { ILeaseFilter } from '../../interfaces';
 
 interface ILeaseAndLicenseFilterProps {
-  isSubmitting?: boolean;
-  filter?: ILeaseAndLicenseFilter;
-  setFilter: (filter: ILeaseAndLicenseFilter) => void;
-  search: (filter: ILeaseAndLicenseFilter) => void;
+  filter?: ILeaseFilter;
+  setFilter: (filter: ILeaseFilter) => void;
 }
 
 /**
@@ -19,10 +17,8 @@ interface ILeaseAndLicenseFilterProps {
  * @param {ILeaseAndLicenseFilterProps} param0
  */
 export const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilterProps> = ({
-  isSubmitting,
   filter,
   setFilter,
-  search,
 }) => {
   const resetFilter = () => {
     setFilter(defaultFilter);
@@ -32,16 +28,17 @@ export const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilt
     <Formik
       enableReinitialize
       initialValues={filter ?? defaultFilter}
-      onSubmit={values => {
+      onSubmit={(values, { setSubmitting }) => {
         setFilter(values);
+        setSubmitting(false);
       }}
     >
-      {({ values, resetForm }) => (
+      {({ values, resetForm, isSubmitting }) => (
         <Styled.InlineForm>
           <b>Search for a Lease or License:</b>
           <PropertyFilterOptions options={options} placeholders={placeholders} />
           <Styled.InlineInput field="tenantName" label="Tenant Name" />
-          <SearchButton disabled={isSubmitting} onClick={() => search(values)} />
+          <SearchButton disabled={isSubmitting} />
           <ResetButton
             disabled={isSubmitting}
             onClick={() => {
@@ -55,10 +52,10 @@ export const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilt
   );
 };
 
-const defaultFilter: ILeaseAndLicenseFilter = {
+const defaultFilter: ILeaseFilter = {
   pidOrPin: '',
   lFileNo: '',
-  searchBy: 'pidOrPin',
+  searchBy: 'lFileNo',
   tenantName: '',
 };
 
