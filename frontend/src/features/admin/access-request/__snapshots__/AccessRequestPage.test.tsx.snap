@@ -27,7 +27,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
           You will receive an email when your request is reviewed.
         </div>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <label
             class="form-label"
@@ -52,7 +52,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
             class="col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <label
                 class="form-label"
@@ -75,7 +75,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
             class="col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <label
                 class="form-label"
@@ -96,7 +96,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <label
             class="form-label"
@@ -115,7 +115,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
           />
         </div>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <label
             class="form-label"
@@ -173,7 +173,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="required form-group"
+          class="required textarea input form-group"
         >
           <label
             class="form-label"

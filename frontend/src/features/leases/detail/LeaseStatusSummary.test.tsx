@@ -1,8 +1,8 @@
 import { createMemoryHistory } from 'history';
+import { defaultLease } from 'interfaces';
 import moment from 'moment';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { defaultLease } from '..';
 import { ILeaseStatusSummaryProps, LeaseStatusSummary } from './LeaseStatusSummary';
 
 const history = createMemoryHistory();

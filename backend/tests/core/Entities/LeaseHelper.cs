@@ -18,7 +18,7 @@ namespace Pims.Core.Test
         /// <param name="lFileNo"></param>
         /// <param name="tenantName"></param>
         /// <returns></returns>
-        public static Entity.Lease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null)
+        public static Entity.Lease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null)
         {
             var lease = new Entity.Lease()
             {
@@ -28,7 +28,9 @@ namespace Pims.Core.Test
             };
             lease.Properties.Add(new Entity.Property() { PID = pidOrPin });
             lease.Persons.Add(new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName });
-            lease.ProgramType = new Entity.LeaseProgramType() { Id = "test" };
+            lease.MotiName = new Entity.Person() { FirstName = motiFirstName, Surname = motiLastName };
+            lease.ProgramType = new Entity.LeaseProgramType() { Id = "testProgramType" };
+            lease.PaymentFrequencyType = new Entity.LeasePaymentFrequencyType() { Id = "testFrequencyType" };
             return lease;
         }
     }

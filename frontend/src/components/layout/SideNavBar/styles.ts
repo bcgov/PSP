@@ -80,7 +80,7 @@ export const SideTray = styled.div`
   &.show {
     transform: translateX(64rem);
   }
-  @media (max-width: 76.5rem) {
+  @media (max-width: 1225px) {
     width: 32rem;
     &.show {
       transform: translateX(32rem);

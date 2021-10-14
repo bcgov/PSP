@@ -20,7 +20,7 @@ const DetailScreenGrid = styled.div`
     'backbutton .'
     'leaseindex leasecontent';
   display: grid;
-  @media (max-width: 35rem) {
+  @media (max-width: 560px) {
     grid-template-rows: minmax(4rem, 1fr) minmax(7.5rem, 2fr) minmax(5rem, 1fr) 10fr;
     grid-template-columns: 22rem 1fr;
     .lease-header {
@@ -29,6 +29,7 @@ const DetailScreenGrid = styled.div`
     }
   }
   height: 100%;
+  overflow: auto;
   padding: 1rem;
 `;
 

@@ -6,7 +6,11 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 }
 
-@media (max-width:35rem) {
+@media only screen and (max-width:1500px) {
+
+}
+
+@media (max-width:560px) {
 
 }
 
@@ -17,7 +21,11 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 }
 
-@media (max-width:35rem) {
+@media only screen and (max-width:1500px) {
+
+}
+
+@media (max-width:560px) {
 
 }
 
@@ -34,6 +42,48 @@ exports[`LeaseContainer component renders as expected 1`] = `
   text-decoration: none;
 }
 
+.c30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c30 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c32 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c32 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c18 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -46,6 +96,27 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c4 {
   padding: 2rem;
+}
+
+.c15 {
+  font-size: 3.2rem;
+  text-align: left;
+  border-bottom: solid 0.4rem;
+}
+
+.c25 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c22 {
+  font-size: 1.8rem;
+  color: white;
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 .c7 {
@@ -111,6 +182,146 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c1 ol {
   background-color: white;
+}
+
+.c28 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.c26 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c26 .form-label,
+.c26 .form-group {
+  margin: 0;
+}
+
+.c26 > .input {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black;
+}
+
+.c26 .form-control {
+  font-weight: 700;
+}
+
+.c26 > label,
+.c26 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c26 > .textarea {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c26 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c31 input.form-control {
+  text-align: left;
+}
+
+.c29 {
+  gap: 5rem;
+}
+
+.c29 .form-control:disabled {
+  border: none;
+  background: none;
+}
+
+.c33 {
+  background-color: white;
+  padding-left: 8rem;
+}
+
+.c33.table .thead .th {
+  font-weight: 700;
+  border-top: none;
+  padding: 1rem 0.5rem;
+  background-color: white;
+  font-size: 14px;
+}
+
+.c33.table .tbody .td {
+  border: none;
+  font-size: 14px;
+}
+
+.c33.table .tbody .tr-wrapper:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.c33.table .tbody .tr-wrapper .tr.selected {
+  font-weight: 700;
+  margin-left: -8rem;
+}
+
+.c33.table .tbody .tr-wrapper .tr.selected:before {
+  content: 'current';
+  padding-right: 1.5rem;
+  background-image: url(caret-right.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+  width: 8rem;
+  height: 3.1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c19 {
+  -webkit-column-count: 2;
+  column-count: 2;
+  -webkit-column-gap: 10rem;
+  column-gap: 10rem;
+}
+
+.c19 > * {
+  -webkit-break-inside: avoid-column;
+  break-inside: avoid-column;
+}
+
+.c19 li {
+  list-style-type: none;
+  padding: 2rem 0;
+  margin: 0;
+}
+
+.c17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  gap: 2.5rem;
 }
 
 .c5 {
@@ -201,7 +412,86 @@ exports[`LeaseContainer component renders as expected 1`] = `
   grid-template-areas: 'breadcrumb breadcrumb' 'leaseheader  leaseheader' 'backbutton .' 'leaseindex leasecontent';
   display: grid;
   height: 100%;
+  overflow: auto;
   padding: 1rem;
+}
+
+.c27 input.form-control {
+  font-size: 1.8rem;
+}
+
+.c24 {
+  justify-self: flex-end;
+  font-weight: 700;
+}
+
+.c21 {
+  width: 25.5rem;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.4rem;
+}
+
+.c23 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.c20 {
+  -webkit-column-gap: 5rem;
+  column-gap: 5rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c16#leaseForm {
+  text-align: left;
+}
+
+.c16#leaseForm input:disabled,
+.c16#leaseForm textarea:disabled {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.c16#leaseForm textarea:disabled {
+  padding-left: 0;
+}
+
+.c16#leaseForm .input-group.disabled .input-group-text {
+  background: none;
+  border: none;
+}
+
+.c14 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+
+.c14 p {
+  height: 3rem;
+  text-align: left;
+}
+
+.c13 {
+  padding: 0 2.5rem;
+  height: 100%;
+  overflow-y: auto;
+  grid-area: leasecontent;
 }
 
 @media only screen and (max-width:715px) {
@@ -210,7 +500,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
   }
 }
 
-@media (max-width:35rem) {
+@media only screen and (max-width:1500px) {
+  .c19 {
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+@media (max-width:560px) {
   .c0 {
     grid-template-rows: minmax(4rem,1fr) minmax(7.5rem,2fr) minmax(5rem,1fr) 10fr;
     grid-template-columns: 22rem 1fr;
@@ -264,11 +561,11 @@ exports[`LeaseContainer component renders as expected 1`] = `
     <div
       class="c2 c3 lease-header"
     >
-      <h3
+      <h1
         class="c4"
       >
         Lease / License
-      </h3>
+      </h1>
       <div
         class="c5 inactive"
       >
@@ -390,6 +687,403 @@ exports[`LeaseContainer component renders as expected 1`] = `
         Surplus Declaration
       </a>
     </div>
+    <div
+      class="c13"
+    >
+      <div
+        class="c14"
+      >
+        <h2
+          class="c15"
+        >
+          Details
+        </h2>
+        <p />
+      </div>
+      <form
+        action="#"
+        class="c16"
+        id="leaseForm"
+      >
+        <div
+          class="c17"
+        >
+          <div
+            class="c18 c19"
+          >
+            <li
+              class="c20"
+            >
+              <div
+                class="c21"
+              >
+                <h4
+                  class="c22"
+                >
+                  Lease / License
+                </h4>
+                <div
+                  class="c2 c23"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    Start date:
+                  </label>
+                  <div
+                    class="c24"
+                  />
+                </div>
+                <div
+                  class="c2 c23"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    Expiry:
+                  </label>
+                  <div
+                    class="c24"
+                  />
+                </div>
+              </div>
+            </li>
+            <li>
+              <h3
+                class="c25"
+              >
+                Administration
+              </h3>
+              <div
+                class="c26"
+              >
+                <label
+                  class="form-label"
+                >
+                  Program:
+                </label>
+                <div
+                  class="c27 input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-programName"
+                    name="programName"
+                    value=""
+                  />
+                </div>
+                <br />
+                <label
+                  class="form-label"
+                >
+                  L-file #:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-lFileNo"
+                    name="lFileNo"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  MoTI contact:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-motiName"
+                    name="motiName"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  LIS #:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-tfaFileNo"
+                    name="tfaFileNo"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  PS #:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-psFileNo"
+                    name="psFileNo"
+                    value=""
+                  />
+                </div>
+              </div>
+            </li>
+            <label
+              class="c28 form-label"
+            >
+              Description
+            </label>
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                disabled=""
+                id="input-description"
+                name="description"
+              />
+            </div>
+          </div>
+          <div
+            class="c18"
+          >
+            <h3
+              class="c25"
+            >
+              Terms
+            </h3>
+            <div
+              class="c2 c29"
+            >
+              <div
+                class="c30 c31 form-group"
+              >
+                <label
+                  class="form-label"
+                >
+                  Payment amount: 
+                </label>
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    disabled=""
+                    name="amount"
+                    placeholder=""
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="c32 input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-paymentFrequencyType"
+                >
+                  Payment frequency: 
+                </label>
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-paymentFrequencyType"
+                  name="paymentFrequencyType"
+                  value=""
+                />
+              </div>
+              <div
+                class="c32 input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-renewalCount"
+                >
+                  Total renewal terms: 
+                </label>
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-renewalCount"
+                  name="renewalCount"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="table c33"
+              role="table"
+            >
+              <div
+                class="thead thead-light"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                >
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Term ID
+                      <span
+                        style="flex: 1 1 auto;"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Term Start Date
+                      <span
+                        style="flex: 1 1 auto;"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Term End Date
+                      <span
+                        style="flex: 1 1 auto;"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Date Renewed
+                      <span
+                        style="flex: 1 1 auto;"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="th"
+                    colspan="1"
+                    role="columnheader"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                  >
+                    <div
+                      class="sortable-column"
+                    >
+                      Term Status
+                      <span
+                        style="flex: 1 1 auto;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tbody"
+                role="rowgroup"
+              >
+                <div
+                  class="tr-wrapper"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                  >
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      title=""
+                    >
+                      initial term
+                    </div>
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      title=""
+                    />
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      title=""
+                    />
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      title=""
+                    />
+                    <div
+                      class="td"
+                      role="cell"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      title=""
+                    >
+                      exercised
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c18"
+          >
+            <label
+              class="c28 form-label"
+            >
+              Lease Notes
+            </label>
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                disabled=""
+                id="input-note"
+                name="note"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   .c0 {
   width: 100%;
@@ -420,7 +1114,11 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 }
 
-@media (max-width:35rem) {
+@media only screen and (max-width:1500px) {
+
+}
+
+@media (max-width:560px) {
 
 }
 

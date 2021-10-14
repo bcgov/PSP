@@ -1,3 +1,5 @@
+import { NumberFieldValue } from 'typings/NumberFieldValue';
+
 /**
  * An address represents a location of a property or person.
  */
@@ -22,3 +24,37 @@ export interface IAddress {
   longitude?: number;
   rowVersion?: number;
 }
+
+export interface IFormAddress
+  extends ExtendOverride<
+    IAddress,
+    {
+      regionId?: NumberFieldValue;
+      districtId?: NumberFieldValue;
+      provinceId: NumberFieldValue;
+      countryId?: NumberFieldValue;
+      latitude?: NumberFieldValue;
+      longitude?: NumberFieldValue;
+      rowVersion?: NumberFieldValue;
+    }
+  > {}
+
+export const defaultAddress: IFormAddress = {
+  addressType: '',
+  addressTypeId: '',
+  municipality: '',
+  postal: '',
+  provinceId: '',
+  streetAddress1: '',
+  country: '',
+  countryId: '',
+  district: '',
+  districtId: '',
+  latitude: '',
+  longitude: '',
+  province: '',
+  region: '',
+  regionId: '',
+  streetAddress2: '',
+  streetAddress3: '',
+};

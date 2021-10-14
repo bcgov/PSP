@@ -97,7 +97,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(!!required ? 'required' : '', className, 'input')}
     >
       {!!label && (
         <Form.Label>
