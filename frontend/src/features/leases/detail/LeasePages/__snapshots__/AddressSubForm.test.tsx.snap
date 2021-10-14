@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddressSubForm component renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <label
+    class="form-label"
+  >
+    Address
+  </label>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-properties.0.address.streetAddress1"
+      name="properties.0.address.streetAddress1"
+      value="1234 mock Street"
+    />
+  </div>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-properties.0.address.streetAddress2"
+      name="properties.0.address.streetAddress2"
+      value="N/A"
+    />
+  </div>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-properties.0.address.municipality"
+      name="properties.0.address.municipality"
+      value="Victoria"
+    />
+  </div>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-properties.0.address.postal"
+      name="properties.0.address.postal"
+      value="V1V1V1"
+    />
+  </div>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-properties.0.address.province"
+      name="properties.0.address.province"
+      value="BC"
+    />
+  </div>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-properties.0.address.country"
+      name="properties.0.address.country"
+      value=""
+    />
+  </div>
+</DocumentFragment>
+`;

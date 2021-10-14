@@ -43,7 +43,8 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
   grid-row: auto;
 }
 
-.c1 > .textarea {
+.c1 > .textarea,
+.c1 > h3 {
   grid-column: span 2;
   border-left: none;
 }
@@ -195,7 +196,8 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
   grid-row: auto;
 }
 
-.c1 > .textarea {
+.c1 > .textarea,
+.c1 > h3 {
   grid-column: span 2;
   border-left: none;
 }

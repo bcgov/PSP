@@ -1,4 +1,5 @@
 import { InlineInput } from 'components/common/form/styles';
+import * as Styled from 'features/leases/detail/styles';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';
@@ -6,7 +7,6 @@ import moment from 'moment';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
 
-import * as Styled from '../styles';
 import { leaseTermColumns } from './columns';
 
 export interface IDetailTermsProps {

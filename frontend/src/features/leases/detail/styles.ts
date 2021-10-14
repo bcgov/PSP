@@ -1,5 +1,5 @@
 import caretRightSvgUrl from 'assets/images/caret-right.svg';
-import { InlineFastCurrencyInput } from 'components/common/form/styles';
+import { InlineFastCurrencyInput, InlineInput } from 'components/common/form/styles';
 import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
 import { Breadcrumb, Form } from 'react-bootstrap';
@@ -117,7 +117,8 @@ export const FormGrid = styled.div`
     grid-row: auto;
   }
 
-  & > .textarea {
+  & > .textarea,
+  & > h3 {
     grid-column: span 2;
     border-left: none;
   }
@@ -177,3 +178,17 @@ export const TermsTable = styled(Table)`
     }
   }
 ` as typeof Table;
+
+export const SpacedInlineListItem = styled.li`
+  column-gap: 5rem;
+  display: flex;
+  flex-wrap: nowrap;
+`;
+
+export const NestedInlineField = styled(InlineInput)`
+  padding: 0.6rem 1.2rem;
+  display: flex;
+  .form-label {
+    min-width: 7rem;
+  }
+`;

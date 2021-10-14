@@ -71,7 +71,17 @@ namespace Pims.Dal.Services
                 .Include(l => l.PaymentFrequencyType)
                 .Include(l => l.MotiName)
                 .Include(l => l.Persons)
+                .ThenInclude(p => p.ContactMethods)
+                .Include(l => l.Persons)
+                .ThenInclude(p => p.Address)
                 .Include(l => l.Organizations)
+                .ThenInclude(p => p.ContactMethods)
+                .Include(l => l.Organizations)
+                .ThenInclude(o => o.Persons)
+                .Include(l => l.Organizations)
+                .ThenInclude(o => o.PersonsManyToMany)
+                .Include(l => l.Organizations)
+                .ThenInclude(o => o.Address)
                 .Where(l => l.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }

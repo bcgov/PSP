@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Pims.Dal;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -18,7 +19,7 @@ namespace Pims.Core.Test
         /// <param name="lFileNo"></param>
         /// <param name="tenantName"></param>
         /// <returns></returns>
-        public static Entity.Lease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null)
+        public static Entity.Lease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, Address address = null)
         {
             var lease = new Entity.Lease()
             {
@@ -27,7 +28,8 @@ namespace Pims.Core.Test
                 RowVersion = 1,
             };
             lease.Properties.Add(new Entity.Property() { PID = pidOrPin });
-            lease.Persons.Add(new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName });
+            lease.Persons.Add(new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName, Address = address });
+            lease.Organizations.Add(new Entity.Organization() { Address = address});
             lease.MotiName = new Entity.Person() { FirstName = motiFirstName, Surname = motiLastName };
             lease.ProgramType = new Entity.LeaseProgramType() { Id = "testProgramType" };
             lease.PaymentFrequencyType = new Entity.LeasePaymentFrequencyType() { Id = "testFrequencyType" };

@@ -43,7 +43,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c1 > .textarea {
+.c1 > .textarea,
+.c1 > h3 {
   grid-column: span 2;
   border-left: none;
 }
