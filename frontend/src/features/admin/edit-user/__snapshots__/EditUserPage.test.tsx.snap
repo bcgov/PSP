@@ -39,7 +39,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           IDIR/BCeID
         </p>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <input
             class="form-control"
@@ -57,7 +57,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           Last Login
         </p>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <input
             class="form-control"
@@ -81,7 +81,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
               First Name
             </p>
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"
@@ -103,7 +103,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
               Last Name
             </p>
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"
@@ -123,7 +123,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           Email
         </p>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <input
             class="form-control"
@@ -170,7 +170,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           Position
         </p>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <input
             class="form-control"
@@ -229,7 +229,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
           Notes
         </p>
         <div
-          class="form-group"
+          class="input form-group"
         >
           <textarea
             class="form-control"

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -25,7 +26,8 @@ namespace Pims.Dal.Helpers.Extensions
             filter.ThrowIfNull(nameof(user));
 
             if (!String.IsNullOrWhiteSpace(filter.TenantName)) {
-                query = query.Where(l => l.Tenant != null && EF.Functions.Like(l.Tenant.Surname + ", " + l.Tenant.FirstName + ", " + l.Tenant.MiddleNames, $"%{filter.TenantName}%"));
+                query = query.Where(l => l.Persons.Any(person => person != null && EF.Functions.Like(person.Surname + ", " + person.FirstName + ", " + person.MiddleNames, $"%{filter.TenantName}%"))
+                || l.Organizations.Any(organization => organization != null && EF.Functions.Like(organization.Name, $"%{filter.TenantName}%")));
             }
 
             if (!String.IsNullOrWhiteSpace(filter.PidOrPin))
@@ -47,7 +49,8 @@ namespace Pims.Dal.Helpers.Extensions
             return query.Include(l => l.Properties)
                 .ThenInclude(p => p.Address)
                 .Include(l => l.ProgramType)
-                .Include(l => l.Tenant);
+                .Include(l => l.Persons)
+                .Include(l => l.Organizations);
         }
 
         /// <summary>
@@ -59,7 +62,6 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static IQueryable<Entity.Lease> GenerateLeaseQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
         {
-            if (context == null) throw new ArgumentNullException("GenerateLeaseQuery context cannot be null");
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
@@ -101,18 +103,41 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Get the full name from the lease's tenant (person).
+        /// Get the full name from the lease's first tenant (person).
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
         public static string GetFullName(this Pims.Dal.Entities.Lease lease)
         {
-            if(lease?.Tenant != null)
+            return lease?.TenantsManyToMany.FirstOrDefault(t => t.Person != null)?.Person?.GetFullName();
+        }
+
+        /// <summary>
+        /// Get the full name from the lease's first tenant (person).
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetMotiName(this Pims.Dal.Entities.Lease lease)
+        {
+            return lease.MotiName?.GetFullName();
+        }
+
+        /// <summary>
+        /// Get the calculated expiry date.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.Lease lease)
+        {
+            if(lease.OrigExpiryDate != null)
             {
-                string[] names = { lease.Tenant.Surname, lease.Tenant.FirstName, lease.Tenant.MiddleNames };
-                return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
+                if(lease.TermExpiryDate != null)
+                {
+                    return lease.OrigExpiryDate > lease.TermExpiryDate ? lease.OrigExpiryDate : lease.TermExpiryDate;
+                }
+                return lease.OrigExpiryDate;
             }
-            return null;
+            return lease.TermExpiryDate;
         }
     }
 }

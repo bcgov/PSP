@@ -11,6 +11,7 @@ namespace Pims.Dal.Services
     {
         int Count();
         IEnumerable<Lease> Get(LeaseFilter filter);
+        Lease Get(int id);
         Paged<Lease> GetPage(LeaseFilter filter);
     }
 }

@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertyInformation component renders a complete lease as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0;
+}
+
+.c1 > .input {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black;
+}
+
+.c1 .form-control {
+  font-weight: 700;
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea,
+.c1 > h3 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Property Information
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Address
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.address.province"
+          name="properties.address.province"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Area
+      </label>
+      <div
+        class="input-group"
+      >
+        <div
+          class="input-group-content"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.landArea"
+              name="properties.landArea"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`PropertyInformation component renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0;
+}
+
+.c1 > .input {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black;
+}
+
+.c1 .form-control {
+  font-weight: 700;
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea,
+.c1 > h3 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Property Information
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Address
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-properties.address.province"
+          name="properties.address.province"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        Area
+      </label>
+      <div
+        class="input-group"
+      >
+        <div
+          class="input-group-content"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.landArea"
+              name="properties.landArea"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

@@ -21,7 +21,7 @@ namespace Pims.Dal.Configuration
 
             builder.Property(m => m.TaskTypeId)
                 .IsRequired()
-                .HasMaxLength(40)
+                .HasMaxLength(20)
                 .HasComment("Foreign key to task template type");
             builder.Property(m => m.IsDisabled)
                 .HasDefaultValue(false)

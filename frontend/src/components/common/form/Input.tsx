@@ -75,7 +75,7 @@ export const Input: React.FC<InputProps> = ({
   const value = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const asElement: any = is || 'input';
-  const [restricted, setRestricted] = useState(value);
+  const [restricted, setRestricted] = useState(onBlurFormatter ? onBlurFormatter(value) : value);
   const handleRestrictedChange = (event: any) => {
     let val = event.target.value;
     pattern?.test(val) && setRestricted(val);
@@ -97,7 +97,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(!!required ? 'required' : '', className, 'input')}
     >
       {!!label && (
         <Form.Label>

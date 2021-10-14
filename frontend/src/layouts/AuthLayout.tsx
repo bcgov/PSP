@@ -1,4 +1,5 @@
 import { SideNavBar } from 'components/layout';
+import { SidebarStateContextProvider } from 'components/layout/SideNavBar/SideNavbarContext';
 import { AuthStateContext } from 'contexts/authStateContext';
 import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
@@ -15,10 +16,12 @@ const AuthLayout: React.FC = ({ children }) => {
         }
 
         return (
-          <PublicLayout className="authenticated">
-            <SideNavBar />
-            <Content className="content">{children}</Content>
-          </PublicLayout>
+          <SidebarStateContextProvider>
+            <PublicLayout className="authenticated">
+              <SideNavBar />
+              <Content className="content">{children}</Content>
+            </PublicLayout>
+          </SidebarStateContextProvider>
         );
       }}
     </AuthStateContext.Consumer>

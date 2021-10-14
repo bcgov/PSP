@@ -14,7 +14,7 @@ import {
   PropertyTypes,
 } from 'constants/index';
 import { createMemoryHistory } from 'history';
-import { IProperty } from 'interfaces';
+import { defaultLease, IProperty } from 'interfaces';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -172,24 +172,50 @@ describe('InfoContent View functionality', () => {
   it('Displays lease information when there are leases', () => {
     const { getByText } = render(
       ContentComponent(
-        { ...mockParcel, leases: [{ tenantName: 'tenantName1' }] },
+        {
+          ...mockParcel,
+          leases: [
+            {
+              ...defaultLease,
+              persons: [{ fullName: 'First Last' }],
+              organizations: [],
+              properties: [],
+            },
+          ],
+        },
         PropertyTypes.Land,
         true,
       ),
     );
     expect(getByText('Active Leases')).toBeVisible();
-    expect(getByText('tenantName1')).toBeVisible();
+    expect(getByText('First Last')).toBeVisible();
   });
 
   it('Displays all lease information when there are multiple leases', () => {
     const { getByText } = render(
       ContentComponent(
-        { ...mockParcel, leases: [{ tenantName: 'tenantName1' }, { tenantName: 'tenantName2' }] },
+        {
+          ...mockParcel,
+          leases: [
+            {
+              ...defaultLease,
+              persons: [{ fullName: 'First Last1' }],
+              organizations: [],
+              properties: [],
+            },
+            {
+              ...defaultLease,
+              persons: [{ fullName: 'First Last2' }],
+              organizations: [],
+              properties: [],
+            },
+          ],
+        },
         PropertyTypes.Land,
         true,
       ),
     );
-    expect(getByText('tenantName1')).toBeVisible();
-    expect(getByText('tenantName2')).toBeVisible();
+    expect(getByText('First Last1')).toBeVisible();
+    expect(getByText('First Last2')).toBeVisible();
   });
 });

@@ -11,7 +11,7 @@ namespace Pims.Api.Areas.Property.Mapping.Property
         {
             config.NewConfig<Entity.Lease, Model.LeaseModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.ExpiryDate, src => src.TermExpiryDate)
                 .Map(dest => dest.TenantName, src => src.GetFullName());
         }
     }

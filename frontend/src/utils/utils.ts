@@ -180,6 +180,10 @@ export const formatDate = (date?: string | Date | Moment) => {
   return !!date ? moment(date).format('YYYY-MM-DD') : '';
 };
 
+export const prettyFormatDate = (date?: string | Date | Moment) => {
+  return !!date ? moment(date).format('MMM D, YYYY') : '';
+};
+
 /**
  * Format the passed string date assuming the date was recorded in UTC (as is the case with the pims API server).
  * Returns a date formatted for display in the current time zone of the user.

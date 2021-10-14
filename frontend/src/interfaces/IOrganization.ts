@@ -10,7 +10,7 @@ export interface IOrganization {
   parentId?: any;
   parent?: string;
   name: string;
-  addressId?: number;
+  addressId: number;
   address?: IAddress;
   regionId?: number;
   districtId?: number;
@@ -18,8 +18,10 @@ export interface IOrganization {
   organizationType?: string;
   identifierTypeId: OrganizationIdentifierTypes;
   identifierType?: string;
-  identifier: string;
+  identifier?: string;
   website?: string;
   isDisabled?: boolean;
   rowVersion?: number;
+  landline?: string;
+  mobile?: string;
 }

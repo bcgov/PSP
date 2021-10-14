@@ -101,6 +101,7 @@ namespace Pims.Api.Controllers
             var areaUnitTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyAreaUnitTypes());
             var tenureTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTenureTypes());
             var propertyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTypes());
+            var paymentReceivableTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPaymentReceivableTypes());
 
             var codes = new List<object>();
             codes.AddRange(roleCodes);
@@ -114,6 +115,7 @@ namespace Pims.Api.Controllers
             codes.AddRange(areaUnitTypes);
             codes.AddRange(tenureTypes);
             codes.AddRange(propertyTypes);
+            codes.AddRange(paymentReceivableTypes);
             return new JsonResult(codes);
         }
         #endregion

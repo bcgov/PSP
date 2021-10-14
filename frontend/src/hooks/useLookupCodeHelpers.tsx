@@ -11,9 +11,10 @@ import { mapLookupCode } from 'utils';
 export function useLookupCodeHelpers() {
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
   const getCodeById = (type: string, id: number | string): string | undefined => {
-    return lookupCodes
+    const match = lookupCodes
       .filter((code: { type: string; id: number | string }) => code.type === type && code.id === id)
-      ?.find((x: any) => x)?.code;
+      ?.find((x: any) => x);
+    return match?.code ?? match?.name;
   };
 
   const getByType = useCallback(
@@ -39,7 +40,7 @@ export function useLookupCodeHelpers() {
   /**
    * Return an array of SelectOptions containing property classifications.
    * @param filter - A filter to determine which classifications will be returned.
-   * @returns An array of SelectOptions for property classifications.
+   * @returns An array of SelectOptions for property classifications.map
    */
   const getPropertyClassificationTypeOptions = (
     filter?: (value: SelectOption, index: number, array: SelectOption[]) => unknown,
