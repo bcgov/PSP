@@ -10,7 +10,7 @@ import { formatNumber, formatStreetAddress, mapLookupCode } from 'utils';
 export const ColumnDiv = styled.div`
   display: flex;
   flex-flow: column;
-  padding-right: 5px;
+  padding-right: 0.5rem;
 `;
 
 const NumberCell = ({ cell: { value } }: CellProps<IProperty, number>) => formatNumber(value);

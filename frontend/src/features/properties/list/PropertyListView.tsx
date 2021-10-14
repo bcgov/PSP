@@ -159,7 +159,7 @@ const PropertyListView: React.FC = () => {
         </Container>
       </Container>
       <div className="ScrollContainer">
-        <Container fluid className="TableToolbar">
+        <Container fluid className="TableToolbar px-0">
           <h3>Property Information</h3>
           <div className="menu"></div>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
@@ -181,6 +181,7 @@ const PropertyListView: React.FC = () => {
           loading={data === undefined}
           sort={sort}
           pageIndex={pageIndex}
+          pageSize={pageSize}
           onRequestData={onRequestData}
           pageCount={pageCount}
           onSortChange={(column: string, direction: SortDirection) => {

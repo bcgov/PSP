@@ -21,7 +21,7 @@ const FooterStyled = styled.footer<IFooterProps>`
   // colors
   background-color: ${props => props.backgroundColor ?? props.theme.css.primaryColor};
   border: none;
-  border-top: 2px solid ${props => props.theme.css.accentColor};
+  border-top: 0.2rem solid ${props => props.theme.css.accentColor};
   grid-area: footer;
 
   a,
