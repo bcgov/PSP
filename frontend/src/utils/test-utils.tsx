@@ -182,6 +182,7 @@ export interface RenderOptions extends RtlRenderOptions {
   organizations?: number[];
   claims?: string[];
   roles?: string[];
+  tenant?: string;
 }
 
 function render(
@@ -195,6 +196,7 @@ function render(
     organizations,
     claims,
     roles,
+    tenant,
     ...renderOptions
   } = options;
 
@@ -212,7 +214,7 @@ function render(
 
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
-      <TestCommonWrapper store={store} history={history}>
+      <TestCommonWrapper store={store} history={history} tenant={tenant}>
         <ToastContainer
           autoClose={5000}
           hideProgressBar

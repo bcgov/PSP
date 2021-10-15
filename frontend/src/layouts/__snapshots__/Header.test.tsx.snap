@@ -9,6 +9,9 @@ exports[`Tenant Header Header CITZ background 1`] = `
 }
 
 <div>
+  <div
+    class="Toastify"
+  />
   <header
     class="c0"
   />
@@ -24,6 +27,9 @@ exports[`Tenant Header Header MOTI background 1`] = `
 }
 
 <div>
+  <div
+    class="Toastify"
+  />
   <header
     class="c0"
   />
@@ -39,6 +45,9 @@ exports[`Tenant Header Header black background 1`] = `
 }
 
 <div>
+  <div
+    class="Toastify"
+  />
   <header
     class="c0"
   />
@@ -54,6 +63,9 @@ exports[`Tenant Header Header default background 1`] = `
 }
 
 <div>
+  <div
+    class="Toastify"
+  />
   <header
     class="c0"
   />

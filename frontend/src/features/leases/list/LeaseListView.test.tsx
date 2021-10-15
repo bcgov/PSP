@@ -1,6 +1,5 @@
 import userEvent from '@testing-library/user-event';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { defaultTenant } from 'tenants';
 import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
 
 import { LeaseListView } from './LeaseListView';
@@ -18,15 +17,9 @@ const setup = (renderOptions: RenderOptions = {}) => {
   return { searchButton, ...utils };
 };
 
-const mockFetch = () =>
-  Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
-    Response
-  >;
-
 describe('Lease and License List View', () => {
   beforeEach(() => {
     getLeases.mockResolvedValue({ data: { items: [] } });
-    global.fetch = mockFetch as any;
   });
 
   it('searches by pid/pin', async () => {

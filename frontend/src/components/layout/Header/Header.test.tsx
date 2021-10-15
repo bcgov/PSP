@@ -37,8 +37,8 @@ const store = mockStore({
   [tenantsSlice.name]: { defaultTenant },
 });
 
-const getHeader = () => (
-  <TestCommonWrapper store={store} history={history}>
+const getHeader = (tenant?: string) => (
+  <TestCommonWrapper store={store} history={history} tenant={tenant}>
     <Header />
   </TestCommonWrapper>
 );
@@ -68,7 +68,7 @@ describe('Header tests', () => {
   it('Header renders for MOTI tenant', async () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const header = render(getHeader());
+    const header = render(getHeader('MOTI'));
     await waitFor(async () => {
       const result = await header.findByText(config['MOTI'].title);
       expect(result.innerHTML).toBe(config['MOTI'].title);
@@ -78,7 +78,7 @@ describe('Header tests', () => {
   it('Header renders for CITZ tenant', async () => {
     process.env.REACT_APP_TENANT = 'CITZ';
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const header = render(getHeader());
+    const header = render(getHeader('CITZ'));
     await waitFor(async () => {
       const result = await header.findByText(config['CITZ'].title);
       expect(result.innerHTML).toBe(config['CITZ'].title);

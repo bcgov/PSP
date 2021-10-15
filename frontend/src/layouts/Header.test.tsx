@@ -1,31 +1,18 @@
 import { act, render } from '@testing-library/react';
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import { config, defaultTenant, ITenantConfig, TenantConsumer, TenantProvider } from 'tenants';
+import { config, defaultTenant, ITenantConfig } from 'tenants';
 import { useTenant } from 'tenants/useTenant';
+import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import { Header } from './Header';
 
 jest.mock('tenants/useTenant');
 const mockUseTenant = useTenant as jest.Mock<ITenantConfig>;
-global.fetch = jest.fn(
-  () =>
-    Promise.resolve({ json: () => Promise.resolve(JSON.stringify(defaultTenant)) }) as Promise<
-      Response
-    >,
-) as any;
 
 const testRender = () =>
   render(
-    <TenantProvider>
-      <TenantConsumer>
-        {({ tenant }) => (
-          <ThemeProvider theme={{ tenant, css: {} }}>
-            <Header />
-          </ThemeProvider>
-        )}
-      </TenantConsumer>
-    </TenantProvider>,
+    <TestCommonWrapper>
+      <Header />
+    </TestCommonWrapper>,
   );
 
 describe('Tenant Header', () => {
