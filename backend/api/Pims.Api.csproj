@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
     <LangVersion>8.0</LangVersion>
-    <Version>0.2.0-12.9</Version>
+    <Version>0.2.0-12.10</Version>
     <AssemblyVersion>0.2.0.12</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
