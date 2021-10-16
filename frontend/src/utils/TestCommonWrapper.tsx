@@ -4,7 +4,7 @@ import { IOrganization } from 'interfaces';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
-import { config, defaultTenant, TenantConsumer, TenantContext } from 'tenants';
+import { config, defaultTenant, TenantConsumer, TenantProvider } from 'tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';
@@ -17,7 +17,6 @@ interface TestProviderWrapperParams {
   claims?: string[];
   roles?: string[];
   history?: MemoryHistory;
-  tenant?: string;
 }
 
 /**
@@ -31,7 +30,6 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
   roles,
   organizations,
   history,
-  tenant,
 }) => {
   if (!!roles || !!claims || !!organizations) {
     (useKeycloak as jest.Mock).mockReturnValue({
@@ -49,17 +47,8 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
     });
   }
 
-  // Pass a tenant object to our unit tests to avoid mocking fetch globally (which could skew other test results)
-  const tenantObj =
-    tenant && config[tenant] ? { ...defaultTenant, ...config[tenant] } : defaultTenant;
-
   return (
-    <TenantContext.Provider
-      value={{
-        tenant: tenantObj,
-        setTenant: () => {}, // noop in tests
-      }}
-    >
+    <TenantProvider>
       <TenantConsumer>
         {({ tenant }) => (
           <TestProviderWrapper store={store}>
@@ -79,7 +68,7 @@ const TestCommonWrapper: React.FunctionComponent<TestProviderWrapperParams> = ({
           </TestProviderWrapper>
         )}
       </TenantConsumer>
-    </TenantContext.Provider>
+    </TenantProvider>
   );
 };
 
