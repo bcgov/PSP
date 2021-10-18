@@ -4,7 +4,7 @@ import { IOrganization } from 'interfaces';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
-import { config, defaultTenant, TenantConsumer, TenantProvider } from 'tenants';
+import { TenantConsumer, TenantProvider } from 'tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';

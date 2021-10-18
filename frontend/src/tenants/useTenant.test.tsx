@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { config, defaultTenant, TenantProvider, useTenant } from '.';
 
