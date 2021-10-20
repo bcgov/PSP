@@ -5,8 +5,8 @@
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
     "@react-keycloak/web": "3.4.0",
-    "@reduxjs/toolkit": "1.5.1",
-    "axios": "0.21.1",
+    "@reduxjs/toolkit": "1.6.2",
+    "axios": "0.23.0",
     "bootstrap": "4.6.0",
     "classnames": "2.3.1",
     "crypto-js": "4.0.0",
@@ -18,7 +18,7 @@
     "lodash": "4.17.21",
     "moment": "2.29.1",
     "moment-timezone": "0.5.33",
-    "npm": "7.11.2",
+    "npm": "8.1.0",
     "query-string": "6.12.1",
     "react": "17.0.2",
     "react-app-polyfill": "2.0.0",
@@ -115,7 +115,8 @@
     "react-styleguidist": "11.1.6",
     "react-test-renderer": "17.0.2",
     "redux-mock-store": "1.5.4",
-    "sass": "1.43.2"
+    "sass": "1.43.2",
+    "webpack": "4.44.2"
   },
   "resolutions": {
     "hosted-git-info": "4.0.2",

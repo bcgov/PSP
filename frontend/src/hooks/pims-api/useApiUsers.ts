@@ -23,7 +23,7 @@ export const useApiUsers = () => {
 
   return React.useMemo(
     () => ({
-      activateUser: () => api.post('/auth/activate'),
+      activateUser: () => api.post<IUser>('/auth/activate'),
       getUser: (key: string) => api.get<IUser>(`/admin/users/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
         api.post<IPagedItems<IUser>>(`/admin/users/my/organization`, params),
