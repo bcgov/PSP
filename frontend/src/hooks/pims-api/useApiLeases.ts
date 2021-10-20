@@ -1,28 +1,28 @@
 import { AxiosResponse } from 'axios';
+import { ILeaseFilter } from 'features/leases/interfaces';
 import { ILease, IPagedItems } from 'interfaces';
 // import queryString from 'query-string';
 import React from 'react';
 
-import { ILeaseFilter } from './../../features/leases/interfaces';
-import { useAxiosApi } from '.';
+import { IPaginateRequest, useAxiosApi } from '.';
 
 // TODO: remove mocked API when backend is functional
-const mockGetLeases = (params: ILeaseFilter | null) => {
-  const testJson = {
+const mockGetLeases = (params: IPaginateLeases | null) => {
+  const mockJson = {
     page: 1,
     pageIndex: 0,
     quantity: 0,
     total: 0,
     items: [] as ILease[],
   } as IPagedItems<ILease>;
-  const axiosResponse: AxiosResponse<IPagedItems<ILease>> = {
-    data: testJson,
+  const mockResponse: AxiosResponse<IPagedItems<ILease>> = {
+    data: mockJson,
     status: 200,
     statusText: 'OK',
     config: {},
     headers: {},
   };
-  return Promise.resolve(axiosResponse);
+  return Promise.resolve(mockResponse);
 };
 
 /**
@@ -35,7 +35,7 @@ export const useApiLeases = () => {
   return React.useMemo(
     () => ({
       getLeases: mockGetLeases,
-      // getLeases: (params: ILeaseAndLicenseFilter | null) =>
+      // getLeases: (params: IPaginateLeases | null) =>
       // api.get<IPagedItems<ILease>>(
       //   `/leases/search?${params ? queryString.stringify(params) : ''}`,
       // ),
@@ -44,3 +44,5 @@ export const useApiLeases = () => {
     [api],
   );
 };
+
+export type IPaginateLeases = IPaginateRequest<ILeaseFilter>;
