@@ -27,16 +27,16 @@ WebUI.maximizeWindow()
 WebUI.click(findTestObject('Object Repository/Login/SignInButton'))
 
 // Click the IDIR authentication button
-WebUI.click(findTestObject('Object Repository/Site Minder/IdirButton'))
+WebUI.click(findTestObject('Object Repository/SiteMinder/IdirButton'))
 
 // Enter IDIR in appropriate field
-WebUI.setText(findTestObject('Object Repository/Site Minder/IdirField'), GlobalVariable.userName)
+WebUI.setText(findTestObject('Object Repository/SiteMinder/IdirField'), GlobalVariable.userName)
 
 // Enter password 
-WebUI.setEncryptedText(findTestObject('Object Repository/Site Minder/PasswordField'), GlobalVariable.password)
+WebUI.setEncryptedText(findTestObject('Object Repository/SiteMinder/PasswordField'), GlobalVariable.password)
 
 // Click continue 
-WebUI.click(findTestObject('Object Repository/Site Minder/ContinueButton'))
+WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
 
 // Click expand option
 WebUI.click(findTestObject('Navigation/ExpandButton'))
