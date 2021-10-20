@@ -55,7 +55,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
                   {error.error?.response?.config?.url?.substr(0, 20)}
                 </abbr>
                 : ({error.error?.response?.statusText ?? 'unknown'}){' '}
-                {error.error?.response?.data?.error}
+                {(error.error?.response?.data as unknown & { error: string }).error}
               </Col>
             )}
           </Row>
