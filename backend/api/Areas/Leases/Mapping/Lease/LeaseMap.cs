@@ -1,6 +1,5 @@
 using Mapster;
 using Pims.Dal.Helpers.Extensions;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
@@ -31,7 +30,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Persons, src => src.Persons)
                 .Map(dest => dest.Organizations, src => src.Organizations);
-                
+
         }
     }
 }

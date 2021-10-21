@@ -11,9 +11,6 @@ trim_trailing_whitespace = true
 [*.ts]
 indent_size = 2
 
-[*.cs]
-indent_size = 4
-
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
@@ -25,3 +22,8 @@ insert_final_newline = false
 # Use tabs for indentation (Makefiles require tabs)
 indent_style = tab
 
+[*.cs]
+indent_size = 4
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning

@@ -7,11 +7,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Http;
 using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Entity = Pims.Dal.Entities;
-using KModel = Pims.Keycloak.Models;
 using Model = Pims.Api.Models.AccessRequest;
 
 namespace Pims.Api.Controllers
