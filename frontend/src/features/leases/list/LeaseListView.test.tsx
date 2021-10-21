@@ -29,12 +29,14 @@ describe('Lease and License List View', () => {
     fillInput(container, 'pidOrPin', '123');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith({
-      lFileNo: '',
-      pidOrPin: '123',
-      searchBy: 'pidOrPin',
-      tenantName: '',
-    });
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '',
+        pidOrPin: '123',
+        searchBy: 'pidOrPin',
+        tenantName: '',
+      }),
+    );
   });
 
   it('searches l file number', async () => {
@@ -43,12 +45,14 @@ describe('Lease and License List View', () => {
     fillInput(container, 'lFileNo', '123');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith({
-      lFileNo: '123',
-      pidOrPin: '',
-      searchBy: 'lFileNo',
-      tenantName: '',
-    });
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '123',
+        pidOrPin: '',
+        searchBy: 'lFileNo',
+        tenantName: '',
+      }),
+    );
   });
 
   it('searches tenant name', async () => {
@@ -58,59 +62,70 @@ describe('Lease and License List View', () => {
     fillInput(container, 'tenantName', 'tenant');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith({
-      lFileNo: '',
-      pidOrPin: '',
-      searchBy: 'pidOrPin',
-      tenantName: 'tenant',
-    });
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '',
+        pidOrPin: '',
+        searchBy: 'pidOrPin',
+        tenantName: 'tenant',
+      }),
+    );
   });
 
   it('displays an error when no matching PID/PIN found', async () => {
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');
     fillInput(container, 'pidOrPin', '123');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith({
-      lFileNo: '',
-      pidOrPin: '123',
-      searchBy: 'pidOrPin',
-      tenantName: '',
-    });
-    expect(await findByText('There is no record for this PID/ PIN')).toBeVisible();
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '',
+        pidOrPin: '123',
+        searchBy: 'pidOrPin',
+        tenantName: '',
+      }),
+    );
+    const toasts = await findAllByText('There are no records for this PID/PIN');
+    expect(toasts[0]).toBeVisible();
   });
 
   it('displays an error when no matching L-File # found', async () => {
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'lFileNo', 'select');
     fillInput(container, 'lFileNo', '123');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith({
-      lFileNo: '123',
-      pidOrPin: '',
-      searchBy: 'lFileNo',
-      tenantName: '',
-    });
-    expect(await findByText('There is no record for this L-File #')).toBeVisible();
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '123',
+        pidOrPin: '',
+        searchBy: 'lFileNo',
+        tenantName: '',
+      }),
+    );
+    const toasts = await findAllByText('There are no records for this L-File #');
+    expect(toasts[0]).toBeVisible();
   });
 
   it('displays an error when no matching tenant found', async () => {
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');
     fillInput(container, 'tenantName', 'tenant');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith({
-      lFileNo: '',
-      pidOrPin: '',
-      searchBy: 'pidOrPin',
-      tenantName: 'tenant',
-    });
-    expect(await findByText('There is no record for this Tenant Name')).toBeVisible();
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '',
+        pidOrPin: '',
+        searchBy: 'pidOrPin',
+        tenantName: 'tenant',
+      }),
+    );
+    const toasts = await findAllByText('There are no records for this Tenant Name');
+    expect(toasts[0]).toBeVisible();
   });
 });

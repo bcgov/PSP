@@ -7,19 +7,16 @@ import * as React from 'react';
 
 import { ILeaseFilter } from '../../interfaces';
 
-interface ILeaseAndLicenseFilterProps {
+interface ILeaseFilterProps {
   filter?: ILeaseFilter;
   setFilter: (filter: ILeaseFilter) => void;
 }
 
 /**
  * Filter bar for leases and license.
- * @param {ILeaseAndLicenseFilterProps} param0
+ * @param {ILeaseFilterProps} param0
  */
-export const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilterProps> = ({
-  filter,
-  setFilter,
-}) => {
+export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter, setFilter }) => {
   const resetFilter = () => {
     setFilter(defaultFilter);
   };
@@ -52,7 +49,7 @@ export const LeaseAndLicenseFilter: React.FunctionComponent<ILeaseAndLicenseFilt
   );
 };
 
-const defaultFilter: ILeaseFilter = {
+export const defaultFilter: ILeaseFilter = {
   pidOrPin: '',
   lFileNo: '',
   searchBy: 'lFileNo',
@@ -75,4 +72,4 @@ const placeholders = {
   lFileNumber: 'Enter an LIS File Number',
 };
 
-export default LeaseAndLicenseFilter;
+export default LeaseFilter;
