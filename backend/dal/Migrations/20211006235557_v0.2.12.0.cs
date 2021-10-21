@@ -1,6 +1,5 @@
 ﻿using System;
 using Pims.Dal.Helpers.Migrations;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pims.Dal.Migrations

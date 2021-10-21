@@ -1,7 +1,6 @@
 using Mapster;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 

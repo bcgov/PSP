@@ -3,7 +3,6 @@ using Pims.Core.Extensions;
 using Pims.Core.Test;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Model = Pims.Api.Models.User;
 
 namespace Pims.Api.Test.Routes
 {

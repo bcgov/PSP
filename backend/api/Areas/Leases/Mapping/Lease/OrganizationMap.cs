@@ -1,7 +1,6 @@
 using Mapster;
 using Pims.Dal.Entities.Helpers;
 using Pims.Dal.Helpers.Extensions;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
@@ -19,7 +18,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Landline, src => src.GetLandlinePhoneNumber())
                 .Map(dest => dest.Mobile, src => src.GetMobilePhoneNumber())
                 .Map(dest => dest.Email, src => src.GetEmail());
-                
+
         }
     }
 }
