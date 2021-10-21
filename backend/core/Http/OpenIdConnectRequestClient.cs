@@ -223,7 +223,7 @@ namespace Pims.Core.Http
         /// <param name="method"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpContent content = null)
+        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null)
         {
             return await SendAsync(url, method, new HttpRequestMessage().Headers, content);
         }

@@ -27,3 +27,17 @@ indent_size = 4
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = warning
+
+# SonarQube
+# S4487 Unread "private" fields should be removed.
+dotnet_diagnostic.S4487.severity = error
+# S927 Parameter names should match base declaration and other partial definitions
+dotnet_diagnostic.S927.severity = error
+# S1006 Remove the default parameter value to match the signature of overridden method
+dotnet_diagnostic.S1006.severity = error
+# S3928 The parameter name '{param}' is not declared in the argument list
+dotnet_diagnostic.S3928.severity = error
+# S1481 Remove the unused local variable
+dotnet_diagnostic.S1481.severity = error
+# S1135 Complete the task associated to this 'TODO' comment
+dotnet_diagnostic.S1135.severity = none

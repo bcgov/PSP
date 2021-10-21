@@ -1,10 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Core.Http;
 using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
@@ -23,32 +20,20 @@ namespace Pims.Api.Controllers
     public class AccessRequestController : ControllerBase
     {
         #region Variables
-        private readonly ILogger<UserController> _logger;
-        private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
-        private readonly IProxyRequestClient _requestClient;
         private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
-        private readonly PimsOptions _options;
         #endregion
 
         #region Constructors
         /// <summary>
         /// Creates a new instance of a AccessRequestController class.
         /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="optionsKeycloak"></param>
-        /// <param name="options"></param>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        /// <param name="requestClient"></param>
-        public AccessRequestController(ILogger<UserController> logger, IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IOptions<PimsOptions> options, IPimsService pimsService, IMapper mapper, IProxyRequestClient requestClient)
+        public AccessRequestController(IPimsService pimsService, IMapper mapper)
         {
-            _logger = logger;
-            _optionsKeycloak = optionsKeycloak.CurrentValue;
-            _requestClient = requestClient;
             _pimsService = pimsService;
             _mapper = mapper;
-            _options = options.Value;
         }
         #endregion
 

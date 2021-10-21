@@ -1,12 +1,11 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Pims.Api.Policies;
 using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Admin.Models.Role;
 
@@ -24,7 +23,6 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class RoleController : ControllerBase
     {
         #region Variables
-        private readonly ILogger<RoleController> _logger;
         private readonly IPimsService _pimsService;
         private readonly IMapper _mapper;
         #endregion
@@ -33,12 +31,10 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <summary>
         /// Creates a new instance of a RoleController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="logger"></param>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public RoleController(ILogger<RoleController> logger, IPimsService pimsService, IMapper mapper)
+        public RoleController(IPimsService pimsService, IMapper mapper)
         {
-            _logger = logger;
             _pimsService = pimsService;
             _mapper = mapper;
         }
