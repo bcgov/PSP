@@ -26,9 +26,7 @@ namespace Pims.Dal.Helpers.Extensions
             filter.ThrowIfNull(nameof(user));
 
             // Check if user has the ability to view sensitive properties.
-            var userOrganizations = user.GetOrganizationsAsNullable();
             var viewSensitive = user.HasPermission(Permissions.SensitiveView);
-            var isAdmin = user.HasPermission(Permissions.AdminProperties);
 
             // Users are not allowed to view sensitive properties outside of their organization or sub-organizations.
             if (!viewSensitive)
