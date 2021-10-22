@@ -1,15 +1,17 @@
-using Pims.Ches.Models;
-using Pims.Core.Http;
 using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using Pims.Ches.Models;
+using Pims.Core.Http;
 
 namespace Pims.Core.Exceptions
 {
     /// <summary>
     /// ChesException class, provides a way to express HTTP request exceptions that occur.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "S3925:Conform to the recommended serialization pattern.", Justification = "HttpClientRequestException does not fully implement serialization")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1032: Implement standard exception constructors.", Justification = "Class implements constructors with default options")]
     public class ChesException : HttpClientRequestException
     {
         #region Properties
@@ -25,6 +27,11 @@ namespace Pims.Core.Exceptions
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of an ChesException class.
+        /// </summary>
+        public ChesException() { }
+
         /// <summary>
         /// Creates a new instance of an ChesException class, initializes it with the specified arguments.
         /// </summary>
@@ -76,6 +83,8 @@ namespace Pims.Core.Exceptions
         public ChesException(HttpResponseMessage response, Exception innerException) : base(response, innerException)
         {
         }
+
+
         #endregion
     }
 }

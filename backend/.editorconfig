@@ -27,6 +27,8 @@ indent_size = 4
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = warning
+# CA1032: Implement standard exception constructors
+dotnet_diagnostic.CA1032.severity = error
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
@@ -41,3 +43,10 @@ dotnet_diagnostic.S3928.severity = error
 dotnet_diagnostic.S1481.severity = error
 # S1135 Complete the task associated to this 'TODO' comment
 dotnet_diagnostic.S1135.severity = none
+# S1116 Remove empty statement
+dotnet_diagnostic.S1116.severity = error
+# S1118 Utility classes should not have public constructors
+dotnet_diagnostic.S1118.severity = error
+# S3925 "ISerializable" should be implemented correctly
+dotnet_diagnostic.S3925.severity = error
+
