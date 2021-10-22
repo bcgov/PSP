@@ -360,7 +360,7 @@ namespace Pims.Ches
                     c.SendOn = c.SendOn.AddSeconds(this.Options.AlwaysDelay.Value));
             }
 
-            // Make sure there are no blank CC or BCC;
+            // Make sure there are no blank CC or BCC
             email.Contexts.ForEach(c =>
             {
                 c.To = c.To.NotNullOrWhiteSpace();

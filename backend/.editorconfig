@@ -26,13 +26,29 @@ indent_style = tab
 indent_size = 4
 
 # IDE0005: Using directive is unnecessary.
-dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.IDE0005.severity = error
 # CA1032: Implement standard exception constructors
 dotnet_diagnostic.CA1032.severity = error
 # CA1816: Call GC.SuppressFinalize correctly
 dotnet_diagnostic.CA1816.severity = error
 # CA1063: Implement IDisposable correctly
 dotnet_diagnostic.CA1063.severity = error
+# CA2007: Do not directly await a Task
+dotnet_diagnostic.CA2007.severity = none
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+# CA2000: Dispose objects before losing scope
+dotnet_diagnostic.CA2000.severity = none #TODO: This should be set to error
+# CA1508: Avoid dead conditional code
+dotnet_diagnostic.CA1508.severity = none #TODO: Requires further analysis
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = none # #TODO: Requires further analysis
+# CA1801: Review unused parameters
+dotnet_diagnostic.CA1801.severity = none # #TODO: Requires further analysis
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = error
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
@@ -57,4 +73,8 @@ dotnet_diagnostic.S3925.severity = error
 dotnet_diagnostic.S4457.severity = error
 # S3442 "abstract" classes should not have "public" constructors
 dotnet_diagnostic.S3442.severity = error
+# S125 Remove commented out code
+dotnet_diagnostic.S125.severity = error
+# S4136 Method overloads should be adjacent
+dotnet_diagnostic.S4136.severity = error
 
