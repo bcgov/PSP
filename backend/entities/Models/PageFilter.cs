@@ -31,7 +31,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// Creates a new instance of a PageFilter class.
         /// </summary>
-        public PageFilter() { }
+        protected PageFilter() { }
 
         /// <summary>
         /// Creates a new instance of a PageFilter class, initializes it with the specified arguments.
@@ -39,7 +39,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="page"></param>
         /// <param name="quantity"></param>
         /// <param name="sort"></param>
-        public PageFilter(int page, int quantity, string[] sort = null)
+        protected PageFilter(int page, int quantity, string[] sort = null)
         {
             this.Page = page;
             this.Quantity = quantity;
@@ -51,7 +51,7 @@ namespace Pims.Dal.Entities.Models
         /// Extracts the properties from the query string to generate the filter.
         /// </summary>
         /// <param name="query"></param>
-        public PageFilter(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
+        protected PageFilter(Dictionary<string, Microsoft.Extensions.Primitives.StringValues> query)
         {
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);

@@ -55,5 +55,6 @@ dotnet_diagnostic.S1118.severity = error
 dotnet_diagnostic.S3925.severity = error
 # S4457 Parameter validation in "async"/"await" methods should be wrapped
 dotnet_diagnostic.S4457.severity = error
-
+# S3442 "abstract" classes should not have "public" constructors
+dotnet_diagnostic.S3442.severity = error
 

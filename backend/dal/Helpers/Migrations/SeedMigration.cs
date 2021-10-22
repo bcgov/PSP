@@ -46,7 +46,7 @@ namespace Pims.Dal.Helpers.Migrations
         /// <summary>
         /// Creates a new instances of a SeedMigration object.
         /// </summary>
-        public SeedMigration()
+        protected SeedMigration()
         {
             _migrationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations");
         }
