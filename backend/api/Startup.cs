@@ -221,7 +221,6 @@ namespace Pims.Api
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new HeaderApiVersionReader("api-version");
-                // options.DefaultApiVersion = new ApiVersion(1, 0);
             });
             services.AddVersionedApiExplorer(options =>
             {
@@ -321,8 +320,6 @@ namespace Pims.Api
             app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<LogResponseMiddleware>();
             app.UseMiddleware<ErrorHandlingMiddleware>();
-
-            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors();

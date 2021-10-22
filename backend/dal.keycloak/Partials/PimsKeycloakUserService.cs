@@ -55,7 +55,7 @@ namespace Pims.Dal.Keycloak
             else
             {
                 // The user exists in PIMS, it only needs to be updated.
-                var roles = euser?.Roles.ToArray();
+                var roles = euser.Roles.ToArray();
                 _mapper.Map(kuser, euser);
                 foreach (var group in kgroups)
                 {

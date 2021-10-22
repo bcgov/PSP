@@ -34,7 +34,6 @@ namespace Pims.Dal
                     .AddFilter("System", LogLevel.Warning)
                     .AddFilter("Pims.Api", LogLevel.Debug)
                     .AddConsole();
-                // .AddEventLog();
             });
             _logger = loggerFactory.CreateLogger<PimsContextFactory>();
         }
