@@ -1,12 +1,12 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Pims.Core.Exceptions;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Pims.Core.Exceptions;
 
 namespace Pims.Core.Http
 {
@@ -49,11 +49,24 @@ namespace Pims.Core.Http
 
         #region Methods
         /// <summary>
-        /// Dispose the HttpClient.
+        /// Dispose managed resources.
         /// </summary>
         public void Dispose()
         {
-            this.Client.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         /// <summary>
@@ -137,26 +150,11 @@ namespace Pims.Core.Http
         /// <param name="headers"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        public virtual Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url)) throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
+            if (String.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
 
-            if (method == null) method = HttpMethod.Get;
-
-            var message = new HttpRequestMessage(method, url);
-            message.Headers.Add("User-Agent", "Pims.Api");
-            message.Content = content;
-
-            if (headers != null)
-            {
-                foreach (var header in headers)
-                {
-                    message.Headers.Add(header.Key, header.Value);
-                }
-            }
-
-            _logger.LogInformation($"HTTP request made '{message.RequestUri}'");
-            return await this.Client.SendAsync(message);
+            return this.SendInternalAsync(url, method, headers, content);
         }
 
         /// <summary>
@@ -684,6 +682,34 @@ namespace Pims.Core.Http
         public async Task<TModel> DeleteAsync<TModel>(Uri url, HttpContent content = null)
         {
             return await SendAsync<TModel>(url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Send an HTTP request to the specified 'url'.
+        /// Note: Internal implementation to avoid throw on different threads.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <param name="headers"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public virtual async Task<HttpResponseMessage> SendInternalAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        {
+            if (method == null) { method = HttpMethod.Get; }
+            using var message = new HttpRequestMessage(method, url);
+            message.Headers.Add("User-Agent", "Pims.Api");
+            message.Content = content;
+
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    message.Headers.Add(header.Key, header.Value);
+                }
+            }
+
+            _logger.LogInformation($"HTTP request made '{message.RequestUri}'");
+            return await this.Client.SendAsync(message);
         }
         #endregion
         #endregion
