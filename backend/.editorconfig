@@ -76,5 +76,5 @@ dotnet_diagnostic.S3442.severity = error
 # S125 Remove commented out code
 dotnet_diagnostic.S125.severity = error
 # S4136 Method overloads should be adjacent
-dotnet_diagnostic.S4136.severity = error
+dotnet_diagnostic.S4136.severity = none
 
