@@ -26,9 +26,9 @@ indent_style = tab
 indent_size = 4
 
 # IDE0005: Using directive is unnecessary.
-dotnet_diagnostic.IDE0005.severity = error
+dotnet_diagnostic.IDE0005.severity = warning
 # CA1032: Implement standard exception constructors
-dotnet_diagnostic.CA1032.severity = error
+dotnet_diagnostic.CA1032.severity = warning
 # CA1816: Call GC.SuppressFinalize correctly
 dotnet_diagnostic.CA1816.severity = error
 # CA1063: Implement IDisposable correctly
@@ -48,7 +48,7 @@ dotnet_diagnostic.CA1305.severity = none # #TODO: Requires further analysis
 # CA1801: Review unused parameters
 dotnet_diagnostic.CA1801.severity = none # #TODO: Requires further analysis
 # CA1822: Mark members as static
-dotnet_diagnostic.CA1822.severity = error
+dotnet_diagnostic.CA1822.severity = warning
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
@@ -60,11 +60,11 @@ dotnet_diagnostic.S1006.severity = error
 # S3928 The parameter name '{param}' is not declared in the argument list
 dotnet_diagnostic.S3928.severity = error
 # S1481 Remove the unused local variable
-dotnet_diagnostic.S1481.severity = error
+dotnet_diagnostic.S1481.severity = warning
 # S1135 Complete the task associated to this 'TODO' comment
 dotnet_diagnostic.S1135.severity = none
 # S1116 Remove empty statement
-dotnet_diagnostic.S1116.severity = error
+dotnet_diagnostic.S1116.severity = warning
 # S1118 Utility classes should not have public constructors
 dotnet_diagnostic.S1118.severity = error
 # S3925 "ISerializable" should be implemented correctly

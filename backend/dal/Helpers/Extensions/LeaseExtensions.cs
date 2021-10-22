@@ -22,7 +22,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         private static IQueryable<Entity.Lease> GenerateCommonLeaseQuery(this IQueryable<Entity.Lease> query, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
         {
-            // TODO: Possible bug, parameter user is not used
+            // TODO: Possible bug, parameter <user> is not used
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
