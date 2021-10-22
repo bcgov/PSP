@@ -29,6 +29,10 @@ indent_size = 4
 dotnet_diagnostic.IDE0005.severity = warning
 # CA1032: Implement standard exception constructors
 dotnet_diagnostic.CA1032.severity = error
+# CA1816: Call GC.SuppressFinalize correctly
+dotnet_diagnostic.CA1816.severity = error
+# CA1063: Implement IDisposable correctly
+dotnet_diagnostic.CA1063.severity = error
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
@@ -49,4 +53,7 @@ dotnet_diagnostic.S1116.severity = error
 dotnet_diagnostic.S1118.severity = error
 # S3925 "ISerializable" should be implemented correctly
 dotnet_diagnostic.S3925.severity = error
+# S4457 Parameter validation in "async"/"await" methods should be wrapped
+dotnet_diagnostic.S4457.severity = error
+
 
