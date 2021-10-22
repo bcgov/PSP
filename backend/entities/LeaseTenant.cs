@@ -75,7 +75,7 @@ namespace Pims.Dal.Entities
         /// <param name="organization"></param>
         public LeaseTenant(Lease lease, Person person, Organization organization, LessorType lessorType)
         {
-            this.LeaseId = lease?.Id ?? throw new ArgumentNullException(nameof(lease)); ;
+            this.LeaseId = lease?.Id ?? throw new ArgumentNullException(nameof(lease));
             this.Lease = lease;
             this.PersonId = person?.Id ?? throw new ArgumentNullException(nameof(person));
             this.Person = person;
