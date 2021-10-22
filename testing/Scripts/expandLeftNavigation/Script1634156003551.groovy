@@ -27,28 +27,25 @@ WebUI.maximizeWindow()
 WebUI.click(findTestObject('Object Repository/Login/SignInButton'))
 
 // Click the IDIR authentication button
-WebUI.click(findTestObject('Object Repository/Site Minder/IdirButton'))
+WebUI.click(findTestObject('Object Repository/SiteMinder/IdirButton'))
 
 // Enter IDIR in appropriate field
-WebUI.setText(findTestObject('Object Repository/Site Minder/IdirField'), GlobalVariable.userName)
+WebUI.setText(findTestObject('Object Repository/SiteMinder/IdirField'), GlobalVariable.userName)
 
 // Enter password
-WebUI.setEncryptedText(findTestObject('Object Repository/Site Minder/PasswordField'), GlobalVariable.password)
+WebUI.setEncryptedText(findTestObject('Object Repository/SiteMinder/PasswordField'), GlobalVariable.password)
 
 // Click continue
-WebUI.click(findTestObject('Object Repository/Site Minder/ContinueButton'))
+WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
 
-// Enter PID
-WebUI.setText(findTestObject('Object Repository/Filter/PID'), "009-956-727")
+// Click the expand button on left navigation
+WebUI.click(findTestObject('Navigation/ExpandButton'))
 
-// Search
-WebUI.click(findTestObject('Filter/SearchButton'))
+// Locate and click expanded management option
+WebUI.click(findTestObject('Navigation/ManagementExpandedButton'))
 
-// Click marker
-WebUI.click(findTestObject('Object Repository/Filter/Marker'))
-
-// Ensure slideout appears
-WebUI.verifyTextPresent("Property Info", false)
+// Ensure Leases & Licenses are present in the list
+WebUI.verifyTextPresent("Leases & Licenses", false)
 
 // Close browser
 WebUI.closeBrowser()
