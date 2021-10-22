@@ -1,32 +1,43 @@
 import { Center } from 'components/common/Center/Center';
 import { Scrollable } from 'components/common/Scrollable/Scrollable';
-import { Table } from 'components/Table';
-import { ILease } from 'interfaces';
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { ILeaseFilter } from '../interfaces';
-import { defaultFilter, LeaseFilter } from './components/LeaseFilter';
 import { useSearch } from './hooks/useSearch';
+import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
+import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
 
 /**
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
 export const LeaseListView = () => {
-  const { results, filter, error, setFilter } = useSearch(defaultFilter);
+  const { results, filter, error, setFilter, setCurrentPage } = useSearch(defaultFilter);
 
-  if (!results?.length || error) {
-    toast.warn(getNoResultErrorMessage(filter));
+  // update internal state whenever the filter bar changes
+  const changeFilter = useCallback(
+    (filter: ILeaseFilter) => {
+      // TODO: remove me
+      console.log(`filter: ${JSON.stringify(filter)}`);
+      setFilter(filter);
+      setCurrentPage(0);
+    },
+    [setFilter, setCurrentPage],
+  );
+
+  if (error) {
+    toast.error(error.message);
   }
 
   return (
     <StyledListPage>
       <Center>
-        <LeaseFilter filter={filter} setFilter={setFilter} />
+        <LeaseFilter filter={filter} setFilter={changeFilter} />
       </Center>
       <StyledScrollable>
         <h3>Leases &amp; Licenses</h3>
-        <Table<ILease> name="leasesTable" columns={[]} data={results ?? []}></Table>
+        <LeaseSearchResults results={results} />
       </StyledScrollable>
     </StyledListPage>
   );

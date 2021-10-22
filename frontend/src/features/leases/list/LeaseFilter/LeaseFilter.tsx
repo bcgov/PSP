@@ -3,7 +3,7 @@ import SearchButton from 'components/common/form/SearchButton';
 import * as Styled from 'components/common/form/styles';
 import { PropertyFilterOptions } from 'features/properties/filter';
 import { Formik } from 'formik';
-import * as React from 'react';
+import React from 'react';
 
 import { ILeaseFilter } from '../../interfaces';
 
@@ -26,6 +26,8 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
       enableReinitialize
       initialValues={filter ?? defaultFilter}
       onSubmit={(values, { setSubmitting }) => {
+        // TODO: remove me
+        console.log(`[Lease-Filter] Submitting...`);
         setFilter(values);
         setSubmitting(false);
       }}

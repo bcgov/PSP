@@ -18,5 +18,4 @@ export * from './detail/LeaseStatusSummary';
 export * from './detail/StackedPidTenantFields';
 export * from './hooks/useLeaseDetail';
 export * from './interfaces';
-export * from './list/components/LeaseFilter';
 export * from './list/LeaseListView';

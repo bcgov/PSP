@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { ILeaseFilter } from 'features/leases/interfaces';
-import { ILease, IPagedItems } from 'interfaces';
+import { defaultLease, ILease, IPagedItems } from 'interfaces';
 // import queryString from 'query-string';
 import React from 'react';
 
@@ -11,9 +11,9 @@ const mockGetLeases = (params: IPaginateLeases | null) => {
   const mockJson = {
     page: 1,
     pageIndex: 0,
-    quantity: 0,
-    total: 0,
-    items: [] as ILease[],
+    quantity: 10,
+    total: 100,
+    items: Array.from({ length: 100 }, () => ({ ...defaultLease })),
   } as IPagedItems<ILease>;
   const mockResponse: AxiosResponse<IPagedItems<ILease>> = {
     data: mockJson,
