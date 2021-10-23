@@ -43,7 +43,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c1 > .textarea {
+.c1 > .textarea,
+.c1 > h3 {
   grid-column: span 2;
   border-left: none;
 }
@@ -121,16 +122,6 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           id="input-properties.0.address.province"
           name="properties.0.address.province"
           value="BC"
-        />
-      </div>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-properties.0.address.country"
-          name="properties.0.address.country"
-          value=""
         />
       </div>
       <br />

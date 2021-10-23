@@ -15,39 +15,12 @@ import {
   LeasePageForm,
   useLeaseDetail,
 } from '..';
-import Details from './LeasePages/Details';
+import Details from './LeasePages/details/Details';
+import Tenant from './LeasePages/tenant/Tenant';
 
 export interface ILeaseAndLicenseContainerProps {
   match?: any;
 }
-
-export interface ILeasePage {
-  component: ReactElement;
-  title: string;
-  description?: string;
-}
-
-export enum LeasePageNames {
-  DETAILS = 'details',
-  TENANT = 'tenant',
-  PAYMENTS = 'payments',
-  IMPROVEMENTS = 'improvements',
-  INSURANCE = 'insurance',
-  DEPOSIT = 'deposit',
-  SECURITY = 'security',
-  SURPLUS = 'surplus',
-}
-
-export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
-  [LeasePageNames.DETAILS, { component: <Details />, title: 'Details' }],
-  [LeasePageNames.TENANT, { component: <></>, title: 'Tenant' }],
-  [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
-  [LeasePageNames.IMPROVEMENTS, { component: <></>, title: 'Improvements' }],
-  [LeasePageNames.INSURANCE, { component: <></>, title: 'Insurance' }],
-  [LeasePageNames.DEPOSIT, { component: <></>, title: 'Deposit' }],
-  [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
-  [LeasePageNames.SURPLUS, { component: <></>, title: 'Surplus Declaration' }],
-]);
 
 /**
  * Top level container for lease details, provides logic for loading and controlling lease display
@@ -82,5 +55,40 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
     </>
   );
 };
+
+export interface ILeasePage {
+  component: ReactElement;
+  title: string;
+  description?: string;
+}
+
+export enum LeasePageNames {
+  DETAILS = 'details',
+  TENANT = 'tenant',
+  PAYMENTS = 'payments',
+  IMPROVEMENTS = 'improvements',
+  INSURANCE = 'insurance',
+  DEPOSIT = 'deposit',
+  SECURITY = 'security',
+  SURPLUS = 'surplus',
+}
+
+export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
+  [LeasePageNames.DETAILS, { component: <Details />, title: 'Details' }],
+  [
+    LeasePageNames.TENANT,
+    {
+      component: <Tenant />,
+      title: 'Tenant',
+      description: 'The following is information related to the leasee or licensee',
+    },
+  ],
+  [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
+  [LeasePageNames.IMPROVEMENTS, { component: <></>, title: 'Improvements' }],
+  [LeasePageNames.INSURANCE, { component: <></>, title: 'Insurance' }],
+  [LeasePageNames.DEPOSIT, { component: <></>, title: 'Deposit' }],
+  [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
+  [LeasePageNames.SURPLUS, { component: <></>, title: 'Surplus Declaration' }],
+]);
 
 export default LeaseContainer;

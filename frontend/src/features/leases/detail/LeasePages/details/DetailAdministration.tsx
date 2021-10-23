@@ -1,9 +1,8 @@
 import { Form, Input } from 'components/common/form';
+import * as Styled from 'features/leases/detail/styles';
 import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
-
-import * as Styled from '../styles';
 
 export interface IDetailAdministrationProps {
   nameSpace?: string;

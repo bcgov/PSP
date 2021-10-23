@@ -2,11 +2,10 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import * as API from 'constants/API';
 import { createMemoryHistory } from 'history';
-import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
-import { tenantsSlice } from 'store/slices/tenants';
+import { tenantsSlice, useTenants } from 'store/slices/tenants';
 import { config } from 'tenants';
 import { defaultTenant } from 'tenants';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
@@ -17,6 +16,11 @@ jest.mock('@react-keycloak/web');
 afterEach(() => {
   cleanup();
 });
+
+jest.mock('store/slices/tenants/useTenants');
+(useTenants as any).mockImplementation(() => ({
+  getSettings: jest.fn(),
+}));
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -43,7 +47,6 @@ describe('Header tests', () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
-    jest.resetModules();
     process.env = {
       ...OLD_ENV,
       REACT_APP_TENANT: 'TEST',
@@ -56,9 +59,9 @@ describe('Header tests', () => {
 
   it('Header renders correctly', async () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    const tree = renderer.create(getHeader()).toJSON();
+    const { container } = render(getHeader());
     await waitFor(async () => {
-      expect(tree).toMatchSnapshot();
+      expect(container).toMatchSnapshot();
     });
   });
 

@@ -1,7 +1,7 @@
+import * as Styled from 'features/leases/detail/styles';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';
-import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
 import { DetailTermInformationBox } from './DetailTermInformationBox';
@@ -21,20 +21,14 @@ export const DetailTermInformation: React.FunctionComponent<IDetailTermInformati
   const startDate = getIn(values, withNameSpace(nameSpace, 'startDate'));
   const expiryDate = getIn(values, withNameSpace(nameSpace, 'expiryDate'));
   return (
-    <SpacedInlineListItem>
+    <Styled.SpacedInlineListItem>
       <DetailTermInformationBox
         title="Lease / License"
         startDate={startDate}
         expiryDate={expiryDate}
       />
-    </SpacedInlineListItem>
+    </Styled.SpacedInlineListItem>
   );
 };
-
-const SpacedInlineListItem = styled.li`
-  column-gap: 5rem;
-  display: flex;
-  flex-wrap: nowrap;
-`;
 
 export default DetailTermInformation;

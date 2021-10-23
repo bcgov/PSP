@@ -6,6 +6,7 @@ import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import 'react-toastify/dist/ReactToastify.css';
 
+import css from '_variables.module.scss';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { AuthStateContextProvider } from 'contexts/authStateContext';
 import LoginLoading from 'features/account/LoginLoading';
@@ -22,9 +23,6 @@ import getKeycloakEventHandler from 'utils/getKeycloakEventHandler';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';
-
-// eslint-disable-next-line import/no-webpack-loader-syntax
-const css = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!./_variables.scss');
 
 //@ts-ignore
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');

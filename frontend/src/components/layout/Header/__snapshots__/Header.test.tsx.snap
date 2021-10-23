@@ -1,15 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header tests Header renders correctly 1`] = `
-Array [
-  @media (min-width:99.2rem) {
-
-}
-
-<div
-    className="Toastify"
-  />,
-  .c1 {
+.c1 {
   border-left: 0.2rem solid white;
   font-size: 3.4rem;
   margin: 0 1.5rem 0 2.5rem;
@@ -101,11 +93,15 @@ Array [
   }
 }
 
-<nav
-    className="c0 App-header navbar navbar-expand navbar-light"
+<div>
+  <div
+    class="Toastify"
+  />
+  <nav
+    class="c0 App-header navbar navbar-expand navbar-light"
   >
     <span
-      className="brand-box navbar-brand"
+      class="brand-box navbar-brand"
     >
       <a
         href="https://www2.gov.bc.ca/gov/content/home"
@@ -114,45 +110,43 @@ Array [
       >
         <img
           alt="Government of BC logo"
-          className="bc-gov-icon"
-          height={43}
+          class="bc-gov-icon"
+          height="43"
           src="logo-banner.svg"
-          width={156}
+          width="156"
         />
       </a>
       <span
-        className="c1"
+        class="c1"
       />
       <img
         alt="PIMS logo"
-        className="pims-logo"
-        height={50}
+        class="pims-logo"
+        height="50"
         src=""
       />
     </span>
     <div
-      className="title mr-auto navbar-nav"
-      onKeyDown={[Function]}
+      class="title mr-auto navbar-nav"
     >
       <div
-        className="nav-item"
+        class="nav-item"
       >
         <h1
-          className="longAppName"
+          class="longAppName"
         >
           Default Tenant Name
         </h1>
         <h1
-          className="shortAppName"
+          class="shortAppName"
         >
           PIMS
         </h1>
       </div>
     </div>
     <div
-      className="other navbar-nav"
-      onKeyDown={[Function]}
+      class="other navbar-nav"
     />
-  </nav>,
-]
+  </nav>
+</div>
 `;

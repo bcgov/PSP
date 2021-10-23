@@ -1214,11 +1214,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("LEASE_DESCRIPTION")
                         .HasComment("A description of the lease");
 
-                    b.Property<DateTime?>("ExpiryDate")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("TERM_EXPIRY_DATE")
-                        .HasComment("The date this lease expires");
-
                     b.Property<bool>("HasDigitalFile")
                         .HasColumnType("bit")
                         .HasColumnName("HAS_DIGITAL_FILE")
@@ -1324,7 +1319,7 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE")
                         .HasComment("Foreign key to lease payment frequency type");
 
-                    b.Property<string>("PaymentRvblTypeId")
+                    b.Property<string>("PaymentReceivableTypeId")
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
 
@@ -1392,6 +1387,11 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("LEASE_STATUS_TYPE_CODE")
                         .HasComment("Foreign key to lease status type");
 
+                    b.Property<DateTime?>("TermExpiryDate")
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("TERM_EXPIRY_DATE")
+                        .HasComment("The date this lease expires");
+
                     b.Property<int?>("TfaFileNo")
                         .HasColumnType("int")
                         .HasColumnName("TFA_FILE_NO")
@@ -1455,7 +1455,7 @@ namespace Pims.Dal.Migrations
                     b.HasIndex("PaymentFrequencyTypeId")
                         .HasDatabaseName("LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX");
 
-                    b.HasIndex("PaymentRvblTypeId")
+                    b.HasIndex("PaymentReceivableTypeId")
                         .HasDatabaseName("LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX");
 
                     b.HasIndex("ProgramTypeId")
@@ -1816,7 +1816,7 @@ namespace Pims.Dal.Migrations
 
                     b.Property<string>("LessorTypeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("LESSOR_TYPE_CODE")
                         .HasComment("Foreign key to the lessor");
 
@@ -1894,26 +1894,43 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.LessorType", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("LESSOR_TYPE_CODE");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("LESSOR_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("DESCRIPTION");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
 
                     b.Property<int?>("DisplayOrder")
                         .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER");
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
 
                     b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasColumnName("IS_DISABLED");
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
 
                     b.Property<long>("RowVersion")
-                        .HasColumnType("bigint")
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER");
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("LSSRTYPE_PK");
 
                     b.ToTable("PIMS_LESSOR_TYPE");
                 });
@@ -5976,7 +5993,7 @@ namespace Pims.Dal.Migrations
 
                     b.HasOne("Pims.Dal.Entities.LeasePaymentReceivableType", "PaymentRvblType")
                         .WithMany("Leases")
-                        .HasForeignKey("PaymentRvblTypeId")
+                        .HasForeignKey("PaymentReceivableTypeId")
                         .HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK")
                         .OnDelete(DeleteBehavior.Restrict);
 

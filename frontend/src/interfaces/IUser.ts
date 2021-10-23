@@ -20,4 +20,6 @@ export interface IUser {
   lastLogin?: Date | string | Moment;
   createdOn?: Date | string | Moment;
   rowVersion?: number;
+  landline?: string;
+  mobile?: string;
 }
