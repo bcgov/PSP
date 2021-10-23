@@ -49,6 +49,8 @@ dotnet_diagnostic.CA1305.severity = none # #TODO: Requires further analysis
 dotnet_diagnostic.CA1801.severity = none # #TODO: Requires further analysis
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = warning
+# CS1591: Missing XML comment
+dotnet_diagnostic.CS1591.severity = none
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
