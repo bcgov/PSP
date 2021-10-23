@@ -13,13 +13,23 @@ import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
 export const LeaseListView = () => {
-  const { results, filter, error, setFilter, setCurrentPage } = useSearch(defaultFilter);
+  const {
+    results,
+    filter,
+    sort,
+    error,
+    currentPage,
+    totalPages,
+    pageSize,
+    setFilter,
+    setSort,
+    setCurrentPage,
+    setPageSize,
+  } = useSearch(defaultFilter);
 
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
     (filter: ILeaseFilter) => {
-      // TODO: remove me
-      console.log(`filter: ${JSON.stringify(filter)}`);
       setFilter(filter);
       setCurrentPage(0);
     },
@@ -36,8 +46,17 @@ export const LeaseListView = () => {
         <LeaseFilter filter={filter} setFilter={changeFilter} />
       </Center>
       <StyledScrollable>
-        <h3>Leases &amp; Licenses</h3>
-        <LeaseSearchResults results={results} />
+        <StyledHeader>Leases &amp; Licenses</StyledHeader>
+        <LeaseSearchResults
+          results={results}
+          pageIndex={currentPage}
+          pageSize={pageSize}
+          pageCount={totalPages}
+          sort={sort}
+          setSort={setSort}
+          setPageSize={setPageSize}
+          setPageIndex={setCurrentPage}
+        />
       </StyledScrollable>
     </StyledListPage>
   );
@@ -47,17 +66,17 @@ export const LeaseListView = () => {
  * Get an error message corresponding to what filter fields have been entered.
  * @param {ILeaseFilter} filter
  */
-const getNoResultErrorMessage = (filter: ILeaseFilter) => {
-  let message = 'Unable to find any records';
-  if (filter.lFileNo) {
-    message = 'There are no records for this L-File #';
-  } else if (filter.pidOrPin) {
-    message = 'There are no records for this PID/PIN';
-  } else if (filter.tenantName) {
-    message = 'There are no records for this Tenant Name';
-  }
-  return message;
-};
+// const getNoResultErrorMessage = (filter: ILeaseFilter) => {
+//   let message = 'Unable to find any records';
+//   if (filter.lFileNo) {
+//     message = 'There are no records for this L-File #';
+//   } else if (filter.pidOrPin) {
+//     message = 'There are no records for this PID/PIN';
+//   } else if (filter.tenantName) {
+//     message = 'There are no records for this Tenant Name';
+//   }
+//   return message;
+// };
 
 const StyledListPage = styled.div`
   display: flex;
@@ -71,6 +90,10 @@ const StyledListPage = styled.div`
 const StyledScrollable = styled(Scrollable)`
   padding: 1.6rem 3.2rem;
   width: 100%;
+`;
+
+const StyledHeader = styled.h3`
+  text-align: left;
 `;
 
 export default LeaseListView;

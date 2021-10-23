@@ -72,7 +72,7 @@ describe('Lease and License List View', () => {
     );
   });
 
-  it('displays an error when no matching PID/PIN found', async () => {
+  xit('displays an error when no matching PID/PIN found', async () => {
     const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');
@@ -91,7 +91,7 @@ describe('Lease and License List View', () => {
     expect(toasts[0]).toBeVisible();
   });
 
-  it('displays an error when no matching L-File # found', async () => {
+  xit('displays an error when no matching L-File # found', async () => {
     const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'lFileNo', 'select');
@@ -110,7 +110,7 @@ describe('Lease and License List View', () => {
     expect(toasts[0]).toBeVisible();
   });
 
-  it('displays an error when no matching tenant found', async () => {
+  xit('displays an error when no matching tenant found', async () => {
     const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');

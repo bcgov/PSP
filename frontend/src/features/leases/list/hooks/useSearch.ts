@@ -2,21 +2,22 @@ import { TableSort } from 'components/Table/TableSort';
 import { ILeaseFilter } from 'features/leases';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
-import { ILease, IPagedItems } from 'interfaces';
+import { ILeaseSearchResult, IPagedItems } from 'interfaces';
 import { useCallback, useState } from 'react';
 
 import { useFetcher } from './useFetcher';
 
 export interface SearchState {
   error?: Error;
-  results: ILease[];
+  results: ILeaseSearchResult[];
   filter: ILeaseFilter;
+  sort: TableSort<ILeaseSearchResult>;
   totalItems: number;
   totalPages: number;
   currentPage: number;
   pageSize: number;
   setFilter: (value: ILeaseFilter) => void;
-  setSort: (value: TableSort<ILease>) => void;
+  setSort: (value: TableSort<ILeaseSearchResult>) => void;
   setCurrentPage: (value: number) => void;
   setPageSize: (value: number) => void;
   execute: () => void;
@@ -28,17 +29,17 @@ export interface SearchState {
  */
 export function useSearch(
   initialFilter: ILeaseFilter,
-  initialSort: TableSort<ILease> = {},
+  initialSort: TableSort<ILeaseSearchResult> = {},
   initialPage = 0,
   initialPageSize = 10,
 ): SearchState {
   // search state
   const [error, setError] = useState<Error>();
   const [filter, setFilter] = useState<ILeaseFilter>(initialFilter);
-  const [sort, setSort] = useState<TableSort<ILease>>(initialSort);
+  const [sort, setSort] = useState<TableSort<ILeaseSearchResult>>(initialSort);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
-  const [results, setResults] = useState<ILease[]>([]);
+  const [results, setResults] = useState<ILeaseSearchResult[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   // manual refresh
@@ -48,17 +49,20 @@ export function useSearch(
   // is this component/hook mounted?
   const isMounted = useIsMounted();
 
-  const setSearchOutput = useCallback((apiResponse?: IPagedItems<ILease>, pageSize = 10) => {
-    if (apiResponse?.items) {
-      setResults(apiResponse.items);
-      setTotalItems(apiResponse.total);
-      setTotalPages(Math.ceil(apiResponse.total / pageSize));
-    } else {
-      setResults([]);
-      setTotalItems(0);
-      setTotalPages(0);
-    }
-  }, []);
+  const setSearchOutput = useCallback(
+    (apiResponse?: IPagedItems<ILeaseSearchResult>, pageSize = 10) => {
+      if (apiResponse?.items) {
+        setResults(apiResponse.items);
+        setTotalItems(apiResponse.total);
+        setTotalPages(Math.ceil(apiResponse.total / pageSize));
+      } else {
+        setResults([]);
+        setTotalItems(0);
+        setTotalPages(0);
+      }
+    },
+    [],
+  );
 
   // update search results whenever new data comes back from API endpoints
   useDeepCompareEffect(() => {
@@ -89,6 +93,7 @@ export function useSearch(
     error,
     results,
     filter,
+    sort,
     totalItems,
     totalPages,
     currentPage,
