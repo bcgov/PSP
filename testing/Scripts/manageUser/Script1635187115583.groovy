@@ -17,7 +17,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-// Open browser to our test environment 
+// Open browser to our test environment
 WebUI.openBrowser('https://tst-pims.th.gov.bc.ca')
 
 // Maximize browser window
@@ -32,11 +32,38 @@ WebUI.click(findTestObject('Object Repository/SiteMinder/IdirButton'))
 // Enter IDIR in appropriate field
 WebUI.setText(findTestObject('Object Repository/SiteMinder/IdirField'), GlobalVariable.userName)
 
-// Enter password 
+// Enter password
 WebUI.setEncryptedText(findTestObject('Object Repository/SiteMinder/PasswordField'), GlobalVariable.password)
 
-// Click continue 
+// Click continue
 WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
+
+// Click expand option
+WebUI.click(findTestObject('Navigation/ExpandButton'))
+
+// Click admin tools
+WebUI.click(findTestObject('Object Repository/Navigation/AdminToolsExpandedButton'))
+
+// Click manage users
+WebUI.click(findTestObject('Object Repository/Navigation/AdminNavigation/ManageUsers'))
+
+// Filter by first name
+WebUI.setText(findTestObject('AdminTools/ManageUsers/UserFilter/UserFirstName'), 'Jonny')
+
+// Filter fire action
+WebUI.sendKeys(findTestObject('AdminTools/ManageUsers/UserFilter/UserFirstName'), Keys.chord(Keys.ENTER))
+
+// Click the filtered username
+WebUI.click(findTestObject('AdminTools/ManageUsers/UserFilter/FilteredUserName'))
+
+// Fill in notes for user
+WebUI.setText(findTestObject('AdminTools/ManageUsers/UserNote'), 'These notes have been generated from a FT test script')
+
+// Click the save button 
+WebUI.click(findTestObject('Object Repository/AdminTools/ManageUsers/ManageUserSaveButton'))
+
+// Check for toast confirming user has been updated
+WebUI.waitForElementPresent(findTestObject('Object Repository/AdminTools/ManageUsers/UserUpdatedToast'), 10)
 
 // Close browser
 WebUI.closeBrowser()
