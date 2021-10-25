@@ -166,15 +166,6 @@ namespace Pims.Api.Helpers.Middleware
                     _logger.LogError(streamEx, $"Failed to read the {nameof(ApiHttpRequestException)} error stream.");
                 }
             }
-            else if (ex is ChesException)
-            {
-                var exception = ex as ChesException;
-                code = exception.StatusCode ?? HttpStatusCode.InternalServerError;
-                message = exception.Message;
-                details = exception.Detail;
-
-                _logger.LogError(ex, "CHES unhandled exception.");
-            }
             else if (ex is LtsaException)
             {
                 var exception = ex as LtsaException;
