@@ -11,9 +11,6 @@ trim_trailing_whitespace = true
 [*.ts]
 indent_size = 2
 
-[*.cs]
-indent_size = 4
-
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
@@ -24,4 +21,62 @@ insert_final_newline = false
 [{Makefile,**.mk}]
 # Use tabs for indentation (Makefiles require tabs)
 indent_style = tab
+
+[*.cs]
+indent_size = 4
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+# CA1032: Implement standard exception constructors
+dotnet_diagnostic.CA1032.severity = warning
+# CA1816: Call GC.SuppressFinalize correctly
+dotnet_diagnostic.CA1816.severity = error
+# CA1063: Implement IDisposable correctly
+dotnet_diagnostic.CA1063.severity = error
+# CA2007: Do not directly await a Task
+dotnet_diagnostic.CA2007.severity = none
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = none
+# CA1031: Do not catch general exception types
+dotnet_diagnostic.CA1031.severity = none
+# CA2000: Dispose objects before losing scope
+dotnet_diagnostic.CA2000.severity = none #TODO: This should be set to error
+# CA1508: Avoid dead conditional code
+dotnet_diagnostic.CA1508.severity = none #TODO: Requires further analysis
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = none # #TODO: Requires further analysis
+# CA1801: Review unused parameters
+dotnet_diagnostic.CA1801.severity = none # #TODO: Requires further analysis
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = warning
+# CS1591: Missing XML comment
+dotnet_diagnostic.CS1591.severity = none
+
+# SonarQube
+# S4487 Unread "private" fields should be removed.
+dotnet_diagnostic.S4487.severity = error
+# S927 Parameter names should match base declaration and other partial definitions
+dotnet_diagnostic.S927.severity = error
+# S1006 Remove the default parameter value to match the signature of overridden method
+dotnet_diagnostic.S1006.severity = error
+# S3928 The parameter name '{param}' is not declared in the argument list
+dotnet_diagnostic.S3928.severity = error
+# S1481 Remove the unused local variable
+dotnet_diagnostic.S1481.severity = warning
+# S1135 Complete the task associated to this 'TODO' comment
+dotnet_diagnostic.S1135.severity = none
+# S1116 Remove empty statement
+dotnet_diagnostic.S1116.severity = warning
+# S1118 Utility classes should not have public constructors
+dotnet_diagnostic.S1118.severity = error
+# S3925 "ISerializable" should be implemented correctly
+dotnet_diagnostic.S3925.severity = error
+# S4457 Parameter validation in "async"/"await" methods should be wrapped
+dotnet_diagnostic.S4457.severity = error
+# S3442 "abstract" classes should not have "public" constructors
+dotnet_diagnostic.S3442.severity = error
+# S125 Remove commented out code
+dotnet_diagnostic.S125.severity = error
+# S4136 Method overloads should be adjacent
+dotnet_diagnostic.S4136.severity = none
 

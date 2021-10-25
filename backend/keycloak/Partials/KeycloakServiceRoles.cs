@@ -254,16 +254,16 @@ namespace Pims.Keycloak
         }
 
         /// <summary>
-        /// Get an array of users that belong to role for the specified 'name'.
+        /// Get an array of users that belong to role for the specified 'parentName'.
         /// This method support paging.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="first"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        public async Task<Models.UserModel[]> GetRoleMembersAsync(string name, int first = 0, int max = 10)
+        public async Task<Models.UserModel[]> GetRoleMembersAsync(string parentName, int first = 0, int max = 10)
         {
-            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles/{name}/users?first={first}&max={max}");
+            var response = await _client.GetAsync($"{this.Options.Admin.Authority}/roles/{parentName}/users?first={first}&max={max}");
 
             return await response.HandleResponseAsync<Models.UserModel[]>();
         }

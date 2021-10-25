@@ -1,11 +1,3 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Pims.Ches.Configuration;
-using Pims.Ches.Models;
-using Pims.Core.Exceptions;
-using Pims.Core.Extensions;
-using Pims.Core.Http;
-using Pims.Core.Http.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,6 +7,14 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Pims.Ches.Configuration;
+using Pims.Ches.Models;
+using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
+using Pims.Core.Http;
+using Pims.Core.Http.Models;
 
 namespace Pims.Ches
 {
@@ -205,10 +205,86 @@ namespace Pims.Ches
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public async Task<EmailResponseModel> SendEmailAsync(IEmail email)
+        public Task<EmailResponseModel> SendEmailAsync(IEmail email)
         {
-            if (email == null) throw new ArgumentNullException(nameof(email));
+            if (email == null) { throw new ArgumentNullException(nameof(email)); }
 
+            return SendEmailPrivateAsync(email);
+        }
+
+        /// <summary>
+        /// Send an HTTP request to CHES to send the specified 'email'.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public Task<EmailResponseModel> SendEmailAsync(IEmailMerge email)
+        {
+            if (email == null) { throw new ArgumentNullException(nameof(email)); }
+
+            return SendEmailPrivateAsync(email);
+        }
+
+        /// <summary>
+        /// Send an HTTP request to get the current status of the message for the specified 'messageId'.
+        /// </summary>
+        /// <param name="messageId"></param>
+        /// <returns></returns>
+        public async Task<StatusResponseModel> GetStatusAsync(Guid messageId)
+        {
+            return await SendAsync<StatusResponseModel>($"/status/{messageId}", HttpMethod.Get);
+        }
+
+        /// <summary>
+        /// Send an HTTP request to get the current status of the message(s) for the specified 'filter'.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<StatusResponseModel>> GetStatusAsync(StatusModel filter)
+        {
+            if (filter == null) throw new ArgumentNullException(nameof(filter));
+            if (!filter.MessageId.HasValue && !filter.TransactionId.HasValue && String.IsNullOrWhiteSpace(filter.Status) && String.IsNullOrWhiteSpace(filter.Tag)) throw new ArgumentException("At least one parameter must be specified.");
+
+            return this.GetStatusPrivateAsync(filter);
+        }
+
+        /// <summary>
+        /// Send a cancel HTTP request to CHES for the specified 'messageId'.
+        /// </summary>
+        /// <param name="messageId"></param>
+        /// <returns></returns>
+        public async Task<StatusResponseModel> CancelEmailAsync(Guid messageId)
+        {
+            // Need to determine if we can cancel the email.
+            var response = await GetStatusAsync(messageId);
+            if (response.Status == "accepted" || response.Status == "pending")
+            {
+                await SendAsync($"/cancel/{messageId}", HttpMethod.Delete);
+                response.Status = "cancelled";
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Send a cancel HTTP request to CHES for the specified 'filter'.
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<StatusResponseModel>> CancelEmailAsync(StatusModel filter)
+        {
+            if (filter == null) throw new ArgumentNullException(nameof(filter));
+            if (!filter.MessageId.HasValue && !filter.TransactionId.HasValue && String.IsNullOrWhiteSpace(filter.Status) && String.IsNullOrWhiteSpace(filter.Tag)) throw new ArgumentException("At least one parameter must be specified.");
+
+            return this.CancelEmailInternalAsync(filter);
+        }
+
+        /// <summary>
+        /// Send an HTTP request to CHES to send the specified 'email'.
+        /// Note: Internal implementation to avoid throw on different threads.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        private async Task<EmailResponseModel> SendEmailPrivateAsync(IEmail email)
+        {
             email.From = this.Options.From ?? email.From;
 
             if (this.Options.BccUser)
@@ -230,26 +306,27 @@ namespace Pims.Ches
                 email.SendOn = email.SendOn.AddSeconds(this.Options.AlwaysDelay.Value);
             }
 
-            // Make sure there are no blank CC or BCC;
+            // Make sure there are no blank CC or BCC
             email.To = email.To.NotNullOrWhiteSpace();
             email.Cc = email.Cc?.NotNullOrWhiteSpace();
             email.Bcc = email.Bcc?.NotNullOrWhiteSpace();
 
             if (this.Options.EmailEnabled)
+            {
                 return await SendAsync<EmailResponseModel, IEmail>("/email", HttpMethod.Post, email);
+            }
 
             return new EmailResponseModel();
         }
 
         /// <summary>
         /// Send an HTTP request to CHES to send the specified 'email'.
+        /// Note: Internal implementation to avoid throw on different threads.
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public async Task<EmailResponseModel> SendEmailAsync(IEmailMerge email)
+        private async Task<EmailResponseModel> SendEmailPrivateAsync(IEmailMerge email)
         {
-            if (email == null) throw new ArgumentNullException(nameof(email));
-
             email.From = this.Options.From ?? email.From;
 
             if (this.Options.BccUser)
@@ -283,7 +360,7 @@ namespace Pims.Ches
                     c.SendOn = c.SendOn.AddSeconds(this.Options.AlwaysDelay.Value));
             }
 
-            // Make sure there are no blank CC or BCC;
+            // Make sure there are no blank CC or BCC
             email.Contexts.ForEach(c =>
             {
                 c.To = c.To.NotNullOrWhiteSpace();
@@ -298,25 +375,13 @@ namespace Pims.Ches
         }
 
         /// <summary>
-        /// Send an HTTP request to get the current status of the message for the specified 'messageId'.
-        /// </summary>
-        /// <param name="messageId"></param>
-        /// <returns></returns>
-        public async Task<StatusResponseModel> GetStatusAsync(Guid messageId)
-        {
-            return await SendAsync<StatusResponseModel>($"/status/{messageId}", HttpMethod.Get);
-        }
-
-        /// <summary>
         /// Send an HTTP request to get the current status of the message(s) for the specified 'filter'.
+        /// Note: Internal implementation to avoid throw on different threads.
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<StatusResponseModel>> GetStatusAsync(StatusModel filter)
+        private async Task<IEnumerable<StatusResponseModel>> GetStatusPrivateAsync(StatusModel filter)
         {
-            if (filter == null) throw new ArgumentNullException(nameof(filter));
-            if (!filter.MessageId.HasValue && !filter.TransactionId.HasValue && String.IsNullOrWhiteSpace(filter.Status) && String.IsNullOrWhiteSpace(filter.Tag)) throw new ArgumentException("At least one parameter must be specified.");
-
             var query = HttpUtility.ParseQueryString(String.Empty);
             if (filter.MessageId.HasValue) query.Add("msgId", $"{ filter.MessageId }");
             if (!String.IsNullOrEmpty(filter.Status)) query.Add("status", $"{ filter.Status }");
@@ -327,32 +392,13 @@ namespace Pims.Ches
         }
 
         /// <summary>
-        /// Send a cancel HTTP request to CHES for the specified 'messageId'.
-        /// </summary>
-        /// <param name="messageId"></param>
-        /// <returns></returns>
-        public async Task<StatusResponseModel> CancelEmailAsync(Guid messageId)
-        {
-            // Need to determine if we can cancel the email.
-            var response = await GetStatusAsync(messageId);
-            if (response.Status == "accepted" || response.Status == "pending")
-            {
-                await SendAsync($"/cancel/{messageId}", HttpMethod.Delete);
-                response.Status = "cancelled";
-            }
-            return response;
-        }
-
-        /// <summary>
         /// Send a cancel HTTP request to CHES for the specified 'filter'.
+        /// Note: Internal implementation to avoid throw on different threads.
         /// </summary>
         /// <param name="status"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<StatusResponseModel>> CancelEmailAsync(StatusModel filter)
+        private async Task<IEnumerable<StatusResponseModel>> CancelEmailInternalAsync(StatusModel filter)
         {
-            if (filter == null) throw new ArgumentNullException(nameof(filter));
-            if (!filter.MessageId.HasValue && !filter.TransactionId.HasValue && String.IsNullOrWhiteSpace(filter.Status) && String.IsNullOrWhiteSpace(filter.Tag)) throw new ArgumentException("At least one parameter must be specified.");
-
             var query = HttpUtility.ParseQueryString(String.Empty);
             if (filter.MessageId.HasValue) query.Add("msgId", $"{ filter.MessageId }");
             if (!String.IsNullOrEmpty(filter.Status)) query.Add("status", $"{ filter.Status }");

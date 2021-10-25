@@ -11,8 +11,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using BModel = Pims.Api.Models;
 
 namespace Pims.Api.Areas.Property.Controllers

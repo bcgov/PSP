@@ -88,7 +88,7 @@ namespace Pims.Dal.Entities
         /// Creates a new instance of a BaseEntity class.
         /// Initializes the default values.
         /// </summary>
-        public BaseAppEntity()
+        protected BaseAppEntity()
         {
             this.CreatedOn = DateTime.UtcNow;
             this.UpdatedOn = this.CreatedOn;
