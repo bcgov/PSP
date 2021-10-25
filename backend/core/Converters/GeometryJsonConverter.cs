@@ -63,24 +63,12 @@ namespace Pims.Core.Converters
         }
 
         /// <summary>
-        /// Create a Geometry of the specified type 'T'.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        private Geometry Create<T>(string value)
-            where T : Geometry
-        {
-            return Create(typeof(T), value);
-        }
-
-        /// <summary>
         /// Create a Geometry of the specified 'type'.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        private Geometry Create(Type type, string value)
+        private static Geometry Create(Type type, string value)
         {
             if (String.IsNullOrWhiteSpace(value)) return null;
 

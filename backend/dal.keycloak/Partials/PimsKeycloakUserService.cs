@@ -55,7 +55,7 @@ namespace Pims.Dal.Keycloak
             else
             {
                 // The user exists in PIMS, it only needs to be updated.
-                var roles = euser?.Roles.ToArray();
+                var roles = euser.Roles.ToArray();
                 _mapper.Map(kuser, euser);
                 foreach (var group in kgroups)
                 {
@@ -114,34 +114,34 @@ namespace Pims.Dal.Keycloak
         /// <param name="user"></param>
         /// <exception type="KeyNotFoundException">User does not exist in keycloak or PIMS.</exception>
         /// <returns></returns>
-        public async Task<Entity.User> UpdateUserAsync(Entity.User update)
+        public async Task<Entity.User> UpdateUserAsync(Entity.User user)
         {
-            var kuser = await _keycloakService.GetUserAsync(update.KeycloakUserId.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
-            var euser = _pimsService.User.GetTracking(update.Id);
+            var kuser = await _keycloakService.GetUserAsync(user.KeycloakUserId.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var euser = _pimsService.User.GetTracking(user.Id);
 
             IEnumerable<long> addRoleIds;
             IEnumerable<long> removeRoleIds;
-            if (update.Roles.Any())
+            if (user.Roles.Any())
             {
-                addRoleIds = update.Roles.Except(euser.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
-                removeRoleIds = euser.Roles.Except(update.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
+                addRoleIds = user.Roles.Except(euser.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
+                removeRoleIds = euser.Roles.Except(user.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
             }
             else
             {
-                addRoleIds = update.RolesManyToMany.Except(euser.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-                removeRoleIds = euser.RolesManyToMany.Except(update.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
+                addRoleIds = user.RolesManyToMany.Except(euser.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
+                removeRoleIds = euser.RolesManyToMany.Except(user.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
             }
 
             IEnumerable<long> addOrganizationIds;
             IEnumerable<long> removeOrganizationIds;
-            if (update.Organizations.Any())
+            if (user.Organizations.Any())
             {
-                addOrganizationIds = update.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
-                removeOrganizationIds = euser.Organizations.Except(update.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
+                addOrganizationIds = user.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
+                removeOrganizationIds = euser.Organizations.Except(user.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
                 // Make sure child organizations are included.
                 if (!addOrganizationIds.Any())
                 {
-                    update.Organizations.ForEach(a =>
+                    user.Organizations.ForEach(a =>
                     {
                         addOrganizationIds = addOrganizationIds.Concat(_pimsService.Organization.GetChildren(a.Id).Select(a => a.Id).ToArray()).ToArray();
                     });
@@ -149,12 +149,12 @@ namespace Pims.Dal.Keycloak
             }
             else
             {
-                addOrganizationIds = update.OrganizationsManyToMany.Except(euser.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
-                removeOrganizationIds = euser.OrganizationsManyToMany.Except(update.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
+                addOrganizationIds = user.OrganizationsManyToMany.Except(euser.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
+                removeOrganizationIds = euser.OrganizationsManyToMany.Except(user.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
                 // Make sure child organizations are included.
                 if (!addOrganizationIds.Any())
                 {
-                    update.OrganizationsManyToMany.ForEach(a =>
+                    user.OrganizationsManyToMany.ForEach(a =>
                     {
                         addOrganizationIds = addOrganizationIds.Concat(_pimsService.Organization.GetChildren(a.OrganizationId).Select(a => a.Id).ToArray()).ToArray();
                     });
@@ -202,7 +202,7 @@ namespace Pims.Dal.Keycloak
             addOrganizationIds.ForEach(oId =>
             {
                 var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
-                var roleId = update.OrganizationsManyToMany.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
+                var roleId = user.OrganizationsManyToMany.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
                 var role = _pimsService.Role.Find(roleId);
                 euser.OrganizationsManyToMany.Add(new Entity.UserOrganization(euser, organization, role));
             });
@@ -213,7 +213,7 @@ namespace Pims.Dal.Keycloak
                 euser.OrganizationsManyToMany.Remove(userOrganization);
             });
 
-            return await SaveUserChanges(update, euser, kuser, true);
+            return await SaveUserChanges(user, euser, kuser, true);
         }
 
         /// <summary>

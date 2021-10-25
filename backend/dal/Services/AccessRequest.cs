@@ -117,92 +117,92 @@ namespace Pims.Dal.Services
         /// <summary>
         /// Delete an access request
         /// </summary>
-        /// <param name="delete">The item to be deleted</param>
+        /// <param name="deleteRequest">The item to be deleted</param>
         /// <returns></returns>
-        public AccessRequest Delete(AccessRequest delete)
+        public AccessRequest Delete(AccessRequest deleteRequest)
         {
-            var accessRequest = Context.AccessRequests.Include(a => a.Organizations).FirstOrDefault(a => a.Id == delete.Id) ?? throw new KeyNotFoundException();
+            var accessRequest = Context.AccessRequests.Include(a => a.Organizations).FirstOrDefault(a => a.Id == deleteRequest.Id) ?? throw new KeyNotFoundException();
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
             if (!isAdmin && accessRequest.User.KeycloakUserId != key) throw new NotAuthorizedException();
 
-            accessRequest.RowVersion = delete.RowVersion;
+            accessRequest.RowVersion = deleteRequest.RowVersion;
             Context.AccessRequests.Remove(accessRequest);
             Context.CommitTransaction();
 
-            return delete;
+            return deleteRequest;
         }
 
         /// <summary>
         /// Add a new access request for the current accessRequest.
         /// </summary>
-        /// <param name="add"></param>
+        /// <param name="addRequest"></param>
         /// <returns></returns>
-        public AccessRequest Add(AccessRequest add)
+        public AccessRequest Add(AccessRequest addRequest)
         {
-            if (add == null) throw new ArgumentNullException(nameof(add));
-            if (add.OrganizationsManyToMany?.Any() == false) throw new ArgumentException($"Argument '{nameof(add)}.{nameof(add.OrganizationsManyToMany)}' is required.", nameof(add));
-            var organizations = add.OrganizationsManyToMany.Select(o => new AccessRequestOrganization() { OrganizationId = o.OrganizationId }).ToList();
-            add.OrganizationsManyToMany.Clear();
+            if (addRequest == null) throw new ArgumentNullException(nameof(addRequest));
+            if (addRequest.OrganizationsManyToMany?.Any() == false) throw new ArgumentException($"Argument '{nameof(addRequest)}.{nameof(addRequest.OrganizationsManyToMany)}' is required.", nameof(addRequest));
+            var organizations = addRequest.OrganizationsManyToMany.Select(o => new AccessRequestOrganization() { OrganizationId = o.OrganizationId }).ToList();
+            addRequest.OrganizationsManyToMany.Clear();
 
             var key = this.User.GetUserKey();
-            var position = add.User.Position;
-            add.User = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
-            add.User.Position = position;
-            add.UserId = add.User.Id;
-            add.Status = this.Context.AccessRequestStatusTypes.FirstOrDefault(a => a.Id == "RECEIVED");
+            var position = addRequest.User.Position;
+            addRequest.User = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
+            addRequest.User.Position = position;
+            addRequest.UserId = addRequest.User.Id;
+            addRequest.Status = this.Context.AccessRequestStatusTypes.FirstOrDefault(a => a.Id == "RECEIVED");
 
             // TODO: PIMS_ACRQOR_I_S_I_TR causes the insert to fail, likely due to the trigger running at an innapropriate time when the generated sql is running.
             // adding the access request and then adding the organizations after resolves this issue.
-            this.Context.AccessRequests.Add(add);
+            this.Context.AccessRequests.Add(addRequest);
             this.Context.CommitTransaction();
-            organizations.ForEach(o => add.OrganizationsManyToMany.Add(new AccessRequestOrganization() { OrganizationId = o.OrganizationId, AccessRequestId = add.Id }));
+            organizations.ForEach(o => addRequest.OrganizationsManyToMany.Add(new AccessRequestOrganization() { OrganizationId = o.OrganizationId, AccessRequestId = addRequest.Id }));
             this.Context.CommitTransaction();
-            return add;
+            return addRequest;
         }
 
         /// <summary>
         /// Update the access request for the current accessRequest.
         /// </summary>
-        /// <param name="update"></param>
+        /// <param name="updateRequest"></param>
         /// <returns></returns>
-        public AccessRequest Update(AccessRequest update)
+        public AccessRequest Update(AccessRequest updateRequest)
         {
-            if (update == null) throw new ArgumentNullException(nameof(update));
-            if (update.OrganizationsManyToMany?.Any() == false) throw new ArgumentException($"Argument '{nameof(update)}.{nameof(update.OrganizationsManyToMany)}' is required.", nameof(update));
+            if (updateRequest == null) throw new ArgumentNullException(nameof(updateRequest));
+            if (updateRequest.OrganizationsManyToMany?.Any() == false) throw new ArgumentException($"Argument '{nameof(updateRequest)}.{nameof(updateRequest.OrganizationsManyToMany)}' is required.", nameof(updateRequest));
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
-            var position = update.User.Position;
-            update.User = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
-            update.User.Position = position;
-            if (!isAdmin && update.User.KeycloakUserId != key) throw new NotAuthorizedException(); // Not allowed to update someone elses request.
+            var position = updateRequest.User.Position;
+            updateRequest.User = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException("Your account has not been activated.");
+            updateRequest.User.Position = position;
+            if (!isAdmin && updateRequest.User.KeycloakUserId != key) throw new NotAuthorizedException(); // Not allowed to update someone elses request.
 
             // fetch the existing request from the datasource.
             var accessRequest = this.Context.AccessRequests
                 .Include(a => a.User)
                 .Include(a => a.Role)
                 .Include(a => a.Organizations)
-                .FirstOrDefault(a => a.Id == update.Id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(a => a.Id == updateRequest.Id) ?? throw new KeyNotFoundException();
 
             // Remove organizations and roles if required.
-            var removeOrganizations = accessRequest.OrganizationsManyToMany.Except(update.OrganizationsManyToMany, new AccessRequestOrganizationOrganizationIdComparer());
+            var removeOrganizations = accessRequest.OrganizationsManyToMany.Except(updateRequest.OrganizationsManyToMany, new AccessRequestOrganizationOrganizationIdComparer());
             if (removeOrganizations.Any()) accessRequest.OrganizationsManyToMany.RemoveAll(a => removeOrganizations.Any(r => r.OrganizationId == a.OrganizationId));
 
             // Add organizations and roles if required.
-            var addOrganizations = update.OrganizationsManyToMany.Except(accessRequest.OrganizationsManyToMany, new AccessRequestOrganizationOrganizationIdComparer());
+            var addOrganizations = updateRequest.OrganizationsManyToMany.Except(accessRequest.OrganizationsManyToMany, new AccessRequestOrganizationOrganizationIdComparer());
             addOrganizations.ForEach(a => accessRequest.OrganizationsManyToMany.Add(a));
 
             // Copy values into entity.
-            accessRequest.RoleId = update.RoleId;
-            accessRequest.RowVersion = update.RowVersion;
-            accessRequest.Note = update.Note;
-            accessRequest.StatusId = update.StatusId;
+            accessRequest.RoleId = updateRequest.RoleId;
+            accessRequest.RowVersion = updateRequest.RowVersion;
+            accessRequest.Note = updateRequest.Note;
+            accessRequest.StatusId = updateRequest.StatusId;
 
             this.Context.AccessRequests.Update(accessRequest);
             this.Context.CommitTransaction();
-            return Get(update.Id);
+            return Get(updateRequest.Id);
         }
         #endregion
     }

@@ -14,7 +14,7 @@ namespace Pims.Api
     /// Program class, provides the main program starting point for the Geo-spatial application.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// The primary entry point for the application.

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>17033af2-41c5-4100-a42e-4d11424b0cbb</UserSecretsId>
     <OutputType>Library</OutputType>
     <Version>2.0.0.0</Version>
