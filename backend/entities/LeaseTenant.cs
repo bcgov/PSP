@@ -17,6 +17,12 @@ namespace Pims.Dal.Entities
         public long Id { get; set; }
 
         /// <summary>
+        /// get/set - The lease tenant note.
+        /// </summary>
+        [Column("NOTE")]
+        public string Note { get; set; }
+
+        /// <summary>
         /// get/set - Primary key: The foreign key to the lease.
         /// </summary>
         [Column("LEASE_ID")]
