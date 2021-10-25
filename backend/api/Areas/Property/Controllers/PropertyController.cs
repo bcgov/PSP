@@ -18,7 +18,7 @@ namespace Pims.Api.Areas.Property.Controllers
     [Area("properties")]
     [Route("v{version:apiVersion}/[area]")]
     [Route("[area]")]
-    public class PropertyController : ControllerBase
+    public class LeaseController : ControllerBase
     {
         #region Variables
         private readonly IPimsService _pimsService;
@@ -32,7 +32,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public PropertyController(IPimsService pimsService, IMapper mapper)
+        public LeaseController(IPimsService pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;

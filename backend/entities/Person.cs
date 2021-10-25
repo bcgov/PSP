@@ -80,6 +80,16 @@ namespace Pims.Dal.Entities
         public ICollection<PersonOrganization> OrganizationsManyToMany { get; } = new List<PersonOrganization>();
 
         /// <summary>
+        /// get - A collection of leases.
+        /// </summary>
+        public ICollection<Lease> Leases { get; } = new List<Lease>();
+
+        /// <summary>
+        /// get - A collection of many-to-many relationships between lease and person tenants.
+        /// </summary>
+        public ICollection<LeaseTenant> LeasesManyToMany { get; } = new List<LeaseTenant>();
+
+        /// <summary>
         /// get - A collection of users.
         /// </summary>
         public ICollection<User> Users { get; } = new List<User>();

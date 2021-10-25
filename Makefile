@@ -50,12 +50,41 @@ endif
 	@node ./build/bump-version.js $(ARGS) --apply
 
 ##############################################################################
+# DevSecOps
+##############################################################################
+# python is required for DevSecOps tools
+PYTHON := $(shell command -v python 2> /dev/null)
+JQ := $(shell command -v jq 2> /dev/null)
+
+.PHONY: devops-install
+devops-install: ## Installs software required by DevSecOps tooling (e.g. python, etc)
+	@if [ -z $(PYTHON) ]; then echo "Python could not be found. See See https://docs.python.org/3/"; exit 2; fi
+	@if [ -z $(JQ) ]; then echo "JQ could not be found. See See https://stedolan.github.io/jq/"; exit 2; fi
+	@python -m ensurepip --upgrade
+	@pip install trufflehog3 jtbl
+
+.PHONY: devops-scan
+devops-scan: | devops-install ## Scans the repo for accidental leaks of passwords/secrets
+	@echo "$(P) Scanning codebase for leaked passwords and secrets..."
+	-@trufflehog3 --no-history --config .github/.trufflehog3.yml --format json --output trufflehog_report.json
+	@echo "$(P) Generating HTML report..."
+	@trufflehog3 -R trufflehog_report.json --output trufflehog_report.html
+	@echo "$(P) HTML report saved to trufflehog_report.html"
+	@echo
+	@./build/secops_report.sh trufflehog_report.json
+
+##############################################################################
 # Docker Development
 ##############################################################################
 
 restart: | stop build up ## Restart local docker environment
 
 refresh: | down build up ## Recreates local docker environment
+
+.PHONY: start-infra
+start-infra: ## Starts infrastructure containers (e.g. keycloak, database, geoserver). Useful for local debugging
+	@echo "$(P) Starting up infrastructure containers..."
+	@"$(MAKE)" start n="keycloak database geoserver"
 
 start up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
@@ -78,8 +107,8 @@ build: ## Builds the local containers (n=service name)
 	@docker-compose build --no-cache $(n)
 
 rebuild: ## Build the local contains (n=service name) and then start them after building
-	@make build n=$(n)
-	@make up n=$(n)
+	@"$(MAKE)" build n=$(n)
+	@"$(MAKE)" up n=$(n)
 
 clean: ## Removes all local containers, images, volumes, etc
 	@echo "$(P) Removing all containers, images, volumes for solution."
@@ -91,7 +120,7 @@ logs: ## Shows logs for running containers (n=service name)
 	@docker-compose logs -f $(n)
 
 setup: ## Setup local container environment, initialize keycloak and database
-	@make build; make up; make pause-30; make db-update; make db-seed; make keycloak-sync;
+	@"$(MAKE)" build; make up; make pause-30; make db-update; make db-seed; make keycloak-sync;
 
 pause-30:
 	@echo "$(P) Pausing 30 seconds..."
@@ -116,7 +145,7 @@ npm-clean: ## Removes local containers, images, volumes, for frontend applicatio
 	@docker volume rm -f psp-frontend-node-cache
 
 npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packages are changed.
-	@make npm-clean; make build n=frontend; make up;
+	@"$(MAKE)" npm-clean; make build n=frontend; make up;
 
 db-migrations: ## Display a list of migrations.
 	@echo "$(P) Display a list of migrations."
@@ -186,5 +215,9 @@ frontend-coverage: ## Generate coverage report for frontend
 	@echo "$(P) Generate coverage report for frontend"
 	@cd frontend; npm run coverage;
 
-.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh db-script npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test
+env: ## Generate env files
+	@echo "$(P) Generate/Regenerate env files required for application (generated passwords only match if database .env file does not already exist)"
+	@./scripts/gen-env-files.sh;
+
+.PHONY: logs start destroy local setup restart refresh up down stop build rebuild clean client-test server-test pause-30 server-run db-migrations db-add db-update db-rollback db-remove db-clean db-drop db-seed db-refresh db-script npm-clean npm-refresh keycloak-sync convert backend-coverage frontend-coverage backend-test frontend-test env
 

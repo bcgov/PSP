@@ -1,5 +1,6 @@
 import { BCGovLogo } from 'components/common/BCGovLogo';
 import { VerticalBar } from 'components/common/VerticalBar';
+import HelpContainer from 'features/help/containers/HelpContainer';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import values from 'lodash/values';
 import React from 'react';
@@ -31,17 +32,17 @@ export const Header = () => {
   const tenant = useTenant();
 
   const errors = useAppSelector(state => {
-    const errors: IGenericNetworkAction[] = [];
+    const networkErrors: IGenericNetworkAction[] = [];
     values(state).forEach(reducer => {
       values(reducer)
         .filter(x => x instanceof Object)
         .forEach(action => {
           if (isNetworkError(action)) {
-            errors.push(action);
+            networkErrors.push(action);
           }
         });
     });
-    return errors;
+    return networkErrors;
   });
   return (
     <HeaderStyled expand className="App-header">
@@ -58,6 +59,7 @@ export const Header = () => {
           <h1 className="shortAppName">{tenant.shortName}</h1>
         </Nav.Item>
       </Nav>
+      <HelpContainer />
       {keycloak.obj.authenticated && <UserProfile />}
       <Nav className="other">
         {errors && errors.length ? (

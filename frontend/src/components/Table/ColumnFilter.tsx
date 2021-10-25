@@ -22,15 +22,15 @@ const Wrapper = styled('div')`
   align-items: center;
   justify-items: center;
   position: relative;
-  padding: 0 5px;
+  padding: 0 0.5rem;
 `;
 
 const InputContainer = styled('div')`
   position: absolute;
-  bottom: -55px;
+  bottom: -5.5rem;
   left: 0;
   z-index: 1;
-  min-width: 200px;
+  min-width: 20rem;
 
   .form-control {
     border-radius: 0;
@@ -63,7 +63,7 @@ const ColumnFilter: React.FC<IColumnFilterProps> = ({ column, onFilter, children
   }
 
   const hasValue = !!getIn(context.values, (column.filter.props || {}).name);
-  const Control = column.filter!.component as any;
+  const Control = column.filter.component as any;
 
   const filter = (
     <Wrapper className={clsx('filter-wrapper', { active: hasValue })}>

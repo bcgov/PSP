@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
       </div>
       <div
         class="Menu-items"
-        style="width: 100px;"
+        style="width: 10.0rem;"
       >
         <div
           class="Menu-options scrollable list-group"

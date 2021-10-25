@@ -2,16 +2,16 @@
 
 .list-group {
   .list-group-item {
-    padding: 0px 0px 5px 0px;
+    padding: 0rem 0rem 0.5rem 0rem;
     border: none;
     font-family: 'BCSans', Fallback, sans-serif;
-    font-size: 12px;
+    font-size: 1.2rem;
     text-align: left;
     font-weight: bold;
     color: $text-color;
 
     &.legal {
-      padding-left: 15px;
+      padding-left: 1.5rem;
     }
 
     &.left-side {
@@ -26,17 +26,17 @@
 }
 
 .header {
-  border-bottom: 1px solid rgba(96, 96, 96, 0.2);
+  border-bottom: 0.1rem solid rgba(96, 96, 96, 0.2);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1.6rem;
   color: $text-color;
-  padding: 2px 0px;
-  margin-bottom: 5px;
+  padding: 0.2rem 0rem;
+  margin-bottom: 0.5rem;
   text-align: left;
 }
 
 .leaflet-control {
-  margin-right: 0px;
+  margin-right: 0rem;
 }
 
 .styled-link {

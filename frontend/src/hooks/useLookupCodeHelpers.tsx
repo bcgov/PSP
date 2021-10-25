@@ -1,23 +1,20 @@
 import { SelectOption } from 'components/common/form';
 import * as API from 'constants/API';
-import Claims from 'constants/claims';
 import { useCallback } from 'react';
 import { useAppSelector } from 'store/hooks';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { mapLookupCode } from 'utils';
 
-import { useKeycloakWrapper } from './useKeycloakWrapper';
-
 /**
  * Hook to return an array ILookupCode for specific types.
  */
 export function useLookupCodeHelpers() {
-  const keycloak = useKeycloakWrapper();
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
   const getCodeById = (type: string, id: number | string): string | undefined => {
-    return lookupCodes
+    const match = lookupCodes
       .filter((code: { type: string; id: number | string }) => code.type === type && code.id === id)
-      ?.find((x: any) => x)?.code;
+      ?.find((x: any) => x);
+    return match?.code ?? match?.name;
   };
 
   const getByType = useCallback(
@@ -43,7 +40,7 @@ export function useLookupCodeHelpers() {
   /**
    * Return an array of SelectOptions containing property classifications.
    * @param filter - A filter to determine which classifications will be returned.
-   * @returns An array of SelectOptions for property classifications.
+   * @returns An array of SelectOptions for property classifications.map
    */
   const getPropertyClassificationTypeOptions = (
     filter?: (value: SelectOption, index: number, array: SelectOption[]) => unknown,
@@ -51,8 +48,6 @@ export function useLookupCodeHelpers() {
     const classifications = getByType(API.PROPERTY_CLASSIFICATION_CODE_SET_NAME);
     return filter
       ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c)).filter(filter)
-      : !keycloak.hasClaim(Claims.ADMIN_PROPERTIES)
-      ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c))
       : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
   };
 

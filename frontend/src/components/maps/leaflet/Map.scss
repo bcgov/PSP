@@ -2,22 +2,20 @@
 
 .leaflet-container {
   /* Subtract the header, nav-bar and footer sizes */
-  height: calc(
-    100vh - #{$header-height} - #{$navbar-height} - #{$mapfilter-height} - #{$footer-height}
-  );
-  // margin-top: 10px;
-  // padding-top: 20px;
+  height: calc(100vh - #{$header-height} - #{$mapfilter-height} - #{$footer-height});
+  // margin-top: 1.0rem;
+  // padding-top: 2.0rem;
   margin: auto;
 
   .leaflet-popup-content-wrapper {
     border-radius: 0;
   }
   .leaflet-popup-content {
-    margin: 0px;
+    margin: 0rem;
     .list-group {
       .list-group-item {
         border: none;
-        padding: 0.5rem 1.25rem;
+        padding: 0.8rem 1.4rem;
       }
     }
   }
@@ -29,13 +27,13 @@
 
 .leaflet-control-layers {
   &.leaflet-control-layers-expanded {
-    border-radius: 0px;
+    border-radius: 0rem;
   }
   .leaflet-control-layers-overlays {
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    width: 150px;
+    padding: 1rem;
+    width: 15rem;
     label {
       display: flex;
     }

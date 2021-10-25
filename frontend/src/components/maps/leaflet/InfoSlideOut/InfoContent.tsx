@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 import { formatAddress, pidFormatter } from 'utils';
 
+import LeaseAttributes from './LeaseAttributes';
 import ParcelAttributes from './ParcelAttributes';
 import { ThreeColumnItem } from './ThreeColumnItem';
 
@@ -43,7 +44,7 @@ interface IInfoContent {
 }
 
 export const OuterRow = styled(Row)`
-  margin: 0px 0px 10px 0px;
+  margin: 0rem 0rem 1rem 0rem;
 `;
 
 /**
@@ -103,11 +104,12 @@ export const InfoContent: React.FC<IInfoContent> = ({
           />
           <ThreeColumnItem
             leftSideLabel={'Regional District'}
-            rightSideItem={propertyInfo?.address?.region}
+            rightSideItem={propertyInfo?.region}
           />
         </OuterRow>
       </ListGroup>
       <ParcelAttributes parcelInfo={propertyInfo as IProperty} canViewDetails={canViewDetails} />
+      <LeaseAttributes leases={propertyInfo?.leases} />
     </>
   );
 };

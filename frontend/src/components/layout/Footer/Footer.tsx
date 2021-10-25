@@ -22,8 +22,7 @@ function Footer() {
  * Styled footer component.
  */
 const FooterStyled = styled('div')`
-  bottom: 0;
-  padding: 10px 0;
+  padding: 1rem 20%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -36,10 +35,10 @@ const FooterStyled = styled('div')`
     &:link,
     &:visited {
       color: #ffffff;
-      font-size: 16px;
+      font-size: 1.6rem;
       font-family: 'BCSans', Fallback, sans-serif;
-      padding: 0 10px;
-      border-right: 1px solid #666;
+      padding: 0 1rem;
+      border-right: 0.1rem solid #666;
     }
     &:hover,
     &:focus {
@@ -49,10 +48,10 @@ const FooterStyled = styled('div')`
 
   div.version {
     color: #ffffff;
-    font-size: 12px;
+    font-size: 1.2rem;
     font-family: 'BCSans', Fallback, sans-serif;
-    padding: 0 0 0 10px;
-    flex-grow: 2;
+    padding: 0 0 0 1rem;
+    flex-grow: 1;
     text-align: right;
   }
 `;

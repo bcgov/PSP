@@ -51,7 +51,7 @@ export const Button: React.FC<ButtonProps & React.HTMLAttributes<HTMLElement>> =
           size="sm"
           role="status"
           as="span"
-          style={{ marginLeft: '.5rem', padding: '.5rem' }}
+          style={{ marginLeft: '.8rem', padding: '.8rem' }}
         />
       )}
     </ButtonBase>

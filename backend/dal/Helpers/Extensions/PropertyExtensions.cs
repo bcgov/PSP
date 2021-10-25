@@ -84,11 +84,42 @@ namespace Pims.Dal.Helpers.Extensions
             filter.ThrowIfNull(nameof(user));
 
             // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning organization.
-            var query = context.Properties.AsNoTracking();
+            var query = context.Properties
+                .Include(p => p.Address)
+                .ThenInclude(a => a.AddressType)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Region)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.District)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Province)
+                .Include(p => p.Address)
+                .ThenInclude(a => a.Country)
+                .AsNoTracking();
 
             query = query.GenerateCommonPropertyQuery(user, filter);
 
             return query;
+        }
+
+        /// <summary>
+        /// Return the pid (if valued) or pin of the property.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static int? GetPidOrPin(this Pims.Dal.Entities.Property property)
+        {
+            return property.PID != 0 ? property.PID : property.PIN;
+        }
+
+        /// <summary>
+        /// Get the Tenant Name of the first associated lease to this property.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <returns></returns>
+        public static string GetTenantName(this Pims.Dal.Entities.Property property)
+        {
+            return property.Leases.FirstOrDefault()?.GetFullName();
         }
     }
 }

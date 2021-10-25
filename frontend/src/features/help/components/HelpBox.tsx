@@ -23,7 +23,7 @@ const Box = styled.div`
 `;
 
 const TopicButton = styled(Button)`
-  max-height: 40px;
+  max-height: 4rem;
   background-color: white;
 `;
 

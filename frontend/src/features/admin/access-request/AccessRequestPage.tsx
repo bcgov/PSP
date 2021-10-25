@@ -101,7 +101,7 @@ const AccessRequestPage = () => {
         <h3>Access Request</h3>
       </div>
       <hr />
-      <Container fluid={true}>
+      <Container fluid>
         <Row className="justify-content-md-center">
           <Formik
             enableReinitialize={true}

@@ -160,6 +160,11 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get - Collection of leases.
         /// </summary>
+        public ICollection<LeaseTenant> LeasesManyToMany { get; } = new List<LeaseTenant>();
+
+        /// <summary>
+        /// get - Collection of leases.
+        /// </summary>
         public ICollection<Lease> Leases { get; } = new List<Lease>();
         #endregion
 

@@ -24,6 +24,7 @@ type OptionalAttributes = {
   /** Adds a custom class to the input element of the <Input> component */
   className?: string;
   /** Whether the field is required. Makes the field border blue. */
+
   required?: boolean;
   /** Specifies that the HTML element should be disabled */
   disabled?: boolean;
@@ -31,8 +32,8 @@ type OptionalAttributes = {
   pattern?: RegExp;
   /** Use React-Bootstrap's custom form elements to replace the browser defaults */
   custom?: boolean;
-  /** class to apply to entire form group */
-  outerClassName?: string;
+  /** class to apply to the inner input */
+  innerClassName?: string;
   /** formatter to apply during input onblur */
   onBlurFormatter?: Function;
   /** optional tooltip text to display after the label */
@@ -55,7 +56,7 @@ export const Input: React.FC<InputProps> = ({
   as: is, // `as` is reserved in typescript
   placeholder,
   className,
-  outerClassName,
+  innerClassName,
   pattern,
   style,
   required,
@@ -74,7 +75,7 @@ export const Input: React.FC<InputProps> = ({
   const value = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const asElement: any = is || 'input';
-  const [restricted, setRestricted] = useState(value);
+  const [restricted, setRestricted] = useState(onBlurFormatter ? onBlurFormatter(value) : value);
   const handleRestrictedChange = (event: any) => {
     let val = event.target.value;
     pattern?.test(val) && setRestricted(val);
@@ -96,7 +97,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', outerClassName)}
+      className={classNames(!!required ? 'required' : '', className, 'input')}
     >
       {!!label && (
         <Form.Label>
@@ -107,7 +108,7 @@ export const Input: React.FC<InputProps> = ({
 
       <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
         <Form.Control
-          className={className}
+          className={innerClassName}
           as={asElement}
           name={field}
           style={style}

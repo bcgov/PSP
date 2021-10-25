@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
@@ -27,33 +28,17 @@ namespace Pims.Api.Test.Controllers.Property
         #region Variables
         public readonly static IEnumerable<object[]> PropertyFilters = new List<object[]>()
         {
-            new object [] { new SModel.PropertyFilterModel(100, 0, 0, 0) },
-            new object [] { new SModel.PropertyFilterModel(0, 100, 0, 0) },
-            new object [] { new SModel.PropertyFilterModel(0, 0, 10, 0) },
-            new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) },
-            new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { Address = "Address" } },
-            new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { Organizations = new long[] { 1 } } },
-            new object [] { new SModel.PropertyFilterModel(0, 0, 0, 10) { ClassificationId = "class" } },
+            new object [] { new SModel.PropertyFilterModel() },
+            new object [] { new SModel.PropertyFilterModel() { Address = "Address" } },
+            new object [] { new SModel.PropertyFilterModel() { PIN = 999999 } },
+            new object [] { new SModel.PropertyFilterModel() { PID = "foobar" } },
         };
 
         public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
         {
-            new object [] { new Uri("http://host/api/properties?Organizations=1,2")},
-            new object [] { new Uri("http://host/api/properties?StatusId=2")},
-            new object [] { new Uri("http://host/api/properties?InSurplusPropertyProgram=true")},
-            new object [] { new Uri("http://host/api/properties?ClassificationId=1")},
-            new object [] { new Uri("http://host/api/properties?Address=Address")},
-            new object [] { new Uri("http://host/api/properties?ProjectNumber=ProjectNumber")},
-            new object [] { new Uri("http://host/api/properties?MinLotArea=1")},
-            new object [] { new Uri("http://host/api/properties?MaxLotArea=1")},
-            new object [] { new Uri("http://host/api/properties?MinLandArea=1")},
-            new object [] { new Uri("http://host/api/properties?MaxLandArea=1")},
-            new object [] { new Uri("http://host/api/properties?ConstructionTypeId=1")},
-            new object [] { new Uri("http://host/api/properties?PredominateUseId=1")},
-            new object [] { new Uri("http://host/api/properties?FloorCount=1")},
-            new object [] { new Uri("http://host/api/properties?Tenancy=Tenancy")},
-            new object [] { new Uri("http://host/api/properties?MinRentableArea=1")},
-            new object [] { new Uri("http://host/api/properties?MaxRentableArea=1")}
+            new object [] { new Uri("http://host/api/properties?address=Address")},
+            new object [] { new Uri("http://host/api/properties?pid=foobar")},
+            new object [] { new Uri("http://host/api/properties?pin=999999")}
         };
         #endregion
 
@@ -74,18 +59,19 @@ namespace Pims.Api.Test.Controllers.Property
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.Property>(properties, filter.Page, filter.Quantity);
 
-            service.Setup(m => m.Property.Get(It.IsAny<PropertyFilter>())).Returns(properties);
+            service.Setup(m => m.Property.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.GetProperties(filter);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<SModel.PropertyModel[]>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Property.Get(It.IsAny<PropertyFilter>()), Times.Once());
+            Assert.Equal(expectedResult, actualResult.Items, new DeepPropertyCompare());
+            service.Verify(m => m.Property.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -103,18 +89,19 @@ namespace Pims.Api.Test.Controllers.Property
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
+            var page = new Paged<Entity.Property>(properties);
 
-            service.Setup(m => m.Property.Get(It.IsAny<PropertyFilter>())).Returns(properties);
+            service.Setup(m => m.Property.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
             // Act
             var result = controller.GetProperties();
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<SModel.PropertyModel[]>(actionResult.Value);
+            var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
             var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
-            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Property.Get(It.IsAny<PropertyFilter>()), Times.Once());
+            Assert.Equal(expectedResult, actualResult.Items, new DeepPropertyCompare());
+            service.Verify(m => m.Property.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
 
         /// <summary>
@@ -138,7 +125,7 @@ namespace Pims.Api.Test.Controllers.Property
         }
 
         /// <summary>
-        /// Make a failed request because the body doesn't contain a fitler object.
+        /// Make a failed request because the body doesn't contain a filter object.
         /// </summary>
         [Fact]
         public void GetProperties_NoFilter_BadRequest()

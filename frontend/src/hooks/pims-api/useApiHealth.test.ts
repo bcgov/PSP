@@ -17,34 +17,33 @@ describe('useApiHealth testing suite', () => {
     jest.restoreAllMocks();
   });
 
-  it('Get Health Version endpoint', () => {
-    renderHook(async () => {
-      const api = useApiHealth();
-      const response = await api.getVersion();
+  const setup = () => {
+    const { result } = renderHook(useApiHealth);
+    return result.current;
+  };
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultVersion);
-    });
+  it('Get Health Version endpoint', async () => {
+    const { getVersion } = setup();
+    const response = await getVersion();
+
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultVersion);
   });
 
-  it('Get Health Live endpoint', () => {
-    renderHook(async () => {
-      const api = useApiHealth();
-      const response = await api.getLive();
+  it('Get Health Live endpoint', async () => {
+    const { getLive } = setup();
+    const response = await getLive();
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultLive);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultLive);
   });
 
-  it('Get Health Ready endpoint', () => {
-    renderHook(async () => {
-      const api = useApiHealth();
-      const response = await api.getReady();
+  it('Get Health Ready endpoint', async () => {
+    const { getReady } = setup();
+    const response = await getReady();
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultReady);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultReady);
   });
 });
 

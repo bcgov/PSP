@@ -94,7 +94,7 @@ function createProps(): TestProps {
       useMockAuthentication: true,
       organizations: [0],
       store: storeState,
-      roles: [Claims.PROPERTY_EDIT],
+      claims: [Claims.PROPERTY_EDIT],
     },
   };
 }
@@ -103,16 +103,7 @@ function createProps(): TestProps {
 function Template(props: Omit<TestProps, 'renderOptions'>) {
   const { done, setMap, zoom = 6, ...rest } = props;
   return (
-    <Map
-      lat={48.43}
-      lng={-123.37}
-      zoom={zoom}
-      organizations={[]}
-      administrativeAreas={[]}
-      whenReady={done}
-      whenCreated={setMap}
-      {...rest}
-    />
+    <Map lat={48.43} lng={-123.37} zoom={zoom} whenReady={done} whenCreated={setMap} {...rest} />
   );
 }
 
@@ -292,7 +283,7 @@ describe('MapProperties View', () => {
     userEvent.type(nameInput, '123-456-789');
     await waitFor(() => userEvent.click(searchButton));
     // check API call params...
-    const filter = expect.objectContaining({ PID: '123-456-789' });
+    const filter = expect.objectContaining({ PID: 123456789 });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
   });
 
@@ -323,11 +314,11 @@ describe('MapProperties View', () => {
     userEvent.type(nameInput, '123-456-789');
     await waitFor(() => userEvent.click(searchButton));
     // check API call params...
-    const filter = expect.objectContaining({ PID: '123-456-789' });
+    const filter = expect.objectContaining({ PID: 123456789 });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
     const resetButton = findResetButton();
     await waitFor(() => userEvent.click(resetButton));
-    const defaultFilter = expect.objectContaining({ PID: '' });
+    const defaultFilter = expect.objectContaining({ PID: undefined });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(defaultFilter));
   });
 });

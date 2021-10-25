@@ -1,11 +1,11 @@
-import { IGeoSearchParams, IPropertySearchParams } from 'constants/API';
+import { IPaginateProperties } from 'constants/API';
 import * as pimsToasts from 'constants/toasts';
 import { LifecycleToasts } from 'customAxios';
 import { IPagedItems, IProperty } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
-import { useApi } from '.';
+import { useAxiosApi } from '.';
 
 const propertyCreatingToasts: LifecycleToasts = {
   loadingToast: pimsToasts.parcel.PARCEL_CREATING,
@@ -30,16 +30,14 @@ const propertyDeletingToasts: LifecycleToasts = {
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiProperties = () => {
-  const api = useApi();
-  const apiWithPropertyCreatingToasts = useApi({ lifecycleToasts: propertyCreatingToasts });
-  const apiWithPropertyUpdatingToasts = useApi({ lifecycleToasts: propertyUpdatingToasts });
-  const apiWithPropertyDeletingToasts = useApi({ lifecycleToasts: propertyDeletingToasts });
+  const api = useAxiosApi();
+  const apiWithPropertyCreatingToasts = useAxiosApi({ lifecycleToasts: propertyCreatingToasts });
+  const apiWithPropertyUpdatingToasts = useAxiosApi({ lifecycleToasts: propertyUpdatingToasts });
+  const apiWithPropertyDeletingToasts = useAxiosApi({ lifecycleToasts: propertyDeletingToasts });
 
   return React.useMemo(
     () => ({
-      // TODO: Remove fake endpoint used by the map.
-      getPropertiesWfs: (params?: IGeoSearchParams): Promise<any[]> => Promise.resolve([]),
-      getProperties: (params: IPropertySearchParams | null) =>
+      getPropertiesPaged: (params: IPaginateProperties | null) =>
         api.get<IPagedItems<IProperty>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
@@ -53,6 +51,16 @@ export const useApiProperties = () => {
         apiWithPropertyDeletingToasts.delete<IProperty>(`/properties/${property.id}`, {
           data: property,
         }),
+      exportProperties: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
+        api.get(
+          `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
     }),
     [
       api,

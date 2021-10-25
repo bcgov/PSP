@@ -18,37 +18,21 @@ namespace Pims.Dal.Entities
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the property management organization.
+        /// get/set - string description of the lease purpose if type code is other.
         /// </summary>
-        [Column("PROP_MGMT_ORG_ID")]
-        public long? PropertyManagementOrganizationId { get; set; }
-
-        /// <summary>
-        /// get/set - The organization that manages this property.
-        /// </summary>
-        public Organization PropertyManagementOrganization { get; set; }
+        [Column("LEASE_PURPOSE_OTHER_DESC")]
+        public string LeasePurposeOtherDesc { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the lease purpose type.
         /// </summary>
         [Column("LEASE_PURPOSE_TYPE_CODE")]
-        public int PurposeTypeId { get; set; }
+        public string PurposeTypeId { get; set; }
 
         /// <summary>
         /// get/set - The lease purpose type.
         /// </summary>
         public LeasePurposeType PurposeType { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to the lease purpose subtype.
-        /// </summary>
-        [Column("LEASE_PURPOSE_SUBTYPE_CODE")]
-        public int PurposeSubtypeId { get; set; }
-
-        /// <summary>
-        /// get/set - The lease purpose subtype.
-        /// </summary>
-        public LeasePurposeSubtype PurposeSubtype { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the lease status type.
@@ -73,6 +57,17 @@ namespace Pims.Dal.Entities
         public LeasePaymentFrequencyType PaymentFrequencyType { get; set; }
 
         /// <summary>
+        /// get/set - Foreign key to the lease payment rvbl type.
+        /// </summary>
+        [Column("LEASE_PAY_RVBL_TYPE_CODE")]
+        public string PaymentReceivableTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease payment rvbl type.
+        /// </summary>
+        public LeasePaymentReceivableType PaymentRvblType { get; set; }
+
+        /// <summary>
         /// get/set - Foreign key to the lease program type.
         /// </summary>
         [Column("LEASE_PROGRAM_TYPE_CODE")]
@@ -84,26 +79,59 @@ namespace Pims.Dal.Entities
         public LeaseProgramType ProgramType { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the lease property manager.
+        /// get/set - Foreign key to the lease category type.
         /// </summary>
-        [Column("PROPERTY_MANAGER_ID")]
-        public long? PropertyManagerId { get; set; }
+        [Column("LEASE_CATEGORY_TYPE_CODE")]
+        public string CategoryTypeId { get; set; }
 
         /// <summary>
-        /// get/set - The lease property manager.
+        /// get/set - The lease category type.
         /// </summary>
-        public Person PropertyManager { get; set; }
+        public LeaseCategoryType CategoryType { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the lease tenant.
+        /// get/set - Foreign key to the lease responsibility type.
         /// </summary>
-        [Column("TENANT_ID")]
-        public long? TenantId { get; set; }
+        [Column("LEASE_RESPONSIBILITY_TYPE_CODE")]
+        public string LeaseResponsibilityTypeId { get; set; }
 
         /// <summary>
-        /// get/set - The lease tenant.
+        /// get/set - The lease responsibility type.
         /// </summary>
-        public Person Tenant { get; set; }
+        public LeaseResponsibilityType LeaseResponsibilityType { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the lease initiator type.
+        /// </summary>
+        [Column("LEASE_INITIATOR_TYPE_CODE")]
+        public string LeaseInitiatorTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease initiator type.
+        /// </summary>
+        public LeaseIntiatorType LeaseInitiatorType { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the lease type.
+        /// </summary>
+        [Column("LEASE_LICENSE_TYPE_CODE")]
+        public string LeaseTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease type.
+        /// </summary>
+        public LeaseLicenseType LeaseLicenseType { get; set; }
+
+        /// <summary>
+        /// get/set - The MOTI resource associated with this lease.
+        /// </summary>
+        [Column("MOTI_NAME_ID")]
+        public long MotiNameId { get; set; }
+
+        /// <summary>
+        /// get/set - The MOTI resource associated with this lease.
+        /// </summary>
+        public Person MotiName { get; set; }
 
         /// <summary>
         /// get/set - The lease LIS file number.
@@ -126,26 +154,56 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The lease start date.
         /// </summary>
-        [Column("START_DATE")]
+        [Column("TERM_START_DATE")]
         public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// get/set - The original lease start date.
+        /// </summary>
+        [Column("ORIG_START_DATE")]
+        public DateTime OrigStartDate { get; set; }
 
         /// <summary>
         /// get/set - The lease renewal date.
         /// </summary>
-        [Column("RENEWAL_DATE")]
+        [Column("TERM_RENEWAL_DATE")]
         public DateTime? RenewalDate { get; set; }
+
+        /// <summary>
+        /// get/set - The number of renewals included in this release.
+        /// </summary>
+        [Column("INCLUDED_RENEWALS")]
+        public int? IncludedRenewals { get; set; }
+
+        /// <summary>
+        /// get/set - The lease renewal count.
+        /// </summary>
+        [Column("RENEWAL_COUNT")]
+        public int RenewalCount { get; set; }
+
+        /// <summary>
+        /// get/set - The lease renewal term in months.
+        /// </summary>
+        [Column("RENEWAL_TERM_MONTHS")]
+        public int RenewalTermMonths { get; set; }
 
         /// <summary>
         /// get/set - The lease expiry date.
         /// </summary>
-        [Column("EXPIRY_DATE")]
-        public DateTime? ExpiryDate { get; set; }
+        [Column("TERM_EXPIRY_DATE")]
+        public DateTime? TermExpiryDate { get; set; }
+
+        /// <summary>
+        /// get/set - The original lease expiry date.
+        /// </summary>
+        [Column("ORIG_EXPIRY_DATE")]
+        public DateTime? OrigExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The lease amount.
         /// </summary>
         [Column("LEASE_AMOUNT")]
-        public string Amount { get; set; }
+        public decimal? Amount { get; set; }
 
         /// <summary>
         /// get/set - The lease insurance start date.
@@ -178,6 +236,12 @@ namespace Pims.Dal.Entities
         public DateTime? InspectionDate { get; set; }
 
         /// <summary>
+        /// get/set - The lease responsibility effective date.
+        /// </summary>
+        [Column("RESPONSIBILITY_EFFECTIVE_DATE")]
+        public DateTime? ResponsibilityEffectiveDate { get; set; }
+
+        /// <summary>
         /// get/set - The lease inspection notes.
         /// </summary>
         [Column("INSPECTION_NOTES")]
@@ -190,6 +254,12 @@ namespace Pims.Dal.Entities
         public string Note { get; set; }
 
         /// <summary>
+        /// get/set - The lease description.
+        /// </summary>
+        [Column("LEASE_DESCRIPTION")]
+        public string Description { get; set; }
+
+        /// <summary>
         /// get/set - The lease unit.
         /// </summary>
         [Column("UNIT")]
@@ -198,8 +268,14 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - Whether the lease has expired.
         /// </summary>
-        [Column("EXPIRED")]
+        [Column("IS_EXPIRED")]
         public bool IsExpired { get; set; }
+
+        /// <summary>
+        /// get/set - Whether the lease has expired.
+        /// </summary>
+        [Column("IS_ORIG_EXPIRY_REQUIRED")]
+        public bool IsOrigExpiryRequired { get; set; }
 
         /// <summary>
         /// get/set - Whether the lease has a physical file.
@@ -226,14 +302,22 @@ namespace Pims.Dal.Entities
         public bool HasDigitalLicense { get; set; }
 
         /// <summary>
-        /// get/set - A collection of lease expected amounts.
+        /// get/set - Whether this improvement contains a building that is subject to RTA.
         /// </summary>
-        public ICollection<LeaseExpectedAmount> ExpectedAmounts { get; } = new List<LeaseExpectedAmount>();
+        [Column("IS_SUBJECT_TO_RTA")]
+        public bool IsSubjectToRta { get; set; }
 
         /// <summary>
-        /// get/set - A collection of lease activities.
+        /// get/set - Whether this improvement contains a commercial building.
         /// </summary>
-        public ICollection<LeaseActivity> Activities { get; } = new List<LeaseActivity>();
+        [Column("IS_COMM_BLDG")]
+        public bool IsCommBldg { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this improvement is of type other.
+        /// </summary>
+        [Column("IS_OTHER_IMPROVEMENT")]
+        public bool IsOtherImprovement { get; set; }
 
         /// <summary>
         /// get/set - A collection of properties.
@@ -244,6 +328,26 @@ namespace Pims.Dal.Entities
         /// get/set - A collection of many-to-many entities that link properties and leases..
         /// </summary>
         public ICollection<PropertyLease> PropertiesManyToMany { get; } = new List<PropertyLease>();
+
+        /// <summary>
+        /// get/set - A collection of many-to-many entities that link tenants and leases.
+        /// </summary>
+        public ICollection<LeaseTenant> TenantsManyToMany { get; } = new List<LeaseTenant>();
+
+        /// <summary>
+        /// get/set - A collection of Persons associated to this Lease
+        /// </summary>
+        public ICollection<Person> Persons { get; } = new List<Person>();
+
+        /// <summary>
+        /// get/set - A collection of Organizations associated to this Lease
+        /// </summary>
+        public ICollection<Organization> Organizations { get; } = new List<Organization>();
+
+        /// <summary>
+        /// get/set - A collection of Improvements associated to this Lease
+        /// </summary>
+        public ICollection<PropertyImprovement> Improvements { get; } = new List<PropertyImprovement>();
         #endregion
 
         #region Constructors
@@ -256,15 +360,12 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a Lease class.
         /// </summary>
         /// <param name="purposeType"></param>
-        /// <param name="purposeSubtype"></param>
         /// <param name="statusType"></param>
         /// <param name="paymentFrequencyType"></param>
-        public Lease(LeasePurposeType purposeType, LeasePurposeSubtype purposeSubtype, LeaseStatusType statusType, LeasePaymentFrequencyType paymentFrequencyType)
+        public Lease(LeasePurposeType purposeType, LeaseStatusType statusType, LeasePaymentFrequencyType paymentFrequencyType)
         {
             this.PurposeTypeId = purposeType?.Id ?? throw new ArgumentNullException(nameof(purposeType));
             this.PurposeType = purposeType;
-            this.PurposeSubtypeId = purposeSubtype?.Id ?? throw new ArgumentNullException(nameof(purposeSubtype));
-            this.PurposeSubtype = purposeSubtype;
             this.StatusTypeId = statusType?.Id ?? throw new ArgumentNullException(nameof(statusType));
             this.StatusType = statusType;
             this.PaymentFrequencyTypeId = paymentFrequencyType?.Id ?? throw new ArgumentNullException(nameof(paymentFrequencyType));

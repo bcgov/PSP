@@ -8,7 +8,7 @@ import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IProperty } from 'interfaces';
-import L from 'leaflet';
+import L, { LatLngLiteral } from 'leaflet';
 import queryString from 'query-string';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
@@ -59,12 +59,14 @@ export const convertToProperty = (
       longitude: longitude,
       propertyTypeId: property.propertyTypeId,
       address: {
-        id: property.ADDRESS,
+        id: property.ADDRESS_ID,
         addressTypeId: AddressTypes.Physical,
-        municipality: '',
-        provinceId: 0,
-        streetAddress1: '',
-        postal: '',
+        municipality: property.MUNICIPALITY_NAME,
+        provinceId: 1,
+        province: property.PROVINCE_STATE_CODE,
+        streetAddress1: property.STREET_ADDRESS_1,
+        postal: property.POSTAL_CODE,
+        country: property.COUNTRY_CODE,
       },
       pin: property.PIN,
       landArea: property.LAND_AREA,
@@ -147,9 +149,9 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       return [];
     }
     try {
-      const points =
+      const clusteredPoints =
         supercluster?.getLeaves(currentCluster?.properties?.cluster_id, Infinity) ?? [];
-      return points.map(p => p.properties.id);
+      return clusteredPoints.map(p => p.properties.id);
     } catch (error) {
       return [];
     }
@@ -237,7 +239,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
       const group: L.FeatureGroup = draftFeatureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && isDraft) {
+      if (groupBounds.isValid()) {
         filterState.setChanged(false);
         mapInstance.fitBounds(groupBounds, { maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM });
       }
@@ -273,11 +275,17 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
   const dispatch = useDispatch();
   const { getProperty } = useApiProperties();
   const fetchProperty = React.useCallback(
-    (propertyTypeId: number, id: number) => {
+    (propertyTypeId: number, id: number, latLng: LatLngLiteral) => {
       popUpContext.setLoading(true);
-      getProperty(id as number)
-        .then(parcel => {
-          popUpContext.setPropertyInfo(parcel.data);
+      getProperty(id)
+        .then(apiProperty => {
+          const property: IProperty = {
+            ...apiProperty.data,
+            latitude: latLng.lat,
+            longitude: latLng.lng,
+          };
+          popUpContext.setPropertyInfo(property);
+          dispatch(storeProperty(property));
         })
         .catch(() => {
           toast.error('Unable to load property details, refresh the page and try again.');
@@ -286,7 +294,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
           popUpContext.setLoading(false);
         });
     },
-    [getProperty, popUpContext],
+    [dispatch, getProperty, popUpContext],
   );
 
   const keycloak = useKeycloakWrapper();
@@ -345,14 +353,17 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                     latitude,
                     longitude,
                   );
-                  //sets this pin as currently selected
-                  dispatch(storeProperty(convertedProperty as IProperty));
                   onMarkerClick(); //open information slideout
                   if (keycloak.canUserViewProperty(cluster.properties as IProperty)) {
                     convertedProperty?.id
-                      ? fetchProperty(cluster.properties.propertyTypeId, convertedProperty.id)
+                      ? fetchProperty(cluster.properties.propertyTypeId, convertedProperty.id, {
+                          lat: latitude,
+                          lng: longitude,
+                        })
                       : toast.dark('This property is invalid, unable to view details');
                   } else {
+                    //sets this pin as currently selected
+                    dispatch(storeProperty(convertedProperty as IProperty));
                     popUpContext.setPropertyInfo(convertedProperty);
                   }
                   popUpContext.setPropertyTypeId(cluster.properties.propertyTypeId);
@@ -366,7 +377,7 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
          */}
         {spider.markers?.map((m: any, index: number) => (
           <Marker
-            {...(m.properties as any)}
+            {...m.properties}
             key={index}
             position={m.position}
             //highlight pin if currently selected
@@ -385,7 +396,12 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                 dispatch(storeProperty(convertedProperty));
                 onMarkerClick(); //open information slideout
                 if (keycloak.canUserViewProperty(m.properties as IProperty)) {
-                  fetchProperty(m.properties.propertyTypeId, m.properties.id);
+                  convertedProperty?.id && convertedProperty.propertyTypeId
+                    ? fetchProperty(m.properties.propertyTypeId, convertedProperty.id, {
+                        lat: convertedProperty.latitude ?? 0,
+                        lng: convertedProperty.longitude ?? 0,
+                      })
+                    : toast.dark('This property is invalid, unable to view details');
                 } else {
                   popUpContext.setPropertyInfo(
                     convertToProperty(m.properties, m.position.lat, m.position.lng),
@@ -417,8 +433,8 @@ export const PointClusterer: React.FC<PointClustererProps> = ({
                   : ''
               }
               position={[
-                selected.propertyDetail!.latitude as number,
-                selected.propertyDetail!.longitude as number,
+                selected.propertyDetail.latitude as number,
+                selected.propertyDetail.longitude as number,
               ]}
               map={mapInstance}
               eventHandlers={{

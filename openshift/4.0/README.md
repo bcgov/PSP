@@ -6,10 +6,10 @@
 
 | Name  | Namespace                                                                                | Description                                              |
 | ----- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| TOOLS | [354028](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/354028-tools) | DevOps tools for CI/CD, and monitoring.                  |
-| DEV   | [354028](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/354028-dev)   | Initial developer testing and quality assurance.         |
-| TEST  | [354028](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/354028-test)  | User acceptance testing and confirmation before release. |
-| PROD  | [354028](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/354028-prod)  | Production environment to support the client.            |
+| TOOLS | [3cd915](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/3cd915-tools) | DevOps tools for CI/CD, and monitoring.                  |
+| DEV   | [3cd915](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/3cd915-dev)   | Initial developer testing and quality assurance.         |
+| TEST  | [3cd915](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/3cd915-test)  | User acceptance testing and confirmation before release. |
+| PROD  | [3cd915](https://console.apps.silver.devops.gov.bc.ca/k8s/cluster/projects/3cd915-prod)  | Production environment to support the client.            |
 
 ## Helpful Documentation
 
@@ -21,7 +21,7 @@
 - [Docker & Artifactory Implementation Details](https://github.com/BCDevOps/OpenShift4-Migration/issues/51)
 - [Artifact Respositories](https://developer.gov.bc.ca/Artifact-Repositories)
 - [OpenShift Project Tools](https://github.com/BCDevOps/openshift-developer-tools)
-- [S2I Docker Push](https://github.com/BCDevOps/s2i-nginx-npm/blob/6021e7acbcbbd9fca630d65500b3d908aa95cd77/README.md)
+- [S2I Docker Push](https://github.com/BCDevOps/s2i-nginx-npm/blob/master/README.md)
 - [Push Image](https://cookbook.openshift.org/image-registry-and-image-streams/how-do-i-push-an-image-to-the-internal-image-registry.html)
 
 When using template parameters you can use the following syntax to control the output.

@@ -1,0 +1,133 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Pims.Api.Areas.Lease.Models.Lease
+{
+    public class LeaseModel
+    {
+        #region Properties
+        /// <summary>
+        /// get/set - The primary key to identify the property.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - The concurrency row version.
+        /// </summary>
+        public long RowVersion { get; set; }
+
+        /// <summary>
+        /// get/set - The lease amount.
+        /// </summary>
+        public decimal? Amount { get; set; }
+
+        /// <summary>
+        /// get/set - The value of the tenant name.
+        /// </summary>
+        /// <value></value>
+        public string TenantName { get; set; }
+
+        /// <summary>
+        /// get/set - The value of the moti resource assigned to this lease.
+        /// </summary>
+        /// <value></value>
+        public string MotiName { get; set; }
+
+        /// <summary>
+        /// get/set - The value of the program name.
+        /// </summary>
+        /// <value></value>
+        public string ProgramName { get; set; }
+
+        /// <summary>
+        /// get/set - The lease notes.
+        /// </summary>
+        public string Note { get; set; }
+
+        /// <summary>
+        /// get/set - The lease description.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// get/set - The string value of the street address.
+        /// </summary>
+        /// <value></value>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// get/set - The LIS L File #.
+        /// </summary>
+        /// <value></value>
+        public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The LIS TFA File #.
+        /// </summary>
+        /// <value></value>
+        public string TfaFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The LIS Ps File #.
+        /// </summary>
+        /// <value></value>
+        public string PsFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The calculated expiry date of the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? ExpiryDate { get; set; }
+
+        /// <summary>
+        /// get/set - The original start date of the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// get/set - The most recent renewal date on the lease
+        /// </summary>
+        /// <value></value>
+        public DateTime? RenewalDate { get; set; }
+
+        /// <summary>
+        /// get/set - The lease renewal count.
+        /// </summary>
+        public int RenewalCount { get; set; }
+
+        /// <summary>
+        /// get/set - The receivable payment type code identifier
+        /// </summary>
+        /// <value></value>
+        public string PaymentReceivableTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the lease payment frequency type.
+        /// </summary>
+        public string PaymentFrequencyTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease payment frequency type.
+        /// </summary>
+        public string PaymentFrequencyType { get; set; }
+
+        /// <summary>
+        /// get/set - A list of persons tenants associated with this lease
+        /// </summary>
+        public IEnumerable<PersonModel> Persons { get; set; }
+
+        /// <summary>
+        /// get/set - A list of organization tenants associated with this lease
+        /// </summary>
+        public IEnumerable<OrganizationModel> Organizations { get; set; }
+
+        /// <summary>
+        /// get/set - A list of properties associated with this lease
+        /// </summary>
+        public IEnumerable<PropertyModel> Properties { get; set; }
+        #endregion
+    }
+}

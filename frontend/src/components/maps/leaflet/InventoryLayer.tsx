@@ -132,8 +132,6 @@ export const defaultBounds = new LatLngBounds(
 export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   bounds,
   zoom,
-  minZoom,
-  maxZoom,
   filter,
   onMarkerClick,
   selected,
@@ -145,7 +143,9 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const { loadProperties } = useApi();
   const { changed: filterChanged } = useFilterContext();
 
-  const draftProperties: PointFeature[] = useAppSelector(state => state.properties.draftProperties);
+  const draftProperties: PointFeature[] = useAppSelector(
+    state => state.properties?.draftProperties ?? [],
+  );
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -162,9 +162,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     fit();
   }, [mapInstance, filter, filterChanged]);
 
-  minZoom = minZoom ?? 0;
-  maxZoom = maxZoom ?? 18;
-
   const params = useMemo((): any => {
     const tiles = getTiles(defaultBounds, 5);
 
@@ -176,8 +173,8 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
     }));
   }, [filter]);
 
-  const loadTile = async (filter: IGeoSearchParams) => {
-    return loadProperties(filter);
+  const loadTile = async (mapFilter: IGeoSearchParams) => {
+    return loadProperties(mapFilter);
   };
 
   /**
@@ -223,7 +220,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
       }
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 7000 });
-      console.error(error);
     } finally {
       onRequestData(false);
     }

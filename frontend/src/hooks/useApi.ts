@@ -4,10 +4,11 @@ import CustomAxios from 'customAxios';
 import { FeatureCollection } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import _ from 'lodash';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { store } from 'store/store';
+import { TenantContext } from 'tenants';
 
 import { toCqlFilter } from './../components/maps/leaflet/mapUtils';
 
@@ -49,6 +50,9 @@ export interface IPimsAPI {
  */
 export const useApi = (): IPimsAPI => {
   const dispatch = useDispatch();
+  const {
+    tenant: { propertiesUrl },
+  } = useContext(TenantContext);
 
   const getAxios = useCallback(() => {
     const axios = CustomAxios();
@@ -159,17 +163,16 @@ export const useApi = (): IPimsAPI => {
     [],
   );
 
-  const loadProperties = useCallback(async (params: IGeoSearchParams): Promise<
-    FeatureCollection
-  > => {
-    const { BBOX, ...rest } = params;
-    const { data } = await CustomAxios().get<FeatureCollection>(
-      `ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&${
-        rest ? toCqlFilter(rest) : ''
-      }`,
-    );
-    return data;
-  }, []);
+  const loadProperties = useCallback(
+    async (params: IGeoSearchParams): Promise<FeatureCollection> => {
+      const { BBOX, ...rest } = params;
+      const { data } = await CustomAxios().get<FeatureCollection>(
+        `${propertiesUrl}${rest ? toCqlFilter(rest) : ''}`,
+      );
+      return data;
+    },
+    [propertiesUrl],
+  );
   // The below memo is only intended to run once, at startup. Or when the jwt is updated.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return {

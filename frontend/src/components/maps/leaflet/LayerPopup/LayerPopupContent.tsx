@@ -1,4 +1,3 @@
-import { SidebarContextType } from 'features/mapSideBar/hooks/useQueryParamSideBar';
 import L from 'leaflet';
 import keys from 'lodash/keys';
 import queryString from 'query-string';
@@ -11,17 +10,17 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const LayerPopupTitle = styled('div')`
-  padding: 16px;
+  padding: 1.6rem;
   font-weight: 800;
 `;
 
 export const MenuRow = styled(Row)`
   text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 1rem;
 `;
 
 export const StyledLink = styled(Link)`
-  padding: 0 4px;
+  padding: 0 0.4rem;
 `;
 
 export type PopupContentConfig = {
@@ -70,15 +69,7 @@ export const LayerPopupContent: React.FC<IPopupContentProps> = ({
   const rows = React.useMemo(() => keys(config), [config]);
   const location = useLocation();
   const urlParsed = queryString.parse(location.search);
-  const isEditing = [
-    SidebarContextType.ADD_BUILDING,
-    SidebarContextType.UPDATE_BUILDING,
-    SidebarContextType.ADD_ASSOCIATED_LAND,
-    SidebarContextType.ADD_BARE_LAND,
-    SidebarContextType.UPDATE_BARE_LAND,
-    SidebarContextType.UPDATE_DEVELOPED_LAND,
-  ].includes(urlParsed.sidebarContext as any);
-  const populateDetails = urlParsed.sidebar === 'true' && isEditing ? true : false;
+  const populateDetails = urlParsed.sidebar === 'true' ? true : false;
 
   const mapInstance = useMap();
   const curZoom = mapInstance.getZoom();
@@ -110,7 +101,7 @@ export const LayerPopupContent: React.FC<IPopupContentProps> = ({
               Populate property details
             </StyledLink>
           ) : null}
-          {bounds && curZoom! !== boundZoom ? (
+          {bounds && curZoom !== boundZoom ? (
             <StyledLink
               to={{ ...location }}
               onClick={() => mapInstance.flyToBounds(bounds, { animate: false })}

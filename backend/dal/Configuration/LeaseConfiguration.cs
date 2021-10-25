@@ -19,22 +19,39 @@ namespace Pims.Dal.Configuration
             builder.HasMotiSequence(m => m.Id)
                 .HasComment("Auto-sequenced unique key value");
 
-            builder.Property(m => m.PropertyManagementOrganizationId)
-                .HasComment("Foreign key to property management organization");
             builder.Property(m => m.PurposeTypeId)
+                .IsRequired()
                 .HasComment("Foreign key to lease purpose type");
-            builder.Property(m => m.PurposeSubtypeId)
-                .HasComment("Foreign key to lease purpose subtype");
             builder.Property(m => m.StatusTypeId)
                 .HasComment("Foreign key to lease status type");
             builder.Property(m => m.PaymentFrequencyTypeId)
+                .IsRequired()
                 .HasComment("Foreign key to lease payment frequency type");
             builder.Property(m => m.ProgramTypeId)
+                .IsRequired()
                 .HasComment("Foreign key to lease program type");
-            builder.Property(m => m.PropertyManagerId)
-                .HasComment("Foreign key to lease property manager person");
-            builder.Property(m => m.TenantId)
-                .HasComment("Foreign key to lease tenant person");
+            builder.Property(m => m.MotiNameId)
+                .IsRequired()
+                .HasComment("Foreign key to lease MOTI person");
+            builder.Property(m => m.CategoryTypeId)
+                .IsRequired()
+                .HasComment("Foreign key to lease category type");
+            builder.Property(m => m.LeaseTypeId)
+                .IsRequired()
+                .HasComment("Foreign key to lease type");
+
+            builder.Property(m => m.IncludedRenewals)
+                .HasColumnType("SMALLINT")
+                .HasDefaultValue(0)
+                .HasComment("The number of times this lease has been renewed");
+            builder.Property(m => m.RenewalCount)
+                .HasColumnType("SMALLINT")
+                .HasDefaultValue(0)
+                .HasComment("The number of times this lease has been renewed");
+            builder.Property(m => m.RenewalTermMonths)
+                .HasColumnType("SMALLINT")
+                .HasDefaultValue(0)
+                .HasComment("The term in months of each renewal for this lease");
 
             builder.Property(m => m.LFileNo)
                 .HasMaxLength(50)
@@ -44,17 +61,16 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.PsFileNo)
                 .HasMaxLength(50)
                 .HasComment("The PS File #");
-            builder.Property(m => m.StartDate)
+            builder.Property(m => m.OrigStartDate)
                 .HasColumnType("DATETIME")
-                .HasComment("The date this lease starts");
-            builder.Property(m => m.RenewalDate)
+                .HasDefaultValueSql("getdate()")
+                .IsRequired()
+                .HasComment("The original date this lease starts");
+            builder.Property(m => m.OrigExpiryDate)
                 .HasColumnType("DATETIME")
-                .HasComment("The date this lease renews");
-            builder.Property(m => m.ExpiryDate)
-                .HasColumnType("DATETIME")
-                .HasComment("The date this lease expires");
+                .HasComment("The original date this lease expires");
             builder.Property(m => m.Amount)
-                .HasMaxLength(40)
+                .HasColumnType("MONEY")
                 .HasComment("The amount of the lease");
             builder.Property(m => m.InsuranceStartDate)
                 .HasColumnType("DATETIME")
@@ -71,6 +87,9 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.InspectionDate)
                 .HasColumnType("DATETIME")
                 .HasComment("The date the property will be inspected");
+            builder.Property(m => m.ResponsibilityEffectiveDate)
+                .HasColumnType("DATETIME")
+                .HasComment("The effective date of the responsibility type");
             builder.Property(m => m.InspectionNote)
                 .HasMaxLength(4000)
                 .HasComment("A note on the inspection");
@@ -80,8 +99,16 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.Unit)
                 .HasMaxLength(2000)
                 .HasComment("A description of the unit");
+            builder.Property(m => m.Description)
+                .HasMaxLength(4000)
+                .HasComment("A description of the lease");
+            builder.Property(m => m.LeasePurposeOtherDesc)
+                .HasMaxLength(200)
+                .HasComment("A description of the lease");
             builder.Property(m => m.IsExpired)
                 .HasComment("Whether this lease has expired");
+            builder.Property(m => m.IsOrigExpiryRequired)
+                .HasComment("Whether thie original expiry on the lease is required");
             builder.Property(m => m.HasPhysicalFile)
                 .HasComment("Whether this lease has a physical file");
             builder.Property(m => m.HasDigitalFile)
@@ -90,29 +117,54 @@ namespace Pims.Dal.Configuration
                 .HasComment("Whether this lease has a physical license");
             builder.Property(m => m.HasDigitalLicense)
                 .HasComment("Whether this lease has a digital license");
+            builder.Property(m => m.IsSubjectToRta)
+                .HasDefaultValue(false)
+                .HasComment("Whether this improvement contains a building that is subject to RTA");
+            builder.Property(m => m.IsCommBldg)
+                .HasDefaultValue(false)
+                .HasComment("Whether this improvement contains a commercial building");
+            builder.Property(m => m.IsOtherImprovement)
+                .HasDefaultValue(false)
+                .HasComment("Whether this improvement is of type other");
 
-            builder.HasOne(m => m.PropertyManagementOrganization).WithMany(m => m.Leases).HasForeignKey(m => m.PropertyManagementOrganizationId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_ORG_PIM_LEASE_FK");
-            builder.HasOne(m => m.PurposeType).WithMany(m => m.Leases).HasForeignKey(m => m.PurposeTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK");
-            builder.HasOne(m => m.PurposeSubtype).WithMany(m => m.Leases).HasForeignKey(m => m.PurposeSubtypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRST_PIM_LEASE_FK");
-            builder.HasOne(m => m.StatusType).WithMany(m => m.Leases).HasForeignKey(m => m.StatusTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSSTSY_PIM_LEASE_FK");
+            builder.HasOne(m => m.PurposeType).WithMany(m => m.Leases).HasForeignKey(m => m.PurposeTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRPTY_PIM_LEASE_FK");
             builder.HasOne(m => m.PaymentFrequencyType).WithMany(m => m.Leases).HasForeignKey(m => m.PaymentFrequencyTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
+            builder.HasOne(m => m.PaymentRvblType).WithMany(m => m.Leases).HasForeignKey(m => m.PaymentReceivableTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK");
             builder.HasOne(m => m.ProgramType).WithMany(m => m.Leases).HasForeignKey(m => m.ProgramTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRGT_PIM_LEASE_FK");
-            builder.HasOne(m => m.PropertyManager).WithMany().HasForeignKey(m => m.PropertyManagerId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PERSON_PIM_LEASE_PM_CONTACT_FK");
-            builder.HasOne(m => m.Tenant).WithMany().HasForeignKey(m => m.TenantId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PERSON_PIM_LEASE_TENANT_FK");
+            builder.HasOne(m => m.MotiName).WithMany().HasForeignKey(m => m.MotiNameId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PERSON_PIM_LEASE_FK");
+            builder.HasOne(m => m.CategoryType).WithMany(m => m.Leases).HasForeignKey(m => m.CategoryTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSCATT_PIM_LEASE_FK");
+            builder.HasOne(m => m.LeaseLicenseType).WithMany(m => m.Leases).HasForeignKey(m => m.LeaseTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LELIST_PIM_LEASE_FK");
+            builder.HasOne(m => m.LeaseInitiatorType).WithMany(m => m.Leases).HasForeignKey(m => m.LeaseInitiatorTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
+            builder.HasOne(m => m.LeaseResponsibilityType).WithMany(m => m.Leases).HasForeignKey(m => m.LeaseResponsibilityTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LRESPT_PIM_LEASE_FK");
+
 
             builder.HasMany(m => m.Properties).WithMany(m => m.Leases).UsingEntity<PropertyLease>(
                 m => m.HasOne(m => m.Property).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.PropertyId),
                 m => m.HasOne(m => m.Lease).WithMany(m => m.PropertiesManyToMany).HasForeignKey(m => m.LeaseId)
             );
 
+            builder.HasMany(m => m.Persons).WithMany(m => m.Leases).UsingEntity<LeaseTenant>(
+                m => m.HasOne(m => m.Person).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.PersonId),
+                m => m.HasOne(m => m.Lease).WithMany(m => m.TenantsManyToMany).HasForeignKey(m => m.LeaseId)
+            );
+
+            builder.HasMany(m => m.Organizations).WithMany(m => m.Leases).UsingEntity<LeaseTenant>(
+                m => m.HasOne(m => m.Organization).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.OrganizationId),
+                m => m.HasOne(m => m.Lease).WithMany(m => m.TenantsManyToMany).HasForeignKey(m => m.LeaseId)
+            );
+
             builder.HasIndex(m => m.PaymentFrequencyTypeId).HasDatabaseName("LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.PaymentReceivableTypeId).HasDatabaseName("LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX");
             builder.HasIndex(m => m.ProgramTypeId).HasDatabaseName("LEASE_LEASE_PROGRAM_TYPE_CODE_IDX");
-            builder.HasIndex(m => m.PurposeSubtypeId).HasDatabaseName("LEASE_LEASE_PURPOSE_SUBTYPE_CODE_IDX");
             builder.HasIndex(m => m.PurposeTypeId).HasDatabaseName("LEASE_LEASE_PURPOSE_TYPE_CODE_IDX");
-            builder.HasIndex(m => m.StatusTypeId).HasDatabaseName("LEASE_LEASE_STATUS_TYPE_CODE_IDX");
-            builder.HasIndex(m => m.PropertyManagementOrganizationId).HasDatabaseName("LEASE_PROP_MGMT_ORG_ID_IDX");
-            builder.HasIndex(m => m.PropertyManagerId).HasDatabaseName("LEASE_PROPERTY_MANAGER_ID_IDX");
-            builder.HasIndex(m => m.TenantId).HasDatabaseName("LEASE_TENANT_ID_IDX");
+            builder.HasIndex(m => m.CategoryTypeId).HasDatabaseName("LEASE_LEASE_CATEGORY_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.MotiNameId).HasDatabaseName("LEASE_MOTI_NAME_ID_IDX");
+            builder.HasIndex(m => m.LFileNo).HasDatabaseName("LEASE_L_FILE_NO_IDX");
+            builder.HasIndex(m => m.PsFileNo).HasDatabaseName("LEASE_PS_FILE_NO_IDX");
+            builder.HasIndex(m => m.TfaFileNo).HasDatabaseName("LEASE_TFA_FILE_NO_IDX");
+            builder.HasIndex(m => m.LeaseTypeId).HasDatabaseName("LEASE_LEASE_LICENSE_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.LeaseInitiatorTypeId).HasDatabaseName("LEASE_INITIATOR_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.LeaseResponsibilityTypeId).HasDatabaseName("LEASE_RESPONSIBILITY_TYPE_CODE_IDX");
 
             base.Configure(builder);
         }

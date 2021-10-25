@@ -238,7 +238,7 @@ describe('MapView', () => {
     await waitFor(() => render(getMap()));
     // find basemap toggle button
     const basemapButton = document.querySelector<HTMLElement>('.basemap-item-button.secondary');
-    expect(basemapButton).not.toBeNull();
+    expect(basemapButton).toBeDefined();
     const { getByAltText } = within(basemapButton!);
     const image = getByAltText('Map Thumbnail');
     expect(image).toHaveAttribute('src', '/satellite.jpg');
@@ -264,7 +264,7 @@ describe('MapView', () => {
   });
 
   it('Rendered markers can be clicked and displayed with permissions', async () => {
-    mockKeycloak([Claims.ADMIN_PROPERTIES], []);
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
     await waitFor(() => render(getMap()));
     const cluster = document.querySelector('.leaflet-marker-icon');
     fireEvent.click(cluster!);

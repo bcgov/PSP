@@ -79,7 +79,7 @@
       <SSIS:Property
         SSIS:Name="Sensitive">0</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Value">desmith</SSIS:Property>
+        SSIS:Name="Value">_YOUR_USER_HERE_</SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>
@@ -101,7 +101,7 @@
         SSIS:Name="Sensitive">1</SSIS:Property>
       <SSIS:Property
         SSIS:Name="Value"
-        SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA81SCakCLK0O+tFUPMxmZ7AAAAAACAAAAAAAQZgAAAAEAACAAAAD2QJ7wNGuXDiOLfv1pubaLVkymz/AF90QxRL33wfY00wAAAAAOgAAAAAIAACAAAAAr41EUGXraVWYZ1zpxhYOv8IsyktdFoFSMtbXM5rLTaIAAAAACS5RXvB3g8gzbTql6SZDz0hA9n98rs2ugFnLihARm5OxQ9gwJwnaDgwONZwQmBSJAp30NIqys6mexckgFtyMiRewwZsHpBtw5d35scmVczxcIudQ3wBJrsO8G/9Jqf9ARMxCoyd7sCuYPdKDmbz4igWMwA8eo7c/BeYZWratONUAAAAC2L/IGkqnyZyWaY6C91HmjscqkYZLs91cq4gnJhusK2kGBVcRJiSIFzgqtJ8CM5jTFm5aVKT8CDhZchtwtZb6A</SSIS:Property>
+        SSIS:Sensitive="1">_YOUR_PASSWORD_HERE_</SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>

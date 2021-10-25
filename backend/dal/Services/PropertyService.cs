@@ -110,6 +110,12 @@ namespace Pims.Dal.Services
                 .ThenInclude(a => a.Province)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.Country)
+                .Include(p => p.Leases)
+                .ThenInclude(l => l.TenantsManyToMany)
+                .Include(p => p.Leases)
+                .ThenInclude(l => l.Persons)
+                .Include(p => p.Leases)
+                .ThenInclude(l => l.Organizations)
                 .Where(p => p.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return property;

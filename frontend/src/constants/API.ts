@@ -31,7 +31,7 @@ export interface IPaginateAccessRequests extends IPaginateParams {
 }
 
 // Parcels
-export interface IPropertySearchParams {
+export interface IPaginateProperties extends IPaginateParams {
   pid?: string;
   pin?: string;
   location?: string;
@@ -40,8 +40,8 @@ export interface IPropertySearchParams {
 
 export interface IGeoSearchParams {
   STREET_ADDRESS_1?: string;
-  PID?: string;
-  PIN?: string;
+  PID?: number;
+  PIN?: number;
   BBOX?: string;
 }
 
@@ -54,6 +54,7 @@ export const PROPERTY_CLASSIFICATION_CODE_SET_NAME = 'PropertyClassification';
 export const CONSTRUCTION_CODE_SET_NAME = 'BuildingConstructionType';
 export const PREDOMINATE_USE_CODE_SET_NAME = 'BuildingPredominateUse';
 export const OCCUPANT_TYPE_CODE_SET_NAME = 'BuildingOccupantType';
+export const PAYMENT_RECEIVABLE_CODE_SET_NAME = 'LeasePaymentReceivableType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations

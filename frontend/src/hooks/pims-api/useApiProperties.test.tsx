@@ -16,84 +16,80 @@ describe('useApiProperties api hook', () => {
     jest.clearAllMocks();
   });
 
-  it('Gets paged parcels', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/properties/search?`).reply(200, {
-        items: [mockParcel],
-        pageIndex: 1,
-        page: 1,
-        quantity: 5,
-        total: 10,
-      } as IPagedItems);
+  const setup = () => {
+    const { result } = renderHook(useApiProperties);
+    return result.current;
+  };
 
-      const api = useApiProperties();
-      const response = await api.getProperties({} as any);
+  it('Gets paged parcels', async () => {
+    mockAxios.onGet(`/properties/search?`).reply(200, {
+      items: [mockParcel],
+      pageIndex: 1,
+      page: 1,
+      quantity: 5,
+      total: 10,
+    } as IPagedItems);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual({
-        items: [mockParcel],
-        pageIndex: 1,
-        page: 1,
-        quantity: 5,
-        total: 10,
-      });
+    const { getPropertiesPaged } = setup();
+    const response = await getPropertiesPaged({} as any);
+
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual({
+      items: [mockParcel],
+      pageIndex: 1,
+      page: 1,
+      quantity: 5,
+      total: 10,
     });
   });
 
-  it('Gets detailed parcels', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/properties/search?`).reply(200, mockParcel);
+  it('Gets detailed parcels', async () => {
+    mockAxios.onGet(`/properties/search?`).reply(200, mockParcel);
 
-      const api = useApiProperties();
-      const response = await api.getProperties({} as any);
+    const { getPropertiesPaged } = setup();
+    const response = await getPropertiesPaged({} as any);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toEqual(mockParcel);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual(mockParcel);
   });
-  it('Gets a detailed parcel', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/properties/${mockParcel.id}`).reply(200, mockParcel);
+  it('Gets a detailed parcel', async () => {
+    mockAxios.onGet(`/properties/${mockParcel.id}`).reply(200, mockParcel);
 
-      const api = useApiProperties();
-      const response = await api.getProperty(mockParcel.id as number);
+    const { getProperty } = setup();
+    const response = await getProperty(mockParcel.id as number);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toEqual(mockParcel);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual(mockParcel);
   });
 
-  it('Puts an updated parcel', () => {
-    renderHook(async () => {
-      mockAxios.onPut(`/properties/${mockParcel.id}`).reply(200, mockParcel);
-      const api = useApiProperties();
-      const response = await api.putProperty(mockParcel);
+  it('Puts an updated parcel', async () => {
+    mockAxios.onPut(`/properties/${mockParcel.id}`).reply(200, mockParcel);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toEqual(mockParcel);
-    });
+    const { putProperty } = setup();
+    const response = await putProperty(mockParcel);
+
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual(mockParcel);
   });
 
-  it('Posts a new parcel', () => {
+  it('Posts a new parcel', async () => {
     const newParcel = { ...mockParcel, id: undefined };
-    renderHook(async () => {
-      mockAxios.onPost(`/properties`).reply(201, newParcel);
-      const api = useApiProperties();
-      const response = await api.postProperty(newParcel);
+    mockAxios.onPost(`/properties`).reply(201, newParcel);
 
-      expect(response.status).toBe(201);
-      expect(response.data).toEqual(newParcel);
-    });
+    const { postProperty } = setup();
+    const response = await postProperty(mockParcel);
+
+    expect(response.status).toBe(201);
+    expect(response.data).toEqual(newParcel);
   });
 
-  it('Deletes a parcel', () => {
+  it('Deletes a parcel', async () => {
     mockAxios.onDelete(`/properties/${mockParcel.id}`).reply(200, mockParcel);
-    renderHook(async () => {
-      const api = useApiProperties();
-      const response = await api.deleteProperty(mockParcel);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toEqual(mockParcel);
-    });
+    const { deleteProperty } = setup();
+    const response = await deleteProperty(mockParcel);
+
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual(mockParcel);
   });
 });

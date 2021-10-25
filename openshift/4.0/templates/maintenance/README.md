@@ -6,7 +6,7 @@ An example caddy configuration [here](https://gist.github.com/jleach/9b1f9e1fa70
 
 > Unable to get the S2I proxy caddy to work.
 
-Go to - `/pims/openshift/s2i/bcgov-s2i-caddy`
+Go to - `/psp/openshift/s2i/bcgov-s2i-caddy`
 
 ```bash
 oc process -f bcgov-s2i-caddy.yaml | oc create -f -
@@ -16,7 +16,7 @@ Clone the BC Gov repo and build and tag the image.
 
 ```bash
 docker build -t bcgov-s2i-caddy .
-docker tag bcgov-s2i-caddy image-registry.apps.silver.devops.gov.bc.ca/354028-tools/bcgov-s2i-caddy
+docker tag bcgov-s2i-caddy image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/bcgov-s2i-caddy
 ```
 
 Login to OpenShift with docker and push the image to the Image Repository.
@@ -25,7 +25,7 @@ Login to OpenShift with docker and push the image to the Image Repository.
 docker login -u $(oc whoami) -p $(oc whoami -t) image-registry.apps.silver.devops.gov.bc.ca
 # Or apparently you can run this command somehow # oc registry login
 
-docker push image-registry.apps.silver.devops.gov.bc.ca/354028-tools/bcgov-s2i-caddy
+docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/bcgov-s2i-caddy
 ```
 
 > Also attempted to pull latest image from DockerHub [caddy](https://hub.docker.com/_/caddy)
@@ -34,13 +34,13 @@ The following gets an image from DockerHub and pushes it to our image registry.
 
 ```bash
 docker pull caddy
-docker tag caddy image-registry.apps.silver.devops.gov.bc.ca/354028-tools/caddy
-docker push image-registry.apps.silver.devops.gov.bc.ca/354028-tools/caddy
+docker tag caddy image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/caddy
+docker push image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/caddy
 ```
 
 ## Build Configuration
 
-Go to - `/pims/openshift/4.0/templates/maintenance`
+Go to - `/psp/openshift/4.0/templates/maintenance`
 
 Create a build configuration file here - `build.dev.env`
 Update the configuration file and set the appropriate parameters.
@@ -48,7 +48,7 @@ Update the configuration file and set the appropriate parameters.
 **Example**
 
 ```conf
-GIT_REPO=https://github.com/bcgov/pims.git
+GIT_REPO=https://github.com/bcgov/PSP.git
 GIT_REF=dev
 IMG_SRC=bcgov-s2i-caddy
 OUTPUT_IMAGE_TAG=dev
@@ -57,7 +57,7 @@ OUTPUT_IMAGE_TAG=dev
 Create the api build and save the template.
 
 ```bash
-oc project 354028-tools
+oc project 3cd915-tools
 oc process -f caddy.bc.yaml --param-file=build.dev.env | oc create --save-config=true -f -
 ```
 
@@ -88,7 +88,7 @@ MEMORY_LIMIT=4Gi
 Create the api deployment and save the template.
 
 ```bash
-oc project 354028-dev
+oc project 3cd915-dev
 oc process -f caddy.dc.yaml --param-file=deploy.dev.env | oc create --save-config=true -f -
 ```
 
@@ -96,7 +96,7 @@ oc process -f caddy.dc.yaml --param-file=deploy.dev.env | oc create --save-confi
 
 After the caddy-proxy pod is running you can test the maintenance script.
 
-Go to - `/pims/maintenance`
+Go to - `/psp/maintenance`
 
 Turn on the maintenance page.
 
@@ -104,7 +104,7 @@ Turn on the maintenance page.
 ./maintenance.sh dev on
 ```
 
-Go to [https://pims-dev.apps.silver.devops.gov.bc.ca](https://pims-dev.apps.silver.devops.gov.bc.ca) and it will display the maintenance page.
+Go to [https://dev-pims.th.gov.bc.ca](https://dev-pims.th.gov.bc.ca) and it will display the maintenance page.
 
 Turn off the maintenance page.
 
@@ -112,4 +112,4 @@ Turn off the maintenance page.
 ./maintenance.sh dev off
 ```
 
-Go to [https://pims-dev.apps.silver.devops.gov.bc.ca](https://pims-dev.apps.silver.devops.gov.bc.ca) and it will display the application.
+Go to [https://dev-pims.th.gov.bc.ca](https://dev-pims.th.gov.bc.ca) and it will display the application.

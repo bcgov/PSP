@@ -111,6 +111,14 @@ namespace Pims.Dal.Services
         {
             return this.Context.Roles.AsNoTracking().OrderBy(a => a.Name).ToArray();
         }
+
+        /// <summary>
+        /// Get all roles sorted by code Id.
+        /// </summary>
+        public IEnumerable<LeasePaymentReceivableType> GetPaymentReceivableTypes()
+        {
+            return this.Context.LeasePaymentReceivableTypes.AsNoTracking().OrderBy(a => a.Id).ToArray();
+        }
         #endregion
     }
 }

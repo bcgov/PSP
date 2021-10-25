@@ -1,41 +1,51 @@
 @import '../../../variables';
-.user-edit-form-container {
-  .userInfo {
-    width: 40%;
-    vertical-align: middle;
-    text-align: left;
-    display: table;
-  }
 
-  .notes {
-    padding-bottom: 30px;
-  }
+.EditUserPage {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0;
+  overflow: auto;
 
-  .is-disabled {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    :first-child {
-      margin-right: 10px;
-      margin-bottom: 0px;
+  .user-edit-form-container {
+    .userInfo {
+      width: 40%;
+      vertical-align: middle;
+      text-align: left;
+      display: table;
     }
-  }
 
-  .cancelSave {
-    padding-top: 15px;
-    padding-bottom: 10px;
-  }
+    .notes {
+      padding-bottom: 3rem;
+    }
 
-  .navBar {
-    font-weight: 700;
-    text-align: left;
-  }
+    .is-disabled {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      :first-child {
+        margin-right: 1rem;
+        margin-bottom: 0rem;
+      }
+    }
 
-  .required {
-    color: red;
-    font-weight: 700;
-  }
+    .cancelSave {
+      padding-top: 1.5rem;
+      padding-bottom: 1rem;
+    }
 
-  justify-content: center;
-  margin-bottom: $footer-height;
+    .navBar {
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .required {
+      color: red;
+      font-weight: 700;
+    }
+
+    justify-content: center;
+    margin-bottom: $footer-height;
+  }
 }

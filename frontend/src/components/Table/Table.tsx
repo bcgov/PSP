@@ -425,7 +425,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     }
                   }
 
-                  actions!.resetForm(nextState);
+                  actions.resetForm(nextState);
                   if (!!props.onFilterChange) {
                     props.onFilterChange(nextState);
                   }
@@ -461,7 +461,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   const renderLoading = () => {
     return (
       <div className="table-loading">
-        <Spinner animation="border"></Spinner>
+        <Spinner animation="border" role="status"></Spinner>
       </div>
     );
   };
@@ -533,18 +533,18 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       return <div className="no-rows-message">{props.noRowsMessage || 'No rows to display'}</div>;
     }
 
-    const handleExpandClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, data: T) => {
+    const handleExpandClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, rowData: T) => {
       e.preventDefault();
-      let expanded = expandedRows;
+      let expanded;
       if (
         props.detailsPanel !== undefined &&
-        props.detailsPanel.checkExpanded(data, expandedRows)
+        props.detailsPanel.checkExpanded(rowData, expandedRows)
       ) {
         expanded = expandedRows.filter(
-          x => props.detailsPanel?.getRowId(x) !== props.detailsPanel?.getRowId(data),
+          x => props.detailsPanel?.getRowId(x) !== props.detailsPanel?.getRowId(rowData),
         );
       } else {
-        expanded = [...expandedRows, data];
+        expanded = [...expandedRows, rowData];
       }
       setExpandedRows(expanded);
       if (props.detailsPanel && props.detailsPanel.onExpand && expanded.length > 0) {
@@ -566,12 +566,12 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
               )}
             {props.canRowExpand && !props.canRowExpand(row) ? (
               <div className="td">
-                <div style={{ width: '20px' }}>&nbsp;</div>
+                <div style={{ width: '2.0rem' }}>&nbsp;</div>
               </div>
             ) : null}
             {filterable ? (
               <div className="td">
-                <div style={{ width: '30px' }}>&nbsp;</div>
+                <div style={{ width: '3.0rem' }}>&nbsp;</div>
               </div>
             ) : null}
             {/* Expansion button shown on every row by default */}
@@ -671,7 +671,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       {!props.hideToolbar && (
         <div className="table-toolbar">
           {props.pageSize !== -1 && <TablePagination<T> instance={instance} />}
-          {!props.lockPageSize && props.data.length > 0 && !props.lockPageSize && (
+          {!props.lockPageSize && props.data.length > 0 && (
             <TablePageSizeSelector
               options={props.pageSizeOptions || DEFAULT_PAGE_SELECTOR_OPTIONS}
               value={props.pageSize || DEFAULT_PAGE_SIZE}

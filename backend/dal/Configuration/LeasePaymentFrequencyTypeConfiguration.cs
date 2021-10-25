@@ -18,7 +18,7 @@ namespace Pims.Dal.Configuration
             builder.HasMotiKey(m => m.Id);
             builder.Property(m => m.Id)
                 .IsRequired()
-                .HasMaxLength(40)
+                .HasMaxLength(20)
                 .HasComment("Primary key code to identify record");
 
             base.Configure(builder);

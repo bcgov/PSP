@@ -86,8 +86,10 @@ export const mockOrganization: IOrganization = {
   organizationTypeId: OrganizationTypes.BCMinistry,
   identifierTypeId: OrganizationIdentifierTypes.Government,
   identifier: 'I have no idea what this is',
-  addressId: mockAddress.id,
+  addressId: mockAddress.id ?? 0,
   address: mockAddress,
+  landline: '2223334444',
+  mobile: '5556667777',
 };
 
 export const mockUser: IUser = {
@@ -103,6 +105,8 @@ export const mockUser: IUser = {
   roles: [],
   createdOn: '2021-05-04T19:07:09.6920606',
   rowVersion: 1,
+  landline: '2223334444',
+  mobile: '5556667777',
 };
 
 export const mockProperties = [

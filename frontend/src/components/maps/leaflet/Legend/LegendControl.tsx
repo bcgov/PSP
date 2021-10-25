@@ -16,9 +16,9 @@ import { Legend } from './Legend';
 const LegendButton = styled(Button)`
   background-color: #ffffff !important;
   color: ${variables.darkVariantColor} !important;
-  width: 40px;
-  height: 40px;
-  font-size: 25px;
+  width: 4rem;
+  height: 4rem;
+  font-size: 2.5rem;
   display: flex;
   align-items: center;
 `;
@@ -35,7 +35,7 @@ export const LegendControl: React.FC = () => {
             <FiMapPin />
           </LegendButton>
         </TooltipWrapper>
-        <Overlay target={target.current!} show={visible} placement="right">
+        <Overlay target={target.current} show={visible} placement="right">
           {(props: any) => {
             return (
               <Tooltip id="overlay-legend" {...props} show={`${visible}`} className="legendTooltip">
