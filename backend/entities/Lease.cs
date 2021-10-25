@@ -90,6 +90,28 @@ namespace Pims.Dal.Entities
         public LeaseCategoryType CategoryType { get; set; }
 
         /// <summary>
+        /// get/set - Foreign key to the lease responsibility type.
+        /// </summary>
+        [Column("LEASE_RESPONSIBILITY_TYPE_CODE")]
+        public string LeaseResponsibilityTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease responsibility type.
+        /// </summary>
+        public LeaseResponsibilityType LeaseResponsibilityType { get; set; }
+
+        /// <summary>
+        /// get/set - Foreign key to the lease initiator type.
+        /// </summary>
+        [Column("LEASE_INITIATOR_TYPE_CODE")]
+        public string LeaseInitiatorTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease initiator type.
+        /// </summary>
+        public LeaseIntiatorType LeaseInitiatorType { get; set; }
+
+        /// <summary>
         /// get/set - Foreign key to the lease type.
         /// </summary>
         [Column("LEASE_LICENSE_TYPE_CODE")]
@@ -214,6 +236,12 @@ namespace Pims.Dal.Entities
         public DateTime? InspectionDate { get; set; }
 
         /// <summary>
+        /// get/set - The lease responsibility effective date.
+        /// </summary>
+        [Column("RESPONSIBILITY_EFFECTIVE_DATE")]
+        public DateTime? ResponsibilityEffectiveDate { get; set; }
+
+        /// <summary>
         /// get/set - The lease inspection notes.
         /// </summary>
         [Column("INSPECTION_NOTES")]
@@ -274,6 +302,24 @@ namespace Pims.Dal.Entities
         public bool HasDigitalLicense { get; set; }
 
         /// <summary>
+        /// get/set - Whether this improvement contains a building that is subject to RTA.
+        /// </summary>
+        [Column("IS_SUBJECT_TO_RTA")]
+        public bool IsSubjectToRta { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this improvement contains a commercial building.
+        /// </summary>
+        [Column("IS_COMM_BLDG")]
+        public bool IsCommBldg { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this improvement is of type other.
+        /// </summary>
+        [Column("IS_OTHER_IMPROVEMENT")]
+        public bool IsOtherImprovement { get; set; }
+
+        /// <summary>
         /// get/set - A collection of properties.
         /// </summary>
         public ICollection<Property> Properties { get; } = new List<Property>();
@@ -297,6 +343,11 @@ namespace Pims.Dal.Entities
         /// get/set - A collection of Organizations associated to this Lease
         /// </summary>
         public ICollection<Organization> Organizations { get; } = new List<Organization>();
+
+        /// <summary>
+        /// get/set - A collection of Improvements associated to this Lease
+        /// </summary>
+        public ICollection<PropertyImprovement> Improvements { get; } = new List<PropertyImprovement>();
         #endregion
 
         #region Constructors

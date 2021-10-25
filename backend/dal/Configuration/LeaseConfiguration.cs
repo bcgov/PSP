@@ -46,6 +46,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("The number of times this lease has been renewed");
             builder.Property(m => m.RenewalCount)
                 .HasColumnType("SMALLINT")
+                .HasDefaultValue(0)
                 .HasComment("The number of times this lease has been renewed");
             builder.Property(m => m.RenewalTermMonths)
                 .HasColumnType("SMALLINT")
@@ -60,20 +61,11 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.PsFileNo)
                 .HasMaxLength(50)
                 .HasComment("The PS File #");
-            builder.Property(m => m.StartDate)
-                .HasColumnType("DATETIME")
-                .HasComment("The date this lease starts");
             builder.Property(m => m.OrigStartDate)
                 .HasColumnType("DATETIME")
                 .HasDefaultValueSql("getdate()")
                 .IsRequired()
                 .HasComment("The original date this lease starts");
-            builder.Property(m => m.RenewalDate)
-                .HasColumnType("DATETIME")
-                .HasComment("The date this lease renews");
-            builder.Property(m => m.TermExpiryDate)
-                .HasColumnType("DATETIME")
-                .HasComment("The date this lease expires");
             builder.Property(m => m.OrigExpiryDate)
                 .HasColumnType("DATETIME")
                 .HasComment("The original date this lease expires");
@@ -95,6 +87,9 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.InspectionDate)
                 .HasColumnType("DATETIME")
                 .HasComment("The date the property will be inspected");
+            builder.Property(m => m.ResponsibilityEffectiveDate)
+                .HasColumnType("DATETIME")
+                .HasComment("The effective date of the responsibility type");
             builder.Property(m => m.InspectionNote)
                 .HasMaxLength(4000)
                 .HasComment("A note on the inspection");
@@ -122,6 +117,15 @@ namespace Pims.Dal.Configuration
                 .HasComment("Whether this lease has a physical license");
             builder.Property(m => m.HasDigitalLicense)
                 .HasComment("Whether this lease has a digital license");
+            builder.Property(m => m.IsSubjectToRta)
+                .HasDefaultValue(false)
+                .HasComment("Whether this improvement contains a building that is subject to RTA");
+            builder.Property(m => m.IsCommBldg)
+                .HasDefaultValue(false)
+                .HasComment("Whether this improvement contains a commercial building");
+            builder.Property(m => m.IsOtherImprovement)
+                .HasDefaultValue(false)
+                .HasComment("Whether this improvement is of type other");
 
             builder.HasOne(m => m.PurposeType).WithMany(m => m.Leases).HasForeignKey(m => m.PurposeTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPRPTY_PIM_LEASE_FK");
             builder.HasOne(m => m.PaymentFrequencyType).WithMany(m => m.Leases).HasForeignKey(m => m.PaymentFrequencyTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
@@ -130,6 +134,9 @@ namespace Pims.Dal.Configuration
             builder.HasOne(m => m.MotiName).WithMany().HasForeignKey(m => m.MotiNameId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PERSON_PIM_LEASE_FK");
             builder.HasOne(m => m.CategoryType).WithMany(m => m.Leases).HasForeignKey(m => m.CategoryTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LSCATT_PIM_LEASE_FK");
             builder.HasOne(m => m.LeaseLicenseType).WithMany(m => m.Leases).HasForeignKey(m => m.LeaseTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LELIST_PIM_LEASE_FK");
+            builder.HasOne(m => m.LeaseInitiatorType).WithMany(m => m.Leases).HasForeignKey(m => m.LeaseInitiatorTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
+            builder.HasOne(m => m.LeaseResponsibilityType).WithMany(m => m.Leases).HasForeignKey(m => m.LeaseResponsibilityTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_LRESPT_PIM_LEASE_FK");
+
 
             builder.HasMany(m => m.Properties).WithMany(m => m.Leases).UsingEntity<PropertyLease>(
                 m => m.HasOne(m => m.Property).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.PropertyId),
@@ -156,6 +163,8 @@ namespace Pims.Dal.Configuration
             builder.HasIndex(m => m.PsFileNo).HasDatabaseName("LEASE_PS_FILE_NO_IDX");
             builder.HasIndex(m => m.TfaFileNo).HasDatabaseName("LEASE_TFA_FILE_NO_IDX");
             builder.HasIndex(m => m.LeaseTypeId).HasDatabaseName("LEASE_LEASE_LICENSE_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.LeaseInitiatorTypeId).HasDatabaseName("LEASE_INITIATOR_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.LeaseResponsibilityTypeId).HasDatabaseName("LEASE_RESPONSIBILITY_TYPE_CODE_IDX");
 
             base.Configure(builder);
         }
