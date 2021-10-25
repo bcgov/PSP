@@ -55,7 +55,7 @@ describe('useProperties functions', () => {
   describe('getProperties action creator', () => {
     const url = `/properties/search?`;
     it('Null Params - Request successful, dispatches success with correct response', async () => {
-      const mockResponse = { data: mockProperties };
+      const mockResponse = { items: mockProperties };
       mockAxios.onGet(url).reply(200, mockResponse);
 
       const { getProperties } = setup();
@@ -64,7 +64,7 @@ describe('useProperties functions', () => {
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
       expect(currentStore.getActions()).toContainEqual({
-        payload: mockResponse,
+        payload: mockProperties,
         type: 'properties/storeProperties',
       });
     });
