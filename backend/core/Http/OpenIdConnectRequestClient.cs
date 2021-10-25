@@ -1,8 +1,3 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Pims.Core.Exceptions;
-using Pims.Core.Extensions;
-using Pims.Core.Http.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,6 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
+using Pims.Core.Http.Configuration;
 
 namespace Pims.Core.Http
 {
@@ -223,7 +223,7 @@ namespace Pims.Core.Http
         /// <param name="method"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpContent content = null)
+        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null)
         {
             return await SendAsync(url, method, new HttpRequestMessage().Headers, content);
         }
@@ -237,19 +237,35 @@ namespace Pims.Core.Http
         /// <param name="headers"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
+        public override Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url)) throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
+            if (String.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
+
+            return this.SendInternalAsync(url, method, headers, content);
+        }
+
+        /// <summary>
+        /// Make a request to the specified 'url', with the specified HTTP 'method', with the specified 'content'.
+        /// Make a request to the open id connect server for an authentication token if required.
+        /// Note: Internal implementation to avoid throw on different threads.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <param name="headers"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private async Task<HttpResponseMessage> SendInternalAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content)
+        {
             method ??= HttpMethod.Get;
             headers ??= new HttpRequestMessage().Headers;
 
             var token = await RequestAccessToken();
 
-            if (!String.IsNullOrWhiteSpace(token)) headers.Add("Authorization", token.ToString());
+            if (!String.IsNullOrWhiteSpace(token)) { headers.Add("Authorization", token.ToString()); }
 
             return await base.SendAsync(url, method, headers, content);
-
         }
+
         #endregion
         #endregion
     }

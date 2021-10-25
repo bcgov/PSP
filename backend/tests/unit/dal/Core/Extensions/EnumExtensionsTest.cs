@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using CModel = Pims.Ches.Models;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Test.Core.Extensions
 {

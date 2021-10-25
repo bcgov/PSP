@@ -38,14 +38,14 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a CodeEntity class.
         /// </summary>
-        public CodeEntity() { }
+        protected CodeEntity() { }
 
         /// <summary>
         /// Create a new instance of a CodeEntity class.
         /// </summary>
         /// <param name="code"></param>
         /// <param name="name"></param>
-        public CodeEntity(string code, string name)
+        protected CodeEntity(string code, string name)
         {
             if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
             if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' must have a valid value.", nameof(name));

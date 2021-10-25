@@ -42,7 +42,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger)
+        protected BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger)
         {
             this.Context = dbContext;
             this.User = user;
