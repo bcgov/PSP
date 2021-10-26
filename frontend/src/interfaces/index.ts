@@ -1,6 +1,7 @@
 export * from './IAccessRequest';
 export * from './IAccessRequestOrganization';
 export * from './IAccessRequestRole';
+export * from './IAccessRequestUserInfo';
 export * from './IAddress';
 export * from './ILease';
 export * from './ILeaseSearchResult';
