@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Pims.Dal;
@@ -10,9 +11,10 @@ using Pims.Dal;
 namespace Pims.Dal.Migrations
 {
     [DbContext(typeof(PimsContext))]
-    partial class PimsContextModelSnapshot : ModelSnapshot
+    [Migration("20211025213140_v0.2.13.2")]
+    partial class v02132
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1262,13 +1264,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("INSURANCE_START_DATE")
                         .HasComment("The date this lease insurance starts");
 
-                    b.Property<bool>("IsCommBldg")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_COMM_BLDG")
-                        .HasComment("Whether this improvement contains a commercial building");
-
                     b.Property<bool>("IsExpired")
                         .HasColumnType("bit")
                         .HasColumnName("IS_EXPIRED")
@@ -1279,39 +1274,17 @@ namespace Pims.Dal.Migrations
                         .HasColumnName("IS_ORIG_EXPIRY_REQUIRED")
                         .HasComment("Whether thie original expiry on the lease is required");
 
-                    b.Property<bool>("IsOtherImprovement")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_OTHER_IMPROVEMENT")
-                        .HasComment("Whether this improvement is of type other");
-
-                    b.Property<bool>("IsSubjectToRta")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_SUBJECT_TO_RTA")
-                        .HasComment("Whether this improvement contains a building that is subject to RTA");
-
                     b.Property<string>("LFileNo")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("L_FILE_NO")
                         .HasComment("The LIS File #");
 
-                    b.Property<string>("LeaseInitiatorTypeId")
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("LEASE_INITIATOR_TYPE_CODE");
-
                     b.Property<string>("LeasePurposeOtherDesc")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("LEASE_PURPOSE_OTHER_DESC")
                         .HasComment("A description of the lease");
-
-                    b.Property<string>("LeaseResponsibilityTypeId")
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
 
                     b.Property<string>("LeaseTypeId")
                         .IsRequired()
@@ -1371,15 +1344,14 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to lease purpose type");
 
                     b.Property<short>("RenewalCount")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("SMALLINT")
-                        .HasDefaultValue((short)0)
                         .HasColumnName("RENEWAL_COUNT")
                         .HasComment("The number of times this lease has been renewed");
 
                     b.Property<DateTime?>("RenewalDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("TERM_RENEWAL_DATE");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("TERM_RENEWAL_DATE")
+                        .HasComment("The date this lease renews");
 
                     b.Property<short>("RenewalTermMonths")
                         .ValueGeneratedOnAdd()
@@ -1387,11 +1359,6 @@ namespace Pims.Dal.Migrations
                         .HasDefaultValue((short)0)
                         .HasColumnName("RENEWAL_TERM_MONTHS")
                         .HasComment("The term in months of each renewal for this lease");
-
-                    b.Property<DateTime?>("ResponsibilityEffectiveDate")
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("RESPONSIBILITY_EFFECTIVE_DATE")
-                        .HasComment("The effective date of the responsibility type");
 
                     b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
@@ -1413,8 +1380,9 @@ namespace Pims.Dal.Migrations
                         .HasComment("The date this lease security starts");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("TERM_START_DATE");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("TERM_START_DATE")
+                        .HasComment("The date this lease starts");
 
                     b.Property<string>("StatusTypeId")
                         .HasColumnType("nvarchar(450)")
@@ -1422,8 +1390,9 @@ namespace Pims.Dal.Migrations
                         .HasComment("Foreign key to lease status type");
 
                     b.Property<DateTime?>("TermExpiryDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("TERM_EXPIRY_DATE");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("TERM_EXPIRY_DATE")
+                        .HasComment("The date this lease expires");
 
                     b.Property<int?>("TfaFileNo")
                         .HasColumnType("int")
@@ -1478,12 +1447,6 @@ namespace Pims.Dal.Migrations
 
                     b.HasIndex("LFileNo")
                         .HasDatabaseName("LEASE_L_FILE_NO_IDX");
-
-                    b.HasIndex("LeaseInitiatorTypeId")
-                        .HasDatabaseName("LEASE_INITIATOR_TYPE_CODE_IDX");
-
-                    b.HasIndex("LeaseResponsibilityTypeId")
-                        .HasDatabaseName("LEASE_RESPONSIBILITY_TYPE_CODE_IDX");
 
                     b.HasIndex("LeaseTypeId")
                         .HasDatabaseName("LEASE_LEASE_LICENSE_TYPE_CODE_IDX");
@@ -1556,50 +1519,6 @@ namespace Pims.Dal.Migrations
                         .HasName("LSCATYPE_PK");
 
                     b.ToTable("PIMS_LEASE_CATEGORY_TYPE");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseIntiatorType", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("LEASE_INITIATOR_TYPE_CODE")
-                        .HasComment("Primary key code to identify record");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
-
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.HasKey("Id")
-                        .HasName("LINNIT_PK");
-
-                    b.ToTable("PIMS_LEASE_INITIATOR_TYPE");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.LeaseLicenseType", b =>
@@ -1822,50 +1741,6 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_LEASE_PURPOSE_TYPE");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseResponsibilityType", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE")
-                        .HasComment("Primary key code to identify record");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
-
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.HasKey("Id")
-                        .HasName("LRESPT_PK");
-
-                    b.ToTable("PIMS_LEASE_RESPONSIBILITY_TYPE");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.LeaseStatusType", b =>
                 {
                     b.Property<string>("Id")
@@ -1946,12 +1821,6 @@ namespace Pims.Dal.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("LESSOR_TYPE_CODE")
                         .HasComment("Foreign key to the lessor");
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("NOTE")
-                        .HasComment("A note on the lease tenant");
 
                     b.Property<long?>("OrganizationId")
                         .HasColumnType("BIGINT")
@@ -4034,175 +3903,6 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_PROPERTY_EVALUATION");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.PropertyImprovement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROPERTY_IMPROVEMENT_ID")
-                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_PROPERTY_IMPROVEMENT_ID_SEQ")
-                        .HasComment("Auto-sequenced unique key value");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the username who created this record")
-                        .HasAnnotation("ColumnOrder", 89);
-
-                    b.Property<string>("CreatedByDirectory")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 91);
-
-                    b.Property<Guid?>("CreatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_CREATE_USER_GUID")
-                        .HasComment("Reference to the user uid who created this record")
-                        .HasAnnotation("ColumnOrder", 90);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_CREATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was created")
-                        .HasAnnotation("ColumnOrder", 88);
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("IMPROVEMENT_DESCRIPTION")
-                        .HasComment("A description of the improvement");
-
-                    b.Property<long>("LeaseId")
-                        .HasColumnType("BIGINT")
-                        .HasColumnName("PROPERTY_LEASE_ID")
-                        .HasComment("Foreign key to lease");
-
-                    b.Property<string>("PropertyImprovementTypeId")
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.Property<string>("StructureSize")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("STRUCTURE_SIZE")
-                        .HasComment("The size of the structure of the improvement");
-
-                    b.Property<string>("Unit")
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)")
-                        .HasColumnName("UNIT")
-                        .HasComment("Notes related to any units within the improvement");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USERID")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user who last updated this record")
-                        .HasAnnotation("ColumnOrder", 93);
-
-                    b.Property<string>("UpdatedByDirectory")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
-                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                        .HasDefaultValueSql("user_name()")
-                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
-                        .HasAnnotation("ColumnOrder", 95);
-
-                    b.Property<Guid?>("UpdatedByKey")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
-                        .HasComment("Reference to the user uid who updated this record")
-                        .HasAnnotation("ColumnOrder", 94);
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("DATETIME")
-                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                        .HasDefaultValueSql("GETUTCDATE()")
-                        .HasComment("When this record was last updated")
-                        .HasAnnotation("ColumnOrder", 92);
-
-                    b.HasKey("Id")
-                        .HasName("PIMPRV_PK");
-
-                    b.HasIndex("LeaseId")
-                        .HasDatabaseName("PIMPRV_PROPERTY_LEASE_ID_IDX");
-
-                    b.HasIndex("PropertyImprovementTypeId")
-                        .HasDatabaseName("PIMPRV_PROPERTY_IMPROVEMENT_TYPE_CODE_IDX");
-
-                    b.ToTable("PIMS_PROPERTY_IMPROVEMENT");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.PropertyImprovementType", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE")
-                        .HasComment("Primary key code to identify record");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("DESCRIPTION")
-                        .HasDefaultValueSql("''")
-                        .HasComment("Friendly description of record");
-
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int")
-                        .HasColumnName("DISPLAY_ORDER")
-                        .HasComment("Sorting order of record");
-
-                    b.Property<bool>("IsDisabled")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IS_DISABLED")
-                        .HasComment("Whether this record is disabled");
-
-                    b.Property<long>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("BIGINT")
-                        .HasDefaultValue(1L)
-                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                        .HasComment("Concurrency control number")
-                        .HasAnnotation("ColumnOrder", 100);
-
-                    b.HasKey("Id")
-                        .HasName("PIMPRT_PK");
-
-                    b.ToTable("PIMS_PROPERTY_IMPROVEMENT_TYPE");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.PropertyLease", b =>
                 {
                     b.Property<long>("Id")
@@ -6272,18 +5972,6 @@ namespace Pims.Dal.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Pims.Dal.Entities.LeaseIntiatorType", "LeaseInitiatorType")
-                        .WithMany("Leases")
-                        .HasForeignKey("LeaseInitiatorTypeId")
-                        .HasConstraintName("PIM_LINITT_PIM_LEASE_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Pims.Dal.Entities.LeaseResponsibilityType", "LeaseResponsibilityType")
-                        .WithMany("Leases")
-                        .HasForeignKey("LeaseResponsibilityTypeId")
-                        .HasConstraintName("PIM_LRESPT_PIM_LEASE_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Pims.Dal.Entities.LeaseLicenseType", "LeaseLicenseType")
                         .WithMany("Leases")
                         .HasForeignKey("LeaseTypeId")
@@ -6331,11 +6019,7 @@ namespace Pims.Dal.Migrations
 
                     b.Navigation("CategoryType");
 
-                    b.Navigation("LeaseInitiatorType");
-
                     b.Navigation("LeaseLicenseType");
-
-                    b.Navigation("LeaseResponsibilityType");
 
                     b.Navigation("MotiName");
 
@@ -6740,26 +6424,6 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("Pims.Dal.Entities.PropertyImprovement", b =>
-                {
-                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
-                        .WithMany("Improvements")
-                        .HasForeignKey("LeaseId")
-                        .HasConstraintName("PIM_PROPLS_PIM_PIMPRV_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.PropertyImprovementType", "PropertyImprovementType")
-                        .WithMany("Improvements")
-                        .HasForeignKey("PropertyImprovementTypeId")
-                        .HasConstraintName("PIM_PIMPRT_PIM_PIMPRV_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Lease");
-
-                    b.Navigation("PropertyImprovementType");
-                });
-
             modelBuilder.Entity("Pims.Dal.Entities.PropertyLease", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.Lease", "Lease")
@@ -7033,19 +6697,12 @@ namespace Pims.Dal.Migrations
 
             modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
                 {
-                    b.Navigation("Improvements");
-
                     b.Navigation("PropertiesManyToMany");
 
                     b.Navigation("TenantsManyToMany");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.LeaseCategoryType", b =>
-                {
-                    b.Navigation("Leases");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseIntiatorType", b =>
                 {
                     b.Navigation("Leases");
                 });
@@ -7071,11 +6728,6 @@ namespace Pims.Dal.Migrations
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.LeasePurposeType", b =>
-                {
-                    b.Navigation("Leases");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.LeaseResponsibilityType", b =>
                 {
                     b.Navigation("Leases");
                 });
@@ -7199,11 +6851,6 @@ namespace Pims.Dal.Migrations
             modelBuilder.Entity("Pims.Dal.Entities.PropertyDataSourceType", b =>
                 {
                     b.Navigation("Properties");
-                });
-
-            modelBuilder.Entity("Pims.Dal.Entities.PropertyImprovementType", b =>
-                {
-                    b.Navigation("Improvements");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.PropertyServiceFile", b =>
