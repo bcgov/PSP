@@ -35,10 +35,10 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
 }
 
 <div
-    class="c0 inactive"
+    class="c0 active"
   >
     <b>
-      Inactive
+      Active
     </b>
     <b />
   </div>

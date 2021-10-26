@@ -569,10 +569,10 @@ exports[`LeaseContainer component renders as expected 1`] = `
         Lease / License
       </h1>
       <div
-        class="c5 inactive"
+        class="c5 active"
       >
         <b>
-          Inactive
+          Active
         </b>
         <b />
       </div>
