@@ -12,11 +12,11 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{086499e9-2000-4f37-aa59-5c5551153c4f}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">LISOS_PIMS</SSIS:Property>
-          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionComments">
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">XERCES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA2gbibNXo2EWnpit2p+XPAQAAAAACAAAAAAAQZgAAAAEAACAAAAASQ8EpD1hoVqMc9/U5mp9w4D8KiUnml6T8H7lMB0jo7wAAAAAOgAAAAAIAACAAAABVDrhwfW0TlAmZam//HCVLZG4tDi83Bh8gAKEdvQZKzJAAAADdmwUvsT717NGdeUZLAnZh/2r6DE0tWrze0RpA8ww0ioXOK4E1jhAuDhFFyE0KaTVmMib7fliq4Gd0CqkY5MaUGzsJIR49/h1Yqbmo+jEaayXTtqRJatCboBShNjHOhfr94643MYcEymogYXC6k8n8Ru0MV5tCm+wBuyok/91LLtc+hvPz20FHf7m6nFiL8cdAAAAAkFXLRuQy2iuPLUFi7tncUFnZsO/SZxAG6N7tRcT7BlB2Fq4+vmAE/pLoutVXENRCjVAmbsMtTMBM96dw5qp2Cg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -64,7 +63,7 @@
                 <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</SSIS:Property>
+                <SSIS:Property SSIS:Name="Value">Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Auto Translate=False;</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
@@ -333,10 +332,10 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">226</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">235</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{667BA413-5B1E-48B8-8FBD-7184B03F2E1E}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{38DF4389-37BB-4D9A-9B86-8F0B235583C9}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>

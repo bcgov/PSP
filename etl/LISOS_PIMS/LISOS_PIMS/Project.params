@@ -80,7 +80,7 @@
         SSIS:Name="Sensitive">1</SSIS:Property>
       <SSIS:Property
         SSIS:Name="Value"
-        SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA2gbibNXo2EWnpit2p+XPAQAAAAACAAAAAAAQZgAAAAEAACAAAADboo+S2l51XYHgEoUys+BvrsQb/I5QRcRYmWtb6hqu1AAAAAAOgAAAAAIAACAAAAAZsLskqIT+yAy64+P94nu3ImFQdSOJnnhz+N+W7IsZIYAAAABCuhSk/utMSszmkifh6mC3fLaiD5RzHG7zV3wMIasUDST36iAsmUd/YIaOUs3wEzmqyo5VXr72fTRXVkvfIMpYXj+CgP/FkT267cP+VzMzKvuwUfsJs5Y0huOIc9XIouhmiqIOoo3lqZyATU5l2C8OOMwnaGZVJYO2/G09bEUGw0AAAADQ656AEFzeBuq9VkjjtlF1qLeacud2WtjexljMksMRG446m/TefQbCVyPqMswUL6lnv1TTJiF8gneDBpNOB24z</SSIS:Property>
+        SSIS:Sensitive="1"></SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>

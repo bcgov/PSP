@@ -53,6 +53,9 @@ exclude: # exclude matching issues
     id: high-entropy
     paths:
       - realm-export.json
+  - message: Ignore SSIS .dtsx files (binary content and verifiers)
+    paths:
+      - "*.dtsx"
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
