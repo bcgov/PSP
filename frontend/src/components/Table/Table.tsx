@@ -390,7 +390,6 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ) : (
           column.render('Header')
         )}
-        <span style={{ flex: '1 1 auto' }} />
         <ColumnSort
           onSort={() => {
             const next = getNextSortDirection(column);

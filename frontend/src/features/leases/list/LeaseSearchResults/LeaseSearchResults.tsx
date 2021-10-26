@@ -1,9 +1,9 @@
-import { ColumnWithProps, Table } from 'components/Table';
+import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { ILeaseSearchResult } from 'interfaces';
 import { useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import { CellProps } from 'react-table';
+
+import columns from './columns';
 
 export interface ILeaseSearchResultsProps {
   results: ILeaseSearchResult[];
@@ -17,25 +17,24 @@ export interface ILeaseSearchResultsProps {
 }
 
 export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
-  const { results, sort, setSort, setPageSize, setPageIndex, ...rest } = props;
+  const { results, sort = {}, setSort, setPageSize, setPageIndex, ...rest } = props;
 
-  const updateSortCriteria = useCallback(
-    (prevValue: TableSort<ILeaseSearchResult> = {}) => {
-      return function sortFn(column: string, nextSortDirection: SortDirection) {
-        if (!setSort) return;
+  // results sort handler
+  const handleSortChange = useCallback(
+    (column: string, nextSortDirection: SortDirection) => {
+      if (!setSort) return null;
 
-        let nextSort: TableSort<ILeaseSearchResult>;
+      let nextSort: TableSort<ILeaseSearchResult>;
 
-        // add new column to sort criteria
-        if (nextSortDirection) {
-          nextSort = { ...prevValue, [column]: nextSortDirection };
-        } else {
-          // remove column from sort criteria
-          nextSort = { ...sort };
-          delete (nextSort as any)[column];
-        }
-        setSort(nextSort);
-      };
+      // add new column to sort criteria
+      if (nextSortDirection) {
+        nextSort = { ...sort, [column]: nextSortDirection };
+      } else {
+        // remove column from sort criteria
+        nextSort = { ...sort };
+        delete (nextSort as any)[column];
+      }
+      setSort(nextSort);
     },
     [setSort, sort],
   );
@@ -52,46 +51,10 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       columns={columns}
       data={results ?? []}
       sort={sort}
-      onSortChange={updateSortCriteria(sort)}
+      onSortChange={handleSortChange}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       {...rest}
     ></Table>
   );
 }
-
-const columns: ColumnWithProps<ILeaseSearchResult>[] = [
-  {
-    Header: 'L-File Number',
-    accessor: 'lFileNo',
-    align: 'right',
-    clickable: true,
-    Cell: (props: CellProps<ILeaseSearchResult>) => (
-      <Link to={`/lease/${props.row.original.id}`}>{props.row.original.lFileNo}</Link>
-    ),
-  },
-  {
-    Header: 'Tenant Name',
-    accessor: 'tenantName',
-    align: 'left',
-    clickable: true,
-  },
-  {
-    Header: 'Program Name',
-    accessor: 'programName',
-    align: 'left',
-    clickable: true,
-  },
-  {
-    Header: 'PID/PIN',
-    accessor: 'pidOrPin',
-    align: 'left',
-    clickable: true,
-  },
-  {
-    Header: 'Civic Address',
-    accessor: 'address',
-    align: 'left',
-    clickable: true,
-  },
-];

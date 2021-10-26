@@ -26,8 +26,6 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
       enableReinitialize
       initialValues={filter ?? defaultFilter}
       onSubmit={(values, { setSubmitting }) => {
-        // TODO: remove me
-        console.log(`[Lease-Filter] Submitting...`);
         setFilter(values);
         setSubmitting(false);
       }}
@@ -70,8 +68,8 @@ const options = [
 ];
 
 const placeholders = {
-  pid: 'Enter a PID or PIN',
-  lFileNumber: 'Enter an LIS File Number',
+  pidOrPin: 'Enter a PID or PIN',
+  lFileNo: 'Enter an LIS File Number',
 };
 
 export default LeaseFilter;

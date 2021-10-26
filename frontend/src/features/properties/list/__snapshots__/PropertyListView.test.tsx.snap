@@ -304,9 +304,6 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 PID
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
             <div
@@ -319,9 +316,6 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 PIN
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
             <div
@@ -334,9 +328,6 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 Civic Address
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
             <div
@@ -349,9 +340,6 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 Location
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
             <div
@@ -364,9 +352,6 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 Lot Size (in ha)
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
           </div>

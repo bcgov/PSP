@@ -946,9 +946,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term ID
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -961,9 +958,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term Start Date
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -976,9 +970,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term End Date
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -991,9 +982,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Date Renewed
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -1006,9 +994,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term Status
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                 </div>

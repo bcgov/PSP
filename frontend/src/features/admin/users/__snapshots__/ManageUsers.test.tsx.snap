@@ -14,9 +14,20 @@ exports[`Manage Users Component Snapshot matches 1`] = `
   -ms-flex-align: center;
   align-items: center;
   justify-items: center;
+  margin-left: 0.5rem;
+}
+
+.c8 {
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .c7 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c9 {
   margin-top: 0.3rem;
 }
 
@@ -336,18 +347,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 IDIR/BCeID
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -357,6 +366,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -382,18 +392,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 First name
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -403,6 +411,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -428,18 +437,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Last name
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -449,6 +456,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -474,18 +482,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Email
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -495,6 +501,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -520,18 +527,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Position
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -541,6 +546,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -566,18 +572,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Active
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -587,6 +591,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -612,18 +617,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Organization
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -633,6 +636,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -658,9 +662,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Roles
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
             <div
@@ -673,9 +674,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Last Login
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
             <div
@@ -688,18 +686,16 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                 Created On
-                <span
-                  style="flex: 1 1 auto;"
-                />
                 <div
                   class="c6"
                 >
                   <svg
+                    class="c7"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
                     stroke-width="0"
-                    style="margin-bottom: -5px;"
+                    style="margin-bottom: -8px;"
                     viewBox="0 0 512 512"
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
@@ -709,6 +705,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -734,9 +731,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 class="sortable-column"
               >
                  
-                <span
-                  style="flex: 1 1 auto;"
-                />
               </div>
             </div>
           </div>
@@ -1158,7 +1152,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 style="display: flex;"
               >
                 <span
-                  class="c7"
+                  class="c9"
                 >
                   Show
                 </span>
@@ -1169,7 +1163,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                   value="10"
                 />
                 <span
-                  class="c7"
+                  class="c9"
                 >
                   Entries
                 </span>

@@ -1,7 +1,7 @@
 import { TableSort } from 'components/Table/TableSort';
 import { ILeaseFilter } from 'features/leases';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { ILease } from 'interfaces';
+import { ILeaseSearchResult } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import { useCallback } from 'react';
 import { generateMultiSortCriteria } from 'utils';
@@ -12,7 +12,7 @@ export function useFetcher() {
 
   const fetchFn = async (
     filter: ILeaseFilter,
-    sort: TableSort<ILease>,
+    sort: TableSort<ILeaseSearchResult>,
     pageIndex: number,
     pageSize: number,
   ) => {
@@ -29,7 +29,7 @@ function getRequestParams(
   pageIndex: number,
   pageSize: number,
   filter: ILeaseFilter,
-  sort: TableSort<ILease>,
+  sort: TableSort<ILeaseSearchResult>,
 ) {
   const sortParam = sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined;
   return toFilteredApiPaginateParams<ILeaseFilter>(pageIndex, pageSize, sortParam, filter);
