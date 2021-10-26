@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Pims.Api.Helpers.Extensions
 {
@@ -35,7 +35,7 @@ namespace Pims.Api.Helpers.Extensions
             {
                 using var responseStream = await response.Content.ReadAsStreamAsync();
 
-                var readStream = new StreamReader(responseStream, Encoding.UTF8);
+                using var readStream = new StreamReader(responseStream, Encoding.UTF8);
                 var error = readStream.ReadToEnd();
                 logger?.LogError(error);
                 responseStream.Position = 0;
