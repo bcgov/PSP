@@ -6,6 +6,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
+import TenantNotes from './TenantNotes';
 import TenantOrganizationContactInfo from './TenantOrganizationContactInfo';
 import TenantPersonContactInfo from './TenantPersonContactInfo';
 
@@ -22,6 +23,7 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
   const persons: IPerson[] = getIn(values, withNameSpace(nameSpace, 'persons')) ?? [];
   const organizations: IOrganization[] =
     getIn(values, withNameSpace(nameSpace, 'organizations')) ?? [];
+  const tenantNotes: string[] = getIn(values, withNameSpace(nameSpace, 'tenantNotes')) ?? [];
 
   return (
     <StyledDetails>
@@ -30,7 +32,7 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
         render={renderProps => (
           <>
             {persons.map((person: IPerson, index) => (
-              <Styled.SpacedInlineListItem>
+              <Styled.SpacedInlineListItem key={`person-${index}`}>
                 <FormSection>
                   <TenantPersonContactInfo
                     disabled={true}
@@ -40,7 +42,7 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
               </Styled.SpacedInlineListItem>
             ))}
             {organizations.map((organization: IOrganization, index) => (
-              <Styled.SpacedInlineListItem>
+              <Styled.SpacedInlineListItem key={`organizations-${index}`}>
                 <FormSection>
                   <TenantOrganizationContactInfo
                     disabled={true}
@@ -49,6 +51,16 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
                 </FormSection>
               </Styled.SpacedInlineListItem>
             ))}
+            {tenantNotes.map(
+              (tenantNote: string, index) =>
+                !!tenantNote && (
+                  <TenantNotes
+                    key={`notes-${index}`}
+                    disabled={true}
+                    nameSpace={withNameSpace(nameSpace, `tenantNotes.${index}`)}
+                  ></TenantNotes>
+                ),
+            )}
           </>
         )}
       />
