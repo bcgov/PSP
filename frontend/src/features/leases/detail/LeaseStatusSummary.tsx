@@ -14,7 +14,7 @@ export interface ILeaseStatusSummaryProps {
 export const LeaseStatusSummary: React.FunctionComponent<ILeaseStatusSummaryProps> = ({
   lease,
 }) => {
-  const isActive = moment().isSameOrBefore(moment(lease?.expiryDate, 'day'));
+  const isActive = moment().isSameOrBefore(moment(lease?.expiryDate), 'day');
   return (
     <StyledLeaseStatusSummary className={isActive ? 'active' : 'inactive'}>
       <b>{isActive ? 'Active' : 'Inactive'}</b>
