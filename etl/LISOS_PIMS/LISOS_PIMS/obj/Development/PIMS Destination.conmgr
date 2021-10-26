@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="PIMS Destination"
+  DTS:DTSID="{1AF2E2F8-B83D-48AC-B542-6DDF4DDB5BED}"
+  DTS:CreationName="OLEDB">
+  <DTS:PropertyExpression
+    DTS:Name="InitialCatalog">@[$Project::pDestinationDatabaseName]</DTS:PropertyExpression>
+  <DTS:PropertyExpression
+    DTS:Name="Password">@[$Project::pDestinationPassword]</DTS:PropertyExpression>
+  <DTS:PropertyExpression
+    DTS:Name="ServerName">@[$Project::pDestinationServerName]</DTS:PropertyExpression>
+  <DTS:PropertyExpression
+    DTS:Name="UserName">@[$Project::pDestinationUserName]</DTS:PropertyExpression>
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA2gbibNXo2EWnpit2p+XPAQAAAAACAAAAAAAQZgAAAAEAACAAAABLdSd69TNpzfRVBqN5NFIcNKhWCTpyaKOvjEeM/CRqqQAAAAAOgAAAAAIAACAAAAA2W5/VAMCdtbh9msg55Vw/zu3Y6luUB01UXD05bdCLBpAAAAAIU8PVkMRm/1QPpftKNL/mIrksyZU/EZhLiCFG5jy0cjmE7Nj88T0GqC0mlQKT5Bv2G5zJo6Qa2+kdunfv4mS6Rnc7XEmogiGRmcd3zENz2s6tMy18jZy6oUsKNb4mhL6WWzrZMfq9EOTlBA3UNBQ1LIvMJK2JA9KXFMCibjWwmvJmlyHOXxBOyJ/MYG58fPRAAAAAGNix2vQcUD2OsYYNL7GvIHwm1Yk7IVXpnG+Lv3uYTjFWLwUuQIM+Pk8vmG1uu1+njYZMnJixnye+givWDAZaaw==</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
