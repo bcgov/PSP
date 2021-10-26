@@ -113,6 +113,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string PaymentFrequencyType { get; set; }
 
         /// <summary>
+        /// get/set - A list of tenant notes.
+        /// </summary>
+        public IEnumerable<String> TenantNotes { get; set; }
+
+        /// <summary>
         /// get/set - A list of persons tenants associated with this lease
         /// </summary>
         public IEnumerable<PersonModel> Persons { get; set; }
