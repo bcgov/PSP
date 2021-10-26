@@ -124,11 +124,18 @@ namespace Pims.Core.Http
         private Task<HttpResponseMessage> ProxySendInternalAsync(HttpRequest request, string url, HttpMethod method = null, HttpContent content = null)
         {
             // Extract the original requests authorization token.
-            var token = request.Headers["Authorization"];
-            if (method == null) { method = HttpMethod.Get; }
+            if (method == null)
+            {
+                method = HttpMethod.Get;
+            }
 
-            var message = new HttpRequestMessage(method, url);
-            if (!String.IsNullOrWhiteSpace(token)) { message.Headers.Add("Authorization", token.ToString()); }
+            using var message = new HttpRequestMessage(method, url);
+            var token = request.Headers["Authorization"];
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                message.Headers.Add("Authorization", token.ToString());
+            }
+
             message.Headers.Add("X-Forwarded-For", request.Host.Value);
             message.Headers.Add("X-Forwarded-Proto", request.Scheme);
             message.Headers.Add("ProxyPreserveHost", "On");

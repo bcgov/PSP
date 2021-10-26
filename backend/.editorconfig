@@ -40,7 +40,7 @@ dotnet_diagnostic.CA1062.severity = none
 # CA1031: Do not catch general exception types
 dotnet_diagnostic.CA1031.severity = none
 # CA2000: Dispose objects before losing scope
-dotnet_diagnostic.CA2000.severity = none #TODO: This should be set to error
+dotnet_diagnostic.CA2000.severity = error
 # CA1508: Avoid dead conditional code
 dotnet_diagnostic.CA1508.severity = none #TODO: Requires further analysis
 # CA1305: Specify IFormatProvider
