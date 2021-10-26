@@ -57,7 +57,7 @@ exclude: # exclude matching issues
     paths:
       - "*.dtsx"
   - message: Ignore SSIS .dtproj state
-    pattern: <State>.*?</State>sha256:.*
+    pattern: <State>.*?</State>
     paths:
       - "*.dtproj"
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
