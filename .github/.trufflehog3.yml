@@ -54,8 +54,10 @@ exclude: # exclude matching issues
     paths:
       - realm-export.json
   - message: Ignore SSIS .dtsx files (binary content and verifiers)
+    pattern: <State>.*?</State>sha256:.*
     paths:
       - "*.dtsx"
+      - "*.dtproj"
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
