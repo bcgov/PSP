@@ -89,7 +89,7 @@ const getStyles = <T extends object>(
       style: {
         justifyContent: column?.align === 'right' ? 'flex-end' : 'flex-start',
         textAlign: column?.align === 'right' ? 'right' : 'left',
-        alignItems: isHeader ? 'center' : 'flex-start',
+        alignItems: 'center',
         display: isHeader && hideHeaders ? 'none' : 'flex',
         ...colSize,
       },

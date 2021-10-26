@@ -512,7 +512,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "100 0 auto",
@@ -535,7 +535,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "100 0 auto",
@@ -555,7 +555,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "100 0 auto",
@@ -575,7 +575,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "200 0 auto",
@@ -595,7 +595,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "100 0 auto",
@@ -615,7 +615,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "100 0 auto",
@@ -635,7 +635,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "200 0 auto",
@@ -655,7 +655,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "200 0 auto",
@@ -675,7 +675,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
               role="cell"
               style={
                 Object {
-                  "alignItems": "flex-start",
+                  "alignItems": "center",
                   "boxSizing": "border-box",
                   "display": "flex",
                   "flex": "75 0 auto",

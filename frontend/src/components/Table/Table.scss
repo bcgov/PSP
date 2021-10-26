@@ -9,13 +9,11 @@
   }
   .thead {
     .th {
-      vertical-align: bottom;
       border-bottom: 0.2rem solid $table-header-border-color;
       cursor: pointer;
-      font-size: 1.4rem;
-      line-height: 2.4rem;
+      font-size: 1.6rem;
       font-weight: bold;
-      height: 4.4rem;
+      line-height: 2.4rem;
     }
   }
   .tbody {
@@ -26,6 +24,9 @@
       }
       &:nth-child(odd) {
         background-color: $table-odd-row-bg-color;
+        &:last-child {
+          border-bottom: 0.1rem solid $table-column-border-color;
+        }
       }
       .tr {
         &:hover {
@@ -55,9 +56,9 @@
   }
   .td,
   .th {
-    padding: 0.5rem;
-    vertical-align: top;
-    // border-top: 0.1rem solid $table-color;
+    height: 5rem;
+    padding: 0.5rem 1.1rem;
+    align-items: center;
     border-right: 0.1rem solid $table-column-border-color;
     &:last-child {
       border-right: none;
@@ -87,10 +88,8 @@
     }
     .sortable-column {
       display: flex;
-      width: 100%;
       height: 100%;
       align-items: center;
-      justify-content: flex-start;
     }
     .filter-wrapper {
       div {
