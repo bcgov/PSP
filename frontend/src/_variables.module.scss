@@ -26,6 +26,11 @@
   slideOutBlue: $slide-out-blue;
   disabledColor: $disabled-color;
 
+  // table ui
   tableColor: $table-color;
-  tableHeaderColor: $table-header-bg-color;
+  tableHeaderBgColor: $table-header-bg-color;
+  tableHeaderBorderColor: $table-header-border-color;
+  tableColumnBorderColor: $table-column-border-color;
+  tableEvenRowBgColor: $table-even-row-bg-color;
+  tableOddRowBgColor: $table-odd-row-bg-color;
 }
