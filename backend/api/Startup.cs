@@ -24,7 +24,6 @@ using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Helpers.Routes.Constraints;
-using Pims.Ches;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Dal;
@@ -203,7 +202,6 @@ namespace Pims.Api
             services.AddPimsService();
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
-            services.AddChesService(this.Configuration.GetSection("Ches"));
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
             services.AddSingleton<IAuthorizationHandler, RealmAccessRoleHandler>();
             services.AddTransient<IClaimsTransformation, KeycloakClaimTransformer>();

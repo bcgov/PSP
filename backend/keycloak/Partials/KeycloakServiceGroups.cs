@@ -61,7 +61,7 @@ namespace Pims.Keycloak
         public async Task<Models.GroupModel> CreateGroupAsync(Models.GroupModel group)
         {
             var json = group.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/groups", content);
 
             return await response.HandleResponseAsync<Models.GroupModel>();
@@ -76,7 +76,7 @@ namespace Pims.Keycloak
         public async Task<Models.GroupModel> CreateSubGroupAsync(Guid parentKey, Models.GroupModel group)
         {
             var json = group.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync($"{this.Options.Admin.Authority}/groups/{parentKey}/children", content);
 
             return await response.HandleResponseAsync<Models.GroupModel>();
@@ -90,7 +90,7 @@ namespace Pims.Keycloak
         public async Task<Models.GroupModel> UpdateGroupAsync(Models.GroupModel group)
         {
             var json = group.Serialize();
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PutAsync($"{this.Options.Admin.Authority}/groups/{group.Id}", content);
 
             return response.HandleResponse(group);

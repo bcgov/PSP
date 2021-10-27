@@ -27,7 +27,7 @@ namespace Pims.Dal
         /// </summary>
         public PimsContextFactory()
         {
-            var loggerFactory = LoggerFactory.Create(builder =>
+            using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
                     .AddFilter("Microsoft", LogLevel.Warning)

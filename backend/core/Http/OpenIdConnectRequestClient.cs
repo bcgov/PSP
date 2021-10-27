@@ -225,7 +225,7 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public override async Task<HttpResponseMessage> SendAsync(string url, HttpMethod method = null, HttpContent content = null)
         {
-            return await SendAsync(url, method, new HttpRequestMessage().Headers, content);
+            return await SendAsync(url, method, null, content);
         }
 
         /// <summary>
@@ -239,7 +239,10 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public override Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
+            if (String.IsNullOrWhiteSpace(url))
+            {
+                throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
+            }
 
             return this.SendInternalAsync(url, method, headers, content);
         }
@@ -257,13 +260,30 @@ namespace Pims.Core.Http
         private async Task<HttpResponseMessage> SendInternalAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content)
         {
             method ??= HttpMethod.Get;
-            headers ??= new HttpRequestMessage().Headers;
+            if (headers == null)
+            {
+                using var message = new HttpRequestMessage();
+                headers = message.Headers;
 
+                headers = await AddAuthorizationHeader(headers);
+                return await base.SendAsync(url, method, headers, content);
+            }
+            else
+            {
+                headers = await AddAuthorizationHeader(headers);
+                return await base.SendAsync(url, method, headers, content);
+            }
+        }
+
+        private async Task<HttpRequestHeaders> AddAuthorizationHeader(HttpRequestHeaders headers)
+        {
             var token = await RequestAccessToken();
 
-            if (!String.IsNullOrWhiteSpace(token)) { headers.Add("Authorization", token.ToString()); }
-
-            return await base.SendAsync(url, method, headers, content);
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                headers.Add("Authorization", token.ToString());
+            }
+            return headers;
         }
 
         #endregion
