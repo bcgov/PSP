@@ -1,12 +1,12 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IO;
 using Pims.Core.Extensions;
 using Serilog;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Middleware
 {
@@ -61,7 +61,8 @@ namespace Pims.Api.Helpers.Middleware
             await _next(context);
 
             context.Response.Body.Seek(0, SeekOrigin.Begin);
-            var body = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            using var reader = new StreamReader(context.Response.Body);
+            var body = await reader.ReadToEndAsync();
             context.Response.Body.Seek(0, SeekOrigin.Begin);
 
             using (_logger.BeginScope("HTTP Response"))

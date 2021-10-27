@@ -1,9 +1,8 @@
-using FluentAssertions;
-using Pims.Core.Extensions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using Pims.Core.Extensions;
 using Xunit;
-using CModel = Pims.Ches.Models;
 
 namespace Pims.Api.Test.Core.Extensions
 {
@@ -51,21 +50,6 @@ namespace Pims.Api.Test.Core.Extensions
 
             // Assert
             result.Should().Be(expectedResult);
-        }
-        #endregion
-
-        #region ConvertTo
-        [Fact]
-        public void Enum_ConvertTo()
-        {
-            // Arrange
-            var encoding = TestEnum.Utf8;
-
-            // Act
-            var result = encoding.ConvertTo<TestEnum, CModel.EmailEncodings>();
-
-            // Assert
-            result.Should().Be(CModel.EmailEncodings.Utf8);
         }
         #endregion
         #endregion

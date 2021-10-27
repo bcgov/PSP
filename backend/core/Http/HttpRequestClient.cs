@@ -131,15 +131,16 @@ namespace Pims.Core.Http
         public virtual async Task<HttpResponseMessage> SendJsonAsync<T>(string url, HttpMethod method, HttpRequestHeaders headers, T data = null)
             where T : class
         {
-            HttpContent content = null;
-
             if (data != null)
             {
                 var json = JsonSerializer.Serialize(data, _serializeOptions);
-                content = new StringContent(json, Encoding.UTF8, "application/json");
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
+                return await SendAsync(url, method, headers, content);
             }
-
-            return await SendAsync(url, method, headers, content);
+            else
+            {
+                return await SendAsync(url, method, headers, null);
+            }
         }
 
         /// <summary>
@@ -152,7 +153,10 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public virtual Task<HttpResponseMessage> SendAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (String.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
+            if (String.IsNullOrWhiteSpace(url))
+            {
+                throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
+            }
 
             return this.SendInternalAsync(url, method, headers, content);
         }
@@ -411,15 +415,16 @@ namespace Pims.Core.Http
         public virtual async Task<TModel> SendJsonAsync<TModel, T>(string url, HttpMethod method, HttpRequestHeaders headers, T data = null, Func<HttpResponseMessage, bool> onError = null)
             where T : class
         {
-            StringContent content = null;
-
             if (data != null)
             {
                 var json = JsonSerializer.Serialize(data, _serializeOptions);
-                content = new StringContent(json, Encoding.UTF8, "application/json");
+                using var content = new StringContent(json, Encoding.UTF8, "application/json");
+                return await SendAsync<TModel>(url, method, headers, content, onError);
             }
-
-            return await SendAsync<TModel>(url, method, headers, content, onError);
+            else
+            {
+                return await SendAsync<TModel>(url, method, headers, null, onError);
+            }
         }
 
         /// <summary>
@@ -695,7 +700,11 @@ namespace Pims.Core.Http
         /// <returns></returns>
         private async Task<HttpResponseMessage> SendInternalAsync(string url, HttpMethod method, HttpRequestHeaders headers, HttpContent content = null)
         {
-            if (method == null) { method = HttpMethod.Get; }
+            if (method == null)
+            {
+                method = HttpMethod.Get;
+            }
+
             using var message = new HttpRequestMessage(method, url);
             message.Headers.Add("User-Agent", "Pims.Api");
             message.Content = content;
