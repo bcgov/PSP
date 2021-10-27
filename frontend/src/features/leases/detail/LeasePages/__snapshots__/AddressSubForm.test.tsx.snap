@@ -11,7 +11,7 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   <label
     class="form-label"
   >
-    Address
+    Address:
   </label>
   <div
     class="input form-group"
