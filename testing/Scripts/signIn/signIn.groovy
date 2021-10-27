@@ -38,8 +38,5 @@ WebUI.setEncryptedText(findTestObject('Object Repository/SiteMinder/PasswordFiel
 // Click continue 
 WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
 
-// Click expand option
-WebUI.click(findTestObject('Navigation/ExpandButton'))
-
 // Close browser
 WebUI.closeBrowser()
