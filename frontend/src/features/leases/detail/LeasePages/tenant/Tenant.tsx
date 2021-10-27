@@ -26,7 +26,7 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
   const tenantNotes: string[] = getIn(values, withNameSpace(nameSpace, 'tenantNotes')) ?? [];
 
   return (
-    <StyledDetails>
+    <FormSectionOne>
       <TenantsFieldArray
         name={withNameSpace(nameSpace, 'properties')}
         render={renderProps => (
@@ -54,21 +54,22 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
             {tenantNotes.map(
               (tenantNote: string, index) =>
                 !!tenantNote && (
-                  <TenantNotes
-                    key={`notes-${index}`}
-                    disabled={true}
-                    nameSpace={withNameSpace(nameSpace, `tenantNotes.${index}`)}
-                  ></TenantNotes>
+                  <Styled.SpacedInlineListItem key={`notes-${index}`}>
+                    <TenantNotes
+                      disabled={true}
+                      nameSpace={withNameSpace(nameSpace, `tenantNotes.${index}`)}
+                    ></TenantNotes>
+                  </Styled.SpacedInlineListItem>
                 ),
             )}
           </>
         )}
       />
-    </StyledDetails>
+    </FormSectionOne>
   );
 };
 
-export const TenantsFieldArray = styled(FieldArray)`
+export const FormSectionOne = styled(FormSection)`
   column-count: 2;
   & > * {
     break-inside: avoid-column;
@@ -84,11 +85,20 @@ export const TenantsFieldArray = styled(FieldArray)`
   }
 `;
 
-const StyledDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 2.5rem;
+export const TenantsFieldArray = styled(FieldArray)`
+  column-count: 2;
+  & > * {
+    break-inside: avoid-column;
+  }
+  column-gap: 10rem;
+  li {
+    list-style-type: none;
+    padding: 2rem 0;
+    margin: 0;
+  }
+  @media only screen and (max-width: 1500px) {
+    column-count: 1;
+  }
 `;
 
 export default Tenant;

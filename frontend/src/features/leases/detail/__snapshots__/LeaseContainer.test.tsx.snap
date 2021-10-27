@@ -108,7 +108,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 1rem 0 0.5rem 0;
   border-bottom: solid 0.3rem;
 }
 
@@ -197,7 +197,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c26 .form-label,
 .c26 .form-group {
-  margin: 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .c26 > .input {
