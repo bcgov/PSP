@@ -61,6 +61,7 @@ export const LeaseListView = () => {
             </Styled.FileIcon>
           </TooltipWrapper>
         </Styled.PageToolbar>
+
         <LeaseSearchResults
           results={results}
           pageIndex={currentPage}
@@ -75,21 +76,5 @@ export const LeaseListView = () => {
     </Styled.ListPage>
   );
 };
-
-/**
- * Get an error message corresponding to what filter fields have been entered.
- * @param {ILeaseFilter} filter
- */
-// const getNoResultErrorMessage = (filter: ILeaseFilter) => {
-//   let message = 'Unable to find any records';
-//   if (filter.lFileNo) {
-//     message = 'There are no records for this L-File #';
-//   } else if (filter.pidOrPin) {
-//     message = 'There are no records for this PID/PIN';
-//   } else if (filter.tenantName) {
-//     message = 'There are no records for this Tenant Name';
-//   }
-//   return message;
-// };
 
 export default LeaseListView;

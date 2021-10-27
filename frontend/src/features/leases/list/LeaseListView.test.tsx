@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
+import { ILeaseSearchResult } from 'interfaces';
+import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { LeaseListView } from './LeaseListView';
 
@@ -10,20 +11,52 @@ const getLeases = jest.fn();
   getLeases,
 });
 
+// render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  // render component under test
   const utils = render(<LeaseListView />, { ...renderOptions });
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
 };
 
+const setupMockSearch = (searchResults?: ILeaseSearchResult[]) => {
+  const results = searchResults ?? [];
+  const len = results.length;
+  getLeases.mockResolvedValue({
+    data: {
+      items: results,
+      quantity: len,
+      total: len,
+      page: 1,
+      pageIndex: 0,
+    },
+  });
+};
+
 describe('Lease and License List View', () => {
   beforeEach(() => {
-    getLeases.mockResolvedValue({ data: { items: [] } });
+    getLeases.mockClear();
+  });
+
+  it('matches snapshot', async () => {
+    setupMockSearch();
+    const { asFragment } = setup();
+
+    const fragment = await waitFor(() => asFragment());
+    expect(fragment).toMatchSnapshot();
   });
 
   it('searches by pid/pin', async () => {
-    const { container, searchButton } = setup();
+    setupMockSearch([
+      {
+        id: 1,
+        lFileNo: 'L-123-456',
+        address: '123 mock st',
+        pidOrPin: '123',
+        programName: 'TRAN-IT',
+        tenantName: 'Chester Tester',
+      },
+    ]);
+    const { container, searchButton, findByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');
     fillInput(container, 'pidOrPin', '123');
@@ -37,10 +70,22 @@ describe('Lease and License List View', () => {
         tenantName: '',
       }),
     );
+
+    expect(await findByText(/123 mock st/i)).toBeInTheDocument();
   });
 
-  it('searches l file number', async () => {
-    const { container, searchButton } = setup({});
+  it('searches by L-file number', async () => {
+    setupMockSearch([
+      {
+        id: 1,
+        lFileNo: 'L-123-456',
+        address: '123 mock st',
+        pidOrPin: '123',
+        programName: 'TRAN-IT',
+        tenantName: 'Chester Tester',
+      },
+    ]);
+    const { container, searchButton, findByText } = setup({});
     fillInput(container, 'searchBy', 'lFileNo', 'select');
     fillInput(container, 'lFileNo', '123');
     await act(async () => userEvent.click(searchButton));
@@ -53,13 +98,25 @@ describe('Lease and License List View', () => {
         tenantName: '',
       }),
     );
+
+    expect(await findByText(/L-123-456/i)).toBeInTheDocument();
   });
 
   it('searches tenant name', async () => {
-    const { container, searchButton } = setup();
+    setupMockSearch([
+      {
+        id: 1,
+        lFileNo: 'L-123-456',
+        address: '123 mock st',
+        pidOrPin: '123',
+        programName: 'TRAN-IT',
+        tenantName: 'Chester Tester',
+      },
+    ]);
+    const { container, searchButton, findByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');
-    fillInput(container, 'tenantName', 'tenant');
+    fillInput(container, 'tenantName', 'Chester');
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
@@ -67,12 +124,36 @@ describe('Lease and License List View', () => {
         lFileNo: '',
         pidOrPin: '',
         searchBy: 'pidOrPin',
-        tenantName: 'tenant',
+        tenantName: 'Chester',
       }),
     );
+
+    expect(await findByText(/Chester Tester/i)).toBeInTheDocument();
   });
 
-  xit('displays an error when no matching PID/PIN found', async () => {
+  it('displays an error when no matching records found', async () => {
+    setupMockSearch();
+    const { container, searchButton, findAllByText } = setup();
+
+    fillInput(container, 'searchBy', 'pidOrPin', 'select');
+    fillInput(container, 'pidOrPin', 'foo-bar-baz');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lFileNo: '',
+        pidOrPin: 'foo-bar-baz',
+        searchBy: 'pidOrPin',
+        tenantName: '',
+      }),
+    );
+    const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
+    expect(toasts[0]).toBeVisible();
+  });
+
+  it('displays an error when when Search API is unreachable', async () => {
+    // simulate a network error
+    getLeases.mockRejectedValue(new Error('network error'));
     const { container, searchButton, findAllByText } = setup();
 
     fillInput(container, 'searchBy', 'pidOrPin', 'select');
@@ -87,45 +168,7 @@ describe('Lease and License List View', () => {
         tenantName: '',
       }),
     );
-    const toasts = await findAllByText('There are no records for this PID/PIN');
-    expect(toasts[0]).toBeVisible();
-  });
-
-  xit('displays an error when no matching L-File # found', async () => {
-    const { container, searchButton, findAllByText } = setup();
-
-    fillInput(container, 'searchBy', 'lFileNo', 'select');
-    fillInput(container, 'lFileNo', '123');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining({
-        lFileNo: '123',
-        pidOrPin: '',
-        searchBy: 'lFileNo',
-        tenantName: '',
-      }),
-    );
-    const toasts = await findAllByText('There are no records for this L-File #');
-    expect(toasts[0]).toBeVisible();
-  });
-
-  xit('displays an error when no matching tenant found', async () => {
-    const { container, searchButton, findAllByText } = setup();
-
-    fillInput(container, 'searchBy', 'pidOrPin', 'select');
-    fillInput(container, 'tenantName', 'tenant');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining({
-        lFileNo: '',
-        pidOrPin: '',
-        searchBy: 'pidOrPin',
-        tenantName: 'tenant',
-      }),
-    );
-    const toasts = await findAllByText('There are no records for this Tenant Name');
+    const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
   });
 });

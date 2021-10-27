@@ -54,6 +54,7 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       onSortChange={handleSortChange}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
+      noRowsMessage="Lease / License details do not exist in PIMS inventory"
       {...rest}
     ></Table>
   );

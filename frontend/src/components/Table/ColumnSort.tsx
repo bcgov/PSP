@@ -41,8 +41,8 @@ function ColumnSort<T extends object = {}>({ column, onSort }: IColumnSortProps<
 
   return (
     <Wrapper onClick={onSort}>
-      {column.isSorted && !column.isSortedDesc && <Up active />}
-      {column.isSorted && column.isSortedDesc && <Down active />}
+      {column.isSorted && !column.isSortedDesc && <Up active={true} />}
+      {column.isSorted && column.isSortedDesc && <Down active={true} />}
 
       {!column.isSorted && (
         <>

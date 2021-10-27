@@ -7,7 +7,7 @@ import React from 'react';
 
 import { ILeaseFilter } from '../../interfaces';
 
-interface ILeaseFilterProps {
+export interface ILeaseFilterProps {
   filter?: ILeaseFilter;
   setFilter: (filter: ILeaseFilter) => void;
 }
@@ -30,7 +30,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
         setSubmitting(false);
       }}
     >
-      {({ values, resetForm, isSubmitting }) => (
+      {({ resetForm, isSubmitting }) => (
         <Styled.InlineForm>
           <b>Search for a Lease or License:</b>
           <PropertyFilterOptions options={options} placeholders={placeholders} />
