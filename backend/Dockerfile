@@ -16,7 +16,6 @@ COPY dal/*.csproj dal/
 COPY dal.keycloak/*.csproj dal.keycloak/
 COPY keycloak/*.csproj keycloak/
 COPY geocoder/*.csproj geocoder/
-COPY ches/*.csproj ches/
 COPY core/*.csproj core/
 COPY ltsa/*.csproj ltsa/
 
