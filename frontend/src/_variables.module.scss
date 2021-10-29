@@ -16,8 +16,6 @@
   dropdownBackgroundColor: $dropdown-background-color;
   accentColor: $accent-color;
   lightAccentColor: $light-accent-color;
-  tableColor: $table-color;
-  tableHeaderColor: $table-header-color;
   sresIconColor: $sres-icon-color;
   dangerColor: $danger-color;
   lightDangerColor: $light-danger-color;
@@ -26,4 +24,13 @@
   completedColor: $completed-color;
   filterBackgroundColor: $filter-background-color;
   slideOutBlue: $slide-out-blue;
+  disabledColor: $disabled-color;
+
+  // table ui
+  tableHoverColor: $table-hover-color;
+  tableHeaderBgColor: $table-header-bg-color;
+  tableHeaderBorderColor: $table-header-border-color;
+  tableColumnBorderColor: $table-column-border-color;
+  tableEvenRowBgColor: $table-even-row-bg-color;
+  tableOddRowBgColor: $table-odd-row-bg-color;
 }

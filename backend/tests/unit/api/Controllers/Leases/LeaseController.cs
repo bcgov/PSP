@@ -1,19 +1,13 @@
 using MapsterMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Controllers;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Comparers;
 using Pims.Core.Test;
 using Pims.Dal;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
 namespace Pims.Api.Test.Controllers.Lease

@@ -17,6 +17,12 @@ namespace Pims.Dal.Entities
         public long Id { get; set; }
 
         /// <summary>
+        /// get/set - The lease tenant note.
+        /// </summary>
+        [Column("NOTE")]
+        public string Note { get; set; }
+
+        /// <summary>
         /// get/set - Primary key: The foreign key to the lease.
         /// </summary>
         [Column("LEASE_ID")]
@@ -75,7 +81,7 @@ namespace Pims.Dal.Entities
         /// <param name="organization"></param>
         public LeaseTenant(Lease lease, Person person, Organization organization, LessorType lessorType)
         {
-            this.LeaseId = lease?.Id ?? throw new ArgumentNullException(nameof(lease)); ;
+            this.LeaseId = lease?.Id ?? throw new ArgumentNullException(nameof(lease));
             this.Lease = lease;
             this.PersonId = person?.Id ?? throw new ArgumentNullException(nameof(person));
             this.Person = person;

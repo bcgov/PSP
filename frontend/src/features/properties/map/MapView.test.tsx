@@ -300,6 +300,26 @@ describe('MapView', () => {
     });
   });
 
+  it('the map can handle features with invalid geometry', async () => {
+    ((useApi as unknown) as jest.Mock<Partial<typeof useApi>>).mockReturnValue({
+      loadProperties: jest.fn(async () => {
+        return {
+          features: createPoints(smallMockParcels).map(feature => ({ ...feature, geometry: null })),
+          type: 'FeatureCollection',
+          bbox: undefined,
+        };
+      }),
+    });
+    ((useApiProperties as unknown) as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+      getParcel: async () => {
+        return {} as IProperty;
+      },
+    });
+    const { findByText } = render(getMap());
+
+    expect(await findByText('No search results found')).toBeVisible();
+  });
+
   it('the map can zoom out until the markers are clustered', async () => {
     const { container } = render(getMap());
     await waitFor(() => {

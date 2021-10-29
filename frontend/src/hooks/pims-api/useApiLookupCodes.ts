@@ -13,7 +13,7 @@ export const useApiLookupCodes = () => {
 
   return React.useMemo(
     () => ({
-      getLookupCodes: () => api.get<ILookupCode>(`/lookup/all`),
+      getLookupCodes: () => api.get<ILookupCode[]>(`/lookup/all`),
     }),
     [api],
   );

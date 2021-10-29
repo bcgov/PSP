@@ -1,8 +1,0 @@
-{
-  "Ches": {
-    "AuthUrl": "https://oidc.gov.bc.ca/auth/realms/jbd6rnxw/protocol/openid-connect/token",
-    "HostUri": "https://ches.nrs.gov.bc.ca/api/v1",
-    "From": "Property Information Management System <pims@gov.bc.ca>",
-    "EmailEnabled": true
-  }
-}

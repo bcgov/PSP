@@ -20,7 +20,7 @@ export const LeaseH3 = styled.h3`
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 1rem 0 0.5rem 0;
   color: ${props => props.theme.css.textColor};
   border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
 `;
@@ -98,7 +98,7 @@ export const FormGrid = styled.div`
   grid-auto-flow: row;
   .form-label,
   .form-group {
-    margin: 0;
+    margin: 0 0.5rem 0 0;
   }
 
   & > .input {

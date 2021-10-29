@@ -31,7 +31,7 @@ namespace Pims.Core.Extensions
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Argument is required for extension method.")]
         public static T CreateInstance<T>(this Type type)
         {
-            return (T)Activator.CreateInstance<T>();
+            return Activator.CreateInstance<T>();
         }
 
         /// <summary>

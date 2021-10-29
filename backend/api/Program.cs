@@ -14,7 +14,7 @@ namespace Pims.Api
     /// Program class, provides the main program starting point for the Geo-spatial application.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// The primary entry point for the application.
@@ -63,8 +63,6 @@ namespace Pims.Api
                     config.AddJsonFile($"connectionstrings.{env}.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile("geocoder.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"geocoder.{env}.json", optional: true, reloadOnChange: true);
-                    config.AddJsonFile("ches.json", optional: false, reloadOnChange: true);
-                    config.AddJsonFile($"ches.{env}.json", optional: true, reloadOnChange: true);
                     config.AddEnvironmentVariables();
                     config.AddCommandLine(args);
                 })

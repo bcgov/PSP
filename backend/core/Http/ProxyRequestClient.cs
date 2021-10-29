@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Pims.Core.Http
 {
@@ -27,11 +27,24 @@ namespace Pims.Core.Http
 
         #region Methods
         /// <summary>
-        /// Dispose the HttpClient.
+        /// Dispose managed resources.
         /// </summary>
         public void Dispose()
         {
-            this.Client.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose the HttpClient.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                this.Client.Dispose();
+            }
         }
 
         #region Proxy Methods
@@ -43,24 +56,12 @@ namespace Pims.Core.Http
         /// <param name="method"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public virtual async Task<HttpResponseMessage> ProxySendAsync(HttpRequest request, string url, HttpMethod method = null, HttpContent content = null)
+        public virtual Task<HttpResponseMessage> ProxySendAsync(HttpRequest request, string url, HttpMethod method = null, HttpContent content = null)
         {
-            if (request == null) throw new ArgumentNullException(nameof(request));
-            if (String.IsNullOrWhiteSpace(url)) throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL.");
+            if (request == null) { throw new ArgumentNullException(nameof(request)); }
+            if (String.IsNullOrWhiteSpace(url)) { throw new ArgumentException($"Argument '{nameof(url)}' must be a valid URL."); }
 
-            // Extract the original requests authorization token.
-            var token = request.Headers["Authorization"];
-            if (method == null) method = HttpMethod.Get;
-
-            var message = new HttpRequestMessage(method, url);
-            if (!String.IsNullOrWhiteSpace(token)) message.Headers.Add("Authorization", token.ToString());
-            message.Headers.Add("X-Forwarded-For", request.Host.Value);
-            message.Headers.Add("X-Forwarded-Proto", request.Scheme);
-            message.Headers.Add("ProxyPreserveHost", "On");
-            message.Headers.Add("User-Agent", "Pims.Api");
-            message.Content = content;
-
-            return await this.Client.SendAsync(message);
+            return this.ProxySendInternalAsync(request, url, method, content);
         }
 
         /// <summary>
@@ -109,6 +110,39 @@ namespace Pims.Core.Http
         public async Task<HttpResponseMessage> ProxyDeleteAsync(HttpRequest request, string url, HttpContent content = null)
         {
             return await ProxySendAsync(request, url, HttpMethod.Delete, content);
+        }
+
+        /// <summary>
+        /// Proxy the request on behalf of the original requestor to the specified 'url'.
+        /// Note: Internal implementation to avoid throw on different threads.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="url"></param>
+        /// <param name="method"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private Task<HttpResponseMessage> ProxySendInternalAsync(HttpRequest request, string url, HttpMethod method = null, HttpContent content = null)
+        {
+            // Extract the original requests authorization token.
+            if (method == null)
+            {
+                method = HttpMethod.Get;
+            }
+
+            using var message = new HttpRequestMessage(method, url);
+            var token = request.Headers["Authorization"];
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                message.Headers.Add("Authorization", token.ToString());
+            }
+
+            message.Headers.Add("X-Forwarded-For", request.Host.Value);
+            message.Headers.Add("X-Forwarded-Proto", request.Scheme);
+            message.Headers.Add("ProxyPreserveHost", "On");
+            message.Headers.Add("User-Agent", "Pims.Api");
+            message.Content = content;
+
+            return this.Client.SendAsync(message);
         }
         #endregion
         #endregion
