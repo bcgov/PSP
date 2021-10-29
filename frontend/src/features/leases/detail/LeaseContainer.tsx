@@ -31,13 +31,17 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
   const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
 
   const { search } = useLocation();
-  const { leasePageName } = queryString.parse(search);
-  const { lease } = useLeaseDetail(props?.match?.params?.leaseId);
-
+  let { leasePageName } = queryString.parse(search);
+  if (leasePageName === undefined) {
+    leasePageName = LeasePageNames.DETAILS;
+  }
   const leasePage = leasePages.get(leasePageName as LeasePageNames);
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
+
+  const { lease } = useLeaseDetail(props?.match?.params?.leaseId);
+
   return (
     <>
       <LeaseLayout>
