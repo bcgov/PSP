@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -8,10 +12,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Services
 {
@@ -93,7 +93,8 @@ namespace Pims.Dal.Services
                 var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
                 person.ContactMethods.Add(contactMethod);
                 this.Context.CommitTransaction();
-            } else
+            }
+            else
             {
                 user.LastLogin = DateTime.UtcNow;
                 this.Context.Entry(user).State = EntityState.Modified;
@@ -308,7 +309,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public User Add(User add)
         {
-            if (add == null) throw new ArgumentNullException("user cannot be null.");
+            if (add == null) throw new ArgumentNullException(nameof(add), "user cannot be null.");
             add.IssueOn = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
@@ -463,18 +464,18 @@ namespace Pims.Dal.Services
         /// <summary>
         /// Get all the system administrators, and organization administrators for the specified 'organizationId'.
         /// </summary>
-        /// <param name="organizations"></param>
+        /// <param name="organizationIds"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetAdmininstrators(params long[] organizations)
+        public IEnumerable<User> GetAdmininstrators(params long[] organizationIds)
         {
-            if (organizations == null) throw new ArgumentNullException(nameof(organizations));
+            if (organizationIds == null) throw new ArgumentNullException(nameof(organizationIds));
 
             return this.Context.Users
                 .Include(u => u.Person)
                 .ThenInclude(p => p.ContactMethods)
                 .AsNoTracking()
                 .Where(u => u.Roles.Any(r => r.Claims.Any(c => c.Name == Permissions.SystemAdmin.GetName()))
-                    || (u.Organizations.Any(a => organizations.Contains(a.Id))
+                    || (u.Organizations.Any(a => organizationIds.Contains(a.Id))
                         && u.Roles.Any(r => r.Claims.Any(c => c.Name == Permissions.OrganizationAdmin.GetName()))
                 ));
         }

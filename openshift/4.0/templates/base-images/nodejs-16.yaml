@@ -1,0 +1,21 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: nodejs-16
+  namespace: 3cd915-tools
+  annotations:
+    openshift.io/display-name: NodeJS 16 Redhat Image
+    description: ImageStream definitions for NodeJS 16
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: 1-1
+      annotations: null
+      from:
+        kind: DockerImage
+        name: "registry.redhat.io/rhel8-beta/nodejs-16:1-1"
+      generation: 1
+      importPolicy: {}
+      referencePolicy:
+        type: Source

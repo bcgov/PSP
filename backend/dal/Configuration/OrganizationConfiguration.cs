@@ -70,8 +70,8 @@ namespace Pims.Dal.Configuration
             );
 
             builder.HasMany(m => m.Leases).WithMany(m => m.Organizations).UsingEntity<LeaseTenant>(
-                m => m.HasOne(m => m.Lease).WithMany(m => m.TenantsManyToMany).HasForeignKey(m => m.OrganizationId),
-                m => m.HasOne(m => m.Organization).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.LeaseId)
+                m => m.HasOne(m => m.Lease).WithMany(m => m.TenantsManyToMany).HasForeignKey(m => m.LeaseId),
+                m => m.HasOne(m => m.Organization).WithMany(m => m.LeasesManyToMany).HasForeignKey(m => m.OrganizationId)
             );
 
             base.Configure(builder);

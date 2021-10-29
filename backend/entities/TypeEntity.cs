@@ -37,13 +37,13 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Create a new instance of a TypeEntity class.
         /// </summary>
-        public TypeEntity() { }
+        protected TypeEntity() { }
 
         /// <summary>
         /// Create a new instance of a TypeEntity class.
         /// </summary>
         /// <param name="description"></param>
-        public TypeEntity(string description)
+        protected TypeEntity(string description)
         {
             this.Description = description ?? throw new ArgumentNullException(nameof(description));
         }
@@ -53,7 +53,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="id"></param>
         /// <param name="description"></param>
-        public TypeEntity(KeyType id, string description) : this(description)
+        protected TypeEntity(KeyType id, string description) : this(description)
         {
             if (typeof(KeyType) == typeof(string) && String.IsNullOrWhiteSpace(id as string)) throw new ArgumentException($"Argument '{nameof(id)}' must have a valid value.", nameof(id));
 

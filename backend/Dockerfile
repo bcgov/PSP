@@ -7,6 +7,7 @@ EXPOSE 443 8080
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY *.sln .
+COPY Directory.Build.props .
 COPY api/*.csproj api/
 COPY entities/*.csproj entities/
 COPY tests/core/*.csproj tests/core/
@@ -16,7 +17,6 @@ COPY dal/*.csproj dal/
 COPY dal.keycloak/*.csproj dal.keycloak/
 COPY keycloak/*.csproj keycloak/
 COPY geocoder/*.csproj geocoder/
-COPY ches/*.csproj ches/
 COPY core/*.csproj core/
 COPY ltsa/*.csproj ltsa/
 

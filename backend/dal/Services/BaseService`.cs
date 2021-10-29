@@ -1,11 +1,12 @@
+using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
-using System.Security.Claims;
 
 namespace Pims.Dal.Services
 {
     /// <summary>
     /// BaseService abstract class, provides a generic service layer to perform CRUD operations on the datasource.
+    /// TODO: Filename contains an tilde.
     /// </summary>
     /// <typeparam name="ET"></typeparam>
     public abstract class BaseService<ET> : BaseService
@@ -25,7 +26,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger) : base(dbContext, user, service, logger)
+        protected BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger) : base(dbContext, user, service, logger)
         { }
         #endregion
 

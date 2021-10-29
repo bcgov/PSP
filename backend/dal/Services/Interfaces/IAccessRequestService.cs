@@ -11,8 +11,8 @@ namespace Pims.Dal.Services
         Paged<AccessRequest> Get(AccessRequestFilter filter);
         AccessRequest Get();
         AccessRequest Get(long id);
-        AccessRequest Add(AccessRequest request);
-        AccessRequest Update(AccessRequest request);
-        AccessRequest Delete(AccessRequest accessRequest);
+        AccessRequest Add(AccessRequest addRequest);
+        AccessRequest Update(AccessRequest updateRequest);
+        AccessRequest Delete(AccessRequest deleteRequest);
     }
 }
