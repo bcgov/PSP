@@ -9,13 +9,8 @@ import 'jest-styled-components';
 // See https://github.com/enzymejs/enzyme/issues/2429 for details
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';
-import replaceAllInserter from 'string.prototype.replaceall';
 
 configure({ adapter: new Adapter() });
-
-// We use String.replaceAll() which is polyfilled in the React app but fails in Node/Jest
-// Once we upgrade to Node 15 this shim can be removed
-replaceAllInserter.shim();
 
 var localStorageMock = (function() {
   var store: any = {};

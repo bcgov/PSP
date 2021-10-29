@@ -29,7 +29,7 @@
       }
       .tr {
         &:hover {
-          background-color: $table-color;
+          background-color: $table-hover-color;
         }
         &.selected {
           background-color: $selected-color;

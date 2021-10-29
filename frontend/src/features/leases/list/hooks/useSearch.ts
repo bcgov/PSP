@@ -76,8 +76,10 @@ export function useSearch(
           setError(undefined);
         }
       } catch (e) {
-        setSearchOutput(undefined);
-        setError((e as Error) ?? new Error('Something went wrong. Please try again.'));
+        if (isMounted()) {
+          setSearchOutput(undefined);
+          setError((e as Error) ?? new Error('Something went wrong. Please try again.'));
+        }
       }
     }
 

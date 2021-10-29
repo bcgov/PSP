@@ -169,7 +169,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             </a>
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             title=""
@@ -177,7 +177,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Chester Tester
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             title=""
@@ -185,7 +185,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             TRAN-IT
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; align-items: center; display: flex;"
             title=""
@@ -193,7 +193,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             123
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 150 0 auto; min-width: 100px; width: 150px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             title=""
@@ -223,7 +223,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             </a>
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             title=""
@@ -231,7 +231,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Chester Tester
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             title=""
@@ -239,7 +239,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             TRAN-IT
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; align-items: center; display: flex;"
             title=""
@@ -247,7 +247,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             999
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 150 0 auto; min-width: 100px; width: 150px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
             title=""
