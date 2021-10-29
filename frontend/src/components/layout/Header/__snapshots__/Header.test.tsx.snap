@@ -1,7 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header tests Header renders correctly 1`] = `
-.c1 {
+exports[`App Header renders correctly 1`] = `
+<DocumentFragment>
+  @media (min-width:99.2rem) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media (min-width:99.2rem) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  .c1 {
   border-left: 0.2rem solid white;
   font-size: 3.4rem;
   margin: 0 1.5rem 0 2.5rem;
@@ -93,11 +108,7 @@ exports[`Header tests Header renders correctly 1`] = `
   }
 }
 
-<div>
-  <div
-    class="Toastify"
-  />
-  <nav
+<nav
     class="c0 App-header navbar navbar-expand navbar-light"
   >
     <span
@@ -123,7 +134,7 @@ exports[`Header tests Header renders correctly 1`] = `
         alt="PIMS logo"
         class="pims-logo"
         height="50"
-        src=""
+        src="/tenants/MOTI/PIMS-logo.png"
       />
     </span>
     <div
@@ -135,7 +146,7 @@ exports[`Header tests Header renders correctly 1`] = `
         <h1
           class="longAppName"
         >
-          Default Tenant Name
+          Property Information Management System
         </h1>
         <h1
           class="shortAppName"
@@ -148,5 +159,5 @@ exports[`Header tests Header renders correctly 1`] = `
       class="other navbar-nav"
     />
   </nav>
-</div>
+</DocumentFragment>
 `;
