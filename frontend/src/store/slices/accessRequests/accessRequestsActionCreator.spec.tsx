@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -26,78 +27,58 @@ const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>{children}</Provider>
 );
 
+const setup = () => {
+  const { result } = renderHook(useAccessRequests, { wrapper: getWrapper(getStore()) });
+  return result.current;
+};
+
 describe('useAccessRequests functionality', () => {
   describe('fetchCurrentAccessRequest', () => {
     const url = `/access/requests`;
     const mockResponse = {
       data: mockAccessRequest,
     };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .fetchCurrentAccessRequest()
-            .then(() => {
-              expect(mockAxios.history.get[0]).toMatchObject({ url: url });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchCurrentAccessRequest } = setup();
+      fetchCurrentAccessRequest();
+      await waitFor(async () => expect(mockAxios.history.get[0]).toMatchObject({ url: url }));
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .fetchCurrentAccessRequest()
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(
-                find(currentStore.getActions(), { type: 'network/logSuccess' }),
-              ).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: mockResponse,
-                type: 'accessRequests/storeAccessRequest',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchCurrentAccessRequest } = setup();
+      fetchCurrentAccessRequest();
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: mockResponse,
+          type: 'accessRequests/storeAccessRequest',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .fetchCurrentAccessRequest()
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: {
-                  data: {
-                    items: [mockAccessRequest],
-                    page: 1,
-                    pageIndex: 0,
-                    quantity: 0,
-                    total: 0,
-                  },
-                },
-                type: 'accessRequests/storeAccessRequest',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchCurrentAccessRequest } = setup();
+      fetchCurrentAccessRequest();
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+        expect(currentStore.getActions()).not.toContainEqual({
+          payload: {
+            data: {
+              items: [mockAccessRequest],
+              page: 1,
+              pageIndex: 0,
+              quantity: 0,
+              total: 0,
+            },
+          },
+          type: 'accessRequests/storeAccessRequest',
+        });
+      });
     });
   });
 
@@ -106,134 +87,90 @@ describe('useAccessRequests functionality', () => {
     const url = `/access/requests`;
     const mockResponse = { data: mockAccessRequest };
 
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onPost(`${url}/${newMockAccessRequest.id}`).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .addAccessRequest(newMockAccessRequest)
-            .then(() => {
-              expect(mockAxios.history.post[0]).toMatchObject({ url: url });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { addAccessRequest } = setup();
+      addAccessRequest(newMockAccessRequest);
+      await waitFor(async () => {
+        expect(mockAxios.history.post[0]).toMatchObject({ url: url });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPost(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .addAccessRequest({ ...mockAccessRequest, id: undefined })
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: {
-                  data: mockAccessRequest,
-                },
-                type: 'accessRequests/storeAccessRequest',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { addAccessRequest } = setup();
+      addAccessRequest(newMockAccessRequest);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: {
+            data: mockAccessRequest,
+          },
+          type: 'accessRequests/storeAccessRequest',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .addAccessRequest(newMockAccessRequest)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                accessRequest: {
-                  data: mockAccessRequest,
-                },
-                type: 'accessRequests/storeAccessRequest',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { addAccessRequest } = setup();
+      addAccessRequest(newMockAccessRequest);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+        expect(currentStore.getActions()).not.toContainEqual({
+          accessRequest: {
+            data: mockAccessRequest,
+          },
+          type: 'accessRequests/storeAccessRequest',
+        });
+      });
     });
   });
 
   describe('updateAccessRequest action creator', () => {
     const url = `/keycloak/access/requests`;
     const mockResponse = { data: mockAccessRequest };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onPut(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .updateAccessRequest(mockAccessRequest)
-            .then(() => {
-              expect(mockAxios.history.put[0]).toMatchObject({ url: url });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { updateAccessRequest } = setup();
+      updateAccessRequest(mockAccessRequest);
+      await waitFor(async () => {
+        expect(mockAxios.history.put[0]).toMatchObject({ url: url });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onPut(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .updateAccessRequest(mockAccessRequest)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(
-                find(currentStore.getActions(), { type: 'network/logSuccess' }),
-              ).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: {
-                  data: mockAccessRequest,
-                },
-                type: 'accessRequests/updateAccessRequestsAdmin',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { updateAccessRequest } = setup();
+      updateAccessRequest(mockAccessRequest);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: {
+            data: mockAccessRequest,
+          },
+          type: 'accessRequests/updateAccessRequestsAdmin',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onPut(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .updateAccessRequest(mockAccessRequest)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                accessRequest: {
-                  data: mockAccessRequest,
-                },
-                type: 'accessRequests/updateAccessRequestsAdmin',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { updateAccessRequest } = setup();
+      updateAccessRequest(mockAccessRequest);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).not.toContainEqual({
+          accessRequest: {
+            data: mockAccessRequest,
+          },
+          type: 'accessRequests/updateAccessRequestsAdmin',
+        });
+      });
     });
   });
 
@@ -248,134 +185,92 @@ describe('useAccessRequests functionality', () => {
         total: 0,
       },
     };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .fetchAccessRequests({} as any)
-            .then(() => {
-              expect(mockAxios.history.get[0]).toMatchObject({ url: url });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchAccessRequests } = setup();
+      fetchAccessRequests({} as any);
+      await waitFor(async () => {
+        expect(mockAxios.history.get[0]).toMatchObject({ url: url });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onGet(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .fetchAccessRequests({} as any)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: {
-                  data: {
-                    items: [mockAccessRequest],
-                    page: 1,
-                    pageIndex: 0,
-                    quantity: 0,
-                    total: 0,
-                  },
-                },
-                type: 'accessRequests/storeAccessRequests',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchAccessRequests } = setup();
+      fetchAccessRequests({} as any);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: {
+            data: {
+              items: [mockAccessRequest],
+              page: 1,
+              pageIndex: 0,
+              quantity: 0,
+              total: 0,
+            },
+          },
+          type: 'accessRequests/storeAccessRequests',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onGet(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .fetchAccessRequests({} as any)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                accessRequest: {
-                  data: mockAccessRequest,
-                },
-                type: 'accessRequests/storeAccessRequests',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { fetchAccessRequests } = setup();
+      fetchAccessRequests({} as any);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+        expect(currentStore.getActions()).not.toContainEqual({
+          accessRequest: {
+            data: mockAccessRequest,
+          },
+          type: 'accessRequests/storeAccessRequests',
+        });
+      });
     });
   });
 
   describe('removeAccessRequest action creator', () => {
     const url = `/admin/access/requests/${mockAccessRequest.id}`;
     const mockResponse = { data: mockAccessRequest };
-    it('calls the api with the expected url', () => {
+    it('calls the api with the expected url', async () => {
       mockAxios.onDelete(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
-            .then(() => {
-              expect(mockAxios.history.delete[0]).toMatchObject({ url: url });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { removeAccessRequest } = setup();
+      removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest);
+      await waitFor(async () => {
+        expect(mockAxios.history.delete[0]).toMatchObject({ url: url });
+      });
     });
-    it('Request successful, dispatches success with correct response', () => {
+    it('Request successful, dispatches success with correct response', async () => {
       mockAxios.onDelete(url).reply(200, mockResponse);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).toContainEqual({
-                payload: 2,
-                type: 'accessRequests/deleteAccessRequest',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { removeAccessRequest } = setup();
+      removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: 2,
+          type: 'accessRequests/deleteAccessRequest',
+        });
+      });
     });
 
-    it('Request failure, dispatches error with correct response', () => {
+    it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onDelete(url).reply(400, MOCK.ERROR);
-      renderHook(
-        () =>
-          useAccessRequests()
-            .removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest)
-            .then(() => {
-              expect(
-                find(currentStore.getActions(), { type: 'network/logRequest' }),
-              ).not.toBeNull();
-              expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeNull();
-              expect(currentStore.getActions()).not.toContainEqual({
-                payload: 2,
-                type: 'accessRequests/deleteAccessRequest',
-              });
-            }),
-        {
-          wrapper: getWrapper(getStore()),
-        },
-      );
+      const { removeAccessRequest } = setup();
+      removeAccessRequest(mockAccessRequest.id ?? 0, mockAccessRequest);
+      await waitFor(async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+        expect(currentStore.getActions()).not.toContainEqual({
+          payload: 2,
+          type: 'accessRequests/deleteAccessRequest',
+        });
+      });
     });
   });
 });

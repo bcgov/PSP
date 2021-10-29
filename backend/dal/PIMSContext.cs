@@ -64,6 +64,7 @@ namespace Pims.Dal
         public DbSet<PropertyClassificationType> PropertyClassificationTypes { get; set; }
         public DbSet<PropertyAreaUnitType> PropertyAreaUnitTypes { get; set; }
         public DbSet<PropertyDataSourceType> PropertyDataSourceTypes { get; set; }
+        public DbSet<PropertySurplusDeclarationType> PropertySurplusDeclarationTypes { get; set; }
         public DbSet<PropertyEvaluation> PropertyEvaluations { get; set; }
         #endregion
 
@@ -85,16 +86,14 @@ namespace Pims.Dal
 
         #region Leases
         public DbSet<Lease> Leases { get; set; }
-        public DbSet<LeaseActivity> LeaseActivityTypes { get; set; }
-        public DbSet<LeaseActivityPeriod> LeaseActivityPeriods { get; set; }
-        public DbSet<LeaseExpectedAmount> LeaseExpectedAmounts { get; set; }
         public DbSet<LeasePaymentFrequencyType> LeasePaymentFrequencyTypes { get; set; }
         public DbSet<LeaseProgramType> LeaseProgramTypes { get; set; }
-        public DbSet<LeasePurposeSubtype> LeasePurposeSubtypes { get; set; }
         public DbSet<LeasePurposeType> LeasePurposeTypes { get; set; }
         public DbSet<LeaseStatusType> LeaseStatusTypes { get; set; }
-        public DbSet<LeaseSubtype> LeaseSubtypes { get; set; }
-        public DbSet<LeaseType> LeaseTypes { get; set; }
+        public DbSet<LeaseLicenseType> LeaseTypes { get; set; }
+        public DbSet<LeaseCategoryType> LeaseCategoryTypes { get; set; }
+        public DbSet<LeasePaymentReceivableType> LeasePaymentReceivableTypes { get; set; }
+        public DbSet<LeaseTenant> LeaseTenants { get; set; }
         #endregion
         #endregion
 

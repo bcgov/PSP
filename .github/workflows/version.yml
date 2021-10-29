@@ -3,7 +3,7 @@ name: Bump version
 on:
   pull_request_target:
     types: [closed]
-    branches: [dev]
+    branches: [dev, test]
 
 jobs:
   bump-version:

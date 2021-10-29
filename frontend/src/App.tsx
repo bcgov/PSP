@@ -3,7 +3,7 @@ import './Stepper.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import AppRouter from 'AppRouter';
-import FilterBackdrop from 'components/maps/leaflet/FilterBackdrop';
+import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
 import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -36,7 +36,7 @@ const App = () => {
           return (
             <PublicLayout>
               <Col>
-                <FilterBackdrop show={true}></FilterBackdrop>
+                <LoadingBackdrop show={true}></LoadingBackdrop>
               </Col>
             </PublicLayout>
           );

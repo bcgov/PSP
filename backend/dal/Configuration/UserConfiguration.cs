@@ -61,8 +61,10 @@ namespace Pims.Dal.Configuration
                 m => m.HasOne(m => m.Role).WithMany(m => m.UsersManyToMany).HasForeignKey(m => m.RoleId),
                 m => m.HasOne(m => m.User).WithMany(m => m.RolesManyToMany).HasForeignKey(m => m.UserId)
             );
-
+            
             builder.HasIndex(m => m.PersonId).HasDatabaseName("USER_PERSON_ID_IDX");
+            builder.HasIndex(m => m.KeycloakUserId).HasDatabaseName("USER_GUID_IDENTIFIER_VALUE_IDX");
+            builder.HasIndex(m => m.BusinessIdentifier).HasDatabaseName("USER_BUSINESS_IDENTIFIER_VALUE_IDX");
 
             base.Configure(builder);
         }

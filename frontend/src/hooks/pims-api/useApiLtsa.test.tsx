@@ -12,29 +12,28 @@ describe('useApiLtsa testing suite', () => {
     jest.restoreAllMocks();
   });
 
-  it('Get title summaries', () => {
-    renderHook(async () => {
-      mockAxios.onGet(`/tools/ltsa/summaries?pid=123456789`).reply(200, defaultTitleSummary);
+  const setup = () => {
+    const { result } = renderHook(useApiLtsa);
+    return result.current;
+  };
 
-      const api = useApiLtsa();
-      const response = await api.getTitleSummaries(123456789);
+  it('Get title summaries', async () => {
+    mockAxios.onGet(`/tools/ltsa/summaries?pid=123456789`).reply(200, defaultTitleSummary);
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultTitleSummary);
-    });
+    const { getTitleSummaries } = setup();
+    const response = await getTitleSummaries(123456789);
+
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultTitleSummary);
   });
 
-  it('post parcel info order', () => {
-    renderHook(async () => {
-      mockAxios
-        .onPost(`/tools/ltsa/order/parcelInfo?pid=123-456-789`)
-        .reply(200, defaultParcelInfo);
-      const api = useApiLtsa();
-      const response = await api.getParcelInfo('123-456-789');
+  it('post parcel info order', async () => {
+    mockAxios.onPost(`/tools/ltsa/order/parcelInfo?pid=123-456-789`).reply(200, defaultParcelInfo);
+    const { getParcelInfo } = setup();
+    const response = await getParcelInfo('123-456-789');
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultParcelInfo);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultParcelInfo);
   });
 });
 

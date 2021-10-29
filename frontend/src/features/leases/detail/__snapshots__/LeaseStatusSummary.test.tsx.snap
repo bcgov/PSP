@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeaseStatusSummary component renders as expected when active 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  max-width: 11rem;
+  max-height: 100%;
+  white-space: nowrap;
+  border-radius: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+}
+
+.c0 b {
+  padding: 0.25rem 0;
+  color: black;
+}
+
+.c0.active {
+  border: 1px solid;
+}
+
+<div
+    class="c0 active"
+  >
+    <b>
+      Active
+    </b>
+    <b />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  max-width: 11rem;
+  max-height: 100%;
+  white-space: nowrap;
+  border-radius: 1rem;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 0.2rem 1rem;
+}
+
+.c0 b {
+  padding: 0.25rem 0;
+  color: black;
+}
+
+.c0.active {
+  border: 1px solid;
+}
+
+<div
+    class="c0 inactive"
+  >
+    <b>
+      Inactive
+    </b>
+    <b />
+  </div>
+</DocumentFragment>
+`;

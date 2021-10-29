@@ -90,7 +90,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"
@@ -105,7 +105,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"
@@ -120,7 +120,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"
@@ -135,7 +135,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"
@@ -150,7 +150,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             class="bar-item col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <input
                 class="form-control"

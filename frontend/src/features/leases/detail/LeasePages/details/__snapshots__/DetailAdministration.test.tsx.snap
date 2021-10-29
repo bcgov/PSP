@@ -1,0 +1,309 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DetailAdministration component renders a complete lease as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0;
+}
+
+.c1 > .input {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black;
+}
+
+.c1 .form-control {
+  font-weight: 700;
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea,
+.c1 > h3 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 input.form-control {
+  font-size: 1.8rem;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Administration
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Program:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-programName"
+          name="programName"
+          value="A program"
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        L-file #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-lFileNo"
+          name="lFileNo"
+          value="222"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        MoTI contact:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-motiName"
+          name="motiName"
+          value="test moti name"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        LIS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-tfaFileNo"
+          name="tfaFileNo"
+          value="333"
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        PS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-psFileNo"
+          name="psFileNo"
+          value="444"
+        />
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`DetailAdministration component renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c1 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c1 .form-label,
+.c1 .form-group {
+  margin: 0;
+}
+
+.c1 > .input {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black;
+}
+
+.c1 .form-control {
+  font-weight: 700;
+}
+
+.c1 > label,
+.c1 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c1 > .textarea,
+.c1 > h3 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c1 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 input.form-control {
+  font-size: 1.8rem;
+}
+
+<li>
+    <h3
+      class="c0"
+    >
+      Administration
+    </h3>
+    <div
+      class="c1"
+    >
+      <label
+        class="form-label"
+      >
+        Program:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-programName"
+          name="programName"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
+        L-file #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-lFileNo"
+          name="lFileNo"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        MoTI contact:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-motiName"
+          name="motiName"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        LIS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-tfaFileNo"
+          name="tfaFileNo"
+          value=""
+        />
+      </div>
+      <label
+        class="form-label"
+      >
+        PS #:
+      </label>
+      <div
+        class="input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-psFileNo"
+          name="psFileNo"
+          value=""
+        />
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

@@ -19,6 +19,8 @@ namespace Pims.Dal.Configuration
             builder.HasMotiSequence(m => m.Id)
                 .HasComment("Auto-sequenced unique key value");
 
+            builder.Property(m => m.PropertyManagementOrganizationId)
+                .HasComment("Foreign key to property management organization");
             builder.Property(m => m.PropertyTypeId)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -58,12 +60,18 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.DataSourceEffectiveDate)
                 .HasColumnType("DATE")
                 .HasComment("The date the data source is effective on");
+            builder.Property(m => m.SurplusDeclarationDate)
+                .HasColumnType("DATETIME")
+                .HasComment("Date of the surplus declaration");
             builder.Property(m => m.Name)
                 .HasMaxLength(250)
                 .HasComment("A friendly name to identify the property");
             builder.Property(m => m.Description)
                 .HasMaxLength(2000)
                 .HasComment("Description of the property");
+            builder.Property(m => m.SurplusDeclarationComment)
+                .HasMaxLength(2000)
+                .HasComment("Comment related to the surplus declaration of this property");
             builder.Property(m => m.PID)
                 .IsRequired()
                 .HasComment("A unique identifier for titled property");
@@ -109,6 +117,7 @@ namespace Pims.Dal.Configuration
                 .HasComment("The potential zoning");
 
             builder.HasOne(m => m.PropertyType).WithMany(m => m.Properties).HasForeignKey(m => m.PropertyTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PRPTYP_PIM_PRPRTY_FK");
+            builder.HasOne(m => m.SurplusDeclarationType).WithMany(m => m.Properties).HasForeignKey(m => m.SurplusDeclarationTypeId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_SPDCLT_PIM_PRPRTY_FK");
             builder.HasOne(m => m.Status).WithMany(m => m.Properties).HasForeignKey(m => m.StatusId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PRPSTS_PIM_PRPRTY_FK");
             builder.HasOne(m => m.Classification).WithMany(m => m.Properties).HasForeignKey(m => m.ClassificationId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PRPCLT_PIM_PRPRTY_FK");
             builder.HasOne(m => m.Address).WithMany(m => m.Properties).HasForeignKey(m => m.AddressId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_ADDRSS_PIM_PRPRTY_FK");
@@ -117,6 +126,8 @@ namespace Pims.Dal.Configuration
             builder.HasOne(m => m.Tenure).WithMany(m => m.Properties).HasForeignKey(m => m.TenureId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PRPTNR_PIM_PRPRTY_FK");
             builder.HasOne(m => m.AreaUnit).WithMany(m => m.Properties).HasForeignKey(m => m.AreaUnitId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_FK");
             builder.HasOne(m => m.DataSource).WithMany(m => m.Properties).HasForeignKey(m => m.DataSourceId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PIDSRT_PIM_PRPRTY_FK");
+            builder.HasOne(m => m.PropertyManager).WithMany().HasForeignKey(m => m.PropertyManagerId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_PERSON_PIM_PRPRTY_FK");
+            builder.HasOne(m => m.PropertyManagementOrganization).WithMany().HasForeignKey(m => m.PropertyManagementOrganizationId).OnDelete(DeleteBehavior.Restrict).HasConstraintName("PIM_ORG_PIM_PRPRTY_FK");
 
             builder.HasMany(m => m.ServiceFiles).WithMany(m => m.Properties).UsingEntity<PropertyPropertyServiceFile>(
                 m => m.HasOne(m => m.ServiceFile).WithMany(m => m.PropertiesManyToMany).HasForeignKey(m => m.ServiceFileId),
@@ -136,6 +147,8 @@ namespace Pims.Dal.Configuration
             builder.HasIndex(m => m.TenureId).HasDatabaseName("PRPRTY_PROPERTY_TENURE_TYPE_CODE_IDX");
             builder.HasIndex(m => m.AreaUnitId).HasDatabaseName("PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX");
             builder.HasIndex(m => m.DataSourceId).HasDatabaseName("PRPRTY_PROPERTY_DATA_SOURCE_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.PropertyManagerId).HasDatabaseName("PRPRTY_PROPERTY_MANAGER_ID_IDX");
+            builder.HasIndex(m => m.PropertyManagementOrganizationId).HasDatabaseName("PRPRTY_PROP_MGMT_ORG_ID_IDX");
 
             base.Configure(builder);
         }

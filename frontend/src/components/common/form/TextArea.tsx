@@ -1,3 +1,4 @@
+import clsx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 
@@ -35,7 +36,7 @@ export const TextArea: React.FC<TextProps> = ({
       label={label}
       as="textarea"
       field={field}
-      className={className}
+      className={clsx(className, 'textarea')}
       required={required}
       disabled={disabled}
       custom={custom}
@@ -50,7 +51,7 @@ export const TextArea: React.FC<TextProps> = ({
       label={label}
       as="textarea"
       field={field}
-      className={className}
+      className={clsx(className, 'textarea')}
       required={required}
       disabled={disabled}
       custom={custom}
