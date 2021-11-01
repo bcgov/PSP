@@ -10,6 +10,7 @@
         <WinAuthDomain />
         <ServerName>ssistst.th.gov.bc.ca</ServerName>
         <PathOnServer>/SSISDB/PIMS_DEV/PAIMS_PIMS</PathOnServer>
+        <Run64BitRuntime>false</Run64BitRuntime>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>
