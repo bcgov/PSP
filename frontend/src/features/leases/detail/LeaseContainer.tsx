@@ -22,40 +22,6 @@ export interface ILeaseAndLicenseContainerProps {
   match?: any;
 }
 
-/**
- * Top level container for lease details, provides logic for loading and controlling lease display
- * @param {ILeaseAndLicenseContainerProps} props
- */
-export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerProps> = props => {
-  const { setTrayPage } = useContext(SidebarStateContext);
-  const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
-
-  const { search } = useLocation();
-  const { leasePageName } = queryString.parse(search);
-  const { lease } = useLeaseDetail(props?.match?.params?.leaseId);
-
-  const leasePage = leasePages.get(leasePageName as LeasePageNames);
-  if (!leasePage) {
-    throw Error('The requested lease page does not exist');
-  }
-  return (
-    <>
-      <LeaseLayout>
-        <LeaseBreadCrumb
-          leaseId={props.match.leaseId}
-          leasePage={leasePage}
-          onClickManagement={onClickManagement}
-        />
-        <LeaseHeader lease={lease} />
-        <BackToSearchButton />
-        <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
-        <LeasePageForm leasePage={leasePage} lease={lease}></LeasePageForm>
-      </LeaseLayout>
-      <LoadingBackdrop show={!lease} />
-    </>
-  );
-};
-
 export interface ILeasePage {
   component: ReactElement;
   title: string;
@@ -90,5 +56,43 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
   [LeasePageNames.SURPLUS, { component: <></>, title: 'Surplus Declaration' }],
 ]);
+
+/**
+ * Top level container for lease details, provides logic for loading and controlling lease display
+ * @param {ILeaseAndLicenseContainerProps} props
+ */
+export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerProps> = props => {
+  const { setTrayPage } = useContext(SidebarStateContext);
+  const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
+
+  const { search } = useLocation();
+  let { leasePageName } = queryString.parse(search);
+  if (leasePageName === undefined) {
+    leasePageName = LeasePageNames.DETAILS;
+  }
+  const leasePage = leasePages.get(leasePageName as LeasePageNames);
+  if (!leasePage) {
+    throw Error('The requested lease page does not exist');
+  }
+
+  const { lease } = useLeaseDetail(props?.match?.params?.leaseId);
+
+  return (
+    <>
+      <LeaseLayout>
+        <LeaseBreadCrumb
+          leaseId={props.match.leaseId}
+          leasePage={leasePage}
+          onClickManagement={onClickManagement}
+        />
+        <LeaseHeader lease={lease} />
+        <BackToSearchButton />
+        <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
+        <LeasePageForm leasePage={leasePage} lease={lease}></LeasePageForm>
+      </LeaseLayout>
+      <LoadingBackdrop show={!lease} />
+    </>
+  );
+};
 
 export default LeaseContainer;

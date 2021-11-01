@@ -146,7 +146,7 @@ export const generateMultiSortCriteria = (sort: TableSort<any>) => {
     return '';
   }
 
-  return keys(sort).map(key => `${startCase(key).replace(' ', '')} ${sort[key]}`);
+  return keys(sort).map(key => `${startCase(key).replaceAll(' ', '')} ${sort[key]}`);
 };
 
 /**

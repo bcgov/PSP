@@ -54,7 +54,7 @@ dotnet_diagnostic.CS1591.severity = none
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
-dotnet_diagnostic.S4487.severity = error
+dotnet_diagnostic.S4487.severity = warning
 # S927 Parameter names should match base declaration and other partial definitions
 dotnet_diagnostic.S927.severity = error
 # S1006 Remove the default parameter value to match the signature of overridden method
