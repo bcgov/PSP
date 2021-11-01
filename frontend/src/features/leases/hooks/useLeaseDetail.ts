@@ -17,22 +17,26 @@ export const useLeaseDetail = (leaseId?: number) => {
 
   useEffect(() => {
     const getLeaseById = async (id: number) => {
-      try {
-        dispatch(showLoading());
-        const { data } = await getLease(id);
-        setLease(data);
-      } catch (e) {
-        toast.error('Failed to load lease, reload this page to try again.');
-        dispatch(
-          logError({
-            name: 'LeaseLoad',
-            status: e?.response?.status,
-            error: e,
-          }),
-        );
-      } finally {
-        dispatch(hideLoading());
-      }
+      dispatch(showLoading());
+      return getLease(id)
+        .then(result => {
+          const { data } = result;
+          setLease(data);
+          return data;
+        })
+        .catch(axiosError => {
+          toast.error('Failed to load lease, reload this page to try again.');
+          dispatch(
+            logError({
+              name: 'LeaseLoad',
+              status: axiosError?.response?.status,
+              error: axiosError,
+            }),
+          );
+        })
+        .finally(() => {
+          dispatch(hideLoading());
+        });
     };
     if (leaseId) {
       getLeaseById(leaseId);
