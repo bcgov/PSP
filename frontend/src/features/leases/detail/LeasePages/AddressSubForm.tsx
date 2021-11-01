@@ -23,7 +23,7 @@ export const AddressSubForm: React.FunctionComponent<IAddressSubFormProps> = ({
 
   return (
     <>
-      <Form.Label>Address</Form.Label>
+      <Form.Label>Address:</Form.Label>
       {streetAddress1 && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress1')} />
       )}

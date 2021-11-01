@@ -6,12 +6,12 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'jotoombs'</initValue>
+      <initValue>''</initValue>
       <name>userName</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'lvv2h9Gg0Xe+I8XHrMSSNg=='</initValue>
+      <initValue>''</initValue>
       <name>password</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

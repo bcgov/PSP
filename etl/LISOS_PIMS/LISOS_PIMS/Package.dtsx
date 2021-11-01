@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="235"
-  DTS:VersionGUID="{38DF4389-37BB-4D9A-9B86-8F0B235583C9}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="238"
+  DTS:VersionGUID="{A80E0E58-BF06-447A-9FBC-512642F53731}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -232,6 +233,11 @@
                       dataType="wstr"
                       length="30"
                       name="DB_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\Associate Organizations With Leases\Add LEASE_TENANT.Inputs[OLE DB Destination Input].ExternalColumns[NOTE]"
+                      dataType="wstr"
+                      length="2000"
+                      name="NOTE" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -11205,16 +11211,19 @@ where [refTable].[DESCRIPTION] = ?</property>
                       name="PS_FILE_NO" />
                     <externalMetadataColumn
                       refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TERM_START_DATE]"
-                      dataType="dbTimeStamp"
-                      name="TERM_START_DATE" />
+                      dataType="dbTimeStamp2"
+                      name="TERM_START_DATE"
+                      scale="7" />
                     <externalMetadataColumn
                       refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TERM_RENEWAL_DATE]"
-                      dataType="dbTimeStamp"
-                      name="TERM_RENEWAL_DATE" />
+                      dataType="dbTimeStamp2"
+                      name="TERM_RENEWAL_DATE"
+                      scale="7" />
                     <externalMetadataColumn
                       refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TERM_EXPIRY_DATE]"
-                      dataType="dbTimeStamp"
-                      name="TERM_EXPIRY_DATE" />
+                      dataType="dbTimeStamp2"
+                      name="TERM_EXPIRY_DATE"
+                      scale="7" />
                     <externalMetadataColumn
                       refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_AMOUNT]"
                       dataType="cy"
@@ -11385,6 +11394,32 @@ where [refTable].[DESCRIPTION] = ?</property>
                       refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RENEWAL_TERM_MONTHS]"
                       dataType="i2"
                       name="RENEWAL_TERM_MONTHS" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IS_COMM_BLDG]"
+                      dataType="bool"
+                      name="IS_COMM_BLDG" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IS_OTHER_IMPROVEMENT]"
+                      dataType="bool"
+                      name="IS_OTHER_IMPROVEMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IS_SUBJECT_TO_RTA]"
+                      dataType="bool"
+                      name="IS_SUBJECT_TO_RTA" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_INITIATOR_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="LEASE_INITIATOR_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_RESPONSIBILITY_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="LEASE_RESPONSIBILITY_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESPONSIBILITY_EFFECTIVE_DATE]"
+                      dataType="dbTimeStamp"
+                      name="RESPONSIBILITY_EFFECTIVE_DATE" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -16915,14 +16950,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               startId="Package\Insert Leases\Filter leases with no TFA or PS #.Outputs[Leases with identifiers]" />
             <path
               refId="Package\Insert Leases.Paths[Lookup Match Output1]"
-              endId="Package\Insert Leases\Merge 1.Inputs[Merge Input 1]"
-              name="Lookup Match Output"
-              startId="Package\Insert Leases\Payment Frequency Lookup.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Insert Leases.Paths[Lookup Match Output]"
               endId="Package\Insert Leases\Merge.Inputs[Merge Input 1]"
               name="Lookup Match Output"
               startId="Package\Insert Leases\Lease Program Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert Leases.Paths[Lookup Match Output]"
+              endId="Package\Insert Leases\Merge 1.Inputs[Merge Input 1]"
+              name="Lookup Match Output"
+              startId="Package\Insert Leases\Payment Frequency Lookup.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Insert Leases.Paths[Lookup No Match Output]"
               endId="Package\Insert Leases\Default Payment Frequency.Inputs[Derived Column Input]"
@@ -34893,21 +34928,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               startId="Package\Insert Property Leases\Flat File Source.Outputs[Flat File Source Output]" />
             <path
               refId="Package\Insert Property Leases.Paths[Lookup Error Output1]"
-              endId="Package\Insert Property Leases\Lookup PID Errors to JSON.Inputs[Input 0]"
-              name="Lookup Error Output"
-              startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Error Output]" />
-            <path
-              refId="Package\Insert Property Leases.Paths[Lookup Error Output]"
               endId="Package\Insert Property Leases\Find Matching Leases to JSON.Inputs[Input 0]"
               name="Lookup Error Output"
               startId="Package\Insert Property Leases\Find Matching Leases.Outputs[Lookup Error Output]" />
             <path
-              refId="Package\Insert Property Leases.Paths[Lookup Match Output1]"
+              refId="Package\Insert Property Leases.Paths[Lookup Error Output]"
+              endId="Package\Insert Property Leases\Lookup PID Errors to JSON.Inputs[Input 0]"
+              name="Lookup Error Output"
+              startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Error Output]" />
+            <path
+              refId="Package\Insert Property Leases.Paths[Lookup Match Output]"
               endId="Package\Insert Property Leases\Filter Pre-existing Property Leases.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Match Output]" />
             <path
-              refId="Package\Insert Property Leases.Paths[Lookup Match Output]"
+              refId="Package\Insert Property Leases.Paths[Lookup Match Output1]"
               endId="Package\Insert Property Leases\Split PIDs by &quot;,&quot;.Inputs[Input 0]"
               name="Lookup Match Output"
               startId="Package\Insert Property Leases\Find Matching Leases.Outputs[Lookup Match Output]" />
@@ -34916,6 +34951,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               endId="Package\Insert Property Leases\Format output columns.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Insert Property Leases\Filter Pre-existing Property Leases.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Insert Property Leases.Paths[Output 03]"
+              endId="Package\Insert Property Leases\Convert TFA_FILE_NO errors.Inputs[OLE DB Destination Input]"
+              name="Output 0"
+              startId="Package\Insert Property Leases\Convert TFA_FILE_NO errors to JSON.Outputs[Output 0]" />
             <path
               refId="Package\Insert Property Leases.Paths[Output 0]"
               endId="Package\Insert Property Leases\Remove '-' from PID.Inputs[Derived Column Input]"
@@ -34931,11 +34971,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               endId="Package\Insert Property Leases\Lookup PID Errors.Inputs[OLE DB Destination Input]"
               name="Output 0"
               startId="Package\Insert Property Leases\Lookup PID Errors to JSON.Outputs[Output 0]" />
-            <path
-              refId="Package\Insert Property Leases.Paths[Output 03]"
-              endId="Package\Insert Property Leases\Convert TFA_FILE_NO errors.Inputs[OLE DB Destination Input]"
-              name="Output 0"
-              startId="Package\Insert Property Leases\Convert TFA_FILE_NO errors to JSON.Outputs[Output 0]" />
             <path
               refId="Package\Insert Property Leases.Paths[Rows with PID values]"
               endId="Package\Insert Property Leases\Find Matching Leases.Inputs[Lookup Input]"
@@ -35353,6 +35388,30 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\Associate Organizations With Leases.Paths[Lookup No Match Output]"
+          TopLeft="134.5,761.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\Associate Organizations With Leases.Paths[Lookup Match Output1]"
           TopLeft="134.5,659.5">
           <EdgeLayout.Curve>
@@ -35397,30 +35456,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Associate Organizations With Leases.Paths[Lookup No Match Output]"
-          TopLeft="134.5,761.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -35604,7 +35639,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -35626,7 +35663,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -35648,7 +35687,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -36343,42 +36384,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert Leases.Paths[Lookup Match Output1]"
-          TopLeft="316.666666666667,1169.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-16.1666666666666,162"
-              Start="0,0"
-              End="-16.1666666666666,154.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.4041859406992" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,76.4041859406992"
-                    Point2="0,80.4041859406992"
-                    Point3="-4,80.4041859406992" />
-                  <mssgle:LineSegment
-                    End="-12.1666666666666,80.4041859406992" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-12.1666666666666,80.4041859406992"
-                    Point2="-16.1666666666666,80.4041859406992"
-                    Point3="-16.1666666666666,84.4041859406992" />
-                  <mssgle:LineSegment
-                    End="-16.1666666666666,154.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-56.2747200520833,85.4041859406992,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Leases.Paths[Lookup Match Output]"
           TopLeft="312.833333333333,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -36410,6 +36415,42 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="-55.1080533854166,85.3842278805642,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Leases.Paths[Lookup Match Output]"
+          TopLeft="316.666666666667,1169.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.1666666666666,162"
+              Start="0,0"
+              End="-16.1666666666666,154.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,76.4041859406992" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,76.4041859406992"
+                    Point2="0,80.4041859406992"
+                    Point3="-4,80.4041859406992" />
+                  <mssgle:LineSegment
+                    End="-12.1666666666666,80.4041859406992" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.1666666666666,80.4041859406992"
+                    Point2="-16.1666666666666,80.4041859406992"
+                    Point3="-16.1666666666666,84.4041859406992" />
+                  <mssgle:LineSegment
+                    End="-16.1666666666666,154.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-56.2747200520833,85.4041859406992,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -37293,6 +37334,19 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert New Organizations\Store Rows with no Tenant Name">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Insert New Persons">
     <LayoutInfo>
@@ -37597,57 +37651,17 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="219,42"
-          Id="Package\Insert Property Leases\Find Matching Leases Errors"
-          TopLeft="530.5,617.5" />
+          Size="186,42"
+          Id="Package\Insert Property Leases\Find Matching Leases"
+          TopLeft="293,413.5" />
         <NodeLayout
           Size="238,42"
           Id="Package\Insert Property Leases\Filter out rows with no pid values"
           TopLeft="267,311.5" />
         <NodeLayout
-          Size="214,42"
-          Id="Package\Insert Property Leases\Lookup PID Errors to JSON"
-          TopLeft="274,923.5" />
-        <NodeLayout
-          Size="136,42"
-          Id="Package\Insert Property Leases\Lookup PID"
-          TopLeft="313,821.5" />
-        <NodeLayout
           Size="177,42"
           Id="Package\Insert Property Leases\OLE DB Destination"
           TopLeft="33.5000000000001,1117.5" />
-        <NodeLayout
-          Size="231,42"
-          Id="Package\Insert Property Leases\Find Matching Leases to JSON"
-          TopLeft="524.5,515.5" />
-        <NodeLayout
-          Size="225,42"
-          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors"
-          TopLeft="587.5,413.5" />
-        <NodeLayout
-          Size="161,42"
-          Id="Package\Insert Property Leases\Data Conversion"
-          TopLeft="300.5,719.5" />
-        <NodeLayout
-          Size="177,42"
-          Id="Package\Insert Property Leases\Remove '-' from PID"
-          TopLeft="292.5,617.5" />
-        <NodeLayout
-          Size="269,42"
-          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors to JSON"
-          TopLeft="565.5,311.5" />
-        <NodeLayout
-          Size="156,42"
-          Id="Package\Insert Property Leases\Flat File Source"
-          TopLeft="622,5.5" />
-        <NodeLayout
-          Size="217,42"
-          Id="Package\Insert Property Leases\Remove '-' from TFA File No"
-          TopLeft="591.5,107.5" />
-        <NodeLayout
-          Size="186,42"
-          Id="Package\Insert Property Leases\Find Matching Leases"
-          TopLeft="293,413.5" />
         <NodeLayout
           Size="169,42"
           Id="Package\Insert Property Leases\Lookup PID Errors"
@@ -37657,13 +37671,57 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           Id="Package\Insert Property Leases\Split PIDs by &quot;,&quot;"
           TopLeft="308,515.5" />
         <NodeLayout
+          Size="191,42"
+          Id="Package\Insert Property Leases\Format output columns"
+          TopLeft="26.5000000000001,1015.5" />
+        <NodeLayout
+          Size="219,42"
+          Id="Package\Insert Property Leases\Find Matching Leases Errors"
+          TopLeft="530.5,617.5" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Insert Property Leases\Data Conversion"
+          TopLeft="300.5,719.5" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Insert Property Leases\Lookup PID Errors to JSON"
+          TopLeft="274,923.5" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\Insert Property Leases\Remove '-' from TFA File No"
+          TopLeft="591.5,107.5" />
+        <NodeLayout
+          Size="269,42"
+          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors to JSON"
+          TopLeft="565.5,311.5" />
+        <NodeLayout
+          Size="231,42"
+          Id="Package\Insert Property Leases\Find Matching Leases to JSON"
+          TopLeft="524.5,515.5" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Insert Property Leases\Remove '-' from PID"
+          TopLeft="292.5,617.5" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors"
+          TopLeft="587.5,413.5" />
+        <NodeLayout
+          Size="248,42"
+          Id="Package\Insert Property Leases\Filter Pre-existing Property Leases"
+          TopLeft="4,928" />
+        <NodeLayout
+          Size="136,42"
+          Id="Package\Insert Property Leases\Lookup PID"
+          TopLeft="313,821.5" />
+        <NodeLayout
           Size="193,42"
           Id="Package\Insert Property Leases\Convert TFA_FILE_NO"
           TopLeft="603.5,209.5" />
         <NodeLayout
-          Size="191,42"
-          Id="Package\Insert Property Leases\Format output columns"
-          TopLeft="26.5000000000001,1015.5" />
+          Size="156,42"
+          Id="Package\Insert Property Leases\Flat File Source"
+          TopLeft="622,5.5" />
         <EdgeLayout
           Id="Package\Insert Property Leases.Paths[Rows with PID values]"
           TopLeft="386,353.5">
@@ -37777,7 +37835,31 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
+          Id="Package\Insert Property Leases.Paths[Lookup No Match Output]"
+          TopLeft="125,970">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.5"
+              Start="0,0"
+              End="0,38">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,13.1953125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
           TopLeft="356.333333333333,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -37813,43 +37895,43 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Error Output1]"
-          TopLeft="402.333333333333,863.5">
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
+          TopLeft="359.666666666667,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-21.3333333333333,60"
+              EndConnector="-231.666666666667,64.5"
               Start="0,0"
-              End="-21.3333333333333,52.5">
+              End="-231.666666666667,57">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,20.4186046511628" />
+                    End="0,22.25" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,20.4186046511628"
-                    Point2="0,24.4186046511628"
-                    Point3="-4,24.4186046511628" />
+                    Point1="0,22.25"
+                    Point2="0,26.25"
+                    Point3="-4,26.25" />
                   <mssgle:LineSegment
-                    End="-17.3333333333333,24.4186046511628" />
+                    End="-227.666666666667,26.25" />
                   <mssgle:CubicBezierSegment
-                    Point1="-17.3333333333333,24.4186046511628"
-                    Point2="-21.3333333333333,24.4186046511628"
-                    Point3="-21.3333333333333,28.4186046511628" />
+                    Point1="-227.666666666667,26.25"
+                    Point2="-231.666666666667,26.25"
+                    Point3="-231.666666666667,30.25" />
                   <mssgle:LineSegment
-                    End="-21.3333333333333,52.5" />
+                    End="-231.666666666667,57" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-56.5330533854166,29.4186046511628,91.7327734375,11.609375"
+              BoundingBox="-164.024720052083,31.25,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Error Output]"
+          Id="Package\Insert Property Leases.Paths[Lookup Error Output1]"
           TopLeft="415.666666666667,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -37881,6 +37963,42 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="66.3002799479167,29.3070362473348,91.7327734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup Error Output]"
+          TopLeft="402.333333333333,863.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-21.3333333333333,60"
+              Start="0,0"
+              End="-21.3333333333333,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.4186046511628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.4186046511628"
+                    Point2="0,24.4186046511628"
+                    Point3="-4,24.4186046511628" />
+                  <mssgle:LineSegment
+                    End="-17.3333333333333,24.4186046511628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-17.3333333333333,24.4186046511628"
+                    Point2="-21.3333333333333,24.4186046511628"
+                    Point3="-21.3333333333333,28.4186046511628" />
+                  <mssgle:LineSegment
+                    End="-21.3333333333333,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-56.5330533854166,29.4186046511628,91.7327734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -38064,88 +38182,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="248,42"
-          Id="Package\Insert Property Leases\Filter Pre-existing Property Leases"
-          TopLeft="4,928" />
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
-          TopLeft="359.666666666667,863.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-231.666666666667,64.5"
-              Start="0,0"
-              End="-231.666666666667,57">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,22.25" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.25"
-                    Point2="0,26.25"
-                    Point3="-4,26.25" />
-                  <mssgle:LineSegment
-                    End="-227.666666666667,26.25" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-227.666666666667,26.25"
-                    Point2="-231.666666666667,26.25"
-                    Point3="-231.666666666667,30.25" />
-                  <mssgle:LineSegment
-                    End="-231.666666666667,57" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-164.024720052083,31.25,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup No Match Output]"
-          TopLeft="125,970">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,45.5"
-              Start="0,0"
-              End="0,38">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,13.1953125,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Find Matching Leases Errors">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Lookup PID">
+    design-time-name="Package\Insert Property Leases\Find Matching Leases">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -38155,7 +38196,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[PIMS_PROPERTY]</Value>
+          type="q3:string">[dbo].[PIMS_LEASE]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -38181,7 +38222,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Convert TFA_FILE_NO errors">
+    design-time-name="Package\Insert Property Leases\Lookup PID Errors">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -38194,30 +38235,20 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Find Matching Leases">
+    design-time-name="Package\Insert Property Leases\Find Matching Leases Errors">
     <Properties>
       <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_LEASE]</Value>
+        <Name>DataSourceViewID</Name>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Lookup PID Errors">
+    design-time-name="Package\Insert Property Leases\Convert TFA_FILE_NO errors">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -38235,7 +38266,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -38245,7 +38276,30 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert Property Leases\Lookup PID">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_PROPERTY]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
