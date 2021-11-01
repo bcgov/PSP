@@ -57,6 +57,11 @@ const Surplus: React.FunctionComponent<{}> = () => {
 
   return (
     <FormSection>
+      <p>
+        Data shown is from the Surplus Declaration workflow on the property screen and is not
+        directly editable on this screen.
+      </p>
+      <br />
       <Table<IDeclaration>
         name="leasesTable"
         columns={columns}
