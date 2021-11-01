@@ -1954,7 +1954,7 @@ namespace Pims.Dal.Migrations
                         .HasComment("A note on the lease tenant");
 
                     b.Property<long?>("OrganizationId")
-                        .HasColumnType("bigint")
+                        .HasColumnType("BIGINT")
                         .HasColumnName("ORGANIZATION_ID")
                         .HasComment("Foreign key to the organization");
 
@@ -6352,17 +6352,10 @@ namespace Pims.Dal.Migrations
 
             modelBuilder.Entity("Pims.Dal.Entities.LeaseTenant", b =>
                 {
-                    b.HasOne("Pims.Dal.Entities.Organization", "Organization")
-                        .WithMany("LeasesManyToMany")
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("TenantsManyToMany")
                         .HasForeignKey("LeaseId")
-                        .HasConstraintName("PIM_ORG_PIM_TENANT_FK")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("Pims.Dal.Entities.Person", "Person")
-                        .WithMany("LeasesManyToMany")
-                        .HasForeignKey("LeaseId")
-                        .HasConstraintName("PIM_PERSON_PIM_TENANT_FK")
+                        .HasConstraintName("PIM_LEASE_PIM_TENANT_FK")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
@@ -6373,10 +6366,16 @@ namespace Pims.Dal.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
-                        .WithMany("TenantsManyToMany")
+                    b.HasOne("Pims.Dal.Entities.Organization", "Organization")
+                        .WithMany("LeasesManyToMany")
+                        .HasForeignKey("OrganizationId")
+                        .HasConstraintName("PIM_ORG_PIM_TENANT_FK")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.HasOne("Pims.Dal.Entities.Person", "Person")
+                        .WithMany("LeasesManyToMany")
                         .HasForeignKey("PersonId")
-                        .HasConstraintName("PIM_LEASE_PIM_TENANT_FK")
+                        .HasConstraintName("PIM_PERSON_PIM_TENANT_FK")
                         .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Lease");

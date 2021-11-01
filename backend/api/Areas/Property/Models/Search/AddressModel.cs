@@ -1,5 +1,3 @@
-using System;
-
 namespace Pims.Api.Areas.Property.Models.Search
 {
     /// <summary>

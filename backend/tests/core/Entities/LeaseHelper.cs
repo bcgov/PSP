@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
@@ -27,12 +23,13 @@ namespace Pims.Core.Test
                 LFileNo = lFileNo,
                 RowVersion = 1,
             };
+            var person = new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName, Address = address };
+            var organization = new Entity.Organization() { Address = address };
             lease.Properties.Add(new Entity.Property() { PID = pidOrPin });
-            lease.Persons.Add(new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName, Address = address });
-            lease.Organizations.Add(new Entity.Organization() { Address = address});
             lease.MotiName = new Entity.Person() { FirstName = motiFirstName, Surname = motiLastName };
             lease.ProgramType = new Entity.LeaseProgramType() { Id = "testProgramType" };
             lease.PaymentFrequencyType = new Entity.LeasePaymentFrequencyType() { Id = "testFrequencyType" };
+            lease.TenantsManyToMany.Add(new LeaseTenant(lease, person, organization, new LessorType("tst", "")));
             return lease;
         }
     }

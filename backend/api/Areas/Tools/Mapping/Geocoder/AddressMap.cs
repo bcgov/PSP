@@ -29,7 +29,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        private string GetAddress1(GModel.PropertyModel properties)
+        private static string GetAddress1(GModel.PropertyModel properties)
         {
             var address = new StringBuilder();
             if (!String.IsNullOrWhiteSpace($"{ properties.CivicNumber}"))
@@ -60,7 +60,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        private string GetAdministrativeArea(GModel.PropertyModel properties)
+        private static string GetAdministrativeArea(GModel.PropertyModel properties)
         {
             return properties.LocalityName;
         }
@@ -70,7 +70,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="geometry"></param>
         /// <returns></returns>
-        private double GetLatitude(GModel.GeometryModel geometry)
+        private static double GetLatitude(GModel.GeometryModel geometry)
         {
             if (geometry.Coordinates?.Length == 2) return geometry.Coordinates[1];
             return 0;
@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Tools.Mapping.Geocoder
         /// </summary>
         /// <param name="geometry"></param>
         /// <returns></returns>
-        private double GetLongtitude(GModel.GeometryModel geometry)
+        private static double GetLongtitude(GModel.GeometryModel geometry)
         {
             if (geometry.Coordinates?.Length >= 1) return geometry.Coordinates[0];
             return 0;

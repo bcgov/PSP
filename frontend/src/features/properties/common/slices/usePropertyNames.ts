@@ -16,7 +16,7 @@ export const usePropertyNames = () => {
   const dispatch = useDispatch();
   const fetchPropertyNames = useCallback(async (): Promise<string[]> => {
     const axiosResponse = CustomAxios()
-      .get(ENVIRONMENT.apiUrl + getPropertyNames({}))
+      .get<string[]>(ENVIRONMENT.apiUrl + getPropertyNames({}))
       .then(response => dispatch(savePropertyNames(response.data)));
     return handleAxiosResponse(dispatch, STORE_PROPERTY_NAMES, axiosResponse);
   }, [dispatch]);

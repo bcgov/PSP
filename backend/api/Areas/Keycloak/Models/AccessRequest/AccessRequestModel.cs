@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Pims.Api.Areas.Keycloak.Models.AccessRequest
 {
     public class AccessRequestModel : Api.Models.BaseAppModel

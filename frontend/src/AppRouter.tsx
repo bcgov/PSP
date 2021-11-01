@@ -21,7 +21,7 @@ const EditUserPage = lazy(() => import('./features/admin/edit-user/EditUserPage'
 const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAccessRequests'));
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
 const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
-const LeaseAndLicenseListView = lazy(() => import('features/leases/list/LeaseAndLicenseListView'));
+const LeaseAndLicenseListView = lazy(() => import('features/leases/list/LeaseListView'));
 const LeaseContainer = lazy(() => import('features/leases/detail/LeaseContainer'));
 
 const AppRouter: React.FC = () => {

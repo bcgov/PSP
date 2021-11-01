@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using System.Collections.Generic;
 
 namespace Pims.Dal.Services
 {
@@ -13,9 +13,9 @@ namespace Pims.Dal.Services
         Organization Get(long id);
         IEnumerable<Organization> GetChildren(long parentId);
         Paged<Organization> Get(int page, int quantity);
-        Paged<Organization> Get(OrganizationFilter filter);
+        Paged<Organization> Get(OrganizationFilter filter = null);
         Organization Add(Organization add);
-        Organization Update(Organization add);
+        Organization Update(Organization update);
         void Delete(Organization delete);
     }
 }

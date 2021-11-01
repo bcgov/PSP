@@ -1,11 +1,11 @@
-import { AxiosError, AxiosResponse } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { useApiAccessRequests } from 'hooks/pims-api';
-import { IAccessRequest } from 'interfaces';
+import { IAccessRequest, IPagedItems } from 'interfaces';
 import React from 'react';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
+import { IGenericNetworkAction } from '../network/interfaces';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useAppDispatch } from './../../hooks';
 import {
@@ -28,16 +28,18 @@ export const useAccessRequests = () => {
    * Get the fetchCurrent function with returns the current access request for the current user.
    * @returns The dispatchable action which will return the access request if one exists, or 204 if one doesn't
    */
-  const fetchCurrent = React.useCallback(async (): Promise<IAccessRequest> => {
+  const fetchCurrent = React.useCallback(async (): Promise<
+    IAccessRequest | { payload: IGenericNetworkAction; type: string }
+  > => {
     dispatch(logRequest(actionTypes.GET_REQUEST_ACCESS));
     dispatch(showLoading());
     return getAccessRequest()
-      .then((response: AxiosResponse) => {
+      .then(response => {
         dispatch(logSuccess({ name: actionTypes.GET_REQUEST_ACCESS }));
         dispatch(storeAccessRequest(response.data));
         return response.data;
       })
-      .catch((axiosError: AxiosError) =>
+      .catch(axiosError =>
         dispatch(
           logError({
             name: actionTypes.GET_REQUEST_ACCESS,
@@ -57,17 +59,19 @@ export const useAccessRequests = () => {
    * @returns The action function to submit the access request
    */
   const add = React.useCallback(
-    async (accessRequest: IAccessRequest): Promise<IAccessRequest> => {
+    async (
+      accessRequest: IAccessRequest,
+    ): Promise<IAccessRequest | { payload: IGenericNetworkAction; type: string }> => {
       dispatch(logRequest(actionTypes.ADD_REQUEST_ACCESS));
       dispatch(showLoading());
 
       return postAccessRequest(accessRequest)
-        .then((response: AxiosResponse) => {
+        .then(response => {
           dispatch(logSuccess({ name: actionTypes.ADD_REQUEST_ACCESS, status: response.status }));
           dispatch(storeAccessRequest(response.data));
           return response.data;
         })
-        .catch((axiosError: AxiosError) =>
+        .catch(axiosError =>
           dispatch(
             logError({
               name: actionTypes.ADD_REQUEST_ACCESS,
@@ -86,18 +90,23 @@ export const useAccessRequests = () => {
    * @returns The dispatchable action which will update the access request.
    */
   const update = React.useCallback(
-    async (accessRequest: IAccessRequest): Promise<IAccessRequest> => {
+    async (
+      accessRequest: IAccessRequest,
+    ): Promise<IAccessRequest | { payload: IGenericNetworkAction; type: string }> => {
       dispatch(logRequest(actionTypes.UPDATE_REQUEST_ACCESS_ADMIN));
       dispatch(showLoading());
       return putAccessRequest(accessRequest)
-        .then((response: AxiosResponse) => {
+        .then(response => {
           dispatch(
-            logSuccess({ name: actionTypes.UPDATE_REQUEST_ACCESS_ADMIN, status: response.status }),
+            logSuccess({
+              name: actionTypes.UPDATE_REQUEST_ACCESS_ADMIN,
+              status: response.status,
+            }),
           );
           dispatch(updateAccessRequestsAdmin(response.data));
           return response.data;
         })
-        .catch((axiosError: AxiosError) =>
+        .catch(axiosError =>
           dispatch(
             logError({
               name: actionTypes.UPDATE_REQUEST_ACCESS_ADMIN,
@@ -116,18 +125,20 @@ export const useAccessRequests = () => {
    * @returns The dispatchable action which will return a paged list of 0 or more access requests
    */
   const fetch = React.useCallback(
-    async (params: API.IPaginateAccessRequests): Promise<IAccessRequest[]> => {
+    async (
+      params: API.IPaginateAccessRequests,
+    ): Promise<IPagedItems<IAccessRequest> | { payload: IGenericNetworkAction; type: string }> => {
       dispatch(logRequest(actionTypes.GET_REQUEST_ACCESS));
       dispatch(showLoading());
       return getAccessRequestsPaged(params)
-        .then((response: AxiosResponse) => {
+        .then(response => {
           dispatch(logSuccess({ name: actionTypes.GET_REQUEST_ACCESS, status: response.status }));
           dispatch(storeAccessRequests(response.data));
 
           dispatch(hideLoading());
           return response.data;
         })
-        .catch((axiosError: AxiosError) =>
+        .catch(axiosError =>
           dispatch(
             logError({
               name: actionTypes.GET_REQUEST_ACCESS,
@@ -146,19 +157,25 @@ export const useAccessRequests = () => {
    * @returns The dispatchable action which will delete the matching access request.
    */
   const remove = React.useCallback(
-    async (id: number, data: IAccessRequest): Promise<IAccessRequest> => {
+    async (
+      id: number,
+      data: IAccessRequest,
+    ): Promise<IAccessRequest | { payload: IGenericNetworkAction; type: string }> => {
       dispatch(logRequest(actionTypes.DELETE_REQUEST_ACCESS_ADMIN));
       dispatch(showLoading());
       return deleteAccessRequest(data)
-        .then((response: AxiosResponse) => {
+        .then(response => {
           dispatch(
-            logSuccess({ name: actionTypes.DELETE_REQUEST_ACCESS_ADMIN, status: response.status }),
+            logSuccess({
+              name: actionTypes.DELETE_REQUEST_ACCESS_ADMIN,
+              status: response.status,
+            }),
           );
           dispatch(removeAccessRequest(id));
           dispatch(hideLoading());
           return response.data;
         })
-        .catch((axiosError: AxiosError) =>
+        .catch(axiosError =>
           dispatch(
             logError({
               name: actionTypes.DELETE_REQUEST_ACCESS_ADMIN,

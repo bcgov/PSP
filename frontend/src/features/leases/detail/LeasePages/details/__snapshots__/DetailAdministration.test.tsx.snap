@@ -12,7 +12,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 1rem 0 0.5rem 0;
   border-bottom: solid 0.3rem;
 }
 
@@ -24,7 +24,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
 
 .c1 .form-label,
 .c1 .form-group {
-  margin: 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .c1 > .input {
@@ -166,7 +166,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 1rem 0 0.5rem 0;
   border-bottom: solid 0.3rem;
 }
 
@@ -178,7 +178,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
 
 .c1 .form-label,
 .c1 .form-group {
-  margin: 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .c1 > .input {

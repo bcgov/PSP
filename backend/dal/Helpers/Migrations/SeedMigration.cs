@@ -46,7 +46,7 @@ namespace Pims.Dal.Helpers.Migrations
         /// <summary>
         /// Creates a new instances of a SeedMigration object.
         /// </summary>
-        public SeedMigration()
+        protected SeedMigration()
         {
             _migrationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations");
         }
@@ -161,7 +161,7 @@ namespace Pims.Dal.Helpers.Migrations
         /// </summary>
         /// <param name="migrationBuilder"></param>
         /// <param name="path"></param>
-        private void ExecuteScript(MigrationBuilder migrationBuilder, string path)
+        private static void ExecuteScript(MigrationBuilder migrationBuilder, string path)
         {
             migrationBuilder.Sql($"PRINT N'---------------> {path}'");
             var sql = File.ReadAllText(path).Trim();
