@@ -5,6 +5,7 @@ import { noop } from 'lodash';
 import { mockOrganization, mockProperties, mockUser } from 'mocks/filterDataMock';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+
 import Surplus from './Surplus';
 
 const history = createMemoryHistory();
