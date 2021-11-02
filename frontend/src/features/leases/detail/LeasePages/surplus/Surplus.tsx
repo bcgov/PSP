@@ -17,26 +17,35 @@ const columns: ColumnWithProps<IDeclaration>[] = [
   {
     Header: 'PID / Identifier',
     accessor: 'identifier',
-    align: 'left',
     maxWidth: 40,
   },
   {
     Header: 'Surplus Declaration',
     accessor: 'declarationType',
-    align: 'left',
     maxWidth: 40,
+    Cell: ({ row: { original } }) => {
+      const declarationType = original.declarationType;
+      const isYesDeclarationType = declarationType.toUpperCase() === 'YES';
+      return (
+        <>
+          {isYesDeclarationType ? (
+            <strong className="text-success">{declarationType}</strong>
+          ) : (
+            <span>{declarationType}</span>
+          )}
+        </>
+      );
+    },
   },
   {
     Header: 'Declaration Date',
     accessor: 'date',
-    align: 'left',
     Cell: ({ cell: { value } }) => prettyFormatDate(value),
     maxWidth: 50,
   },
   {
     Header: 'Declaration Comments',
     accessor: 'comments',
-    align: 'left',
     minWidth: 150,
   },
 ];
@@ -47,10 +56,10 @@ const Surplus: React.FunctionComponent<{}> = () => {
 
   let declarations: IDeclaration[] = organizations.map<IDeclaration>(x => {
     return {
-      id: x.id || 1,
+      id: x.id || Math.random(),
       identifier: x.pid,
       comments: x.surplusDeclaration?.comment || '',
-      declarationType: x.surplusDeclaration?.typeDescription || 'No',
+      declarationType: x.surplusDeclaration?.typeDescription || 'Unknown',
       date: x.surplusDeclaration?.date || '',
     };
   });

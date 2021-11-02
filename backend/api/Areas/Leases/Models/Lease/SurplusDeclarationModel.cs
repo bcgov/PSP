@@ -20,6 +20,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string TypeDescription { get; set; }
 
         /// <summary>
+        /// get/set - Surplus declaration type code.
+        /// </summary>
+        public string TypeCode { get; set; }
+
+        /// <summary>
         /// get/set - Surplus declaration comment.
         /// </summary>
         public string Comment { get; set; }

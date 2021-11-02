@@ -20,12 +20,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.RowVersion, src => src.RowVersion)
-                .Map(dest => dest.SurplusDeclaration, src => string.IsNullOrEmpty(src.SurplusDeclarationTypeId) ? null : new Model.SurplusDeclarationModel()
-                {
-                    Comment = src.SurplusDeclarationComment,
-                    Date = src.SurplusDeclarationDate,
-                    TypeDescription = src.SurplusDeclarationType.Description
-                });
+                .Map(dest => dest.SurplusDeclaration, src => src);
         }
     }
 }
