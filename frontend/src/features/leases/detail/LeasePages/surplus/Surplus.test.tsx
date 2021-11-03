@@ -41,7 +41,7 @@ describe('Lease Surplus Declaration', () => {
         organizations: [mockOrganization],
       },
     });
-    const rows = result.container.querySelectorAll('[role="row"]');
+    const rows = result.getAllByRole('row');
     expect(rows.length).toBe(mockProperties.length + 1);
   });
 
@@ -56,7 +56,7 @@ describe('Lease Surplus Declaration', () => {
         organizations: [mockOrganization],
       },
     });
-    const dataRow = result.container.querySelectorAll('[role="row"]')[1];
+    const dataRow = result.getAllByRole('row')[1];
     const columns = dataRow.querySelectorAll('[role="cell"]');
 
     expect(columns[1].textContent).toBe('Unknown');
@@ -79,7 +79,7 @@ describe('Lease Surplus Declaration', () => {
         organizations: [mockOrganization],
       },
     });
-    const dataRow = result.container.querySelectorAll('[role="row"]')[1];
+    const dataRow = result.getAllByRole('row')[1];
     const columns = dataRow.querySelectorAll('[role="cell"]');
 
     expect(columns[0].textContent).toBe(testProperty.pid);

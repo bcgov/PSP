@@ -52,7 +52,7 @@ const columns: ColumnWithProps<IDeclaration>[] = [
 
 const Surplus: React.FunctionComponent<{}> = () => {
   const { values } = useFormikContext<ILease>();
-  const organizations: IProperty[] = getIn(values, withNameSpace(undefined, 'properties')) ?? [];
+  const organizations: IProperty[] = getIn(values, 'properties') ?? [];
 
   let declarations: IDeclaration[] = organizations.map<IDeclaration>(x => {
     return {
