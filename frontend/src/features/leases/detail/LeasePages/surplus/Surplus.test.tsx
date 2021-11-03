@@ -31,12 +31,6 @@ describe('Lease Surplus Declaration', () => {
     });
     expect(result.asFragment()).toMatchSnapshot();
   });
-  it('Snapshot matches', () => {
-    const result = setup({
-      lease: { ...defaultFormLease, persons: [mockUser], organizations: [mockOrganization] },
-    });
-    expect(result.asFragment()).toMatchSnapshot();
-  });
 
   it('Table row count is equal to the number of properties', () => {
     const result = setup({
