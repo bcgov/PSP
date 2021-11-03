@@ -3,7 +3,6 @@ import { ColumnWithProps, Table } from 'components/Table';
 import { getIn, useFormikContext } from 'formik';
 import { ILease, IProperty } from 'interfaces';
 import { prettyFormatDate } from 'utils';
-import { withNameSpace } from 'utils/formUtils';
 
 interface IDeclaration {
   id: number;
