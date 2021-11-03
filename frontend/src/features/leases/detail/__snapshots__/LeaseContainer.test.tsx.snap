@@ -481,11 +481,12 @@ exports[`LeaseContainer component renders as expected 1`] = `
   position: sticky;
   top: 0;
   left: 0;
+  padding-bottom: 1rem;
   background-color: white;
 }
 
 .c14 p {
-  height: 3rem;
+  height: 1rem;
   text-align: left;
 }
 
@@ -700,7 +701,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
         >
           Details
         </h2>
-        <p />
       </div>
       <form
         action="#"

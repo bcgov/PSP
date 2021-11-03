@@ -16,6 +16,7 @@ import {
   useLeaseDetail,
 } from '..';
 import Details from './LeasePages/details/Details';
+import Surplus from './LeasePages/surplus/Surplus';
 import Tenant from './LeasePages/tenant/Tenant';
 
 export interface ILeaseAndLicenseContainerProps {
@@ -54,7 +55,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [LeasePageNames.INSURANCE, { component: <></>, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: <></>, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
-  [LeasePageNames.SURPLUS, { component: <></>, title: 'Surplus Declaration' }],
+  [LeasePageNames.SURPLUS, { component: <Surplus />, title: 'Surplus Declaration' }],
 ]);
 
 /**
