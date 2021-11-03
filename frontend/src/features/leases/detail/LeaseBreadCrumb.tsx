@@ -24,15 +24,18 @@ export const LeaseBreadCrumb: React.FunctionComponent<ILeaseAndLicenseBreadCrumb
     <Styled.LeaseBreadcrumb>
       <Breadcrumb.Item onClick={onClickManagement}>Management</Breadcrumb.Item>
       <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/lease/list' }}>
-        Lease & License Search
+        Lease &amp; License Search
       </Breadcrumb.Item>
-      <Breadcrumb.Item
-        active
-        linkAs={Link}
-        linkProps={{ to: `/lease/${leaseId}?leasePage=${leasePage?.title}` }}
-      >
-        {leasePage?.title}
-      </Breadcrumb.Item>
+      {/* Render link only if leaseId is available */}
+      {leaseId && (
+        <Breadcrumb.Item
+          active
+          linkAs={Link}
+          linkProps={{ to: `/lease/${leaseId}?leasePage=${leasePage?.title}` }}
+        >
+          {leasePage?.title}
+        </Breadcrumb.Item>
+      )}
     </Styled.LeaseBreadcrumb>
   );
 };
