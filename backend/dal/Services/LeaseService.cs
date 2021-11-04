@@ -50,7 +50,7 @@ namespace Pims.Dal.Services
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
-            var query = this.Context.GenerateLeaseQuery(this.User, filter);
+            var query = this.Context.GenerateLeaseQuery(filter);
             var leases = query.ToArray();
 
             return leases;
@@ -107,7 +107,7 @@ namespace Pims.Dal.Services
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = this.Context.GenerateLeaseQuery(this.User, filter);
+            var query = this.Context.GenerateLeaseQuery(filter);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)
