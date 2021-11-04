@@ -49,11 +49,11 @@ const columns: ColumnWithProps<IDeclaration>[] = [
   },
 ];
 
-const Surplus: React.FunctionComponent<{}> = () => {
+const Surplus: React.FunctionComponent = () => {
   const { values } = useFormikContext<ILease>();
-  const organizations: IProperty[] = getIn(values, 'properties') ?? [];
+  const properties: IProperty[] = getIn(values, 'properties') ?? [];
 
-  let declarations: IDeclaration[] = organizations.map<IDeclaration>(x => {
+  let declarations: IDeclaration[] = properties.map<IDeclaration>(x => {
     return {
       id: x.id || Math.random(),
       identifier: x.pid,
