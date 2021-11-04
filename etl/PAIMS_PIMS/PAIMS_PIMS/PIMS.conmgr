@@ -10,7 +10,7 @@
       DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;User ID=PIMS_DEV;Initial Catalog=PIMS_DEV;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
       <DTS:Password
         DTS:Name="Password"
-        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA1mUTV2pQrESdnKDHC1rXUwAAAAACAAAAAAAQZgAAAAEAACAAAACXm2qu0B3W0TmbBRR8aRCYEISbUk2CT/VP16dDE3FdiwAAAAAOgAAAAAIAACAAAADB+zMSuRkCyWLpyFyvqlDSRGsDgHe0hISycjG8rL4hF4AAAACaJfEaBuuKC3YCCMK0n+iIHDXPlEBlZGoOm8iTROQnjVZ4AG1bxlRuNYosVqL6OOSrtfc5cnMtscGL4zSaK5olPNsUrfli/HRHm7Od5zviqf6cHfookgYjxhJwbt1QYXnHCSkeulFk8kPc9tDBM8icoIe5CY4y+B4lye1Tpz57x0AAAADmpalKrhKsZzOspSxwTzp8Vxs5WCe/oItkayAOQmOANSdryh/d55OtgTtmdRWOM94Q7qG6O1bscPaUGuru43mk</DTS:Password>
+        Sensitive="1"></DTS:Password>
     </DTS:ConnectionManager>
   </DTS:ObjectData>
 </DTS:ConnectionManager>
