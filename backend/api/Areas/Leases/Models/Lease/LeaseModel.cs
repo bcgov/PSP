@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
+    /// <summary>
+    /// Provides a lease-oriented model.
+    /// </summary>
     public class LeaseModel
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key to identify the property.
+        /// get/set - The primary key to identify the lease.
         /// </summary>
         public long Id { get; set; }
 
