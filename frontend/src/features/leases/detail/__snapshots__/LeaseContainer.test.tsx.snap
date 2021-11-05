@@ -100,6 +100,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c15 {
   font-size: 3.2rem;
+  line-height: 4.2rem;
   text-align: left;
   border-bottom: solid 0.4rem;
 }
@@ -203,7 +204,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 .c26 > .input {
   grid-column: controls;
   grid-row: auto;
-  border-left: 1px solid black;
+  border-left: 1px solid #666666;
 }
 
 .c26 .form-control {
@@ -553,12 +554,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
           >
             Lease & License Search
           </a>
-        </li>
-        <li
-          aria-current="page"
-          class="breadcrumb-item active"
-        >
-          Details
         </li>
       </ol>
     </nav>
