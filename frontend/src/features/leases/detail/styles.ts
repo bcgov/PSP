@@ -11,6 +11,7 @@ export const LeaseH1 = styled.h1`
 
 export const LeaseH2 = styled.h2`
   font-size: 3.2rem;
+  line-height: 4.2rem;
   text-align: left;
   color: ${props => props.theme.css.textColor};
   border-bottom: solid 0.4rem ${props => props.theme.css.primaryColor};
@@ -104,7 +105,7 @@ export const FormGrid = styled.div`
   & > .input {
     grid-column: controls;
     grid-row: auto;
-    border-left: 1px solid black;
+    border-left: 1px solid #666666;
   }
 
   & .form-control {
