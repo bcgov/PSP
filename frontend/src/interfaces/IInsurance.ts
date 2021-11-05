@@ -1,4 +1,5 @@
 import { IOrganization, IPerson } from 'interfaces';
+
 import ITypeCode from './ITypeCode';
 
 export default interface IInsurance {
