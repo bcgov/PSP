@@ -134,6 +134,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - A list of properties associated with this lease
         /// </summary>
         public IEnumerable<PropertyModel> Properties { get; set; }
+
+        /// <summary>
+        /// get/set - A list of insurance objects associated with this lease
+        /// </summary>
+        public IEnumerable<InsuranceModel> Insurances { get; set; }
         #endregion
     }
 }

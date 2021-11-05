@@ -1,5 +1,4 @@
 using System;
-using Pims.Api.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
@@ -16,7 +15,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The insurance's type
         /// </summary>
-        public CodeModel InsuranceType { get; set; }
+        public TypeModel<string> InsuranceType { get; set; }
 
         /// <summary>
         /// get/set - The insurance's organization
@@ -41,7 +40,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The insurance's insurance payee type
         /// </summary>
-        public CodeModel InsurancePayeeType { get; set; }
+        public TypeModel<string> InsurancePayeeType { get; set; }
 
         /// <summary>
         /// get/set - The insurance's other insurance type
@@ -77,5 +76,10 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - The insurance's risk assessment completed date
         /// </summary>
         public DateTime? RiskAssessmentCompletedDate { get; set; }
+
+        /// <summary>
+        /// get/set - The insurance's is in place flag indicator
+        /// </summary>
+        public bool InsuranceInPlace { get; set; }
     }
 }

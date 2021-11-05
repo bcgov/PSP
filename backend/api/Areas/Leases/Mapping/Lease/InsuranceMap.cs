@@ -22,7 +22,8 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.InsuredValue, src => src.InsuredValue)
                 .Map(dest => dest.StartDate, src => src.StartDate)
                 .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
-                .Map(dest => dest.RiskAssessmentCompletedDate, src => src.RiskAssessmentCompletedDate);
+                .Map(dest => dest.RiskAssessmentCompletedDate, src => src.RiskAssessmentCompletedDate)
+                .Map(dest => dest.InsuranceInPlace, src => (src.StartDate > System.DateTime.Now) && (System.DateTime.Now < src.ExpiryDate));
         }
     }
 }
