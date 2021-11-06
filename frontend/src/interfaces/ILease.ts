@@ -1,7 +1,6 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
-import { IOrganization, IPerson, IProperty } from '.';
-import IInsurance from './IInsurance';
+import { IInsurance, IOrganization, IPerson, IProperty } from '.';
 export interface ILease {
   id?: number;
   lFileNo?: string;

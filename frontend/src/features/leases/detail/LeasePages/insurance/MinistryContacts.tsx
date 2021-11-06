@@ -1,32 +1,46 @@
+import { IInsurance } from 'interfaces';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 
-export const LabelCol = styled(Col)`
-  border-right: solid 1px ${props => props.theme.css.primaryColor};
-  padding-bottom: 10px;
-`;
+import { LabelCol, SubTitle } from './styles';
 
-const SubTitle = styled.h2`
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
-  margin-bottom: 10px;
-`;
+interface IContactsProps {
+  insurance: IInsurance;
+}
 
-const MinistryContacts: React.FunctionComponent = () => {
+interface ContactsView {
+  riskManagement: string;
+  ministryOfFinance: string;
+}
+
+const MinistryContacts: React.FunctionComponent<IContactsProps> = ({ insurance }) => {
   const columnWidth = 7;
+  const model: ContactsView = {
+    riskManagement:
+      insurance.motiRiskManagementContact.fullName ||
+      insurance.motiRiskManagementContact.surname ||
+      insurance.motiRiskManagementContact.firstName ||
+      insurance.motiRiskManagementContact.middleNames ||
+      '',
+    ministryOfFinance:
+      insurance.bctfaRiskManagementContact.fullName ||
+      insurance.motiRiskManagementContact.surname ||
+      insurance.motiRiskManagementContact.firstName ||
+      insurance.motiRiskManagementContact.middleNames ||
+      '',
+  };
   return (
-    <Row className="border">
+    <Row>
       <Col>
         <SubTitle>Ministry Contacts</SubTitle>
         <Row>
           <Col>
             <Row>
               <LabelCol xs={columnWidth}>MOTI Risk Management:</LabelCol>
-              <Col>Jane Smith</Col>
+              <Col>{model.riskManagement}</Col>
             </Row>
             <Row>
-              <LabelCol xs={columnWidth}>Ministry of Finance::</LabelCol>
-              <Col>Joan Jones</Col>
+              <LabelCol xs={columnWidth}>Ministry of Finance:</LabelCol>
+              <Col>{model.ministryOfFinance}</Col>
             </Row>
           </Col>
         </Row>

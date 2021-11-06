@@ -1,43 +1,58 @@
+import { IInsurance } from 'interfaces';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 
-const LabelCol = styled(Col)`
-  border-right: solid 1px ${props => props.theme.css.primaryColor};
-  padding-bottom: 10px;
-`;
+import { LabelCol, SubTitle } from './styles';
 
-const SubTitle = styled.h2`
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
-  margin-bottom: 10px;
-`;
+interface InsurerProps {
+  insurance: IInsurance;
+}
 
-const Insurer: React.FunctionComponent = () => {
+interface InsurerView {
+  organization: string;
+  contactName: string;
+  mobilePhone?: string;
+  landlinePhone?: string;
+  email: string;
+}
+
+const Insurer: React.FunctionComponent<InsurerProps> = ({ insurance }) => {
   const columnWidth = 5;
+  const model: InsurerView = {
+    organization: insurance.insurerOrganization.name,
+    contactName:
+      insurance.insurerContact.fullName ||
+      insurance.insurerContact.surname ||
+      insurance.insurerContact.firstName ||
+      insurance.insurerContact.middleNames ||
+      '',
+    mobilePhone: insurance.insurerContact.mobile || '',
+    landlinePhone: insurance.insurerContact.landline || '',
+    email: insurance.insurerContact.email || '',
+  };
   return (
-    <Row className="border">
+    <Row>
       <Col>
         <SubTitle>Insurer</SubTitle>
         <Row>
           <Col>
             <Row>
               <LabelCol xs={columnWidth}>Organization:</LabelCol>
-              <Col>Acme Auto Insurance Group</Col>
+              <Col>{model.organization}</Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Contact name:</LabelCol>
-              <Col>Jennifer Smith</Col>
+              <Col>{model.contactName}</Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Phone number:</LabelCol>
               <Col>
-                <div>mobile: 250-555-7777</div>
-                <div>landline: 250-555-8888</div>
+                <div className="mb-2">mobile: {model.mobilePhone}</div>
+                <div className="mb-2">landline: {model.landlinePhone}</div>
               </Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Email:</LabelCol>
-              <Col>jen.16.smith@acmeins.co</Col>
+              <Col>{model.email}</Col>
             </Row>
           </Col>
         </Row>
