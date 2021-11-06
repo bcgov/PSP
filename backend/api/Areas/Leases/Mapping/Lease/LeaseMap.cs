@@ -30,6 +30,9 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PaymentFrequencyType, src => src.PaymentFrequencyType.Description)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.IsSubjectToRta, src => src.IsSubjectToRta)
+                .Map(dest => dest.IsCommBldg, src => src.IsCommBldg)
+                .Map(dest => dest.IsOtherImprovement, src => src.IsOtherImprovement)
                 .Map(dest => dest.Persons, src => src.Persons)
                 .Map(dest => dest.Organizations, src => src.Organizations)
                 .Map(dest => dest.TenantNotes, src => src.TenantsManyToMany.Select(t => t.Note));

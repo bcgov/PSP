@@ -186,7 +186,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 }
 
 .c28 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
 }
 
@@ -459,6 +459,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 }
 
 .c16#leaseForm input:disabled,
+.c16#leaseForm select:disabled,
 .c16#leaseForm textarea:disabled {
   background: none;
   border: none;

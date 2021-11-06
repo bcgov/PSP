@@ -1,8 +1,18 @@
+import { FormDescriptionLabel } from 'features/leases/detail/styles';
 import styled from 'styled-components';
+
+// common ui styling
+export * from 'features/leases/detail/styles';
 
 export const ImprovementsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 2.5rem;
+`;
+
+export const ImprovementsListHeader = styled(FormDescriptionLabel)`
+  color: ${props => props.theme.css.primaryColor};
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 `;

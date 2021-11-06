@@ -139,6 +139,21 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - A list of insurance objects associated with this lease
         /// </summary>
         public IEnumerable<InsuranceModel> Insurances { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this improvement contains a building that is subject to RTA.
+        /// </summary>
+        public bool IsSubjectToRta { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this improvement contains a commercial building.
+        /// </summary>
+        public bool IsCommBldg { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this improvement is of type other.
+        /// </summary>
+        public bool IsOtherImprovement { get; set; }
         #endregion
     }
 }
