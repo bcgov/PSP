@@ -11,7 +11,7 @@ interface PolicyProps {
 interface PolicyView {
   insuranceInPlace: string;
   limit: string;
-  assesmentDate: string;
+  assessmentDate: string;
   payee: string;
   insuredValue: string;
   startDate: string;
@@ -21,11 +21,10 @@ interface PolicyView {
 
 const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   const columnWidth = 5;
-  console.log(insurance);
   const policy: PolicyView = {
     insuranceInPlace: insurance.insuranceInPlace ? 'Yes' : 'no',
     limit: formatMoney(insurance.coverageLimit),
-    assesmentDate: prettyFormatDate(insurance.riskAssessmentCompletedDate) || '',
+    assessmentDate: prettyFormatDate(insurance.riskAssessmentCompletedDate) || '',
     payee: insurance.insurancePayeeType.description,
     insuredValue: formatMoney(insurance.insuredValue),
     startDate: prettyFormatDate(insurance.startDate),
@@ -48,7 +47,7 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Risk Assessment completed:</LabelCol>
-              <Col>{policy.assesmentDate}</Col>
+              <Col>{policy.assessmentDate}</Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>BCTFA/MOTI (Insurance Payee):</LabelCol>
