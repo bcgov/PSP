@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease, IInsurance, IProperty } from 'interfaces';
+import { defaultFormLease, IFormLease, IInsurance } from 'interfaces';
 import { noop } from 'lodash';
-import { mockOrganization, mockProperties, mockUser } from 'mocks/filterDataMock';
-import { prettyFormatDate } from 'utils';
+import { mockOrganization, mockUser } from 'mocks/filterDataMock';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+
 import Insurance from './Insurance';
 
 const mockInsurance: IInsurance = {
