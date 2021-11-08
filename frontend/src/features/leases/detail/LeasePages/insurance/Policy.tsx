@@ -22,7 +22,7 @@ interface PolicyView {
 const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   const columnWidth = 5;
   const policy: PolicyView = {
-    insuranceInPlace: insurance.insuranceInPlace ? 'Yes' : 'no',
+    insuranceInPlace: insurance.insuranceInPlace ? 'Yes' : 'No',
     limit: formatMoney(insurance.coverageLimit),
     assessmentDate: prettyFormatDate(insurance.riskAssessmentCompletedDate) || '',
     payee: insurance.insurancePayeeType.description,
@@ -32,7 +32,7 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
     coverageDescription: insurance.coverageDescription,
   };
   return (
-    <Row>
+    <Row className="pt-3">
       <Col>
         <SubTitle>Policy</SubTitle>
         <Row>

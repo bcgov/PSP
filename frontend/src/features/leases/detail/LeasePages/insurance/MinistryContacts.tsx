@@ -15,18 +15,8 @@ interface ContactsView {
 const MinistryContacts: React.FunctionComponent<IContactsProps> = ({ insurance }) => {
   const columnWidth = 7;
   const model: ContactsView = {
-    riskManagement:
-      insurance.motiRiskManagementContact.fullName ||
-      insurance.motiRiskManagementContact.surname ||
-      insurance.motiRiskManagementContact.firstName ||
-      insurance.motiRiskManagementContact.middleNames ||
-      '',
-    ministryOfFinance:
-      insurance.bctfaRiskManagementContact.fullName ||
-      insurance.motiRiskManagementContact.surname ||
-      insurance.motiRiskManagementContact.firstName ||
-      insurance.motiRiskManagementContact.middleNames ||
-      '',
+    riskManagement: insurance.motiRiskManagementContact.fullName || 'N.A',
+    ministryOfFinance: insurance.bctfaRiskManagementContact.fullName || 'N.A',
   };
   return (
     <Row>

@@ -19,15 +19,10 @@ const Insurer: React.FunctionComponent<InsurerProps> = ({ insurance }) => {
   const columnWidth = 5;
   const model: InsurerView = {
     organization: insurance.insurerOrganization.name,
-    contactName:
-      insurance.insurerContact.fullName ||
-      insurance.insurerContact.surname ||
-      insurance.insurerContact.firstName ||
-      insurance.insurerContact.middleNames ||
-      '',
-    mobilePhone: insurance.insurerContact.mobile || '',
-    landlinePhone: insurance.insurerContact.landline || '',
-    email: insurance.insurerContact.email || '',
+    contactName: insurance.insurerContact.fullName || 'N.A',
+    mobilePhone: insurance.insurerContact.mobile,
+    landlinePhone: insurance.insurerContact.landline,
+    email: insurance.insurerContact.email || 'N.A',
   };
   return (
     <Row>
@@ -37,17 +32,24 @@ const Insurer: React.FunctionComponent<InsurerProps> = ({ insurance }) => {
           <Col>
             <Row>
               <LabelCol xs={columnWidth}>Organization:</LabelCol>
-              <Col>{model.organization}</Col>
+              <Col data-testid="organization">{model.organization}</Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Contact name:</LabelCol>
-              <Col>{model.contactName}</Col>
+              <Col data-testid="contact-name">{model.contactName}</Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Phone number:</LabelCol>
-              <Col>
-                <div className="mb-2">mobile: {model.mobilePhone}</div>
-                <div className="mb-2">landline: {model.landlinePhone}</div>
+              <Col data-testid="col-phone">
+                {model.mobilePhone !== undefined && (
+                  <div className="mb-2">mobile: {model.mobilePhone}</div>
+                )}
+                {model.landlinePhone !== undefined && (
+                  <div className="mb-2">landline: {model.landlinePhone}</div>
+                )}
+                {model.mobilePhone === undefined && model.landlinePhone === undefined && (
+                  <div className="mb-2">N.A</div>
+                )}
               </Col>
             </Row>
             <Row>

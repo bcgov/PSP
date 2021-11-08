@@ -15,7 +15,7 @@ const Insurance: React.FunctionComponent = () => {
       {insuranceList.map((insurance: IInsurance, index: number) => (
         <div>
           <FormSection key={index + insurance.id}>
-            <h2>{insurance.insuranceType.description || ''}</h2>
+            <h2 data-testid="insurance-title">{insurance.insuranceType.description}</h2>
             <br />
             <Row>
               <Col>
