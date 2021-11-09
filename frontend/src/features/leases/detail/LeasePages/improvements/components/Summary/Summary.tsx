@@ -14,8 +14,8 @@ export interface ISummaryProps {
  */
 export const Summary: React.FunctionComponent<ISummaryProps> = ({ disabled }) => {
   const { values } = useFormikContext<IFormLease>();
-  const isResidential = getIn(values, 'isSubjectToRta');
-  const isCommercial = getIn(values, 'isCommBldg');
+  const isResidential = getIn(values, 'isResidential');
+  const isCommercial = getIn(values, 'isCommercialBuilding');
   const isOther = getIn(values, 'isOtherImprovement');
 
   return (

@@ -27,8 +27,8 @@ export interface ILease {
   areaUnit?: string;
   tenantNotes: string[];
   insurances: IInsurance[];
-  isSubjectToRta: boolean;
-  isCommBldg: boolean;
+  isResidential: boolean;
+  isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
 }
 
@@ -55,8 +55,8 @@ export const defaultLease: ILease = {
   motiName: 'Moti, Name, Name',
   tenantNotes: [],
   insurances: [],
-  isSubjectToRta: false,
-  isCommBldg: false,
+  isResidential: false,
+  isCommercialBuilding: false,
   isOtherImprovement: false,
 };
 
@@ -82,7 +82,7 @@ export const defaultFormLease: IFormLease = {
   areaUnit: '',
   tenantNotes: [],
   insurances: [],
-  isSubjectToRta: false,
-  isCommBldg: false,
+  isResidential: false,
+  isCommercialBuilding: false,
   isOtherImprovement: false,
 };

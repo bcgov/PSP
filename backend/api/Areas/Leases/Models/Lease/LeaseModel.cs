@@ -146,14 +146,14 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<PropertyImprovementModel> Improvements { get; set; }
 
         /// <summary>
-        /// get/set - Whether this improvement contains a building that is subject to RTA.
+        /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).
         /// </summary>
-        public bool IsSubjectToRta { get; set; }
+        public bool IsResidential { get; set; }
 
         /// <summary>
         /// get/set - Whether this improvement contains a commercial building.
         /// </summary>
-        public bool IsCommBldg { get; set; }
+        public bool IsCommercialBuilding { get; set; }
 
         /// <summary>
         /// get/set - Whether this improvement is of type other.
