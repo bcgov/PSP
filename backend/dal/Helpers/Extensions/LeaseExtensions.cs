@@ -46,8 +46,11 @@ namespace Pims.Dal.Helpers.Extensions
             return query.Include(l => l.Properties)
                 .ThenInclude(p => p.Address)
                 .Include(l => l.ProgramType)
-                .Include(l => l.Persons)
-                .Include(l => l.Organizations);
+                .Include(l => l.TenantsManyToMany)
+                .ThenInclude(t => t.Person)
+                .Include(l => l.TenantsManyToMany)
+                .ThenInclude(t => t.Organization);
+            
         }
 
         /// <summary>
