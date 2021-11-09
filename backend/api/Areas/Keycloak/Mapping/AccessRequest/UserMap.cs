@@ -13,7 +13,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
-                .Map(dest => dest.Email, src => src.Person.GetEmail())
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
         }
     }

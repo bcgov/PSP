@@ -4,6 +4,7 @@ export * from './IAccessRequestRole';
 export * from './IAccessRequestUserInfo';
 export * from './IAddress';
 export * from './IInsurance';
+export * from './IContactSearchResult';
 export * from './ILease';
 export * from './ILeaseSearchResult';
 export * from './IOrganization';

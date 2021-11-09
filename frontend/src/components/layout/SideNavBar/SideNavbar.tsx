@@ -8,7 +8,7 @@ import { ReactComponent as RealEstateAgent } from 'assets/images/real-estate-age
 import { ReactComponent as Source } from 'assets/images/source.svg';
 import clsx from 'classnames';
 import { NavIcon } from 'components/layout';
-import { Roles } from 'constants/index';
+import { Claims, Roles } from 'constants/index';
 import noop from 'lodash/noop';
 import { useContext } from 'react';
 import { useState } from 'react';
@@ -44,17 +44,13 @@ export const SideNavBar = () => {
           text="Management"
           showText={expanded}
         />
+        <NavIcon onClick={noop} icon={<Stops />} text="Disposition" showText={expanded} />
         <NavIcon
-          onClick={() => setTrayPage(SidebarContextType.LEASE)}
-          icon={<Stops />}
-          text="Disposition"
-          showText={expanded}
-        />
-        <NavIcon
-          onClick={noop}
+          onClick={() => history.push('/contact/list')}
           icon={<MdContactMail size={24} />}
           text="Contacts"
           showText={expanded}
+          claims={[Claims.CONTACT_VIEW]}
         />
         <NavIcon onClick={noop} icon={<Inventory />} text="Documents" showText={expanded} />
         <NavIcon onClick={noop} icon={<Forms />} text="Forms" showText={expanded} />

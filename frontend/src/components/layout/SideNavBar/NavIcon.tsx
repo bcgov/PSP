@@ -1,6 +1,6 @@
 import clsx from 'classnames';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import { Roles } from 'constants/index';
+import { Claims, Roles } from 'constants/index';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import _ from 'lodash';
 import { Nav } from 'react-bootstrap';
@@ -12,15 +12,18 @@ interface INavIconProps {
   showText: boolean;
   onClick: () => void;
   roles?: Roles[];
+  claims?: Claims[];
 }
 
 /**
  * Component that creates a nav, with an icon, and optional text.
  * @param {INavIconProps} param0
  */
-export const NavIcon = ({ icon, text, showText, onClick, roles }: INavIconProps) => {
-  const { hasRole } = useKeycloakWrapper();
-  const displayIcon = _.find(roles, (role: Roles) => hasRole(role));
+export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIconProps) => {
+  const { hasRole, hasClaim } = useKeycloakWrapper();
+  const displayIcon =
+    _.find(roles, (role: Roles) => hasRole(role)) ||
+    _.find(claims, (claim: Claims) => hasClaim(claim));
 
   return !roles?.length || displayIcon ? (
     <StyledNav onClick={onClick} data-testid={`nav-tooltip-${text.replace(' ', '').toLowerCase()}`}>

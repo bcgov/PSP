@@ -14,9 +14,21 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetEmail(this Person person)
+        public static string GetWorkEmail(this Person person)
         {
             return person?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
+        }
+
+        /// <summary>
+        /// Get the first email address for the person from their contact methods, preferring work emails.
+        /// Note this will only return a value if Person.ContactMethods.ContactType is eager loaded into context.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static string GetEmail(this Person person)
+        {
+            return person?.ContactMethods.OrderBy(cm => cm.ContactMethodTypeId == "WORKEMAIL" ? 1 : 0)
+                .FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail || cm.ContactMethodTypeId == ContactMethodTypes.PerseEmail)?.Value;
         }
 
         /// <summary>
@@ -48,8 +60,19 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string GetFullName(this Person person)
         {
-            string[] names = { person.Surname, person.FirstName, person.MiddleNames };
-            return String.Join(", ", names.Where(n => n != null && n.Trim() != String.Empty));
+            string[] names = { person.FirstName, person.MiddleNames, person.Surname };
+            return String.Join(" ", names.Where(n => n != null && n.Trim() != String.Empty));
+        }
+
+        /// <summary>
+        /// Get the mailing address of the person, or null if the person does not have a mailing address.
+        /// Note this will only return a value if Person.ContactMethods.ContactType is eager loaded into context.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static Address GetMailingAddress(this Person person)
+        {
+            return person?.Address?.AddressTypeId == "MAILADDR" ? person.Address : null;
         }
     }
 }
