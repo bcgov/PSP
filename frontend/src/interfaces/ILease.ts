@@ -1,6 +1,6 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
-import { IOrganization, IPerson, IProperty } from '.';
+import { IInsurance, IOrganization, IPerson, IProperty } from '.';
 export interface ILease {
   id?: number;
   lFileNo?: string;
@@ -24,6 +24,7 @@ export interface ILease {
   landArea?: number;
   areaUnit?: string;
   tenantNotes: string[];
+  insurances: IInsurance[];
 }
 
 export interface IFormLease
@@ -47,6 +48,7 @@ export const defaultLease: ILease = {
   renewalCount: 0,
   motiName: 'Moti, Name, Name',
   tenantNotes: [],
+  insurances: [],
 };
 
 export const defaultFormLease: IFormLease = {
@@ -69,4 +71,5 @@ export const defaultFormLease: IFormLease = {
   landArea: '',
   areaUnit: '',
   tenantNotes: [],
+  insurances: [],
 };

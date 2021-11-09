@@ -483,6 +483,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   left: 0;
   padding-bottom: 1rem;
   background-color: white;
+  z-index: 1;
 }
 
 .c14 p {

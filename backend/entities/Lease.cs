@@ -348,6 +348,21 @@ namespace Pims.Dal.Entities
         /// get/set - A collection of Improvements associated to this Lease
         /// </summary>
         public ICollection<PropertyImprovement> Improvements { get; } = new List<PropertyImprovement>();
+
+        /// <summary>
+        /// get/set - A collection of Insurances associated to this Lease
+        /// </summary>
+        public ICollection<Insurance> Insurances { get; } = new List<Insurance>();
+
+        /// <summary>
+        /// get/set - A collection of Security Deposits associated to this Lease
+        /// </summary>
+        public ICollection<SecurityDeposit> SecurityDeposits { get; } = new List<SecurityDeposit>();
+
+        /// <summary>
+        /// get/set - A collection of Security Deposit Returns associated to this Lease
+        /// </summary>
+        public ICollection<SecurityDepositReturn> SecurityDepositReturns { get; } = new List<SecurityDepositReturn>();
         #endregion
 
         #region Constructors

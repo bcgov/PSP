@@ -87,7 +87,7 @@ const defaultFilterValues: IPropertyFilter = {
   location: '',
 };
 
-const whitelistedFilterKeys = ['PID', 'PIN', 'ADDRESS', 'LOCATION'];
+const whitelistedFilterKeys = ['PID', 'PIN', 'STREET_ADDRESS_1', 'LOCATION'];
 
 /**
  * Converts the map filter to a geo search filter.

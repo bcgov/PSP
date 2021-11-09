@@ -72,6 +72,7 @@ const StyledLeasePageHeader = styled.div`
     height: 1rem;
     text-align: left;
   }
+  z-index: 1;
 `;
 
 const StyledLeasePage = styled.div`

@@ -1154,6 +1154,285 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_DISTRICT");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.Insurance", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("INSURANCE_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_INSURANCE_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<long>("BctfaRiskManagementContactId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("BCTFA_RISK_MGMT_CONTACT_ID")
+                        .HasComment("Foreign key to person");
+
+                    b.Property<string>("CoverageDescription")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnName("COVERAGE_DESCRIPTION")
+                        .HasComment("The description of the insurance coverage");
+
+                    b.Property<decimal>("CoverageLimit")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("MONEY")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("COVERAGE_LIMIT")
+                        .HasComment("The coverage limit of this insurance");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("EXPIRY_DATE")
+                        .HasComment("The effective end date of the insurance coverage");
+
+                    b.Property<string>("InsurancePayeeTypeId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("INSURANCE_PAYEE_TYPE_CODE")
+                        .HasComment("Foreign key to insurance payee type");
+
+                    b.Property<string>("InsuranceTypeId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("INSURANCE_TYPE_CODE")
+                        .HasComment("Foreign key to insurance type");
+
+                    b.Property<decimal>("InsuredValue")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("INSURED_VALUE")
+                        .HasComment("The insured value");
+
+                    b.Property<long>("InsurerContactId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("INSURER_CONTACT_ID")
+                        .HasComment("Foreign key to person");
+
+                    b.Property<long>("InsurerOrganizationId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("INSURER_ORG_ID")
+                        .HasComment("Foreign key to organization");
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to lease");
+
+                    b.Property<long>("MotiRiskManagementContactId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("MOTI_RISK_MGMT_CONTACT_ID")
+                        .HasComment("Foreign key to person");
+
+                    b.Property<string>("OtherInsuranceType")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("OTHER_INSURANCE_TYPE")
+                        .HasComment("The description of the insurance type if the type is other");
+
+                    b.Property<DateTime?>("RiskAssessmentCompletedDate")
+                        .HasColumnType("DateTime")
+                        .HasColumnName("RISK_ASSESSMENT_COMPLETED_DATE")
+                        .HasComment("The optional date the risk assessment was completed");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("START_DATE")
+                        .HasComment("The effective start date of the insurance coverage");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("INSRNC_PK");
+
+                    b.HasIndex("BctfaRiskManagementContactId")
+                        .HasDatabaseName("INSRNC_BCTFA_RISK_MGMT_CONTACT_ID_IDX");
+
+                    b.HasIndex("InsurancePayeeTypeId")
+                        .HasDatabaseName("INSRNC_INSURANCE_PAYEE_TYPE_CODE_IDX");
+
+                    b.HasIndex("InsuranceTypeId")
+                        .HasDatabaseName("INSRNC_INSURANCE_TYPE_CODE_IDX");
+
+                    b.HasIndex("InsurerContactId")
+                        .HasDatabaseName("INSRNC_INSURER_CONTACT_ID_IDX");
+
+                    b.HasIndex("InsurerOrganizationId")
+                        .HasDatabaseName("INSRNC_INSURER_ORG_ID_IDX");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("INSRNC_LEASE_ID_IDX");
+
+                    b.HasIndex("MotiRiskManagementContactId")
+                        .HasDatabaseName("INSRNC_MOTI_RISK_MGMT_CONTACT_ID_IDX");
+
+                    b.ToTable("PIMS_INSURANCE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.InsurancePayeeType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("INSURANCE_PAYEE_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("INSPAY_PK");
+
+                    b.ToTable("PIMS_INSURANCE_PAYEE_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.InsuranceType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("INSURANCE_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("INSPYT_PK");
+
+                    b.ToTable("PIMS_INSURANCE_TYPE");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
                 {
                     b.Property<long>("Id")
@@ -5351,6 +5630,399 @@ namespace Pims.Dal.Migrations
                     b.ToTable("PIMS_ROLE_CLAIM");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDeposit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("SECURITY_DEPOSIT_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_SECURITY_DEPOSIT_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<decimal>("AmountPaid")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("AMOUNT_PAID")
+                        .HasComment("The actual amount paid");
+
+                    b.Property<decimal>("AnnualInterestRate")
+                        .HasColumnType("NUMERIC(5,2)")
+                        .HasColumnName("ANNUAL_INTEREST_RATE")
+                        .HasComment("The annual interest rate of this deposit");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<DateTime>("DepositDate")
+                        .HasColumnType("Date")
+                        .HasColumnName("DEPOSIT_DATE")
+                        .HasComment("The date of the deposit");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasComment("The description of the security deposit");
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to lease");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<string>("SecurityDepositHolderTypeId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SEC_DEP_HOLDER_TYPE_CODE")
+                        .HasComment("Foreign key to security deposit holder type");
+
+                    b.Property<string>("SecurityDepositTypeId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE")
+                        .HasComment("Foreign key to security deposit type");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("TOTAL_AMOUNT")
+                        .HasComment("The total amount of the security deposit");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("SECDEP_PK");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("SECDEP_LEASE_ID_IDX");
+
+                    b.HasIndex("SecurityDepositHolderTypeId")
+                        .HasDatabaseName("SECDEP_SEC_DEP_HOLDER_TYPE_CODE_IDX");
+
+                    b.HasIndex("SecurityDepositTypeId")
+                        .HasDatabaseName("SECDEP_SECURITY_DEPOSIT_TYPE_CODE_IDX");
+
+                    b.ToTable("PIMS_SECURITY_DEPOSIT");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDepositHolderType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SEC_DEP_HOLDER_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("SCHLDT_PK");
+
+                    b.ToTable("PIMS_SEC_DEP_HOLDER_TYPE");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDepositReturn", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("SECURITY_DEPOSIT_RETURN_ID")
+                        .HasDefaultValueSql("NEXT VALUE FOR PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ")
+                        .HasComment("Auto-sequenced unique key value");
+
+                    b.Property<string>("ChequeNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("CHEQUE_NUMBER")
+                        .HasComment("The cheque number of the original deposit");
+
+                    b.Property<decimal?>("ClaimsAgainst")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("CLAIMS_AGAINST")
+                        .HasComment("The total amount of claims made against the deposit");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the username who created this record")
+                        .HasAnnotation("ColumnOrder", 89);
+
+                    b.Property<string>("CreatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_CREATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who created this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 91);
+
+                    b.Property<Guid?>("CreatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_CREATE_USER_GUID")
+                        .HasComment("Reference to the user uid who created this record")
+                        .HasAnnotation("ColumnOrder", 90);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_CREATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was created")
+                        .HasAnnotation("ColumnOrder", 88);
+
+                    b.Property<decimal>("DepositTotal")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("DEPOSIT_TOTAL")
+                        .HasComment("The total deposit amount before claims");
+
+                    b.Property<long>("LeaseId")
+                        .HasColumnType("BIGINT")
+                        .HasColumnName("LEASE_ID")
+                        .HasComment("Foreign key to lease");
+
+                    b.Property<string>("PayeeAddress")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasColumnName("PAYEE_ADDRESS")
+                        .HasComment("The deposit payee address");
+
+                    b.Property<string>("PayeeName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("PAYEE_NAME")
+                        .HasComment("The deposit payee name");
+
+                    b.Property<decimal>("ReturnAmount")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("RETURN_AMOUNT")
+                        .HasComment("The total deposit amount less any claims");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("DateTime")
+                        .HasColumnName("RETURN_DATE")
+                        .HasComment("The date the deposit was returned");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.Property<string>("SecurityDepositTypeId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE")
+                        .HasComment("Foreign key to security deposit type");
+
+                    b.Property<DateTime>("TerminationDate")
+                        .HasColumnType("DateTime")
+                        .HasColumnName("TERMINATION_DATE")
+                        .HasComment("The date the deposit was returned");
+
+                    b.Property<string>("TerminationNote")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnName("TERMINATION_NOTE")
+                        .HasComment("Any notes corresponding to the termination of this security deposit");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USERID")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user who last updated this record")
+                        .HasAnnotation("ColumnOrder", 93);
+
+                    b.Property<string>("UpdatedByDirectory")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
+                        .HasDefaultValueSql("user_name()")
+                        .HasComment("Reference to the user directory who updated this record [IDIR, BCeID]")
+                        .HasAnnotation("ColumnOrder", 95);
+
+                    b.Property<Guid?>("UpdatedByKey")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("APP_LAST_UPDATE_USER_GUID")
+                        .HasComment("Reference to the user uid who updated this record")
+                        .HasAnnotation("ColumnOrder", 94);
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
+                        .HasDefaultValueSql("GETUTCDATE()")
+                        .HasComment("When this record was last updated")
+                        .HasAnnotation("ColumnOrder", 92);
+
+                    b.HasKey("Id")
+                        .HasName("SDRTRN_PK");
+
+                    b.HasIndex("LeaseId")
+                        .HasDatabaseName("SDRTRN_LEASE_ID_IDX");
+
+                    b.HasIndex("SecurityDepositTypeId")
+                        .HasDatabaseName("SDRTRN_SECURITY_DEPOSIT_TYPE_CODE_IDX");
+
+                    b.ToTable("PIMS_SECURITY_DEPOSIT_RETURN");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDepositType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE")
+                        .HasComment("Primary key code to identify record");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("DESCRIPTION")
+                        .HasDefaultValueSql("''")
+                        .HasComment("Friendly description of record");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("int")
+                        .HasColumnName("DISPLAY_ORDER")
+                        .HasComment("Sorting order of record");
+
+                    b.Property<bool>("IsDisabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IS_DISABLED")
+                        .HasComment("Whether this record is disabled");
+
+                    b.Property<long>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("BIGINT")
+                        .HasDefaultValue(1L)
+                        .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                        .HasComment("Concurrency control number")
+                        .HasAnnotation("ColumnOrder", 100);
+
+                    b.HasKey("Id")
+                        .HasName("SECDPT_PK");
+
+                    b.ToTable("PIMS_SECURITY_DEPOSIT_TYPE");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Task", b =>
                 {
                     b.Property<long>("Id")
@@ -6263,6 +6935,72 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Region");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.Insurance", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.Person", "BctfaRiskManagementContact")
+                        .WithMany()
+                        .HasForeignKey("BctfaRiskManagementContactId")
+                        .HasConstraintName("PIM_PERSON_PIM_INSRNC_BCTFA_CONTACT_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.InsurancePayeeType", "InsurancePayeeType")
+                        .WithMany("Insurances")
+                        .HasForeignKey("InsurancePayeeTypeId")
+                        .HasConstraintName("PIM_INSPAY_PIM_INSRNC_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.InsuranceType", "InsuranceType")
+                        .WithMany("Insurances")
+                        .HasForeignKey("InsuranceTypeId")
+                        .HasConstraintName("PIM_INSPYT_PIM_INSRNC_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.Person", "InsurerContact")
+                        .WithMany()
+                        .HasForeignKey("InsurerContactId")
+                        .HasConstraintName("PIM_PERSON_PIM_INSRNC_INSURER_CONTACT_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.Organization", "InsurerOrganization")
+                        .WithMany()
+                        .HasForeignKey("InsurerOrganizationId")
+                        .HasConstraintName("PIM_ORG_PIM_INSRNC_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("Insurances")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_LEASE_PIM_INSRNC_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.Person", "MotiRiskManagementContact")
+                        .WithMany()
+                        .HasForeignKey("MotiRiskManagementContactId")
+                        .HasConstraintName("PIM_PERSON_PIM_INSRNCMOTI_CONTACT_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BctfaRiskManagementContact");
+
+                    b.Navigation("InsurancePayeeType");
+
+                    b.Navigation("InsuranceType");
+
+                    b.Navigation("InsurerContact");
+
+                    b.Navigation("InsurerOrganization");
+
+                    b.Navigation("Lease");
+
+                    b.Navigation("MotiRiskManagementContact");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.LeaseCategoryType", "CategoryType")
@@ -6887,6 +7625,57 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDeposit", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("SecurityDeposits")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_LEASE_PIM_SECDEP_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.SecurityDepositHolderType", "SecurityDepositHolderType")
+                        .WithMany("SecurityDeposits")
+                        .HasForeignKey("SecurityDepositHolderTypeId")
+                        .HasConstraintName("PIM_SCHLDT_PIM_SECDEP_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.SecurityDepositType", "SecurityDepositType")
+                        .WithMany("SecurityDeposits")
+                        .HasForeignKey("SecurityDepositTypeId")
+                        .HasConstraintName("PIM_SECDPT_PIM_SECDEP_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Lease");
+
+                    b.Navigation("SecurityDepositHolderType");
+
+                    b.Navigation("SecurityDepositType");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDepositReturn", b =>
+                {
+                    b.HasOne("Pims.Dal.Entities.Lease", "Lease")
+                        .WithMany("SecurityDepositReturns")
+                        .HasForeignKey("LeaseId")
+                        .HasConstraintName("PIM_LEASE_PIM_SDRTRN_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Pims.Dal.Entities.SecurityDepositType", "SecurityDepositType")
+                        .WithMany("SecurityDepositReturns")
+                        .HasForeignKey("SecurityDepositTypeId")
+                        .HasConstraintName("PIM_SECDPT_PIM_SDRTRN_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Lease");
+
+                    b.Navigation("SecurityDepositType");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Task", b =>
                 {
                     b.HasOne("Pims.Dal.Entities.TaskType", "TaskType")
@@ -7031,11 +7820,27 @@ namespace Pims.Dal.Migrations
                     b.Navigation("Properties");
                 });
 
+            modelBuilder.Entity("Pims.Dal.Entities.InsurancePayeeType", b =>
+                {
+                    b.Navigation("Insurances");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.InsuranceType", b =>
+                {
+                    b.Navigation("Insurances");
+                });
+
             modelBuilder.Entity("Pims.Dal.Entities.Lease", b =>
                 {
                     b.Navigation("Improvements");
 
+                    b.Navigation("Insurances");
+
                     b.Navigation("PropertiesManyToMany");
+
+                    b.Navigation("SecurityDepositReturns");
+
+                    b.Navigation("SecurityDeposits");
 
                     b.Navigation("TenantsManyToMany");
                 });
@@ -7261,6 +8066,18 @@ namespace Pims.Dal.Migrations
                     b.Navigation("OrganizationsManyToMany");
 
                     b.Navigation("UsersManyToMany");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDepositHolderType", b =>
+                {
+                    b.Navigation("SecurityDeposits");
+                });
+
+            modelBuilder.Entity("Pims.Dal.Entities.SecurityDepositType", b =>
+                {
+                    b.Navigation("SecurityDepositReturns");
+
+                    b.Navigation("SecurityDeposits");
                 });
 
             modelBuilder.Entity("Pims.Dal.Entities.Task", b =>

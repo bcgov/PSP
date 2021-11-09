@@ -3,7 +3,6 @@ using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using System;
 using System.Linq;
-using System.Security.Claims;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -17,14 +16,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// Generate an SQL statement for the specified 'user' and 'filter'.
         /// </summary>
         /// <param name="query"></param>
-        /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static IQueryable<Entity.Lease> GenerateCommonLeaseQuery(this IQueryable<Entity.Lease> query, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
+        private static IQueryable<Entity.Lease> GenerateCommonLeaseQuery(this IQueryable<Entity.Lease> query, Entity.Models.LeaseFilter filter)
         {
-            // TODO: Possible bug, parameter <user> is not used
             filter.ThrowIfNull(nameof(filter));
-            filter.ThrowIfNull(nameof(user));
 
             if (!String.IsNullOrWhiteSpace(filter.TenantName)) {
                 query = query.Where(l => l.Persons.Any(person => person != null && EF.Functions.Like(person.Surname + ", " + person.FirstName + ", " + person.MiddleNames, $"%{filter.TenantName}%"))
@@ -61,17 +57,15 @@ namespace Pims.Dal.Helpers.Extensions
         /// Generate a query for the specified 'filter'.
         /// </summary>
         /// <param name="context"></param>
-        /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entity.Lease> GenerateLeaseQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
+        public static IQueryable<Entity.Lease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
-            filter.ThrowIfNull(nameof(user));
 
             var query = context.Leases.AsNoTracking();
 
-            query = query.GenerateCommonLeaseQuery(user, filter);
+            query = query.GenerateCommonLeaseQuery(filter);
 
             return query;
         }
