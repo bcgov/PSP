@@ -44,6 +44,7 @@ export const ViewEditToggleForm = styled(Form)`
   &#leaseForm {
     text-align: left;
     input:disabled,
+    select:disabled,
     textarea:disabled {
       background: none;
       border: none;
