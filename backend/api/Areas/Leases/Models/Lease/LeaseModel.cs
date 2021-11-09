@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
+    /// <summary>
+    /// Provides a lease-oriented model.
+    /// </summary>
     public class LeaseModel
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key to identify the property.
+        /// get/set - The primary key to identify the lease.
         /// </summary>
         public long Id { get; set; }
 
@@ -131,6 +134,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - A list of properties associated with this lease
         /// </summary>
         public IEnumerable<PropertyModel> Properties { get; set; }
+
+        /// <summary>
+        /// get/set - A list of insurance objects associated with this lease
+        /// </summary>
+        public IEnumerable<InsuranceModel> Insurances { get; set; }
         #endregion
     }
 }
