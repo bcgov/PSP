@@ -115,6 +115,8 @@ describe('Contact Filter', () => {
 
     await act(async () => userEvent.click(resetButton));
 
-    expect(setFilter).toHaveBeenCalledWith(expect.objectContaining(defaultFilter));
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({ ...defaultFilter, searchBy: 'persons' }),
+    );
   });
 });

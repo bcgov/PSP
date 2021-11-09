@@ -75,7 +75,7 @@ describe('Contact Search Results Table', () => {
     const { tableRows, findAllByText } = setup({ results: [] });
 
     expect(tableRows.length).toBe(0);
-    const toasts = await findAllByText('No Contacts exist in PIMS inventory');
+    const toasts = await findAllByText('No Contacts match the search criteria');
     expect(toasts[0]).toBeVisible();
   });
 

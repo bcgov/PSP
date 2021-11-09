@@ -102,11 +102,7 @@ export const RadioGroup = ({
           </InlineFlexDiv>
         ))}
       </div>
-      {!!postLabel && !!required && (
-        <>
-          <Form.Label>{postLabel}</Form.Label>
-        </>
-      )}
+      {!!postLabel && !!required && <Form.Label>{postLabel}</Form.Label>}
       {!!postLabel && !required && <Form.Label className="text-wrap">{postLabel}</Form.Label>}
       <DisplayError field={field} />
     </StyledRadioGroup>

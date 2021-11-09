@@ -23,8 +23,8 @@ export const ContactFilter: React.FunctionComponent<IContactFilterProps> = ({
   filter,
   setFilter,
 }: IContactFilterProps) => {
-  const resetFilter = () => {
-    setFilter(defaultFilter);
+  const resetFilter = (values: IContactFilter) => {
+    setFilter({ ...defaultFilter, searchBy: values.searchBy });
   };
   return (
     <Formik
@@ -36,7 +36,7 @@ export const ContactFilter: React.FunctionComponent<IContactFilterProps> = ({
       }}
       validateOnChange={true}
     >
-      {({ resetForm, isSubmitting }) => (
+      {({ resetForm, isSubmitting, values }) => (
         <>
           <Styled.FilterBox>
             <RadioGroup
@@ -56,7 +56,7 @@ export const ContactFilter: React.FunctionComponent<IContactFilterProps> = ({
                   radioLabel: (
                     <>
                       <FaRegUser size={20} />
-                      <p>Persons</p>
+                      <p>Individuals</p>
                     </>
                   ),
                   radioValue: 'persons',
@@ -77,10 +77,11 @@ export const ContactFilter: React.FunctionComponent<IContactFilterProps> = ({
             <Styled.ShortInlineInput field="municipality" label="City" />
             <Styled.SmallSearchButton disabled={isSubmitting} />
             <ResetButton
+              type=""
               disabled={isSubmitting}
               onClick={() => {
-                resetForm();
-                resetFilter();
+                resetForm({ values: { ...defaultFilter, searchBy: values.searchBy } });
+                resetFilter(values);
               }}
             />
             <ActiveFilterCheck setFilter={setFilter} />

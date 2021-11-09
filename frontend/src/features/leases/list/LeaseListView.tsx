@@ -3,6 +3,7 @@ import TooltipWrapper from 'components/common/TooltipWrapper';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { useSearch } from 'hooks/useSearch';
 import { ILeaseSearchResult } from 'interfaces';
+import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -40,9 +41,11 @@ export const LeaseListView = () => {
     [setFilter, setCurrentPage],
   );
 
-  if (error) {
-    toast.error(error.message);
-  }
+  useEffect(() => {
+    if (error) {
+      toast.error(error?.message);
+    }
+  }, [error]);
 
   return (
     <Styled.ListPage>

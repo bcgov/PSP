@@ -1,5 +1,6 @@
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
+import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { toast } from 'react-toastify';
@@ -28,7 +29,11 @@ export const ContactListView = () => {
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<IContactSearchResult, IContactFilter>(defaultFilter, getContacts);
+  } = useSearch<IContactSearchResult, IContactFilter>(
+    defaultFilter,
+    getContacts,
+    'Search returned no results',
+  );
 
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
@@ -39,9 +44,11 @@ export const ContactListView = () => {
     [setFilter, setCurrentPage],
   );
 
-  if (error) {
-    toast.error(error.message);
-  }
+  useEffect(() => {
+    if (error) {
+      toast.error(error?.message);
+    }
+  }, [error]);
 
   return (
     <Styled.ListPage>
@@ -54,6 +61,7 @@ export const ContactListView = () => {
             <IoMdPersonAdd color="white" />
             Add new contact
           </Styled.PrimaryButton>
+          <Styled.Spacer />
         </Styled.PageToolbar>
         <ContactSearchResults
           loading={loading}

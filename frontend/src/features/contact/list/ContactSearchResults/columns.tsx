@@ -1,10 +1,16 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
+import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import { IContactSearchResult } from 'interfaces';
+import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { MdContactMail, MdEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import styled from 'styled-components';
+
+import * as Styled from '../styles';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
@@ -20,8 +26,8 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Header: '',
     accessor: 'id',
     align: 'right',
-    width: 20,
-    maxWidth: 20,
+    width: 10,
+    maxWidth: 10,
     Cell: (props: CellProps<IContactSearchResult>) =>
       props.row.original.personId !== undefined ? (
         <FaRegUser size={20} />
@@ -44,7 +50,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'Last Name',
     accessor: 'surname',
-    clickable: true,
     sortable: true,
     align: 'left',
     width: 60,
@@ -53,7 +58,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'First Name',
     accessor: 'firstName',
-    clickable: true,
     sortable: true,
     align: 'left',
     width: 60,
@@ -62,11 +66,10 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'Organization',
     accessor: 'organizationName',
-    clickable: true,
     sortable: true,
     align: 'left',
     width: 80,
-    maxWidth: 120,
+    maxWidth: 100,
   },
   {
     Header: 'E-mail',
@@ -79,13 +82,12 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Header: 'Mailing Address',
     accessor: 'mailingAddress',
     align: 'left',
-    minWidth: 100,
-    width: 150,
+    minWidth: 80,
+    width: 100,
   },
   {
     Header: 'City',
     accessor: 'municipality',
-    clickable: true,
     sortable: true,
     align: 'left',
     minWidth: 50,
@@ -95,9 +97,29 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Header: 'Prov',
     accessor: 'provinceState',
     align: 'left',
-    width: 50,
-    maxWidth: 70,
+    width: 30,
+    maxWidth: 50,
+  },
+  {
+    Header: 'Update/View',
+    accessor: 'controls' as any, // this column is not part of the data model
+    width: 40,
+    maxWidth: 40,
+    Cell: (props: CellProps<IContactSearchResult>) => (
+      <StyledDiv>
+        <Styled.IconButton variant="light">
+          <MdEdit size={22} />
+        </Styled.IconButton>
+        <Styled.IconButton variant="light">
+          <MdContactMail size={22} />
+        </Styled.IconButton>
+      </StyledDiv>
+    ),
   },
 ];
+const StyledDiv = styled(InlineFlexDiv)`
+  justify-content: space-around;
+  width: 100%;
+`;
 
 export default columns;

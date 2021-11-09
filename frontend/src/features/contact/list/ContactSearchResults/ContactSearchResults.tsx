@@ -58,7 +58,7 @@ export function ContactSearchResults(props: IContactSearchResultsProps) {
       onSortChange={handleSortChange}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
-      noRowsMessage="No Contacts exist in PIMS inventory"
+      noRowsMessage="No Contacts match the search criteria"
       {...rest}
     ></Table>
   );

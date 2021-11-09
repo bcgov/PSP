@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string GetWorkEmail(this Person person)
         {
-            return person?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
+            return person?.ContactMethods.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string GetEmail(this Person person)
         {
-            return person?.ContactMethods.OrderBy(cm => cm.ContactMethodTypeId == "WORKEMAIL" ? 1 : 0)
+            return person?.ContactMethods.OrderBy(cm => cm.ContactMethodTypeId == "WORKEMAIL" ? 0 : 1).ThenByDescending(cm => cm.IsPreferredMethod)
                 .FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail || cm.ContactMethodTypeId == ContactMethodTypes.PerseEmail)?.Value;
         }
 

@@ -174,7 +174,7 @@ describe('Contact List View', () => {
     expect(getContacts).toHaveBeenCalledWith(
       expect.objectContaining({ ...defaultPagedFilter, summary: 'a summary that does not exist' }),
     );
-    const toasts = await findAllByText('No Contacts exist in PIMS inventory');
+    const toasts = await findAllByText('No Contacts match the search criteria');
     expect(toasts[0]).toBeVisible();
   });
 

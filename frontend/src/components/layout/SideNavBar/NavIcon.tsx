@@ -25,7 +25,7 @@ export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIc
     _.find(roles, (role: Roles) => hasRole(role)) ||
     _.find(claims, (claim: Claims) => hasClaim(claim));
 
-  return !roles?.length || displayIcon ? (
+  return (!roles?.length && !claims?.length) || displayIcon ? (
     <StyledNav onClick={onClick} data-testid={`nav-tooltip-${text.replace(' ', '').toLowerCase()}`}>
       <StyledLink>
         <TooltipWrapper toolTipId={`nav-tooltip-${text}`} toolTip={text}>

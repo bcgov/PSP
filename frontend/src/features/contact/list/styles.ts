@@ -22,6 +22,10 @@ export const ListPage = styled.div`
     border-right: 0;
     padding: 0;
   }
+  .table .tbody .tr:hover {
+    transition: all 0.2s ease-in;
+    background-color: rgba(252, 213, 115, 0.5);
+  }
   h3 {
     margin-bottom: 1.75rem;
   }
@@ -100,4 +104,22 @@ export const FileIcon = styled(Button)`
   color: ${({ theme, disabled }) =>
     disabled ? theme.css.disabledColor : theme.css.primaryColor} !important;
   padding: 6px 0.5rem;
+`;
+
+export const IconButton = styled(Button)`
+  &.btn.btn-light {
+    background-color: unset;
+    border: 0;
+    :hover {
+      background-color: unset;
+    }
+    svg {
+      color: ${({ theme }) => theme.css.slideOutBlue};
+      transition: all 0.3s ease-out;
+    }
+    svg:hover {
+      transition: all 0.3s ease-in;
+      color: ${({ theme }) => theme.css.secondaryVariantColor};
+    }
+  }
 `;

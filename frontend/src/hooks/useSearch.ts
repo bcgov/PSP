@@ -4,6 +4,7 @@ import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useIsMounted from 'hooks/useIsMounted';
 import { IPagedItems } from 'interfaces';
 import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { IPaginateRequest } from './pims-api';
 import { useFetcher } from './useFetcher';
@@ -38,6 +39,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
   apiCall: (
     params: IPaginateRequest<IFilter>,
   ) => Promise<AxiosResponse<IPagedItems<ISearchResult>>>,
+  noResultsWarning?: string,
   initialSort: TableSort<ISearchResult> = {},
   initialPage = 0,
   initialPageSize = 10,
@@ -58,17 +60,26 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
   // is this component/hook mounted?
   const isMounted = useIsMounted();
 
-  const setSearchOutput = useCallback((apiResponse?: IPagedItems<ISearchResult>, pageSize = 10) => {
-    if (apiResponse?.items) {
-      setResults(apiResponse.items);
-      setTotalItems(apiResponse.total);
-      setTotalPages(Math.ceil(apiResponse.total / pageSize));
-    } else {
-      setResults([]);
-      setTotalItems(0);
-      setTotalPages(0);
-    }
-  }, []);
+  const setSearchOutput = useCallback(
+    (apiResponse?: IPagedItems<ISearchResult>, pageSize = 10) => {
+      if (apiResponse?.items) {
+        setResults(apiResponse.items);
+        setTotalItems(apiResponse.total);
+        setTotalPages(Math.ceil(apiResponse.total / pageSize));
+        if (noResultsWarning && apiResponse.items.length === 0) {
+          toast.warn(noResultsWarning);
+        }
+      } else {
+        setResults([]);
+        setTotalItems(0);
+        setTotalPages(0);
+        if (noResultsWarning) {
+          toast.warn(noResultsWarning);
+        }
+      }
+    },
+    [noResultsWarning],
+  );
 
   // update search results whenever new data comes back from API endpoints
   useDeepCompareEffect(() => {
