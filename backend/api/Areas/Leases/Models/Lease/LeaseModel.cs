@@ -141,6 +141,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<InsuranceModel> Insurances { get; set; }
 
         /// <summary>
+        /// get/set - A collection of Improvements associated to this Lease
+        /// </summary>
+        public IEnumerable<PropertyImprovementModel> Improvements { get; set; }
+
+        /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA.
         /// </summary>
         public bool IsSubjectToRta { get; set; }
