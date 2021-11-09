@@ -51,7 +51,7 @@ namespace Pims.Dal.Helpers.Extensions
                 .Include(l => l.TenantsManyToMany)
                 .ThenInclude(t => t.Person)
                 .Include(l => l.TenantsManyToMany)
-                .ThenInclude(t => t.Organization);
+                .ThenInclude(t => t.Organization)
                 .Include(l => l.Improvements);
         }
 

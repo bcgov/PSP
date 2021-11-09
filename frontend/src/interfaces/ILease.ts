@@ -1,6 +1,7 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import { IInsurance, IOrganization, IPerson, IProperty } from '.';
+import { ILeaseImprovement } from './ILeaseImprovement';
 export interface ILease {
   id?: number;
   lFileNo?: string;
@@ -13,6 +14,7 @@ export interface ILease {
   properties: IProperty[];
   persons: IPerson[];
   organizations: IOrganization[];
+  improvements: ILeaseImprovement[];
   paymentReceivableTypeId?: string;
   paymentFrequencyTypeId: string;
   paymentFrequencyType: string;
@@ -44,6 +46,7 @@ export const defaultLease: ILease = {
   organizations: [],
   persons: [],
   properties: [],
+  improvements: [],
   programName: 'program',
   startDate: '2020-01-01',
   paymentFrequencyTypeId: 'ANNUAL',
@@ -61,6 +64,7 @@ export const defaultFormLease: IFormLease = {
   organizations: [],
   persons: [],
   properties: [],
+  improvements: [],
   startDate: '',
   expiryDate: '',
   renewalDate: '',

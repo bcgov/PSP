@@ -1,4 +1,4 @@
-import { Form, Input } from 'components/common/form';
+import { Form } from 'components/common/form';
 import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';

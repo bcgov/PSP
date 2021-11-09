@@ -1,31 +1,35 @@
 import { FormSection } from 'components/common/form/styles';
-import { Grid } from 'components/common/Grid';
+import { FieldArray, getIn, useFormikContext } from 'formik';
+import { IFormLease } from 'interfaces';
+import { ILeaseImprovement } from 'interfaces/ILeaseImprovement';
 
+import Improvement from './components/Improvement/Improvement';
 import Summary from './components/Summary/Summary';
 import * as Styled from './styles';
 
 export interface IImprovementsProps {}
 
 export const Improvements: React.FunctionComponent<IImprovementsProps> = props => {
+  const { values } = useFormikContext<IFormLease>();
+  const improvements: ILeaseImprovement[] = getIn(values, 'improvements') ?? [];
+
   return (
     <Styled.ImprovementsContainer>
       <FormSection>
         <Summary disabled={true} />
       </FormSection>
 
-      {/* <FormSection>
-        <Grid columns={2} columnGap="3rem">
-          <Grid.Item>AAA</Grid.Item>
-          <Grid.Item>BBB</Grid.Item>
-        </Grid>
-      </FormSection> */}
-
       <FormSection>
         <Styled.ImprovementsListHeader>Description of Improvements</Styled.ImprovementsListHeader>
-        <div>Foo</div>
+        <FieldArray
+          name="improvements"
+          render={renderProps =>
+            improvements.map((entry: ILeaseImprovement, index) => (
+              <Improvement {...renderProps} nameSpace={`improvements.${index}`} disabled={true} />
+            ))
+          }
+        ></FieldArray>
       </FormSection>
-
-      <FormSection>EEE</FormSection>
     </Styled.ImprovementsContainer>
   );
 };

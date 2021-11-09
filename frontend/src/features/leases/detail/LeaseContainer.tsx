@@ -16,8 +16,8 @@ import {
   useLeaseDetail,
 } from '..';
 import Details from './LeasePages/details/Details';
-import Insurance from './LeasePages/insurance/Insurance';
 import Improvements from './LeasePages/improvements/Improvements';
+import Insurance from './LeasePages/insurance/Insurance';
 import Surplus from './LeasePages/surplus/Surplus';
 import Tenant from './LeasePages/tenant/Tenant';
 
