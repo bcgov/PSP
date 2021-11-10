@@ -1,6 +1,7 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import { IInsurance, IOrganization, IPerson, IProperty } from '.';
+import { ILeaseImprovement } from './ILeaseImprovement';
 export interface ILease {
   id?: number;
   lFileNo?: string;
@@ -13,6 +14,7 @@ export interface ILease {
   properties: IProperty[];
   persons: IPerson[];
   organizations: IOrganization[];
+  improvements: ILeaseImprovement[];
   paymentReceivableTypeId?: string;
   paymentFrequencyTypeId: string;
   paymentFrequencyType: string;
@@ -25,6 +27,9 @@ export interface ILease {
   areaUnit?: string;
   tenantNotes: string[];
   insurances: IInsurance[];
+  isResidential: boolean;
+  isCommercialBuilding: boolean;
+  isOtherImprovement: boolean;
 }
 
 export interface IFormLease
@@ -41,6 +46,7 @@ export const defaultLease: ILease = {
   organizations: [],
   persons: [],
   properties: [],
+  improvements: [],
   programName: 'program',
   startDate: '2020-01-01',
   paymentFrequencyTypeId: 'ANNUAL',
@@ -49,12 +55,16 @@ export const defaultLease: ILease = {
   motiName: 'Moti, Name, Name',
   tenantNotes: [],
   insurances: [],
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
 };
 
 export const defaultFormLease: IFormLease = {
   organizations: [],
   persons: [],
   properties: [],
+  improvements: [],
   startDate: '',
   expiryDate: '',
   renewalDate: '',
@@ -72,4 +82,7 @@ export const defaultFormLease: IFormLease = {
   areaUnit: '',
   tenantNotes: [],
   insurances: [],
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
 };

@@ -22,7 +22,8 @@ namespace Pims.Dal.Helpers.Extensions
         {
             filter.ThrowIfNull(nameof(filter));
 
-            if (!String.IsNullOrWhiteSpace(filter.TenantName)) {
+            if (!String.IsNullOrWhiteSpace(filter.TenantName))
+            {
                 query = query.Where(l => l.Persons.Any(person => person != null && EF.Functions.Like(person.Surname + ", " + person.FirstName + ", " + person.MiddleNames, $"%{filter.TenantName}%"))
                 || l.Organizations.Any(organization => organization != null && EF.Functions.Like(organization.Name, $"%{filter.TenantName}%")));
             }
@@ -30,7 +31,8 @@ namespace Pims.Dal.Helpers.Extensions
             if (!String.IsNullOrWhiteSpace(filter.PidOrPin))
             {
                 var pidOrPinValue = filter.PidOrPin.Replace("-", "").Trim();
-                if (Int32.TryParse(pidOrPinValue, out int pidOrPin)) {
+                if (Int32.TryParse(pidOrPinValue, out int pidOrPin))
+                {
                     query = query.Where(l => l.Properties.FirstOrDefault() != null && (l.Properties.FirstOrDefault().PID == pidOrPin || l.Properties.FirstOrDefault().PIN == pidOrPin));
                 }
             }
@@ -49,8 +51,8 @@ namespace Pims.Dal.Helpers.Extensions
                 .Include(l => l.TenantsManyToMany)
                 .ThenInclude(t => t.Person)
                 .Include(l => l.TenantsManyToMany)
-                .ThenInclude(t => t.Organization);
-            
+                .ThenInclude(t => t.Organization)
+                .Include(l => l.Improvements);
         }
 
         /// <summary>
@@ -127,9 +129,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static DateTime? GetExpiryDate(this Pims.Dal.Entities.Lease lease)
         {
-            if(lease.OrigExpiryDate != null)
+            if (lease.OrigExpiryDate != null)
             {
-                if(lease.TermExpiryDate != null)
+                if (lease.TermExpiryDate != null)
                 {
                     return lease.OrigExpiryDate > lease.TermExpiryDate ? lease.OrigExpiryDate : lease.TermExpiryDate;
                 }

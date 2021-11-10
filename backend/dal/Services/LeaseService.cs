@@ -90,6 +90,10 @@ namespace Pims.Dal.Services
                 .Include(l => l.TenantsManyToMany)
                 .ThenInclude(t => t.Organization)
                 .ThenInclude(o => o.ContactMethods)
+
+                .Include(l => l.Improvements)
+                .ThenInclude(t => t.PropertyImprovementType)
+
                 .Where(l => l.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }

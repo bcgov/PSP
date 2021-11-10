@@ -16,6 +16,7 @@ import {
   useLeaseDetail,
 } from '..';
 import Details from './LeasePages/details/Details';
+import Improvements from './LeasePages/improvements/Improvements';
 import Insurance from './LeasePages/insurance/Insurance';
 import Surplus from './LeasePages/surplus/Surplus';
 import Tenant from './LeasePages/tenant/Tenant';
@@ -52,7 +53,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     },
   ],
   [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
-  [LeasePageNames.IMPROVEMENTS, { component: <></>, title: 'Improvements' }],
+  [LeasePageNames.IMPROVEMENTS, { component: <Improvements />, title: 'Improvements' }],
   [LeasePageNames.INSURANCE, { component: <Insurance />, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: <></>, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
@@ -83,7 +84,7 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
     <>
       <LeaseLayout>
         <LeaseBreadCrumb
-          leaseId={props.match.leaseId}
+          leaseId={lease?.id}
           leasePage={leasePage}
           onClickManagement={onClickManagement}
         />
