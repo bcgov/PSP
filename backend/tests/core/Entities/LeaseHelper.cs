@@ -19,7 +19,7 @@ namespace Pims.Core.Test
         {
             var lease = new Entity.Lease()
             {
-                Id = 1,
+                Id = pidOrPin,
                 LFileNo = lFileNo,
                 RowVersion = 1,
             };

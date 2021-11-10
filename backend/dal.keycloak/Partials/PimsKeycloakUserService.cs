@@ -161,7 +161,7 @@ namespace Pims.Dal.Keycloak
                 }
             }
             // Each parent organization should add children organizations.
-            addOrganizationIds.ToArray().ForEach(id =>
+            addOrganizationIds.ForEach(id =>
             {
                 var childOrganizations = _pimsService.Organization.GetChildren(id).Select(a => a.Id).ToArray();
                 addOrganizationIds = addOrganizationIds.Concat(childOrganizations).Distinct().ToArray();
@@ -231,7 +231,7 @@ namespace Pims.Dal.Keycloak
             IEnumerable<long> addOrganizationIds = update.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
             addOrganizationIds = update.OrganizationsManyToMany.Except(euser.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
             // Each parent organization should add children organizations.
-            addOrganizationIds.ToArray().ForEach(id =>
+            addOrganizationIds.ForEach(id =>
             {
                 var childOrganizations = _pimsService.Organization.GetChildren(id).Select(a => a.Id).ToArray();
                 addOrganizationIds = addOrganizationIds.Concat(childOrganizations).Distinct().ToArray();

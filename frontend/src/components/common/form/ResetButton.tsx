@@ -14,7 +14,7 @@ export const ResetButton: React.FC<ButtonProps> = ({ ...props }) => {
       <Button
         data-testid="reset-button"
         id="reset-button"
-        type="reset"
+        type={props.type ?? 'reset'}
         variant="info"
         {...props}
         icon={<FaUndo size={20} />}

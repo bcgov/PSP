@@ -129,6 +129,11 @@ namespace Pims.Dal.Entities
         /// get - A collection of property with this address.
         /// </summary>
         public ICollection<Property> Properties { get; } = new List<Property>();
+
+        /// <summary>
+        /// get - A collection of contacts with this address.
+        /// </summary>
+        public ICollection<Contact> Contacts { get; } = new List<Contact>();
         #endregion
 
         #region Constructors
