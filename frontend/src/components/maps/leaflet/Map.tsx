@@ -95,8 +95,8 @@ const whitelistedFilterKeys = ['PID', 'PIN', 'STREET_ADDRESS_1', 'LOCATION'];
  */
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   return {
-    PID: filter.pid ? +filter.pid?.replace(/-/g, '') : undefined,
-    PIN: filter.pin ? +filter.pin?.replace(/-/g, '') : undefined,
+    PID: filter.pid ? filter.pid?.replace(/-/g, '') : undefined,
+    PIN: filter.pin ? filter.pin?.replace(/-/g, '') : undefined,
     STREET_ADDRESS_1: filter.address,
   };
 };

@@ -175,8 +175,13 @@ export const useApi = (): IPimsAPI => {
   const loadProperties = useCallback(
     async (params: IGeoSearchParams): Promise<FeatureCollection> => {
       const { BBOX, ...rest } = params;
+      const geoserver_params = {
+        STREET_ADDRESS_1: rest?.STREET_ADDRESS_1,
+        PID_PADDED: rest?.PID,
+        PIN: rest?.PIN,
+      };
       const { data } = await CustomAxios().get<FeatureCollection>(
-        `${propertiesUrl}${rest ? toCqlFilter(rest) : ''}`,
+        `${propertiesUrl}${geoserver_params ? toCqlFilter(geoserver_params) : ''}`,
       );
       return data;
     },
