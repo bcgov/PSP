@@ -38,14 +38,7 @@ WebUI.setEncryptedText(findTestObject('Object Repository/SiteMinder/PasswordFiel
 // Click continue
 WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
 
-// Enter PID
-WebUI.setText(findTestObject('Object Repository/Filter/PID'), "009-956-727")
-
-// Search
-WebUI.click(findTestObject('Filter/SearchButton'))
-
-// Click marker
-WebUI.click(findTestObject('Object Repository/Filter/Marker'))
+// Navigate to list view
 
 // Ensure slideout appears
 WebUI.verifyTextPresent("Property Info", false)
