@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -5,10 +9,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Services
 {
@@ -66,6 +66,8 @@ namespace Pims.Dal.Services
                 .ThenInclude(p => p.Address)
                 .ThenInclude(p => p.Province)
                 .Include(l => l.Properties)
+                .ThenInclude(s => s.SurplusDeclarationType)
+                .Include(l => l.Properties)
                 .ThenInclude(p => p.AreaUnit)
                 .Include(l => l.ProgramType)
                 .Include(l => l.PaymentFrequencyType)
@@ -93,6 +95,15 @@ namespace Pims.Dal.Services
 
                 .Include(l => l.Improvements)
                 .ThenInclude(t => t.PropertyImprovementType)
+
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsurancePayeeType)
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsuranceType)
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsurerOrganization)
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsurerContact)
 
                 .Where(l => l.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
