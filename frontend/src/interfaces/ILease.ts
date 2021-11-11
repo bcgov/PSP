@@ -1,7 +1,15 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
-import { IInsurance, IOrganization, IPerson, IProperty } from '.';
-import { ILeaseImprovement } from './ILeaseImprovement';
+import {
+  IInsurance,
+  ILeaseImprovement,
+  ILeaseSecurityDeposit,
+  ILeaseSecurityDepositReturn,
+  IOrganization,
+  IPerson,
+  IProperty,
+} from '.';
+
 export interface ILease {
   id?: number;
   lFileNo?: string;
@@ -15,6 +23,8 @@ export interface ILease {
   persons: IPerson[];
   organizations: IOrganization[];
   improvements: ILeaseImprovement[];
+  securityDeposits: ILeaseSecurityDeposit[];
+  securityDepositReturns: ILeaseSecurityDepositReturn[];
   paymentReceivableTypeId?: string;
   paymentFrequencyTypeId: string;
   paymentFrequencyType: string;
@@ -55,6 +65,8 @@ export const defaultLease: ILease = {
   motiName: 'Moti, Name, Name',
   tenantNotes: [],
   insurances: [],
+  securityDeposits: [],
+  securityDepositReturns: [],
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -65,6 +77,8 @@ export const defaultFormLease: IFormLease = {
   persons: [],
   properties: [],
   improvements: [],
+  securityDeposits: [],
+  securityDepositReturns: [],
   startDate: '',
   expiryDate: '',
   renewalDate: '',
