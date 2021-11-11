@@ -147,6 +147,7 @@ namespace Pims.Dal.Configuration
             builder.HasIndex(m => m.TenureId).HasDatabaseName("PRPRTY_PROPERTY_TENURE_TYPE_CODE_IDX");
             builder.HasIndex(m => m.AreaUnitId).HasDatabaseName("PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX");
             builder.HasIndex(m => m.DataSourceId).HasDatabaseName("PRPRTY_PROPERTY_DATA_SOURCE_TYPE_CODE_IDX");
+            builder.HasIndex(m => m.SurplusDeclarationTypeId).HasDatabaseName("PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX");
             builder.HasIndex(m => m.PropertyManagerId).HasDatabaseName("PRPRTY_PROPERTY_MANAGER_ID_IDX");
             builder.HasIndex(m => m.PropertyManagementOrganizationId).HasDatabaseName("PRPRTY_PROP_MGMT_ORG_ID_IDX");
 

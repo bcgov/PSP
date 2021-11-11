@@ -58,7 +58,7 @@ const Surplus: React.FunctionComponent = () => {
       id: x.id || Math.random(),
       identifier: x.pid,
       comments: x.surplusDeclaration?.comment || '',
-      declarationType: x.surplusDeclaration?.typeDescription || 'Unknown',
+      declarationType: x.surplusDeclaration?.type?.description || 'Unknown',
       date: x.surplusDeclaration?.date || '',
     };
   });
