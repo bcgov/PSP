@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Dal.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Helpers.Middleware
 {
@@ -165,15 +165,6 @@ namespace Pims.Api.Helpers.Middleware
                     // Ignore for now.
                     _logger.LogError(streamEx, $"Failed to read the {nameof(ApiHttpRequestException)} error stream.");
                 }
-            }
-            else if (ex is ChesException)
-            {
-                var exception = ex as ChesException;
-                code = exception.StatusCode ?? HttpStatusCode.InternalServerError;
-                message = exception.Message;
-                details = exception.Detail;
-
-                _logger.LogError(ex, "CHES unhandled exception.");
             }
             else if (ex is LtsaException)
             {

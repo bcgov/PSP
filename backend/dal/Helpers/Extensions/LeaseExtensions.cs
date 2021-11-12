@@ -22,6 +22,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         private static IQueryable<Entity.Lease> GenerateCommonLeaseQuery(this IQueryable<Entity.Lease> query, ClaimsPrincipal user, Entity.Models.LeaseFilter filter)
         {
+            // TODO: Possible bug, parameter <user> is not used
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
@@ -49,8 +50,11 @@ namespace Pims.Dal.Helpers.Extensions
             return query.Include(l => l.Properties)
                 .ThenInclude(p => p.Address)
                 .Include(l => l.ProgramType)
-                .Include(l => l.Persons)
-                .Include(l => l.Organizations);
+                .Include(l => l.TenantsManyToMany)
+                .ThenInclude(t => t.Person)
+                .Include(l => l.TenantsManyToMany)
+                .ThenInclude(t => t.Organization);
+            
         }
 
         /// <summary>

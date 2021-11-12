@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Dal;
 using Pims.Dal.Security;

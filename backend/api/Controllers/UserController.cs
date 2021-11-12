@@ -1,20 +1,11 @@
-using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
-using Pims.Api.Models.User;
 using Pims.Core.Http;
-using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
-using Model = Pims.Api.Models.User;
 
 namespace Pims.Api.Controllers
 {

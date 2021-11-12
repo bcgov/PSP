@@ -7,6 +7,8 @@ namespace Pims.Core.Exceptions
     /// <summary>
     /// HttpClientRequestException class, provides a way to express HTTP request exceptions that occur.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "S3925:Conform to the recommended serialization pattern.", Justification = "HttpRequestException does not fully implement serialization")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1032: Implement standard exception constructors.", Justification = "Class implements constructors with default options")]
     public class HttpClientRequestException : HttpRequestException
     {
         #region Properties
@@ -18,6 +20,12 @@ namespace Pims.Core.Exceptions
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Creates a new instance of an HttpClientRequestException class.
+        /// </summary>
+        /// <returns></returns>
+        public HttpClientRequestException() { }
+
         /// <summary>
         /// Creates a new instance of an HttpClientRequestException class, initializes it with the specified arguments.
         /// </summary>
@@ -75,6 +83,9 @@ namespace Pims.Core.Exceptions
             this.Response = response ?? throw new ArgumentNullException(nameof(response)); // NOSONAR
             // TODO: Extract error response details into innerException.
         }
+
+
+
         #endregion
     }
 }

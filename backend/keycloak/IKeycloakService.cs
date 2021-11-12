@@ -12,12 +12,12 @@ namespace Pims.Keycloak
         #region Users
         Task<int> GetUserCountAsync();
         Task<Models.UserModel[]> GetUsersAsync(int first = 0, int max = 10, string search = null);
-        Task<Models.UserModel> GetUserAsync(Guid key);
+        Task<Models.UserModel> GetUserAsync(Guid id);
         Task<Models.UserModel> CreateUserAsync(Models.UserModel user);
         Task<Guid> UpdateUserAsync(Models.UserModel user);
-        Task<Guid> DeleteUserAsync(Guid key);
-        Task<Models.GroupModel[]> GetUserGroupsAsync(Guid key);
-        Task<int> GetUserGroupCountAsync(Guid key);
+        Task<Guid> DeleteUserAsync(Guid id);
+        Task<Models.GroupModel[]> GetUserGroupsAsync(Guid id);
+        Task<int> GetUserGroupCountAsync(Guid id);
         Task<Guid> AddGroupToUserAsync(Guid userKey, Guid groupKey);
         Task<Guid> RemoveGroupFromUserAsync(Guid userKey, Guid groupKey);
         #endregion
@@ -25,12 +25,12 @@ namespace Pims.Keycloak
         #region Groups
         Task<int> GetGroupCountAsync();
         Task<Models.GroupModel[]> GetGroupsAsync(int first = 0, int max = 10, string search = null);
-        Task<Models.GroupModel> GetGroupAsync(Guid key);
+        Task<Models.GroupModel> GetGroupAsync(Guid id);
         Task<Models.GroupModel> CreateGroupAsync(Models.GroupModel group);
         Task<Models.GroupModel> CreateSubGroupAsync(Guid parentKey, Models.GroupModel group);
         Task<Models.GroupModel> UpdateGroupAsync(Models.GroupModel group);
-        Task<Guid> DeleteGroupAsync(Guid key);
-        Task<Models.UserModel[]> GetGroupMembersAsync(Guid key, int first = 0, int max = 10);
+        Task<Guid> DeleteGroupAsync(Guid id);
+        Task<Models.UserModel[]> GetGroupMembersAsync(Guid id, int first = 0, int max = 10);
         #endregion
 
         #region Roles

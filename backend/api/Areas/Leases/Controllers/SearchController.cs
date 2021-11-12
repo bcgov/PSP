@@ -12,7 +12,6 @@ using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pims.Api.Areas.Lease.Controllers
 {
@@ -55,7 +54,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpGet]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable< LeaseModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         public IActionResult GetLeases()

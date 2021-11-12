@@ -1,25 +1,14 @@
 using MapsterMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Api.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Comparers;
-using Pims.Core.Http;
-using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
 using Pims.Dal;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using KModel = Pims.Keycloak.Models;
 using Model = Pims.Api.Models.AccessRequest;
 
 namespace PimsApi.Test.Controllers

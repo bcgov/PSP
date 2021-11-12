@@ -26,6 +26,9 @@ namespace Pims.Dal.Configuration
             builder.Property(m => m.LeaseId)
                 .IsRequired()
                 .HasComment("Foreign key to the lease");
+            builder.Property(m => m.Note)
+                .HasMaxLength(2000)
+                .HasComment("A note on the lease tenant");
 
 
             builder.Property(m => m.LessorTypeId)

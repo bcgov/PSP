@@ -64,7 +64,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 PidOrPin = model.PidOrPin,
                 TenantName = model.TenantName,
                 LFileNo = model.LFileNo,
-                
+
                 Sort = model.Sort
             };
 

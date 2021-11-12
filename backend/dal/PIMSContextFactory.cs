@@ -27,14 +27,13 @@ namespace Pims.Dal
         /// </summary>
         public PimsContextFactory()
         {
-            var loggerFactory = LoggerFactory.Create(builder =>
+            using var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
                     .AddFilter("Microsoft", LogLevel.Warning)
                     .AddFilter("System", LogLevel.Warning)
                     .AddFilter("Pims.Api", LogLevel.Debug)
                     .AddConsole();
-                // .AddEventLog();
             });
             _logger = loggerFactory.CreateLogger<PimsContextFactory>();
         }

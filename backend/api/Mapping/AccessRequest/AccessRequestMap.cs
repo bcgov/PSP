@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
@@ -19,10 +18,14 @@ namespace Pims.Api.Mapping.AccessRequest
                 .AfterMapping((src, dest) =>
                 {
                     Entity.Organization organization = src.OrganizationsManyToMany.FirstOrDefault()?.Organization;
-                    if (organization != null) {
+                    if (organization != null)
+                    {
                         dest.OrganizationId = organization?.Id;
-                    }  else if (src.Organizations.Any())
+                    }
+                    else if (src.Organizations.Any())
+                    {
                         dest.OrganizationId = organization?.Id;
+                    }
                 })
                 .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
 

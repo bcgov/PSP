@@ -42,6 +42,16 @@ describe('Tenant component', () => {
     expect(personTenant).toHaveLength(2);
   });
 
+  it('renders one notes section per tenant note', () => {
+    const { component } = setup({
+      lease: { ...defaultFormLease, tenantNotes: ['note one', 'note two'] },
+    });
+    const { getAllByText } = component;
+    const personTenant = getAllByText('Notes');
+
+    expect(personTenant).toHaveLength(2);
+  });
+
   it('renders no person information section if there are no persons', () => {
     const { component } = setup({
       lease: { ...defaultFormLease, persons: [] },
