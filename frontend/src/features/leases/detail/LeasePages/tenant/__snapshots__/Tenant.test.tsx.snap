@@ -70,7 +70,7 @@ exports[`Tenant component renders as expected 1`] = `
 .c3 > .input {
   grid-column: controls;
   grid-row: auto;
-  border-left: 1px solid black;
+  border-left: 1px solid #666666;
 }
 
 .c3 .form-control {

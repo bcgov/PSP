@@ -1,10 +1,13 @@
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
+    /// <summary>
+    /// Provides a lease-oriented person model.
+    /// </summary>
     public class PersonModel
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key to identify the property.
+        /// get/set - The primary key to identify the person.
         /// </summary>
         public long Id { get; set; }
 

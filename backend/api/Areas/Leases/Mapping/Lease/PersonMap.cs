@@ -17,7 +17,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Surname, src => src.Surname)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.FullName, src => src.GetFullName())
-                .Map(dest => dest.Email, src => src.GetEmail())
+                .Map(dest => dest.Email, src => src.GetWorkEmail())
                 .Map(dest => dest.Landline, src => src.GetLandlinePhoneNumber())
                 .Map(dest => dest.Mobile, src => src.GetMobilePhoneNumber());
         }
