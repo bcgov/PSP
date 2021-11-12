@@ -72,14 +72,3 @@ $table-fontSize: 1.3rem;
   font-size: 1.1rem !important;
   font-weight: bolder !important;
 }
-
-.td,
-.th {
-  font-size: $table-fontSize !important;
-  border-bottom: 0.1rem solid $table-color;
-  border-top: none !important;
-}
-
-.th {
-  font-weight: bold;
-}

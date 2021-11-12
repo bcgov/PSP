@@ -46,7 +46,7 @@ export interface IPimsAPI {
 
 /**
  * TODO: This hook needs to get deleted.
- * @deprecatedThe /hooks/pims-api hooks should be used instead.
+ * @deprecated The /hooks/pims-api hooks should be used instead.
  */
 export const useApi = (): IPimsAPI => {
   const dispatch = useDispatch();
@@ -58,6 +58,9 @@ export const useApi = (): IPimsAPI => {
     const axios = CustomAxios();
     axios.interceptors.request.use(
       config => {
+        if (config.headers === undefined) {
+          config.headers = {};
+        }
         config.headers.Authorization = `Bearer ${store.getState().jwt}`;
         dispatch(showLoading());
         return config;
@@ -82,7 +85,10 @@ export const useApi = (): IPimsAPI => {
   }, [dispatch]);
 
   const isPidAvailable = useCallback(
-    async (parcelId: number | '' | undefined, pid: string | undefined) => {
+    async (
+      parcelId: number | '' | undefined,
+      pid: string | undefined,
+    ): Promise<{ available: boolean }> => {
       const pidParam = `pid=${Number(
         pid
           ?.split('-')
@@ -91,7 +97,7 @@ export const useApi = (): IPimsAPI => {
           .join(''),
       )}`;
       let params = parcelId ? `${pidParam}&parcelId=${parcelId}` : pidParam;
-      const { data } = await getAxios().get(
+      const { data } = await getAxios().get<{ available: boolean }>(
         `${ENVIRONMENT.apiUrl}/properties/parcels/check/pid-available?${params}`,
       );
       return data;
@@ -101,10 +107,13 @@ export const useApi = (): IPimsAPI => {
   );
 
   const isPinAvailable = useCallback(
-    async (parcelId: number | '' | undefined, pin: number | '' | undefined) => {
+    async (
+      parcelId: number | '' | undefined,
+      pin: number | '' | undefined,
+    ): Promise<{ available: boolean }> => {
       const pinParam = `pin=${Number(pin)}`;
       let params = parcelId ? `${pinParam}&parcelId=${parcelId}` : pinParam;
-      const { data } = await getAxios().get(
+      const { data } = await getAxios().get<{ available: boolean }>(
         `${ENVIRONMENT.apiUrl}/properties/parcels/check/pin-available?${params}`,
       );
       return data;

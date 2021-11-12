@@ -65,7 +65,7 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
   const findOneWhereContains = useCallback(
     async (latlng: LatLngLiteral): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
-        await wfsAxios().get(
+        await wfsAxios().get<FeatureCollection>(
           `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=4326;POINT ( ${latlng.lng} ${latlng.lat}))`,
         )
       )?.data;
@@ -100,7 +100,7 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
       //Do not make a request if we our currently cached response matches the requested pid.
       const formattedPid = pid.replace(/-/g, '');
       const data: FeatureCollection = (
-        await wfsAxios().get(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)
+        await wfsAxios().get<FeatureCollection>(`${baseUrl}&CQL_FILTER=PID_NUMBER=${+formattedPid}`)
       ).data;
       return data;
     },
@@ -110,8 +110,9 @@ export const useLayerQuery = (url: string, geometryName: string = 'SHAPE'): IUse
   const findByPin = useCallback(
     async (pin: string): Promise<FeatureCollection> => {
       //Do not make a request if we our currently cached response matches the requested pid.
-      const data: FeatureCollection = (await wfsAxios().get(`${baseUrl}&CQL_FILTER=PIN=${pin}`))
-        .data;
+      const data: FeatureCollection = (
+        await wfsAxios().get<FeatureCollection>(`${baseUrl}&CQL_FILTER=PIN=${pin}`)
+      ).data;
       return data;
     },
     [baseUrl],

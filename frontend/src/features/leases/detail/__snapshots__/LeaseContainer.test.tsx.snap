@@ -108,7 +108,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
-  padding: 0.5rem 0;
+  padding: 1rem 0 0.5rem 0;
   border-bottom: solid 0.3rem;
 }
 
@@ -197,7 +197,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c26 .form-label,
 .c26 .form-group {
-  margin: 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .c26 > .input {
@@ -946,9 +946,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term ID
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -961,9 +958,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term Start Date
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -976,9 +970,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term End Date
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -991,9 +982,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Date Renewed
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                   <div
@@ -1006,9 +994,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
                       class="sortable-column"
                     >
                       Term Status
-                      <span
-                        style="flex: 1 1 auto;"
-                      />
                     </div>
                   </div>
                 </div>
@@ -1028,7 +1013,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     <div
                       class="td"
                       role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
                       title=""
                     >
                       initial term
@@ -1036,25 +1021,25 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     <div
                       class="td"
                       role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
                       title=""
                     />
                     <div
                       class="td"
                       role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
                       title=""
                     />
                     <div
                       class="td"
                       role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
                       title=""
                     />
                     <div
                       class="td"
                       role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: flex-start; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
                       title=""
                     >
                       exercised

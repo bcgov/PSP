@@ -23,13 +23,11 @@ describe('useApiHealth testing suite', () => {
   };
 
   it('Get Health Version endpoint', async () => {
-    renderHook(async () => {
-      const { getVersion } = setup();
-      const response = await getVersion();
+    const { getVersion } = setup();
+    const response = await getVersion();
 
-      expect(response.status).toBe(200);
-      expect(response.data).toStrictEqual(defaultVersion);
-    });
+    expect(response.status).toBe(200);
+    expect(response.data).toStrictEqual(defaultVersion);
   });
 
   it('Get Health Live endpoint', async () => {

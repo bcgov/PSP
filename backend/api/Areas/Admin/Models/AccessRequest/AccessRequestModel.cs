@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Pims.Api.Areas.Admin.Models.AccessRequest
 {
     public class AccessRequestModel : Api.Models.BaseAppModel

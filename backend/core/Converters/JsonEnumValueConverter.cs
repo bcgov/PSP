@@ -28,11 +28,11 @@ namespace Pims.Core.Converters
         /// <summary>
         /// Only can convert enum type.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="typeToConvert"></param>
         /// <returns></returns>
-        public override bool CanConvert(Type type)
+        public override bool CanConvert(Type typeToConvert)
         {
-            return type.IsEnum;
+            return typeToConvert.IsEnum;
         }
 
         /// <summary>

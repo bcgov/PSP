@@ -27,7 +27,7 @@ export const TenantPersonContactInfo: React.FunctionComponent<ITenantPersonConta
         <br />
         <Form.Label>E-mail address:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'email')} />
-        <Form.Label>Phone</Form.Label>
+        <Form.Label>Phone:</Form.Label>
         <Styled.NestedInlineField
           label="Landline:"
           disabled={disabled}

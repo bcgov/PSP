@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
@@ -113,6 +111,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - The lease payment frequency type.
         /// </summary>
         public string PaymentFrequencyType { get; set; }
+
+        /// <summary>
+        /// get/set - A list of tenant notes.
+        /// </summary>
+        public IEnumerable<String> TenantNotes { get; set; }
 
         /// <summary>
         /// get/set - A list of persons tenants associated with this lease
