@@ -24,4 +24,6 @@ export interface IOrganization {
   rowVersion?: number;
   landline?: string;
   mobile?: string;
+  email?: string;
+  contactName?: string;
 }

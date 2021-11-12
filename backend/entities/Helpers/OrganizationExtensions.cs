@@ -53,5 +53,16 @@ namespace Pims.Dal.Entities.Helpers
             }
             return null;
         }
+
+        /// <summary>
+        /// Get the mailing address of the organization, or null if the organization does not have a mailing address.
+        /// Note this will only return a value if Person.ContactMethods.ContactType is eager loaded into context.
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public static Address GetMailingAddress(this Organization organization)
+        {
+            return organization?.Address?.AddressTypeId == "MAILADDR" ? organization.Address : null;
+        }
     }
 }

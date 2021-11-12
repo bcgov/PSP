@@ -115,10 +115,6 @@ exports[`LeaseBreadCrumb component renders as expected with no data 1`] = `
           Lease & License Search
         </a>
       </li>
-      <li
-        aria-current="page"
-        class="breadcrumb-item active"
-      />
     </ol>
   </nav>
 </DocumentFragment>

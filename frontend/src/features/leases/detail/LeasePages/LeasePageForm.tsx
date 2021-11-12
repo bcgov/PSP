@@ -24,7 +24,7 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
     <StyledLeasePage>
       <StyledLeasePageHeader>
         <Styled.LeaseH2>{leasePage.title}</Styled.LeaseH2>
-        <p>{leasePage.description}</p>
+        {leasePage.description && <p>{leasePage.description}</p>}
       </StyledLeasePageHeader>
       <Formik
         initialValues={{
@@ -44,6 +44,7 @@ export const ViewEditToggleForm = styled(Form)`
   &#leaseForm {
     text-align: left;
     input:disabled,
+    select:disabled,
     textarea:disabled {
       background: none;
       border: none;
@@ -66,11 +67,13 @@ const StyledLeasePageHeader = styled.div`
   position: sticky;
   top: 0;
   left: 0;
+  padding-bottom: 1rem;
   background-color: white;
   p {
-    height: 3rem;
+    height: 1rem;
     text-align: left;
   }
+  z-index: 1;
 `;
 
 const StyledLeasePage = styled.div`

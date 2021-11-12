@@ -30,7 +30,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
 .c1 > .input {
   grid-column: controls;
   grid-row: auto;
-  border-left: 1px solid black;
+  border-left: 1px solid #666666;
 }
 
 .c1 .form-control {

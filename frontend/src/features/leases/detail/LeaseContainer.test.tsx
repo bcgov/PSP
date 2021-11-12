@@ -48,10 +48,12 @@ describe('LeaseContainer component', () => {
     getLease.mockReset();
     history.push('/lease/1?leasePageName=details');
   });
+
   it('renders as expected', () => {
     const { component } = setup({ store: storeState });
     expect(component.asFragment()).toMatchSnapshot();
   });
+
   it('loads a lease by lease id', async () => {
     getLease.mockResolvedValue({ data: mockLease });
     setup({ store: storeState });

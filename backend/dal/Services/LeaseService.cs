@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -5,10 +9,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Services
 {
@@ -50,7 +50,7 @@ namespace Pims.Dal.Services
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
-            var query = this.Context.GenerateLeaseQuery(this.User, filter);
+            var query = this.Context.GenerateLeaseQuery(filter);
             var leases = query.ToArray();
 
             return leases;
@@ -65,6 +65,8 @@ namespace Pims.Dal.Services
                 .Include(l => l.Properties)
                 .ThenInclude(p => p.Address)
                 .ThenInclude(p => p.Province)
+                .Include(l => l.Properties)
+                .ThenInclude(s => s.SurplusDeclarationType)
                 .Include(l => l.Properties)
                 .ThenInclude(p => p.AreaUnit)
                 .Include(l => l.ProgramType)
@@ -86,10 +88,26 @@ namespace Pims.Dal.Services
                 .ThenInclude(o => o.PersonsManyToMany)
                 .Include(l => l.TenantsManyToMany)
                 .ThenInclude(t => t.Organization)
+                .ThenInclude(o => o.Persons)
+                .Include(l => l.TenantsManyToMany)
+                .ThenInclude(t => t.Organization)
                 .ThenInclude(o => o.Address)
                 .Include(l => l.TenantsManyToMany)
                 .ThenInclude(t => t.Organization)
                 .ThenInclude(o => o.ContactMethods)
+
+                .Include(l => l.Improvements)
+                .ThenInclude(t => t.PropertyImprovementType)
+
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsurancePayeeType)
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsuranceType)
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsurerOrganization)
+                .Include(l => l.Insurances)
+                .ThenInclude(i => i.InsurerContact)
+
                 .Where(l => l.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
@@ -107,7 +125,7 @@ namespace Pims.Dal.Services
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = this.Context.GenerateLeaseQuery(this.User, filter);
+            var query = this.Context.GenerateLeaseQuery(filter);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)
