@@ -46,6 +46,18 @@ namespace Pims.Dal.Security
         PropertyDelete = 13,
 
         [Display(GroupName = "property", Name = "sensitive-view", Description = "Can view sensitive properties in inventory.")]
-        SensitiveView = 14
+        SensitiveView = 14,
+
+        [Display(GroupName = "contact", Name = "contact-view", Description = "Can view contacts.")]
+        ContactView = 15,
+
+        [Display(GroupName = "contact", Name = "contact-add", Description = "Can add new contacts.")]
+        ContactAdd = 16,
+
+        [Display(GroupName = "contact", Name = "contact-edit", Description = "Can edit existing contacts.")]
+        ContactEdit = 17,
+
+        [Display(GroupName = "contact", Name = "contact-delete", Description = "Can delete existing contacts.")]
+        ContactDelete = 18
     }
 }

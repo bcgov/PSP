@@ -9,6 +9,8 @@ import { Input, InputProps } from './Input';
 export type TextProps = InputProps & {
   /** use FastInput instead of Input */
   fast?: boolean;
+  rows?: number;
+  cols?: number;
 };
 
 /**

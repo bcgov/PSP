@@ -1,10 +1,13 @@
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
+    /// <summary>
+    /// Provides a lease-oriented organization model.
+    /// </summary>
     public class OrganizationModel
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key to identify the property.
+        /// get/set - The primary key to identify the organization.
         /// </summary>
         public long Id { get; set; }
 

@@ -28,6 +28,10 @@ namespace Pims.Dal
         ILeaseService Lease { get; }
         #endregion
 
+        #region Contacts
+        IContactService Contact { get; }
+        #endregion
+
         #region Configuration
         ITenantService Tenant { get; }
         #endregion

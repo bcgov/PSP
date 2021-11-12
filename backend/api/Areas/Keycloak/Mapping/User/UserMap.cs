@@ -20,7 +20,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.MiddleNames, src => src.Person.MiddleNames)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
-                .Map(dest => dest.Email, src => src.Person.GetEmail())
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Organizations, src => src.OrganizationsManyToMany.OrderBy(a => a.Organization.ParentId))
                 .Map(dest => dest.Roles, src => src.RolesManyToMany)
                 .Inherits<Entity.BaseAppEntity, Api.Models.BaseAppModel>();
@@ -42,7 +42,7 @@ namespace Pims.Api.Areas.Keycloak.Mapping.User
                 .Map(dest => dest.Username, src => src.BusinessIdentifier)
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.LastName, src => src.Person.Surname)
-                .Map(dest => dest.Email, src => src.Person.GetEmail())
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Enabled, src => !src.IsDisabled)
                 .Inherits<Entity.BaseAppEntity, Object>();
         }

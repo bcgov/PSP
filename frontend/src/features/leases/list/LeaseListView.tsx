@@ -1,11 +1,14 @@
 import { Center } from 'components/common/Center/Center';
 import TooltipWrapper from 'components/common/TooltipWrapper';
+import { useApiLeases } from 'hooks/pims-api/useApiLeases';
+import { useSearch } from 'hooks/useSearch';
+import { ILeaseSearchResult } from 'interfaces';
+import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 import { ILeaseFilter } from '../interfaces';
-import { useSearch } from './hooks/useSearch';
 import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
 import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
 import * as Styled from './styles';
@@ -14,6 +17,7 @@ import * as Styled from './styles';
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
 export const LeaseListView = () => {
+  const { getLeases } = useApiLeases();
   const {
     results,
     filter,
@@ -26,7 +30,7 @@ export const LeaseListView = () => {
     setSort,
     setCurrentPage,
     setPageSize,
-  } = useSearch(defaultFilter);
+  } = useSearch<ILeaseSearchResult, ILeaseFilter>(defaultFilter, getLeases);
 
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
@@ -37,9 +41,11 @@ export const LeaseListView = () => {
     [setFilter, setCurrentPage],
   );
 
-  if (error) {
-    toast.error(error.message);
-  }
+  useEffect(() => {
+    if (error) {
+      toast.error(error?.message);
+    }
+  }, [error]);
 
   return (
     <Styled.ListPage>
