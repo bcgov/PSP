@@ -1,0 +1,324 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lease Insurance renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c2 {
+  border-right: solid 1px;
+  padding-bottom: 1rem;
+}
+
+.c1 {
+  border-bottom: solid 0.3rem;
+  margin-bottom: 1rem;
+}
+
+<div>
+    <div
+      class="c0"
+    >
+      <h2
+        data-testid="insurance-title"
+      >
+        Test Insurance Type
+      </h2>
+      <br />
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <h2
+                class="c1"
+              >
+                Insurer
+              </h2>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Organization:
+                    </div>
+                    <div
+                      class="col"
+                      data-testid="organization"
+                    >
+                      Ministry of Transportation & Infrastructure
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Contact name:
+                    </div>
+                    <div
+                      class="col"
+                      data-testid="contact-name"
+                    >
+                      N.A
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Phone number:
+                    </div>
+                    <div
+                      class="col"
+                      data-testid="col-phone"
+                    >
+                      <div
+                        class="mb-2"
+                      >
+                        mobile: 5556667777
+                      </div>
+                      <div
+                        class="mb-2"
+                      >
+                        landline: 2223334444
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Email:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      admin@pims.gov.bc.ca
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <h2
+                class="c1"
+              >
+                Ministry Contacts
+              </h2>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-7"
+                    >
+                      MOTI Risk Management:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      N.A
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-7"
+                    >
+                      Ministry of Finance:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      N.A
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="pt-3 row"
+          >
+            <div
+              class="col"
+            >
+              <h2
+                class="c1"
+              >
+                Policy
+              </h2>
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Insurance in place:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      Yes
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Limit:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      $777
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Risk Assessment completed:
+                    </div>
+                    <div
+                      class="col"
+                    />
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      BCTFA/MOTI (Insurance Payee):
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      Test Payee Type
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Insured value:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      $777
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Policy start date:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      Jan 1, 2021
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="c2 col-5"
+                    >
+                      Policy expiry date:
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      Jan 1, 2022
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  <h2>
+                    Description of Coverage
+                  </h2>
+                  <div />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+  </div>
+</DocumentFragment>
+`;

@@ -1,8 +1,8 @@
+using System.Linq;
 using Mapster;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
-using System.Linq;
 
 namespace Pims.Api.Areas.Lease.Mapping.Lease
 {
@@ -16,6 +16,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Amount, src => src.Amount)
                 .Map(dest => dest.RenewalCount, src => src.RenewalCount)
                 .Map(dest => dest.Properties, src => src.Properties)
+                .Map(dest => dest.Insurances, src => src.Insurances)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.TfaFileNo, src => src.TfaFileNo)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
@@ -29,9 +30,13 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PaymentFrequencyType, src => src.PaymentFrequencyType.Description)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.IsResidential, src => src.IsSubjectToRta)
+                .Map(dest => dest.IsCommercialBuilding, src => src.IsCommBldg)
+                .Map(dest => dest.IsOtherImprovement, src => src.IsOtherImprovement)
                 .Map(dest => dest.Persons, src => src.Persons)
                 .Map(dest => dest.Organizations, src => src.Organizations)
-                .Map(dest => dest.TenantNotes, src => src.TenantsManyToMany.Select(t => t.Note));
+                .Map(dest => dest.TenantNotes, src => src.TenantsManyToMany.Select(t => t.Note))
+                .Map(dest => dest.Improvements, src => src.Improvements);
         }
     }
 }

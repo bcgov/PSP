@@ -98,6 +98,7 @@ namespace Pims.Dal
         #endregion
 
         #region Views
+        public DbSet<Contact> Contacts { get; set; }
         #endregion
 
         #region Configuration

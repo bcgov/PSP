@@ -8,7 +8,7 @@ import { AUTHORIZATION_URL } from 'constants/strings';
 import { Formik } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { IAccessRequest, IUserInfo } from 'interfaces';
+import { IAccessRequest, IAccessRequestUserInfo } from 'interfaces';
 import React, { useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
@@ -33,7 +33,7 @@ import { Form, Input, Select, TextArea } from '../../../components/common/form';
 const AccessRequestPage = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
-  const userInfo = keycloak?.userInfo as IUserInfo;
+  const userInfo = keycloak?.userInfo as IAccessRequestUserInfo;
   const { fetchCurrentAccessRequest, addAccessRequest } = useAccessRequests();
   const [alert, setAlert] = React.useState<ISnackbarState>({});
 
@@ -54,10 +54,10 @@ const AccessRequestPage = () => {
     user: {
       id: userInfo?.id,
       keycloakUserId: userInfo?.keycloakUserId,
-      businessIdentifier: userInfo?.businessIdentifier,
+      businessIdentifier: userInfo?.username,
       displayName: userInfo?.name,
       firstName: userInfo?.firstName,
-      surname: userInfo?.surname,
+      surname: userInfo?.family_name,
       email: userInfo?.email,
       position: accessRequest?.user?.position ?? userInfo?.position ?? '',
     },

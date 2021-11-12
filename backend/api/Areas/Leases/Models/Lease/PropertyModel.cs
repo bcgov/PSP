@@ -54,6 +54,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - Whether the property is sensitive data.
         /// </summary>
         public bool IsSensitive { get; set; }
+
+        /// <summary>
+        /// get/set - A surplus declarations for the property
+        /// </summary>
+        public SurplusDeclarationModel SurplusDeclaration { get; set; }
         #endregion
 
         #region Parcel Properties

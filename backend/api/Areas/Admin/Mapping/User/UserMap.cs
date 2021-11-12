@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Admin.Mapping.User
                 .Map(dest => dest.MiddleNames, src => src.Person.MiddleNames)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
                 .Map(dest => dest.LastLogin, src => src.LastLogin)
-                .Map(dest => dest.Email, src => src.Person.GetEmail())
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Organizations, src => src.OrganizationsManyToMany.OrderBy(a => a.Organization != null ? a.Organization.ParentId : null))
                 .Map(dest => dest.Roles, src => src.Roles)
                 .Map(dest => dest.CreatedOn, src => src.CreatedOn)
