@@ -192,7 +192,7 @@ namespace Pims.Dal.Entities
         [Column("SURPLUS_DECLARATION_TYPE_CODE")]
         public string SurplusDeclarationTypeId { get; set; }
 
-        // <summary>
+        /// <summary>
         /// get/set - Foreign key to the surplus declaration type.
         /// </summary>
         public PropertySurplusDeclarationType SurplusDeclarationType { get; set; }

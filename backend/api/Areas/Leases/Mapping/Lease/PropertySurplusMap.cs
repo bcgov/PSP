@@ -11,8 +11,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
             config.NewConfig<Entity.Property, Model.SurplusDeclarationModel>()
                 .Map(dest => dest.Comment, src => src.SurplusDeclarationComment)
                 .Map(dest => dest.Date, src => src.SurplusDeclarationDate)
-                .Map(dest => dest.TypeDescription, src => src.SurplusDeclarationType.Description)
-                .Map(dest => dest.TypeCode, src => src.SurplusDeclarationTypeId);
+                .Map(dest => dest.Type, src => src.SurplusDeclarationType);
         }
     }
 }

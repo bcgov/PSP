@@ -15,14 +15,9 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public DateTime? Date { get; set; }
 
         /// <summary>
-        /// get/set - Surplus declaration type description.
+        /// get/set - Surplus declaration type.
         /// </summary>
-        public string TypeDescription { get; set; }
-
-        /// <summary>
-        /// get/set - Surplus declaration type code.
-        /// </summary>
-        public string TypeCode { get; set; }
+        public TypeModel<string> Type { get; set; }
 
         /// <summary>
         /// get/set - Surplus declaration comment.
