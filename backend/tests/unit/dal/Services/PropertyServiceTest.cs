@@ -1,8 +1,10 @@
+using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,102 +15,95 @@ namespace Pims.Dal.Test.Services
 {
     [Trait("category", "unit")]
     [Trait("category", "dal")]
-    [Trait("area", "admin")]
-    [Trait("group", "lease")]
+    [Trait("group", "property")]
     [ExcludeFromCodeCoverage]
-    public class LeaseServiceTest
+    public class PropertyServiceTest
     {
         #region Data
-        public static IEnumerable<object[]> LeaseFilterData =>
+        public static IEnumerable<object[]> AllPropertyFilters =>
             new List<object[]>
             {
-                new object[] { new LeaseFilter() { TenantName = "tenant" }, 1 },
-                new object[] { new LeaseFilter() { TenantName = "fake" }, 0 },
-                new object[] { new LeaseFilter() { LFileNo = "123" }, 1 },
-                new object[] { new LeaseFilter() { LFileNo = "fake" }, 0 },
-                new object[] { new LeaseFilter() { PidOrPin = "456" }, 1 },
-                new object[] { new LeaseFilter() { PidOrPin = "789" }, 0 },
-                new object[] { new LeaseFilter(), 1 },
+                new object[] { new PropertyFilter(48.571155, -123.657596, 48.492947, -123.731803), 1 },
+                new object[] { new PropertyFilter(48.821333, -123.795017, 48.763431, -123.959783), 0 },
+                new object[] { new PropertyFilter() { ClassificationId = "Core Operational" }, 5 },
+                new object[] { new PropertyFilter() { PID = "111-111-111" }, 1 },
+                new object[] { new PropertyFilter() { PIN = 111 }, 1 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 4 },
+                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
+                new object[] { new PropertyFilter(), 6 },
             };
         #endregion
 
+        #region Constructors
+        public PropertyServiceTest() { }
+        #endregion
+
         #region Tests
+        #region Get Paged Properties
+        /// <summary>
+        /// User does not have 'property-view' claim.
+        /// </summary>
         [Fact]
-        public void Lease_Count()
+        public void GetPage_Properties_ArgumentNullException()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-            var elease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
-
-            var service = helper.CreateService<LeaseService>(user);
+            var service = helper.CreateService<PropertyService>(user);
 
             // Act
-            var result = service.Count();
-
             // Assert
-            Assert.Equal(1, result);
+            Assert.Throws<ArgumentNullException>(() =>
+                service.GetPage((PropertyFilter)null));
         }
 
-        #region Get
-        [Theory]
-        [MemberData(nameof(LeaseFilterData))]
-        public void Get_Leases_Paged(LeaseFilter filter, int expectedCount)
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant");
-
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
-
-            var service = helper.CreateService<LeaseService>(user);
-
-            // Act
-            var result = service.Get(filter);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<Entity.Lease[]>(result);
-            Assert.Equal(expectedCount, result.Count());
-        }
-
+        /// <summary>
+        /// User does not have 'property-view' claim.
+        /// </summary>
         [Fact]
-        public void Get_Leases_NotAuthorized()
+        public void GetPage_Properties_NotAuthorized()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
+            var filter = new PropertyFilter(50, 25, 50, 20);
 
-            var service = helper.CreateService<LeaseService>(user);
+            var service = helper.CreateService<PropertyService>(user);
 
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get(null));
+                service.GetPage(filter));
         }
 
         [Theory]
-        [MemberData(nameof(LeaseFilterData))]
-        public void Get_Leases_Filter(LeaseFilter filter, int expectedCount)
+        [MemberData(nameof(AllPropertyFilters))]
+        public void GetPage_Properties(PropertyFilter filter, int expectedCount)
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.PropertyView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant");
 
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
+            using var init = helper.InitializeDatabase(user);
 
-            var service = helper.CreateService<LeaseService>(user);
+            init.CreateProperty(2);
+            init.CreateProperty(3, pin: 111);
+            init.CreateProperty(4, address: init.Addresses.FirstOrDefault());
+            init.Add(new Entity.Property() { Location = new NetTopologySuite.Geometries.Point(-123.720810, 48.529338) });
+            init.CreateProperty(5, classification: init.PropertyClassificationTypes.FirstOrDefault(c => c.Id == "Core Operational"));
+            init.CreateProperty(111111111);
+
+            init.SaveChanges();
+
+            var service = helper.CreateService<PropertyService>(user);
 
             // Act
             var result = service.GetPage(filter);
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.Lease>>(result);
-            Assert.Equal(expectedCount, result.Items.Count);
+            Assert.IsAssignableFrom<IEnumerable<Entity.Property>>(result);
+            Assert.Equal(expectedCount, result.Total);
         }
         #endregion
         #endregion

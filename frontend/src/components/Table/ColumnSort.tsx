@@ -19,17 +19,17 @@ const Wrapper = styled('div')`
 `;
 
 interface Props {
-  active?: boolean;
+  $active?: boolean;
 }
 
 const Down = styled(IoMdArrowDropdown)<Props>`
-  color: ${props => (props.active ? variables.activeColor : undefined)};
+  color: ${props => (props.$active ? variables.activeColor : undefined)};
   width: 1.6rem;
   height: 1.6rem;
 `;
 
 const Up = styled(IoMdArrowDropup)<Props>`
-  color: ${props => (props.active ? variables.activeColor : undefined)};
+  color: ${props => (props.$active ? variables.activeColor : undefined)};
   width: 1.6rem;
   height: 1.6rem;
 `;
@@ -41,8 +41,8 @@ function ColumnSort<T extends object = {}>({ column, onSort }: IColumnSortProps<
 
   return (
     <Wrapper onClick={onSort}>
-      {column.isSorted && !column.isSortedDesc && <Up active={true} />}
-      {column.isSorted && column.isSortedDesc && <Down active={true} />}
+      {column.isSorted && !column.isSortedDesc && <Up $active={true} />}
+      {column.isSorted && column.isSortedDesc && <Down $active={true} />}
 
       {!column.isSorted && (
         <>

@@ -65,6 +65,11 @@ namespace Pims.Dal
         /// get - The lease service.
         /// </summary>
         public ILeaseService Lease { get { return _serviceProvider.GetService<ILeaseService>(); } }
+
+        /// <summary>
+        /// get - The contact service.
+        /// </summary>
+        public IContactService Contact { get { return _serviceProvider.GetService<IContactService>(); } }
         #endregion
 
         #region Constructors

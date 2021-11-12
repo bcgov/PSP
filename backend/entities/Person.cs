@@ -93,6 +93,11 @@ namespace Pims.Dal.Entities
         /// get - A collection of users.
         /// </summary>
         public ICollection<User> Users { get; } = new List<User>();
+
+        /// <summary>
+        /// get - A collection of contacts with this address.
+        /// </summary>
+        public ICollection<Contact> Contacts { get; } = new List<Contact>();
         #endregion
 
         #region Constructors
