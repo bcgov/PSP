@@ -58,6 +58,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - The annual interest rate.
         /// </summary>
-        public int AnnualInterestRate { get; set; }
+        public decimal AnnualInterestRate { get; set; }
     }
 }

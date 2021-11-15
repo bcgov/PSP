@@ -12,7 +12,7 @@ export const renderDate = <T extends object>({ cell: { value } }: CellProps<T, s
   prettyFormatDate(value);
 
 export const renderMoney = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
-  `$${formatMoney(value as any)}`;
+  formatMoney(value as any);
 
 export const renderPercentage = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
   `${formatNumber(value as any, 2)}%`;

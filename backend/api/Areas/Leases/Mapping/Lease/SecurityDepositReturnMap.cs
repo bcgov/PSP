@@ -17,6 +17,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.DepositTotal, src => src.DepositTotal)
                 .Map(dest => dest.ClaimsAgainst, src => src.ClaimsAgainst)
                 .Map(dest => dest.ReturnAmount, src => src.ReturnAmount)
+                .Map(dest => dest.ReturnDate, src => src.ReturnDate)
                 .Map(dest => dest.ChequeNumber, src => src.ChequeNumber)
                 .Map(dest => dest.PayeeName, src => src.PayeeName)
                 .Map(dest => dest.PayeeAddress, src => src.PayeeAddress)
