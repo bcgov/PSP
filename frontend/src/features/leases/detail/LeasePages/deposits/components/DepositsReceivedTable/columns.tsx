@@ -10,6 +10,12 @@ function renderInterestToDate({ row: { original } }: CellProps<ILeaseSecurityDep
   return formatMoney(value);
 }
 
+function renderTotalAmount({ row: { original } }: CellProps<ILeaseSecurityDeposit, string>) {
+  const { annualInterestRate, amountPaid, depositDate } = original;
+  const interest = calculateInterest(annualInterestRate, amountPaid, depositDate);
+  return formatMoney(amountPaid + interest);
+}
+
 // As specified in Confluence, this calculates interest to date using the "simple interest" method.
 // The formula looks like this: I (interest) = P (principal) x r (rate) x t (time periods)
 function calculateInterest(
@@ -53,8 +59,8 @@ export const columns: ColumnWithProps<ILeaseSecurityDeposit>[] = [
   },
   {
     Header: 'Deposit holder',
-    accessor: 'securityDepositHolderType',
-    maxWidth: 50,
+    accessor: 'securityDepositHolderType', // TODO: Support "other holder type" when DB schema is updated
+    maxWidth: 60,
   },
   {
     Header: 'Annual Interest %',
@@ -65,16 +71,16 @@ export const columns: ColumnWithProps<ILeaseSecurityDeposit>[] = [
   },
   {
     // This is a derived field. See `renderInterestToDate` for details
-    Header: 'Interest',
+    Header: 'Interest (approx)',
     align: 'right',
     maxWidth: 40,
     Cell: renderInterestToDate,
   },
   {
-    Header: 'Total',
-    accessor: 'totalAmount',
+    // This is a derived field.
+    Header: 'Total (with interest)',
     align: 'right',
     maxWidth: 40,
-    Cell: renderMoney,
+    Cell: renderTotalAmount,
   },
 ];

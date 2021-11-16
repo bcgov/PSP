@@ -2,6 +2,7 @@ import { FormSection } from 'components/common/form/styles';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease, ILeaseSecurityDeposit, ILeaseSecurityDepositReturn } from 'interfaces';
 
+import DepositNotes from './components/DepositNotes/DepositNotes';
 import DepositsReceivedTable from './components/DepositsReceivedTable/DepositsReceivedTable';
 import DepositsReturnedTable from './components/DepositsReturnedTable/DepositsReturnedTable';
 import * as Styled from './styles';
@@ -24,6 +25,10 @@ export const Deposits: React.FunctionComponent<IDepositsProps> = props => {
       <FormSection>
         <Styled.SectiontHeader>Deposits Returned</Styled.SectiontHeader>
         <DepositsReturnedTable dataSource={depositReturns} />
+      </FormSection>
+
+      <FormSection>
+        <DepositNotes disabled={true} />
       </FormSection>
     </Styled.DepositsContainer>
   );

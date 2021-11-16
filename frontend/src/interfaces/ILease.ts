@@ -40,6 +40,7 @@ export interface ILease {
   isResidential: boolean;
   isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
+  returnNotes?: string; // security deposit notes (free form text)
 }
 
 export interface IFormLease
