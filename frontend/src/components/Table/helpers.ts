@@ -15,4 +15,4 @@ export const renderMoney = <T extends object>({ cell: { value } }: CellProps<T, 
   formatMoney(value as any);
 
 export const renderPercentage = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
-  `${formatNumber(value as any, 2)}%`;
+  `${formatNumber(value as any, 0, 2)}%`;
