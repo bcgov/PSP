@@ -71,6 +71,7 @@ export const defaultLease: ILease = {
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
+  returnNotes: '',
 };
 
 export const defaultFormLease: IFormLease = {
@@ -100,4 +101,5 @@ export const defaultFormLease: IFormLease = {
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
+  returnNotes: '',
 };
