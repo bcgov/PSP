@@ -1,8 +1,14 @@
 export interface ILeaseSearchResult {
   id: number;
   lFileNo: string;
-  pidOrPin?: string;
   programName?: string;
-  tenantName?: string;
+  tenantNames: string[];
+  properties: ILeaseProperty[];
+}
+
+interface ILeaseProperty {
+  id: number;
   address?: string;
+  pin?: string;
+  pid?: string;
 }

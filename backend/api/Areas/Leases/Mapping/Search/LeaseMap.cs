@@ -1,4 +1,6 @@
+using System.Linq;
 using Mapster;
+using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Search;
@@ -11,12 +13,10 @@ namespace Pims.Api.Areas.Lease.Mapping.Search
         {
             config.NewConfig<Entity.Lease, Model.LeaseModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.RowVersion, src => src.RowVersion)
-                .Map(dest => dest.PidOrPin, src => src.GetPidOrPin())
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
+                .Map(dest => dest.Properties, src => src.Properties)
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
-                .Map(dest => dest.TenantName, src => src.GetFullName())
-                .Map(dest => dest.Address, src => src.GetAddress());
+                .Map(dest => dest.TenantNames, src => src.TenantsManyToMany.Select(t => t.Person.GetFullName()));
         }
     }
 }
