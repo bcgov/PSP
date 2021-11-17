@@ -53,7 +53,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         [HasPermission(Permissions.AdminUsers)]
         public async Task<IActionResult> UpdateAccessRequestAsync(Model.AccessRequestModel model)
         {
-            var accessRequest = _mapper.Map<Entity.AccessRequest>(model);
+            var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
             var result = await _keycloakService.UpdateAccessRequestAsync(accessRequest);
             return new JsonResult(_mapper.Map<Model.AccessRequestModel>(result));
         }

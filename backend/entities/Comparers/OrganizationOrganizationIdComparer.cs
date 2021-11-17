@@ -4,17 +4,17 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Entities.Comparers
 {
-    public class OrganizationOrganizationIdComparer : IEqualityComparer<Organization>
+    public class OrganizationOrganizationIdComparer : IEqualityComparer<PimsUserOrganization>
     {
-        public bool Equals([AllowNull] Organization x, [AllowNull] Organization y)
+        public bool Equals([AllowNull] PimsUserOrganization x, [AllowNull] PimsUserOrganization y)
         {
             return x != null && y != null && GetHashCode(x) == GetHashCode(y);
         }
 
-        public int GetHashCode([DisallowNull] Organization obj)
+        public int GetHashCode([DisallowNull] PimsUserOrganization obj)
         {
             var hash = new HashCode();
-            hash.Add(obj.Id);
+            hash.Add(obj.OrganizationId);
             return hash.ToHashCode();
         }
     }

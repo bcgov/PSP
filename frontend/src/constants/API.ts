@@ -10,7 +10,7 @@ export interface IPaginateParams {
 }
 
 export interface IGetUsersParams extends IPaginateParams {
-  businessIdentifier?: string;
+  businessIdentifierValue?: string;
   firstName?: string;
   surname?: string;
   email?: string;
@@ -46,15 +46,12 @@ export interface IGeoSearchParams {
 }
 
 // Lookup Codes
-export const ORGANIZATION_CODE_SET_NAME = 'Organization';
-export const ROLE_CODE_SET_NAME = 'Role';
-export const PROVINCE_CODE_SET_NAME = 'Province';
-export const ADMINISTRATIVE_AREA_CODE_SET_NAME = 'AdministrativeArea';
-export const PROPERTY_CLASSIFICATION_CODE_SET_NAME = 'PropertyClassification';
-export const CONSTRUCTION_CODE_SET_NAME = 'BuildingConstructionType';
-export const PREDOMINATE_USE_CODE_SET_NAME = 'BuildingPredominateUse';
-export const OCCUPANT_TYPE_CODE_SET_NAME = 'BuildingOccupantType';
-export const PAYMENT_RECEIVABLE_CODE_SET_NAME = 'LeasePaymentReceivableType';
+export const ORGANIZATION_CODE_SET_NAME = 'PimsOrganization';
+export const ROLE_CODE_SET_NAME = 'PimsRole';
+export const PROVINCE_CODE_SET_NAME = 'PimsProvinceState';
+export const ADMINISTRATIVE_AREA_CODE_SET_NAME = 'PimsAdministrativeArea';
+export const PROPERTY_CLASSIFICATION_CODE_SET_NAME = 'PimsPropertyClassification';
+export const PAYMENT_RECEIVABLE_CODE_SET_NAME = 'PimsLeasePaymentReceivableType';
 export const LEASE_PROGRAM_TYPES = 'LeaseProgramType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.

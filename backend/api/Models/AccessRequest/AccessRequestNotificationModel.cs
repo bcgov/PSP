@@ -12,7 +12,7 @@ namespace Pims.Api.Models.AccessRequest
         /// <summary>
         /// get/ste - The access request.
         /// </summary>
-        public Entity.AccessRequest AccessRequest { get; set; }
+        public Entity.PimsAccessRequest AccessRequest { get; set; }
 
         /// <summary>
         /// get/set - Environment configuration settings.
@@ -31,7 +31,7 @@ namespace Pims.Api.Models.AccessRequest
         /// </summary>
         /// <param name="accessRequest"></param>
         /// <param name="env"></param>
-        public AccessRequestNotificationModel(Entity.AccessRequest accessRequest, Entity.Models.EnvironmentModel env)
+        public AccessRequestNotificationModel(Entity.PimsAccessRequest accessRequest, Entity.Models.EnvironmentModel env)
         {
             this.AccessRequest = accessRequest;
             this.Environment = env;
@@ -42,7 +42,7 @@ namespace Pims.Api.Models.AccessRequest
         /// </summary>
         /// <param name="accessRequest"></param>
         /// <param name="options"></param>
-        public AccessRequestNotificationModel(Entity.AccessRequest accessRequest, PimsOptions options)
+        public AccessRequestNotificationModel(Entity.PimsAccessRequest accessRequest, PimsOptions options)
         {
             this.AccessRequest = accessRequest;
             this.Environment = new Entity.Models.EnvironmentModel(options.Environment.Uri, options.Environment.Name, options.Environment.Title);

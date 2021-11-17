@@ -53,7 +53,7 @@ namespace Pims.Dal.Test.Services
             var result = service.Get(1, 1, "Role 1");
 
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.Role>>(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsRole>>(result);
             Assert.Equal(expectedCount, result.Items.Count());
         }
 
@@ -65,7 +65,7 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminRoles);
             using var init = helper.InitializeDatabase(user);
             var role = EntityHelper.CreateRole(99, "Role 1");
-            var roleKey = role.Key;
+            var roleKey = role.RoleUid;
             init.AddAndSaveChanges(role);
 
             var service = helper.CreateService<RoleService>(user);
@@ -75,7 +75,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Pims.Dal.Entities.Role>(result);
+            Assert.IsAssignableFrom<Pims.Dal.Entities.PimsRole>(result);
             Assert.Equal("Role 1", result.Name);
         }
 
@@ -96,7 +96,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Pims.Dal.Entities.Role>(result);
+            Assert.IsAssignableFrom<Pims.Dal.Entities.PimsRole>(result);
             Assert.Equal("Role 1", result.Name);
         }
 
@@ -137,7 +137,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Pims.Dal.Entities.Role>(result);
+            Assert.IsAssignableFrom<Pims.Dal.Entities.PimsRole>(result);
             Assert.Equal("Role 1", result.Name);
         }
         #endregion
@@ -157,7 +157,7 @@ namespace Pims.Dal.Test.Services
             var updatedRole = EntityHelper.CreateRole(1, id, "Role 1");
             var newName = "Updated Role";
             updatedRole.Name = newName;
-            updatedRole.RowVersion = role.RowVersion;
+            updatedRole.ConcurrencyControlNumber = role.ConcurrencyControlNumber;
 
             // Act
             service.Update(updatedRole);
@@ -258,7 +258,7 @@ namespace Pims.Dal.Test.Services
             var role1 = EntityHelper.CreateRole(1, "Delete Me");
             var role2 = EntityHelper.CreateRole(2, "And Me");
             var role3 = EntityHelper.CreateRole(3, "Not Me");
-            Guid[] exclusions = new Guid[] { role3.Key };
+            Guid[] exclusions = new Guid[] { role3.RoleUid };
             helper.CreatePimsContext(user, true).AddAndSaveChanges(role1, role2);
 
             var service = helper.CreateService<RoleService>(user);
@@ -279,7 +279,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
             var role = EntityHelper.CreateRole(Guid.NewGuid(), "Role 1");
-            Guid[] exclusions = new Guid[] { role.Key };
+            Guid[] exclusions = new Guid[] { role.RoleUid };
 
 
             var service = helper.CreateService<RoleService>(user);

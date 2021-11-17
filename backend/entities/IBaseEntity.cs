@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
-        long RowVersion { get; set; }
+        long ConcurrencyControlNumber { get; set; }
         #endregion
     }
 }

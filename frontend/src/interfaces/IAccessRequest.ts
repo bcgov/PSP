@@ -12,6 +12,6 @@ export interface IAccessRequest {
   organizationId?: number | '';
   role?: IRole;
   roleId?: number | '';
-  createdOn?: string;
+  appCreateTimestamp?: string;
   rowVersion?: number;
 }

@@ -41,10 +41,10 @@ namespace Pims.Api.Models.Auth
         /// Creates a new instance of a UserModel object, initializes it with specified arguments.
         /// </summary>
         /// <param name="user"></param>
-        public UserModel(Entity.User user)
+        public UserModel(Entity.PimsUser user)
         {
             this.Id = user.Id;
-            this.Key = user.KeycloakUserId.Value;
+            this.Key = user.GuidIdentifierValue.Value;
         }
         #endregion
     }

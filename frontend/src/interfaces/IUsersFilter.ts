@@ -1,5 +1,5 @@
 export interface IUsersFilter {
-  businessIdentifier?: string;
+  businessIdentifierValue?: string;
   firstName?: string;
   surname?: string;
   email?: string;

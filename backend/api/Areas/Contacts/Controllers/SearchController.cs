@@ -80,7 +80,7 @@ namespace Pims.Api.Areas.Contact.Controllers
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid()) throw new BadRequestException("Contact filter must contain valid values.");
 
-            Paged<Dal.Entities.Contact> contacts = _pimsService.Contact.GetPage((ContactFilter)filter);
+            Paged<Dal.Entities.PimsContactMgrVw> contacts = _pimsService.Contact.GetPage((ContactFilter)filter);
             return new JsonResult(_mapper.Map<Api.Models.PageModel<ContactModel>>(contacts));
         }
         #endregion

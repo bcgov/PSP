@@ -96,7 +96,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    businessIdentifier: user.businessIdentifier ?? '',
+    businessIdentifierValue: user.businessIdentifierValue ?? '',
     firstName: user.firstName ?? '',
     surname: user.surname ?? '',
     email: user.email ?? '',
@@ -140,7 +140,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
               await updateUser({
                 id: user.id,
                 keycloakUserId: user.keycloakUserId,
-                businessIdentifier: user.businessIdentifier,
+                businessIdentifierValue: user.businessIdentifierValue,
                 displayName: values.displayName,
                 firstName: values.firstName,
                 surname: values.surname,
@@ -161,7 +161,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
                 <Input
                   data-testid="businessIdentifier"
                   field="businessIdentifier"
-                  value={formikProps.values.businessIdentifier}
+                  value={formikProps.values.businessIdentifierValue}
                   readOnly={true}
                   type="text"
                 />

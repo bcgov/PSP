@@ -14,21 +14,21 @@ namespace Pims.Core.Test
         /// <param name="id"></param>
         /// <param name="code"></param>
         /// <returns></returns>
-        public static Entity.Country CreateCountry(int id, string code)
+        public static Entity.PimsCountry CreateCountry(short id, string code)
         {
-            return new Entity.Country(code) { Id = id, RowVersion = 1 };
+            return new Entity.PimsCountry(code) { CountryId = id, ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of Country.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.Country> CreateDefaultCountries()
+        public static List<Entity.PimsCountry> CreateDefaultCountries()
         {
-            return new List<Entity.Country>()
+            return new List<Entity.PimsCountry>()
             {
-                new Entity.Country("CAN") { Id = 1, RowVersion = 1 },
-                new Entity.Country("USA") { Id = 2,  RowVersion = 1 },
+                new Entity.PimsCountry("CAN") { CountryId = 1, ConcurrencyControlNumber = 1 },
+                new Entity.PimsCountry("USA") { CountryId = 2,  ConcurrencyControlNumber = 1 },
             };
         }
     }

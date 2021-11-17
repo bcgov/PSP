@@ -11,8 +11,9 @@ namespace Pims.Api.Areas.Lease.Mapping.Search
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Lease, Model.LeaseModel>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsLease, Model.LeaseModel>()
+                .Map(dest => dest.Id, src => src.LeaseId)
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.Properties, src => src.Properties)
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())

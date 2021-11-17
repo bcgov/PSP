@@ -95,7 +95,7 @@ export const ManageUsers = () => {
       id: u.id,
       keycloakUserId: u.keycloakUserId,
       email: u.email,
-      businessIdentifier: u.businessIdentifier,
+      businessIdentifierValue: u.businessIdentifierValue,
       firstName: u.firstName,
       surname: u.surname,
       isDisabled: u.isDisabled,
@@ -103,7 +103,7 @@ export const ManageUsers = () => {
       organization: u.organizations && u.organizations.length > 0 ? u.organizations[0].name : '',
       position: u.position ?? '',
       lastLogin: formatApiDateTime(u.lastLogin),
-      createdOn: formatApiDateTime(u.createdOn),
+      appCreateTimestamp: formatApiDateTime(u.appCreateTimestamp),
       rowVersion: u.rowVersion,
     }),
   );

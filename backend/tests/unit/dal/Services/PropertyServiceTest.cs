@@ -28,7 +28,7 @@ namespace Pims.Dal.Test.Services
                 new object[] { new PropertyFilter() { ClassificationId = "Core Operational" }, 5 },
                 new object[] { new PropertyFilter() { PID = "111-111-111" }, 1 },
                 new object[] { new PropertyFilter() { PIN = 111 }, 1 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 4 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 5 },
                 new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
                 new object[] { new PropertyFilter(), 6 },
             };
@@ -88,9 +88,9 @@ namespace Pims.Dal.Test.Services
 
             init.CreateProperty(2);
             init.CreateProperty(3, pin: 111);
-            init.CreateProperty(4, address: init.Addresses.FirstOrDefault());
-            init.Add(new Entity.Property() { Location = new NetTopologySuite.Geometries.Point(-123.720810, 48.529338) });
-            init.CreateProperty(5, classification: init.PropertyClassificationTypes.FirstOrDefault(c => c.Id == "Core Operational"));
+            init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
+            init.Add(new Entity.PimsProperty() { Location = new NetTopologySuite.Geometries.Point(-123.720810, 48.529338) });
+            init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
             init.CreateProperty(111111111);
 
             init.SaveChanges();
@@ -102,7 +102,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<IEnumerable<Entity.Property>>(result);
+            Assert.IsAssignableFrom<IEnumerable<Entity.PimsProperty>>(result);
             Assert.Equal(expectedCount, result.Total);
         }
         #endregion

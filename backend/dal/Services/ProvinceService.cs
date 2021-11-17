@@ -4,13 +4,14 @@ using Pims.Dal.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 
 namespace Pims.Dal.Services
 {
     /// <summary>
     /// ProvinceService class, provides a service layer to administrate provinces within the datasource.
     /// </summary>
-    public class ProvinceService : BaseService<Province>, IProvinceService
+    public class ProvinceService : BaseService<PimsProvinceState>, IProvinceService
     {
         #region Variables
         #endregion
@@ -23,7 +24,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<ProvinceService> logger) : base(dbContext, user, service, logger) { }
+        public ProvinceService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<ProvinceService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -31,10 +32,10 @@ namespace Pims.Dal.Services
         /// Get all of provinces from the datasource.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Province> Get()
+        public IEnumerable<PimsProvinceState> Get()
         {
-            var query = this.Context.Provinces.AsNoTracking();
-            return query.OrderBy(p => p.DisplayOrder).OrderBy(p => p.Id).ToArray();
+            var query = this.Context.PimsProvinceStates.AsNoTracking();
+            return query.OrderBy(p => p.DisplayOrder).OrderBy(p => p.ProvinceStateId).ToArray();
         }
         #endregion
     }

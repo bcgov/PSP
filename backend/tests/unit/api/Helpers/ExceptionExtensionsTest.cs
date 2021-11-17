@@ -18,7 +18,7 @@ namespace Pims.Api.Test.Helpers
         public void ThrowBadRequestIfNull_WithNull()
         {
             // Arrange
-            Entity.Property property = null;
+            Entity.PimsProperty property = null;
 
             // Act
             // Assert
@@ -32,7 +32,7 @@ namespace Pims.Api.Test.Helpers
         public void ThrowBadRequestIfNull_ArgumentException(string message)
         {
             // Arrange
-            Entity.Property property = null;
+            Entity.PimsProperty property = null;
 
             // Act
             // Assert
@@ -43,7 +43,7 @@ namespace Pims.Api.Test.Helpers
         public void ThrowBadRequestIfNull_WithObject()
         {
             // Arrange
-            var property = new Entity.Property();
+            var property = new Entity.PimsProperty();
 
             // Act
             property.ThrowBadRequestIfNull("test");

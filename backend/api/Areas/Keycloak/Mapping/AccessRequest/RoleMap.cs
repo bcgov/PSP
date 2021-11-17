@@ -8,10 +8,10 @@ namespace Pims.Api.Areas.Keycloak.Mapping.AccessRequest
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Role, Model.RoleModel>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsRole, Model.RoleModel>()
+                .Map(dest => dest.Id, src => src.RoleId)
                 .Map(dest => dest.Name, src => src.Name)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
         }
     }
 }
