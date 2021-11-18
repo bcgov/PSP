@@ -50,12 +50,24 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// </summary>
         public DateTime ReturnDate { get; set; }
 
+        /// <summary>
+        /// get/set - The cheque number.
+        /// </summary>
         public string ChequeNumber { get; set; }
 
+        /// <summary>
+        /// get/set - The payee name.
+        /// </summary>
         public string PayeeName { get; set; }
 
+        /// <summary>
+        /// get/set - The payee address.
+        /// </summary>
         public string PayeeAddress { get; set; }
 
+        /// <summary>
+        /// get/set - The termination note.
+        /// </summary>
         public string TerminationNote { get; set; }
     }
 }
