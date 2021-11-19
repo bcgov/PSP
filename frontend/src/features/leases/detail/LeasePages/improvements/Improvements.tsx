@@ -20,7 +20,7 @@ export const Improvements: React.FunctionComponent<IImprovementsProps> = props =
       </FormSection>
 
       <FormSection>
-        <Styled.ImprovementsListHeader>Description of Improvements</Styled.ImprovementsListHeader>
+        <Styled.SectiontHeader>Description of Improvements</Styled.SectiontHeader>
         <FieldArray
           name="improvements"
           render={renderProps =>

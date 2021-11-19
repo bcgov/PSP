@@ -120,6 +120,13 @@ namespace Pims.Dal.Services
                     .ThenInclude(i => i.BctfaRiskManagementContact)
                     .ThenInclude(p => p.ContactMethods)
 
+                .Include(l => l.SecurityDeposits)
+                    .ThenInclude(s => s.SecurityDepositHolderType)
+                .Include(l => l.SecurityDeposits)
+                    .ThenInclude(s => s.SecurityDepositType)
+                .Include(l => l.SecurityDepositReturns)
+                    .ThenInclude(s => s.SecurityDepositType)
+
                 .Where(l => l.Id == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }

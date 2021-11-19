@@ -36,7 +36,9 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Persons, src => src.Persons)
                 .Map(dest => dest.Organizations, src => src.Organizations)
                 .Map(dest => dest.TenantNotes, src => src.TenantsManyToMany.Select(t => t.Note))
-                .Map(dest => dest.Improvements, src => src.Improvements);
+                .Map(dest => dest.Improvements, src => src.Improvements)
+                .Map(dest => dest.SecurityDeposits, src => src.SecurityDeposits)
+                .Map(dest => dest.SecurityDepositReturns, src => src.SecurityDepositReturns);
         }
     }
 }

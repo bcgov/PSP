@@ -77,7 +77,7 @@ namespace Pims.Dal.Entities
         /// get/set - The annual interest rate.
         /// </summary>
         [Column("ANNUAL_INTEREST_RATE")]
-        public int AnnualInterestRate { get; set; }
+        public decimal AnnualInterestRate { get; set; }
 
         #endregion
 

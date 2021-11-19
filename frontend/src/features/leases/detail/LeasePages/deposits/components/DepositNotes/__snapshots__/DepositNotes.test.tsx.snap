@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DepositNotes component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+<label
+    class="c0 form-label"
+  >
+    Deposit Notes
+  </label>
+  <div
+    class="textarea input form-group"
+  >
+    <textarea
+      class="form-control"
+      id="input-returnNotes"
+      name="returnNotes"
+      rows="5"
+    >
+      security deposit notes
+    </textarea>
+  </div>
+</DocumentFragment>
+`;
