@@ -24,7 +24,7 @@ run(args);
 
 function run(args) {
   const IS_DRY_RUN = !args.includes('--apply'); // default to dry-run
-  const IS_PRINT_VERSION = args.includes('--print-version');
+  const IS_PRINT_VERSION = args.includes('--print-next-version');
 
   const releaseType = args[0];
   const packageJson = JSON.parse(fs.readFileSync(packageJsonLoc, 'utf8'));

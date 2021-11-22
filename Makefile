@@ -33,14 +33,60 @@ help:
 
 .PHONY: help
 
+# these are various tools required by make commands below
+GH := $(shell command -v gh 2> /dev/null)
+PYTHON := $(shell command -v python 2> /dev/null)
+JQ := $(shell command -v jq 2> /dev/null)
+
+
+##############################################################################
+# Dev Tools Requirements
+##############################################################################
+.PHONY: requirements
+requirements: ## Checks development environment requirements (tools in the PATH)
+ifndef GH
+	$(error "gh (GitHub CLI) is not available please install from https://cli.github.com/")
+endif
+ifndef PYTHON
+	$(error "python3 is not available please install from https://docs.python.org/3")
+endif
+ifndef JQ
+	$(error "jq is not available please install from https://stedolan.github.io/jq")
+endif
+	$(info gh found...)
+	$(info python3 found...)
+	$(info jq found...)
+	@exit 0
+
+.PHONY: check-github-auth
+check-github-auth: ## Checks GITHUB_TOKEN has been set
+ifndef GH
+	$(error "gh (GitHub CLI) is not available please install from https://cli.github.com/")
+endif
+# look for GITHUB_TOKEN in the environment
+ifdef GITHUB_TOKEN
+	$(info GITHUB_TOKEN found in the environment)
+endif
+# if the token isn't available in the environment we try using the GitHub CLI
+ifeq ($(shell gh config get oauth_token -h github.com),)
+	$(error Failed to fetch GitHub token using GitHub CLI)
+else
+	$(info GITHUB_TOKEN fetched via GitHub CLI)
+endif
+	@exit 0
+
 ##############################################################################
 # Release Management
 ##############################################################################
 VERSION := $(shell node -pe "require('./frontend/package.json').version")
 
 .PHONY: version
-version: ## Prints the current version number
-	@echo "v$(VERSION)"
+version: ## Outputs the latest released version
+	@build/version.sh
+
+.PHONY: version-next
+version-next: ## Outputs the next unreleased version
+	@build/version-next.sh
 
 .PHONY: bump
 bump: ## Bumps the version number
@@ -49,17 +95,19 @@ ifndef $(ARGS)
 endif
 	@node ./build/bump-version.js $(ARGS) --apply
 
+.PHONY: release
+release: | check-github-auth ## Checks the programs required for release-automation are installed
+
+
 ##############################################################################
 # DevSecOps
 ##############################################################################
 # python is required for DevSecOps tools
-PYTHON := $(shell command -v python 2> /dev/null)
-JQ := $(shell command -v jq 2> /dev/null)
 
 .PHONY: devops-install
 devops-install: ## Installs software required by DevSecOps tooling (e.g. python, etc)
-	@if [ -z $(PYTHON) ]; then echo "Python could not be found. See See https://docs.python.org/3/"; exit 2; fi
-	@if [ -z $(JQ) ]; then echo "JQ could not be found. See See https://stedolan.github.io/jq/"; exit 2; fi
+	@if [ -z "$(PYTHON)" ]; then echo "Python not found. Install from "; exit 2; fi
+	@if [ -z "$(JQ)" ]; then echo "JQ not found. Install from https://stedolan.github.io/jq/"; exit 2; fi
 	@python -m ensurepip --upgrade
 	@pip install trufflehog3 jtbl
 
