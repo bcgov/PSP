@@ -2,9 +2,13 @@ import { ColumnWithProps, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { ILeaseSearchResult } from 'interfaces';
 import { useCallback } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+
+import LeaseProperties from './LeaseProperties';
+import LeaseTenants from './LeaseTenants';
+
+const maxPropertyDisplayCount = 2;
 
 const columns: ColumnWithProps<ILeaseSearchResult>[] = [
   {
@@ -24,15 +28,13 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     width: 40,
     maxWidth: 100,
     Cell: (props: CellProps<ILeaseSearchResult>) => {
-      return props.row.original.tenantNames.map((x, y) => {
-        return (
-          <Row key={y} className="w-100">
-            <Col md="auto">
-              <div> {x}</div>
-            </Col>
-          </Row>
-        );
-      });
+      props.row.original.tenantNames.push(...['Carlitos Romero', 'Federico Suzes', 'James Raynor']);
+      return (
+        <LeaseTenants
+          tenantNames={props.row.original.tenantNames}
+          maxDisplayCount={maxPropertyDisplayCount}
+        ></LeaseTenants>
+      );
     },
   },
   {
@@ -48,24 +50,15 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     align: 'left',
 
     Cell: (props: CellProps<ILeaseSearchResult>) => {
-      return props.row.original.properties.map((x, y) => {
-        return (
-          <Row key={y} className="w-100 mx-1 mb-3 border-bottom">
-            <Col md="auto" className="mr-0 pr-0">
-              <div>
-                <strong>PID:</strong> {x.pid || 'n.a'}
-              </div>
-              <div>
-                <strong>PIN:</strong> {x.pin || 'n.a'}
-              </div>
-            </Col>
-            <Col md="auto" className="mr-1 pr-1">
-              <strong>Address:</strong>
-            </Col>
-            <Col className="ml-0 pl-0">{x.address}</Col>
-          </Row>
-        );
-      });
+      // TODO: just for testing
+      props.row.original.properties.push(...props.row.original.properties);
+
+      return (
+        <LeaseProperties
+          properties={props.row.original.properties}
+          maxDisplayCount={maxPropertyDisplayCount}
+        ></LeaseProperties>
+      );
     },
   },
 ];
