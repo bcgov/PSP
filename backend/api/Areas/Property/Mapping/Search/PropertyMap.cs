@@ -43,7 +43,7 @@ namespace Pims.Api.Areas.Property.Mapping.Search
                 .Map(dest => dest.RegionId, src => src.RegionCode)
                 .Map(dest => dest.Region, src => src.RegionCodeNavigation != null ? src.RegionCodeNavigation.RegionName : null)
                 .Map(dest => dest.DistrictId, src => src.DistrictCode)
-                .Map(dest => dest.District, src => src.DistrictCodeNavigation);
+                .Map(dest => dest.District, src => src.DistrictCodeNavigation != null ? src.DistrictCodeNavigation.DistrictName : null);
         }
     }
 }
