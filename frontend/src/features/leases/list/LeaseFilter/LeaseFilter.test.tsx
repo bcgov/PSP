@@ -1,12 +1,20 @@
 import userEvent from '@testing-library/user-event';
+import { ILeaseFilter } from 'features/leases';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
 
 import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
 
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: [] },
+};
+
 const setFilter = jest.fn();
 
 // render component under test
-const setup = (renderOptions: RenderOptions & ILeaseFilterProps = { setFilter }) => {
+const setup = (
+  renderOptions: RenderOptions & ILeaseFilterProps = { store: storeState, setFilter },
+) => {
   const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
   const utils = render(<LeaseFilter filter={filter} setFilter={setFilterFn} />, { ...rest });
   const searchButton = utils.getByTestId('search');
@@ -32,11 +40,12 @@ describe('Lease Filter', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: '123',
         searchBy: 'pidOrPin',
         tenantName: '',
+        programs: [],
       }),
     );
   });
@@ -49,11 +58,12 @@ describe('Lease Filter', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '123',
         pidOrPin: '',
         searchBy: 'lFileNo',
         tenantName: '',
+        programs: [],
       }),
     );
   });
@@ -66,11 +76,12 @@ describe('Lease Filter', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: '',
         searchBy: 'pidOrPin',
         tenantName: 'Chester',
+        programs: [],
       }),
     );
   });
@@ -83,11 +94,12 @@ describe('Lease Filter', () => {
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: '',
         searchBy: 'lFileNo',
         tenantName: '',
+        programs: [],
       }),
     );
   });

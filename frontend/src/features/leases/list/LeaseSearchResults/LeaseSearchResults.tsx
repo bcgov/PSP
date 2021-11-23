@@ -28,7 +28,6 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     width: 40,
     maxWidth: 100,
     Cell: (props: CellProps<ILeaseSearchResult>) => {
-      props.row.original.tenantNames.push(...['Carlitos Romero', 'Federico Suzes', 'James Raynor']);
       return (
         <LeaseTenants
           tenantNames={props.row.original.tenantNames}
