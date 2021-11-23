@@ -1,6 +1,5 @@
-import userEvent from '@testing-library/user-event';
 import { ILeaseSearchResult } from 'interfaces';
-import { act, render, RenderOptions } from 'utils/test-utils';
+import { render, RenderOptions } from 'utils/test-utils';
 
 import { ILeaseSearchResultsProps, LeaseSearchResults } from './LeaseSearchResults';
 

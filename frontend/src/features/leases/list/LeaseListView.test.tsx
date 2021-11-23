@@ -3,8 +3,8 @@ import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILeaseSearchResult } from 'interfaces';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
-import { ILeaseFilter } from '..';
 
+import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
 
 const storeState = {
