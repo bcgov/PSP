@@ -1,7 +1,9 @@
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
+import { LEASE_PROGRAM_TYPES } from 'constants/API';
 import { PropertyFilterOptions } from 'features/properties/filter';
 import { Formik } from 'formik';
+import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
@@ -50,8 +52,8 @@ const idFilterPlaceholders = {
 export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter, setFilter }) => {
   const onSearchSubmit = (values: ILeaseFilter, { setSubmitting }: any) => {
     let selectedPrograms: MultiSelectOption[] = multiselectRef.current?.getSelectedItems();
-    values.programs = selectedPrograms.map<string>(x => x.id);
-    console.log(values);
+    let programIds = selectedPrograms.map<string>(x => x.id);
+    values = { ...values, programs: programIds };
     setFilter(values);
     setSubmitting(false);
   };
@@ -62,21 +64,21 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
 
   const multiselectRef = React.createRef<Multiselect>();
 
-  const programFilterOptions: MultiSelectOption[] = [
-    { text: 'PT Licensee', id: '1' },
-    { text: 'Authorized Inspector', id: '2' },
-    { text: 'Facility Owner/Operator', id: '3' },
-    { text: 'Facility Owner/Operator 4', id: '4' },
-    { text: 'Facility Owner/Operator 5', id: '5' },
-  ];
+  const lookupCodes = useLookupCodeHelpers();
+  const leaseProgramTypes = lookupCodes.getByType(LEASE_PROGRAM_TYPES);
+  const programFilterOptions: MultiSelectOption[] = leaseProgramTypes.map<MultiSelectOption>(x => {
+    return { id: x.id as string, text: x.name };
+  });
 
   return (
     <Formik enableReinitialize initialValues={filter ?? defaultFilter} onSubmit={onSearchSubmit}>
       {({ resetForm, isSubmitting }) => (
         <Styled.FilterBox>
-          <b className="pr-3">Search by:</b>
+          <b className="pr-3 text-nowrap">Search by:</b>
           <PropertyFilterOptions options={idFilterOptions} placeholders={idFilterPlaceholders} />
           <Styled.LongInlineInput field="tenantName" label="Tenant Name" className="ml-3 mr-5" />
+
+          <span>Program</span>
           <Multiselect
             id="properties-selector"
             ref={multiselectRef}
