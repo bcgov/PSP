@@ -6,7 +6,7 @@ export interface ILeaseSearchResult {
   properties: ILeaseProperty[];
 }
 
-interface ILeaseProperty {
+export interface ILeaseProperty {
   id: number;
   address?: string;
   pin?: string;
