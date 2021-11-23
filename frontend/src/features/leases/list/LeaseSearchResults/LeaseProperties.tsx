@@ -21,7 +21,7 @@ const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props =>
   }
 
   let rowItems = displayProperties.map((property, index) => {
-    let isLastItem = index + 1 === properties.length;
+    //let isLastItem = index + 1 === properties.length;
     return (
       <Row key={index + property.id} className="mx-0 my-2 border border-secondary">
         <Col md="12">
