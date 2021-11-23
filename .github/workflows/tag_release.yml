@@ -10,14 +10,29 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }} # with this we can bypass branch protection rules here (no-push)
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
 
       - name: Initialize mandatory git config
         run: |
           git config user.name "github-actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          gh auth status
+          gh config get oauth_token -h github.com
+
       - name: Create Release
         id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
         run: make release repo=asanchezr/PSP branch=staging
 
       - name: Post notification in MS Teams
