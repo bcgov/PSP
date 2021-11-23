@@ -1,7 +1,7 @@
-using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Search
 {
@@ -24,6 +24,12 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The Program(s) to filter by.
+        /// </summary>
+        /// <value></value>
+        public IList<string> Programs { get; set; } = new List<string>();
         #endregion
 
         #region Constructors
@@ -45,6 +51,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.PidOrPin = filter.GetStringValue(nameof(this.PidOrPin));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
+            this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion
@@ -64,6 +71,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 PidOrPin = model.PidOrPin,
                 TenantName = model.TenantName,
                 LFileNo = model.LFileNo,
+                Programs = model.Programs,
 
                 Sort = model.Sort
             };

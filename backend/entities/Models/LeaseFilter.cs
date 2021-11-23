@@ -1,6 +1,6 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -26,6 +26,12 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The Program(s) to filter by.
+        /// </summary>
+        /// <value></value>
+        public IList<string> Programs { get; set; } = new List<string>();
         #endregion
 
         #region Constructors

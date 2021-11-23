@@ -1,6 +1,11 @@
 import { ILeaseProperty } from 'interfaces';
 import { useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const PropertyRow = styled(Row)`
+  border-radius: 0.4rem;
+`;
 
 export interface ILeasePropertiesProps {
   properties: ILeaseProperty[];
@@ -23,7 +28,7 @@ const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props =>
   let rowItems = displayProperties.map((property, index) => {
     //let isLastItem = index + 1 === properties.length;
     return (
-      <Row key={index + property.id} className="mx-0 my-2 border border-secondary">
+      <PropertyRow key={index + property.id} className="mx-0 my-2 border border-secondary">
         <Col md="12">
           <strong className="pr-2">Address:</strong>
           {property.address}
@@ -38,7 +43,7 @@ const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props =>
             <strong className="pr-2">PIN:</strong> {property.pin || 'n.a'}
           </div>
         </Col>
-      </Row>
+      </PropertyRow>
     );
   });
 
