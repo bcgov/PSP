@@ -146,6 +146,16 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<PropertyImprovementModel> Improvements { get; set; }
 
         /// <summary>
+        /// get/set - A collection of Security Deposits associated to this Lease
+        /// </summary>
+        public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
+
+        /// <summary>
+        /// get/set - A collection of Security Deposit Returns associated to this Lease
+        /// </summary>
+        public IEnumerable<SecurityDepositReturnModel> SecurityDepositReturns { get; set; }
+
+        /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).
         /// </summary>
         public bool IsResidential { get; set; }
