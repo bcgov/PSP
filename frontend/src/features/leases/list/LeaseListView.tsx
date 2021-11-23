@@ -1,4 +1,3 @@
-import { Center } from 'components/common/Center/Center';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { useSearch } from 'hooks/useSearch';
