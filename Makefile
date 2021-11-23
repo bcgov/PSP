@@ -78,8 +78,6 @@ endif
 ##############################################################################
 # Release Management
 ##############################################################################
-VERSION := $(shell node -pe "require('./frontend/package.json').version")
-
 .PHONY: version
 version: ## Outputs the latest released version
 	@build/version.sh
@@ -95,9 +93,19 @@ ifndef $(ARGS)
 endif
 	@node ./build/bump-version.js $(ARGS) --apply
 
-.PHONY: release
-release: | check-github-auth ## Checks the programs required for release-automation are installed
+CURRENT_VERSION := $(shell build/version.sh)
+CURRENT_DATE := $(shell date +'%b %d, %Y')
+tag = v$(CURRENT_VERSION)
+branch = master
+repo = bcgov/psp
 
+.PHONY: release
+release: | check-github-auth ## Creates a new github release
+	$(info Releasing version $(CURRENT_VERSION))
+	$(info Using tag: $(tag))
+	$(info Using repo: $(repo))
+	$(info Using target branch: $(branch))
+	@gh release create $(tag) --target $(branch) -R $(repo) --title $(tag) --notes "# Release $(tag) ($(CURRENT_DATE))"
 
 ##############################################################################
 # DevSecOps

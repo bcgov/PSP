@@ -1,0 +1,25 @@
+name: Tag Release
+
+on:
+  push:
+    branches: [staging]
+
+jobs:
+  tag_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "github-actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create Release
+        id: create_release
+        run: make release repo=asanchezr/PSP branch=staging
+
+      - name: Post notification in MS Teams
+        run: |
+          echo "Teams notification sent..."
