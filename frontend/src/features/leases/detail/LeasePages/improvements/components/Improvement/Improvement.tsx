@@ -1,4 +1,4 @@
-import { Form, Input, TextArea } from 'components/common/form';
+import { Form, Input } from 'components/common/form';
 import { PropertyImprovementTypes } from 'constants/propertyImprovementTypes';
 import * as Styled from 'features/leases/detail/LeasePages/improvements/styles';
 import { getIn, useFormikContext } from 'formik';
@@ -37,7 +37,11 @@ export const Improvement: React.FunctionComponent<IImprovementProps> = ({
         <Form.Label>House size:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
         <Styled.FormDescriptionLabel>Description</Styled.FormDescriptionLabel>
-        <TextArea rows={5} disabled={disabled} field={withNameSpace(nameSpace, 'description')} />
+        <Styled.FormDescriptionBody
+          rows={5}
+          disabled={disabled}
+          field={withNameSpace(nameSpace, 'description')}
+        />
       </Styled.FormGrid>
     </>
   );
