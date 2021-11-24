@@ -33,7 +33,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   border-left: 1px solid #666666;
 }
 
-.c1 .form-control {
+.c1 .form-control:not(.description) {
   font-weight: 700;
 }
 
@@ -187,7 +187,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   border-left: 1px solid #666666;
 }
 
-.c1 .form-control {
+.c1 .form-control:not(.description) {
   font-weight: 700;
 }
 

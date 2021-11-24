@@ -38,6 +38,7 @@ export const Improvement: React.FunctionComponent<IImprovementProps> = ({
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
         <Styled.FormDescriptionLabel>Description</Styled.FormDescriptionLabel>
         <Styled.FormDescriptionBody
+          className="description"
           rows={5}
           disabled={disabled}
           field={withNameSpace(nameSpace, 'description')}
