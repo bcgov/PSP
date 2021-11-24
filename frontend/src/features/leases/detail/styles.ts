@@ -113,7 +113,7 @@ export const FormGrid = styled.div`
     border-left: 1px solid #666666;
   }
 
-  & .form-control {
+  & .form-control:not(.description) {
     font-weight: 700;
   }
 
