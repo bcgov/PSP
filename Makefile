@@ -161,7 +161,11 @@ db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
 	@cd backend/dal; dotnet ef database drop;
 
-db-scaffold: 
+db-deploy: 
+	@echo "$(P) regenerate ef core entities from database"
+	@cd database/mssql/scripts/dbscripts; ./deploy.sh
+
+db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
 	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities -v -f
 
