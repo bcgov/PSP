@@ -8,10 +8,10 @@ namespace Pims.Api.Areas.Lease.Mapping.Search
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Property, Model.PropertyModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Pin, src => src.PIN)
-                .Map(dest => dest.Pid, src => src.PID)
+            config.NewConfig<Entity.PimsProperty, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.PropertyId)
+                .Map(dest => dest.Pin, src => src.Pin)
+                .Map(dest => dest.Pid, src => src.Pid)
                 .Map(dest => dest.Address, src => src.Address);
         }
     }

@@ -30,7 +30,6 @@ namespace Pims.Dal.Helpers.Extensions
             if (!string.IsNullOrWhiteSpace(filter.PidOrPin))
             {
                 var pidOrPinValue = filter.PidOrPin.Replace("-", "").Trim();
-                query = query.Where(l => l.Properties.Any(p => p != null && (p.PID.ToString().Contains(pidOrPinValue) || p.PIN.ToString().Contains(pidOrPinValue))));
                 if (Int32.TryParse(pidOrPinValue, out int pidOrPin))
                 {
                     query = query.Where(l => l.PimsPropertyLeases.Where(p => p != null && p.Property != null).Select(p => p.Property).Count(p => p.Pid == pidOrPin || p.Pin == pidOrPin) > 0);
@@ -44,7 +43,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Programs.Count > 0)
             {
-                query = query.Where(l => filter.Programs.Any(p => p == l.ProgramTypeId));
+                query = query.Where(l => filter.Programs.Any(p => p == l.LeaseProgramTypeCode));
             }
 
             if (filter.Sort?.Any() == true)

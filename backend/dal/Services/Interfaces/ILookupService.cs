@@ -20,6 +20,6 @@ namespace Pims.Dal.Services
         IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes();
         IEnumerable<PimsRole> GetRoles();
         IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes();
-        IEnumerable<LeaseProgramType> GetLeaseProgramTypes();
+        IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes();
     }
 }

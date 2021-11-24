@@ -124,9 +124,9 @@ namespace Pims.Dal.Services
         /// <summary>
         /// Get all lease programs by id.
         /// </summary>
-        public IEnumerable<LeaseProgramType> GetLeaseProgramTypes()
+        public IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes()
         {
-            return this.Context.LeaseProgramTypes.AsNoTracking().OrderBy(a => a.Id).ToArray();
+            return this.Context.PimsLeaseProgramTypes.AsNoTracking().OrderBy(a => a.LeaseProgramTypeCode).ToArray();
         }
         #endregion
     }

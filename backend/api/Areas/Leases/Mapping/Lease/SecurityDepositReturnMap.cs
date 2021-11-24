@@ -8,11 +8,11 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.SecurityDepositReturn, Model.SecurityDepositReturnModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.RowVersion, src => src.RowVersion)
-                .Map(dest => dest.SecurityDepositTypeId, src => src.SecurityDepositTypeId)
-                .Map(dest => dest.SecurityDepositType, src => src.SecurityDepositType.Description)
+            config.NewConfig<Entity.PimsSecurityDepositReturn, Model.SecurityDepositReturnModel>()
+                .Map(dest => dest.Id, src => src.SecurityDepositReturnId)
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
+                .Map(dest => dest.SecurityDepositTypeId, src => src.SecurityDepositTypeCode)
+                .Map(dest => dest.SecurityDepositType, src => src.SecurityDepositTypeCodeNavigation.Description)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.DepositTotal, src => src.DepositTotal)
                 .Map(dest => dest.ClaimsAgainst, src => src.ClaimsAgainst)

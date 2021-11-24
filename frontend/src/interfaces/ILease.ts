@@ -9,6 +9,8 @@ import {
   IPerson,
   IProperty,
 } from '.';
+import { ILeaseTerm } from './ILeaseTerm';
+import ITypeCode from './ITypeCode';
 
 export interface ILease {
   id?: number;

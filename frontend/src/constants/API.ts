@@ -52,7 +52,7 @@ export const PROVINCE_CODE_SET_NAME = 'PimsProvinceState';
 export const ADMINISTRATIVE_AREA_CODE_SET_NAME = 'PimsAdministrativeArea';
 export const PROPERTY_CLASSIFICATION_CODE_SET_NAME = 'PimsPropertyClassification';
 export const PAYMENT_RECEIVABLE_CODE_SET_NAME = 'PimsLeasePaymentReceivableType';
-export const LEASE_PROGRAM_TYPES = 'LeaseProgramType';
+export const LEASE_PROGRAM_TYPES = 'PimsLeaseProgramType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations
