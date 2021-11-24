@@ -88,7 +88,7 @@ export const FormDescriptionLabel = styled(Form.Label)`
 `;
 
 export const TenantNotes = styled(TextArea)`
-  margin-left: 95px;
+  margin-left: 9.5rem;
 `;
 
 export const FormControl = styled(Form.Control)`
