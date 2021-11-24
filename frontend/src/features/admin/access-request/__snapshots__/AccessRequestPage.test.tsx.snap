@@ -31,15 +31,15 @@ exports[`AccessRequestPage renders correctly 1`] = `
         >
           <label
             class="form-label"
-            for="input-user.businessIdentifier"
+            for="input-user.businessIdentifierValue"
           >
             IDIR/BCeID
              
           </label>
           <input
             class="form-control"
-            id="input-user.businessIdentifier"
-            name="user.businessIdentifier"
+            id="input-user.businessIdentifierValue"
+            name="user.businessIdentifierValue"
             readonly=""
             type="text"
             value=""

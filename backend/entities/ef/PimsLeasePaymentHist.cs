@@ -11,7 +11,7 @@ namespace Pims.Dal.Entities
         public DateTime EffectiveDateHist { get; set; }
         public DateTime? EndDateHist { get; set; }
         public long LeasePaymentId { get; set; }
-        public string LeaseTermId { get; set; }
+        public long LeaseTermId { get; set; }
         public long LeasePaymentPeriodId { get; set; }
         public string LeasePaymentMethodTypeCode { get; set; }
         public DateTime PaymentReceivedDate { get; set; }

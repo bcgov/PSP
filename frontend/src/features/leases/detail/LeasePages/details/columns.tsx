@@ -1,5 +1,6 @@
 import { ColumnWithProps } from 'components/Table';
 import { ILeaseTerm } from 'interfaces/ILeaseTerm';
+import ITypeCode from 'interfaces/ITypeCode';
 import { CellProps } from 'react-table';
 import { prettyFormatDate } from 'utils';
 
@@ -12,6 +13,8 @@ export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
     accessor: 'id',
     align: 'left',
     sortable: false,
+    Cell: ({ cell }: CellProps<ILeaseTerm, ITypeCode<number>>) =>
+      cell.row.index === 0 ? 'initial term' : `renewal ${cell.row.index}`,
   },
   {
     Header: 'Term Start Date',
@@ -22,7 +25,7 @@ export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
   },
   {
     Header: 'Term End Date',
-    accessor: 'endDate',
+    accessor: 'expiryDate',
     Cell: DateCell,
     align: 'left',
     sortable: false,
@@ -36,8 +39,10 @@ export const leaseTermColumns: ColumnWithProps<ILeaseTerm>[] = [
   },
   {
     Header: 'Term Status',
-    accessor: 'termStatus',
+    accessor: 'statusTypeCode',
     align: 'left',
     sortable: false,
+    Cell: ({ cell: { value } }: CellProps<ILeaseTerm, ITypeCode<string>>) =>
+      value?.description ?? '',
   },
 ];

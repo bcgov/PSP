@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsLeasePaymentForecast
     {
         public long LeasePaymentForecastId { get; set; }
-        public string LeaseTermId { get; set; }
+        public long LeaseTermId { get; set; }
         public long LeasePaymentPeriodId { get; set; }
         public string LeasePaymentStatusTypeCode { get; set; }
         public DateTime PaymentDueDate { get; set; }

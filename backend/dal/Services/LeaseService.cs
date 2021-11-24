@@ -76,6 +76,12 @@ namespace Pims.Dal.Services
                 .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePmtFreqTypeCodeNavigation)
+                .Include(l => l.LeasePayRvblTypeCodeNavigation)
+                .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
+                .Include(l => l.LeaseInitiatorTypeCodeNavigation)
+                .Include(l => l.LeasePurposeTypeCodeNavigation)
+                .Include(l => l.LeaseCategoryTypeCodeNavigation)
                 .Include(l => l.MotiName)
 
                 .Include(l => l.PimsLeaseTenants)
@@ -131,6 +137,9 @@ namespace Pims.Dal.Services
                     .ThenInclude(s => s.SecurityDepositType)
                 .Include(l => l.SecurityDepositReturns)
                     .ThenInclude(s => s.SecurityDepositType)
+
+                .Include(l => l.PimsLeaseTerms)
+                .ThenInclude(t => t.LeaseTermStatusTypeCodeNavigation)
 
                 .Where(l => l.LeaseId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();

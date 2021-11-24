@@ -87,16 +87,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                   <div
                     className="Menu-options scrollable list-group"
                     onKeyDown={[Function]}
-                  >
-                    <div
-                      className="Menu-item list-group-item"
-                      data-rb-event-key={null}
-                      disabled={false}
-                      onClick={[Function]}
-                    >
-                      organizationVal
-                    </div>
-                  </div>
+                  />
                 </div>
               </div>
             </div>
@@ -158,16 +149,7 @@ exports[`Manage access requests Snapshot matches 1`] = `
                   <div
                     className="Menu-options scrollable list-group"
                     onKeyDown={[Function]}
-                  >
-                    <div
-                      className="Menu-item list-group-item"
-                      data-rb-event-key={null}
-                      disabled={false}
-                      onClick={[Function]}
-                    >
-                      roleVal
-                    </div>
-                  </div>
+                  />
                 </div>
               </div>
             </div>

@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
             PimsLeasePayments = new HashSet<PimsLeasePayment>();
         }
 
-        public string LeaseTermId { get; set; }
+        public long LeaseTermId { get; set; }
         public long LeaseId { get; set; }
         public string LeaseTermStatusTypeCode { get; set; }
         public DateTime TermStartDate { get; set; }

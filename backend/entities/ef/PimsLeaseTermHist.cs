@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
         public long LeaseTermHistId { get; set; }
         public DateTime EffectiveDateHist { get; set; }
         public DateTime? EndDateHist { get; set; }
-        public string LeaseTermId { get; set; }
+        public long LeaseTermId { get; set; }
         public long LeaseId { get; set; }
         public string LeaseTermStatusTypeCode { get; set; }
         public DateTime TermStartDate { get; set; }

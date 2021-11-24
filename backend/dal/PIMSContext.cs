@@ -3113,11 +3113,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
 
-                entity.Property(e => e.LeaseTermId)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
-                    .HasColumnName("LEASE_TERM_ID");
+                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
 
                 entity.Property(e => e.Note)
                     .HasMaxLength(2000)
@@ -3266,11 +3262,7 @@ namespace Pims.Dal
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_PAYMENT_STATUS_TYPE_CODE");
 
-                entity.Property(e => e.LeaseTermId)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
-                    .HasColumnName("LEASE_TERM_ID");
+                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
 
                 entity.Property(e => e.PaymentDueDate)
                     .HasColumnType("datetime")
@@ -3395,11 +3387,7 @@ namespace Pims.Dal
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_PAYMENT_STATUS_TYPE_CODE");
 
-                entity.Property(e => e.LeaseTermId)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
-                    .HasColumnName("LEASE_TERM_ID");
+                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
 
                 entity.Property(e => e.PaymentDueDate)
                     .HasColumnType("datetime")
@@ -3490,11 +3478,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
 
-                entity.Property(e => e.LeaseTermId)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
-                    .HasColumnName("LEASE_TERM_ID");
+                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
 
                 entity.Property(e => e.Note)
                     .HasMaxLength(2000)
@@ -4232,10 +4216,8 @@ namespace Pims.Dal
                 entity.HasIndex(e => e.LeaseTermStatusTypeCode, "LSTERM_LEASE_TERM_STATUS_TYPE_CODE_IDX");
 
                 entity.Property(e => e.LeaseTermId)
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
                     .HasColumnName("LEASE_TERM_ID")
-                    .HasDefaultValueSql("('NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ]')");
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ])");
 
                 entity.Property(e => e.AppCreateTimestamp)
                     .HasColumnType("datetime")
@@ -4413,11 +4395,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
-                entity.Property(e => e.LeaseTermId)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
-                    .HasColumnName("LEASE_TERM_ID");
+                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
 
                 entity.Property(e => e.LeaseTermStatusTypeCode)
                     .IsRequired()

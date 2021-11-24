@@ -23,11 +23,15 @@ export interface ILease {
   persons: IPerson[];
   organizations: IOrganization[];
   improvements: ILeaseImprovement[];
+  paymentFrequencyType?: ITypeCode<string>;
+  paymentReceivableType?: ITypeCode<string>;
   securityDeposits: ILeaseSecurityDeposit[];
   securityDepositReturns: ILeaseSecurityDepositReturn[];
-  paymentReceivableTypeId?: string;
-  paymentFrequencyTypeId: string;
-  paymentFrequencyType: string;
+  categoryType?: ITypeCode<string>;
+  purposeType?: ITypeCode<string>;
+  responsibilityType?: ITypeCode<string>;
+  initiatorType?: ITypeCode<string>;
+  type?: ITypeCode<string>;
   amount?: number;
   renewalCount: number;
   note?: string;
@@ -41,6 +45,7 @@ export interface ILease {
   isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
   returnNotes?: string; // security deposit notes (free form text)
+  terms: ILeaseTerm[];
 }
 
 export interface IFormLease
@@ -60,8 +65,13 @@ export const defaultLease: ILease = {
   improvements: [],
   programName: 'program',
   startDate: '2020-01-01',
-  paymentFrequencyTypeId: 'ANNUAL',
-  paymentFrequencyType: 'Annually',
+  paymentFrequencyType: { id: 'ANNUAL', description: 'Annually', isDisabled: false },
+  paymentReceivableType: { id: 'RCVBL', description: 'Receivable', isDisabled: false },
+  categoryType: { id: 'COMM', description: 'Commercial', isDisabled: false },
+  purposeType: { id: 'BCFERRIES', description: 'BC Ferries', isDisabled: false },
+  responsibilityType: { id: 'HQ', description: 'Headquarters', isDisabled: false },
+  initiatorType: { id: 'PROJECT', description: 'Project', isDisabled: false },
+  type: { id: 'LSREG', description: 'Lease - Registered', isDisabled: false },
   renewalCount: 0,
   motiName: 'Moti, Name, Name',
   tenantNotes: [],
@@ -72,6 +82,7 @@ export const defaultLease: ILease = {
   isCommercialBuilding: false,
   isOtherImprovement: false,
   returnNotes: '',
+  terms: [],
 };
 
 export const defaultFormLease: IFormLease = {
@@ -87,13 +98,10 @@ export const defaultFormLease: IFormLease = {
   lFileNo: '',
   tfaFileNo: '',
   psFileNo: '',
-  paymentReceivableTypeId: '',
   programName: '',
   motiName: '',
   amount: '',
   renewalCount: '',
-  paymentFrequencyTypeId: '',
-  paymentFrequencyType: '',
   landArea: '',
   areaUnit: '',
   tenantNotes: [],
@@ -102,4 +110,5 @@ export const defaultFormLease: IFormLease = {
   isCommercialBuilding: false,
   isOtherImprovement: false,
   returnNotes: '',
+  terms: [],
 };
