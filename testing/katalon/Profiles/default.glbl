@@ -34,4 +34,9 @@
       <initValue>''</initValue>
       <name>email</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>contactEmail</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>
