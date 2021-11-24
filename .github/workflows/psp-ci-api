@@ -1,4 +1,4 @@
-name: ci-api
+name: psp-ci-api
 
 on:
   pull_request:
