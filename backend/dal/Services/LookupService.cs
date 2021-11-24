@@ -119,6 +119,14 @@ namespace Pims.Dal.Services
         {
             return this.Context.LeasePaymentReceivableTypes.AsNoTracking().OrderBy(a => a.Id).ToArray();
         }
+
+        /// <summary>
+        /// Get all lease programs by id.
+        /// </summary>
+        public IEnumerable<LeaseProgramType> GetLeaseProgramTypes()
+        {
+            return this.Context.LeaseProgramTypes.AsNoTracking().OrderBy(a => a.Id).ToArray();
+        }
         #endregion
     }
 }

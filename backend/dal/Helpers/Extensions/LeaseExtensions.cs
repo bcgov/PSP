@@ -1,8 +1,8 @@
+using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using System;
-using System.Linq;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -22,23 +22,27 @@ namespace Pims.Dal.Helpers.Extensions
         {
             filter.ThrowIfNull(nameof(filter));
 
-            if (!String.IsNullOrWhiteSpace(filter.TenantName))
+            if (!string.IsNullOrWhiteSpace(filter.TenantName))
             {
                 query = query.Where(l => l.Persons.Any(person => person != null && EF.Functions.Like(person.Surname + ", " + person.FirstName + ", " + person.MiddleNames, $"%{filter.TenantName}%"))
                 || l.Organizations.Any(organization => organization != null && EF.Functions.Like(organization.Name, $"%{filter.TenantName}%")));
             }
 
-            if (!String.IsNullOrWhiteSpace(filter.PidOrPin))
+            if (!string.IsNullOrWhiteSpace(filter.PidOrPin))
             {
                 var pidOrPinValue = filter.PidOrPin.Replace("-", "").Trim();
-                if (Int32.TryParse(pidOrPinValue, out int pidOrPin))
-                {
-                    query = query.Where(l => l.Properties.FirstOrDefault() != null && (l.Properties.FirstOrDefault().PID == pidOrPin || l.Properties.FirstOrDefault().PIN == pidOrPin));
-                }
+                query = query.Where(l => l.Properties.Any(p => p != null && (p.PID.ToString().Contains(pidOrPinValue) || p.PIN.ToString().Contains(pidOrPinValue))));
             }
 
-            if (!String.IsNullOrWhiteSpace(filter.LFileNo))
+            if (!string.IsNullOrWhiteSpace(filter.LFileNo))
+            {
                 query = query.Where(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
+            }
+
+            if (filter.Programs.Count > 0)
+            {
+                query = query.Where(l => filter.Programs.Any(p => p == l.ProgramTypeId));
+            }
 
             if (filter.Sort?.Any() == true)
                 query = query.OrderByProperty(filter.Sort);

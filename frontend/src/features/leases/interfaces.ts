@@ -3,4 +3,5 @@ export interface ILeaseFilter {
   lFileNo: string;
   searchBy: string;
   tenantName: string;
+  programs: string[];
 }
