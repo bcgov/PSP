@@ -5,7 +5,7 @@ import { IRole } from './IRole';
 
 export interface IUser {
   id?: number;
-  businessIdentifier?: string;
+  businessIdentifierValue?: string;
   keycloakUserId?: string;
   email?: string;
   displayName?: string;
@@ -18,7 +18,7 @@ export interface IUser {
   organizations?: IOrganization[];
   isDisabled?: boolean;
   lastLogin?: Date | string | Moment;
-  createdOn?: Date | string | Moment;
+  appCreateTimestamp?: Date | string | Moment;
   rowVersion?: number;
   landline?: string;
   mobile?: string;

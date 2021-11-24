@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Core.Extensions
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => o1.CopyValues((Entity.Property)null));
+            Assert.Throws<ArgumentNullException>(() => o1.CopyValues((Entity.PimsProperty)null));
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Pims.Api.Test.Core.Extensions
             o1.CopyValues(o2);
 
             // Assert
-            o2.PID.Should().Be(o1.PID);
+            o2.Pid.Should().Be(o1.Pid);
             o2.Description.Should().Be(o1.Description);
             o2.Location.Should().Be(o1.Location);
         }

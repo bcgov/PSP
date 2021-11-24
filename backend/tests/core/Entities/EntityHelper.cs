@@ -13,7 +13,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="data">Data to convert into row version.</param>
         /// <returns></returns>
-        public static byte[] GenerateRowVersion(string data)
+        public static byte[] GenerateConcurrencyControlNumber(string data)
         {
             return System.Text.Encoding.UTF8.GetBytes(data);
         }

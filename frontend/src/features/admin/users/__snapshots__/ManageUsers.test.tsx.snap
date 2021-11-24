@@ -108,8 +108,8 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             >
               <input
                 class="form-control"
-                id="input-businessIdentifier"
-                name="businessIdentifier"
+                id="input-businessIdentifierValue"
+                name="businessIdentifierValue"
                 placeholder="IDIR/BCeID"
                 value=""
               />

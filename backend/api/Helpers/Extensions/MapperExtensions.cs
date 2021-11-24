@@ -12,9 +12,9 @@ namespace Pims.Api.Helpers.Extensions
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetOrganizationName(this Organization organization)
+        public static string GetOrganizationName(this PimsOrganization organization)
         {
-            return organization?.ParentId.HasValue ?? false ? organization?.Parent?.Name : organization?.Name;
+            return organization?.PrntOrganizationId.HasValue ?? false ? organization?.PrntOrganization?.OrganizationName : organization?.OrganizationName;
         }
 
         /// <summary>
@@ -22,9 +22,9 @@ namespace Pims.Api.Helpers.Extensions
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetSubOrganizationName(this Organization organization)
+        public static string GetSubOrganizationName(this PimsOrganization organization)
         {
-            return organization?.ParentId.HasValue ?? false ? organization?.Name : null;
+            return organization?.PrntOrganizationId.HasValue ?? false ? organization?.OrganizationName : null;
         }
     }
 }

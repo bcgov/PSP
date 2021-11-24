@@ -51,6 +51,15 @@ const StyledTermInformationBox = styled.div`
   color: white;
   padding: 1rem 2rem;
   border-radius: 0.4rem;
+  &.inverted {
+    background: white;
+    color: ${props => props.theme.css.primaryColor};
+    border: 0.1rem solid;
+    h4 {
+      font-weight: 700;
+      color: ${props => props.theme.css.primaryColor};
+    }
+  }
 `;
 
 const FullWidthInlineFlexDiv = styled(InlineFlexDiv)`

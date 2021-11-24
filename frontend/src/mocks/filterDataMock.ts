@@ -95,7 +95,7 @@ export const mockOrganization: IOrganization = {
 export const mockUser: IUser = {
   id: 1,
   keycloakUserId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-  businessIdentifier: 'admin',
+  businessIdentifierValue: 'admin',
   email: 'admin@pims.gov.bc.ca',
   displayName: 'User, Admin',
   firstName: 'Admin',
@@ -103,7 +103,7 @@ export const mockUser: IUser = {
   position: '',
   organizations: [],
   roles: [],
-  createdOn: '2021-05-04T19:07:09.6920606',
+  appCreateTimestamp: '2021-05-04T19:07:09.6920606',
   rowVersion: 1,
   landline: '2223334444',
   mobile: '5556667777',
@@ -228,9 +228,9 @@ export const mockAccessRequest: IAccessRequest = {
     firstName: 'Admin',
     surname: 'User',
     email: 'admin@pims.gov.bc.ca',
-    businessIdentifier: 'admin',
+    businessIdentifierValue: 'admin',
     position: '',
-    createdOn: '2021-05-04T19:07:09.6920606',
+    appCreateTimestamp: '2021-05-04T19:07:09.6920606',
   },
   organizationId: mockOrganization.id,
   organization: mockOrganization,
@@ -239,7 +239,7 @@ export const mockAccessRequest: IAccessRequest = {
     name: 'Real Estate Manager',
   },
 
-  createdOn: '2021-05-07T00:37:06.2457303',
+  appCreateTimestamp: '2021-05-07T00:37:06.2457303',
 };
 
 export const mockParcelLayerResponse = {

@@ -1,7 +1,7 @@
 PRINT N'Creating default database'
-CREATE DATABASE $(TARGET_SPRINT);
+CREATE DATABASE pims;
 GO
-USE $(TARGET_SPRINT);
+USE pims;
 GO
 PRINT N'Adding default admin account'
 CREATE LOGIN $(DB_USER) WITH PASSWORD = '$(DB_PASSWORD)';

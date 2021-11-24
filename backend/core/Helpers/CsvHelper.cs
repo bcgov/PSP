@@ -63,6 +63,7 @@ namespace Pims.Core.Helpers
                 {
                     var type = isNullable ? Nullable.GetUnderlyingType(pType) : pType;
                     if (type.IsEnum) type = typeof(string); // Need to do this because enums are converted to strings.
+                    if (pType == typeof(DateTime)) type = typeof(string);
                     var displayAttr = p.GetCustomAttribute<DisplayNameAttribute>();
                     var name = displayAttr?.DisplayName ?? p.Name;
                     var column = new DataColumn(name, type) { AllowDBNull = isNullable || type == typeof(string) };

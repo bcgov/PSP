@@ -23,7 +23,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var paged = new Paged<User>();
+            var paged = new Paged<PimsUser>();
 
             // Assert
             paged.Page.Should().Be(1);
@@ -63,7 +63,7 @@ namespace Pims.Dal.Test.Entities
             // Act
             // Assert
             Assert.Throws<ArgumentNullException>(() => new Paged<object>(null, page, quantity, total));
-            Assert.Throws<ArgumentNullException>(() => new Paged<User>(null, page, quantity, total));
+            Assert.Throws<ArgumentNullException>(() => new Paged<PimsUser>(null, page, quantity, total));
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             var result = paged.To((items) => items.Select(i => new { Key = $"{i.Id}" }));
@@ -138,11 +138,11 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => paged.To((Func<IEnumerable<User>, IEnumerable<object>>)null));
+            Assert.Throws<ArgumentNullException>(() => paged.To((Func<IEnumerable<PimsUser>, IEnumerable<object>>)null));
         }
         #endregion
 
@@ -155,7 +155,7 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             var weak = paged.AsWeakEnumerable();
@@ -175,7 +175,7 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             paged.Add(EntityHelper.CreateUser("three"));
@@ -194,7 +194,7 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             paged.Clear();
@@ -213,7 +213,7 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             var result = paged.Contains(items.First());
@@ -232,8 +232,8 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
-            var result = new User[3];
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
+            var result = new PimsUser[3];
 
             // Act
             paged.CopyTo(result, 1);
@@ -255,7 +255,7 @@ namespace Pims.Dal.Test.Entities
             var page = 2;
             var quantity = 4;
             var total = 6;
-            var paged = new Paged<User>(items, page, quantity, total);
+            var paged = new Paged<PimsUser>(items, page, quantity, total);
 
             // Act
             paged.Remove(items.First());

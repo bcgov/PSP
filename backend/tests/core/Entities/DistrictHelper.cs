@@ -18,10 +18,10 @@ namespace Pims.Core.Test
         /// <param name="code"></param>
         /// <param name="region"></param>
         /// <returns></returns>
-        public static Entity.District CreateDistrict(int id, string code, Entity.Region region = null)
+        public static Entity.PimsDistrict CreateDistrict(short id, string code, Entity.PimsRegion region = null)
         {
             region ??= EntityHelper.CreateRegion(id, "Region 1");
-            return new Entity.District(code, region) { Id = id, RowVersion = 1 };
+            return new Entity.PimsDistrict(code, region) { DistrictCode = id, ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
@@ -29,13 +29,13 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-        public static List<Entity.District> CreateDefaultDistricts(Entity.Region region = null)
+        public static List<Entity.PimsDistrict> CreateDefaultDistricts(Entity.PimsRegion region = null)
         {
             region ??= EntityHelper.CreateRegion(1, "Region 1");
-            return new List<Entity.District>()
+            return new List<Entity.PimsDistrict>()
             {
-                new Entity.District("District 1", region) { Id = 1, RowVersion = 1 },
-                new Entity.District("District 2", region) { Id = 2,  RowVersion = 1 },
+                new Entity.PimsDistrict("District 1", region) { DistrictCode = 1, ConcurrencyControlNumber = 1 },
+                new Entity.PimsDistrict("District 2", region) { DistrictCode = 2,  ConcurrencyControlNumber = 1 },
             };
         }
 
@@ -46,10 +46,10 @@ namespace Pims.Core.Test
         /// <param name="code"></param>
         /// <param name="region"></param>
         /// <returns></returns>
-        public static Entity.District CreateDistrict(this PimsContext context, int id, string code, Entity.Region region = null)
+        public static Entity.PimsDistrict CreateDistrict(this PimsContext context, short id, string code, Entity.PimsRegion region = null)
         {
-            region ??= context.Regions.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a region.");
-            return new Entity.District(code, region) { Id = id, RowVersion = 1 };
+            region ??= context.PimsRegions.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a region.");
+            return new Entity.PimsDistrict(code, region) { DistrictCode = id, ConcurrencyControlNumber = 1 };
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Pims.Api.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "To support standardized routes (/{code})")]
         public IActionResult UpdateTenant(string code, Model.TenantModel model)
         {
-            var tenant = _pimsService.Tenant.UpdateTenant(_mapper.Map<Entity.Tenant>(model));
+            var tenant = _pimsService.Tenant.UpdateTenant(_mapper.Map<Entity.PimsTenant>(model));
             return new JsonResult(_mapper.Map<Model.TenantModel>(tenant));
         }
         #endregion

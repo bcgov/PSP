@@ -9,7 +9,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Search
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Contact, Model.ContactModel>()
+            config.NewConfig<Entity.PimsContactMgrVw, Model.ContactModel>()
                 .Map(dest => dest.Id, src => src.AddressId)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
@@ -19,7 +19,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Search
                 .Map(dest => dest.OrganizationName, src => src.OrganizationName)
                 .Map(dest => dest.Email, src => src.Person != null ? src.Person.GetEmail() : null)
                 .Map(dest => dest.MailingAddress, src => src.MailingAddress)
-                .Map(dest => dest.Municipality, src => src.Municipality)
+                .Map(dest => dest.MunicipalityName, src => src.MunicipalityName)
                 .Map(dest => dest.ProvinceState, src => src.ProvinceState)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled);
         }

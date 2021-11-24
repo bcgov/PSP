@@ -20,7 +20,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static IQueryable<Entity.Property> GenerateCommonPropertyQuery(this IQueryable<Entity.Property> query, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        private static IQueryable<Entity.PimsProperty> GenerateCommonPropertyQuery(this IQueryable<Entity.PimsProperty> query, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
@@ -30,21 +30,21 @@ namespace Pims.Dal.Helpers.Extensions
 
             // Users are not allowed to view sensitive properties outside of their organization or sub-organizations.
             if (!viewSensitive)
-                query = query.Where(p => !p.IsSensitive);
+                query = query.Where(p => !(p.IsSensitive.HasValue && p.IsSensitive.Value));
 
             if (!String.IsNullOrWhiteSpace(filter.ClassificationId))
-                query = query.Where(p => p.ClassificationId == filter.ClassificationId);
+                query = query.Where(p => p.PropertyClassificationTypeCode == filter.ClassificationId);
             if (!String.IsNullOrWhiteSpace(filter.PropertyTypeId))
-                query = query.Where(p => p.PropertyTypeId == filter.PropertyTypeId);
+                query = query.Where(p => p.PropertyTypeCode == filter.PropertyTypeId);
             if (!String.IsNullOrWhiteSpace(filter.TenureId))
-                query = query.Where(p => p.TenureId == filter.TenureId);
+                query = query.Where(p => p.PropertyTenureTypeCode == filter.TenureId);
             if (filter.NELatitude.HasValue && filter.NELongitude.HasValue && filter.SWLatitude.HasValue && filter.SWLongitude.HasValue)
             {
                 var poly = new NetTopologySuite.Geometries.Envelope(filter.NELongitude.Value, filter.SWLongitude.Value, filter.NELatitude.Value, filter.SWLatitude.Value).ToPolygon();
                 query = query.Where(p => poly.Contains(p.Location));
             }
             if (filter.Organizations?.Any() == true)
-                query = query.Where(p => p.OrganizationsManyToMany.Any(o => filter.Organizations.Contains(o.OrganizationId)));
+                query = query.Where(p => p.GetOrganizations().Any(o => filter.Organizations.Contains(o.OrganizationId)));
             if (!String.IsNullOrWhiteSpace(filter.Name))
                 query = query.Where(p => EF.Functions.Like(p.Name, $"%{filter.Name}%"));
 
@@ -52,18 +52,18 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 var pidValue = filter.PID.Replace("-", "").Trim();
                 if (Int32.TryParse(pidValue, out int pid))
-                    query = query.Where(p => p.PID == pid || p.PIN == pid);
+                    query = query.Where(p => p.Pid == pid || p.Pin == pid);
             }
             if (filter.PIN.HasValue)
-                query = query.Where(p => p.PIN == filter.PIN);
+                query = query.Where(p => p.Pin == filter.PIN);
 
             if (!String.IsNullOrWhiteSpace(filter.Address))
-                query = query.Where(p => EF.Functions.Like(p.Address.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.Address.Municipality, $"%{filter.Address}%"));
+                query = query.Where(p => EF.Functions.Like(p.Address.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.Address.MunicipalityName, $"%{filter.Address}%"));
 
             if (filter.Sort?.Any() == true)
                 query = query.OrderByProperty(filter.Sort);
             else
-                query = query.OrderBy(p => p.PropertyTypeId);
+                query = query.OrderBy(p => p.PropertyTypeCode);
 
             return query;
         }
@@ -76,21 +76,19 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entity.Property> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        public static IQueryable<Entity.PimsProperty> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
             // Users may only view sensitive properties if they have the `sensitive-view` claim and belong to the owning organization.
-            var query = context.Properties
+            var query = context.PimsProperties
                 .Include(p => p.Address)
-                .ThenInclude(a => a.AddressType)
+                .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.Region)
+                .ThenInclude(a => a.DistrictCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.District)
-                .Include(p => p.Address)
-                .ThenInclude(a => a.Province)
+                .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.Country)
                 .AsNoTracking();
@@ -105,9 +103,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public static int? GetPidOrPin(this Pims.Dal.Entities.Property property)
+        public static int? GetPidOrPin(this Entities.PimsProperty property)
         {
-            return property.PID != 0 ? property.PID : property.PIN;
+            return property.Pid != 0 ? property.Pid : property.Pin;
         }
 
         /// <summary>
@@ -115,9 +113,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static string GetTenantName(this Pims.Dal.Entities.Property property)
+        public static string GetTenantName(this Entities.PimsProperty property)
         {
-            return property.Leases.FirstOrDefault()?.GetFullName();
+            return property.PimsPropertyLeases.FirstOrDefault(l => l != null).Lease?.GetFullName();
         }
     }
 }

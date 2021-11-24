@@ -43,9 +43,9 @@ namespace PimsApi.Test.Keycloak.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
-            var erole = new Entity.Role(Guid.NewGuid(), "test");
+            var erole = new Entity.PimsRole(Guid.NewGuid(), "test");
             var eroles = new[] { erole };
-            service.Setup(m => m.SyncRolesAsync()).Returns(Task.FromResult((IEnumerable<Entity.Role>)eroles));
+            service.Setup(m => m.SyncRolesAsync()).Returns(Task.FromResult((IEnumerable<Entity.PimsRole>)eroles));
 
             // Act
             var result = await controller.SyncRolesAsync();
@@ -69,9 +69,9 @@ namespace PimsApi.Test.Keycloak.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
-            var erole = new Entity.Role(Guid.NewGuid(), "test");
+            var erole = new Entity.PimsRole(Guid.NewGuid(), "test");
             var eroles = new[] { erole };
-            service.Setup(m => m.GetRolesAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult((IEnumerable<Entity.Role>)eroles));
+            service.Setup(m => m.GetRolesAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult((IEnumerable<Entity.PimsRole>)eroles));
 
             // Act
             var result = await controller.GetRolesAsync(1, 10);
@@ -95,11 +95,11 @@ namespace PimsApi.Test.Keycloak.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
-            var erole = new Entity.Role(Guid.NewGuid(), "test");
+            var erole = new Entity.PimsRole(Guid.NewGuid(), "test");
             service.Setup(m => m.GetRoleAsync(It.IsAny<Guid>())).Returns(Task.FromResult(erole));
 
             // Act
-            var result = await controller.GetRoleAsync(erole.Key);
+            var result = await controller.GetRoleAsync(erole.RoleUid);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -120,12 +120,12 @@ namespace PimsApi.Test.Keycloak.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
-            var erole = new Entity.Role(Guid.NewGuid(), "test") { Description = "description" };
-            service.Setup(m => m.UpdateRoleAsync(It.IsAny<Entity.Role>())).Returns(Task.FromResult(erole));
+            var erole = new Entity.PimsRole(Guid.NewGuid(), "test") { Description = "description" };
+            service.Setup(m => m.UpdateRoleAsync(It.IsAny<Entity.PimsRole>())).Returns(Task.FromResult(erole));
             var model = mapper.Map<Model.Update.RoleModel>(erole);
 
             // Act
-            var result = await controller.UpdateRoleAsync(erole.Key, model);
+            var result = await controller.UpdateRoleAsync(erole.RoleUid, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -134,7 +134,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             Assert.Equal(expectedResult.Id, actualResult.Id);
             Assert.Equal(expectedResult.Name, actualResult.Name);
             Assert.Equal(expectedResult.Description, actualResult.Description);
-            service.Verify(m => m.UpdateRoleAsync(It.IsAny<Entity.Role>()), Times.Once());
+            service.Verify(m => m.UpdateRoleAsync(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
         #endregion

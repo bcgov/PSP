@@ -18,7 +18,7 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var type = new PropertyType();
+            var type = new PimsPropertyType();
 
             // Assert
             type.Id.Should().BeNull();
@@ -31,11 +31,11 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var type = new PropertyType("name", "");
+            var type = new PimsPropertyType("name");
 
             // Assert
             type.Id.Should().Be("name");
-            type.Description.Should().Be("");
+            type.Description.Should().BeNull();
             type.DisplayOrder.Should().BeNull();
         }
         #endregion

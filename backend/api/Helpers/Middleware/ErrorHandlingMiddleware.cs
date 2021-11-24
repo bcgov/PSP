@@ -118,7 +118,7 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogDebug(ex, "Middleware caught unhandled exception.");
             }
-            else if (ex is RowVersionMissingException)
+            else if (ex is ConcurrencyControlNumberMissingException)
             {
                 code = HttpStatusCode.BadRequest;
                 message = "Item cannot be updated without a row version.";

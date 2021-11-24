@@ -8,18 +8,18 @@ namespace Pims.Dal.Services
     /// </summary>
     public interface ILookupService : IService
     {
-        IEnumerable<Organization> GetOrganizations();
-        IEnumerable<OrganizationType> GetOrganizationTypes();
-        IEnumerable<Country> GetCountries();
-        IEnumerable<Province> GetProvinces();
-        IEnumerable<Region> GetRegions();
-        IEnumerable<District> GetDistricts();
-        IEnumerable<PropertyType> GetPropertyTypes();
-        IEnumerable<PropertyClassificationType> GetPropertyClassificationTypes();
-        IEnumerable<PropertyAreaUnitType> GetPropertyAreaUnitTypes();
-        IEnumerable<PropertyTenureType> GetPropertyTenureTypes();
-        IEnumerable<Role> GetRoles();
-        IEnumerable<LeasePaymentReceivableType> GetPaymentReceivableTypes();
-        IEnumerable<LeaseProgramType> GetLeaseProgramTypes();
+        IEnumerable<PimsOrganization> GetOrganizations();
+        IEnumerable<PimsOrganizationType> GetOrganizationTypes();
+        IEnumerable<PimsCountry> GetCountries();
+        IEnumerable<PimsProvinceState> GetProvinces();
+        IEnumerable<PimsRegion> GetRegions();
+        IEnumerable<PimsDistrict> GetDistricts();
+        IEnumerable<PimsPropertyType> GetPropertyTypes();
+        IEnumerable<PimsPropertyClassificationType> GetPropertyClassificationTypes();
+        IEnumerable<PimsAreaUnitType> GetPropertyAreaUnitTypes();
+        IEnumerable<PimsPropertyTenureType> GetPropertyTenureTypes();
+        IEnumerable<PimsRole> GetRoles();
+        IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes();
+        IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes();
     }
 }

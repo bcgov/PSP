@@ -1,6 +1,6 @@
 namespace Pims.Dal.Entities
 {
-    public interface ITypeEntity<KeyType>
+    public interface IBaseTypeEntity<KeyType, DisplayKeyType>
     {
         #region Properties
         /// <summary>
@@ -14,14 +14,18 @@ namespace Pims.Dal.Entities
         string Description { get; set; }
 
         /// <summary>
-        /// get/set - Whether this type is disabled.
+        /// get/set - Whether this code is disabled.
         /// </summary>
-        bool IsDisabled { get; set; }
+        bool? IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The sort order of the type.
+        /// get/set - The sort order of the lookup item.
         /// </summary>
-        int? DisplayOrder { get; set; }
+        DisplayKeyType DisplayOrder { get; set; }
         #endregion
+    }
+
+    public interface ITypeEntity<KeyType> : IBaseTypeEntity<KeyType, int?>
+    {
     }
 }

@@ -38,8 +38,8 @@ namespace PimsApi.Test.Admin.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var roles = new Entity.Role[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
-            var paged = new Entity.Models.Paged<Entity.Role>(roles);
+            var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
+            var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
             service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
@@ -62,8 +62,8 @@ namespace PimsApi.Test.Admin.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var roles = new Entity.Role[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
-            var paged = new Entity.Models.Paged<Entity.Role>(roles);
+            var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
+            var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
             service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
 
             // Act
@@ -92,14 +92,14 @@ namespace PimsApi.Test.Admin.Controllers
             service.Setup(m => m.Role.Get(It.IsAny<Guid>())).Returns(role);
 
             // Act
-            var result = controller.GetRole(role.Key);
+            var result = controller.GetRole(role.RoleUid);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Role.Get(role.Key), Times.Once());
+            service.Verify(m => m.Role.Get(role.RoleUid), Times.Once());
         }
         #endregion
 
@@ -114,7 +114,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Add(It.IsAny<Entity.Role>()));
+            service.Setup(m => m.Role.Add(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
@@ -125,7 +125,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Role.Add(It.IsAny<Entity.Role>()), Times.Once());
+            service.Verify(m => m.Role.Add(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
 
@@ -140,18 +140,18 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Update(It.IsAny<Entity.Role>()));
+            service.Setup(m => m.Role.Update(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
-            var result = controller.UpdateRole(role.Key, model);
+            var result = controller.UpdateRole(role.RoleUid, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Role.Update(It.IsAny<Entity.Role>()), Times.Once());
+            service.Verify(m => m.Role.Update(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
 
@@ -166,18 +166,18 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var role = EntityHelper.CreateRole("role1");
-            service.Setup(m => m.Role.Delete(It.IsAny<Entity.Role>()));
+            service.Setup(m => m.Role.Delete(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
 
             // Act
-            var result = controller.DeleteRole(role.Key, model);
+            var result = controller.DeleteRole(role.RoleUid, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.RoleModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.RoleModel>(role), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Role.Delete(It.IsAny<Entity.Role>()), Times.Once());
+            service.Verify(m => m.Role.Delete(It.IsAny<Entity.PimsRole>()), Times.Once());
         }
         #endregion
         #endregion

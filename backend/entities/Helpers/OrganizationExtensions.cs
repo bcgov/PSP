@@ -11,9 +11,9 @@ namespace Pims.Dal.Entities.Helpers
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetEmail(this Organization organization)
+        public static string GetEmail(this PimsOrganization organization)
         {
-            return organization?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
+            return organization?.PimsContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -22,9 +22,9 @@ namespace Pims.Dal.Entities.Helpers
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetLandlinePhoneNumber(this Organization organization)
+        public static string GetLandlinePhoneNumber(this PimsOrganization organization)
         {
-            return organization?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.PersPhone || cm.ContactMethodTypeId == ContactMethodTypes.WorkPhone)?.Value;
+            return organization?.PimsContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.PersPhone || cm.ContactMethodTypeCode == ContactMethodTypes.WorkPhone)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Pims.Dal.Entities.Helpers
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetMobilePhoneNumber(this Organization organization)
+        public static string GetMobilePhoneNumber(this PimsOrganization organization)
         {
-            return organization?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.PerseMobil || cm.ContactMethodTypeId == ContactMethodTypes.WorkMobil)?.Value;
+            return organization?.PimsContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.PerseMobil || cm.ContactMethodTypeCode == ContactMethodTypes.WorkMobil)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace Pims.Dal.Entities.Helpers
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetFullName(this Organization organization)
+        public static string GetFullName(this PimsOrganization organization)
         {
-            Person person = organization.Persons.FirstOrDefault();
+            PimsPerson person = organization.GetPersons().FirstOrDefault();
             if (person != null)
             {
                 string[] names = { person.Surname, person.FirstName, person.MiddleNames };
@@ -60,9 +60,20 @@ namespace Pims.Dal.Entities.Helpers
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static Address GetMailingAddress(this Organization organization)
+        public static PimsAddress GetMailingAddress(this PimsOrganization organization)
         {
-            return organization?.Address?.AddressTypeId == "MAILADDR" ? organization.Address : null;
+            return organization?.PimsOrganizationAddresses.FirstOrDefault(a => a?.AddressUsageTypeCode == "MAILADDR")?.Address;
+        }
+
+        /// <summary>
+        /// DEPRECATED, either get an address by type, or get all addresses for a person.
+        /// Get a single address from this user's address list.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static PimsAddress GetSingleAddress(this PimsOrganization organization)
+        {
+            return organization?.PimsOrganizationAddresses.FirstOrDefault()?.Address;
         }
     }
 }

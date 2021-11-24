@@ -19,14 +19,14 @@ namespace Pims.Core.Test
         /// <param name="organization"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Entity.ContactMethod CreateContactMethod(long id, string value, Entity.Person person, Entity.Organization organization = null, Entity.ContactMethodType type = null)
+        public static Entity.PimsContactMethod CreateContactMethod(long id, string value, Entity.PimsPerson person, Entity.PimsOrganization organization = null, Entity.PimsContactMethodType type = null)
         {
-            organization ??= person?.Organizations.FirstOrDefault() ?? EntityHelper.CreateOrganization(id, "Test 1");
+            organization ??= person?.GetOrganizations().FirstOrDefault() ?? EntityHelper.CreateOrganization(id, "Test 1");
             type ??= EntityHelper.CreateContactMethodType("Email");
-            return new Entity.ContactMethod(person, organization, type, value)
+            return new Entity.PimsContactMethod(person, organization, type, value)
             {
-                Id = id,
-                RowVersion = 1
+                ContactMethodId = id,
+                ConcurrencyControlNumber = 1
             };
         }
 
@@ -39,14 +39,14 @@ namespace Pims.Core.Test
         /// <param name="organization"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Entity.ContactMethod CreateContactMethod(this PimsContext context, long id, string value, Entity.Person person, Entity.Organization organization = null, Entity.ContactMethodType type = null)
+        public static Entity.PimsContactMethod CreateContactMethod(this PimsContext context, long id, string value, Entity.PimsPerson person, Entity.PimsOrganization organization = null, Entity.PimsContactMethodType type = null)
         {
-            organization ??= context.Organizations.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find an organization.");
-            type ??= context.ContactMethodTypes.FirstOrDefault(t => t.Id == "Email") ?? throw new InvalidOperationException("Unable to find 'Email' contact method type.");
-            return new Entity.ContactMethod(person, organization, type, value)
+            organization ??= context.PimsOrganizations.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find an organization.");
+            type ??= context.PimsContactMethodTypes.FirstOrDefault(t => t.Id == "Email") ?? throw new InvalidOperationException("Unable to find 'Email' contact method type.");
+            return new Entity.PimsContactMethod(person, organization, type, value)
             {
-                Id = id,
-                RowVersion = 1
+                ContactMethodId = id,
+                ConcurrencyControlNumber = 1
             };
         }
     }

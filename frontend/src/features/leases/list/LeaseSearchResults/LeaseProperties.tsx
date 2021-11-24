@@ -34,12 +34,12 @@ const LeaseProperties: React.FunctionComponent<ILeasePropertiesProps> = props =>
         </Col>
         <Col md="auto">
           <div>
-            <strong className="pr-2">PID:</strong> {property.pid || 'n.a'}
+            <strong className="pr-2">PID:</strong> {property.pid || 'N.A'}
           </div>
         </Col>
         <Col md="auto">
           <div>
-            <strong className="pr-2">PIN:</strong> {property.pin || 'n.a'}
+            <strong className="pr-2">PIN:</strong> {property.pin || 'N.A'}
           </div>
         </Col>
       </PropertyRow>

@@ -9,7 +9,7 @@ describe('Access request details', () => {
   it('Snapshot matches', () => {
     const request: IAccessRequestModel = {
       id: 1,
-      businessIdentifier: 'idir/bceid',
+      businessIdentifierValue: 'idir/bceid',
       userId: 2,
       firstName: 'firstName',
       surname: 'surname',

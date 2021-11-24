@@ -4,7 +4,7 @@ export interface IAccessRequestRole {
   description?: string;
   isDisabled?: boolean;
   sortOrder?: number;
-  createdOn?: string;
+  appCreateTimestamp?: string;
   updatedByName?: string;
   updatedByEmail?: string;
   rowVersion?: number;

@@ -41,9 +41,9 @@ namespace Pims.Api.Test.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var organization = new Entity.Organization
+            var organization = new Entity.PimsOrganization
             {
-                Name = "Ministry of Health",
+                OrganizationName = "Ministry of Health",
             };
             service.Setup(m => m.Lookup.GetOrganizations()).Returns(new[] { organization });
 
@@ -66,7 +66,7 @@ namespace Pims.Api.Test.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var propertyClassification = new Entity.PropertyClassificationType
+            var propertyClassification = new Entity.PimsPropertyClassificationType
             {
                 Id = "Surplus Active",
             };
@@ -91,10 +91,10 @@ namespace Pims.Api.Test.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var role = new Entity.Role
+            var role = new Entity.PimsRole
             {
                 Id = 1,
-                Key = Guid.NewGuid(),
+                RoleUid = Guid.NewGuid(),
                 Name = "Ministry of Health",
                 Description = "The Ministry of Health"
             };

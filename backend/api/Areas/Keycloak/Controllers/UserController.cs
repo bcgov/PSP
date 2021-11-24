@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
         public async Task<IActionResult> UpdateUserAsync(Guid key, [FromBody] Model.UserModel model)
         {
-            var user = _mapper.Map<Entity.User>(model);
+            var user = _mapper.Map<Entity.PimsUser>(model);
             var entity = await _keycloakService.UpdateUserAsync(user);
             var result = _mapper.Map<Model.UserModel>(entity);
             return new JsonResult(result);

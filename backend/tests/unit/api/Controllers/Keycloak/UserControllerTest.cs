@@ -48,7 +48,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             service.Setup(m => m.SyncUserAsync(It.IsAny<Guid>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await controller.SyncUserAsync(user.KeycloakUserId.Value);
+            var result = await controller.SyncUserAsync(user.GuidIdentifierValue.Value);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -71,7 +71,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
             var user = EntityHelper.CreateUser("test");
             var users = new[] { user };
-            service.Setup(m => m.GetUsersAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult((IEnumerable<Entity.User>)users));
+            service.Setup(m => m.GetUsersAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult((IEnumerable<Entity.PimsUser>)users));
 
             // Act
             var result = await controller.GetUsersAsync(1, 10);
@@ -99,7 +99,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             service.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).Returns(Task.FromResult(user));
 
             // Act
-            var result = await controller.GetUserAsync(user.KeycloakUserId.Value);
+            var result = await controller.GetUserAsync(user.GuidIdentifierValue.Value);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -121,12 +121,12 @@ namespace PimsApi.Test.Keycloak.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
             var user = EntityHelper.CreateUser("test");
-            service.Setup(m => m.UpdateUserAsync(It.IsAny<Entity.User>())).Returns(Task.FromResult(user));
+            service.Setup(m => m.UpdateUserAsync(It.IsAny<Entity.PimsUser>())).Returns(Task.FromResult(user));
             var model = mapper.Map<AdminModels.UserModel>(user);
             model.Email = "test@test.com";
 
             // Act
-            var result = await controller.UpdateUserAsync(user.KeycloakUserId.Value, model);
+            var result = await controller.UpdateUserAsync(user.GuidIdentifierValue.Value, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -141,7 +141,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             Assert.Equal(expectedResult.IsDisabled, actualResult.IsDisabled);
             Assert.Equal(expectedResult.Organizations, actualResult.Organizations, new DeepPropertyCompare());
             Assert.Equal(expectedResult.Roles, actualResult.Roles, new DeepPropertyCompare());
-            service.Verify(m => m.UpdateUserAsync(It.IsAny<Entity.User>()), Times.Once());
+            service.Verify(m => m.UpdateUserAsync(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
         #endregion
         #endregion

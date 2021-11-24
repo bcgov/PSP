@@ -244,6 +244,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     sort,
     filterable,
     renderBodyComponent,
+    manualSortBy,
   } = props;
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
   React.useEffect(() => {
@@ -275,7 +276,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ? { sortBy, pageIndex: pageIndexProp ?? 0, pageSize: pageSizeProp }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
       manualPagination: manualPagination ?? true, // Tell the usePagination hook
-      manualSortBy: false,
+      manualSortBy: manualSortBy,
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
       // pageCount.

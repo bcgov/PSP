@@ -9,7 +9,7 @@ export interface IContactSearchResult {
   organizationName: string;
   email: string;
   mailingAddress: string;
-  municipality: string;
+  municipalityName: string;
   provinceState: string;
   provinceStateId: number;
 }

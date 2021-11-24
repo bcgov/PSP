@@ -23,10 +23,10 @@ namespace Pims.Dal.Test.Entities
             var organization = EntityHelper.CreateOrganization(2, "ORG");
 
             // Act
-            var accessRequestOrganization = new AccessRequestOrganization(accessRequest.Id, organization.Id);
+            var accessRequestOrganization = new PimsAccessRequestOrganization(accessRequest.AccessRequestId, organization.Id);
 
             // Assert
-            accessRequestOrganization.AccessRequestId.Should().Be(accessRequest.Id);
+            accessRequestOrganization.AccessRequestId.Should().Be(accessRequest.AccessRequestId);
             accessRequestOrganization.OrganizationId.Should().Be(organization.Id);
         }
 
@@ -38,10 +38,10 @@ namespace Pims.Dal.Test.Entities
             var organization = EntityHelper.CreateOrganization(2, "ORG");
 
             // Act
-            var accessRequestOrganization = new AccessRequestOrganization(accessRequest, organization);
+            var accessRequestOrganization = new PimsAccessRequestOrganization(accessRequest, organization);
 
             // Assert
-            accessRequestOrganization.AccessRequestId.Should().Be(accessRequest.Id);
+            accessRequestOrganization.AccessRequestId.Should().Be(accessRequest.AccessRequestId);
             accessRequestOrganization.AccessRequest.Should().Be(accessRequest);
             accessRequestOrganization.OrganizationId.Should().Be(organization.Id);
             accessRequestOrganization.Organization.Should().Be(organization);
@@ -55,7 +55,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new AccessRequestOrganization(null, organization));
+            Assert.Throws<ArgumentNullException>(() => new PimsAccessRequestOrganization(null, organization));
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new AccessRequestOrganization(accessRequest, null));
+            Assert.Throws<ArgumentNullException>(() => new PimsAccessRequestOrganization(accessRequest, null));
         }
         #endregion
     }
