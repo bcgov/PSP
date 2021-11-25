@@ -101,7 +101,7 @@ repo := $(shell gh repo view --json name --jq '.name')
 branch = HEAD
 release_notes = Release $(tag) ($(CURRENT_DATE))
 
-.PHONE: tag
+.PHONY: tag
 tag: ## Creates a pre-release tag
 	$(info Using tag: $(tag))
 	$(info Using repo: $(owner)/$(repo))
@@ -126,7 +126,7 @@ endif
 
 .PHONY: devops-install
 devops-install: ## Installs software required by DevSecOps tooling (e.g. python, etc)
-	@if [ -z "$(PYTHON)" ]; then echo "Python not found. Install from "; exit 2; fi
+	@if [ -z "$(PYTHON)" ]; then echo "Python not found. Install from https://docs.python.org/3"; exit 2; fi
 	@if [ -z "$(JQ)" ]; then echo "JQ not found. Install from https://stedolan.github.io/jq/"; exit 2; fi
 	@python -m ensurepip --upgrade
 	@pip install trufflehog3 jtbl
