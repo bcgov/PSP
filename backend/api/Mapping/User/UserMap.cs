@@ -16,7 +16,7 @@ namespace Pims.Api.Mapping.User
                 .Map(dest => dest.BusinessIdentifier, src => src.BusinessIdentifier)
                 .Map(dest => dest.FirstName, src => src.Person.FirstName)
                 .Map(dest => dest.Surname, src => src.Person.Surname)
-                .Map(dest => dest.Email, src => src.Person.GetEmail())
+                .Map(dest => dest.Email, src => src.Person.GetWorkEmail())
                 .Map(dest => dest.Organizations, src => src.Organizations)
                 .Map(dest => dest.Roles, src => src.Roles)
                 .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();

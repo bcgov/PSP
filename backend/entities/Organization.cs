@@ -166,6 +166,11 @@ namespace Pims.Dal.Entities
         /// get - Collection of leases.
         /// </summary>
         public ICollection<Lease> Leases { get; } = new List<Lease>();
+
+        /// <summary>
+        /// get - A collection of contacts with this address.
+        /// </summary>
+        public ICollection<Contact> Contacts { get; } = new List<Contact>();
         #endregion
 
         #region Constructors

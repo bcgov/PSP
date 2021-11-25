@@ -2,6 +2,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
+import { ContactListView } from 'features/contact';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -136,6 +137,14 @@ const AppRouter: React.FC = () => {
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('View Lease & Licenses')}
+        />
+        <AppRoute
+          protected
+          path="/contact/list"
+          component={ContactListView}
+          layout={AuthLayout}
+          claim={Claims.CONTACT_VIEW}
+          title={getTitle('View Contacts')}
         />
         <AppRoute
           protected

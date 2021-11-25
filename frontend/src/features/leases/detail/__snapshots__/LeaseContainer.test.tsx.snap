@@ -100,6 +100,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 
 .c15 {
   font-size: 3.2rem;
+  line-height: 4.2rem;
   text-align: left;
   border-bottom: solid 0.4rem;
 }
@@ -185,7 +186,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 }
 
 .c28 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
 }
 
@@ -203,10 +204,10 @@ exports[`LeaseContainer component renders as expected 1`] = `
 .c26 > .input {
   grid-column: controls;
   grid-row: auto;
-  border-left: 1px solid black;
+  border-left: 1px solid #666666;
 }
 
-.c26 .form-control {
+.c26 .form-control:not(.description) {
   font-weight: 700;
 }
 
@@ -458,6 +459,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 }
 
 .c16#leaseForm input:disabled,
+.c16#leaseForm select:disabled,
 .c16#leaseForm textarea:disabled {
   background: none;
   border: none;
@@ -481,11 +483,13 @@ exports[`LeaseContainer component renders as expected 1`] = `
   position: sticky;
   top: 0;
   left: 0;
+  padding-bottom: 1rem;
   background-color: white;
+  z-index: 1;
 }
 
 .c14 p {
-  height: 3rem;
+  height: 1rem;
   text-align: left;
 }
 
@@ -551,12 +555,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
           >
             Lease & License Search
           </a>
-        </li>
-        <li
-          aria-current="page"
-          class="breadcrumb-item active"
-        >
-          Details
         </li>
       </ol>
     </nav>
@@ -700,7 +698,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
         >
           Details
         </h2>
-        <p />
       </div>
       <form
         action="#"

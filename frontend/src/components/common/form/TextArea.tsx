@@ -9,6 +9,8 @@ import { Input, InputProps } from './Input';
 export type TextProps = InputProps & {
   /** use FastInput instead of Input */
   fast?: boolean;
+  rows?: number;
+  cols?: number;
 };
 
 /**
@@ -23,6 +25,7 @@ export const TextArea: React.FC<TextProps> = ({
   disabled,
   custom,
   fast,
+  innerClassName,
   ...rest
 }) => {
   const formikProps = useFormikContext();
@@ -49,6 +52,7 @@ export const TextArea: React.FC<TextProps> = ({
   ) : (
     <Input
       label={label}
+      innerClassName={innerClassName}
       as="textarea"
       field={field}
       className={clsx(className, 'textarea')}

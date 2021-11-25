@@ -79,6 +79,17 @@ describe('SideNavbar display and logic', () => {
     });
   });
 
+  it('The sidebar restricts nav items by claim.', async () => {
+    const { getByTitle, queryByText } = renderComponent();
+    const expandButton = getByTitle('expand');
+    await act(async () => {
+      userEvent.click(expandButton);
+    });
+    await waitFor(async () => {
+      expect(queryByText('Contacts')).toBeNull();
+    });
+  });
+
   it('The sidebar displays restricted items if the user has the required role.', async () => {
     const { getByTitle, getByText } = renderComponent({
       roles: [Roles.SYSTEM_ADMINISTRATOR],

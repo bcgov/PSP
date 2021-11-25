@@ -21,7 +21,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.Property CreateProperty(int pid, Entity.PropertyType type = null, Entity.PropertyClassificationType classification = null, Entity.Address address = null, Entity.PropertyTenureType tenure = null, Entity.PropertyAreaUnitType areaUnit = null, Entity.PropertyDataSourceType dataSource = null)
+        public static Entity.Property CreateProperty(int pid, int? pin = null, Entity.PropertyType type = null, Entity.PropertyClassificationType classification = null, Entity.Address address = null, Entity.PropertyTenureType tenure = null, Entity.PropertyAreaUnitType areaUnit = null, Entity.PropertyDataSourceType dataSource = null, Entity.Lease lease = null)
         {
             type ??= EntityHelper.CreatePropertyType("Land");
             classification ??= EntityHelper.CreatePropertyClassificationType("Class");
@@ -32,11 +32,15 @@ namespace Pims.Core.Test
             var property = new Entity.Property(pid, type, classification, address, tenure, areaUnit, dataSource, DateTime.UtcNow)
             {
                 Id = pid,
+                PIN = pin,
                 RowVersion = 1,
+                Location = new NetTopologySuite.Geometries.Point(0, 0)
             };
-            var lease = EntityHelper.CreateLease(1);
-            lease.Properties.Add(property);
-            property.Leases.Add(lease);
+            if (lease != null)
+            {
+                lease.Properties.Add(property);
+                property.Leases.Add(lease);
+            }
             return property;
         }
 
@@ -53,7 +57,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.Property CreateProperty(this PimsContext context, int pid, Entity.PropertyType type = null, Entity.PropertyClassificationType classification = null, Entity.Address address = null, Entity.PropertyTenureType tenure = null, Entity.PropertyAreaUnitType areaUnit = null, Entity.PropertyDataSourceType dataSource = null)
+        public static Entity.Property CreateProperty(this PimsContext context, int pid, int? pin = null, Entity.PropertyType type = null, Entity.PropertyClassificationType classification = null, Entity.Address address = null, Entity.PropertyTenureType tenure = null, Entity.PropertyAreaUnitType areaUnit = null, Entity.PropertyDataSourceType dataSource = null)
         {
             type ??= context.PropertyTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property type.");
             classification ??= context.PropertyClassificationTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property classification type.");
@@ -61,7 +65,8 @@ namespace Pims.Core.Test
             tenure ??= context.PropertyTenureTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property tenure type.");
             areaUnit ??= context.PropertyAreaUnitTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property area unit type.");
             dataSource ??= context.PropertyDataSourceTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property data source type.");
-            var property = EntityHelper.CreateProperty(pid, type, classification, address, tenure, areaUnit, dataSource);
+            var lease = context.Leases.FirstOrDefault() ?? EntityHelper.CreateLease(pid);
+            var property = EntityHelper.CreateProperty(pid, pin, type, classification, address, tenure, areaUnit, dataSource);
             context.Properties.Add(property);
             return property;
         }

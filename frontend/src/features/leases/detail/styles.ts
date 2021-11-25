@@ -1,4 +1,5 @@
 import caretRightSvgUrl from 'assets/images/caret-right.svg';
+import { TextArea } from 'components/common/form';
 import { InlineFastCurrencyInput, InlineInput } from 'components/common/form/styles';
 import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
@@ -11,6 +12,7 @@ export const LeaseH1 = styled.h1`
 
 export const LeaseH2 = styled.h2`
   font-size: 3.2rem;
+  line-height: 4.2rem;
   text-align: left;
   color: ${props => props.theme.css.textColor};
   border-bottom: solid 0.4rem ${props => props.theme.css.primaryColor};
@@ -81,8 +83,12 @@ export const LeaseBreadcrumb = styled(Breadcrumb)`
 `;
 
 export const FormDescriptionLabel = styled(Form.Label)`
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
+`;
+
+export const FormDescriptionBody = styled(TextArea)`
+  font-weight: 400;
 `;
 
 export const FormControl = styled(Form.Control)`
@@ -104,10 +110,10 @@ export const FormGrid = styled.div`
   & > .input {
     grid-column: controls;
     grid-row: auto;
-    border-left: 1px solid black;
+    border-left: 1px solid #666666;
   }
 
-  & .form-control {
+  & .form-control:not(.description) {
     font-weight: 700;
   }
 
