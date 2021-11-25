@@ -1,9 +1,9 @@
 -- Insert security deposit data of the three different SEC_DEP_HOLDER_TYPE_CODE
 INSERT INTO [PIMS_TST].[dbo].[PIMS_SECURITY_DEPOSIT]
-    ([LEASE_ID], [SEC_DEP_HOLDER_TYPE_CODE], [SECURITY_DEPOSIT_TYPE_CODE], [DESCRIPTION], [AMOUNT_PAID], [TOTAL_AMOUNT], [DEPOSIT_DATE], [ANNUAL_INTEREST_RATE], [CONCURRENCY_CONTROL_NUMBER])
+  ([LEASE_ID], [SEC_DEP_HOLDER_TYPE_CODE], [SECURITY_DEPOSIT_TYPE_CODE], [DESCRIPTION], [AMOUNT_PAID], [TOTAL_AMOUNT], [DEPOSIT_DATE], [ANNUAL_INTEREST_RATE], [CONCURRENCY_CONTROL_NUMBER])
 VALUES
-    (
-        2
+  (
+    2
 	, 'MINISTRY'
 	, 'PET'
 	, 'This is a test description'
@@ -13,8 +13,8 @@ VALUES
 	, 12
 	, 1
   ),
-    (
-        3
+  (
+    3
       , 'OTHER'
       , 'SECURITY'
       , 'This is a test description.'
@@ -24,8 +24,8 @@ VALUES
       , 13
       , 1
   ),
-    (
-        4
+  (
+    4
       , 'PROPMGR'
       , 'PET'
       , 5000
