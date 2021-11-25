@@ -162,8 +162,8 @@ db-drop: ## Drop the database.
 	@cd backend/dal; dotnet ef database drop;
 
 db-deploy: 
-	@echo "$(P) regenerate ef core entities from database"
-	@cd database/mssql/scripts/dbscripts; ./deploy.sh
+	@echo "$(P) deployment script that facilitates releasing database changes."
+	@cd database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
