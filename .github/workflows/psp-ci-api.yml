@@ -16,5 +16,5 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build image
-        working-directory: ./backend/api
+        working-directory: ./backend
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
