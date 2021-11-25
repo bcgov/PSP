@@ -8,19 +8,19 @@ namespace Pims.Api.Mapping.Lookup
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Organization, Model.OrganizationModel>()
+            config.NewConfig<Entity.PimsOrganization, Model.OrganizationModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name)
-                .Map(dest => dest.Code, src => src.Identifier)
+                .Map(dest => dest.Name, src => src.OrganizationName)
+                .Map(dest => dest.Code, src => src.OrganizationIdentifier)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
+                .Inherits<Entity.IDisableBaseAppEntity, Models.BaseAppModel>();
 
-            config.NewConfig<Model.OrganizationModel, Entity.Organization>()
+            config.NewConfig<Model.OrganizationModel, Entity.PimsOrganization>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.OrganizationName, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Models.BaseAppModel, Entity.IDisableBaseAppEntity>();
         }
     }
 }

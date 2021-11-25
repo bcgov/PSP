@@ -4,17 +4,17 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Entities.Comparers
 {
-    public class RoleIdComparer : IEqualityComparer<Role>
+    public class RoleIdComparer : IEqualityComparer<PimsRole>
     {
-        public bool Equals([AllowNull] Role x, [AllowNull] Role y)
+        public bool Equals([AllowNull] PimsRole x, [AllowNull] PimsRole y)
         {
             return x != null && y != null && GetHashCode(x) == GetHashCode(y);
         }
 
-        public int GetHashCode([DisallowNull] Role obj)
+        public int GetHashCode([DisallowNull] PimsRole obj)
         {
             var hash = new HashCode();
-            hash.Add(obj.Id);
+            hash.Add(obj.RoleId);
             return hash.ToHashCode();
         }
     }

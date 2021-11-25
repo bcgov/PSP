@@ -6,13 +6,13 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IAccessRequestService interface, provides functions to interact with access requests within the datasource.
     /// </summary>
-    public interface IAccessRequestService : IService<AccessRequest>
+    public interface IAccessRequestService : IService<PimsAccessRequest>
     {
-        Paged<AccessRequest> Get(AccessRequestFilter filter);
-        AccessRequest Get();
-        AccessRequest Get(long id);
-        AccessRequest Add(AccessRequest addRequest);
-        AccessRequest Update(AccessRequest updateRequest);
-        AccessRequest Delete(AccessRequest deleteRequest);
+        Paged<PimsAccessRequest> Get(AccessRequestFilter filter);
+        PimsAccessRequest Get();
+        PimsAccessRequest Get(long id);
+        PimsAccessRequest Add(PimsAccessRequest addRequest);
+        PimsAccessRequest Update(PimsAccessRequest updateRequest);
+        PimsAccessRequest Delete(PimsAccessRequest deleteRequest);
     }
 }

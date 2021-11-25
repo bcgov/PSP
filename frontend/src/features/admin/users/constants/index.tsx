@@ -10,12 +10,12 @@ import { IUserRecord } from '../interfaces/IUserRecord';
 export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
   {
     Header: 'IDIR/BCeID',
-    accessor: 'businessIdentifier',
+    accessor: 'businessIdentifierValue',
     align: 'left',
     Cell: (props: CellProps<IUserRecord>) => {
       return (
         <Link to={`/admin/user/${props.row.original.id}`}>
-          {props.row.original.businessIdentifier}
+          {props.row.original.businessIdentifierValue}
         </Link>
       );
     },
@@ -84,7 +84,7 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
   },
   {
     Header: 'Created On',
-    accessor: 'createdOn',
+    accessor: 'appCreateTimestamp',
     align: 'left',
     clickable: true,
     sortable: true,

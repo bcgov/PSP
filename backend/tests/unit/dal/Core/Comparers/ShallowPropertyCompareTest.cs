@@ -51,7 +51,7 @@ namespace Pims.Api.Test.Helpers
         {
             // Arrange
             var o1 = EntityHelper.CreatePropertyClassificationType("test");
-            var o2 = new { Id = "test", Description = "", IsDisabled = false, DisplayOrder = (int?)null, RowVersion = 1 };
+            var o2 = EntityHelper.CreatePropertyClassificationType("test");
 
             var comparer = new ShallowPropertyCompare();
 
@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Helpers
         public void Not_Equal_Null1()
         {
             // Arrange
-            Entity.Property parcel1 = null;
+            Entity.PimsProperty parcel1 = null;
             var parcel2 = EntityHelper.CreateProperty(1);
 
             var comparer = new ShallowPropertyCompare();
@@ -99,7 +99,7 @@ namespace Pims.Api.Test.Helpers
         {
             // Arrange
             var parcel1 = EntityHelper.CreateProperty(1);
-            Entity.Property parcel2 = null;
+            Entity.PimsProperty parcel2 = null;
 
             var comparer = new ShallowPropertyCompare();
 

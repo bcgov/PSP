@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
         #region Tests
         [Theory]
         [MemberData(nameof(Addresses))]
-        public void FormatAddress(Address address, string expectedResult)
+        public void FormatAddress(PimsAddress address, string expectedResult)
         {
             // Arrange
             // Act

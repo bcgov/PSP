@@ -8,26 +8,27 @@ namespace Pims.Api.Mapping.User
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Role, Model.RoleModel>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsRole, Model.RoleModel>()
+                .Map(dest => dest.Id, src => src.RoleId)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Map(dest => dest.Users, src => src.Users)
+                .Map(dest => dest.Users, src => src.GetUsers())
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Inherits<Entity.IBaseEntity, Models.BaseModel>();
 
-            config.NewConfig<Model.RoleModel, Entity.Role>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Model.RoleModel, Entity.PimsRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Map(dest => dest.Users, src => src.Users)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Inherits<Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Models.BaseModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Model.RoleModel, Entity.PimsUserRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
+                .Map(dest => dest.Role, src => src);
         }
     }
 }

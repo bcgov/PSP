@@ -4,14 +4,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal.Entities.Comparers
 {
-    public class UserOrganizationOrganizationIdComparer : IEqualityComparer<UserOrganization>
+    public class UserOrganizationOrganizationIdComparer : IEqualityComparer<PimsUserOrganization>
     {
-        public bool Equals([AllowNull] UserOrganization x, [AllowNull] UserOrganization y)
+        public bool Equals([AllowNull] PimsUserOrganization x, [AllowNull] PimsUserOrganization y)
         {
             return x != null && y != null && GetHashCode(x) == GetHashCode(y);
         }
 
-        public int GetHashCode([DisallowNull] UserOrganization obj)
+        public int GetHashCode([DisallowNull] PimsUserOrganization obj)
         {
             var hash = new HashCode();
             hash.Add(obj.OrganizationId);

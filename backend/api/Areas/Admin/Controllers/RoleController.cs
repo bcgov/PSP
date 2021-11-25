@@ -110,7 +110,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-role" })]
         public IActionResult AddRole([FromBody] Model.RoleModel model)
         {
-            var entity = _mapper.Map<Entity.Role>(model); // TODO: Return bad request.
+            var entity = _mapper.Map<Entity.PimsRole>(model); // TODO: Return bad request.
             _pimsService.Role.Add(entity);
             var role = _mapper.Map<Model.RoleModel>(entity);
 
@@ -131,7 +131,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
         public IActionResult UpdateRole(Guid key, [FromBody] Model.RoleModel model)
         {
-            var entity = _mapper.Map<Role>(model);
+            var entity = _mapper.Map<PimsRole>(model);
             _pimsService.Role.Update(entity);
 
             var role = _mapper.Map<Model.RoleModel>(entity);
@@ -152,7 +152,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
         public IActionResult DeleteRole(Guid key, [FromBody] Model.RoleModel model)
         {
-            var entity = _mapper.Map<Role>(model);
+            var entity = _mapper.Map<PimsRole>(model);
             _pimsService.Role.Delete(entity);
 
             return new JsonResult(model);

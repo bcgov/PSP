@@ -66,7 +66,7 @@ namespace Pims.Api.Test.Controllers.Contact
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Contact.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.Contact>(contacts));
+            service.Setup(m => m.Contact.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
 
             // Act
             var result = controller.GetContacts(filter);
@@ -74,7 +74,7 @@ namespace Pims.Api.Test.Controllers.Contact
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.ContactModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactModel>>(new Paged<Entity.Contact>(contacts));
+            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
@@ -95,7 +95,7 @@ namespace Pims.Api.Test.Controllers.Contact
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Contact.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.Contact>(contacts));
+            service.Setup(m => m.Contact.GetPage(It.IsAny<ContactFilter>())).Returns(new Paged<Entity.PimsContactMgrVw>(contacts));
 
             // Act
             var result = controller.GetContacts();
@@ -103,7 +103,7 @@ namespace Pims.Api.Test.Controllers.Contact
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.ContactModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactModel>>(new Paged<Entity.Contact>(contacts));
+            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }

@@ -8,7 +8,7 @@ import { IProperty } from 'interfaces';
  */
 export interface IUserInfo {
   displayName?: string;
-  businessIdentifier: string;
+  businessIdentifierValue: string;
   name?: string;
   preferred_businessIdentifier?: string;
   firstName?: string;
@@ -27,7 +27,7 @@ export interface IUserInfo {
 export interface IKeycloak {
   obj: any;
   displayName?: string;
-  businessIdentifier: string;
+  businessIdentifierValue: string;
   name?: string;
   preferred_businessIdentifier?: string;
   firstName?: string;
@@ -103,7 +103,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * Return the user's businessIdentifier
    */
   const businessIdentifier = (): string => {
-    return userInfo?.businessIdentifier;
+    return userInfo?.businessIdentifierValue;
   };
 
   /**
@@ -164,7 +164,7 @@ export function useKeycloakWrapper(): IKeycloak {
 
   return {
     obj: keycloak,
-    businessIdentifier: businessIdentifier(),
+    businessIdentifierValue: businessIdentifier(),
     displayName: displayName(),
     firstName: firstName(),
     surname: surname(),

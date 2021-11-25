@@ -177,7 +177,6 @@ export const TermsTable = styled(Table)`
       background-repeat: no-repeat;
       background-position: right;
       width: 8rem;
-      height: 3.1rem;
       display: flex;
       align-items: center;
       justify-content: flex-end;

@@ -27,7 +27,7 @@ namespace Pims.Dal.Keycloak
         /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">User does not exist in keycloak or PIMS.</exception>
         /// <returns></returns>
-        public async Task<Entity.User> SyncUserAsync(Guid key)
+        public async Task<Entity.PimsUser> SyncUserAsync(Guid key)
         {
             var kuser = await _keycloakService.GetUserAsync(key) ?? throw new KeyNotFoundException();
             var kgroups = await _keycloakService.GetUserGroupsAsync(key);
@@ -36,7 +36,7 @@ namespace Pims.Dal.Keycloak
             if (euser == null)
             {
                 // The user does not exist in PIMS, it needs to be added.
-                euser = _mapper.Map<Entity.User>(kuser);
+                euser = _mapper.Map<Entity.PimsUser>(kuser);
                 foreach (var group in kgroups)
                 {
                     var erole = _pimsService.Role.Get(group.Id);
@@ -44,18 +44,18 @@ namespace Pims.Dal.Keycloak
                     // If the role doesn't exist, create it.
                     if (erole == null)
                     {
-                        erole = _mapper.Map<Entity.Role>(group);
+                        erole = _mapper.Map<Entity.PimsRole>(group);
                         _pimsService.Role.AddWithoutSave(erole);
                     }
 
-                    euser.RolesManyToMany.Add(new Entity.UserRole(euser, erole));
+                    euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, erole));
                 }
                 _pimsService.User.AddWithoutSave(euser);
             }
             else
             {
                 // The user exists in PIMS, it only needs to be updated.
-                var roles = euser.Roles.ToArray();
+                var roles = euser.GetRoles();
                 _mapper.Map(kuser, euser);
                 foreach (var group in kgroups)
                 {
@@ -64,14 +64,14 @@ namespace Pims.Dal.Keycloak
                     // If the role doesn't exist, create it.
                     if (erole == null)
                     {
-                        erole = _mapper.Map<Entity.Role>(group);
+                        erole = _mapper.Map<Entity.PimsRole>(group);
                         _pimsService.Role.AddWithoutSave(erole);
                     }
 
                     // If the user isn't associated with the role, add a link.
-                    if (!roles.Any(r => r.Key == group.Id))
+                    if (!roles.Any(r => r.RoleUid == group.Id))
                     {
-                        euser.RolesManyToMany.Add(new Entity.UserRole(euser, erole));
+                        euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, erole));
                     }
                 }
                 _pimsService.User.UpdateWithoutSave(euser);
@@ -88,12 +88,12 @@ namespace Pims.Dal.Keycloak
         /// <param name="quantity"></param>
         /// <param name="search"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Entity.User>> GetUsersAsync(int page = 1, int quantity = 10, string search = null)
+        public async Task<IEnumerable<Entity.PimsUser>> GetUsersAsync(int page = 1, int quantity = 10, string search = null)
         {
             var kusers = await _keycloakService.GetUsersAsync((page - 1) * quantity, quantity, search);
 
             // TODO: Need better performing solution.
-            return kusers.Select(u => ExceptionHelper.HandleKeyNotFound(() => _pimsService.User.Get(u.Id)) ?? _mapper.Map<Entity.User>(u));
+            return kusers.Select(u => ExceptionHelper.HandleKeyNotFound(() => _pimsService.User.Get(u.Id)) ?? _mapper.Map<Entity.PimsUser>(u));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Pims.Dal.Keycloak
         /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">User does not exist in keycloak or PIMS.</exception>
         /// <returns></returns>
-        public async Task<Entity.User> GetUserAsync(Guid key)
+        public async Task<Entity.PimsUser> GetUserAsync(Guid key)
         {
             var kuser = await _keycloakService.GetUserAsync(key) ?? throw new KeyNotFoundException();
             return _pimsService.User.Get(kuser.Id);
@@ -114,51 +114,27 @@ namespace Pims.Dal.Keycloak
         /// <param name="user"></param>
         /// <exception type="KeyNotFoundException">User does not exist in keycloak or PIMS.</exception>
         /// <returns></returns>
-        public async Task<Entity.User> UpdateUserAsync(Entity.User user)
+        public async Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user)
         {
-            var kuser = await _keycloakService.GetUserAsync(user.KeycloakUserId.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var kuser = await _keycloakService.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsService.User.GetTracking(user.Id);
 
             IEnumerable<long> addRoleIds;
             IEnumerable<long> removeRoleIds;
-            if (user.Roles.Any())
-            {
-                addRoleIds = user.Roles.Except(euser.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
-                removeRoleIds = euser.Roles.Except(user.Roles, new RoleRoleIdComparer()).Select(r => r.Id).ToArray();
-            }
-            else
-            {
-                addRoleIds = user.RolesManyToMany.Except(euser.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-                removeRoleIds = euser.RolesManyToMany.Except(user.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-            }
+            addRoleIds = user.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
+            removeRoleIds = euser.PimsUserRoles.Except(user.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
 
             IEnumerable<long> addOrganizationIds;
             IEnumerable<long> removeOrganizationIds;
-            if (user.Organizations.Any())
+            addOrganizationIds = user.PimsUserOrganizations.Except(euser.PimsUserOrganizations, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
+            removeOrganizationIds = euser.PimsUserOrganizations.Except(user.PimsUserOrganizations, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
+            // Make sure child organizations are included.
+            if (!addOrganizationIds.Any())
             {
-                addOrganizationIds = user.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
-                removeOrganizationIds = euser.Organizations.Except(user.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
-                // Make sure child organizations are included.
-                if (!addOrganizationIds.Any())
+                user.PimsUserOrganizations.ForEach(a =>
                 {
-                    user.Organizations.ForEach(a =>
-                    {
-                        addOrganizationIds = addOrganizationIds.Concat(_pimsService.Organization.GetChildren(a.Id).Select(a => a.Id).ToArray()).ToArray();
-                    });
-                }
-            }
-            else
-            {
-                addOrganizationIds = user.OrganizationsManyToMany.Except(euser.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
-                removeOrganizationIds = euser.OrganizationsManyToMany.Except(user.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
-                // Make sure child organizations are included.
-                if (!addOrganizationIds.Any())
-                {
-                    user.OrganizationsManyToMany.ForEach(a =>
-                    {
-                        addOrganizationIds = addOrganizationIds.Concat(_pimsService.Organization.GetChildren(a.OrganizationId).Select(a => a.Id).ToArray()).ToArray();
-                    });
-                }
+                    addOrganizationIds = addOrganizationIds.Concat(_pimsService.Organization.GetChildren(a.OrganizationId).Select(a => a.Id).ToArray()).ToArray();
+                });
             }
             // Each parent organization should add children organizations.
             addOrganizationIds.ForEach(id =>
@@ -174,43 +150,29 @@ namespace Pims.Dal.Keycloak
             {
                 var role = _pimsService.Role.Find(r) ?? throw new KeyNotFoundException("Cannot remove a role from a user, when the role does not exist.");
                 if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                if (euser.Roles.Any())
-                {
-                    euser.Roles.Remove(role);
-                }
-                else
-                {
-                    var userRole = euser.RolesManyToMany.FirstOrDefault(r => r.RoleId == role.Id);
-                    euser.RolesManyToMany.Remove(userRole);
-                }
+                var userRole = euser.PimsUserRoles.FirstOrDefault(r => r.RoleId == role.RoleId);
+                euser.PimsUserRoles.Remove(userRole);
             });
             addRoleIds.ForEach(r =>
             {
                 var role = _pimsService.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
                 if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                if (euser.Roles.Any())
-                {
-                    euser.Roles.Add(role);
-                }
-                else
-                {
-                    euser.RolesManyToMany.Add(new Entity.UserRole(euser, role));
-                }
+                euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
             });
 
             // Update Organizations
             addOrganizationIds.ForEach(oId =>
             {
                 var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
-                var roleId = user.OrganizationsManyToMany.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
+                var roleId = user.PimsUserOrganizations.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
                 var role = _pimsService.Role.Find(roleId);
-                euser.OrganizationsManyToMany.Add(new Entity.UserOrganization(euser, organization, role));
+                euser.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { User = euser, Organization = organization, Role = role });
             });
             removeOrganizationIds.ForEach(oId =>
             {
                 var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot remove an organization from a user, when the organization does not exist.");
-                var userOrganization = euser.OrganizationsManyToMany.FirstOrDefault(r => r.OrganizationId == organization.Id);
-                euser.OrganizationsManyToMany.Remove(userOrganization);
+                var userOrganization = euser.PimsUserOrganizations.FirstOrDefault(r => r.OrganizationId == organization.Id);
+                euser.PimsUserOrganizations.Remove(userOrganization);
             });
 
             return await SaveUserChanges(user, euser, kuser, true);
@@ -222,14 +184,14 @@ namespace Pims.Dal.Keycloak
         /// <param name="user"></param>
         /// <exception type="KeyNotFoundException">User does not exist in keycloak or PIMS.</exception>
         /// <returns></returns>
-        public async Task<Entity.User> AppendToUserAsync(Entity.User update)
+        public async Task<Entity.PimsUser> AppendToUserAsync(Entity.PimsUser update)
         {
-            var kuser = await _keycloakService.GetUserAsync(update.KeycloakUserId.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var kuser = await _keycloakService.GetUserAsync(update.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
             var euser = _pimsService.User.GetTracking(update.Id);
 
-            IEnumerable<long> addRoleIds = update.RolesManyToMany.Except(euser.RolesManyToMany, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
-            IEnumerable<long> addOrganizationIds = update.Organizations.Except(euser.Organizations, new OrganizationOrganizationIdComparer()).Select(a => a.Id).ToArray();
-            addOrganizationIds = update.OrganizationsManyToMany.Except(euser.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
+            IEnumerable<long> addRoleIds = update.PimsUserRoles.Except(euser.PimsUserRoles, new UserRoleRoleIdComparer()).Select(r => r.RoleId).ToArray();
+            IEnumerable<long> addOrganizationIds = update.PimsUserOrganizations.Except(euser.PimsUserOrganizations, new OrganizationOrganizationIdComparer()).Select(a => a.OrganizationId).ToArray();
+            addOrganizationIds = update.PimsUserOrganizations.Except(euser.PimsUserOrganizations, new UserOrganizationOrganizationIdComparer()).Select(r => r.OrganizationId).ToArray();
             // Each parent organization should add children organizations.
             addOrganizationIds.ForEach(id =>
             {
@@ -237,29 +199,29 @@ namespace Pims.Dal.Keycloak
                 addOrganizationIds = addOrganizationIds.Concat(childOrganizations).Distinct().ToArray();
             });
 
-            var roleIds = update.Roles.Any() ? update.Roles.Select(r => r.Id) : update.RolesManyToMany.Select(r => r.RoleId);
+            var roleIds = update.PimsUserRoles.Select(r => r.RoleId);
             foreach (var roleId in roleIds)
             {
                 var role = _pimsService.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
                 if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifier}'.");
-                await _keycloakService.AddGroupToUserAsync(update.KeycloakUserId.Value, role.KeycloakGroupId.Value);
+                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifierValue}'.");
+                await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
             }
 
             addRoleIds.ForEach(r =>
             {
                 var role = _pimsService.Role.Find(r) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
                 if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                euser.RolesManyToMany.Add(new Entity.UserRole(euser, role));
+                euser.PimsUserRoles.Add(new Entity.PimsUserRole(euser, role));
             });
 
             // Update Organizations
             addOrganizationIds.ForEach(oId =>
             {
                 var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
-                var roleId = update.OrganizationsManyToMany.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
+                var roleId = update.PimsUserOrganizations.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
                 var role = _pimsService.Role.Find(roleId);
-                euser.OrganizationsManyToMany.Add(new Entity.UserOrganization(euser, organization, role));
+                euser.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { UserId = update.UserId, Organization = organization, Role = role });
             });
 
             return await SaveUserChanges(update, euser, kuser);
@@ -272,20 +234,26 @@ namespace Pims.Dal.Keycloak
         /// <param name="euser"></param>
         /// <param name="kuser"></param>
         /// <returns></returns>
-        private async Task<Entity.User> SaveUserChanges(Entity.User update, Entity.User euser, KModel.UserModel kuser, bool resetRoles = false)
+        private async Task<Entity.PimsUser> SaveUserChanges(Entity.PimsUser update, Entity.PimsUser euser, KModel.UserModel kuser, bool resetRoles = false)
         {
 
             // Update PIMS
-            euser.BusinessIdentifier = kuser.Username; // PIMS must use whatever username is set in keycloak.
+            euser.BusinessIdentifierValue = kuser.Username; // PIMS must use whatever username is set in keycloak.
             euser.Person.FirstName = update.Person.FirstName;
             euser.Person.MiddleNames = update.Person.MiddleNames;
             euser.Person.Surname = update.Person.Surname;
-            euser.Person.ContactMethods.Clear();
             euser.Position = update.Position;
             euser.Note = update.Note;
-            update.Person.ContactMethods.ForEach(c => euser.Person.ContactMethods.Add(c));
             euser.IsDisabled = update.IsDisabled;
-            euser.RowVersion = update.RowVersion;
+            euser.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
+
+            //TODO: currently the PIMS contact method screen does not support the concept of multiple contact methods, so for now simply overwrite any work email addresses.
+            euser.Person.PimsContactMethods.RemoveAll(c => c.ContactMethodTypeCode == ContactMethodTypes.WorkEmail);
+            update.Person.PimsContactMethods.ForEach(c =>
+            {
+                euser.Person.PimsContactMethods.Add(new PimsContactMethod(c.Person, c.Organization, c.ContactMethodTypeCode, c.ContactMethodValue));
+            });
+
 
             euser = _pimsService.User.UpdateOnly(euser);
 
@@ -295,28 +263,28 @@ namespace Pims.Dal.Keycloak
             if (resetRoles)
             {
                 // Remove all keycloak groups from user.  // TODO: Only add/remove the ones that should be removed.
-                var userGroups = await _keycloakService.GetUserGroupsAsync(euser.KeycloakUserId.Value);
+                var userGroups = await _keycloakService.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
                 foreach (var group in userGroups)
                 {
-                    await _keycloakService.RemoveGroupFromUserAsync(update.KeycloakUserId.Value, group.Id);
+                    await _keycloakService.RemoveGroupFromUserAsync(update.GuidIdentifierValue.Value, group.Id);
                 }
             }
 
-            var roleIds = update.Roles.Any() ? update.Roles.Select(r => r.Id) : update.RolesManyToMany.Select(r => r.RoleId);
+            var roleIds = update.PimsUserRoles.Select(r => r.RoleId);
             foreach (var roleId in roleIds)
             {
                 var role = _pimsService.Role.Find(roleId) ?? throw new KeyNotFoundException("Cannot assign a role to a user, when the role does not exist.");
                 if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifier}'.");
-                await _keycloakService.AddGroupToUserAsync(update.KeycloakUserId.Value, role.KeycloakGroupId.Value);
+                _logger.LogInformation($"Adding keycloak group '{role.Name}' to user '{euser.BusinessIdentifierValue}'.");
+                await _keycloakService.AddGroupToUserAsync(update.GuidIdentifierValue.Value, role.KeycloakGroupId.Value);
             }
 
             kmodel.Attributes = new Dictionary<string, string[]>
             {
-                ["organizations"] = _pimsService.User.GetOrganizations(euser.KeycloakUserId.Value).Select(a => a.ToString()).ToArray(),
-                ["displayName"] = new[] { update.BusinessIdentifier }
+                ["organizations"] = _pimsService.User.GetOrganizations(euser.GuidIdentifierValue.Value).Select(a => a.ToString()).ToArray(),
+                ["displayName"] = new[] { update.BusinessIdentifierValue }
             };
-            _logger.LogInformation($"Updating keycloak organization attribute '{kmodel.Attributes["organizations"]}' for user '{euser.BusinessIdentifier}'.");
+            _logger.LogInformation($"Updating keycloak organization attribute '{kmodel.Attributes["organizations"]}' for user '{euser.BusinessIdentifierValue}'.");
             await _keycloakService.UpdateUserAsync(kmodel);
 
             return _pimsService.User.Get(euser.Id);
@@ -328,27 +296,23 @@ namespace Pims.Dal.Keycloak
         /// <param name="accessRequest"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public async Task<Entity.AccessRequest> UpdateAccessRequestAsync(Entity.AccessRequest update)
+        public async Task<Entity.PimsAccessRequest> UpdateAccessRequestAsync(Entity.PimsAccessRequest update)
         {
             update.ThrowIfNull(nameof(update));
             _user.ThrowIfNotAuthorized(Permissions.AdminUsers, Permissions.OrganizationAdmin);
 
-            var accessRequest = _pimsService.AccessRequest.Get(update.Id);
+            var accessRequest = _pimsService.AccessRequest.Get(update.AccessRequestId);
             var user = _pimsService.User.Get(accessRequest.UserId);
 
-            if (update.StatusId == AccessRequestStatusTypes.APPROVED) {
-                
-                user.RolesManyToMany.Clear();
-                user.Roles.Clear();
-                user.RolesManyToMany.Add(new Entity.UserRole(user.Id, update.RoleId));
-                user.Organizations.Clear();
-                user.OrganizationsManyToMany.Clear();
-                update.Organizations.Clear();
-                update.OrganizationsManyToMany.ForEach(aro =>
+            if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED) {
+
+                user.PimsUserRoles.Clear();
+                user.PimsUserRoles.Add(new Entity.PimsUserRole() { UserId = user.Id, RoleId = update.RoleId.Value});
+                update.PimsAccessRequestOrganizations.ToArray().ForEach(aro =>
                 {
-                    if (!user.OrganizationsManyToMany.Any(a => a.OrganizationId == aro.OrganizationId))
+                    if (!user.PimsUserOrganizations.Any(a => a.OrganizationId == aro.OrganizationId))
                     {
-                        user.OrganizationsManyToMany.Add(new Entity.UserOrganization(update.UserId, aro.OrganizationId, update.RoleId));
+                        user.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { UserId = update.UserId, OrganizationId = aro.OrganizationId.Value, RoleId = update.RoleId.Value });
                     }
                 });
                 await AppendToUserAsync(user);

@@ -19,11 +19,11 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> Addresses =>
             new List<object[]>
             {
-                new object[] { new Address("address1", "address2", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, address2, municipality, BC, district, Region 1, postal, CAN" },
-                new object[] { new Address("address1", "", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
-                new object[] { new Address("address1", " ", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
-                new object[] { new Address("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
-                new object[] { new Address("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" }
+                new object[] { new PimsAddress("address1", "address2", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, address2, municipality, BC, district, Region 1, postal, CAN" },
+                new object[] { new PimsAddress("address1", "", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
+                new object[] { new PimsAddress("address1", " ", "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
+                new object[] { new PimsAddress("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" },
+                new object[] { new PimsAddress("address1", null, "municipality", EntityHelper.CreateProvince(1, "BC"), EntityHelper.CreateDistrict(1, "district"), "postal"), "address1, municipality, BC, district, Region 1, postal, CAN" }
             };
         #endregion
 
@@ -36,17 +36,17 @@ namespace Pims.Dal.Test.Entities
             var district = EntityHelper.CreateDistrict(1, "district");
 
             // Act
-            var address = new Address("address1", "address2", "municipality", province, district, "postal");
+            var address = new PimsAddress("address1", "address2", "municipality", province, district, "postal");
 
             // Assert
             address.StreetAddress1.Should().Be("address1");
             address.StreetAddress2.Should().Be("address2");
-            address.Municipality.Should().Be("municipality");
-            address.Province.Should().Be(province);
-            address.ProvinceId.Should().Be(province.Id);
-            address.District.Should().Be(district);
-            address.DistrictId.Should().Be(district.Id);
-            address.Postal.Should().Be("postal");
+            address.MunicipalityName.Should().Be("municipality");
+            address.ProvinceState.Should().Be(province);
+            address.ProvinceStateId.Should().Be(province.Id);
+            address.DistrictCodeNavigation.Should().Be(district);
+            address.DistrictCode.Should().Be(district.DistrictCode);
+            address.PostalCode.Should().Be("postal");
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new Address("", "address2", "municipality", province, null, "postal"));
+            Assert.Throws<ArgumentException>(() => new PimsAddress("", "address2", "municipality", province, null, "postal"));
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new Address(" ", "address2", "municipality", province, null, "postal"));
+            Assert.Throws<ArgumentException>(() => new PimsAddress(" ", "address2", "municipality", province, null, "postal"));
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new Address(null, "address2", "municipality", province, null, "postal"));
+            Assert.Throws<ArgumentException>(() => new PimsAddress(null, "address2", "municipality", province, null, "postal"));
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new Address("address1", "address2", null, province, null, "postal"));
+            Assert.Throws<ArgumentNullException>(() => new PimsAddress("address1", "address2", null, province, null, "postal"));
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace Pims.Dal.Test.Entities
             // Arrange
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new Address("address1", "address2", "municipality", (Province)null, null, "postal"));
+            Assert.Throws<ArgumentNullException>(() => new PimsAddress("address1", "address2", "municipality", (PimsProvinceState)null, null, "postal"));
         }
 
         [Fact]
@@ -111,12 +111,12 @@ namespace Pims.Dal.Test.Entities
 
             // Act
             // Assert
-            Assert.Throws<ArgumentException>(() => new Address("address1", "address2", "municipality", province, null, "postal"));
+            Assert.Throws<ArgumentException>(() => new PimsAddress("address1", "address2", "municipality", province, null, "postal"));
         }
 
         [Theory]
         [MemberData(nameof(Addresses))]
-        public void Address_ToString(Address address, string expectedResult)
+        public void Address_ToString(PimsAddress address, string expectedResult)
         {
             // Arrange
             // Act

@@ -1,12 +1,16 @@
 namespace Pims.Dal.Entities
 {
-    public interface ICodeEntity
+    public interface ICodeEntity<CodeType>
     {
         #region Properties
         /// <summary>
         /// get/set - A unique code for the lookup.
         /// </summary>
-        string Code { get; set; }
+        CodeType Code { get; set; }
+
+        public bool? IsDisabled { get; set; }
+
+        public int? DisplayOrder { get; set; }
         #endregion
     }
 }

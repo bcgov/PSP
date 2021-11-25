@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.0.0-15.6",
+  "version": "1.0.0-15.8",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -18,7 +18,7 @@
     "lodash": "4.17.21",
     "moment": "2.29.1",
     "moment-timezone": "0.5.33",
-    "multiselect-react-dropdown": "^2.0.7",
+    "multiselect-react-dropdown": "2.0.7",
     "npm": "8.1.0",
     "query-string": "6.12.1",
     "react": "17.0.2",

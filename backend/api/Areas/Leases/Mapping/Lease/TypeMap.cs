@@ -8,7 +8,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.ForType(typeof(Entity.TypeEntity<string>), typeof(Model.TypeModel<string>))
+            config.ForType(typeof(Entity.ITypeEntity<string>), typeof(Model.TypeModel<string>))
                 .Map("Id", "Id")
                 .Map("Description", "Description")
                 .Map("IsDisabled", "IsDisabled")

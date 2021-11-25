@@ -22,7 +22,7 @@ namespace Pims.Api.Test.Helpers
             // Arrange
             var parcel1 = EntityHelper.CreateProperty(1);
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result = comparer.Equals(parcel1, parcel1);
@@ -38,7 +38,7 @@ namespace Pims.Api.Test.Helpers
             var o1 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 } } };
             var o2 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 } } };
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result = comparer.Equals(o1, o2);
@@ -52,9 +52,9 @@ namespace Pims.Api.Test.Helpers
         {
             // Arrange
             var o1 = EntityHelper.CreatePropertyClassificationType("test");
-            var o2 = new { Id = "test", Description = "", IsDisabled = false, DisplayOrder = (int?)null, RowVersion = 1 };
+            var o2 = EntityHelper.CreatePropertyClassificationType("test");
 
-            var comparer = new ShallowPropertyCompare<Entity.PropertyClassificationType>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsPropertyClassificationType>();
 
             // Act
             var result = comparer.Equals(o1, o2);
@@ -70,7 +70,7 @@ namespace Pims.Api.Test.Helpers
             var parcel1 = EntityHelper.CreateProperty(1);
             var parcel2 = EntityHelper.CreateProperty(1);
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result = comparer.Equals(parcel1, parcel2);
@@ -83,10 +83,10 @@ namespace Pims.Api.Test.Helpers
         public void Not_Equal_Null1()
         {
             // Arrange
-            Entity.Property parcel1 = null;
+            Entity.PimsProperty parcel1 = null;
             var parcel2 = EntityHelper.CreateProperty(1);
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result = comparer.Equals(parcel1, parcel2);
@@ -100,9 +100,9 @@ namespace Pims.Api.Test.Helpers
         {
             // Arrange
             var parcel1 = EntityHelper.CreateProperty(1);
-            Entity.Property parcel2 = null;
+            Entity.PimsProperty parcel2 = null;
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result = comparer.Equals(parcel1, parcel2);
@@ -118,7 +118,7 @@ namespace Pims.Api.Test.Helpers
             var o1 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 }, new { Id = 3 } } };
             var o2 = new { Id = 1, Name = "test", Items = new[] { new { Id = 2 } } };
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result = comparer.Equals(o1, o2);
@@ -135,15 +135,15 @@ namespace Pims.Api.Test.Helpers
             // Arrange
             var date = DateTime.UtcNow;
             var o1 = EntityHelper.CreateProperty(1);
-            o1.DataSourceEffectiveDate = date;
-            o1.CreatedOn = date;
-            o1.UpdatedOn = date;
+            o1.PropertyDataSourceEffectiveDate = date;
+            o1.AppCreateTimestamp = date;
+            o1.AppLastUpdateTimestamp = date;
             var o2 = EntityHelper.CreateProperty(1);
-            o2.DataSourceEffectiveDate = date;
-            o2.CreatedOn = date;
-            o2.UpdatedOn = date;
+            o2.PropertyDataSourceEffectiveDate = date;
+            o2.AppCreateTimestamp = date;
+            o2.AppLastUpdateTimestamp = date;
 
-            var comparer = new ShallowPropertyCompare<Entity.Property>();
+            var comparer = new ShallowPropertyCompare<Entity.PimsProperty>();
 
             // Act
             var result1 = comparer.GetHashCode(o1);

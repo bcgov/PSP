@@ -9,40 +9,40 @@ namespace Pims.Api.Mapping.AccessRequest
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.AccessRequest, Model.AccessRequestModel>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsAccessRequest, Model.AccessRequestModel>()
+                .Map(dest => dest.Id, src => src.AccessRequestId)
                 .Map(dest => dest.User, src => src.User)
                 .Map(dest => dest.RoleId, src => src.RoleId)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.Status, src => src.StatusId)
+                .Map(dest => dest.Status, src => src.AccessRequestStatusTypeCode)
                 .AfterMapping((src, dest) =>
                 {
-                    Entity.Organization organization = src.OrganizationsManyToMany.FirstOrDefault()?.Organization;
+                    Entity.PimsOrganization organization = src.PimsAccessRequestOrganizations.FirstOrDefault()?.Organization;
                     if (organization != null)
                     {
                         dest.OrganizationId = organization?.Id;
                     }
-                    else if (src.Organizations.Any())
+                    else if (src.GetOrganizations().Any())
                     {
                         dest.OrganizationId = organization?.Id;
                     }
                 })
-                .Inherits<Entity.BaseAppEntity, Models.BaseAppModel>();
+                .Inherits<Entity.IBaseAppEntity, Models.BaseAppModel>();
 
-            config.NewConfig<Model.AccessRequestModel, Entity.AccessRequest>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Model.AccessRequestModel, Entity.PimsAccessRequest>()
+                .Map(dest => dest.AccessRequestId, src => src.Id)
                 .Map(dest => dest.User, src => src.User)
                 .Map(dest => dest.RoleId, src => src.RoleId)
                 .Map(dest => dest.Note, src => src.Note)
-                .Map(dest => dest.StatusId, src => src.Status)
+                .Map(dest => dest.AccessRequestStatusTypeCode, src => src.Status)
                 .AfterMapping((src, dest) =>
                 {
                     if (src.OrganizationId != null)
                     {
-                        dest.OrganizationsManyToMany.Add(new Entity.AccessRequestOrganization() { OrganizationId = (long)src.OrganizationId });
+                        dest.PimsAccessRequestOrganizations.Add(new Entity.PimsAccessRequestOrganization() { OrganizationId = (long)src.OrganizationId });
                     }
                 })
-                .Inherits<Models.BaseAppModel, Entity.BaseAppEntity>();
+                .Inherits<Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
 }

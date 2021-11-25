@@ -60,6 +60,9 @@ exclude: # exclude matching issues
     pattern: <State>.*?</State>
     paths:
       - "*.dtproj"
+  - message: Ignore integrity hashes on Openshift config files
+    paths:
+      - "Test Data/**"
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
