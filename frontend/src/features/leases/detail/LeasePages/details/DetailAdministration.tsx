@@ -1,8 +1,11 @@
 import { Form, Input } from 'components/common/form';
 import TooltipIcon from 'components/common/TooltipIcon';
 import * as Styled from 'features/leases/detail/styles';
+import { FormControl } from 'features/leases/detail/styles';
+import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
 export interface IDetailAdministrationProps {
@@ -18,6 +21,7 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
   nameSpace,
   disabled,
 }) => {
+  const { values } = useFormikContext();
   return (
     <li>
       <Styled.LeaseH3>Administration</Styled.LeaseH3>
@@ -54,9 +58,11 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
           field={withNameSpace(nameSpace, 'responsibilityType.description')}
         />
         <Form.Label>Effective Date:</Form.Label>
-        <Input
-          disabled={disabled}
-          field={withNameSpace(nameSpace, 'responsibilityEffectiveDate')}
+        <FormControl
+          disabled
+          value={prettyFormatDate(
+            getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate')),
+          )}
         />
         <br />
         <Form.Label>L-file #:</Form.Label>

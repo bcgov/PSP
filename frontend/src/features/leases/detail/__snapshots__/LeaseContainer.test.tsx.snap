@@ -42,7 +42,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c30 {
+.c31 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -54,13 +54,13 @@ exports[`LeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c30 .form-label {
+.c31 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c32 {
+.c33 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -72,7 +72,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c32 .form-label {
+.c33 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -185,9 +185,16 @@ exports[`LeaseContainer component renders as expected 1`] = `
   background-color: white;
 }
 
-.c28 {
+.c29 {
   font-size: 1.6rem;
   font-weight: 700;
+}
+
+.c28 {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black !important;
+  border-radius: 0;
 }
 
 .c26 {
@@ -234,25 +241,25 @@ exports[`LeaseContainer component renders as expected 1`] = `
   align-items: center;
 }
 
-.c31 input.form-control {
+.c32 input.form-control {
   text-align: left;
 }
 
-.c29 {
+.c30 {
   gap: 5rem;
 }
 
-.c29 .form-control:disabled {
+.c30 .form-control:disabled {
   border: none;
   background: none;
 }
 
-.c33 {
+.c34 {
   background-color: white;
   padding-left: 8rem;
 }
 
-.c33.table .thead .th {
+.c34.table .thead .th {
   font-weight: 700;
   border-top: none;
   padding: 1rem 0.5rem;
@@ -260,21 +267,21 @@ exports[`LeaseContainer component renders as expected 1`] = `
   font-size: 14px;
 }
 
-.c33.table .tbody .td {
+.c34.table .tbody .td {
   border: none;
   font-size: 14px;
 }
 
-.c33.table .tbody .tr-wrapper:nth-child(even) {
+.c34.table .tbody .tr-wrapper:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.c33.table .tbody .tr-wrapper .tr.selected {
+.c34.table .tbody .tr-wrapper .tr.selected {
   font-weight: 700;
   margin-left: -8rem;
 }
 
-.c33.table .tbody .tr-wrapper .tr.selected:before {
+.c34.table .tbody .tr-wrapper .tr.selected:before {
   content: 'current';
   padding-right: 1.5rem;
   background-image: url(caret-right.svg);
@@ -952,17 +959,11 @@ exports[`LeaseContainer component renders as expected 1`] = `
                 >
                   Effective Date:
                 </label>
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    disabled=""
-                    id="input-responsibilityEffectiveDate"
-                    name="responsibilityEffectiveDate"
-                    value=""
-                  />
-                </div>
+                <input
+                  class="c28 form-control"
+                  disabled=""
+                  value=""
+                />
                 <br />
                 <label
                   class="form-label"
@@ -1031,7 +1032,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
               </div>
             </li>
             <label
-              class="c28 form-label"
+              class="c29 form-label"
             >
               Description
             </label>
@@ -1055,10 +1056,10 @@ exports[`LeaseContainer component renders as expected 1`] = `
               Terms
             </h3>
             <div
-              class="c2 c29"
+              class="c2 c30"
             >
               <div
-                class="c30 c31 form-group"
+                class="c31 c32 form-group"
               >
                 <label
                   class="form-label"
@@ -1078,7 +1079,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="c32 input form-group"
+                class="c33 input form-group"
               >
                 <label
                   class="form-label"
@@ -1095,7 +1096,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                 />
               </div>
               <div
-                class="c32 input form-group"
+                class="c33 input form-group"
               >
                 <label
                   class="form-label"
@@ -1113,7 +1114,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="table c33"
+              class="table c34"
               role="table"
             >
               <div
@@ -1197,7 +1198,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
             class="c18"
           >
             <label
-              class="c28 form-label"
+              class="c29 form-label"
             >
               Lease Notes
             </label>

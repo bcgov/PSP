@@ -16,6 +16,13 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   border-bottom: solid 0.3rem;
 }
 
+.c3 {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black !important;
+  border-radius: 0;
+}
+
 .c1 {
   display: grid;
   grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
@@ -221,16 +228,11 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         Effective Date:
       </label>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-responsibilityEffectiveDate"
-          name="responsibilityEffectiveDate"
-          value=""
-        />
-      </div>
+      <input
+        class="c3 form-control"
+        disabled=""
+        value=""
+      />
       <br />
       <label
         class="form-label"
@@ -311,6 +313,13 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   text-align: left;
   padding: 1rem 0 0.5rem 0;
   border-bottom: solid 0.3rem;
+}
+
+.c3 {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black !important;
+  border-radius: 0;
 }
 
 .c1 {
@@ -518,16 +527,11 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         Effective Date:
       </label>
-      <div
-        class="input form-group"
-      >
-        <input
-          class="form-control"
-          id="input-responsibilityEffectiveDate"
-          name="responsibilityEffectiveDate"
-          value=""
-        />
-      </div>
+      <input
+        class="c3 form-control"
+        disabled=""
+        value=""
+      />
       <br />
       <label
         class="form-label"
