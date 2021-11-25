@@ -5,10 +5,10 @@ namespace Pims.Dal.Services
     /// <summary>
     /// ITenantService interface, provides functions to interact with tenants within the datasource.
     /// </summary>
-    public interface ITenantService : IService<Tenant>
+    public interface ITenantService : IService<PimsTenant>
     {
-        Tenant GetTenant(string code);
+        PimsTenant GetTenant(string code);
 
-        Tenant UpdateTenant(Tenant tenant);
+        PimsTenant UpdateTenant(PimsTenant tenant);
     }
 }

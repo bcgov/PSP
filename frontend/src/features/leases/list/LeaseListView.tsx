@@ -1,4 +1,3 @@
-import { Center } from 'components/common/Center/Center';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { useSearch } from 'hooks/useSearch';
@@ -16,7 +15,7 @@ import * as Styled from './styles';
 /**
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
-export const LeaseListView = () => {
+export const LeaseListView: React.FunctionComponent = () => {
   const { getLeases } = useApiLeases();
   const {
     results,
@@ -49,12 +48,10 @@ export const LeaseListView = () => {
 
   return (
     <Styled.ListPage>
-      <Center>
-        <LeaseFilter filter={filter} setFilter={changeFilter} />
-      </Center>
       <Styled.Scrollable>
+        <Styled.PageHeader>Leases &amp; Licenses</Styled.PageHeader>
         <Styled.PageToolbar>
-          <Styled.PageHeader>Leases &amp; Licenses</Styled.PageHeader>
+          <LeaseFilter filter={filter} setFilter={changeFilter} />
           <Styled.Spacer />
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
             <Styled.FileIcon disabled>
@@ -66,6 +63,7 @@ export const LeaseListView = () => {
               <FaFileAlt data-testid="csv-icon" size={36} />
             </Styled.FileIcon>
           </TooltipWrapper>
+          <Styled.Spacer />
         </Styled.PageToolbar>
 
         <LeaseSearchResults

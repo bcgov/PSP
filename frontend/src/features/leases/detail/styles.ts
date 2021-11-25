@@ -91,6 +91,10 @@ export const FormDescriptionBody = styled(TextArea)`
   font-weight: 400;
 `;
 
+export const TenantNotes = styled(TextArea)`
+  margin-left: 9.5rem;
+`;
+
 export const FormControl = styled(Form.Control)`
   grid-column: controls;
   grid-row: auto;
@@ -177,7 +181,6 @@ export const TermsTable = styled(Table)`
       background-repeat: no-repeat;
       background-position: right;
       width: 8rem;
-      height: 3.1rem;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -197,4 +200,10 @@ export const NestedInlineField = styled(InlineInput)`
   .form-label {
     min-width: 7rem;
   }
+`;
+
+export const SectiontHeader = styled(FormDescriptionLabel)`
+  color: ${props => props.theme.css.primaryColor};
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 `;

@@ -13,21 +13,21 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.OrganizationType CreateOrganizationType(string id)
+        public static Entity.PimsOrganizationType CreateOrganizationType(string id)
         {
-            return new Entity.OrganizationType(id, "") { RowVersion = 1 };
+            return new Entity.PimsOrganizationType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of OrganizationType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.OrganizationType> CreateDefaultOrganizationTypes()
+        public static List<Entity.PimsOrganizationType> CreateDefaultOrganizationTypes()
         {
-            return new List<Entity.OrganizationType>()
+            return new List<Entity.PimsOrganizationType>()
             {
-                new Entity.OrganizationType("Type 1", "") { RowVersion = 1 },
-                new Entity.OrganizationType("Type 2", "") { RowVersion = 1 },
+                new Entity.PimsOrganizationType("Type 1") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsOrganizationType("Type 2") { ConcurrencyControlNumber = 1 },
             };
         }
     }

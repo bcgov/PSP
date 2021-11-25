@@ -58,7 +58,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.Lease>(leases));
+            service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
             var result = controller.GetLeases(filter);
@@ -66,7 +66,7 @@ namespace Pims.Api.Test.Controllers.Lease
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.Lease>(leases));
+            var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Lease.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }
@@ -87,7 +87,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.Lease>(leases));
+            service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
 
             // Act
             var result = controller.GetLeases();
@@ -95,7 +95,7 @@ namespace Pims.Api.Test.Controllers.Lease
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Models.PageModel<SModel.LeaseModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.Lease>(leases));
+            var expectedResult = mapper.Map<Models.PageModel<SModel.LeaseModel>>(new Paged<Entity.PimsLease>(leases));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Lease.GetPage(It.IsAny<LeaseFilter>()), Times.Once());
         }

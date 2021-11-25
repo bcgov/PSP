@@ -8,44 +8,39 @@ namespace Pims.Api.Mapping.Lookup
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Province, Model.LookupModel>()
-                 .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsProvinceState, Model.LookupModel>()
+                 .Map(dest => dest.Id, src => src.CountryId)
                  .Map(dest => dest.Name, src => src.Code)
                  .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                 .Map(dest => dest.Type, src => src.GetType().Name)
-                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                 .Map(dest => dest.Type, src => src.GetType().Name);
 
-            config.NewConfig<Entity.Country, Model.LookupModel>()
-                 .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsCountry, Model.LookupModel>()
+                 .Map(dest => dest.Id, src => src.CountryId)
                  .Map(dest => dest.Name, src => src.Code)
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                 .Map(dest => dest.Type, src => src.GetType().Name)
-                 .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                 .Map(dest => dest.Type, src => src.GetType().Name);
 
-            config.NewConfig<Entity.TypeEntity<string>, Model.LookupModel>()
+            config.NewConfig<Entity.ITypeEntity<string>, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Description != null ? src.Description : src.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Map(dest => dest.Type, src => src.GetType().Name);
 
-            config.NewConfig<Entity.TypeEntity<int>, Model.LookupModel>()
+            config.NewConfig<Entity.ITypeEntity<int>, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Name, src => src.Description)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Map(dest => dest.Type, src => src.GetType().Name);
 
-            config.NewConfig<Entity.Organization, Model.LookupModel>()
+            config.NewConfig<Entity.PimsOrganization, Model.LookupModel>()
                 .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Code, src => src.Identifier)
-                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Code, src => src.OrganizationIdentifier)
+                .Map(dest => dest.Name, src => src.OrganizationName)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.Type, src => src.GetType().Name)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                .Map(dest => dest.Type, src => src.GetType().Name);
         }
     }
 }

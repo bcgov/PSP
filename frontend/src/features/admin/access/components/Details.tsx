@@ -27,7 +27,7 @@ export const AccessRequestDetails: React.FC<IProps> = ({ request, onClose }) => 
                 IDIR/BCeID:
               </Form.Label>
               <Col sm="8">
-                <Form.Control disabled defaultValue={request.businessIdentifier} />
+                <Form.Control disabled defaultValue={request.businessIdentifierValue} />
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="emailAddress">

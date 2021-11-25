@@ -8,18 +8,18 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Property, Model.PropertyModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.PID, src => src.PID)
-                .Map(dest => dest.PIN, src => src.PIN)
+            config.NewConfig<Entity.PimsProperty, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.PropertyId)
+                .Map(dest => dest.PID, src => src.Pid)
+                .Map(dest => dest.PIN, src => src.Pin)
                 .Map(dest => dest.Name, src => src.Name)
-                .Map(dest => dest.AreaUnitId, src => src.AreaUnitId)
-                .Map(dest => dest.AreaUnit, src => src.AreaUnit.Description)
+                .Map(dest => dest.AreaUnitId, src => src.PropertyAreaUnitTypeCode)
+                .Map(dest => dest.AreaUnit, src => src.PropertyAreaUnitTypeCodeNavigation.Description)
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
                 .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.RowVersion, src => src.RowVersion)
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.SurplusDeclaration, src => src);
         }
     }

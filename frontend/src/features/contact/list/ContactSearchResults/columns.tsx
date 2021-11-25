@@ -87,7 +87,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   },
   {
     Header: 'City',
-    accessor: 'municipality',
+    accessor: 'municipalityName',
     sortable: true,
     align: 'left',
     minWidth: 50,

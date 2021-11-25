@@ -18,10 +18,13 @@ services:
 
   ####################### Database #######################
   database:
+    environment:
+      - TARGET_SPRINT
+      - SEED
     restart: on-failure:1
     container_name: psp-db
     build:
-      context: database/mssql
+      context: database/mssql/scripts/dbscripts
     env_file:
       - database/mssql/.env
     ports:

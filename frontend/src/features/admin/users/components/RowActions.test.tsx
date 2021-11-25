@@ -20,7 +20,7 @@ const getItems = (disabled?: boolean) => [
   {
     id: 1,
     key: '03c92a6b-686e-4015-84b3-e726905473f4',
-    businessIdentifier: 'testername1',
+    businessIdentifierValue: 'testername1',
     firstName: 'testUserFirst1',
     surname: 'testUserLast1',
     isDisabled: !!disabled,

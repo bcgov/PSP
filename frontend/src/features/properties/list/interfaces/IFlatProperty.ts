@@ -61,7 +61,7 @@ export interface IFlatProperty {
   projectActivities?: IProjectActivity[];
   evaluations?: IPropertyEvaluation[];
 
-  createdOn?: Date | string | Moment;
+  appCreateTimestamp?: Date | string | Moment;
   updatedOn?: Date | string | Moment;
   updatedByEmail?: string;
   updatedByName?: string;

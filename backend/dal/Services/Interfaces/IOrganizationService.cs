@@ -7,15 +7,15 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IOrganizationService interface, provides a service layer to administer organizations within the datasource.
     /// </summary>
-    public interface IOrganizationService : IService<Organization>
+    public interface IOrganizationService : IService<PimsOrganization>
     {
-        IEnumerable<Organization> GetAll();
-        Organization Get(long id);
-        IEnumerable<Organization> GetChildren(long parentId);
-        Paged<Organization> Get(int page, int quantity);
-        Paged<Organization> Get(OrganizationFilter filter = null);
-        Organization Add(Organization add);
-        Organization Update(Organization update);
-        void Delete(Organization delete);
+        IEnumerable<PimsOrganization> GetAll();
+        PimsOrganization Get(long id);
+        IEnumerable<PimsOrganization> GetChildren(long parentId);
+        Paged<PimsOrganization> Get(int page, int quantity);
+        Paged<PimsOrganization> Get(OrganizationFilter filter = null);
+        PimsOrganization Add(PimsOrganization add);
+        PimsOrganization Update(PimsOrganization update);
+        void Delete(PimsOrganization delete);
     }
 }

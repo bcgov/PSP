@@ -1,40 +1,28 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// LeasePurposeType class, provides an entity for the datamodel to manage a list of lease purpose types.
     /// </summary>
-    [MotiTable("PIMS_LEASE_PURPOSE_TYPE", "LSPRPTY")]
-    public class LeasePurposeType : TypeEntity<string>
+    public partial class PimsLeasePurposeType : ITypeEntity<string>
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key to identify lease purpose type.
         /// </summary>
-        [Column("LEASE_PURPOSE_TYPE_CODE")]
-        public override string Id { get; set; }
-
-        /// <summary>
-        /// get - Collection of leases.
-        /// </summary>
-        public ICollection<Lease> Leases { get; } = new List<Lease>();
+        [NotMapped]
+        public string Id { get => LeasePurposeTypeCode; set => LeasePurposeTypeCode = value; }
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Create a new instance of a LeasePurposeType class.
-        /// </summary>
-        public LeasePurposeType() { }
 
         /// <summary>
         /// Create a new instance of a LeasePurposeType class.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="description"></param>
-        public LeasePurposeType(string id, string description) : base(id, description)
+        public PimsLeasePurposeType(string id):this()
         {
+            Id = id;
         }
         #endregion
     }

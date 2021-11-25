@@ -8,26 +8,26 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IUserService interface, provides functions to interact with users within the datasource.
     /// </summary>
-    public interface IUserService : IService<User>
+    public interface IUserService : IService<PimsUser>
     {
         int Count();
         bool UserExists(Guid keycloakUserId);
-        User Activate();
-        Paged<User> Get(int page, int quantity);
-        Paged<User> Get(UserFilter filter = null);
-        User Get(Guid keycloakUserId);
-        User Get(long id);
+        PimsUser Activate();
+        Paged<PimsUser> Get(int page, int quantity);
+        Paged<PimsUser> Get(UserFilter filter = null);
+        PimsUser Get(Guid keycloakUserId);
+        PimsUser Get(long id);
 
-        User GetTracking(long id);
-        void LoadOrganizations(User user);
-        void LoadRoles(User user);
+        PimsUser GetTracking(long id);
+        void LoadOrganizations(PimsUser user);
+        void LoadRoles(PimsUser user);
         IEnumerable<long> GetOrganizations(Guid keycloakUserId);
-        IEnumerable<User> GetAdmininstrators(params long[] organizationIds);
-        User Add(User add);
-        void AddWithoutSave(User add);
-        User Update(User update);
-        User UpdateOnly(User update);
-        User UpdateWithoutSave(User update);
-        void Delete(User delete);
+        IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds);
+        PimsUser Add(PimsUser add);
+        void AddWithoutSave(PimsUser add);
+        PimsUser Update(PimsUser update);
+        PimsUser UpdateOnly(PimsUser update);
+        PimsUser UpdateWithoutSave(PimsUser update);
+        void Delete(PimsUser delete);
     }
 }

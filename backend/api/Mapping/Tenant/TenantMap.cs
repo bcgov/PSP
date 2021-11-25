@@ -30,7 +30,7 @@ namespace Pims.Api.Mapping.Tenant
         #region Methods
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Tenant, Model.TenantModel>()
+            config.NewConfig<Entity.PimsTenant, Model.TenantModel>()
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Name, src => src.Name)
                 .AfterMapping((src, dest) =>
@@ -38,17 +38,15 @@ namespace Pims.Api.Mapping.Tenant
                     dest.Settings = JsonSerializer.Deserialize<Model.TenantSettingsModel>(src.Settings ?? "{}", _serializerOptions);
                     // Override if in environmental configuration.
                     dest.Settings.HelpDeskEmail = _pimsOptions.HelpDeskEmail ?? dest.Settings.HelpDeskEmail;
-                })
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+                });
 
-            config.NewConfig<Model.TenantModel, Entity.Tenant>()
+            config.NewConfig<Model.TenantModel, Entity.PimsTenant>()
                 .Map(dest => dest.Code, src => src.Code)
                 .Map(dest => dest.Name, src => src.Name)
                 .AfterMapping((src, dest) =>
                 {
                     dest.Settings = JsonSerializer.Serialize(src.Settings, _serializerOptions);
-                })
-                .Inherits<Models.BaseModel, Entity.BaseEntity>();
+                });
         }
         #endregion
     }

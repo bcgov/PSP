@@ -1,5 +1,3 @@
-using System;
-
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
     /// <summary>

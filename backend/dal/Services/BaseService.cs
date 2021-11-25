@@ -1,3 +1,4 @@
+using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Security.Claims;
@@ -29,6 +30,11 @@ namespace Pims.Dal.Services
         protected ILogger<BaseService> Logger { get; }
 
         /// <summary>
+        /// get - The property mapping provider
+        /// </summary>
+        protected IMapper Mapper { get; }
+
+        /// <summary>
         /// get - References to wrapping service.
         /// </summary>
         protected IPimsService Self { get; }
@@ -42,12 +48,14 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        protected BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger)
+        /// <param name="mapper"></param>
+        protected BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger, IMapper mapper)
         {
             this.Context = dbContext;
             this.User = user;
             this.Logger = logger;
             this.Self = service;
+            this.Mapper = mapper;
         }
         #endregion
 

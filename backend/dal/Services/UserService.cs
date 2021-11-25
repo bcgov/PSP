@@ -12,13 +12,14 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using MapsterMapper;
 
 namespace Pims.Dal.Services
 {
     /// <summary>
     /// UserService class, provides a service layer to interact with users within the datasource.
     /// </summary>
-    public class UserService : BaseService<User>, IUserService
+    public class UserService : BaseService<PimsUser>, IUserService
     {
         #region Variables
         private readonly PimsOptions _options;
@@ -34,7 +35,7 @@ namespace Pims.Dal.Services
         /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public UserService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, IOptionsMonitor<PimsOptions> options, ILogger<UserService> logger) : base(dbContext, user, service, logger)
+        public UserService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, IOptionsMonitor<PimsOptions> options, ILogger<UserService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper)
         {
             _options = options.CurrentValue;
         }
@@ -50,7 +51,7 @@ namespace Pims.Dal.Services
         {
             this.User.ThrowIfNotAuthorized();
 
-            return this.Context.Users.Any(u => u.KeycloakUserId == keycloakUserId);
+            return this.Context.PimsUsers.Any(u => u.GuidIdentifierValue == keycloakUserId);
         }
 
         /// <summary>
@@ -58,14 +59,14 @@ namespace Pims.Dal.Services
         /// If activating a service account, then the configuration must be provided to set the default attributes.
         /// </summary>
         /// <returns></returns>
-        public User Activate()
+        public PimsUser Activate()
         {
             this.User.ThrowIfNotAuthorized();
 
             var key = this.User.GetUserKey();
             var username = this.User.GetUsername() ?? _options.ServiceAccount?.Username ??
                 throw new ConfigurationException($"Configuration 'Pims:ServiceAccount:Username' is invalid or missing.");
-            var user = this.Context.Users.FirstOrDefault(u => u.KeycloakUserId == key);
+            var user = this.Context.PimsUsers.FirstOrDefault(u => u.GuidIdentifierValue == key);
             var exists = user != null;
             if (!exists)
             {
@@ -79,19 +80,22 @@ namespace Pims.Dal.Services
 
                 this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
-                var person = new Person(surname, givenName);
-                this.Context.Persons.Add(person);
+                var person = new PimsPerson() { Surname = surname, FirstName = givenName };
+                this.Context.PimsPeople.Add(person);
                 this.Context.CommitTransaction();
 
-                user = new User(key, username, person)
+                user = new PimsUser()
                 {
-                    IssueOn = DateTime.UtcNow
+                    GuidIdentifierValue = key,
+                    BusinessIdentifierValue = username,
+                    Person = person,
+                    IssueDate = DateTime.UtcNow
                 };
-                this.Context.Users.Add(user);
+                this.Context.PimsUsers.Add(user);
                 this.Context.CommitTransaction();
 
-                var contactMethod = new ContactMethod(person, organization, ContactMethodTypes.WorkEmail, email);
-                person.ContactMethods.Add(contactMethod);
+                var contactMethod = new PimsContactMethod() { Person = person, Organization = organization, ContactMethodTypeCode = ContactMethodTypes.WorkEmail, ContactMethodValue = email };
+                person.PimsContactMethods.Add(contactMethod);
                 this.Context.CommitTransaction();
             }
             else
@@ -110,7 +114,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public int Count()
         {
-            return this.Context.Users.Count();
+            return this.Context.PimsUsers.Count();
         }
 
         /// <summary>
@@ -120,7 +124,7 @@ namespace Pims.Dal.Services
         /// <param name="page"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public Paged<User> Get(int page, int quantity)
+        public Paged<PimsUser> Get(int page, int quantity)
         {
             return Get(new UserFilter(page, quantity));
         }
@@ -131,22 +135,23 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<User> Get(UserFilter filter = null)
+        public Paged<PimsUser> Get(UserFilter filter = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            var query = this.Context.Users
-                .Include(u => u.OrganizationsManyToMany)
+            var query = this.Context.PimsUsers
+                .Include(u => u.PimsUserOrganizations)
                 .ThenInclude(o => o.Organization)
-                .Include(u => u.Roles)
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.ContactMethods)
+                .ThenInclude(p => p.PimsContactMethods)
                 .AsNoTracking();
 
             if (User.HasPermission(Permissions.OrganizationAdmin) && !User.HasPermission(Permissions.SystemAdmin))
             {
                 var userOrganizations = this.User.GetOrganizations();
-                query = query.Where(user => user.Organizations.Any(o => userOrganizations.Contains(o.Id)));
+                query = query.Where(user => user.PimsUserOrganizations.Any(o => userOrganizations.Contains(o.Organization.OrganizationId)));
             }
 
             if (filter != null)
@@ -157,7 +162,7 @@ namespace Pims.Dal.Services
                 if (filter.Sort == null) filter.Sort = Array.Empty<string>();
 
                 if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifier))
-                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifier, $"%{filter.BusinessIdentifier}%"));
+                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifier}%"));
                 if (!string.IsNullOrWhiteSpace(filter.FirstName))
                     query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Surname))
@@ -165,15 +170,15 @@ namespace Pims.Dal.Services
                 if (!string.IsNullOrWhiteSpace(filter.Position))
                     query = query.Where(u => EF.Functions.Like(u.Position, $"%{filter.Position}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Email))
-                    query = query.Where(u => u.Person.ContactMethods.Any(cm => EF.Functions.Like(cm.Value, $"%{filter.Email}%")));
+                    query = query.Where(u => u.Person.PimsContactMethods.Any(cm => EF.Functions.Like(cm.ContactMethodValue, $"%{filter.Email}%")));
                 if (filter.IsDisabled != null)
                     query = query.Where(u => u.IsDisabled == filter.IsDisabled);
                 if (!string.IsNullOrWhiteSpace(filter.Role))
-                    query = query.Where(u => u.Roles.Any(r =>
-                        EF.Functions.Like(r.Name, $"%{filter.Role}")));
+                    query = query.Where(u => u.PimsUserRoles.Any(r =>
+                        EF.Functions.Like(r.Role.Name, $"%{filter.Role}")));
                 if (!string.IsNullOrWhiteSpace(filter.Organization))
-                    query = query.Where(u => u.Organizations.Any(a =>
-                        EF.Functions.Like(a.Name, $"%{filter.Organization}")));
+                    query = query.Where(u => u.PimsUserOrganizations.Any(a =>
+                        EF.Functions.Like(a.Organization.OrganizationName, $"%{filter.Organization}")));
 
                 if (filter.Sort.Any())
                 {
@@ -181,14 +186,14 @@ namespace Pims.Dal.Services
                     if (filter.Sort[0].StartsWith("Organization"))
                     {
                         query = direction == "asc" ?
-                            query.OrderBy(u => u.Organizations.Any() ? u.Organizations.FirstOrDefault().Name : null)
-                            : query.OrderByDescending(u => u.Organizations.Any() ? u.Organizations.FirstOrDefault().Name : null);
+                            query.OrderBy(u => u.PimsUserOrganizations.Any() ? u.PimsUserOrganizations.FirstOrDefault(o => o.Organization != null).Organization.OrganizationName : null)
+                            : query.OrderByDescending(u => u.PimsUserOrganizations.Any() ? u.PimsUserOrganizations.FirstOrDefault(o => o.Organization != null).Organization.OrganizationName : null);
                     }
                     else if (filter.Sort[0].StartsWith("Email"))
                     {
                         query = direction == "asc" ?
-                            query.OrderBy(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null)
-                            : query.OrderByDescending(u => u.Person.ContactMethods.Any() ? u.Person.ContactMethods.FirstOrDefault().Value : null);
+                            query.OrderBy(u => u.Person.PimsContactMethods.Any() ? u.Person.PimsContactMethods.FirstOrDefault().ContactMethodValue : null)
+                            : query.OrderByDescending(u => u.Person.PimsContactMethods.Any() ? u.Person.PimsContactMethods.FirstOrDefault().ContactMethodValue : null);
                     }
                     else if (filter.Sort[0].StartsWith("Surname"))
                     {
@@ -209,7 +214,7 @@ namespace Pims.Dal.Services
                 }
             }
             var users = query.Skip((filter.Page - 1) * filter.Quantity).Take(filter.Quantity);
-            return new Paged<User>(users.ToArray(), filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsUser>(users.ToArray(), filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>
@@ -218,19 +223,20 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public User Get(long id)
+        public PimsUser Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            return this.Context.Users
-                .Include(u => u.Roles)
-                .Include(u => u.Organizations)
-                .ThenInclude(o => o.Parent)
-                .Include(u => u.OrganizationsManyToMany)
+            return this.Context.PimsUsers
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
+                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.ContactMethods)
+                .ThenInclude(p => p.PimsContactMethods)
                 .AsNoTracking()
-                .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+                .SingleOrDefault(u => u.UserId == id) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -239,31 +245,29 @@ namespace Pims.Dal.Services
         /// <param name="id"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public User GetTracking(long id)
+        public PimsUser GetTracking(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            return this.Context.Users
-                .Include(u => u.Roles)
-                .Include(u => u.Organizations)
-                .ThenInclude(o => o.Parent)
+            return this.Context.PimsUsers
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
+                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.ContactMethods)
-                .SingleOrDefault(u => u.Id == id) ?? throw new KeyNotFoundException();
+                .ThenInclude(p => p.PimsContactMethods)
+                .SingleOrDefault(u => u.UserId == id) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
         /// Load the specified 'user' organizations into context.
         /// </summary>
         /// <param name="user"></param>
-        public void LoadOrganizations(User user)
+        public void LoadOrganizations(PimsUser user)
         {
             this.Context.Entry(user)
-                .Collection(u => u.OrganizationsManyToMany)
-                .Load();
-
-            this.Context.Entry(user)
-                .Collection(u => u.Organizations)
+                .Collection(u => u.PimsUserOrganizations)
                 .Load();
         }
 
@@ -271,14 +275,10 @@ namespace Pims.Dal.Services
         /// Load the specified 'user' roles into context.
         /// </summary>
         /// <param name="user"></param>
-        public void LoadRoles(User user)
+        public void LoadRoles(PimsUser user)
         {
             this.Context.Entry(user)
-                .Collection(u => u.RolesManyToMany)
-                .Load();
-
-            this.Context.Entry(user)
-                .Collection(u => u.Roles)
+                .Collection(u => u.PimsUserRoles)
                 .Load();
         }
 
@@ -288,18 +288,20 @@ namespace Pims.Dal.Services
         /// <param name="keycloakUserId"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public User Get(Guid keycloakUserId)
+        public PimsUser Get(Guid keycloakUserId)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            return this.Context.Users
-                .Include(u => u.Roles)
-                .Include(u => u.Organizations)
-                .ThenInclude(o => o.Parent)
+            return this.Context.PimsUsers
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
+                .ThenInclude(o => o.PrntOrganization)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.ContactMethods)
+                .ThenInclude(p => p.PimsContactMethods)
                 .AsNoTracking()
-                .SingleOrDefault(u => u.KeycloakUserId == keycloakUserId) ?? throw new KeyNotFoundException();
+                .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -307,13 +309,13 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="add"></param>
         /// <returns></returns>
-        public User Add(User add)
+        public PimsUser Add(PimsUser add)
         {
             if (add == null) throw new ArgumentNullException(nameof(add), "user cannot be null.");
-            add.IssueOn = DateTime.UtcNow;
+            add.IssueDate = DateTime.UtcNow;
             AddWithoutSave(add);
             this.Context.CommitTransaction();
-            return Get(add.Id);
+            return Get(add.UserId);
         }
 
         /// <summary>
@@ -321,17 +323,15 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="add"></param>
         /// <returns></returns>
-        public void AddWithoutSave(User add)
+        public void AddWithoutSave(PimsUser add)
         {
             add.ThrowIfNull(nameof(add));
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            add.Roles.ForEach(r => this.Context.Entry(r).State = EntityState.Added);
-            add.Organizations.ForEach(a => this.Context.Entry(a).State = EntityState.Added);
-            add.RolesManyToMany.ForEach(r => this.Context.Entry(r).State = EntityState.Added);
-            add.OrganizationsManyToMany.ForEach(a => this.Context.Entry(a).State = EntityState.Added);
+            add.PimsUserRoles.ForEach(r => this.Context.Entry(r).State = EntityState.Added);
+            add.PimsUserOrganizations.ForEach(a => this.Context.Entry(a).State = EntityState.Added);
 
-            this.Context.Users.Add(add);
+            this.Context.PimsUsers.Add(add);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Pims.Dal.Services
         /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public User Update(User update)
+        public PimsUser Update(PimsUser update)
         {
             var user = UpdateWithoutSave(update);
             this.Context.CommitTransaction();
@@ -353,9 +353,9 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="update"></param>
         /// <returns></returns>
-        public User UpdateOnly(User update)
+        public PimsUser UpdateOnly(PimsUser update)
         {
-            this.Context.Users.Update(update);
+            this.Context.PimsUsers.Update(update);
             this.Context.CommitTransaction();
 
             return update;
@@ -367,54 +367,56 @@ namespace Pims.Dal.Services
         /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public User UpdateWithoutSave(User update)
+        public PimsUser UpdateWithoutSave(PimsUser update)
         {
             update.ThrowIfNull(nameof(update));
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            var user = this.Context.Users
-                .Include(u => u.RolesManyToMany)
-                .Include(u => u.OrganizationsManyToMany)
+            var user = this.Context.PimsUsers
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
                 .Include(u => u.Person)
-                .ThenInclude(p => p.ContactMethods)
-                .FirstOrDefault(u => u.Id == update.Id) ?? throw new KeyNotFoundException();
+                .ThenInclude(p => p.PimsContactMethods)
+                .FirstOrDefault(u => u.UserId == update.UserId) ?? throw new KeyNotFoundException();
 
             //If the user has no organizations we assume this update is an approval.
-            if (!user.Organizations.Any())
+            if (!user.PimsUserOrganizations.Any())
             {
                 var key = this.User.GetUserKey();
-                var approvedBy = this.Context.Users.AsNoTracking().FirstOrDefault(u => u.KeycloakUserId == key) ?? throw new KeyNotFoundException($"Current user principal key:'{key}' does not exist");
-                user.ApprovedBy = approvedBy.BusinessIdentifier;
-                user.IssueOn = DateTime.UtcNow;
+                var approvedBy = this.Context.PimsUsers.AsNoTracking().FirstOrDefault(u => u.GuidIdentifierValue == key) ?? throw new KeyNotFoundException($"Current user principal key:'{key}' does not exist");
+                user.ApprovedById = approvedBy.BusinessIdentifierValue;
+                user.IssueDate = DateTime.UtcNow;
             }
 
-            user.RowVersion = update.RowVersion;
-            this.Context.SetOriginalRowVersion(user);
+            user.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
+            this.Context.SetOriginalConcurrencyControlNumber(user);
 
-            var addRoles = update.RolesManyToMany.Except(user.RolesManyToMany, new UserRoleRoleIdComparer());
-            addRoles.ForEach(r => user.RolesManyToMany.Add(new UserRole(user.Id, r.Id)));
-            var removeRoles = user.RolesManyToMany.Except(update.RolesManyToMany, new UserRoleRoleIdComparer());
+            var addRoles = update.PimsUserRoles.Except(user.PimsUserRoles, new UserRoleRoleIdComparer());
+            addRoles.ForEach(r => user.PimsUserRoles.Add(new PimsUserRole() { UserId = user.UserId, RoleId = r.RoleId }));
+            var removeRoles = user.PimsUserRoles.Except(update.PimsUserRoles, new UserRoleRoleIdComparer());
             removeRoles.ForEach(r =>
             {
-                var remove = user.RolesManyToMany.FirstOrDefault(r2 => r2.RoleId == r.RoleId);
+                var remove = user.PimsUserRoles.FirstOrDefault(r2 => r2.RoleId == r.RoleId);
                 if (remove != null)
                     this.Context.Entry(remove).State = EntityState.Deleted;
             });
 
-            var addOrganizations = update.OrganizationsManyToMany.Except(user.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer());
-            addOrganizations.ForEach(o => user.OrganizationsManyToMany.Add(new UserOrganization(user.Id, o.OrganizationId, o.RoleId)));
-            var removeOrganizations = user.OrganizationsManyToMany.Except(update.OrganizationsManyToMany, new UserOrganizationOrganizationIdComparer());
+            var addOrganizations = update.PimsUserOrganizations.Except(user.PimsUserOrganizations, new UserOrganizationOrganizationIdComparer());
+            addOrganizations.ForEach(o => user.PimsUserOrganizations.Add(new PimsUserOrganization() { UserId = user.UserId, OrganizationId = o.OrganizationId, RoleId = o.RoleId }));
+            var removeOrganizations = user.PimsUserOrganizations.Except(update.PimsUserOrganizations, new UserOrganizationOrganizationIdComparer());
             removeOrganizations.ForEach(o =>
             {
-                var remove = user.OrganizationsManyToMany.FirstOrDefault(o2 => o2.OrganizationId == o.OrganizationId && o2.RoleId == o.RoleId);
+                var remove = user.PimsUserOrganizations.FirstOrDefault(o2 => o2.OrganizationId == o.OrganizationId && o2.RoleId == o.RoleId);
                 if (remove != null)
                     this.Context.Entry(remove).State = EntityState.Deleted;
             });
             user.Note = update.Note;
             user.Position = update.Position;
             user.LastLogin = update.LastLogin;
-            user.ExpiryOn = update.ExpiryOn;
-            this.Context.Users.Update(user);
+            user.ExpiryDate = update.ExpiryDate;
+            this.Context.PimsUsers.Update(user);
             return user;
         }
 
@@ -423,23 +425,25 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <param name="delete"></param>
-        public void Delete(User delete)
+        public void Delete(PimsUser delete)
         {
             delete.ThrowIfNull(nameof(delete));
             this.User.ThrowIfNotAuthorized(Permissions.AdminUsers);
 
-            var user = this.Context.Users
-                .Include(u => u.RolesManyToMany)
-                .Include(u => u.OrganizationsManyToMany)
-                .FirstOrDefault(u => u.Id == delete.Id) ?? throw new KeyNotFoundException();
+            var user = this.Context.PimsUsers
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
+                .FirstOrDefault(u => u.UserId == delete.UserId) ?? throw new KeyNotFoundException();
 
-            user.RowVersion = delete.RowVersion;
-            this.Context.SetOriginalRowVersion(user);
+            user.ConcurrencyControlNumber = delete.ConcurrencyControlNumber;
+            this.Context.SetOriginalConcurrencyControlNumber(user);
 
-            user.RolesManyToMany.Clear();
-            user.OrganizationsManyToMany.Clear();
+            user.PimsUserRoles.Clear();
+            user.PimsUserOrganizations.Clear();
 
-            this.Context.Users.Remove(user);
+            this.Context.PimsUsers.Remove(user);
             this.Context.CommitTransaction();
         }
 
@@ -451,12 +455,13 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public IEnumerable<long> GetOrganizations(Guid keycloakUserId)
         {
-            var user = this.Context.Users
-                .Include(u => u.Organizations)
-                .ThenInclude(a => a.Children)
-                .Single(u => u.KeycloakUserId == keycloakUserId) ?? throw new KeyNotFoundException();
-            var organizations = user.Organizations.Select(a => a.Id).ToList();
-            organizations.AddRange(user.Organizations.SelectMany(a => a.Children.Where(ac => !ac.IsDisabled)).Select(a => a.Id));
+            var user = this.Context.PimsUsers
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
+                .ThenInclude(a => a.InversePrntOrganization)
+                .Single(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
+            var organizations = user.PimsUserOrganizations.Select(a => a.OrganizationId).ToList();
+            organizations.AddRange(user.PimsUserOrganizations.SelectMany(a => a.Organization.InversePrntOrganization.Where(ac => !(ac.IsDisabled.HasValue && ac.IsDisabled.Value))).Select(a => a.OrganizationId));
 
             return organizations.ToArray();
         }
@@ -466,17 +471,21 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="organizationIds"></param>
         /// <returns></returns>
-        public IEnumerable<User> GetAdmininstrators(params long[] organizationIds)
+        public IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds)
         {
             if (organizationIds == null) throw new ArgumentNullException(nameof(organizationIds));
 
-            return this.Context.Users
+            return this.Context.PimsUsers
                 .Include(u => u.Person)
-                .ThenInclude(p => p.ContactMethods)
+                .ThenInclude(p => p.PimsContactMethods)
+                .Include(u => u.PimsUserRoles)
+                .ThenInclude(r => r.Role)
+                .Include(u => u.PimsUserOrganizations)
+                .ThenInclude(o => o.Organization)
                 .AsNoTracking()
-                .Where(u => u.Roles.Any(r => r.Claims.Any(c => c.Name == Permissions.SystemAdmin.GetName()))
-                    || (u.Organizations.Any(a => organizationIds.Contains(a.Id))
-                        && u.Roles.Any(r => r.Claims.Any(c => c.Name == Permissions.OrganizationAdmin.GetName()))
+                .Where(u => u.PimsUserRoles.Any(r => r.Role.PimsRoleClaims.Any(c => c.Claim.Name == Permissions.SystemAdmin.GetName()))
+                    || (u.PimsUserOrganizations.Any(a => organizationIds.Contains(a.Organization.OrganizationId))
+                        && u.PimsUserRoles.Any(r => r.Role.PimsRoleClaims.Any(c => c.Claim.Name == Permissions.OrganizationAdmin.GetName()))
                 ));
         }
         #endregion

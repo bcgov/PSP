@@ -15,21 +15,23 @@ namespace Pims.Core.Test
         /// <param name="lFileNo"></param>
         /// <param name="tenantName"></param>
         /// <returns></returns>
-        public static Entity.Lease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, Address address = null)
+        public static Entity.PimsLease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null)
         {
-            var lease = new Entity.Lease()
+            var lease = new Entity.PimsLease()
             {
-                Id = pidOrPin,
+                LeaseId = pidOrPin,
                 LFileNo = lFileNo,
-                RowVersion = 1,
+                ConcurrencyControlNumber = 1,
             };
-            var person = new Entity.Person() { FirstName = tenantFirstName, Surname = tenantLastName, Address = address };
-            var organization = new Entity.Organization() { Address = address };
-            lease.Properties.Add(new Entity.Property() { PID = pidOrPin });
-            lease.MotiName = new Entity.Person() { FirstName = motiFirstName, Surname = motiLastName };
-            lease.ProgramType = new Entity.LeaseProgramType() { Id = "testProgramType" };
-            lease.PaymentFrequencyType = new Entity.LeasePaymentFrequencyType() { Id = "testFrequencyType" };
-            lease.TenantsManyToMany.Add(new LeaseTenant(lease, person, organization, new LessorType("tst", "")));
+            var person = new Entity.PimsPerson() { FirstName = tenantFirstName, Surname = tenantLastName };
+            person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address });
+            var organization = new Entity.PimsOrganization();
+            organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address });
+            lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pidOrPin }, Lease = lease });
+            lease.MotiName = new Entity.PimsPerson() { FirstName = motiFirstName, Surname = motiLastName };
+            lease.LeaseProgramTypeCodeNavigation = new Entity.PimsLeaseProgramType() { Id = "testProgramType" };
+            lease.LeasePmtFreqTypeCodeNavigation = new Entity.PimsLeasePmtFreqType() { Id = "testFrequencyType" };
+            lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
             return lease;
         }
     }

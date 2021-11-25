@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -15,7 +16,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// LeaseService class, provides a service layer to interact with leases within the datasource.
     /// </summary>
-    public class LeaseService : BaseService<Lease>, ILeaseService
+    public class LeaseService : BaseService<PimsLease>, ILeaseService
     {
         #region Constructors
         /// <summary>
@@ -25,7 +26,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LeaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<LeaseService> logger) : base(dbContext, user, service, logger) { }
+        public LeaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<LeaseService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -35,7 +36,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public int Count()
         {
-            return this.Context.Leases.Count();
+            return this.Context.PimsLeases.Count();
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<Lease> Get(LeaseFilter filter)
+        public IEnumerable<PimsLease> Get(LeaseFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -56,71 +57,93 @@ namespace Pims.Dal.Services
             return leases;
         }
 
-        public Lease Get(int id)
+        public PimsLease Get(int id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
-            return this.Context.Leases.Include(l => l.Properties)
+            return this.Context.PimsLeases.Include(l => l.PimsPropertyLeases)
+                .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
                     .ThenInclude(p => p.Country)
-                .Include(l => l.Properties)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
-                    .ThenInclude(p => p.Province)
-                .Include(l => l.Properties)
-                    .ThenInclude(s => s.SurplusDeclarationType)
-                .Include(l => l.Properties)
-                    .ThenInclude(p => p.AreaUnit)
-                .Include(l => l.ProgramType)
-                .Include(l => l.PaymentFrequencyType)
+                    .ThenInclude(p => p.ProvinceState)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(s => s.SurplusDeclarationTypeCodeNavigation)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(l => l.LeaseProgramTypeCodeNavigation)
+                .Include(l => l.LeasePmtFreqTypeCodeNavigation)
+                .Include(l => l.LeasePayRvblTypeCodeNavigation)
+                .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
+                .Include(l => l.LeaseInitiatorTypeCodeNavigation)
+                .Include(l => l.LeasePurposeTypeCodeNavigation)
+                .Include(l => l.LeaseCategoryTypeCodeNavigation)
                 .Include(l => l.MotiName)
 
-                .Include(l => l.TenantsManyToMany)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
-                    .ThenInclude(o => o.OrganizationsManyToMany)
-                .Include(l => l.TenantsManyToMany)
+                    .ThenInclude(o => o.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Organization)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
+                    .ThenInclude(o => o.PimsPersonAddresses)
                     .ThenInclude(o => o.Address)
-                .Include(l => l.TenantsManyToMany)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
-                    .ThenInclude(o => o.ContactMethods)
+                    .ThenInclude(o => o.PimsContactMethods)
 
-                .Include(l => l.TenantsManyToMany)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
-                    .ThenInclude(o => o.PersonsManyToMany)
-                .Include(l => l.TenantsManyToMany)
+                    .ThenInclude(o => o.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Person)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
-                    .ThenInclude(o => o.Persons)
-                .Include(l => l.TenantsManyToMany)
-                    .ThenInclude(t => t.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
                     .ThenInclude(o => o.Address)
-                .Include(l => l.TenantsManyToMany)
+                .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
-                    .ThenInclude(o => o.ContactMethods)
+                    .ThenInclude(o => o.PimsContactMethods)
 
-                .Include(l => l.Improvements)
-                    .ThenInclude(t => t.PropertyImprovementType)
+                .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(t => t.PimsPropertyImprovements)
 
-                .Include(l => l.Insurances)
-                    .ThenInclude(i => i.InsurancePayeeType)
-                .Include(l => l.Insurances)
-                    .ThenInclude(i => i.InsuranceType)
-                .Include(l => l.Insurances)
-                    .ThenInclude(i => i.InsurerOrganization)
-                    .ThenInclude(o => o.Persons)
-                    .ThenInclude(p => p.ContactMethods)
-                .Include(l => l.Insurances)
-                    .ThenInclude(i => i.InsurerOrganization)
-                    .ThenInclude(o => o.ContactMethods)
-                .Include(l => l.Insurances)
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.InsurancePayeeTypeCodeNavigation)
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.InsuranceTypeCodeNavigation)
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.InsurerOrg)
+                    .ThenInclude(o => o.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Person)
+                    .ThenInclude(p => p.PimsContactMethods)
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.InsurerOrg)
+                    .ThenInclude(o => o.PimsContactMethods)
+                .Include(l => l.PimsInsurances)
                     .ThenInclude(i => i.InsurerContact)
-                    .ThenInclude(p => p.ContactMethods)
-                .Include(l => l.Insurances)
-                    .ThenInclude(i => i.MotiRiskManagementContact)
-                    .ThenInclude(p => p.ContactMethods)
-                .Include(l => l.Insurances)
-                    .ThenInclude(i => i.BctfaRiskManagementContact)
-                    .ThenInclude(p => p.ContactMethods)
+                    .ThenInclude(p => p.PimsContactMethods)
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.MotiRiskMgmtContact)
+                    .ThenInclude(p => p.PimsContactMethods)
+                .Include(l => l.PimsInsurances)
+                    .ThenInclude(i => i.BctfaRiskMgmtContact)
+                    .ThenInclude(p => p.PimsContactMethods)
 
-                .Where(l => l.Id == id)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.SecDepHolderTypeCodeNavigation)
+                .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
+                .Include(l => l.PimsSecurityDepositReturns)
+                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
+
+                .Include(l => l.PimsLeaseTerms)
+                    .ThenInclude(t => t.LeaseTermStatusTypeCodeNavigation)
+
+                .Where(l => l.LeaseId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
@@ -130,9 +153,9 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<Lease> GetPage(LeaseFilter filter)
+        public Paged<PimsLease> GetPage(LeaseFilter filter)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            //This is not code this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
@@ -143,7 +166,7 @@ namespace Pims.Dal.Services
                 .Take(filter.Quantity)
                 .ToArray();
 
-            return new Paged<Lease>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsLease>(items, filter.Page, filter.Quantity, query.Count());
         }
         #endregion
     }

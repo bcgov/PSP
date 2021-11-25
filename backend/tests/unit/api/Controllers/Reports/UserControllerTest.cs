@@ -73,7 +73,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -103,7 +103,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users);
+            var page = new Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -134,7 +134,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -166,7 +166,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users);
+            var page = new Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -198,7 +198,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsUser>(users, filter.Page, filter.Quantity);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act
@@ -230,7 +230,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.User>(users);
+            var page = new Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(page);
 
             // Act

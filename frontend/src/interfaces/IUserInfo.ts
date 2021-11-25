@@ -1,7 +1,7 @@
 export interface IUserInfo {
   id: number;
   keycloakUserId: string;
-  businessIdentifier: string;
+  businessIdentifierValue: string;
   name: string;
   email: string;
   firstName: string;

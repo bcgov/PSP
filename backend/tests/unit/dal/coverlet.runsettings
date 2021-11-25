@@ -7,6 +7,7 @@
           <Format>json,opencover</Format>
           <MergeWith>../TestResults/coverage.json</MergeWith>
           <Exclude>[*.Test]*,[*]*Model,[*]*Migrations*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+          <ExcludeByFile>**/ef/*</ExcludeByFile>
           <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
           <SingleHit>false</SingleHit>
           <UseSourceLink>true</UseSourceLink>

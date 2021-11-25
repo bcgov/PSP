@@ -17,23 +17,42 @@ namespace Pims.Dal.Extensions
         /// <param name="entry"></param>
         public static void UndoAppCreatedEdits(this EntityEntry entry)
         {
-            if (entry.Entity is BaseAppEntity entity)
+            if (entry.Entity is IDisableBaseAppEntity entity)
             {
-                var oCreatedOn = (DateTime)entry.OriginalValues[nameof(entity.CreatedOn)];
-                if (!oCreatedOn.Equals(entity.CreatedOn))
-                    entity.CreatedOn = oCreatedOn;
+                var oCreatedOn = (DateTime)entry.OriginalValues[nameof(entity.AppCreateTimestamp)];
+                if (!oCreatedOn.Equals(entity.AppCreateTimestamp))
+                    entity.AppCreateTimestamp = oCreatedOn;
 
-                var oCreatedBy = (string)entry.OriginalValues[nameof(entity.CreatedBy)];
-                if (String.IsNullOrWhiteSpace(entity.CreatedBy) || !oCreatedBy.Equals(entity.CreatedBy))
-                    entity.CreatedBy = oCreatedBy;
+                var oCreatedBy = (string)entry.OriginalValues[nameof(entity.AppCreateUserid)];
+                if (String.IsNullOrWhiteSpace(entity.AppCreateUserid) || !oCreatedBy.Equals(entity.AppCreateUserid))
+                    entity.AppCreateUserid = oCreatedBy;
 
-                var oCreatedByKey = (Guid?)entry.OriginalValues[nameof(entity.CreatedByKey)];
-                if (!entity.CreatedByKey.HasValue || !oCreatedByKey.Equals(entity.CreatedByKey))
-                    entity.CreatedByKey = oCreatedByKey;
+                var oCreatedByKey = (Guid?)entry.OriginalValues[nameof(entity.AppCreateUserGuid)];
+                if (!entity.AppCreateUserGuid.HasValue || !oCreatedByKey.Equals(entity.AppCreateUserGuid))
+                    entity.AppCreateUserGuid = oCreatedByKey;
 
-                var oCreatedByDirectory = (string)entry.OriginalValues[nameof(entity.CreatedByDirectory)];
-                if (String.IsNullOrWhiteSpace(entity.CreatedByDirectory) || !oCreatedByDirectory.Equals(entity.CreatedByDirectory))
-                    entity.CreatedByDirectory = oCreatedByDirectory;
+                var oCreatedByDirectory = (string)entry.OriginalValues[nameof(entity.AppCreateUserDirectory)];
+                if (String.IsNullOrWhiteSpace(entity.AppCreateUserDirectory) || !oCreatedByDirectory.Equals(entity.AppCreateUserDirectory))
+                    entity.AppCreateUserDirectory = oCreatedByDirectory;
+            }
+        }
+
+        /// <summary>
+        /// Do not allow editing the App created properties.
+        /// Reset them to their original values.
+        /// </summary>
+        /// <param name="entry"></param>
+        public static void UndoDbCreatedEdits(this EntityEntry entry)
+        {
+            if (entry.Entity is IDisableBaseAppEntity entity)
+            {
+                var oCreatedOn = (DateTime)entry.OriginalValues[nameof(entity.DbCreateTimestamp)];
+                if (!oCreatedOn.Equals(entity.DbCreateTimestamp))
+                    entity.DbCreateTimestamp = oCreatedOn;
+
+                var oCreatedBy = (string)entry.OriginalValues[nameof(entity.DbCreateUserid)];
+                if (String.IsNullOrWhiteSpace(entity.DbCreateUserid) || !oCreatedBy.Equals(entity.DbCreateUserid))
+                    entity.DbCreateUserid = oCreatedBy;
             }
         }
 
@@ -43,9 +62,9 @@ namespace Pims.Dal.Extensions
         /// <param name="entry"></param>
         public static void UpdateRowversion(this EntityEntry entry)
         {
-            if (entry.Entity is BaseEntity entity)
+            if (entry.Entity is IBaseEntity entity)
             {
-                entity.RowVersion += 1;
+                entity.ConcurrencyControlNumber += 1;
             }
         }
 
@@ -59,27 +78,58 @@ namespace Pims.Dal.Extensions
         /// <param name="userDirectory"></param>
         public static void UpdateAppAuditProperties(this EntityEntry entry, string username, Guid userKey, string userDirectory)
         {
-            if (entry.Entity is BaseAppEntity entity)
+            if (entry.Entity is IDisableBaseAppEntity disableEntity)
+            {
+                disableEntity.IsDisabled ??= false;
+            }
+            if (entry.Entity is IBaseAppEntity entity)
             {
                 var date = DateTime.UtcNow;
                 if (entry.State == EntityState.Added)
                 {
-                    entity.CreatedOn = date;
-                    entity.CreatedBy = username;
-                    entity.CreatedByKey = userKey;
-                    entity.CreatedByDirectory = userDirectory;
+                    entity.AppCreateTimestamp = date;
+                    entity.AppCreateUserid = username;
+                    entity.AppCreateUserGuid = userKey;
+                    entity.AppCreateUserDirectory = userDirectory;
                 }
                 else
                 {
                     entry.UndoAppCreatedEdits();
                 }
-                entity.UpdatedOn = date;
-                entity.UpdatedBy = username;
-                entity.UpdatedByKey = userKey;
-                entity.UpdatedByDirectory = userDirectory;
+                entity.AppLastUpdateTimestamp = date;
+                entity.AppLastUpdateUserid = username;
+                entity.AppLastUpdateUserGuid = userKey;
+                entity.AppLastUpdateUserDirectory = userDirectory;
             }
-
+            UpdateDbAuditProperties(entry, username);
             entry.UpdateRowversion();
+        }
+
+        /// <summary>
+        /// Auto update the application audit properties.
+        /// This handles both added and updated entities.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="username"></param>
+        /// <param name="userKey"></param>
+        /// <param name="userDirectory"></param>
+        public static void UpdateDbAuditProperties(this EntityEntry entry, string username)
+        {
+            if (entry.Entity is IDisableBaseAppEntity entity)
+            {
+                var date = DateTime.UtcNow;
+                if (entry.State == EntityState.Added)
+                {
+                    entity.DbCreateTimestamp = date;
+                    entity.DbCreateUserid = username;
+                }
+                else
+                {
+                    entry.UndoDbCreatedEdits();
+                }
+                entity.DbLastUpdateTimestamp = date;
+                entity.DbLastUpdateUserid = username;
+            }
         }
     }
 }

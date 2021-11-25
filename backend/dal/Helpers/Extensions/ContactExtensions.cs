@@ -18,7 +18,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="query"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static IQueryable<Entity.Contact> GenerateCommonContactQuery(this IQueryable<Entity.Contact> query, Entity.Models.ContactFilter filter)
+        private static IQueryable<Entity.PimsContactMgrVw> GenerateCommonContactQuery(this IQueryable<Entity.PimsContactMgrVw> query, Entity.Models.ContactFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -29,15 +29,15 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!String.IsNullOrWhiteSpace(filter.Municipality))
             {
-                query = query.Where(c => EF.Functions.Like(c.Municipality, $"%{filter.Municipality}%"));
+                query = query.Where(c => EF.Functions.Like(c.MunicipalityName, $"%{filter.Municipality}%"));
             }
 
             if (filter.SearchBy == "persons")
             {
-                query = query.Where(c => c.Person != null);
+                query = query.Where(c => c.PersonId != null);
             } else if (filter.SearchBy == "organizations")
             {
-                query = query.Where(c => c.Organization != null);
+                query = query.Where(c => c.OrganizationId != null);
             }
 
             if (filter.ActiveContactsOnly)
@@ -59,13 +59,11 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="context"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entity.Contact> GenerateContactQuery(this PimsContext context, Entity.Models.ContactFilter filter)
+        public static IQueryable<Entity.PimsContactMgrVw> GenerateContactQuery(this PimsContext context, Entity.Models.ContactFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
 
-            IQueryable<Contact> query = context.Contacts.AsNoTracking()
-                .Include(c => c.Person)
-                .ThenInclude(p => p.ContactMethods);
+            IQueryable<PimsContactMgrVw> query = context.PimsContactMgrVws.AsNoTracking();
 
             query = query.GenerateCommonContactQuery(filter);
 

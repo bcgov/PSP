@@ -12,7 +12,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest(long id)
+        public static Entity.PimsAccessRequest CreateAccessRequest(long id)
         {
             return CreateAccessRequest(id, null, null, null);
         }
@@ -25,13 +25,13 @@ namespace Pims.Core.Test
         /// <param name="role"></param>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static Entity.AccessRequest CreateAccessRequest(long id, Entity.User user, Entity.Role role, Entity.Organization organization)
+        public static Entity.PimsAccessRequest CreateAccessRequest(long id, Entity.PimsUser user, Entity.PimsRole role, Entity.PimsOrganization organization)
         {
             user ??= EntityHelper.CreateUser("test");
             role ??= EntityHelper.CreateRole("Real Estate Manager");
-            var accessRequest = new Entity.AccessRequest()
+            var accessRequest = new Entity.PimsAccessRequest()
             {
-                Id = id,
+                AccessRequestId = id,
                 UserId = user.Id,
                 User = user,
                 RoleId = role.Id,
@@ -39,7 +39,7 @@ namespace Pims.Core.Test
             };
 
             organization ??= EntityHelper.CreateOrganization(id, "test", EntityHelper.CreateOrganizationType("Type 1"), EntityHelper.CreateOrganizationIdentifierType("Identifier 1"), EntityHelper.CreateAddress(id));
-            accessRequest.OrganizationsManyToMany.Add(new Entity.AccessRequestOrganization()
+            accessRequest.PimsAccessRequestOrganizations.Add(new Entity.PimsAccessRequestOrganization()
             {
                 AccessRequestId = id,
                 AccessRequest = accessRequest,
