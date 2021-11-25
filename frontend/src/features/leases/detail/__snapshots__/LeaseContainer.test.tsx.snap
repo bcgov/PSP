@@ -214,7 +214,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   border-left: 1px solid #666666;
 }
 
-.c26 .form-control {
+.c26 .form-control:not(.description) {
   font-weight: 700;
 }
 
