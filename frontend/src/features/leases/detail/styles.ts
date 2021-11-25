@@ -87,6 +87,10 @@ export const FormDescriptionLabel = styled(Form.Label)`
   font-weight: 700;
 `;
 
+export const FormDescriptionBody = styled(TextArea)`
+  font-weight: 400;
+`;
+
 export const TenantNotes = styled(TextArea)`
   margin-left: 9.5rem;
 `;
@@ -113,7 +117,7 @@ export const FormGrid = styled.div`
     border-left: 1px solid #666666;
   }
 
-  & .form-control {
+  & .form-control:not(.description) {
     font-weight: 700;
   }
 
