@@ -1,116 +1,55 @@
-/* Drop all non-system stored procs */
-DECLARE @name VARCHAR(128)
-DECLARE @SQL VARCHAR(254)
+declare @n char(1)
+set @n = char(10)
 
-SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'P' AND category = 0 ORDER BY [name])
+declare @stmt nvarchar(max)
 
-WHILE @name is not null
-BEGIN
-    SELECT @SQL = 'DROP PROCEDURE [dbo].[' + RTRIM(@name) +']'
-    EXEC (@SQL)
-    PRINT N'Dropped Procedure: ' + @name
-    SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'P' AND category = 0 AND [name] > @name ORDER BY [name])
-END
-GO
+-- procedures
+select @stmt = isnull( @stmt + @n, '' ) +
+    'drop procedure [' + schema_name(schema_id) + '].[' + name + ']'
+from sys.procedures
+where SCHEMA_NAME(schema_id) != 'pmbc'
 
-/* Drop all views */
-DECLARE @name VARCHAR(128)
-DECLARE @SQL VARCHAR(254)
+-- check constraints
+select @stmt = isnull( @stmt + @n, '' ) +
+'alter table [' + schema_name(schema_id) + '].[' + object_name( parent_object_id ) + ']    drop constraint [' + name + ']'
+from sys.check_constraints
+where SCHEMA_NAME(schema_id) != 'pmbc'
 
-SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'V' AND category = 0 ORDER BY [name])
+-- functions
+select @stmt = isnull( @stmt + @n, '' ) +
+    'drop function [' + schema_name(schema_id) + '].[' + name + ']'
+from sys.objects
+where type in ( 'FN', 'IF', 'TF' )
+and SCHEMA_NAME(schema_id) != 'pmbc'
 
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @SQL = 'DROP VIEW [dbo].[' + RTRIM(@name) +']'
-    EXEC (@SQL)
-    PRINT N'Dropped View: ' + @name
-    SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'V' AND category = 0 AND [name] > @name ORDER BY [name])
-END
-GO
+-- views
+select @stmt = isnull( @stmt + @n, '' ) +
+    'drop view [' + schema_name(schema_id) + '].[' + name + ']'
+from sys.views
+where SCHEMA_NAME(schema_id) != 'pmbc'
 
-/* Drop all functions */
-DECLARE @name VARCHAR(128)
-DECLARE @SQL VARCHAR(254)
+-- foreign keys
+select @stmt = isnull( @stmt + @n, '' ) +
+    'alter table [' + schema_name(schema_id) + '].[' + object_name( parent_object_id ) + '] drop constraint [' + name + ']'
+from sys.foreign_keys
+where SCHEMA_NAME(schema_id) != 'pmbc'
 
-SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] IN (N'FN', N'IF', N'TF', N'FS', N'FT') AND category = 0 ORDER BY [name])
+-- tables
+select @stmt = isnull( @stmt + @n, '' ) +
+    'drop table [' + schema_name(schema_id) + '].[' + name + ']'
+from sys.tables
+where SCHEMA_NAME(schema_id) != 'pmbc'
 
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @SQL = 'DROP FUNCTION [dbo].[' + RTRIM(@name) +']'
-    EXEC (@SQL)
-    PRINT N'Dropped Function: ' + @name
-    SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] IN (N'FN', N'IF', N'TF', N'FS', N'FT') AND category = 0 AND [name] > @name ORDER BY [name])
-END
-GO
+-- user defined types
+select @stmt = isnull( @stmt + @n, '' ) +
+    'drop type [' + schema_name(schema_id) + '].[' + name + ']'
+from sys.types
+where is_user_defined = 1
+and SCHEMA_NAME(schema_id) != 'pmbc'
 
-/* Drop all Foreign Key constraints */
-DECLARE @name VARCHAR(128)
-DECLARE @constraint VARCHAR(254)
-DECLARE @SQL VARCHAR(254)
+-- sequences
+select @stmt = isnull( @stmt + @n, '' ) +
+    'drop sequence [' + schema_name(schema_id) + '].[' + name + ']'
+from sys.sequences
 
-SELECT @name = (SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'FOREIGN KEY' ORDER BY TABLE_NAME)
-
-WHILE @name is not null
-BEGIN
-    SELECT @constraint = (SELECT TOP 1 CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'FOREIGN KEY' AND TABLE_NAME = @name ORDER BY CONSTRAINT_NAME)
-    WHILE @constraint IS NOT NULL
-    BEGIN
-        SELECT @SQL = 'ALTER TABLE [dbo].[' + RTRIM(@name) +'] DROP CONSTRAINT [' + RTRIM(@constraint) +']'
-        EXEC (@SQL)
-        PRINT N'Dropped FK Constraint: ' + @constraint + ' on ' + @name
-        SELECT @constraint = (SELECT TOP 1 CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'FOREIGN KEY' AND CONSTRAINT_NAME <> @constraint AND TABLE_NAME = @name ORDER BY CONSTRAINT_NAME)
-    END
-SELECT @name = (SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'FOREIGN KEY' ORDER BY TABLE_NAME)
-END
-GO
-
-/* Drop all Primary Key constraints */
-DECLARE @name VARCHAR(128)
-DECLARE @constraint VARCHAR(254)
-DECLARE @SQL VARCHAR(254)
-
-SELECT @name = (SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' ORDER BY TABLE_NAME)
-
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @constraint = (SELECT TOP 1 CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' AND TABLE_NAME = @name ORDER BY CONSTRAINT_NAME)
-    WHILE @constraint is not null
-    BEGIN
-        SELECT @SQL = 'ALTER TABLE [dbo].[' + RTRIM(@name) +'] DROP CONSTRAINT [' + RTRIM(@constraint)+']'
-        EXEC (@SQL)
-        PRINT N'Dropped PK Constraint: ' + @constraint + ' on ' + @name
-        SELECT @constraint = (SELECT TOP 1 CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' AND CONSTRAINT_NAME <> @constraint AND TABLE_NAME = @name ORDER BY CONSTRAINT_NAME)
-    END
-SELECT @name = (SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' ORDER BY TABLE_NAME)
-END
-GO
-
-/* Drop all tables */
-DECLARE @name VARCHAR(128)
-DECLARE @SQL VARCHAR(254)
-
-SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'U' AND category = 0 ORDER BY [name])
-
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @SQL = 'DROP TABLE [dbo].[' + RTRIM(@name) +']'
-    EXEC (@SQL)
-    PRINT N'Dropped Table: ' + @name
-    SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'U' AND category = 0 AND [name] > @name ORDER BY [name])
-END
-GO
-
-/* Drop all sequences */
-DECLARE @name VARCHAR(128)
-DECLARE @SQL VARCHAR(254)
-
-SELECT @name = (SELECT TOP 1 [name] FROM sys.sequences ORDER BY [name])
-
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @SQL = 'DROP SEQUENCE [dbo].[' + RTRIM(@name) +']'
-    EXEC (@SQL)
-    PRINT N'Dropped SEQUENCE: ' + @name
-    SELECT @name = (SELECT TOP 1 [name] FROM  sys.sequences WHERE [name] > @name ORDER BY [name])
-END
-GO
+exec sp_executesql @stmt

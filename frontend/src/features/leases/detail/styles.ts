@@ -1,4 +1,5 @@
 import caretRightSvgUrl from 'assets/images/caret-right.svg';
+import { TextArea } from 'components/common/form';
 import { InlineFastCurrencyInput, InlineInput } from 'components/common/form/styles';
 import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
@@ -84,6 +85,10 @@ export const LeaseBreadcrumb = styled(Breadcrumb)`
 export const FormDescriptionLabel = styled(Form.Label)`
   font-size: 1.6rem;
   font-weight: 700;
+`;
+
+export const TenantNotes = styled(TextArea)`
+  margin-left: 9.5rem;
 `;
 
 export const FormControl = styled(Form.Control)`
