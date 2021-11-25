@@ -33,14 +33,58 @@ help:
 
 .PHONY: help
 
+# these are various tools required by make commands below
+GH := $(shell command -v gh 2> /dev/null)
+PYTHON := $(shell command -v python 2> /dev/null)
+JQ := $(shell command -v jq 2> /dev/null)
+
+
+##############################################################################
+# Dev Tools Requirements
+##############################################################################
+.PHONY: requirements
+requirements: ## Checks development environment requirements (tools in the PATH)
+ifndef GH
+	$(error "gh (GitHub CLI) is not available please install from https://cli.github.com/")
+endif
+ifndef PYTHON
+	$(error "python3 is not available please install from https://docs.python.org/3")
+endif
+ifndef JQ
+	$(error "jq is not available please install from https://stedolan.github.io/jq")
+endif
+	$(info gh found...)
+	$(info python3 found...)
+	$(info jq found...)
+	@exit 0
+
+.PHONY: check-github-auth
+check-github-auth: ## Checks GITHUB_TOKEN has been set
+ifndef GH
+	$(error "gh (GitHub CLI) is not available please install from https://cli.github.com/")
+endif
+# look for GITHUB_TOKEN in the environment
+ifdef GITHUB_TOKEN
+	$(info GITHUB_TOKEN found in the environment)
+endif
+# if the token isn't available in the environment we try using the GitHub CLI
+ifeq ($(shell gh config get oauth_token -h github.com),)
+	$(error Failed to fetch GitHub token using GitHub CLI)
+else
+	$(info GITHUB_TOKEN fetched via GitHub CLI)
+endif
+	@exit 0
+
 ##############################################################################
 # Release Management
 ##############################################################################
-VERSION := $(shell node -pe "require('./frontend/package.json').version")
-
 .PHONY: version
-version: ## Prints the current version number
-	@echo "v$(VERSION)"
+version: ## Outputs the latest released version
+	@build/version.sh
+
+.PHONY: version-next
+version-next: ## Outputs the next unreleased version
+	@build/version-next.sh
 
 .PHONY: bump
 bump: ## Bumps the version number
@@ -49,17 +93,41 @@ ifndef $(ARGS)
 endif
 	@node ./build/bump-version.js $(ARGS) --apply
 
+CURRENT_VERSION := $(shell build/version.sh)
+CURRENT_DATE := $(shell date +'%b %d, %Y')
+tag = v$(CURRENT_VERSION)
+owner := $(shell gh repo view --json owner --jq '.owner.login')
+repo := $(shell gh repo view --json name --jq '.name')
+branch = HEAD
+release_notes = Release $(tag) ($(CURRENT_DATE))
+
+.PHONY: tag
+tag: ## Creates a pre-release tag
+	$(info Using tag: $(tag))
+	$(info Using repo: $(owner)/$(repo))
+	@git tag -a -f $(tag) $(branch) -m "Release $(tag)"
+	@git push --tags
+
+.PHONY: release
+release: | check-github-auth ## Creates a new github release
+	$(info Releasing version $(CURRENT_VERSION))
+	$(info Using tag: $(tag))
+	$(info Using repo: $(owner)/$(repo))
+ifdef changelog
+	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --notes-file $(changelog)
+else
+	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --notes "$(release_notes)"
+endif
+
 ##############################################################################
 # DevSecOps
 ##############################################################################
 # python is required for DevSecOps tools
-PYTHON := $(shell command -v python 2> /dev/null)
-JQ := $(shell command -v jq 2> /dev/null)
 
 .PHONY: devops-install
 devops-install: ## Installs software required by DevSecOps tooling (e.g. python, etc)
-	@if [ -z $(PYTHON) ]; then echo "Python could not be found. See See https://docs.python.org/3/"; exit 2; fi
-	@if [ -z $(JQ) ]; then echo "JQ could not be found. See See https://stedolan.github.io/jq/"; exit 2; fi
+	@if [ -z "$(PYTHON)" ]; then echo "Python not found. Install from https://docs.python.org/3"; exit 2; fi
+	@if [ -z "$(JQ)" ]; then echo "JQ not found. Install from https://stedolan.github.io/jq/"; exit 2; fi
 	@python -m ensurepip --upgrade
 	@pip install trufflehog3 jtbl
 
@@ -150,12 +218,12 @@ npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packa
 db-refresh: | server-run pause-30 db-clean pause-10 db-seed keycloak-sync ## Refresh the database and seed it with data.
 
 db-clean: ## create a new, clean database using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
-	@echo "$(P) create a clean database with minimal required data for development" 
-	TARGET_SPRINT=$(n) docker-compose up -d --build --force-recreate database 
+	@echo "$(P) create a clean database with minimal required data for development"
+	TARGET_SPRINT=$(n) docker-compose up -d --build --force-recreate database
 
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
-	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database 
+	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database
 
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
