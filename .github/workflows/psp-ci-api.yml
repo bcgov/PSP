@@ -1,8 +1,7 @@
-name: ci-api
+name: PSP-CI-API
 
 on:
-  pull_request:
-    types: [opened, reopened, edited, synchronize]
+  push:
     paths:
       - "backend/api/**"
       - ".github/workflows/ci-api.yml"
