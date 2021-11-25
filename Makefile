@@ -96,18 +96,28 @@ endif
 CURRENT_VERSION := $(shell build/version.sh)
 CURRENT_DATE := $(shell date +'%b %d, %Y')
 tag = v$(CURRENT_VERSION)
-branch = master
-repo = bcgov/psp
+owner := $(shell gh repo view --json owner --jq '.owner.login')
+repo := $(shell gh repo view --json name --jq '.name')
+branch = HEAD
+release_notes = Release $(tag) ($(CURRENT_DATE))
+
+.PHONE: tag
+tag: ## Creates a pre-release tag
+	$(info Using tag: $(tag))
+	$(info Using repo: $(owner)/$(repo))
+	@git tag -a -f $(tag) $(branch) -m "Release $(tag)"
+	@git push --tags
 
 .PHONY: release
 release: | check-github-auth ## Creates a new github release
 	$(info Releasing version $(CURRENT_VERSION))
 	$(info Using tag: $(tag))
-	$(info Using repo: $(repo))
-	$(info Using target branch: $(branch))
-	@git tag -a -f $(tag) $(branch) -m "Release $(tag)"
-	@git push origin --tags
-	@gh release create $(tag) -R $(repo) --target $(branch) --title $(tag) --notes "# Release $(tag) ($(CURRENT_DATE))"
+	$(info Using repo: $(owner)/$(repo))
+ifdef changelog
+	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --notes-file $(changelog)
+else
+	gh release create $(tag) -R $(owner)/$(repo) --title $(tag) --notes "$(release_notes)"
+endif
 
 ##############################################################################
 # DevSecOps
@@ -208,12 +218,12 @@ npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packa
 db-refresh: | server-run pause-30 db-clean pause-10 db-seed keycloak-sync ## Refresh the database and seed it with data.
 
 db-clean: ## create a new, clean database using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
-	@echo "$(P) create a clean database with minimal required data for development" 
-	TARGET_SPRINT=$(n) docker-compose up -d --build --force-recreate database 
+	@echo "$(P) create a clean database with minimal required data for development"
+	TARGET_SPRINT=$(n) docker-compose up -d --build --force-recreate database
 
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
-	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database 
+	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database
 
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
