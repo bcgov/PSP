@@ -6,7 +6,7 @@
 
 ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m784832378-1d844c019bc2900c17c826cb)
 [![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
-![Site Security Scan](<https://github.com/bcgov/psp/actions/workflows/zap-scan.yml/badge.svg?branch=dev>)
+![Site Security Scan](https://github.com/bcgov/psp/actions/workflows/zap-scan.yml/badge.svg?branch=dev)
 [![Image Security Scan](https://github.com/bcgov/PSP/actions/workflows/image-scan-analysis.yml/badge.svg)](https://github.com/bcgov/PSP/actions/workflows/image-scan-analysis.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bcgov/psp/master)
 
@@ -32,7 +32,7 @@ To support SRES’s overall strategic real estate initiatives a modern Informati
 
 ## Problem Statement
 
-The Province is not able to make the most informed, timely, and strategic decisions on the optimal use of its real property assets on behalf of the people and priorities of British Columbia.
+The Province is not able to make the most informed, timely, and strategic decisions on the optimal use of its real property assets on behalf of the people and priorities of British Columbia.asdsajhasdkl fhdal
 
 ## Hypothesis
 
