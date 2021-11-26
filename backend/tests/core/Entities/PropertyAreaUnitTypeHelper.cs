@@ -13,21 +13,21 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PropertyAreaUnitType CreatePropertyAreaUnitType(string id)
+        public static Entity.PimsAreaUnitType CreatePropertyAreaUnitType(string id)
         {
-            return new Entity.PropertyAreaUnitType(id, "") { RowVersion = 1 };
+            return new Entity.PimsAreaUnitType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of PropertyAreaUnitType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.PropertyAreaUnitType> CreateDefaultPropertyAreaUnitTypes()
+        public static List<Entity.PimsAreaUnitType> CreateDefaultPropertyAreaUnitTypes()
         {
-            return new List<Entity.PropertyAreaUnitType>()
+            return new List<Entity.PimsAreaUnitType>()
             {
-                new Entity.PropertyAreaUnitType("Land", "") { RowVersion = 1 },
-                new Entity.PropertyAreaUnitType("Building", "") { RowVersion = 1 }
+                new Entity.PimsAreaUnitType("Land") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsAreaUnitType("Building") { ConcurrencyControlNumber = 1 }
             };
         }
     }

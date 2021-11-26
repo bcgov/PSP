@@ -106,13 +106,13 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-organization" })]
         public async Task<IActionResult> AddOrganizationAsync([FromBody] Model.OrganizationModel model)
         {
-            var entity = _mapper.Map<Entity.Organization>(model);
+            var entity = _mapper.Map<Entity.PimsOrganization>(model);
             _pimsService.Organization.Add(entity);
 
             // TODO: This isn't ideal as the db update may be successful but this request may not.
-            await entity.Users.ForEachAsync(async u =>
+            await entity.PimsUserOrganizations.ForEachAsync(async u =>
             {
-                var user = _pimsService.User.Get(u.KeycloakUserId.Value);
+                var user = _pimsService.User.Get(u.User.GuidIdentifierValue.Value);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 
@@ -133,13 +133,13 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-organization" })]
         public async Task<IActionResult> UpdateOrganizationAsync([FromBody] Model.OrganizationModel model)
         {
-            var entity = _mapper.Map<Entity.Organization>(model);
+            var entity = _mapper.Map<Entity.PimsOrganization>(model);
             _pimsService.Organization.Update(entity);
 
             // TODO: This isn't ideal as the db update may be successful but this request may not.
-            await entity.Users.ForEachAsync(async u =>
+            await entity.PimsUserOrganizations.ForEachAsync(async u =>
             {
-                var user = _pimsService.User.Get(u.KeycloakUserId.Value);
+                var user = _pimsService.User.Get(u.User.GuidIdentifierValue.Value);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 
@@ -159,13 +159,13 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-organization" })]
         public async Task<IActionResult> DeleteOrganizationAsync([FromBody] Model.OrganizationModel model)
         {
-            var entity = _mapper.Map<Entity.Organization>(model);
+            var entity = _mapper.Map<Entity.PimsOrganization>(model);
             _pimsService.Organization.Delete(entity);
 
             // TODO: This isn't ideal as the db update may be successful but this request may not.
-            await entity.Users.ForEachAsync(async u =>
+            await entity.PimsUserOrganizations.ForEachAsync(async u =>
             {
-                var user = _pimsService.User.Get(u.KeycloakUserId.Value);
+                var user = _pimsService.User.Get(u.User.GuidIdentifierValue.Value);
                 await _pimsKeycloakService.UpdateUserAsync(user);
             });
 

@@ -13,26 +13,26 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PropertyClassificationType CreatePropertyClassificationType(string id)
+        public static Entity.PimsPropertyClassificationType CreatePropertyClassificationType(string id)
         {
-            return new Entity.PropertyClassificationType(id, "") { RowVersion = 1 };
+            return new Entity.PimsPropertyClassificationType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of PropertyClassificationType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.PropertyClassificationType> CreateDefaultPropertyClassificationTypes()
+        public static List<Entity.PimsPropertyClassificationType> CreateDefaultPropertyClassificationTypes()
         {
-            return new List<Entity.PropertyClassificationType>()
+            return new List<Entity.PimsPropertyClassificationType>()
             {
-                new Entity.PropertyClassificationType("Core Operational", "") { RowVersion = 1 },
-                new Entity.PropertyClassificationType("Core Strategic", "") { RowVersion = 1 },
-                new Entity.PropertyClassificationType("Surplus Active", "") { RowVersion = 1 },
-                new Entity.PropertyClassificationType("Surplus Encumbered", "") { RowVersion = 1 },
-                new Entity.PropertyClassificationType("Disposed", "") { RowVersion = 1 },
-                new Entity.PropertyClassificationType("Demolished", "") { RowVersion = 1 },
-                new Entity.PropertyClassificationType("Subdivided", "") { RowVersion = 1 }
+                new Entity.PimsPropertyClassificationType("Core Operational") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Core Strategic") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Surplus Active") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Surplus Encumbered") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Disposed") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Demolished") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Subdivided") { ConcurrencyControlNumber = 1 }
             };
         }
     }

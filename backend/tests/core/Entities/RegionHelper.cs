@@ -14,22 +14,22 @@ namespace Pims.Core.Test
         /// <param name="id"></param>
         /// <param name="code"></param>
         /// <returns></returns>
-        public static Entity.Region CreateRegion(int id, string code)
+        public static Entity.PimsRegion CreateRegion(short id, string code)
         {
-            return new Entity.Region(code) { Id = id, RowVersion = 1 };
+            return new Entity.PimsRegion(code) { RegionCode = id, ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of Region.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.Region> CreateDefaultRegions()
+        public static List<Entity.PimsRegion> CreateDefaultRegions()
         {
-            return new List<Entity.Region>()
+            return new List<Entity.PimsRegion>()
             {
-                new Entity.Region("Northern") { Id = 1, RowVersion = 1 },
-                new Entity.Region("Southern Interior") { Id = 2,  RowVersion = 1 },
-                new Entity.Region("South Coast") { Id = 3,  RowVersion = 1 }
+                new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1 },
+                new Entity.PimsRegion("Southern Interior") { RegionCode = 2,  ConcurrencyControlNumber = 1 },
+                new Entity.PimsRegion("South Coast") { RegionCode = 3,  ConcurrencyControlNumber = 1 }
             };
         }
     }

@@ -1,4 +1,5 @@
 import caretRightSvgUrl from 'assets/images/caret-right.svg';
+import { TextArea } from 'components/common/form';
 import { InlineFastCurrencyInput, InlineInput } from 'components/common/form/styles';
 import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
@@ -86,6 +87,14 @@ export const FormDescriptionLabel = styled(Form.Label)`
   font-weight: 700;
 `;
 
+export const FormDescriptionBody = styled(TextArea)`
+  font-weight: 400;
+`;
+
+export const TenantNotes = styled(TextArea)`
+  margin-left: 9.5rem;
+`;
+
 export const FormControl = styled(Form.Control)`
   grid-column: controls;
   grid-row: auto;
@@ -108,7 +117,7 @@ export const FormGrid = styled.div`
     border-left: 1px solid #666666;
   }
 
-  & .form-control {
+  & .form-control:not(.description) {
     font-weight: 700;
   }
 
@@ -172,7 +181,6 @@ export const TermsTable = styled(Table)`
       background-repeat: no-repeat;
       background-position: right;
       width: 8rem;
-      height: 3.1rem;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -192,4 +200,10 @@ export const NestedInlineField = styled(InlineInput)`
   .form-label {
     min-width: 7rem;
   }
+`;
+
+export const SectiontHeader = styled(FormDescriptionLabel)`
+  color: ${props => props.theme.css.primaryColor};
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 `;

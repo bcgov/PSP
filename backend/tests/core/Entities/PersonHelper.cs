@@ -16,12 +16,19 @@ namespace Pims.Core.Test
         /// <param name="firstName"></param>
         /// <param name="address"></param>
         /// <returns></returns>
-        public static Entity.Person CreatePerson(long id, string surname, string firstName, Entity.Address address = null)
+        public static Entity.PimsPerson CreatePerson(long id, string surname, string firstName, Entity.PimsAddress address = null)
         {
-            return new Entity.Person(surname, firstName, address ?? EntityHelper.CreateAddress(id))
+            return new Entity.PimsPerson(surname, firstName, address ?? EntityHelper.CreateAddress(id))
             {
-                Id = id,
-                RowVersion = 1
+                PersonId = id,
+                AppCreateUserDirectory = "",
+                AppCreateUserid = "",
+                AppLastUpdateUserDirectory = "",
+                AppLastUpdateUserid = "",
+                DbCreateUserid = "",
+                DbLastUpdateUserid = "",
+                IsDisabled = false,
+                ConcurrencyControlNumber = 1
             };
         }
 
@@ -33,13 +40,20 @@ namespace Pims.Core.Test
         /// <param name="firstName"></param>
         /// <param name="address"></param>
         /// <returns></returns>
-        public static Entity.Person CreatePerson(this PimsContext context, long id, string surname, string firstName, Entity.Address address = null)
+        public static Entity.PimsPerson CreatePerson(this PimsContext context, long id, string surname, string firstName, Entity.PimsAddress address = null)
         {
             address ??= EntityHelper.CreateAddress(context, id, "1234 St");
-            return new Entity.Person(surname, firstName, address)
+            return new Entity.PimsPerson(surname, firstName, address)
             {
-                Id = id,
-                RowVersion = 1
+                PersonId = id,
+                ConcurrencyControlNumber = 1,
+                AppCreateUserDirectory = "",
+                AppCreateUserid = "",
+                AppLastUpdateUserDirectory = "",
+                AppLastUpdateUserid = "",
+                DbCreateUserid = "",
+                DbLastUpdateUserid = "",
+                IsDisabled = false
             };
         }
     }

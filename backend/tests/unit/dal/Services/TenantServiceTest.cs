@@ -46,7 +46,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Entity.Tenant>(result);
+            Assert.IsAssignableFrom<Entity.PimsTenant>(result);
             result.Should().Be(tenant);
         }
 
@@ -94,7 +94,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Entity.Tenant>(result);
+            Assert.IsAssignableFrom<Entity.PimsTenant>(result);
             result.Should().Be(tenant);
             result.Name.Should().Be(updateTenant.Name);
             result.Description.Should().Be(updateTenant.Description);

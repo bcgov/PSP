@@ -1,3 +1,4 @@
+using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -24,7 +25,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ContactService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<ContactService> logger) : base(dbContext, user, service, logger) { }
+        public ContactService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<ContactService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -34,7 +35,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public int Count()
         {
-            return this.Context.Persons.Count() + this.Context.Organizations.Count();
+            return this.Context.PimsContactMgrVws.Count();
         }
 
         /// <summary>
@@ -43,13 +44,13 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<Contact> Get(ContactFilter filter)
+        public IEnumerable<PimsContactMgrVw> Get(ContactFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
-            IEnumerable<Contact> contacts = this.Context.GenerateContactQuery(filter).ToArray();
+            IEnumerable<PimsContactMgrVw> contacts = this.Context.GenerateContactQuery(filter).ToArray();
 
             return contacts;
         }
@@ -60,7 +61,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<Contact> GetPage(ContactFilter filter)
+        public Paged<PimsContactMgrVw> GetPage(ContactFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
             filter.ThrowIfNull(nameof(filter));
@@ -73,7 +74,7 @@ namespace Pims.Dal.Services
                 .Take(filter.Quantity)
                 .ToArray();
 
-            return new Paged<Contact>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsContactMgrVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>
@@ -81,9 +82,9 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="keyValues"></param>
         /// <returns></returns>
-        public Contact Find(params object[] keyValues)
+        public PimsContactMgrVw Find(params object[] keyValues)
         {
-            return this.Context.Find<Contact>(keyValues);
+            return this.Context.Find<PimsContactMgrVw>(keyValues);
         }
         #endregion
     }

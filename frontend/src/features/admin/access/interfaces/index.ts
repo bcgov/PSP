@@ -3,7 +3,7 @@ import { AccessRequestStatus } from 'constants/accessStatus';
 export interface IAccessRequestModel {
   id: number;
   userId: number;
-  businessIdentifier: string;
+  businessIdentifierValue: string;
   firstName: string;
   surname: string;
   email: string;

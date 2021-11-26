@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 
 namespace Pims.Dal.Services
 {
     /// <summary>
     /// TenantService class, provides a service layer to interact with tenants within the datasource.
     /// </summary>
-    public class TenantService : BaseService<Tenant>, ITenantService
+    public class TenantService : BaseService<PimsTenant>, ITenantService
     {
         #region Variables
         #endregion
@@ -27,9 +28,7 @@ namespace Pims.Dal.Services
         /// <param name="options"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public TenantService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<TenantService> logger) : base(dbContext, user, service, logger)
-        {
-        }
+        public TenantService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<TenantService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -38,9 +37,9 @@ namespace Pims.Dal.Services
         /// Get the tenant for the specified 'code'.
         /// </summary>
         /// <returns></returns>
-        public Tenant GetTenant(string code)
+        public PimsTenant GetTenant(string code)
         {
-            return this.Context.Tenants.FirstOrDefault(t => t.Code == code);
+            return this.Context.PimsTenants.FirstOrDefault(t => t.Code == code);
         }
 
         /// <summary>
@@ -48,20 +47,20 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="tenant"></param>
         /// <returns></returns>
-        public Tenant UpdateTenant(Tenant tenant)
+        public PimsTenant UpdateTenant(PimsTenant tenant)
         {
             if (tenant == null) throw new ArgumentNullException(nameof(tenant));
             this.User.ThrowIfNotAuthorized(Permissions.SystemAdmin);
-            var originalTenant = this.Context.Tenants.FirstOrDefault(t => t.Code == tenant.Code);
+            var originalTenant = this.Context.PimsTenants.FirstOrDefault(t => t.Code == tenant.Code);
 
             if (originalTenant == null) throw new KeyNotFoundException();
 
             originalTenant.Name = tenant.Name;
             originalTenant.Description = tenant.Description;
             originalTenant.Settings = tenant.Settings;
-            originalTenant.RowVersion = tenant.RowVersion;
+            originalTenant.ConcurrencyControlNumber = tenant.ConcurrencyControlNumber;
 
-            this.Context.Tenants.Update(originalTenant);
+            this.Context.PimsTenants.Update(originalTenant);
             this.Context.CommitTransaction();
 
             return originalTenant;

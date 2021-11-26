@@ -52,21 +52,21 @@ const TableToolbarText = styled.p`
 `;
 
 // these provide a way to inject custom CSS into table headers and cells
-const headerProps = <T extends object>(
+const headerPropsGetter = <T extends object>(
   props: any,
   { column }: { column: ColumnInstanceWithProps<T> },
 ) => {
   return getStyles(props, true, column);
 };
 
-const noHeaders = <T extends object>(
+const noHeadersGetter = <T extends object>(
   props: any,
   { column }: { column: ColumnInstanceWithProps<T> },
 ) => {
   return getStyles(props, true, column, true);
 };
 
-const cellProps = <T extends object>(props: any, { cell }: { cell: Cell<T> }) => {
+const cellPropsGetter = <T extends object>(props: any, { cell }: { cell: Cell<T> }) => {
   return getStyles(props, false, cell.column);
 };
 
@@ -89,6 +89,7 @@ const getStyles = <T extends object>(
       style: {
         justifyContent: column?.align === 'right' ? 'flex-end' : 'flex-start',
         textAlign: column?.align === 'right' ? 'right' : 'left',
+        flexWrap: 'wrap',
         alignItems: 'center',
         display: isHeader && hideHeaders ? 'none' : 'flex',
         ...colSize,
@@ -243,6 +244,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     sort,
     filterable,
     renderBodyComponent,
+    manualSortBy,
   } = props;
   const selectedRowsRef = React.useRef<T[]>(externalSelectedRows ?? []);
   React.useEffect(() => {
@@ -274,7 +276,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
         ? { sortBy, pageIndex: pageIndexProp ?? 0, pageSize: pageSizeProp }
         : { sortBy, pageIndex: pageIndexProp ?? 0 },
       manualPagination: manualPagination ?? true, // Tell the usePagination hook
-      manualSortBy: false,
+      manualSortBy: manualSortBy,
       // that we'll handle our own data fetching.
       // This means we'll also have to provide our own
       // pageCount.
@@ -436,17 +438,17 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             </TooltipWrapper>
           </div>
         )}
-        {headerGroup.headers.map((column: ColumnInstanceWithProps<T>) => (
+        {headerGroup.headers.map((columnProps: ColumnInstanceWithProps<T>) => (
           <div
             {...(props.hideHeaders
-              ? column.getHeaderProps(noHeaders)
-              : column.getHeaderProps(headerProps))}
+              ? columnProps.getHeaderProps(noHeadersGetter)
+              : columnProps.getHeaderProps(headerPropsGetter))}
             className={classnames(
               'th',
-              column.isSorted ? (column.isSortedDesc ? 'sort-desc' : 'sort-asc') : '',
+              columnProps.isSorted ? (columnProps.isSortedDesc ? 'sort-desc' : 'sort-asc') : '',
             )}
           >
-            {renderHeaderCell(column)}
+            {renderHeaderCell(columnProps)}
           </div>
         ))}
       </>
@@ -512,7 +514,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
           <div {...footerGroup.getHeaderGroupProps()} className="tr">
             {footerGroup.headers.map(
               (column: ColumnInstanceWithProps<T> & { Footer?: Function }) => (
-                <div {...column.getHeaderProps(headerProps)} className="th">
+                <div {...column.getHeaderProps(headerPropsGetter)} className="th">
                   {column.Footer ? <column.Footer properties={map(page, 'original')} /> : null}
                 </div>
               ),
@@ -583,7 +585,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             {row.cells.map((cell: CellWithProps<T>) => {
               return (
                 <div
-                  {...cell.getCellProps(cellProps)}
+                  {...cell.getCellProps(cellPropsGetter)}
                   title={cell.column.clickable && clickableTooltip ? clickableTooltip : ''}
                   className={classnames('td', cell.column.clickable ? 'clickable' : '')}
                   onClick={() =>
@@ -625,7 +627,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     props.noRowsMessage,
     props.columns,
     renderExpandRowStateButton,
-    cellProps,
+    cellPropsGetter,
     expandedRows,
     clickableTooltip,
     externalSelectedRows,
