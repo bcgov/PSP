@@ -1,4 +1,4 @@
-import { IContactFilter } from 'features/contact/interfaces';
+import { IContactFilter } from 'features/contacts/interfaces';
 import { useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as React from 'react';
