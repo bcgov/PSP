@@ -16,7 +16,7 @@ export const toAccessRequest = (values: any): IAccessRequest => {
     userId: values.userId,
     user: {
       id: values.userId,
-      businessIdentifier: values.user.businessIdentifier,
+      businessIdentifierValue: values.user.businessIdentifier,
       email: values.user.email,
       position: values.user.position,
     },

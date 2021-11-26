@@ -62,7 +62,7 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// get/set - The municipality(city) of this contact.
         /// </summary>
         /// <value></value>
-        public string Municipality { get; set; }
+        public string MunicipalityName { get; set; }
 
         /// <summary>
         /// get/set - The province or state, of the person or organization.

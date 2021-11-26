@@ -6,8 +6,8 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IProvinceService interface, provides a service layer to administer provinces within the datasource.
     /// </summary>
-    public interface IProvinceService : IService<Province>
+    public interface IProvinceService : IService<PimsProvinceState>
     {
-        IEnumerable<Province> Get();
+        IEnumerable<PimsProvinceState> Get();
     }
 }

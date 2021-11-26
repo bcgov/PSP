@@ -1,3 +1,4 @@
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -14,7 +15,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// ClaimService class, provides a service layer to administrate users within the datasource.
     /// </summary>
-    public class ClaimService : BaseService<Claim>, IClaimService
+    public class ClaimService : BaseService<PimsClaim>, IClaimService
     {
         #region Variables
         #endregion
@@ -27,7 +28,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, IPimsService service, ILogger<ClaimService> logger) : base(dbContext, user, service, logger) { }
+        public ClaimService(PimsContext dbContext, System.Security.Claims.ClaimsPrincipal user, IPimsService service, ILogger<ClaimService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -38,17 +39,17 @@ namespace Pims.Dal.Services
         /// <param name="quantity"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Paged<Claim> Get(int page, int quantity, string name = null)
+        public Paged<PimsClaim> Get(int page, int quantity, string name = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var query = this.Context.Claims.AsNoTracking();
+            var query = this.Context.PimsClaims.AsNoTracking();
 
             if (!String.IsNullOrWhiteSpace(name))
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
 
             var claims = query.Skip((page - 1) * quantity).Take(quantity);
-            return new Paged<Claim>(claims.ToArray(), page, quantity, query.Count());
+            return new Paged<PimsClaim>(claims.ToArray(), page, quantity, query.Count());
         }
 
         /// <summary>
@@ -57,11 +58,11 @@ namespace Pims.Dal.Services
         /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Claim Get(Guid key)
+        public PimsClaim Get(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            return this.Context.Claims.AsNoTracking().FirstOrDefault(c => c.Key == key) ?? throw new KeyNotFoundException();
+            return this.Context.PimsClaims.AsNoTracking().FirstOrDefault(c => c.ClaimUid == key) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -70,9 +71,9 @@ namespace Pims.Dal.Services
         /// <param name="name"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Claim GetByName(string name)
+        public PimsClaim GetByName(string name)
         {
-            return this.Context.Claims.AsNoTracking().FirstOrDefault(c => c.Name == name) ?? throw new KeyNotFoundException();
+            return this.Context.PimsClaims.AsNoTracking().FirstOrDefault(c => c.Name == name) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -81,12 +82,12 @@ namespace Pims.Dal.Services
         /// <param name="add"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Claim Add(Claim add)
+        public PimsClaim Add(PimsClaim add)
         {
             add.ThrowIfNull(nameof(add));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            this.Context.Claims.Add(add);
+            this.Context.PimsClaims.Add(add);
             this.Context.CommitTransaction();
             return add;
         }
@@ -97,12 +98,12 @@ namespace Pims.Dal.Services
         /// <param name="update"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Claim Update(Claim update)
+        public PimsClaim Update(PimsClaim update)
         {
             update.ThrowIfNull(nameof(update));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var claim = this.Context.Claims.Find(update.Id) ?? throw new KeyNotFoundException();
+            var claim = this.Context.PimsClaims.Find(update.ClaimId) ?? throw new KeyNotFoundException();
 
             this.Context.Entry(claim).CurrentValues.SetValues(update);
             this.Context.CommitTransaction();
@@ -114,12 +115,12 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="delete"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        public void Delete(Claim delete)
+        public void Delete(PimsClaim delete)
         {
             delete.ThrowIfNull(nameof(delete));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var claim = this.Context.Claims.Find(delete.Id) ?? throw new KeyNotFoundException();
+            var claim = this.Context.PimsClaims.Find(delete.ClaimId) ?? throw new KeyNotFoundException();
 
             this.Context.Entry(claim).CurrentValues.SetValues(delete);
             this.Context.CommitTransaction();
@@ -133,15 +134,16 @@ namespace Pims.Dal.Services
         public int RemoveAll(Guid[] exclude)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-            var claims = this.Context.Claims
-                .Include(r => r.Roles)
-                .Where(r => !exclude.Contains(r.Key));
+            var claims = this.Context.PimsClaims
+                .Include(r => r.PimsRoleClaims)
+                .ThenInclude(r => r.Role)
+                .Where(r => !exclude.Contains(r.ClaimUid));
             claims.ForEach(r =>
             {
-                r.Roles.Clear();
+                r.PimsRoleClaims.Clear();
             });
 
-            this.Context.Claims.RemoveRange(claims);
+            this.Context.PimsClaims.RemoveRange(claims);
             var result = this.Context.CommitTransaction();
             return result;
         }

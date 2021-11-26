@@ -22,14 +22,14 @@ namespace Pims.Api.Test.Core.Extensions
         public void CreateInstance()
         {
             // Arrange
-            var type = typeof(Entity.Property);
+            var type = typeof(Entity.PimsProperty);
 
             // Act
-            var result = type.CreateInstance<Entity.Property>();
+            var result = type.CreateInstance<Entity.PimsProperty>();
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<Entity.Property>();
+            result.Should().BeAssignableTo<Entity.PimsProperty>();
         }
         #endregion
 

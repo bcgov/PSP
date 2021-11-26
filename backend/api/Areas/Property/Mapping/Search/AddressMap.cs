@@ -8,24 +8,22 @@ namespace Pims.Api.Areas.Property.Mapping.Search
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Address, Model.AddressModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.RowVersion, src => src.RowVersion)
-                .Map(dest => dest.AddressTypeId, src => src.AddressTypeId)
-                .Map(dest => dest.AddressType, src => src.AddressType.Description)
+            config.NewConfig<Entity.PimsAddress, Model.AddressModel>()
+                .Map(dest => dest.Id, src => src.AddressId)
+                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.StreetAddress1, src => src.StreetAddress1)
                 .Map(dest => dest.StreetAddress2, src => src.StreetAddress2)
                 .Map(dest => dest.StreetAddress3, src => src.StreetAddress3)
-                .Map(dest => dest.Municipality, src => src.Municipality)
-                .Map(dest => dest.RegionId, src => src.RegionId)
-                .Map(dest => dest.Region, src => src.Region.Name)
-                .Map(dest => dest.DistrictId, src => src.DistrictId)
-                .Map(dest => dest.District, src => src.District.Name)
-                .Map(dest => dest.ProvinceId, src => src.ProvinceId)
-                .Map(dest => dest.Province, src => src.Province.Code)
+                .Map(dest => dest.Municipality, src => src.MunicipalityName)
+                .Map(dest => dest.RegionId, src => src.RegionCode)
+                .Map(dest => dest.Region, src => src.RegionCodeNavigation.RegionName)
+                .Map(dest => dest.DistrictId, src => src.DistrictCode)
+                .Map(dest => dest.District, src => src.DistrictCodeNavigation.DistrictName)
+                .Map(dest => dest.ProvinceId, src => src.ProvinceStateId)
+                .Map(dest => dest.Province, src => src.ProvinceState.ProvinceStateCode)
                 .Map(dest => dest.CountryId, src => src.CountryId)
-                .Map(dest => dest.Country, src => src.Country.Code)
-                .Map(dest => dest.Postal, src => src.Postal);
+                .Map(dest => dest.Country, src => src.Country.CountryCode)
+                .Map(dest => dest.Postal, src => src.PostalCode);
         }
     }
 }

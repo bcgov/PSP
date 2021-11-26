@@ -5,5 +5,5 @@ export interface IAccessRequestOrganization {
   description?: string;
   isDisabled?: boolean;
   sortOrder?: number;
-  createdOn?: string;
+  appCreateTimestamp?: string;
 }

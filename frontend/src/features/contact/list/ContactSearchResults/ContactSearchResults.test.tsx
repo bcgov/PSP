@@ -31,7 +31,7 @@ const defaultSearchResult: IContactSearchResult = {
   firstName: 'first',
   organizationName: 'organizationName',
   email: 'email',
-  municipality: 'city',
+  municipalityName: 'city',
   provinceState: 'province',
   isDisabled: false,
   provinceStateId: 0,

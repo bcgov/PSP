@@ -7,7 +7,7 @@ const componentRender = () => {
   let component = create(
     <div>
       <FilterBar
-        initialValues={{ businessIdentifier: 'test', firstName: 'user' }}
+        initialValues={{ businessIdentifierValue: 'test', firstName: 'user' }}
         onChange={() => {}}
       />
     </div>,

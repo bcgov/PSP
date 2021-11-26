@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Admin.Models.AccessRequest
         /// <summary>
         /// get/set - The username.
         /// </summary>
-        public string BusinessIdentifier { get; set; }
+        public string BusinessIdentifierValue { get; set; }
 
         /// <summary>
         /// get/set - The user's given name.

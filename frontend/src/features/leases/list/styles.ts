@@ -1,3 +1,4 @@
+import { InlineForm, InlineInput } from 'components/common/form/styles';
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
@@ -38,4 +39,21 @@ export const FileIcon = styled(Button)`
   color: ${({ theme, disabled }) =>
     disabled ? theme.css.disabledColor : theme.css.primaryColor} !important;
   padding: 6px 0.5rem;
+`;
+
+export const FilterBox = styled(InlineForm)`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  flex: 1 1 auto;
+  padding: 1.5rem;
+  .form-check-label {
+    display: flex;
+    p {
+      margin-left: 1rem;
+    }
+  }
+`;
+
+export const LongInlineInput = styled(InlineInput)`
+  flex: 3 1 auto;
+  max-width: 31rem;
 `;

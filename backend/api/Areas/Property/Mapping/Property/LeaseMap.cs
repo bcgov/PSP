@@ -9,9 +9,9 @@ namespace Pims.Api.Areas.Property.Mapping.Property
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Lease, Model.LeaseModel>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.ExpiryDate, src => src.TermExpiryDate)
+            config.NewConfig<Entity.PimsLease, Model.LeaseModel>()
+                .Map(dest => dest.Id, src => src.LeaseId)
+                .Map(dest => dest.ExpiryDate, src => src.GetExpiryDate())
                 .Map(dest => dest.TenantName, src => src.GetFullName());
         }
     }

@@ -1,4 +1,5 @@
 using Pims.Dal.Entities;
+using System.Collections.Generic;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -12,20 +13,20 @@ namespace Pims.Core.Test
         /// Create a new instance of a Contact, using entities
         /// </summary>
         /// <returns></returns>
-        public static Entity.Contact CreateContact(string id, bool isDisabled = false, Address address = null, Organization organization = null, Person person = null)
+        public static Entity.PimsContactMgrVw CreateContact(string id, bool isDisabled = false, PimsAddress address = null, PimsOrganization organization = null, PimsPerson person = null)
         {
-            var contact = new Entity.Contact()
+            var contact = new Entity.PimsContactMgrVw()
             {
                 Id = id,
                 Address = address,
                 FirstName = person?.FirstName ?? "firstName",
                 Surname = person?.Surname ?? "surName",
-                Summary = organization?.Name ?? person?.GetFullName(),
+                Summary = organization?.OrganizationName ?? person?.GetFullName(),
                 IsDisabled = isDisabled,
                 Organization = organization,
                 Person = person,
-                OrganizationName = organization?.Name ?? "organization name",
-                Municipality = address.Municipality,
+                OrganizationName = organization?.OrganizationName ?? "organization name",
+                MunicipalityName = address.MunicipalityName,
             };
             return contact;
         }
@@ -34,11 +35,11 @@ namespace Pims.Core.Test
         /// Create a new instance of a Contact, using string values
         /// </summary>
         /// <returns></returns>
-        public static Entity.Contact CreateContact(string id, bool isDisabled = false, string municipality = null, string firstName = null, string surname = null, string organizationName = null)
+        public static Entity.PimsContactMgrVw CreateContact(string id, bool isDisabled = false, string municipality = null, string firstName = null, string surname = null, string organizationName = null)
         {
-            var address = new Address() { Municipality = municipality };
-            var organization = organizationName != null ? new Organization() { Name = organizationName, Address = address } : null;
-            var person = firstName != null ? new Person() { FirstName = firstName, Surname = surname, Address = address } : null;
+            var address = new PimsAddress() { MunicipalityName = municipality };
+            var organization = organizationName != null ? new PimsOrganization() { OrganizationName = organizationName, PimsOrganizationAddresses = new List<PimsOrganizationAddress>() { new PimsOrganizationAddress() { Address = address } } } : null;
+            var person = firstName != null ? new PimsPerson() { FirstName = firstName, Surname = surname, PimsPersonAddresses = new List<PimsPersonAddress>() { new PimsPersonAddress() { Address = address } } } : null;
             
             return CreateContact(id, isDisabled, address, organization, person);
         }

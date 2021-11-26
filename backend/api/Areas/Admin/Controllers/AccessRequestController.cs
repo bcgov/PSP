@@ -84,7 +84,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-access-requests" })]
         public IActionResult Delete(long id, [FromBody] Model.AccessRequestModel model)
         {
-            var entity = _mapper.Map<Entity.AccessRequest>(model);
+            var entity = _mapper.Map<Entity.PimsAccessRequest>(model);
             _pimsService.AccessRequest.Delete(entity);
             return new JsonResult(model);
         }

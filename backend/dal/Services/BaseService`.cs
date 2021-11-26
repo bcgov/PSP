@@ -1,6 +1,6 @@
 using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
 
 namespace Pims.Dal.Services
 {
@@ -10,7 +10,7 @@ namespace Pims.Dal.Services
     /// </summary>
     /// <typeparam name="ET"></typeparam>
     public abstract class BaseService<ET> : BaseService
-        where ET : BaseEntity
+        where ET : class
     {
         #region Variables
         #endregion
@@ -26,7 +26,8 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        protected BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger) : base(dbContext, user, service, logger)
+        /// <param name="mapper"></param>
+        protected BaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<BaseService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper)
         { }
         #endregion
 

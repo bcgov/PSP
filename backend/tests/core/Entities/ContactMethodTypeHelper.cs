@@ -13,23 +13,23 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.ContactMethodType CreateContactMethodType(string id)
+        public static Entity.PimsContactMethodType CreateContactMethodType(string id)
         {
-            return new Entity.ContactMethodType(id, "") { RowVersion = 1 };
+            return new Entity.PimsContactMethodType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of ContactMethodType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.ContactMethodType> CreateDefaultContactMethodTypes()
+        public static List<Entity.PimsContactMethodType> CreateDefaultContactMethodTypes()
         {
-            return new List<Entity.ContactMethodType>()
+            return new List<Entity.PimsContactMethodType>()
             {
-                new Entity.ContactMethodType("Email", "") { RowVersion = 1 },
-                new Entity.ContactMethodType("Phone", "") { RowVersion = 1 },
-                new Entity.ContactMethodType("Mobile", "") { RowVersion = 1 },
-                new Entity.ContactMethodType("Fax", "") { RowVersion = 1 }
+                new Entity.PimsContactMethodType("Email") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsContactMethodType("Phone") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsContactMethodType("Mobile") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsContactMethodType("Fax") { ConcurrencyControlNumber = 1 }
             };
         }
     }

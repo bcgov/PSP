@@ -55,6 +55,7 @@ export function ContactSearchResults(props: IContactSearchResultsProps) {
       columns={columns}
       data={results ?? []}
       sort={sort}
+      manualSortBy={true}
       onSortChange={handleSortChange}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}

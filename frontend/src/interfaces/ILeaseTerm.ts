@@ -1,7 +1,9 @@
+import ITypeCode from './ITypeCode';
 export interface ILeaseTerm {
-  id: 'initial term';
-  startDate: string;
-  endDate: string;
-  renewalDate: string;
-  termStatus: string;
+  id: number;
+  leaseId: number;
+  statusTypeCode?: ITypeCode<string>;
+  startDate?: string;
+  expiryDate?: string;
+  renewalDate?: string;
 }

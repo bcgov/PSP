@@ -73,7 +73,7 @@ exports[`Tenant component renders as expected 1`] = `
   border-left: 1px solid #666666;
 }
 
-.c3 .form-control {
+.c3 .form-control:not(.description) {
   font-weight: 700;
 }
 
