@@ -1,8 +1,8 @@
 import { createMemoryHistory } from 'history';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { render, RenderOptions, waitFor } from 'utils/test-utils';
+import { render, RenderOptions } from 'utils/test-utils';
 
-import { ContactContainer, IContactContainerProps } from '..';
+import { ContactContainer, IContactContainerProps } from '../..';
 
 const history = createMemoryHistory();
 
