@@ -24,21 +24,10 @@ export const DetailTerms: React.FunctionComponent<IDetailTermsProps> = ({
 }) => {
   const formikProps = useFormikContext<IFormLease>();
   const { values } = formikProps;
-  const startDate = getIn(values, withNameSpace(nameSpace, 'startDate'));
-  const expiryDate = getIn(values, withNameSpace(nameSpace, 'expiryDate'));
-  const renewalDate = getIn(values, withNameSpace(nameSpace, 'renewalDate'));
-
-  //TODO: this should be populated by the API when the schema is updated to support renewal terms.
-  const terms: ILeaseTerm[] = [
-    {
-      id: 'initial term',
-      startDate: startDate,
-      endDate: expiryDate,
-      renewalDate: renewalDate,
-      termStatus: 'exercised',
-    },
-  ];
-  const currentTerm = terms.find(term => moment().isSameOrBefore(moment(term.endDate), 'day'));
+  const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
+  const currentTerm = terms.find((term: ILeaseTerm) =>
+    moment().isSameOrBefore(moment(term.expiryDate), 'day'),
+  );
 
   return (
     <>
@@ -50,7 +39,11 @@ export const DetailTerms: React.FunctionComponent<IDetailTermsProps> = ({
           label="Payment amount:"
           field="amount"
         />
-        <InlineInput disabled={disabled} label="Payment frequency:" field="paymentFrequencyType" />
+        <InlineInput
+          disabled={disabled}
+          label="Payment frequency:"
+          field="paymentFrequencyType.description"
+        />
         <InlineInput disabled={disabled} label="Total renewal terms:" field="renewalCount" />
       </Styled.TableHeadFields>
       <Styled.TermsTable<ILeaseTerm>

@@ -26,7 +26,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             property.ThrowIfNotAllowedToEdit("paramName", user, "role");
@@ -42,11 +42,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Property)null, "paramName", user, "role"));
+            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((PimsProperty)null, "paramName", user, "role"));
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForRole("role");
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
@@ -72,7 +72,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             property.ThrowIfNotAllowedToEdit("paramName", user, Permissions.PropertyEdit);
@@ -88,11 +88,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Property)null, "paramName", user, Permissions.PropertyEdit));
+            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((PimsProperty)null, "paramName", user, Permissions.PropertyEdit));
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
@@ -118,7 +118,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             property.ThrowIfNotAllowedToEdit("paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd });
@@ -134,11 +134,11 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
-            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((Property)null, "paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }));
+            Assert.Throws<ArgumentNullException>(() => EntityExtensions.ThrowIfNotAllowedToEdit((PimsProperty)null, "paramName", user, new[] { Permissions.PropertyEdit, Permissions.PropertyAdd }));
         }
 
         [Fact]
@@ -148,7 +148,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
@@ -162,7 +162,7 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var helper = new TestHelper();
             var user = helper.CreateForPermission(Permissions.PropertyEdit);
             var property = EntityHelper.CreateProperty(123);
-            property.RowVersion = 1;
+            property.ConcurrencyControlNumber = 1;
 
             // Act
             // Assert
@@ -170,9 +170,9 @@ namespace Pims.Dal.Test.Helpers.Extensions
         }
         #endregion
 
-        #region SetOriginalRowVersion
+        #region SetOriginalConcurrencyControlNumber
         [Fact]
-        public void SetOriginalRowVersion_Success()
+        public void SetOriginalConcurrencyControlNumber_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -180,14 +180,14 @@ namespace Pims.Dal.Test.Helpers.Extensions
             var context = helper.InitializeDatabase(user);
             var property = context.CreateProperty(123);
             context.SaveChanges();
-            property.RowVersion = 2;
+            property.ConcurrencyControlNumber = 2;
 
             // Act
-            property.SetOriginalRowVersion(context);
+            property.SetOriginalConcurrencyControlNumber(context);
 
             // Assert
-            context.Entry(property).OriginalValues[nameof(BaseEntity.RowVersion)].Should().BeEquivalentTo(property.RowVersion);
-            context.Entry(property).CurrentValues[nameof(BaseEntity.RowVersion)].Should().BeEquivalentTo(property.RowVersion);
+            context.Entry(property).OriginalValues[nameof(IBaseEntity.ConcurrencyControlNumber)].Should().BeEquivalentTo(property.ConcurrencyControlNumber);
+            context.Entry(property).CurrentValues[nameof(IBaseEntity.ConcurrencyControlNumber)].Should().BeEquivalentTo(property.ConcurrencyControlNumber);
         }
         #endregion
         #endregion

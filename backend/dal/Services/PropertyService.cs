@@ -1,3 +1,4 @@
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -15,7 +16,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// PropertyService class, provides a service layer to interact with properties within the datasource.
     /// </summary>
-    public class PropertyService : BaseService<Property>, IPropertyService
+    public class PropertyService : BaseService<PimsProperty>, IPropertyService
     {
         #region Constructors
         /// <summary>
@@ -25,7 +26,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public PropertyService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<PropertyService> logger) : base(dbContext, user, service, logger) { }
+        public PropertyService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<PropertyService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -35,7 +36,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public int Count()
         {
-            return this.Context.Properties.Count();
+            return this.Context.PimsProperties.Count();
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<Property> Get(PropertyFilter filter)
+        public IEnumerable<PimsProperty> Get(PropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -66,7 +67,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<Property> GetPage(PropertyFilter filter)
+        public Paged<PimsProperty> GetPage(PropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -79,7 +80,7 @@ namespace Pims.Dal.Services
                 .Take(filter.Quantity)
                 .ToArray();
 
-            return new Paged<Property>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsProperty>(items, filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>
@@ -87,36 +88,39 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Property Get(int id)
+        public PimsProperty Get(int id)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.Properties
-                .Include(p => p.District)
-                .Include(p => p.Region)
-                .Include(p => p.PropertyType)
-                .Include(p => p.Status)
-                .Include(p => p.DataSource)
-                .Include(p => p.Classification)
-                .Include(p => p.Tenure)
-                .Include(p => p.AreaUnit)
+            var property = this.Context.PimsProperties
+                .Include(p => p.DistrictCodeNavigation)
+                .Include(p => p.RegionCodeNavigation)
+                .Include(p => p.PropertyTypeCodeNavigation)
+                .Include(p => p.PropertyStatusTypeCodeNavigation)
+                .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.AddressType)
+                .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.Region)
+                .ThenInclude(a => a.DistrictCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.District)
-                .Include(p => p.Address)
-                .ThenInclude(a => a.Province)
+                .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.Country)
-                .Include(p => p.Leases)
-                .ThenInclude(l => l.TenantsManyToMany)
-                .Include(p => p.Leases)
-                .ThenInclude(l => l.Persons)
-                .Include(p => p.Leases)
-                .ThenInclude(l => l.Organizations)
-                .Where(p => p.Id == id)
+                .Include(p => p.PimsPropertyLeases)
+                .ThenInclude(l => l.Lease)
+                .ThenInclude(l => l.PimsLeaseTenants)
+                .Include(p => p.PimsPropertyLeases)
+                .ThenInclude(l => l.Lease)
+                .ThenInclude(l => l.PimsLeaseTenants)
+                .ThenInclude(l => l.Person)
+                .Include(p => p.PimsPropertyLeases)
+                .ThenInclude(l => l.Lease)
+                .ThenInclude(l => l.PimsLeaseTenants)
+                .ThenInclude(l => l.Organization)
+                .Where(p => p.PropertyId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return property;
         }
@@ -126,31 +130,29 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="pid"></param>
         /// <returns></returns>
-        public Property GetForPID(string pid)
+        public PimsProperty GetForPID(string pid)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
             var search = pid.ConvertPID();
 
-            var property = this.Context.Properties
-                .Include(p => p.District)
-                .Include(p => p.Region)
-                .Include(p => p.PropertyType)
-                .Include(p => p.Status)
-                .Include(p => p.DataSource)
-                .Include(p => p.Classification)
-                .Include(p => p.Tenure)
-                .Include(p => p.AreaUnit)
+            var property = this.Context.PimsProperties
+                .Include(p => p.DistrictCodeNavigation)
+                .Include(p => p.RegionCodeNavigation)
+                .Include(p => p.PropertyTypeCodeNavigation)
+                .Include(p => p.PropertyStatusTypeCodeNavigation)
+                .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                .Include(p => p.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.AddressType)
+                .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.Region)
+                .ThenInclude(a => a.DistrictCodeNavigation)
                 .Include(p => p.Address)
-                .ThenInclude(a => a.District)
-                .Include(p => p.Address)
-                .ThenInclude(a => a.Province)
+                .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                 .ThenInclude(a => a.Country)
-                .Where(p => p.PID == search)
+                .Where(p => p.Pid == search)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
             return property;
         }

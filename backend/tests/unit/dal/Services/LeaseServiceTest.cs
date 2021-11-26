@@ -70,7 +70,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Entity.Lease[]>(result);
+            Assert.IsAssignableFrom<Entity.PimsLease[]>(result);
             Assert.Equal(expectedCount, result.Count());
         }
 
@@ -107,7 +107,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.Lease>>(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
             Assert.Equal(expectedCount, result.Items.Count);
         }
         #endregion

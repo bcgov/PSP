@@ -1,3 +1,4 @@
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -15,7 +16,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// RoleService class, provides a service layer to administrate users within the datasource.
     /// </summary>
-    public class RoleService : BaseService<Role>, IRoleService
+    public class RoleService : BaseService<PimsRole>, IRoleService
     {
         #region Variables
         #endregion
@@ -28,7 +29,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public RoleService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<RoleService> logger) : base(dbContext, user, service, logger) { }
+        public RoleService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<RoleService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -39,17 +40,17 @@ namespace Pims.Dal.Services
         /// <param name="quantity"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Paged<Role> Get(int page, int quantity, string name = null)
+        public Paged<PimsRole> Get(int page, int quantity, string name = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var query = this.Context.Roles.AsNoTracking();
+            var query = this.Context.PimsRoles.AsNoTracking();
 
             if (!String.IsNullOrWhiteSpace(name))
                 query = query.Where(r => EF.Functions.Like(r.Name, $"%{name}%"));
 
             var roles = query.Skip((page - 1) * quantity).Take(quantity);
-            return new Paged<Role>(roles.ToArray(), page, quantity, query.Count());
+            return new Paged<PimsRole>(roles.ToArray(), page, quantity, query.Count());
         }
 
         /// <summary>
@@ -58,14 +59,14 @@ namespace Pims.Dal.Services
         /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role Get(Guid key)
+        public PimsRole Get(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            return this.Context.Roles
-                .Include(r => r.ClaimsManyToMany).ThenInclude(c => c.Claim)
+            return this.Context.PimsRoles
+                .Include(r => r.PimsRoleClaims).ThenInclude(c => c.Claim)
                 .AsNoTracking()
-                .FirstOrDefault(u => u.Key == key) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(u => u.RoleUid == key) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -74,10 +75,10 @@ namespace Pims.Dal.Services
         /// <param name="name"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role GetByName(string name)
+        public PimsRole GetByName(string name)
         {
-            return this.Context.Roles
-                .Include(r => r.ClaimsManyToMany).ThenInclude(c => c.Claim)
+            return this.Context.PimsRoles
+                .Include(r => r.PimsRoleClaims).ThenInclude(c => c.Claim)
                 .AsNoTracking()
                 .FirstOrDefault(r => r.Name == name) ?? throw new KeyNotFoundException();
         }
@@ -88,12 +89,12 @@ namespace Pims.Dal.Services
         /// <param name="key"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role GetByKeycloakId(Guid key)
+        public PimsRole GetByKeycloakId(Guid key)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            return this.Context.Roles
-                .Include(r => r.ClaimsManyToMany).ThenInclude(c => c.Claim)
+            return this.Context.PimsRoles
+                .Include(r => r.PimsRoleClaims).ThenInclude(c => c.Claim)
                 .AsNoTracking()
                 .FirstOrDefault(u => u.KeycloakGroupId == key) ?? throw new KeyNotFoundException();
         }
@@ -103,7 +104,7 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="add"></param>
         /// <returns></returns>
-        public Role Add(Role add)
+        public PimsRole Add(PimsRole add)
         {
             AddWithoutSave(add);
             this.Context.CommitTransaction();
@@ -115,12 +116,12 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="add"></param>
         /// <returns></returns>
-        public void AddWithoutSave(Role add)
+        public void AddWithoutSave(PimsRole add)
         {
             add.ThrowIfNull(nameof(add));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            this.Context.Roles.Add(add);
+            this.Context.PimsRoles.Add(add);
         }
 
         /// <summary>
@@ -129,7 +130,7 @@ namespace Pims.Dal.Services
         /// <param name="role"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role Update(Role update)
+        public PimsRole Update(PimsRole update)
         {
             var role = UpdateWithoutSave(update);
             this.Context.CommitTransaction();
@@ -142,15 +143,15 @@ namespace Pims.Dal.Services
         /// <param name="role"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         /// <returns></returns>
-        public Role UpdateWithoutSave(Role update)
+        public PimsRole UpdateWithoutSave(PimsRole update)
         {
             update.ThrowIfNull(nameof(update));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var role = this.Context.Roles.Find(update.Id) ?? throw new KeyNotFoundException();
+            var role = this.Context.PimsRoles.Find(update.RoleId) ?? throw new KeyNotFoundException();
 
             this.Context.Entry(role).CurrentValues.SetValues(update);
-            this.Context.SetOriginalRowVersion(role);
+            this.Context.SetOriginalConcurrencyControlNumber(role);
             return role;
         }
 
@@ -159,16 +160,16 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="entity"></param>
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
-        public void Delete(Role delete)
+        public void Delete(PimsRole delete)
         {
             delete.ThrowIfNull(nameof(delete));
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
 
-            var role = this.Context.Roles.Find(delete.Id) ?? throw new KeyNotFoundException();
+            var role = this.Context.PimsRoles.Find(delete.RoleId) ?? throw new KeyNotFoundException();
 
-            role.RowVersion = delete.RowVersion;
-            this.Context.SetOriginalRowVersion(role);
-            this.Context.Roles.Remove(role);
+            role.ConcurrencyControlNumber = delete.ConcurrencyControlNumber;
+            this.Context.SetOriginalConcurrencyControlNumber(role);
+            this.Context.PimsRoles.Remove(role);
             this.Context.CommitTransaction();
         }
 
@@ -180,14 +181,14 @@ namespace Pims.Dal.Services
         public int RemoveAll(Guid[] exclude)
         {
             this.User.ThrowIfNotAuthorized(Permissions.AdminRoles);
-            var roles = this.Context.Roles.Include(r => r.Claims).Include(r => r.Users).Where(r => !exclude.Contains(r.Key));
+            var roles = this.Context.PimsRoles.Include(r => r.PimsRoleClaims).Include(r => r.PimsUserRoles).Where(r => !exclude.Contains(r.RoleUid));
             roles.ForEach(r =>
             {
-                r.Claims.Clear();
-                r.Users.Clear();
+                r.PimsRoleClaims.Clear();
+                r.PimsUserRoles.Clear();
             });
 
-            this.Context.Roles.RemoveRange(roles);
+            this.Context.PimsRoles.RemoveRange(roles);
             var result = this.Context.CommitTransaction();
             return result;
         }

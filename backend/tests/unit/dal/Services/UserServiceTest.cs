@@ -67,7 +67,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.User>>(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsUser>>(result);
             Assert.Equal(expectedCount, result.Items.Count());
         }
 
@@ -96,9 +96,9 @@ namespace Pims.Dal.Test.Services
             var euser = EntityHelper.CreateUser("Tester");
             euser.Person.FirstName = "Test";
             euser.Person.Surname = "McTest";
-            euser.BusinessIdentifier = "ttester";
+            euser.BusinessIdentifierValue = "ttester";
             euser.Position = "position";
-            euser.Person.ContactMethods.Add(EntityHelper.CreateContactMethod(1, "test@test.com", euser.Person, euser.Organizations.First()));
+            euser.Person.PimsContactMethods.Add(EntityHelper.CreateContactMethod(1, "test@test.com", euser.Person, euser.GetOrganizations().First()));
             euser.IsDisabled = false;
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(euser);
@@ -110,7 +110,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.User>>(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsUser>>(result);
             Assert.Equal(expectedCount, result.Items.Count);
         }
 
@@ -131,7 +131,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(key, result.KeycloakUserId);
+            Assert.Equal(key, result.GuidIdentifierValue);
         }
         #endregion
 
@@ -149,11 +149,11 @@ namespace Pims.Dal.Test.Services
 
             // Act
             service.Add(euser);
-            var result = service.Get(euser.KeycloakUserId.Value);
+            var result = service.Get(euser.GuidIdentifierValue.Value);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("ttester", result.BusinessIdentifier);
+            Assert.Equal("ttester", result.BusinessIdentifierValue);
         }
 
         [Fact]

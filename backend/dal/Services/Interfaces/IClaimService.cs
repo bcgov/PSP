@@ -7,14 +7,14 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IClaimService interface, provides a service layer to administer roles within the datasource.
     /// </summary>
-    public interface IClaimService : IService<Claim>
+    public interface IClaimService : IService<PimsClaim>
     {
-        Paged<Claim> Get(int page, int quantity, string name = null);
-        Claim Get(Guid key);
-        Claim GetByName(string name);
+        Paged<PimsClaim> Get(int page, int quantity, string name = null);
+        PimsClaim Get(Guid key);
+        PimsClaim GetByName(string name);
         int RemoveAll(Guid[] exclude);
-        Claim Add(Claim add);
-        Claim Update(Claim update);
-        void Delete(Claim delete);
+        PimsClaim Add(PimsClaim add);
+        PimsClaim Update(PimsClaim update);
+        void Delete(PimsClaim delete);
     }
 }

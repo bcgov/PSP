@@ -53,7 +53,6 @@ namespace Pims.Dal
                 {
                     options.CommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
                     options.UseNetTopologySuite();
-                    // options.MigrationsHistoryTable("PIMS_MIGRATION_HISTORY"); // TODO: This doesn't work in .NET 5.0 currently.
                 });
                 if (!env.IsProduction())
                 {

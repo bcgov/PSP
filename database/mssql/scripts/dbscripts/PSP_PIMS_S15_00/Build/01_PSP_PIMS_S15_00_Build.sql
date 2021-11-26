@@ -1934,7 +1934,7 @@ CREATE TABLE "dbo"."PIMS_LEASE_LICENSE_TYPE"  (
 GO
 CREATE TABLE "dbo"."PIMS_LEASE_PAYMENT"  ( 
 	"LEASE_PAYMENT_ID"              	bigint NOT NULL CONSTRAINT "LSPYMT_LEASE_PAYMENT_ID_DEF"  DEFAULT (NEXT VALUE FOR [PIMS_LEASE_PAYMENT_ID_SEQ]),
-	"LEASE_TERM_ID"                 	varchar(40) NOT NULL,
+	"LEASE_TERM_ID"                 	bigint NOT NULL,
 	"LEASE_PAYMENT_PERIOD_ID"       	bigint NOT NULL,
 	"LEASE_PAYMENT_METHOD_TYPE_CODE"	nvarchar(20) NOT NULL,
 	"PAYMENT_RECEIVED_DATE"         	datetime NOT NULL,
@@ -1961,7 +1961,7 @@ CREATE TABLE "dbo"."PIMS_LEASE_PAYMENT"  (
 GO
 CREATE TABLE "dbo"."PIMS_LEASE_PAYMENT_FORECAST"  ( 
 	"LEASE_PAYMENT_FORECAST_ID"     	bigint NOT NULL CONSTRAINT "LPFCST_LEASE_PAYMENT_FORECAST_ID_DEF"  DEFAULT (NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_ID_SEQ]),
-	"LEASE_TERM_ID"                 	varchar(40) NOT NULL,
+	"LEASE_TERM_ID"                 	bigint NOT NULL,
 	"LEASE_PAYMENT_PERIOD_ID"       	bigint NOT NULL,
 	"LEASE_PAYMENT_STATUS_TYPE_CODE"	nvarchar(20) NOT NULL,
 	"PAYMENT_DUE_DATE"              	datetime NOT NULL,
@@ -1990,7 +1990,7 @@ CREATE TABLE "dbo"."PIMS_LEASE_PAYMENT_FORECAST_HIST"  (
 	"EFFECTIVE_DATE_HIST"            	datetime NOT NULL CONSTRAINT "DF__PIMS_LEAS__EFFEC__77CAB889"  DEFAULT (getutcdate()),
 	"END_DATE_HIST"                  	datetime NULL,
 	"LEASE_PAYMENT_FORECAST_ID"      	bigint NOT NULL,
-	"LEASE_TERM_ID"                  	varchar(40) NOT NULL,
+	"LEASE_TERM_ID"                  	bigint NOT NULL,
 	"LEASE_PAYMENT_PERIOD_ID"        	bigint NOT NULL,
 	"LEASE_PAYMENT_STATUS_TYPE_CODE" 	nvarchar(20) NOT NULL,
 	"PAYMENT_DUE_DATE"               	datetime NOT NULL,
@@ -2019,7 +2019,7 @@ CREATE TABLE "dbo"."PIMS_LEASE_PAYMENT_HIST"  (
 	"EFFECTIVE_DATE_HIST"           	datetime NOT NULL CONSTRAINT "DF__PIMS_LEAS__EFFEC__7D8391DF"  DEFAULT (getutcdate()),
 	"END_DATE_HIST"                 	datetime NULL,
 	"LEASE_PAYMENT_ID"              	bigint NOT NULL,
-	"LEASE_TERM_ID"                 	varchar(40) NOT NULL,
+	"LEASE_TERM_ID"                 	bigint NOT NULL,
 	"LEASE_PAYMENT_PERIOD_ID"       	bigint NOT NULL,
 	"LEASE_PAYMENT_METHOD_TYPE_CODE"	nvarchar(20) NOT NULL,
 	"PAYMENT_RECEIVED_DATE"         	datetime NOT NULL,
@@ -2298,7 +2298,7 @@ CREATE TABLE "dbo"."PIMS_LEASE_TENANT_HIST"  (
  ON [PRIMARY])
 GO
 CREATE TABLE "dbo"."PIMS_LEASE_TERM"  ( 
-	"LEASE_TERM_ID"                 	varchar(40) NOT NULL CONSTRAINT "LSTERM_LEASE_TERM_ID_DEF"  DEFAULT ('NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ]'),
+	"LEASE_TERM_ID"                 	bigint NOT NULL CONSTRAINT "LSTERM_LEASE_TERM_ID_DEF"  DEFAULT (NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ]),
 	"LEASE_ID"                      	bigint NOT NULL,
 	"LEASE_TERM_STATUS_TYPE_CODE"   	nvarchar(20) NOT NULL,
 	"TERM_START_DATE"               	datetime NOT NULL,
@@ -2342,7 +2342,7 @@ CREATE TABLE "dbo"."PIMS_LEASE_TERM_HIST"  (
 	"_LEASE_TERM_HIST_ID"           	bigint NOT NULL CONSTRAINT "DF__PIMS_LEAS___LEAS__0DB9F9A8"  DEFAULT (NEXT VALUE FOR [PIMS_LEASE_TERM_H_ID_SEQ]),
 	"EFFECTIVE_DATE_HIST"           	datetime NOT NULL CONSTRAINT "DF__PIMS_LEAS__EFFEC__0EAE1DE1"  DEFAULT (getutcdate()),
 	"END_DATE_HIST"                 	datetime NULL,
-	"LEASE_TERM_ID"                 	varchar(40) NOT NULL,
+	"LEASE_TERM_ID"                 	bigint NOT NULL,
 	"LEASE_ID"                      	bigint NOT NULL,
 	"LEASE_TERM_STATUS_TYPE_CODE"   	nvarchar(20) NOT NULL,
 	"TERM_START_DATE"               	datetime NOT NULL,
@@ -13240,4 +13240,147 @@ ALTER TABLE "dbo"."PIMS_WORKFLOW_MODEL"
 	REFERENCES "dbo"."PIMS_WORKFLOW_MODEL_TYPE"("WORKFLOW_MODEL_TYPE_CODE")
 	ON DELETE NO ACTION 
 	ON UPDATE NO ACTION 
+GO
+
+/****** Object:  Table [dbo].[PIMS_TENANT]    Script Date: 11/18/2021 1:28:31 PM ******/
+-- Create sequence dbo.[PIMS_TENANT_ID_SEQ]
+PRINT N'Create sequence dbo.[PIMS_TENANT_ID_SEQ]'
+GO
+CREATE SEQUENCE [dbo].[PIMS_TENANT_ID_SEQ]
+	AS bigint
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	NO CYCLE
+	CACHE 50
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+CREATE TABLE [dbo].[PIMS_TENANT](
+	[TENANT_ID] [bigint] NOT NULL,
+	[CODE] [nvarchar](6) NOT NULL,
+	[NAME] [nvarchar](150) NOT NULL,
+	[DESCRIPTION] [nvarchar](500) NULL,
+	[SETTINGS] [nvarchar](2000) NOT NULL,
+	[CONCURRENCY_CONTROL_NUMBER] [bigint] NOT NULL,
+	[DB_CREATE_TIMESTAMP] [datetime] NOT NULL,
+	[DB_CREATE_USERID] [nvarchar](30) NOT NULL,
+	[DB_LAST_UPDATE_TIMESTAMP] [datetime] NOT NULL,
+	[DB_LAST_UPDATE_USERID] [nvarchar](30) NOT NULL,
+ CONSTRAINT [PIMS_TENANT_PK] PRIMARY KEY CLUSTERED 
+(
+	[TENANT_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  CONSTRAINT [TENANT_TENANT_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_TENANT_ID_SEQ]) FOR [TENANT_ID]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (CONVERT([bigint],(1))) FOR [CONCURRENCY_CONTROL_NUMBER]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (getutcdate()) FOR [DB_CREATE_TIMESTAMP]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (user_name()) FOR [DB_CREATE_USERID]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (getutcdate()) FOR [DB_LAST_UPDATE_TIMESTAMP]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (user_name()) FOR [DB_LAST_UPDATE_USERID]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Auto-sequenced unique key value' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'TENANT_ID'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Code value for entry' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'CODE'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Name of the entry for display purposes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'NAME'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Description of the entry for display purposes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'DESCRIPTION'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Serialized JSON value for the configuration' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'SETTINGS'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Concurrency control number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop view dbo.PIMS_CONTACT_MGR_VW
+PRINT N'Drop view dbo.PIMS_CONTACT_MGR_VW'
+GO
+DROP VIEW IF EXISTS [dbo].[PIMS_CONTACT_MGR_VW]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+PRINT N'Create view dbo.PIMS_CONTACT_MGR_VW'
+GO
+CREATE VIEW [dbo].[PIMS_CONTACT_MGR_VW] AS
+  SELECT CONCAT('P', PER.PERSON_ID) AS ID
+       , PER.PERSON_ID
+       , NULL                   AS ORGANIZATION_ID
+       , PER.IS_DISABLED
+       , TRIM(CONCAT_WS(' ', PER.FIRST_NAME, PER.MIDDLE_NAMES, PER.SURNAME)) AS SUMMARY
+       , PER.SURNAME
+       , PER.FIRST_NAME
+       , PER.MIDDLE_NAMES
+       , NULL                    AS ORGANIZATION_NAME
+       , PAD.ADDRESS_ID
+       , ADR.STREET_ADDRESS_1    AS MAILING_ADDRESS
+       , ADR.MUNICIPALITY_NAME
+       , PRV.PROVINCE_STATE_CODE AS PROVINCE_STATE 
+  FROM   PIMS_PERSON         PER                                           LEFT JOIN
+         PIMS_PERSON_ADDRESS PAD ON PAD.PERSON_ID         = PER.PERSON_ID  AND PAD.ADDRESS_USAGE_TYPE_CODE = 'MAILADDR' LEFT JOIN
+         PIMS_ADDRESS        ADR ON ADR.ADDRESS_ID        = PAD.ADDRESS_ID LEFT JOIN 
+		 PIMS_PROVINCE_STATE PRV ON PRV.PROVINCE_STATE_ID = ADR.PROVINCE_STATE_ID
+  UNION
+  SELECT CONCAT('O', ORG.ORGANIZATION_ID) AS ID
+       , NULL                        AS PERSON_ID
+	   , ORG.ORGANIZATION_ID
+	   , ORG.IS_DISABLED
+	   , ORG.ORGANIZATION_NAME       AS SUMMARY
+	   , NULL                        AS SURNAME
+	   , NULL                        AS FIRST_NAME
+	   , NULL                        AS MIDDLE_NAMES
+	   , ORG.ORGANIZATION_NAME
+	   , OAD.ADDRESS_ID
+	   , ADR.STREET_ADDRESS_1        AS MAILING_ADDRESS
+	   , ADR.MUNICIPALITY_NAME
+	   , PRV.PROVINCE_STATE_CODE     AS PROVINCE_STATE 
+  FROM   PIMS_ORGANIZATION         ORG                                              LEFT JOIN 
+         PIMS_ORGANIZATION_ADDRESS OAD ON OAD.ORGANIZATION_ID = ORG.ORGANIZATION_ID AND OAD.ADDRESS_USAGE_TYPE_CODE = 'MAILADDR' LEFT JOIN
+         PIMS_ADDRESS              ADR ON ADR.ADDRESS_ID      = OAD.ADDRESS_ID      LEFT JOIN 
+		 PIMS_PROVINCE_STATE       PRV ON PRV.PROVINCE_STATE_ID = ADR.PROVINCE_STATE_ID
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
 GO

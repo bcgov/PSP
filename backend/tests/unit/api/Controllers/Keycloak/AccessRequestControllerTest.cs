@@ -32,7 +32,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsKeycloakService>>();
             var accessRequest = EntityHelper.CreateAccessRequest(1);
-            service.Setup(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.AccessRequest>())).Returns(Task.FromResult(accessRequest));
+            service.Setup(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.PimsAccessRequest>())).Returns(Task.FromResult(accessRequest));
             var model = mapper.Map<Model.AccessRequestModel>(accessRequest);
 
             // Act
@@ -44,7 +44,7 @@ namespace PimsApi.Test.Keycloak.Controllers
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.AccessRequestModel>(accessRequest);
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.AccessRequest>()), Times.Once());
+            service.Verify(m => m.UpdateAccessRequestAsync(It.IsAny<Entity.PimsAccessRequest>()), Times.Once());
         }
         #endregion
     }

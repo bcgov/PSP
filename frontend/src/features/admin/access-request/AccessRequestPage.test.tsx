@@ -140,7 +140,7 @@ describe('AccessRequestPage', () => {
           id: undefined,
           surname: undefined,
           position: '',
-          businessIdentifier: undefined,
+          businessIdentifierValue: undefined,
           keycloakUserId: undefined,
         },
         userId: undefined,

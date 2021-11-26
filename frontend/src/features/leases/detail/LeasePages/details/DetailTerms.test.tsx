@@ -35,7 +35,7 @@ describe('DetailTermInformation component', () => {
         ...defaultFormLease,
         amount: 1000,
         renewalCount: 31,
-        paymentFrequencyType: 'Annual',
+        paymentFrequencyType: { id: 'ANNUAL', description: 'Annual', isDisabled: false },
       },
     });
     expect(getByDisplayValue('1000')).toBeVisible();
@@ -48,9 +48,16 @@ describe('DetailTermInformation component', () => {
     } = setup({
       lease: {
         ...defaultFormLease,
-        startDate: '2020-01-01',
-        expiryDate: '2022-01-01',
-        renewalDate: '2021-01-01',
+        terms: [
+          {
+            id: 1,
+            leaseId: 1,
+            startDate: '2020-01-01',
+            expiryDate: '2022-01-01',
+            renewalDate: '2021-01-01',
+            statusTypeCode: { id: 'EX', description: 'exercised', isDisabled: false },
+          },
+        ],
       },
     });
     expect(getByText('initial term')).toBeVisible();
@@ -69,6 +76,16 @@ describe('DetailTermInformation component', () => {
         startDate: '',
         expiryDate: undefined,
         renewalDate: undefined,
+        terms: [
+          {
+            id: 1,
+            leaseId: 1,
+            startDate: '',
+            expiryDate: '',
+            renewalDate: '',
+            statusTypeCode: { id: 'EX', description: 'exercised', isDisabled: false },
+          },
+        ],
       },
     });
     expect(getByText('initial term')).toBeVisible();

@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(long id)
+        public static Entity.PimsAddress CreateAddress(long id)
         {
             return CreateAddress(id, "1234 St", "", "", null, null, "V9V9V9");
         }
@@ -29,7 +29,7 @@ namespace Pims.Core.Test
         /// <param name="municipality"></param>
         /// <param name="postal"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(long id, string address, string unitNumber, string municipality, string postal)
+        public static Entity.PimsAddress CreateAddress(long id, string address, string unitNumber, string municipality, string postal)
         {
             return CreateAddress(id, address, unitNumber, municipality, null, null, postal);
         }
@@ -44,7 +44,7 @@ namespace Pims.Core.Test
         /// <param name="district"></param>
         /// <param name="postal"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(long id, string address, Entity.Province province = null, Entity.District district = null, string postal = "V9V9V9")
+        public static Entity.PimsAddress CreateAddress(long id, string address, Entity.PimsProvinceState province = null, Entity.PimsDistrict district = null, string postal = "V9V9V9")
         {
             return CreateAddress(id, address, null, null, province, district, postal);
         }
@@ -60,15 +60,15 @@ namespace Pims.Core.Test
         /// <param name="district"></param>
         /// <param name="postal"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(long id, string address, string unitNumber, string municipality, Entity.Province province = null, Entity.District district = null, string postal = "V9V9V9")
+        public static Entity.PimsAddress CreateAddress(long id, string address, string unitNumber, string municipality, Entity.PimsProvinceState province = null, Entity.PimsDistrict district = null, string postal = "V9V9V9")
         {
-            province ??= EntityHelper.CreateProvince((int)id, "BC", EntityHelper.CreateCountry((int)id, "CAN"));
-            district ??= EntityHelper.CreateDistrict((int)id, "District 1");
+            province ??= EntityHelper.CreateProvince((short)id, "BC", EntityHelper.CreateCountry((short)id, "CAN"));
+            district ??= EntityHelper.CreateDistrict((short)id, "District 1");
             municipality ??= "municipality";
-            return new Entity.Address(address, unitNumber, municipality, province, district, postal)
+            return new Entity.PimsAddress(address, unitNumber, municipality, province, district, postal)
             {
-                Id = id,
-                RowVersion = 1
+                AddressId = id,
+                ConcurrencyControlNumber = 1
             };
         }
 
@@ -81,14 +81,14 @@ namespace Pims.Core.Test
         /// <param name="district"></param>
         /// <param name="postal"></param>
         /// <returns></returns>
-        public static Entity.Address CreateAddress(this PimsContext context, long id, string address, Entity.Province province = null, Entity.District district = null, string postal = "")
+        public static Entity.PimsAddress CreateAddress(this PimsContext context, long id, string address, Entity.PimsProvinceState province = null, Entity.PimsDistrict district = null, string postal = "")
         {
-            province ??= context.Provinces.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a province.");
-            district ??= context.Districts.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a district.");
-            return new Entity.Address(address, null, "municipality", province, district, postal)
+            province ??= context.PimsProvinceStates.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a province.");
+            district ??= context.PimsDistricts.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a district.");
+            return new Entity.PimsAddress(address, null, "municipality", province, district, postal)
             {
-                Id = id,
-                RowVersion = 1
+                AddressId = id,
+                ConcurrencyControlNumber = 1
             };
         }
     }

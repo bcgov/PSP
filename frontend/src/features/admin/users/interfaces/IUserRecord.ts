@@ -7,7 +7,7 @@ export interface IUserRecord {
   id?: number;
   keycloakUserId?: string;
   email?: string;
-  businessIdentifier?: string;
+  businessIdentifierValue?: string;
   firstName?: string;
   surname?: string;
   isDisabled?: boolean;
@@ -15,6 +15,6 @@ export interface IUserRecord {
   roles?: string;
   position?: string;
   lastLogin?: string;
-  createdOn?: string;
+  appCreateTimestamp?: string;
   rowVersion?: number;
 }

@@ -10,12 +10,12 @@ export const initialState: IUsersState = {
   pagedUsers: { page: 1, pageIndex: 0, total: 0, quantity: 0, items: [] },
   rowsPerPage: DEFAULT_PAGE_SIZE,
   filter: {},
-  sort: { businessIdentifier: 'asc' },
+  sort: { businessIdentifierValue: 'asc' },
   pageIndex: 0,
   userDetail: {
     id: 0,
     keycloakUserId: '',
-    businessIdentifier: '',
+    businessIdentifierValue: '',
     displayName: '',
     firstName: '',
     surname: '',
@@ -23,7 +23,7 @@ export const initialState: IUsersState = {
     isDisabled: false,
     organizations: [],
     roles: [],
-    createdOn: '',
+    appCreateTimestamp: '',
     rowVersion: 1,
   },
 };

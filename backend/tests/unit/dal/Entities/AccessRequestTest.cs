@@ -18,31 +18,31 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var accessRequest = new AccessRequest();
+            var accessRequest = new PimsAccessRequest();
 
             // Assert
             accessRequest.User.Should().BeNull();
             accessRequest.Role.Should().BeNull();
-            accessRequest.Status.Should().BeNull();
-            accessRequest.Organizations.Should().BeEmpty();
+            accessRequest.AccessRequestStatusTypeCode.Should().BeNull();
+            accessRequest.GetOrganizations().Should().BeEmpty();
         }
 
         [Fact]
         public void AccessRequest_User_Constructor()
         {
             // Arrange
-            var user = new User();
-            var role = new Role();
-            var status = new AccessRequestStatusType();
+            var user = new PimsUser();
+            var role = new PimsRole();
+            var status = new PimsAccessRequestStatusType();
 
             // Act
-            var accessRequest = new AccessRequest(user, role, status);
+            var accessRequest = new PimsAccessRequest(user, role, status);
 
             // Assert
             accessRequest.User.Should().Be(user);
             accessRequest.Role.Should().Be(role);
-            accessRequest.Status.Should().Be(status);
-            accessRequest.Organizations.Should().BeEmpty();
+            accessRequest.AccessRequestStatusTypeCodeNavigation.Should().Be(status);
+            accessRequest.GetOrganizations().Should().BeEmpty();
         }
         #endregion
     }

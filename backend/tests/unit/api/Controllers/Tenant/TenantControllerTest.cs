@@ -72,7 +72,7 @@ namespace Pims.Api.Test.Controllers
 
             var service = helper.GetService<Mock<IPimsService>>();
             var tenant = EntityHelper.CreateTenant(1, "TEST");
-            service.Setup(m => m.Tenant.GetTenant(tenant.Code)).Returns<Entity.Tenant>(null);
+            service.Setup(m => m.Tenant.GetTenant(tenant.Code)).Returns<Entity.PimsTenant>(null);
 
             // Act
             var result = controller.Settings();
@@ -96,7 +96,7 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<TenantController>(user, mockOptions.Object);
 
             var service = helper.GetService<Mock<IPimsService>>();
-            service.Setup(m => m.Tenant.GetTenant(null)).Returns<Entity.Tenant>(null);
+            service.Setup(m => m.Tenant.GetTenant(null)).Returns<Entity.PimsTenant>(null);
 
             // Act
             var result = controller.Settings();
@@ -119,7 +119,7 @@ namespace Pims.Api.Test.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var tenant = EntityHelper.CreateTenant(1, "TEST");
-            service.Setup(m => m.Tenant.UpdateTenant(It.IsAny<Entity.Tenant>())).Returns(tenant);
+            service.Setup(m => m.Tenant.UpdateTenant(It.IsAny<Entity.PimsTenant>())).Returns(tenant);
 
             var model = mapper.Map<Model.TenantModel>(tenant);
 
@@ -131,7 +131,7 @@ namespace Pims.Api.Test.Controllers
             var actualResult = Assert.IsType<Model.TenantModel>(actionResult.Value);
             Assert.Null(actionResult.StatusCode);
             Assert.Equal(model, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Tenant.UpdateTenant(It.IsAny<Entity.Tenant>()), Times.Once());
+            service.Verify(m => m.Tenant.UpdateTenant(It.IsAny<Entity.PimsTenant>()), Times.Once());
         }
         #endregion
         #endregion

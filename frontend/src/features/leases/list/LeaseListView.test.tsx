@@ -1,9 +1,15 @@
 import userEvent from '@testing-library/user-event';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILeaseSearchResult } from 'interfaces';
+import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
+import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
+
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: [] },
+};
 
 jest.mock('hooks/pims-api/useApiLeases');
 const getLeases = jest.fn();
@@ -12,7 +18,7 @@ const getLeases = jest.fn();
 });
 
 // render component under test
-const setup = (renderOptions: RenderOptions = {}) => {
+const setup = (renderOptions: RenderOptions = { store: storeState }) => {
   const utils = render(<LeaseListView />, { ...renderOptions });
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
@@ -50,10 +56,15 @@ describe('Lease and License List View', () => {
       {
         id: 1,
         lFileNo: 'L-123-456',
-        address: '123 mock st',
-        pidOrPin: '123',
         programName: 'TRAN-IT',
-        tenantName: 'Chester Tester',
+        tenantNames: ['Chester Tester'],
+        properties: [
+          {
+            id: 12,
+            address: '123 mock st',
+            pid: '123',
+          },
+        ],
       },
     ]);
     const { container, searchButton, findByText } = setup();
@@ -63,15 +74,16 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: '123',
         searchBy: 'pidOrPin',
         tenantName: '',
+        programs: [],
       }),
     );
 
-    expect(await findByText(/123 mock st/i)).toBeInTheDocument();
+    expect(await findByText(/TRAN-IT/i)).toBeInTheDocument();
   });
 
   it('searches by L-file number', async () => {
@@ -79,13 +91,12 @@ describe('Lease and License List View', () => {
       {
         id: 1,
         lFileNo: 'L-123-456',
-        address: '123 mock st',
-        pidOrPin: '123',
         programName: 'TRAN-IT',
-        tenantName: 'Chester Tester',
+        tenantNames: ['Chester Tester'],
+        properties: [{ id: 1234, address: '123 mock st', pin: '123' }],
       },
     ]);
-    const { container, searchButton, findByText } = setup({});
+    const { container, searchButton, findByText } = setup();
     fillInput(container, 'searchBy', 'lFileNo', 'select');
     fillInput(container, 'lFileNo', '123');
     await act(async () => userEvent.click(searchButton));
@@ -107,10 +118,9 @@ describe('Lease and License List View', () => {
       {
         id: 1,
         lFileNo: 'L-123-456',
-        address: '123 mock st',
-        pidOrPin: '123',
         programName: 'TRAN-IT',
-        tenantName: 'Chester Tester',
+        tenantNames: ['Chester Tester'],
+        properties: [{ id: 123, address: '123 mock st', pin: '123' }],
       },
     ]);
     const { container, searchButton, findByText } = setup();
@@ -120,11 +130,12 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: '',
         searchBy: 'pidOrPin',
         tenantName: 'Chester',
+        programs: [],
       }),
     );
 
@@ -140,11 +151,12 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: 'foo-bar-baz',
         searchBy: 'pidOrPin',
         tenantName: '',
+        programs: [],
       }),
     );
     const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
@@ -161,11 +173,12 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining({
+      expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pidOrPin: '123',
         searchBy: 'pidOrPin',
         tenantName: '',
+        programs: [],
       }),
     );
     const toasts = await findAllByText('network error');

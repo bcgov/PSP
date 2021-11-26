@@ -21,10 +21,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, string role, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, string role, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(role, message);
@@ -42,10 +42,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions permission, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions permission, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -64,10 +64,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this T entity, string paramName, ClaimsPrincipal user, Permissions[] permission, bool requireAll = false, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             if (requireAll) user.ThrowIfNotAllAuthorized(permission);
@@ -77,13 +77,13 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// When manipulating entities it is necessary to reset the original value for 'RowVersion' so that concurrency checking can occur.
+        /// When manipulating entities it is necessary to reset the original value for 'ConcurrencyControlNumber' so that concurrency checking can occur.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="context"></param>
-        public static void SetOriginalRowVersion<T>(this T source, DbContext context) where T : BaseEntity
+        public static void SetOriginalConcurrencyControlNumber<T>(this T source, DbContext context) where T : class, IBaseEntity
         {
-            context.SetOriginalRowVersion(source);
+            context.SetOriginalConcurrencyControlNumber(source);
         }
     }
 }

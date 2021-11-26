@@ -41,7 +41,7 @@ const defaultSearchResult: IContactSearchResult = {
   firstName: 'first',
   organizationName: 'organizationName',
   email: 'email',
-  municipality: 'city',
+  municipalityName: 'city',
   provinceState: 'province',
   isDisabled: false,
   provinceStateId: 0,
@@ -85,7 +85,7 @@ describe('Contact List View', () => {
   });
 
   it('searches by city/municipality', async () => {
-    setupMockSearch([{ ...defaultSearchResult, municipality: 'victoria' }]);
+    setupMockSearch([{ ...defaultSearchResult, municipalityName: 'victoria' }]);
     const { container, searchButton, findByText } = setup({});
     fillInput(container, 'municipality', 'victoria');
     await act(async () => userEvent.click(searchButton));

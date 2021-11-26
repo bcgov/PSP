@@ -18,11 +18,11 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> AccessRequestsOrganizations =>
             new List<object[]>
             {
-                new object[] { new AccessRequestOrganization(), new AccessRequestOrganization(), true },
-                new object[] { new AccessRequestOrganization(1, 2), new AccessRequestOrganization(1, 2), true },
-                new object[] { new AccessRequestOrganization(1, 2), new AccessRequestOrganization(1, 3), false },
-                new object[] { null, new AccessRequestOrganization(1, 3), false },
-                new object[] { new AccessRequestOrganization(1, 2), null, false },
+                new object[] { new PimsAccessRequestOrganization(), new PimsAccessRequestOrganization(), true },
+                new object[] { new PimsAccessRequestOrganization(1, 2), new PimsAccessRequestOrganization(1, 2), true },
+                new object[] { new PimsAccessRequestOrganization(1, 2), new PimsAccessRequestOrganization(1, 3), false },
+                new object[] { null, new PimsAccessRequestOrganization(1, 3), false },
+                new object[] { new PimsAccessRequestOrganization(1, 2), null, false },
                 new object[] { null, null, false },
             };
         #endregion
@@ -30,7 +30,7 @@ namespace Pims.Dal.Test.Entities
         #region Tests
         [Theory]
         [MemberData(nameof(AccessRequestsOrganizations))]
-        public void AccessRequestOrganizationOrganizationIdComparer_Equal(AccessRequestOrganization val1, AccessRequestOrganization val2, bool expectedResult)
+        public void AccessRequestOrganizationOrganizationIdComparer_Equal(PimsAccessRequestOrganization val1, PimsAccessRequestOrganization val2, bool expectedResult)
         {
             // Arrange
             var comparer = new AccessRequestOrganizationOrganizationIdComparer();
