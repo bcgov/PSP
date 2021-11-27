@@ -86,8 +86,8 @@ requirements: require-git require-node require-python require-jq require-gh ## C
 	@echo "jq found..."
 	@echo "gh cli found..."
 
-.PHONY: check-github-auth
-check-github-auth: require-gh ## Checks GITHUB_TOKEN has been set
+.PHONY: github-auth
+github-auth: require-gh ## Checks GITHUB_TOKEN has been set
 # look for GITHUB_TOKEN in the environment
 ifdef GITHUB_TOKEN
 	$(info GITHUB_TOKEN found in the environment)
@@ -130,10 +130,10 @@ tag: require-node require-git require-gh ## Creates a pre-release tag
 	$(info Using tag: $(tag))
 	$(info Using repo: $(owner)/$(repo))
 	@git tag -a -f $(tag) $(branch) -m "Release $(tag)"
-	@git push --tags
+	@git push -f --tags --no-verify
 
 .PHONY: release
-release: check-github-auth require-node ## Creates a new github release
+release: github-auth require-node require-gh ## Creates a new github release
 	$(eval CURRENT_VERSION := $(shell build/version.sh))
 	$(eval CURRENT_DATE := $(shell date +'%b %d, %Y'))
 	$(eval tag := v$(CURRENT_VERSION))
