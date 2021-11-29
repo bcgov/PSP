@@ -46,11 +46,23 @@ jobs:
           echo "::set-output name=release_version::$RELEASE_VERSION"
           echo "::set-output name=release_url::$RELEASE_URL"
 
-      - name: Post notification in MS Teams
+      # This is so we can use a "Card Message" template for notifications and replace it with relevant values; e.g. __RELEASEVERSION__ etc
+      # Template found in: .github/notifications/
+      - uses: bluwy/substitute-string-action@v1
+        id: sub
+        with:
+          _input-file: .github/notifications/release_template.json
+          _format-key: __key__
+          _output-file: release_notification.json
+        env:
+          INPUT_REPO: ${{ github.repository }}
+          INPUT_RELEASEVERSION: ${{ steps.create_release.outputs.release_version }}
+          INPUT_RELEASEURL: ${{ steps.create_release.outputs.release_url }}
+
+      # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
+      - name: Post notification to MS Teams
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
         if: env.MS_TEAMS_NOTIFY_URL != ''
         run: |
-          echo "Send notification to MS Teams..."
-          curl -v -H 'Content-Type: application/json' ${{ secrets.MS_TEAMS_NOTIFY_URL }} \
-          --data '{"@context":"https://schema.org/extensions","@type":"MessageCard","themeColor":"0078D7","title":"Release ${{ steps.create_release.outputs.release_version }} created on repository ${{ github.repository }}","text":"${{ steps.build_changelog.outputs.changelog }}", "potentialAction": [{"@type": "OpenUri","name": "View in GitHub","targets": [{"os": "default","uri": "${{ steps.create_release.outputs.release_url }}"}]}]}'
+          curl -H 'Content-Type: application/json' ${{ secrets.MS_TEAMS_NOTIFY_URL }} --data @release_notification.json
