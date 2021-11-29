@@ -82,7 +82,6 @@ namespace Pims.Dal.Services
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
                 .Include(l => l.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseCategoryTypeCodeNavigation)
-                .Include(l => l.MotiContact)
 
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
