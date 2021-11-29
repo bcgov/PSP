@@ -24,6 +24,7 @@ namespace Pims.Dal.Entities
         public string StreetAddress3 { get; set; }
         public string MunicipalityName { get; set; }
         public string PostalCode { get; set; }
+        public string OtherCountry { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
         public string Comment { get; set; }

@@ -21,7 +21,6 @@ namespace Pims.Dal.Entities
         public string ChequeNumber { get; set; }
         public string PayeeName { get; set; }
         public string PayeeAddress { get; set; }
-        public string TerminationNote { get; set; }
         public long ConcurrencyControlNumber { get; set; }
         public DateTime AppCreateTimestamp { get; set; }
         public string AppCreateUserid { get; set; }

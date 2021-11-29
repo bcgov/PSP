@@ -11,9 +11,9 @@ namespace Pims.Dal.Entities
         public long LeaseId { get; set; }
         public string SecDepHolderTypeCode { get; set; }
         public string SecurityDepositTypeCode { get; set; }
+        public string OtherDepHolderTypeDesc { get; set; }
         public string Description { get; set; }
         public decimal AmountPaid { get; set; }
-        public decimal TotalAmount { get; set; }
         public DateTime DepositDate { get; set; }
         public decimal? AnnualInterestRate { get; set; }
         public long ConcurrencyControlNumber { get; set; }

@@ -38,6 +38,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsContactMethodType> PimsContactMethodTypes { get; set; }
         public virtual DbSet<PimsContactMgrVw> PimsContactMgrVws { get; set; }
         public virtual DbSet<PimsCountry> PimsCountries { get; set; }
+        public virtual DbSet<PimsDataSourceType> PimsDataSourceTypes { get; set; }
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
@@ -61,6 +62,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsLeaseProgramType> PimsLeaseProgramTypes { get; set; }
         public virtual DbSet<PimsLeasePurposeType> PimsLeasePurposeTypes { get; set; }
         public virtual DbSet<PimsLeaseResponsibilityType> PimsLeaseResponsibilityTypes { get; set; }
+        public virtual DbSet<PimsLeaseStatusType> PimsLeaseStatusTypes { get; set; }
         public virtual DbSet<PimsLeaseTenant> PimsLeaseTenants { get; set; }
         public virtual DbSet<PimsLeaseTenantHist> PimsLeaseTenantHists { get; set; }
         public virtual DbSet<PimsLeaseTerm> PimsLeaseTerms { get; set; }
@@ -96,7 +98,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsPropertyActivityHist> PimsPropertyActivityHists { get; set; }
         public virtual DbSet<PimsPropertyBoundaryVw> PimsPropertyBoundaryVws { get; set; }
         public virtual DbSet<PimsPropertyClassificationType> PimsPropertyClassificationTypes { get; set; }
-        public virtual DbSet<PimsPropertyDataSourceType> PimsPropertyDataSourceTypes { get; set; }
         public virtual DbSet<PimsPropertyEvaluation> PimsPropertyEvaluations { get; set; }
         public virtual DbSet<PimsPropertyEvaluationHist> PimsPropertyEvaluationHists { get; set; }
         public virtual DbSet<PimsPropertyHist> PimsPropertyHists { get; set; }
@@ -1031,6 +1032,11 @@ namespace Pims.Dal
                     .HasMaxLength(200)
                     .HasColumnName("MUNICIPALITY_NAME");
 
+                entity.Property(e => e.OtherCountry)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_COUNTRY")
+                    .HasComment("Other country not listed in drop-down list");
+
                 entity.Property(e => e.PostalCode)
                     .HasMaxLength(20)
                     .HasColumnName("POSTAL_CODE");
@@ -1169,6 +1175,10 @@ namespace Pims.Dal
                 entity.Property(e => e.MunicipalityName)
                     .HasMaxLength(200)
                     .HasColumnName("MUNICIPALITY_NAME");
+
+                entity.Property(e => e.OtherCountry)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_COUNTRY");
 
                 entity.Property(e => e.PostalCode)
                     .HasMaxLength(20)
@@ -1846,6 +1856,63 @@ namespace Pims.Dal
                 entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
             });
 
+            modelBuilder.Entity<PimsDataSourceType>(entity =>
+            {
+                entity.HasKey(e => e.DataSourceTypeCode)
+                    .HasName("PIDSRT_PK");
+
+                entity.ToTable("PIMS_DATA_SOURCE_TYPE");
+
+                entity.HasComment("Describes the source system of the data (PAIMS, LIS, etc.)");
+
+                entity.Property(e => e.DataSourceTypeCode)
+                    .HasMaxLength(20)
+                    .HasColumnName("DATA_SOURCE_TYPE_CODE")
+                    .HasComment("Code val;ue of the source system of the data (PAIMS, LIS, etc.)");
+
+                entity.Property(e => e.ConcurrencyControlNumber)
+                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DB_CREATE_TIMESTAMP")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnName("DB_CREATE_USERID")
+                    .HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnName("DB_LAST_UPDATE_USERID")
+                    .HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnName("DESCRIPTION")
+                    .HasComment("Description of the source system of the data (PAIMS, LIS, etc.)");
+
+                entity.Property(e => e.DisplayOrder)
+                    .HasColumnName("DISPLAY_ORDER")
+                    .HasComment("Defines the default display order of the descriptions");
+
+                entity.Property(e => e.IsDisabled)
+                    .IsRequired()
+                    .HasColumnName("IS_DISABLED")
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicates if the code is still in use");
+            });
+
             modelBuilder.Entity<PimsDistrict>(entity =>
             {
                 entity.HasKey(e => e.DistrictCode)
@@ -2336,9 +2403,9 @@ namespace Pims.Dal
 
                 entity.HasIndex(e => e.LeaseResponsibilityTypeCode, "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX");
 
-                entity.HasIndex(e => e.LFileNo, "LEASE_L_FILE_NO_IDX");
+                entity.HasIndex(e => e.LeaseStatusTypeCode, "LEASE_LEASE_STATUS_TYPE_CODE_IDX");
 
-                entity.HasIndex(e => e.MotiNameId, "LEASE_MOTI_NAME_ID_IDX");
+                entity.HasIndex(e => e.LFileNo, "LEASE_L_FILE_NO_IDX");
 
                 entity.HasIndex(e => e.PsFileNo, "LEASE_PS_FILE_NO_IDX");
 
@@ -2412,6 +2479,11 @@ namespace Pims.Dal
                     .HasColumnName("DB_LAST_UPDATE_USERID")
                     .HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.DocumentationReference)
+                    .HasMaxLength(500)
+                    .HasColumnName("DOCUMENTATION_REFERENCE")
+                    .HasComment("Location of documents pertianing to the lease/license");
+
                 entity.Property(e => e.HasDigitalFile)
                     .IsRequired()
                     .HasColumnName("HAS_DIGITAL_FILE")
@@ -2436,17 +2508,12 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicator that physical license exists");
 
-                entity.Property(e => e.IncludedRenewals)
-                    .HasColumnName("INCLUDED_RENEWALS")
-                    .HasComment("Maximum allowable number of lease renewals");
-
                 entity.Property(e => e.InspectionDate)
                     .HasColumnType("datetime")
                     .HasColumnName("INSPECTION_DATE")
                     .HasComment("Inspection date");
 
                 entity.Property(e => e.InspectionNotes)
-                    .HasMaxLength(4000)
                     .HasColumnName("INSPECTION_NOTES")
                     .HasComment("Notes accompanying inspection");
 
@@ -2460,12 +2527,6 @@ namespace Pims.Dal
                     .HasColumnName("IS_EXPIRED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Incidcator that lease/license has expired");
-
-                entity.Property(e => e.IsOrigExpiryRequired)
-                    .IsRequired()
-                    .HasColumnName("IS_ORIG_EXPIRY_REQUIRED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
-                    .HasComment("Is there a a requirement to record the original tenancy expiry date?");
 
                 entity.Property(e => e.IsOtherImprovement)
                     .HasColumnName("IS_OTHER_IMPROVEMENT")
@@ -2487,13 +2548,17 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_AMOUNT")
                     .HasComment("Lease/licence amount");
 
+                entity.Property(e => e.LeaseCategoryOtherDesc)
+                    .HasMaxLength(200)
+                    .HasColumnName("LEASE_CATEGORY_OTHER_DESC")
+                    .HasComment("User-specified lease category description not included in standard set of lease purposes");
+
                 entity.Property(e => e.LeaseCategoryTypeCode)
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
 
                 entity.Property(e => e.LeaseDescription)
-                    .HasMaxLength(4000)
                     .HasColumnName("LEASE_DESCRIPTION")
                     .HasComment("Manually etered lease description, not the legal description");
 
@@ -2508,7 +2573,6 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_LICENSE_TYPE_CODE");
 
                 entity.Property(e => e.LeaseNotes)
-                    .HasMaxLength(4000)
                     .HasColumnName("LEASE_NOTES")
                     .HasComment("Notes accompanying lease");
 
@@ -2542,7 +2606,20 @@ namespace Pims.Dal
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
 
-                entity.Property(e => e.MotiNameId).HasColumnName("MOTI_NAME_ID");
+                entity.Property(e => e.LeaseStatusTypeCode)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnName("LEASE_STATUS_TYPE_CODE");
+
+                entity.Property(e => e.MotiContact)
+                    .HasMaxLength(200)
+                    .HasColumnName("MOTI_CONTACT")
+                    .HasComment("Contact of the MoTI person associated with the lease");
+
+                entity.Property(e => e.MotiRegion)
+                    .HasMaxLength(200)
+                    .HasColumnName("MOTI_REGION")
+                    .HasComment("MoTI region associated with the lease");
 
                 entity.Property(e => e.OrigExpiryDate)
                     .HasColumnType("datetime")
@@ -2554,23 +2631,34 @@ namespace Pims.Dal
                     .HasColumnName("ORIG_START_DATE")
                     .HasComment("Original start date of the lease/license");
 
+                entity.Property(e => e.OtherLeaseLicenseType)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_LEASE_LICENSE_TYPE")
+                    .HasComment("Description of a non-standard lease/license type");
+
+                entity.Property(e => e.OtherLeaseProgramType)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_LEASE_PROGRAM_TYPE")
+                    .HasComment("Description of a non-standard lease program type");
+
+                entity.Property(e => e.OtherLeasePurposeType)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_LEASE_PURPOSE_TYPE")
+                    .HasComment("Description of a non-standard lease purpose type");
+
                 entity.Property(e => e.PsFileNo)
                     .HasMaxLength(50)
                     .HasColumnName("PS_FILE_NO")
                     .HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
 
-                entity.Property(e => e.RenewalCount)
-                    .HasColumnName("RENEWAL_COUNT")
-                    .HasComment("Number of exercised renewals");
-
-                entity.Property(e => e.RenewalTermMonths)
-                    .HasColumnName("RENEWAL_TERM_MONTHS")
-                    .HasComment("Number of months included in lease renewal");
-
                 entity.Property(e => e.ResponsibilityEffectiveDate)
                     .HasColumnType("datetime")
                     .HasColumnName("RESPONSIBILITY_EFFECTIVE_DATE")
                     .HasComment("Date current responsibility came into effect for this lease");
+
+                entity.Property(e => e.ReturnNotes)
+                    .HasColumnName("RETURN_NOTES")
+                    .HasComment("Notes accompanying lease");
 
                 entity.Property(e => e.TfaFileNo)
                     .HasColumnName("TFA_FILE_NO")
@@ -2624,11 +2712,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LRESPT_PIM_LEASE_FK");
 
-                entity.HasOne(d => d.MotiName)
+                entity.HasOne(d => d.LeaseStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
-                    .HasForeignKey(d => d.MotiNameId)
+                    .HasForeignKey(d => d.LeaseStatusTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_LEASE_FK");
+                    .HasConstraintName("PIM_LSSTYP_PIM_LEASE_FK");
             });
 
             modelBuilder.Entity<PimsLeaseCategoryType>(entity =>
@@ -2747,6 +2835,10 @@ namespace Pims.Dal
                     .HasMaxLength(30)
                     .HasColumnName("DB_LAST_UPDATE_USERID");
 
+                entity.Property(e => e.DocumentationReference)
+                    .HasMaxLength(500)
+                    .HasColumnName("DOCUMENTATION_REFERENCE");
+
                 entity.Property(e => e.EffectiveDateHist)
                     .HasColumnType("datetime")
                     .HasColumnName("EFFECTIVE_DATE_HIST")
@@ -2764,21 +2856,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.HasPhysicialLicense).HasColumnName("HAS_PHYSICIAL_LICENSE");
 
-                entity.Property(e => e.IncludedRenewals).HasColumnName("INCLUDED_RENEWALS");
-
                 entity.Property(e => e.InspectionDate)
                     .HasColumnType("datetime")
                     .HasColumnName("INSPECTION_DATE");
 
-                entity.Property(e => e.InspectionNotes)
-                    .HasMaxLength(4000)
-                    .HasColumnName("INSPECTION_NOTES");
-
                 entity.Property(e => e.IsCommBldg).HasColumnName("IS_COMM_BLDG");
 
                 entity.Property(e => e.IsExpired).HasColumnName("IS_EXPIRED");
-
-                entity.Property(e => e.IsOrigExpiryRequired).HasColumnName("IS_ORIG_EXPIRY_REQUIRED");
 
                 entity.Property(e => e.IsOtherImprovement).HasColumnName("IS_OTHER_IMPROVEMENT");
 
@@ -2792,14 +2876,14 @@ namespace Pims.Dal
                     .HasColumnType("money")
                     .HasColumnName("LEASE_AMOUNT");
 
+                entity.Property(e => e.LeaseCategoryOtherDesc)
+                    .HasMaxLength(200)
+                    .HasColumnName("LEASE_CATEGORY_OTHER_DESC");
+
                 entity.Property(e => e.LeaseCategoryTypeCode)
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
-
-                entity.Property(e => e.LeaseDescription)
-                    .HasMaxLength(4000)
-                    .HasColumnName("LEASE_DESCRIPTION");
 
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
@@ -2812,10 +2896,6 @@ namespace Pims.Dal
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_LICENSE_TYPE_CODE");
-
-                entity.Property(e => e.LeaseNotes)
-                    .HasMaxLength(4000)
-                    .HasColumnName("LEASE_NOTES");
 
                 entity.Property(e => e.LeasePayRvblTypeCode)
                     .IsRequired()
@@ -2846,7 +2926,18 @@ namespace Pims.Dal
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
 
-                entity.Property(e => e.MotiNameId).HasColumnName("MOTI_NAME_ID");
+                entity.Property(e => e.LeaseStatusTypeCode)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnName("LEASE_STATUS_TYPE_CODE");
+
+                entity.Property(e => e.MotiContact)
+                    .HasMaxLength(200)
+                    .HasColumnName("MOTI_CONTACT");
+
+                entity.Property(e => e.MotiRegion)
+                    .HasMaxLength(200)
+                    .HasColumnName("MOTI_REGION");
 
                 entity.Property(e => e.OrigExpiryDate)
                     .HasColumnType("datetime")
@@ -2856,13 +2947,21 @@ namespace Pims.Dal
                     .HasColumnType("datetime")
                     .HasColumnName("ORIG_START_DATE");
 
+                entity.Property(e => e.OtherLeaseLicenseType)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_LEASE_LICENSE_TYPE");
+
+                entity.Property(e => e.OtherLeaseProgramType)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_LEASE_PROGRAM_TYPE");
+
+                entity.Property(e => e.OtherLeasePurposeType)
+                    .HasMaxLength(200)
+                    .HasColumnName("OTHER_LEASE_PURPOSE_TYPE");
+
                 entity.Property(e => e.PsFileNo)
                     .HasMaxLength(50)
                     .HasColumnName("PS_FILE_NO");
-
-                entity.Property(e => e.RenewalCount).HasColumnName("RENEWAL_COUNT");
-
-                entity.Property(e => e.RenewalTermMonths).HasColumnName("RENEWAL_TERM_MONTHS");
 
                 entity.Property(e => e.ResponsibilityEffectiveDate)
                     .HasColumnType("datetime")
@@ -3990,6 +4089,60 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
+            modelBuilder.Entity<PimsLeaseStatusType>(entity =>
+            {
+                entity.HasKey(e => e.LeaseStatusTypeCode)
+                    .HasName("LSSTYP_PK");
+
+                entity.ToTable("PIMS_LEASE_STATUS_TYPE");
+
+                entity.HasComment("Describes the status of the lease");
+
+                entity.Property(e => e.LeaseStatusTypeCode)
+                    .HasMaxLength(20)
+                    .HasColumnName("LEASE_STATUS_TYPE_CODE")
+                    .HasComment("Code value of the status of the lease");
+
+                entity.Property(e => e.ConcurrencyControlNumber)
+                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DB_CREATE_TIMESTAMP")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnName("DB_CREATE_USERID")
+                    .HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasColumnName("DB_LAST_UPDATE_USERID")
+                    .HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnName("DESCRIPTION")
+                    .HasComment("Description of the status of the lease");
+
+                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
+
+                entity.Property(e => e.IsDisabled)
+                    .IsRequired()
+                    .HasColumnName("IS_DISABLED")
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+            });
+
             modelBuilder.Entity<PimsLeaseTenant>(entity =>
             {
                 entity.HasKey(e => e.LeaseTenantId)
@@ -4576,6 +4729,8 @@ namespace Pims.Dal
 
                 entity.ToTable("PIMS_ORGANIZATION");
 
+                entity.HasComment("Information related to an organization identified in the PSP system.");
+
                 entity.HasIndex(e => e.DistrictCode, "ORG_DISTRICT_CODE_IDX");
 
                 entity.HasIndex(e => e.OrganizationTypeCode, "ORG_ORGANIZATION_TYPE_CODE_IDX");
@@ -4655,6 +4810,11 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
+
+                entity.Property(e => e.IncorporationNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("INCORPORATION_NUMBER")
+                    .HasComment("Incorporation number of the orgnization");
 
                 entity.Property(e => e.IsDisabled)
                     .IsRequired()
@@ -5004,6 +5164,10 @@ namespace Pims.Dal
                 entity.Property(e => e.EndDateHist)
                     .HasColumnType("datetime")
                     .HasColumnName("END_DATE_HIST");
+
+                entity.Property(e => e.IncorporationNumber)
+                    .HasMaxLength(50)
+                    .HasColumnName("INCORPORATION_NUMBER");
 
                 entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
 
@@ -7329,56 +7493,6 @@ namespace Pims.Dal
                     .HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
-            modelBuilder.Entity<PimsPropertyDataSourceType>(entity =>
-            {
-                entity.HasKey(e => e.PropertyDataSourceTypeCode)
-                    .HasName("PIDSRT_PK");
-
-                entity.ToTable("PIMS_PROPERTY_DATA_SOURCE_TYPE");
-
-                entity.Property(e => e.PropertyDataSourceTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_DATA_SOURCE_TYPE_CODE");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-            });
-
             modelBuilder.Entity<PimsPropertyEvaluation>(entity =>
             {
                 entity.HasKey(e => e.PropertyEvaluationId)
@@ -7747,9 +7861,12 @@ namespace Pims.Dal
 
                 entity.HasComment("Description of property improvements associated with the lease.");
 
+                entity.HasIndex(e => new { e.LeaseId, e.PropertyImprovementTypeCode }, "PIMPRV_LEASE_IMPROVEMENT_TUC")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.PropertyImprovementTypeCode, "PIMPRV_PROPERTY_IMPROVEMENT_TYPE_CODE_IDX");
 
-                entity.HasIndex(e => e.PropertyLeaseId, "PIMPRV_PROPERTY_LEASE_ID_IDX");
+                entity.HasIndex(e => e.LeaseId, "PIMPRV_PROPERTY_LEASE_ID_IDX");
 
                 entity.Property(e => e.PropertyImprovementId)
                     .HasColumnName("PROPERTY_IMPROVEMENT_ID")
@@ -7825,34 +7942,34 @@ namespace Pims.Dal
                     .HasColumnName("IMPROVEMENT_DESCRIPTION")
                     .HasComment("Description of the improvements");
 
+                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
+
                 entity.Property(e => e.PropertyImprovementTypeCode)
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE");
 
-                entity.Property(e => e.PropertyLeaseId).HasColumnName("PROPERTY_LEASE_ID");
-
                 entity.Property(e => e.StructureSize)
                     .HasMaxLength(2000)
                     .HasColumnName("STRUCTURE_SIZE")
-                    .HasComment("Size of the structure (house, building, bridge, etc,)");
+                    .HasComment("Size of the structure (house, building, bridge, etc,) ");
 
                 entity.Property(e => e.Unit)
                     .HasMaxLength(2000)
                     .HasColumnName("UNIT")
                     .HasComment("Unit(s) affected");
 
+                entity.HasOne(d => d.Lease)
+                    .WithMany(p => p.PimsPropertyImprovements)
+                    .HasForeignKey(d => d.LeaseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_LEASE_PIM_PIMPRV_FK");
+
                 entity.HasOne(d => d.PropertyImprovementTypeCodeNavigation)
                     .WithMany(p => p.PimsPropertyImprovements)
                     .HasForeignKey(d => d.PropertyImprovementTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_PIMPRT_PIM_PIMPRV_FK");
-
-                entity.HasOne(d => d.PropertyLease)
-                    .WithMany(p => p.PimsPropertyImprovements)
-                    .HasForeignKey(d => d.PropertyLeaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PROPLS_PIM_PIMPRV_FK");
             });
 
             modelBuilder.Entity<PimsPropertyImprovementHist>(entity =>
@@ -7935,14 +8052,14 @@ namespace Pims.Dal
                     .HasMaxLength(2000)
                     .HasColumnName("IMPROVEMENT_DESCRIPTION");
 
+                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
+
                 entity.Property(e => e.PropertyImprovementId).HasColumnName("PROPERTY_IMPROVEMENT_ID");
 
                 entity.Property(e => e.PropertyImprovementTypeCode)
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE");
-
-                entity.Property(e => e.PropertyLeaseId).HasColumnName("PROPERTY_LEASE_ID");
 
                 entity.Property(e => e.StructureSize)
                     .HasMaxLength(2000)
@@ -8061,6 +8178,10 @@ namespace Pims.Dal
                     .HasColumnName("APP_LAST_UPDATE_USERID")
                     .HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.AreaUnitTypeCode)
+                    .HasMaxLength(20)
+                    .HasColumnName("AREA_UNIT_TYPE_CODE");
+
                 entity.Property(e => e.ConcurrencyControlNumber)
                     .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
                     .HasDefaultValueSql("((1))");
@@ -8087,9 +8208,18 @@ namespace Pims.Dal
                     .HasColumnName("DB_LAST_UPDATE_USERID")
                     .HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.LeaseArea)
+                    .HasColumnName("LEASE_AREA")
+                    .HasComment("Leased area measurement");
+
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
                 entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+
+                entity.HasOne(d => d.AreaUnitTypeCodeNavigation)
+                    .WithMany(p => p.PimsPropertyLeases)
+                    .HasForeignKey(d => d.AreaUnitTypeCode)
+                    .HasConstraintName("PIM_ARUNIT_PIM_PROPLS_FK");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsPropertyLeases)
@@ -8150,6 +8280,10 @@ namespace Pims.Dal
                     .HasMaxLength(30)
                     .HasColumnName("APP_LAST_UPDATE_USERID");
 
+                entity.Property(e => e.AreaUnitTypeCode)
+                    .HasMaxLength(20)
+                    .HasColumnName("AREA_UNIT_TYPE_CODE");
+
                 entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
 
                 entity.Property(e => e.DbCreateTimestamp)
@@ -8178,6 +8312,8 @@ namespace Pims.Dal
                 entity.Property(e => e.EndDateHist)
                     .HasColumnType("datetime")
                     .HasColumnName("END_DATE_HIST");
+
+                entity.Property(e => e.LeaseArea).HasColumnName("LEASE_AREA");
 
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
@@ -9243,7 +9379,7 @@ namespace Pims.Dal
 
                 entity.ToTable("PIMS_PROPERTY_TENURE_TYPE");
 
-                entity.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel");
+                entity.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel still accurately describes the legal title of the land parcel but the individual properties each can have different tenures by MoTI.");
 
                 entity.Property(e => e.PropertyTenureTypeCode)
                     .HasMaxLength(20)
@@ -9984,6 +10120,10 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
+                entity.Property(e => e.OtherDepHolderTypeDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("OTHER_DEP_HOLDER_TYPE_DESC");
+
                 entity.Property(e => e.SecDepHolderTypeCode)
                     .IsRequired()
                     .HasMaxLength(20)
@@ -9993,10 +10133,6 @@ namespace Pims.Dal
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
-
-                entity.Property(e => e.TotalAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("TOTAL_AMOUNT");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsSecurityDeposits)
@@ -10111,6 +10247,10 @@ namespace Pims.Dal
 
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
+                entity.Property(e => e.OtherDepHolderTypeDesc)
+                    .HasMaxLength(100)
+                    .HasColumnName("OTHER_DEP_HOLDER_TYPE_DESC");
+
                 entity.Property(e => e.SecDepHolderTypeCode)
                     .IsRequired()
                     .HasMaxLength(20)
@@ -10122,10 +10262,6 @@ namespace Pims.Dal
                     .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
-
-                entity.Property(e => e.TotalAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("TOTAL_AMOUNT");
             });
 
             modelBuilder.Entity<PimsSecurityDepositReturn>(entity =>
@@ -10226,7 +10362,6 @@ namespace Pims.Dal
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
                 entity.Property(e => e.PayeeAddress)
-                    .IsRequired()
                     .HasMaxLength(500)
                     .HasColumnName("PAYEE_ADDRESS")
                     .HasComment("Address of cheque recipient");
@@ -10256,11 +10391,6 @@ namespace Pims.Dal
                     .HasColumnType("datetime")
                     .HasColumnName("TERMINATION_DATE")
                     .HasComment("Date the lease/license was terminated or surrendered");
-
-                entity.Property(e => e.TerminationNote)
-                    .HasMaxLength(4000)
-                    .HasColumnName("TERMINATION_NOTE")
-                    .HasComment("Notes regarding termination situation");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsSecurityDepositReturns)
@@ -10366,7 +10496,6 @@ namespace Pims.Dal
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
                 entity.Property(e => e.PayeeAddress)
-                    .IsRequired()
                     .HasMaxLength(500)
                     .HasColumnName("PAYEE_ADDRESS");
 
@@ -10393,10 +10522,6 @@ namespace Pims.Dal
                 entity.Property(e => e.TerminationDate)
                     .HasColumnType("datetime")
                     .HasColumnName("TERMINATION_DATE");
-
-                entity.Property(e => e.TerminationNote)
-                    .HasMaxLength(4000)
-                    .HasColumnName("TERMINATION_NOTE");
             });
 
             modelBuilder.Entity<PimsSecurityDepositType>(entity =>

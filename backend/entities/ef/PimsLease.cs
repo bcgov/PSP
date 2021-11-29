@@ -12,13 +12,13 @@ namespace Pims.Dal.Entities
             PimsInsurances = new HashSet<PimsInsurance>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
             PimsLeaseTerms = new HashSet<PimsLeaseTerm>();
+            PimsPropertyImprovements = new HashSet<PimsPropertyImprovement>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
             PimsSecurityDepositReturns = new HashSet<PimsSecurityDepositReturn>();
             PimsSecurityDeposits = new HashSet<PimsSecurityDeposit>();
         }
 
         public long LeaseId { get; set; }
-        public long MotiNameId { get; set; }
         public string LeasePayRvblTypeCode { get; set; }
         public string LeaseLicenseTypeCode { get; set; }
         public string LeaseCategoryTypeCode { get; set; }
@@ -27,18 +27,23 @@ namespace Pims.Dal.Entities
         public string LeaseInitiatorTypeCode { get; set; }
         public string LeaseResponsibilityTypeCode { get; set; }
         public string LeasePmtFreqTypeCode { get; set; }
-        public string LeasePurposeOtherDesc { get; set; }
+        public string LeaseStatusTypeCode { get; set; }
         public string LFileNo { get; set; }
         public int? TfaFileNo { get; set; }
         public string PsFileNo { get; set; }
         public string LeaseDescription { get; set; }
+        public string LeaseCategoryOtherDesc { get; set; }
+        public string LeasePurposeOtherDesc { get; set; }
         public string LeaseNotes { get; set; }
+        public string MotiContact { get; set; }
+        public string MotiRegion { get; set; }
+        public string DocumentationReference { get; set; }
+        public string ReturnNotes { get; set; }
+        public string OtherLeaseProgramType { get; set; }
+        public string OtherLeaseLicenseType { get; set; }
+        public string OtherLeasePurposeType { get; set; }
         public DateTime OrigStartDate { get; set; }
         public DateTime? OrigExpiryDate { get; set; }
-        public bool? IsOrigExpiryRequired { get; set; }
-        public short? IncludedRenewals { get; set; }
-        public short? RenewalCount { get; set; }
-        public short RenewalTermMonths { get; set; }
         public decimal? LeaseAmount { get; set; }
         public DateTime? ResponsibilityEffectiveDate { get; set; }
         public DateTime? InspectionDate { get; set; }
@@ -73,10 +78,11 @@ namespace Pims.Dal.Entities
         public virtual PimsLeaseProgramType LeaseProgramTypeCodeNavigation { get; set; }
         public virtual PimsLeasePurposeType LeasePurposeTypeCodeNavigation { get; set; }
         public virtual PimsLeaseResponsibilityType LeaseResponsibilityTypeCodeNavigation { get; set; }
-        public virtual PimsPerson MotiName { get; set; }
+        public virtual PimsLeaseStatusType LeaseStatusTypeCodeNavigation { get; set; }
         public virtual ICollection<PimsInsurance> PimsInsurances { get; set; }
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; }
         public virtual ICollection<PimsLeaseTerm> PimsLeaseTerms { get; set; }
+        public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; }
         public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
         public virtual ICollection<PimsSecurityDepositReturn> PimsSecurityDepositReturns { get; set; }
         public virtual ICollection<PimsSecurityDeposit> PimsSecurityDeposits { get; set; }

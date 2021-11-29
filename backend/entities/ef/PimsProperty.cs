@@ -69,7 +69,7 @@ namespace Pims.Dal.Entities
         public virtual PimsOrganization PropMgmtOrg { get; set; }
         public virtual PimsAreaUnitType PropertyAreaUnitTypeCodeNavigation { get; set; }
         public virtual PimsPropertyClassificationType PropertyClassificationTypeCodeNavigation { get; set; }
-        public virtual PimsPropertyDataSourceType PropertyDataSourceTypeCodeNavigation { get; set; }
+        public virtual PimsDataSourceType PropertyDataSourceTypeCodeNavigation { get; set; }
         public virtual PimsPerson PropertyManager { get; set; }
         public virtual PimsPropertyStatusType PropertyStatusTypeCodeNavigation { get; set; }
         public virtual PimsPropertyTenureType PropertyTenureTypeCodeNavigation { get; set; }

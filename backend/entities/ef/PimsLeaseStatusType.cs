@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace Pims.Dal.Entities
 {
-    public partial class PimsPropertyDataSourceType
+    public partial class PimsLeaseStatusType
     {
-        public PimsPropertyDataSourceType()
+        public PimsLeaseStatusType()
         {
-            PimsProperties = new HashSet<PimsProperty>();
+            PimsLeases = new HashSet<PimsLease>();
         }
 
-        public string PropertyDataSourceTypeCode { get; set; }
+        public string LeaseStatusTypeCode { get; set; }
         public string Description { get; set; }
         public bool? IsDisabled { get; set; }
         public int? DisplayOrder { get; set; }
@@ -22,6 +22,6 @@ namespace Pims.Dal.Entities
         public DateTime DbLastUpdateTimestamp { get; set; }
         public string DbLastUpdateUserid { get; set; }
 
-        public virtual ICollection<PimsProperty> PimsProperties { get; set; }
+        public virtual ICollection<PimsLease> PimsLeases { get; set; }
     }
 }
