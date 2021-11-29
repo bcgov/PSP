@@ -28,7 +28,7 @@ namespace Pims.Core.Test
             address ??= EntityHelper.CreateAddress(pid);
             tenure ??= EntityHelper.CreatePropertyTenureType("Tenure");
             areaUnit ??= EntityHelper.CreatePropertyAreaUnitType("Sqft");
-            dataSource ??= EntityHelper.CreatePropertyDataSourceType("LIS");
+            dataSource ??= EntityHelper.CreateDataSourceType("LIS");
             var property = new Entity.PimsProperty(pid, type, classification, address, tenure, areaUnit, dataSource, DateTime.UtcNow)
             {
                 PropertyId = pid,
