@@ -4,6 +4,7 @@ import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { ContactListView } from 'features/contacts';
 import ContactContainer from 'features/contacts/contact/ContactContainer/ContactContainer';
+import { DetailContainer } from 'features/leases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -125,6 +126,7 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
+          exact
           path="/lease/list"
           component={LeaseAndLicenseListView}
           layout={AuthLayout}
@@ -133,11 +135,20 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
-          path="/lease/:leaseId?"
+          path="/lease/new"
+          exact
+          component={DetailContainer}
+          layout={AuthLayout}
+          claim={Claims.PROPERTY_VIEW}
+          title={getTitle('Create/Edit Lease & Licenses')}
+        />
+        <AppRoute
+          protected
+          path="/lease/:leaseId"
           component={LeaseContainer}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
-          title={getTitle('View Lease & Licenses')}
+          title={getTitle('Create/Edit Lease & Licenses')}
         />
         <AppRoute
           protected

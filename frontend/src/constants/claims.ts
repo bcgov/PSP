@@ -2,6 +2,8 @@
  * Claims enum, provides a list of permissions that govern what actions are available to an authenticated user.
  */
 export enum Claims {
+  LEASE_VIEW = 'lease-view',
+  LEASE_ADD = 'lease-add',
   CONTACT_EDIT = 'contact-edit',
   CONTACT_VIEW = 'contact-view',
   CONTACT_CREATE = 'contact-create',
