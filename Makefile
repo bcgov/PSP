@@ -36,33 +36,58 @@ help:
 # these are various tools required by make commands below
 GH := $(shell command -v gh 2> /dev/null)
 PYTHON := $(shell command -v python 2> /dev/null)
+NODE := $(shell command -v node 2> /dev/null)
 JQ := $(shell command -v jq 2> /dev/null)
+GIT := $(shell command -v git 2> /dev/null)
 
 
 ##############################################################################
 # Dev Tools Requirements
 ##############################################################################
-.PHONY: requirements
-requirements: ## Checks development environment requirements (tools in the PATH)
-ifndef GH
-	$(error "gh (GitHub CLI) is not available please install from https://cli.github.com/")
+.PHONY: require-node
+require-node:
+ifndef NODE
+	$(error "NodeJS is not available please install from https://nodejs.org/en/")
 endif
+	@exit 0
+
+.PHONY: require-python
+require-python:
 ifndef PYTHON
 	$(error "python3 is not available please install from https://docs.python.org/3")
 endif
+	@exit 0
+
+.PHONY: require-jq
+require-jq:
 ifndef JQ
 	$(error "jq is not available please install from https://stedolan.github.io/jq")
 endif
-	$(info gh found...)
-	$(info python3 found...)
-	$(info jq found...)
 	@exit 0
 
-.PHONY: check-github-auth
-check-github-auth: ## Checks GITHUB_TOKEN has been set
+.PHONY: require-gh
+require-gh:
 ifndef GH
 	$(error "gh (GitHub CLI) is not available please install from https://cli.github.com/")
 endif
+	@exit 0
+
+require-git:
+ifndef GIT
+	$(error "GIT is not available please install from https://git-scm.com/downloads")
+endif
+	@exit 0
+
+.PHONY: requirements
+requirements: require-git require-node require-python require-jq require-gh ## Checks development environment requirements (tools in the PATH)
+	@echo "git found..."
+	@echo "node found..."
+	@echo "python3 found..."
+	@echo "jq found..."
+	@echo "gh cli found..."
+
+.PHONY: github-auth
+github-auth: require-gh ## Checks GITHUB_TOKEN has been set
 # look for GITHUB_TOKEN in the environment
 ifdef GITHUB_TOKEN
 	$(info GITHUB_TOKEN found in the environment)
@@ -79,37 +104,43 @@ endif
 # Release Management
 ##############################################################################
 .PHONY: version
-version: ## Outputs the latest released version
+version: require-node ## Outputs the latest released version
 	@build/version.sh
 
 .PHONY: version-next
-version-next: ## Outputs the next unreleased version
+version-next: require-node ## Outputs the next unreleased version
 	@build/version-next.sh
 
 .PHONY: bump
-bump: ## Bumps the version number
+bump: require-node ## Bumps the version number
 ifndef $(ARGS)
 	$(eval ARGS := --build)
 endif
-	@node ./build/bump-version.js $(ARGS) --apply
+	@build/bump.sh $(ARGS) --apply
 
-CURRENT_VERSION := $(shell build/version.sh)
-CURRENT_DATE := $(shell date +'%b %d, %Y')
-tag = v$(CURRENT_VERSION)
-owner := $(shell gh repo view --json owner --jq '.owner.login')
-repo := $(shell gh repo view --json name --jq '.name')
 branch = HEAD
-release_notes = Release $(tag) ($(CURRENT_DATE))
 
 .PHONY: tag
-tag: ## Creates a pre-release tag
+tag: require-node require-git require-gh ## Creates a pre-release tag
+	$(eval CURRENT_VERSION := $(shell build/version.sh))
+	$(eval tag := v$(CURRENT_VERSION))
+	$(eval owner := $(shell gh repo view --json owner --jq '.owner.login'))
+	$(eval repo := $(shell gh repo view --json name --jq '.name'))
+
 	$(info Using tag: $(tag))
 	$(info Using repo: $(owner)/$(repo))
 	@git tag -a -f $(tag) $(branch) -m "Release $(tag)"
-	@git push --tags
+	@git push -f --tags --no-verify
 
 .PHONY: release
-release: | check-github-auth ## Creates a new github release
+release: github-auth require-node require-gh ## Creates a new github release
+	$(eval CURRENT_VERSION := $(shell build/version.sh))
+	$(eval CURRENT_DATE := $(shell date +'%b %d, %Y'))
+	$(eval tag := v$(CURRENT_VERSION))
+	$(eval owner := $(shell gh repo view --json owner --jq '.owner.login'))
+	$(eval repo := $(shell gh repo view --json name --jq '.name'))
+	$(eval release_notes := Release $(tag) ($(CURRENT_DATE)))
+
 	$(info Releasing version $(CURRENT_VERSION))
 	$(info Using tag: $(tag))
 	$(info Using repo: $(owner)/$(repo))
@@ -229,7 +260,7 @@ db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
 	@cd backend/dal; dotnet ef database drop;
 
-db-deploy: 
+db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
 	@cd database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
