@@ -3,7 +3,7 @@ import { TextArea } from 'components/common/form';
 import { InlineFastCurrencyInput, InlineInput } from 'components/common/form/styles';
 import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
-import { Breadcrumb, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export const LeaseH1 = styled.h1`
@@ -62,23 +62,6 @@ export const LeaseHeader = styled(InlineFlexDiv)`
   label {
     padding-right: 1rem;
     margin: 0;
-  }
-`;
-
-export const LeaseBreadcrumb = styled(Breadcrumb)`
-  .breadcrumb-item:not(:first-child)::before {
-    content: '>';
-    width: 0px;
-    margin-right: 1rem;
-  }
-  .breadcrumb {
-    li a {
-      max-height: 24px;
-    }
-  }
-  grid-area: breadcrumb;
-  ol {
-    background-color: white;
   }
 `;
 
