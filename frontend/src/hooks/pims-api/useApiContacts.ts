@@ -2,7 +2,7 @@ import { IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IContactFilter } from './../../features/contact/interfaces';
+import { IContactFilter } from '../../features/contacts/interfaces';
 import { IContactSearchResult } from './../../interfaces/IContactSearchResult';
 import { IPaginateRequest, useAxiosApi } from '.';
 
