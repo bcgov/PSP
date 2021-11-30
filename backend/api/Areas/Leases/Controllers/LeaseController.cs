@@ -45,7 +45,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id:int}")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
