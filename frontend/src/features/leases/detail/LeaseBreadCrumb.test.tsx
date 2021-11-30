@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+import Claims from 'constants/claims';
 import { createMemoryHistory } from 'history';
 import { ReactElement } from 'react';
 import { render, RenderOptions } from 'utils/test-utils';
@@ -13,9 +14,12 @@ describe('LeaseBreadCrumb component', () => {
   const setup = (renderOptions: RenderOptions & { breadcrumb?: ReactElement } = {}) => {
     // render component under test
     const component = render(
-      renderOptions.breadcrumb ?? <LeaseBreadCrumb onClickManagement={onClickManagement} />,
+      renderOptions.breadcrumb ?? (
+        <LeaseBreadCrumb leaseId={1} onClickManagement={onClickManagement} />
+      ),
       {
         ...renderOptions,
+        claims: [Claims.LEASE_VIEW],
         history,
       },
     );
