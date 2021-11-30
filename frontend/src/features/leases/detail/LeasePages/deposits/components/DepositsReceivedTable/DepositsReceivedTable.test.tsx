@@ -49,6 +49,12 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedTableProps = {}) 
 };
 
 describe('DepositsReceivedTable component', () => {
+  beforeEach(() => {
+    Date.now = jest.fn().mockReturnValue(new Date('2020-11-30T18:33:37.000Z'));
+  });
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   it('renders as expected', () => {
     const { asFragment } = setup({ dataSource: [...mockDeposits] });
     expect(asFragment()).toMatchSnapshot();
