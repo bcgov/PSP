@@ -28,9 +28,7 @@ export const DetailContainer: React.FunctionComponent<IDetailContainerProps> = p
         <LeaseBreadCrumb leasePage={leasePage} onClickManagement={onClickManagement} />
         <LeaseHeader />
         <LeaseIndex currentPageName={LeasePageNames.DETAILS}></LeaseIndex>
-        <LeasePageForm leasePage={leasePage}>
-          <p>Add Lease Placeholder</p>
-        </LeasePageForm>
+        <p>Add Lease Placeholder</p>
       </AddLeaseLayout>
     </>
   );
