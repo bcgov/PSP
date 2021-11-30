@@ -14,7 +14,6 @@ namespace Pims.Dal.Entities
             PimsInsuranceInsurerContacts = new HashSet<PimsInsurance>();
             PimsInsuranceMotiRiskMgmtContacts = new HashSet<PimsInsurance>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
-            PimsLeases = new HashSet<PimsLease>();
             PimsPersonAddresses = new HashSet<PimsPersonAddress>();
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
             PimsProperties = new HashSet<PimsProperty>();
@@ -49,7 +48,6 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsInsurance> PimsInsuranceInsurerContacts { get; set; }
         public virtual ICollection<PimsInsurance> PimsInsuranceMotiRiskMgmtContacts { get; set; }
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; }
-        public virtual ICollection<PimsLease> PimsLeases { get; set; }
         public virtual ICollection<PimsPersonAddress> PimsPersonAddresses { get; set; }
         public virtual ICollection<PimsPersonOrganization> PimsPersonOrganizations { get; set; }
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }

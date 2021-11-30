@@ -55,7 +55,7 @@ namespace Pims.Dal.Helpers.Extensions
                 .ThenInclude(p => p.Property)
                 .ThenInclude(p => p.Address)
                 .Include(l => l.PimsPropertyLeases)
-                .ThenInclude(p => p.PimsPropertyImprovements)
+                .Include(l => l.PimsPropertyImprovements)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
                 .ThenInclude(t => t.Person)
@@ -127,7 +127,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static string GetMotiName(this Pims.Dal.Entities.PimsLease lease)
         {
-            return lease.MotiName?.GetFullName();
+            return lease.MotiContact;
         }
 
         /// <summary>

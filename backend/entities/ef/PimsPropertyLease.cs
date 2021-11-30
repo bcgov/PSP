@@ -7,14 +7,11 @@ namespace Pims.Dal.Entities
 {
     public partial class PimsPropertyLease
     {
-        public PimsPropertyLease()
-        {
-            PimsPropertyImprovements = new HashSet<PimsPropertyImprovement>();
-        }
-
         public long PropertyLeaseId { get; set; }
         public long PropertyId { get; set; }
         public long LeaseId { get; set; }
+        public string AreaUnitTypeCode { get; set; }
+        public float? LeaseArea { get; set; }
         public long ConcurrencyControlNumber { get; set; }
         public DateTime AppCreateTimestamp { get; set; }
         public string AppCreateUserid { get; set; }
@@ -29,8 +26,8 @@ namespace Pims.Dal.Entities
         public DateTime DbLastUpdateTimestamp { get; set; }
         public string DbLastUpdateUserid { get; set; }
 
+        public virtual PimsAreaUnitType AreaUnitTypeCodeNavigation { get; set; }
         public virtual PimsLease Lease { get; set; }
         public virtual PimsProperty Property { get; set; }
-        public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; }
     }
 }

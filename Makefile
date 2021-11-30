@@ -246,7 +246,7 @@ npm-clean: ## Removes local containers, images, volumes, for frontend applicatio
 npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packages are changed.
 	@"$(MAKE)" npm-clean; make build n=frontend; make up;
 
-db-refresh: | server-run pause-30 db-clean pause-10 db-seed keycloak-sync ## Refresh the database and seed it with data.
+db-refresh: | server-run pause-30 db-seed keycloak-sync ## Refresh the database and seed it with data.
 
 db-clean: ## create a new, clean database using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) create a clean database with minimal required data for development"
@@ -254,7 +254,7 @@ db-clean: ## create a new, clean database using the script file in the database.
 
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
-	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database
+	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database; make pause-30; make keycloak-sync;
 
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."

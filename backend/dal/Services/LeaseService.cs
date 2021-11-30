@@ -82,7 +82,6 @@ namespace Pims.Dal.Services
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
                 .Include(l => l.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseCategoryTypeCodeNavigation)
-                .Include(l => l.MotiName)
 
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
@@ -108,8 +107,7 @@ namespace Pims.Dal.Services
                     .ThenInclude(t => t.Organization)
                     .ThenInclude(o => o.PimsContactMethods)
 
-                .Include(l => l.PimsPropertyLeases)
-                    .ThenInclude(t => t.PimsPropertyImprovements)
+                .Include(t => t.PimsPropertyImprovements)
 
                 .Include(l => l.PimsInsurances)
                     .ThenInclude(i => i.InsurancePayeeTypeCodeNavigation)
