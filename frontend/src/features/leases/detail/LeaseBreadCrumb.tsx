@@ -29,6 +29,7 @@ export const LeaseBreadCrumb: React.FunctionComponent<ILeaseAndLicenseBreadCrumb
           Lease &amp; License Search
         </Breadcrumb.Item>
       )}
+      <Breadcrumb.Item active>{leasePage?.title}</Breadcrumb.Item>
     </CommonStyled.Breadcrumb>
   );
 };
