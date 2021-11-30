@@ -42,6 +42,34 @@ exports[`LeaseContainer component renders as expected 1`] = `
   text-decoration: none;
 }
 
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  grid-area: breadcrumb;
+}
+
+.c1 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c1 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c1 ol {
+  background-color: white;
+}
+
 .c31 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -82,16 +110,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
 }
 
 .c4 {
@@ -165,24 +183,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
 .c3 label {
   padding-right: 1rem;
   margin: 0;
-}
-
-.c1 {
-  grid-area: breadcrumb;
-}
-
-.c1 .breadcrumb-item:not(:first-child)::before {
-  content: '>';
-  width: 0px;
-  margin-right: 1rem;
-}
-
-.c1 .breadcrumb li a {
-  max-height: 24px;
-}
-
-.c1 ol {
-  background-color: white;
 }
 
 .c29 {

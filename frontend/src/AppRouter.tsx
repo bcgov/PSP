@@ -2,7 +2,8 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
-import { ContactListView } from 'features/contact';
+import { ContactListView } from 'features/contacts';
+import ContactContainer from 'features/contacts/contact/ContactContainer/ContactContainer';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -144,6 +145,14 @@ const AppRouter: React.FC = () => {
           component={ContactListView}
           layout={AuthLayout}
           claim={Claims.CONTACT_VIEW}
+          title={getTitle('View Contacts')}
+        />
+        <AppRoute
+          protected
+          path="/contact/:id?"
+          component={ContactContainer}
+          layout={AuthLayout}
+          claim={[Claims.CONTACT_CREATE, Claims.CONTACT_EDIT]}
           title={getTitle('View Contacts')}
         />
         <AppRoute
