@@ -96,7 +96,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
   return {
     PID: pinOrPidValue,
-    PIN: pinOrPidValue,
+    PIN: undefined,
     STREET_ADDRESS_1: filter.address,
   };
 };
