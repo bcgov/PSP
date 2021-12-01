@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { ContactContainer, IContactContainerProps } from '../..';
+import ContactCreateContainer, { IContactCreateContainerProps } from './Container';
 
 const history = createMemoryHistory();
 
@@ -13,10 +13,10 @@ jest.mock('hooks/pims-api/useApiContacts');
 });
 
 describe('ContactContainer component', () => {
-  const setup = (renderOptions?: RenderOptions & Partial<IContactContainerProps>) => {
+  const setup = (renderOptions?: RenderOptions & Partial<IContactCreateContainerProps>) => {
     // render component under test
     const component = render(
-      <ContactContainer
+      <ContactCreateContainer
         match={
           renderOptions?.match ?? {
             params: { id: 'P0' },
