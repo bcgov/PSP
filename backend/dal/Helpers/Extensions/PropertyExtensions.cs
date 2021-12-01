@@ -37,7 +37,7 @@ namespace Pims.Dal.Helpers.Extensions
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
                 var pinOrPidValue = filter.PinOrPid.Replace("-", "").Trim();
-                query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null && (pl.Property.Pid.ToString().Contains(pinOrPidValue) || pl.Property.Pin.ToString().Contains(pinOrPidValue))));
+                query = query.Where(p => p != null && (EF.Functions.Like(p.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(p.Pin.ToString(), $"%{pinOrPidValue}%")));
             }
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
