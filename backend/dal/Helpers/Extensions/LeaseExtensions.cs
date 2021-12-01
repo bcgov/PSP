@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
+
 namespace Pims.Dal.Helpers.Extensions
 {
     /// <summary>
@@ -27,13 +28,10 @@ namespace Pims.Dal.Helpers.Extensions
                 || l.PimsLeaseTenants.Any(tenant => tenant.Organization != null && EF.Functions.Like(tenant.Organization.OrganizationName, $"%{filter.TenantName}%")));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.PidOrPin))
+            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
-                var pidOrPinValue = filter.PidOrPin.Replace("-", "").Trim();
-                if (Int32.TryParse(pidOrPinValue, out int pidOrPin))
-                {
-                    query = query.Where(l => l.PimsPropertyLeases.Where(p => p != null && p.Property != null).Select(p => p.Property).Count(p => p.Pid == pidOrPin || p.Pin == pidOrPin) > 0);
-                }
+                var pinOrPidValue = filter.PinOrPid.Replace("-", "").Trim();
+                query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null && (pl.Property.Pid.ToString().Contains(pinOrPidValue) || pl.Property.Pin.ToString().Contains(pinOrPidValue))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.LFileNo))
@@ -95,7 +93,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static int? GetPidOrPin(this Pims.Dal.Entities.PimsLease lease)
+        public static int? GetPinOrPid(this Pims.Dal.Entities.PimsLease lease)
         {
             return lease.PimsPropertyLeases?.FirstOrDefault(p => p != null && p?.Property != null)?.Property?.Pid ?? lease.PimsPropertyLeases?.FirstOrDefault(p => p != null && p?.Property != null)?.Property?.Pin;
         }

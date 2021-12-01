@@ -20,12 +20,12 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions &
     placeholders: Record<string, string>;
   } = {
     options: options ?? [
-      { label: 'PID/PIN', value: 'pid' },
+      { label: 'PID/PIN', value: 'pinOrPid' },
       { label: 'Address', value: 'address' },
     ],
     placeholders: placeholders ?? {
       address: 'Enter an address',
-      pid: 'Enter a PID or PIN',
+      pinOrPid: 'Enter a PID or PIN',
     },
   };
 
@@ -37,7 +37,7 @@ export const PropertyFilterOptions: React.FC<IPropertyFilterOptions &
   const desc = state.placeholders[searchBy] || '';
 
   const reset = () => {
-    setFieldValue(searchBy ? searchBy : 'pid', '');
+    setFieldValue(searchBy ? searchBy : 'pinOrPid', '');
   };
 
   return (
