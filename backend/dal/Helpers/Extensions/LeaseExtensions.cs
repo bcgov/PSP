@@ -79,26 +79,6 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Get the street address from the lease's first associated property.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static string GetAddress(this Entities.PimsLease lease)
-        {
-            return lease.PimsPropertyLeases.FirstOrDefault(p => p != null && p?.Property != null)?.Property?.Address?.StreetAddress1;
-        }
-
-        /// <summary>
-        /// Get the pid or pin from the lease's first associated property.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static int? GetPinOrPid(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease.PimsPropertyLeases?.FirstOrDefault(p => p != null && p?.Property != null)?.Property?.Pid ?? lease.PimsPropertyLeases?.FirstOrDefault(p => p != null && p?.Property != null)?.Property?.Pin;
-        }
-
-        /// <summary>
         /// Get the Program name from the lease's program type description
         /// </summary>
         /// <param name="lease"></param>
