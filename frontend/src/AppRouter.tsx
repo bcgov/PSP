@@ -3,7 +3,9 @@ import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { ContactListView } from 'features/contacts';
-import ContactContainer from 'features/contacts/contact/ContactContainer/ContactContainer';
+import { ContactCreateContainer } from 'features/contacts/contact/create/Container';
+import ContactViewContainer from 'features/contacts/contact/detail/Container';
+import { ContactEditContainer } from 'features/contacts/contact/edit/Container';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -149,11 +151,27 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
-          path="/contact/:id?"
-          component={ContactContainer}
+          path="/contact/new"
+          component={ContactCreateContainer}
           layout={AuthLayout}
-          claim={[Claims.CONTACT_CREATE, Claims.CONTACT_EDIT]}
-          title={getTitle('View Contacts')}
+          claim={[Claims.CONTACT_CREATE]}
+          title={getTitle('Create Contactj')}
+        />
+        <AppRoute
+          protected
+          path="/contact/:id?/edit"
+          component={ContactEditContainer}
+          layout={AuthLayout}
+          claim={[Claims.CONTACT_EDIT]}
+          title={getTitle('Edit Contact')}
+        />
+        <AppRoute
+          protected
+          path="/contact/:id?"
+          component={ContactViewContainer}
+          layout={AuthLayout}
+          claim={[Claims.CONTACT_VIEW]}
+          title={getTitle('View Contact')}
         />
         <AppRoute
           protected

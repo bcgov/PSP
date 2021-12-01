@@ -1,4 +1,5 @@
 import { IPagedItems } from 'interfaces';
+import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -19,6 +20,7 @@ export const useApiContacts = () => {
         api.get<IPagedItems<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
+      getContact: (id: number) => api.get<IContact>(`/contacts/${id}`),
     }),
     [api],
   );
