@@ -9,25 +9,25 @@ namespace Pims.Core.Test
     public static partial class EntityHelper
     {
         /// <summary>
-        /// Create a new instance of a PropertyDataSourceType.
+        /// Create a new instance of a DataSourceType.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PimsPropertyDataSourceType CreatePropertyDataSourceType(string id)
+        public static Entity.PimsDataSourceType CreateDataSourceType(string id)
         {
-            return new Entity.PimsPropertyDataSourceType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsDataSourceType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
-        /// Creates a default list of PropertyDataSourceType.
+        /// Creates a default list of DataSourceType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.PimsPropertyDataSourceType> CreateDefaultPropertyDataSourceTypes()
+        public static List<Entity.PimsDataSourceType> CreateDefaultDataSourceTypes()
         {
-            return new List<Entity.PimsPropertyDataSourceType>()
+            return new List<Entity.PimsDataSourceType>()
             {
-                new Entity.PimsPropertyDataSourceType("LIS") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyDataSourceType("PAIMS") { ConcurrencyControlNumber = 1 }
+                new Entity.PimsDataSourceType("LIS") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsDataSourceType("PAIMS") { ConcurrencyControlNumber = 1 }
             };
         }
     }

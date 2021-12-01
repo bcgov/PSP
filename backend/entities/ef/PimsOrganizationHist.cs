@@ -19,6 +19,7 @@ namespace Pims.Dal.Entities
         public string OrganizationIdentifier { get; set; }
         public string OrganizationName { get; set; }
         public string OrganizationAlias { get; set; }
+        public string IncorporationNumber { get; set; }
         public string Website { get; set; }
         public string Comment { get; set; }
         public bool IsDisabled { get; set; }

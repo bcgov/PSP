@@ -13888,3 +13888,81 @@ BEGIN CATCH
 END CATCH;
 GO
 
+/****** Object:  Table [dbo].[PIMS_TENANT]    Script Date: 11/18/2021 1:28:31 PM ******/
+-- Create sequence dbo.[PIMS_TENANT_ID_SEQ]
+PRINT N'Create sequence dbo.[PIMS_TENANT_ID_SEQ]'
+GO
+CREATE SEQUENCE [dbo].[PIMS_TENANT_ID_SEQ]
+	AS bigint
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	NO CYCLE
+	CACHE 50
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+CREATE TABLE [dbo].[PIMS_TENANT](
+	[TENANT_ID] [bigint] NOT NULL,
+	[CODE] [nvarchar](6) NOT NULL,
+	[NAME] [nvarchar](150) NOT NULL,
+	[DESCRIPTION] [nvarchar](500) NULL,
+	[SETTINGS] [nvarchar](2000) NOT NULL,
+	[CONCURRENCY_CONTROL_NUMBER] [bigint] NOT NULL,
+	[DB_CREATE_TIMESTAMP] [datetime] NOT NULL,
+	[DB_CREATE_USERID] [nvarchar](30) NOT NULL,
+	[DB_LAST_UPDATE_TIMESTAMP] [datetime] NOT NULL,
+	[DB_LAST_UPDATE_USERID] [nvarchar](30) NOT NULL,
+ CONSTRAINT [PIMS_TENANT_PK] PRIMARY KEY CLUSTERED 
+(
+	[TENANT_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  CONSTRAINT [TENANT_TENANT_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_TENANT_ID_SEQ]) FOR [TENANT_ID]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (CONVERT([bigint],(1))) FOR [CONCURRENCY_CONTROL_NUMBER]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (getutcdate()) FOR [DB_CREATE_TIMESTAMP]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (user_name()) FOR [DB_CREATE_USERID]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (getutcdate()) FOR [DB_LAST_UPDATE_TIMESTAMP]
+GO
+
+ALTER TABLE [dbo].[PIMS_TENANT] ADD  DEFAULT (user_name()) FOR [DB_LAST_UPDATE_USERID]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Auto-sequenced unique key value' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'TENANT_ID'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Code value for entry' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'CODE'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Name of the entry for display purposes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'NAME'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Description of the entry for display purposes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'DESCRIPTION'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Serialized JSON value for the configuration' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'SETTINGS'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Concurrency control number' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'PIMS_TENANT', @level2type=N'COLUMN',@level2name=N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO

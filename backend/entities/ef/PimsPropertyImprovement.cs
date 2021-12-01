@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPropertyImprovement
     {
         public long PropertyImprovementId { get; set; }
-        public long PropertyLeaseId { get; set; }
+        public long LeaseId { get; set; }
         public string PropertyImprovementTypeCode { get; set; }
         public string ImprovementDescription { get; set; }
         public string StructureSize { get; set; }
@@ -27,7 +27,7 @@ namespace Pims.Dal.Entities
         public DateTime DbLastUpdateTimestamp { get; set; }
         public string DbLastUpdateUserid { get; set; }
 
+        public virtual PimsLease Lease { get; set; }
         public virtual PimsPropertyImprovementType PropertyImprovementTypeCodeNavigation { get; set; }
-        public virtual PimsPropertyLease PropertyLease { get; set; }
     }
 }

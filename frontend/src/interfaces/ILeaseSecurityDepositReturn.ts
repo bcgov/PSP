@@ -12,5 +12,4 @@ export interface ILeaseSecurityDepositReturn {
   chequeNumber: string;
   payeeName: string;
   payeeAddress: string;
-  terminationNote: string;
 }

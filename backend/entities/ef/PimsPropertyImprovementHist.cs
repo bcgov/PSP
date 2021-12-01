@@ -11,7 +11,7 @@ namespace Pims.Dal.Entities
         public DateTime EffectiveDateHist { get; set; }
         public DateTime? EndDateHist { get; set; }
         public long PropertyImprovementId { get; set; }
-        public long PropertyLeaseId { get; set; }
+        public long LeaseId { get; set; }
         public string PropertyImprovementTypeCode { get; set; }
         public string ImprovementDescription { get; set; }
         public string StructureSize { get; set; }

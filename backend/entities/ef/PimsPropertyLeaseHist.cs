@@ -13,6 +13,8 @@ namespace Pims.Dal.Entities
         public long PropertyLeaseId { get; set; }
         public long PropertyId { get; set; }
         public long LeaseId { get; set; }
+        public string AreaUnitTypeCode { get; set; }
+        public float? LeaseArea { get; set; }
         public long ConcurrencyControlNumber { get; set; }
         public DateTime AppCreateTimestamp { get; set; }
         public string AppCreateUserid { get; set; }
