@@ -1,33 +1,17 @@
 import axios, { AxiosError } from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
+import { catchAxiosError } from 'customAxios';
 import { useApiProperties } from 'hooks/pims-api';
 import { useGeoServer } from 'hooks/pims-api/useGeoServer';
 import { IProperty } from 'interfaces';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { Dispatch } from 'redux';
 import { downloadFile } from 'utils/download';
 
-import { IGenericNetworkAction } from '../network/interfaces';
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { storeProperties, storeProperty } from './propertiesSlice';
-
-const catchAxiosError = (
-  axiosError: AxiosError,
-  dispatch: Dispatch<any>,
-  errorNetworkAction: string,
-) => {
-  const payload: IGenericNetworkAction = {
-    name: errorNetworkAction,
-    status: axiosError?.response?.status,
-    error: axiosError,
-  };
-  dispatch(logError(payload));
-  dispatch(hideLoading());
-  throw Error(axiosError.message);
-};
 
 export const useProperties = () => {
   const dispatch = useDispatch();
