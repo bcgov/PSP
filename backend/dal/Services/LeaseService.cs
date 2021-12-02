@@ -47,7 +47,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public IEnumerable<PimsLease> Get(LeaseFilter filter)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
@@ -59,7 +59,7 @@ namespace Pims.Dal.Services
 
         public PimsLease Get(int id)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsLeases.Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)

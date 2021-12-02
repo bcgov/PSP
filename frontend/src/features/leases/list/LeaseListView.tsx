@@ -1,11 +1,17 @@
+import { Button } from 'components/common/form';
 import TooltipWrapper from 'components/common/TooltipWrapper';
+import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { ILeaseSearchResult } from 'interfaces';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
+import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import { ILeaseFilter } from '../interfaces';
 import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
@@ -16,7 +22,9 @@ import * as Styled from './styles';
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
 export const LeaseListView: React.FunctionComponent = () => {
+  const history = useHistory();
   const { getLeases } = useApiLeases();
+  const { hasClaim } = useKeycloakWrapper();
   const {
     results,
     filter,
@@ -65,7 +73,12 @@ export const LeaseListView: React.FunctionComponent = () => {
           </TooltipWrapper>
           <Styled.Spacer />
         </Styled.PageToolbar>
-
+        {hasClaim(Claims.LEASE_ADD) && (
+          <StyledAddButton onClick={() => history.push('/lease/new')}>
+            <FaPlus />
+            &nbsp;Add A Lease/License
+          </StyledAddButton>
+        )}
         <LeaseSearchResults
           results={results}
           pageIndex={currentPage}
@@ -80,5 +93,11 @@ export const LeaseListView: React.FunctionComponent = () => {
     </Styled.ListPage>
   );
 };
+
+export const StyledAddButton = styled(Button)`
+  &.btn.btn-primary {
+    background-color: ${props => props.theme.css.completedColor};
+  }
+`;
 
 export default LeaseListView;

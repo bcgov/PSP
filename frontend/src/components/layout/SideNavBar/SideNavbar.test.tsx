@@ -1,6 +1,6 @@
 import { act, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Roles } from 'constants/index';
+import { Claims, Roles } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
@@ -14,7 +14,11 @@ interface IRenderProps {
 const history = createMemoryHistory();
 const renderComponent = (props?: IRenderProps) =>
   render(
-    <TestCommonWrapper history={history} roles={props?.roles ?? [Roles.REAL_ESTATE_MANAGER]}>
+    <TestCommonWrapper
+      history={history}
+      roles={props?.roles ?? [Roles.REAL_ESTATE_MANAGER]}
+      claims={[Claims.LEASE_VIEW]}
+    >
       <SidebarStateContextProvider>
         <SideNavBar />
       </SidebarStateContextProvider>
@@ -113,7 +117,7 @@ describe('SideNavbar display and logic', () => {
         userEvent.click(managementButton);
       });
       await waitFor(async () => {
-        expect(getByText('Leases & Licenses')).toBeInTheDocument();
+        expect(getByText('Search for a Lease or License')).toBeInTheDocument();
       });
     });
 

@@ -254,8 +254,8 @@ db-clean: ## create a new, clean database using the script file in the database.
 
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
-	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database; make pause-30; make keycloak-sync;
-
+	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database;
+	
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
 	@cd backend/dal; dotnet ef database drop;

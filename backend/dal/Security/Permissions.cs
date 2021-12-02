@@ -58,6 +58,18 @@ namespace Pims.Dal.Security
         ContactEdit = 17,
 
         [Display(GroupName = "contact", Name = "contact-delete", Description = "Can delete existing contacts.")]
-        ContactDelete = 18
+        ContactDelete = 18,
+
+        [Display(GroupName = "lease", Name = "lease-view", Description = "Can view leases.")]
+        LeaseView = 19,
+
+        [Display(GroupName = "lease", Name = "lease-add", Description = "Can add new leases.")]
+        LeaseAdd = 20,
+
+        [Display(GroupName = "lease", Name = "lease-edit", Description = "Can edit existing leases.")]
+        LeaseEdit = 21,
+
+        [Display(GroupName = "lease", Name = "lease-delete", Description = "Can delete existing leases.")]
+        LeaseDelete = 22
     }
 }

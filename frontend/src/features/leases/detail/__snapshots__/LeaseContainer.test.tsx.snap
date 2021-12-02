@@ -32,45 +32,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
 <div
     class="Toastify"
   />
-  .c10 {
-  grid-area: backbutton;
-  margin: 0.5rem;
-}
-
-.c10:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
-  grid-area: breadcrumb;
-}
-
-.c1 .breadcrumb-item:not(:first-child)::before {
-  content: '>';
-  width: 0px;
-  margin-right: 1rem;
-}
-
-.c1 .breadcrumb li a {
-  max-height: 24px;
-}
-
-.c1 ol {
-  background-color: white;
-}
-
-.c31 {
+  .c31 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -110,6 +72,34 @@ exports[`LeaseContainer component renders as expected 1`] = `
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  grid-area: breadcrumb;
+}
+
+.c1 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c1 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c1 ol {
+  background-color: white;
 }
 
 .c4 {
@@ -344,6 +334,16 @@ exports[`LeaseContainer component renders as expected 1`] = `
   gap: 2.5rem;
 }
 
+.c10 {
+  grid-area: backbutton;
+  margin: 0.5rem;
+}
+
+.c10:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c5 {
   max-width: 11rem;
   max-height: 100%;
@@ -563,13 +563,10 @@ exports[`LeaseContainer component renders as expected 1`] = `
           </a>
         </li>
         <li
-          class="breadcrumb-item"
+          aria-current="page"
+          class="breadcrumb-item active"
         >
-          <a
-            href="/lease/list"
-          >
-            Lease & License Search
-          </a>
+          Details
         </li>
       </ol>
     </nav>

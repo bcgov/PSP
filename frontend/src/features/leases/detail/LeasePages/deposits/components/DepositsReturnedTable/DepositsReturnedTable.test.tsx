@@ -16,7 +16,6 @@ const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
     chequeNumber: '20-12780',
     payeeName: 'John Smith',
     payeeAddress: '1020 Skid Row',
-    terminationNote: '',
   },
 ];
 

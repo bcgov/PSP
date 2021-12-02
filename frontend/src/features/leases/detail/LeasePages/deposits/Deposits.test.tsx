@@ -19,7 +19,6 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     securityDepositType: 'Pet deposit',
     description: 'Pet deposit collected for one cat and one medium size dog.',
     amountPaid: 500.0,
-    totalAmount: 521.0,
     depositDate: '2021-09-15T00:00:00',
     annualInterestRate: 2.1,
   },
@@ -32,7 +31,6 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
     amountPaid: 2000.0,
-    totalAmount: 2084.0,
     depositDate: '2019-03-01T00:00:00',
     annualInterestRate: 2.1,
   },
@@ -51,7 +49,6 @@ const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
     chequeNumber: '20-12780',
     payeeName: 'John Smith',
     payeeAddress: '1020 Skid Row',
-    terminationNote: '',
   },
 ];
 
@@ -69,6 +66,12 @@ const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): Rend
 };
 
 describe('Lease Deposits', () => {
+  beforeEach(() => {
+    Date.now = jest.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
+  });
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   it('renders as expected', () => {
     const result = setup({
       lease: {

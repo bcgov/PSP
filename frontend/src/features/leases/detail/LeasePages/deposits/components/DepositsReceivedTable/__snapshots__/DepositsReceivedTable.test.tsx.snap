@@ -184,7 +184,7 @@ exports[`DepositsReceivedTable component renders as expected 1`] = `
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            $1.75
+            -$7.88
           </div>
           <div
             class="td"
@@ -192,7 +192,7 @@ exports[`DepositsReceivedTable component renders as expected 1`] = `
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            $501.75
+            $492.13
           </div>
         </div>
       </div>
@@ -260,7 +260,7 @@ Integer nec odio.
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            $115.5
+            $70
           </div>
           <div
             class="td"
@@ -268,7 +268,7 @@ Integer nec odio.
             style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            $2,115.5
+            $2,070
           </div>
         </div>
       </div>
