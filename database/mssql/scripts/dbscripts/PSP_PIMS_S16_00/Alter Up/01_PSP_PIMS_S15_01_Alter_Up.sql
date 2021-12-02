@@ -15,18 +15,26 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Drop DEFAULT dbo.DF__ETL_DATA___DATA___7ECCBBD3
-DROP DEFAULT IF EXISTS DF__ETL_DATA___DATA___7ECCBBD3;
-GO
+declare @schema_name nvarchar(256)
+declare @table_name nvarchar(256)
+declare @col_name nvarchar(256)
+declare @Command  nvarchar(1000)
 
--- Drop DEFAULT etl.SRCTRC_DATA_SOURCE_TRACE_ID_DEF
-PRINT N'Rebuild table etl.SRCTRC_DATA_SOURCE_TRACE_ID_DEF'
-GO
-ALTER TABLE [etl].[ETL_DATA_SOURCE_TRACE]
-DROP CONSTRAINT [SRCTRC_DATA_SOURCE_TRACE_ID_DEF]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+set @schema_name = N'etl'
+set @table_name = N'ETL_DATA_SOURCE_TRACE'
+set @col_name = N'DATA_SOURCE_TRACE_ID'
+
+select @Command = 'ALTER TABLE ' + @schema_name + '.[' + @table_name + '] DROP CONSTRAINT ' + d.name
+ from sys.tables t
+  join sys.default_constraints d on d.parent_object_id = t.object_id
+  join sys.columns c on c.object_id = t.object_id and c.column_id = d.parent_column_id
+ where t.name = @table_name
+  and t.schema_id = schema_id(@schema_name)
+  and c.name = @col_name
+
+--print @Command
+
+execute (@Command)
 
 -- Drop trigger dbo.PIMS_SDRTRN_I_S_U_TR
 PRINT N'Drop trigger dbo.PIMS_SDRTRN_I_S_U_TR'
@@ -1323,16 +1331,6 @@ GO
 
 -- Rebuild table dbo.PIMS_LEASE_HIST
 PRINT N'Rebuild table dbo.PIMS_LEASE_HIST'
-GO
-ALTER TABLE [dbo].[PIMS_LEASE_HIST]
-DROP CONSTRAINT [DF__PIMS_LEAS___LEAS__7C8F6DA6]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-ALTER TABLE [dbo].[PIMS_LEASE_HIST]
-DROP CONSTRAINT [DF__PIMS_LEAS__EFFEC__7D8391DF]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
 GO
 CREATE TABLE [dbo].[ADS_SSDATA_1637956464239]  ( 
 	[_LEASE_HIST_ID]                	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_LEASE_H_ID_SEQ]),
