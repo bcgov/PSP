@@ -21,6 +21,8 @@ export const useApiContacts = () => {
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
+      // TODO: implement call to the backend
+      postContact: () => Promise.resolve(),
     }),
     [api],
   );

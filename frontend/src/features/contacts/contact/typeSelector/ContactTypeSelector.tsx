@@ -1,9 +1,8 @@
 import { InlineFlexDiv } from 'components/common/styles';
+import { ContactTypes } from 'features/contacts';
 import * as React from 'react';
 import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
-
-import { ContactTypes } from '../..';
 
 interface IContactTypeSelectorProps {
   disabled?: boolean;

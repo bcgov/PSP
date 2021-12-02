@@ -1,36 +1,39 @@
+import { ContactBreadcrumb, ContactTypes } from 'features/contacts';
+import { useQuery } from 'hooks/use-query';
 import * as React from 'react';
 import { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ContactBreadcrumb, ContactTypes, ContactTypeSelector } from '../..';
 import * as Styled from '../../styles';
+import { ContactTypeSelector } from './ContactTypeSelector/ContactTypeSelector';
 
 interface MatchParams {
   id?: string;
 }
 
-export interface IContactCreateContainerProps extends RouteComponentProps<MatchParams> {
+export interface IContainerProps extends RouteComponentProps<MatchParams> {
   type: ContactTypes;
 }
 
-export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = ({
+export const Container: React.FunctionComponent<IContainerProps> = ({
   match: {
     params: { id },
   },
 }) => {
-  const [contactType, setContactType] = useState(getContactTypeFromId(id));
+  // get default contact type from URL; e.g. contact/new?type=P
+  const { type } = useQuery();
+  const [contactType, setContactType] = useState(getContactType(type as string));
+
   return (
     <ContactLayout>
       <ContactBreadcrumb />
       <Styled.H1>Add a Contact</Styled.H1>
 
-      {!id && (
-        <ContactTypeSelector
-          contactType={contactType}
-          setContactType={setContactType}
-        ></ContactTypeSelector>
-      )}
+      <ContactTypeSelector
+        contactType={contactType}
+        setContactType={setContactType}
+      ></ContactTypeSelector>
     </ContactLayout>
   );
 };
@@ -43,11 +46,11 @@ const ContactLayout = styled.div`
   padding: 1rem;
 `;
 
-const getContactTypeFromId = (id?: string) => {
-  if (id?.length !== undefined && id.length > 0) {
-    return id[0] as ContactTypes;
+const getContactType = (value?: string) => {
+  if (value !== undefined) {
+    return value as ContactTypes;
   }
   return ContactTypes.INDIVIDUAL;
 };
 
-export default ContactCreateContainer;
+export default Container;
