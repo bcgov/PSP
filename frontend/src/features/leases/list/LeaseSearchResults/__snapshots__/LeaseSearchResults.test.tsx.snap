@@ -175,44 +175,6 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
                   </div>
                 </div>
               </div>
-              <div
-                class="c0 mx-0 my-2 border border-secondary row"
-              >
-                <div
-                  class="col-md-12"
-                >
-                  <strong
-                    class="pr-2"
-                  >
-                    Address:
-                  </strong>
-                  123 mock st
-                </div>
-                <div
-                  class="col-md-auto"
-                >
-                  <div>
-                    <strong
-                      class="pr-2"
-                    >
-                      PID:
-                    </strong>
-                     N.A
-                  </div>
-                </div>
-                <div
-                  class="col-md-auto"
-                >
-                  <div>
-                    <strong
-                      class="pr-2"
-                    >
-                      PIN:
-                    </strong>
-                     123
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -276,44 +238,6 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             <div
               class="w-100"
             >
-              <div
-                class="c0 mx-0 my-2 border border-secondary row"
-              >
-                <div
-                  class="col-md-12"
-                >
-                  <strong
-                    class="pr-2"
-                  >
-                    Address:
-                  </strong>
-                  456 mock st
-                </div>
-                <div
-                  class="col-md-auto"
-                >
-                  <div>
-                    <strong
-                      class="pr-2"
-                    >
-                      PID:
-                    </strong>
-                     999
-                  </div>
-                </div>
-                <div
-                  class="col-md-auto"
-                >
-                  <div>
-                    <strong
-                      class="pr-2"
-                    >
-                      PIN:
-                    </strong>
-                     N.A
-                  </div>
-                </div>
-              </div>
               <div
                 class="c0 mx-0 my-2 border border-secondary row"
               >

@@ -22,7 +22,7 @@ interface MultiSelectOption {
 }
 
 export const defaultFilter: ILeaseFilter = {
-  pidOrPin: '',
+  pinOrPid: '',
   lFileNo: '',
   searchBy: 'lFileNo',
   tenantName: '',
@@ -32,7 +32,7 @@ export const defaultFilter: ILeaseFilter = {
 const idFilterOptions = [
   {
     label: 'PID/PIN',
-    value: 'pidOrPin',
+    value: 'pinOrPid',
   },
   {
     label: 'L-File #',
@@ -41,7 +41,7 @@ const idFilterOptions = [
 ];
 
 const idFilterPlaceholders = {
-  pidOrPin: 'Enter a PID or PIN',
+  pinOrPid: 'Enter a PID or PIN',
   lFileNo: 'Enter an LIS File Number',
 };
 

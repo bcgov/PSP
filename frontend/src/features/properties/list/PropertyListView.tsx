@@ -26,11 +26,9 @@ import { columns as columnDefinitions } from './columns';
 import * as Styled from './PropertyListView.styled';
 
 const defaultFilterValues: IPropertyFilter = {
-  searchBy: 'pid',
-  pid: '',
-  pin: '',
+  searchBy: 'pinOrPid',
+  pinOrPid: '',
   address: '',
-  location: '',
 };
 
 const PropertyListView: React.FC = () => {

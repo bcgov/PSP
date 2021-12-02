@@ -11,7 +11,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The unique identifier for titled property, either pid or pin.
         /// </summary>
-        public string PidOrPin { get; set; }
+        public string PinOrPid { get; set; }
 
         /// <summary>
         /// get/set - The value of the tenant name.
@@ -48,7 +48,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.PidOrPin = filter.GetStringValue(nameof(this.PidOrPin));
+            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
             this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
@@ -68,7 +68,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 Page = model.Page,
                 Quantity = model.Quantity,
 
-                PidOrPin = model.PidOrPin,
+                PinOrPid = model.PinOrPid,
                 TenantName = model.TenantName,
                 LFileNo = model.LFileNo,
                 Programs = model.Programs,
@@ -86,7 +86,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.PidOrPin)
+                || !String.IsNullOrWhiteSpace(this.PinOrPid)
                 || !String.IsNullOrWhiteSpace(this.TenantName)
                 || !String.IsNullOrWhiteSpace(this.LFileNo);
         }

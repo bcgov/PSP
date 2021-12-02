@@ -1,5 +1,5 @@
 export interface ILeaseFilter {
-  pidOrPin: string;
+  pinOrPid: string;
   lFileNo: string;
   searchBy: string;
   tenantName: string;
