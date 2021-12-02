@@ -153,7 +153,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public Paged<PimsLease> GetPage(LeaseFilter filter)
         {
-            //This is not code this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 

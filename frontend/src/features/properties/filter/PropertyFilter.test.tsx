@@ -90,11 +90,9 @@ const getStore = (filter: any) =>
   });
 
 const defaultFilter: IPropertyFilter = {
-  searchBy: 'pid',
-  pid: '',
+  searchBy: 'pinOrPid',
+  pinOrPid: '',
   address: '',
-  pin: '',
-  location: '',
 };
 
 const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
@@ -145,21 +143,17 @@ describe('MapFilterBar', () => {
 
     // Assert
     expect(onFilterChange).toBeCalledWith({
-      pid: '',
+      pinOrPid: '',
       address: '',
-      pin: '',
-      location: '',
-      searchBy: 'pid',
+      searchBy: 'pinOrPid',
     });
   });
 
   it('loads filter values if provided', () => {
     const providedFilter: IPropertyFilter = {
-      pid: 'mockPid',
+      pinOrPid: 'mockPid',
       searchBy: 'address',
       address: 'mockaddress',
-      pin: '',
-      location: '',
     };
     const { getByText } = render(getUiElement(providedFilter));
     expect(getByText('Address')).toBeVisible();
@@ -175,11 +169,9 @@ describe('MapFilterBar', () => {
       fireEvent.click(getByTestId('reset-button'));
     });
     expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
-      pid: '',
+      pinOrPid: '',
       address: '',
-      pin: '',
-      location: '',
-      searchBy: 'pid',
+      searchBy: 'pinOrPid',
     });
   });
 });
