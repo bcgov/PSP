@@ -27,7 +27,7 @@ namespace Pims.Core.Test
             person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address });
             var organization = new Entity.PimsOrganization();
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address });
-            lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pidOrPin }, Lease = lease });
+            lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pid }, Lease = lease });
             lease.MotiContact = $"{motiFirstName} {motiLastName}";
             lease.LeaseProgramTypeCodeNavigation = new Entity.PimsLeaseProgramType() { Id = "testProgramType" };
             lease.LeasePmtFreqTypeCodeNavigation = new Entity.PimsLeasePmtFreqType() { Id = "testFrequencyType" };
