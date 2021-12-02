@@ -67,7 +67,7 @@ const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): Rend
 
 describe('Lease Deposits', () => {
   beforeEach(() => {
-    Date.now = jest.fn().mockReturnValue(new Date('2020-11-30T18:33:37.000Z'));
+    Date.now = jest.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
   });
   afterAll(() => {
     jest.restoreAllMocks();

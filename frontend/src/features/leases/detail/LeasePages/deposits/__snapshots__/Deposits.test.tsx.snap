@@ -223,7 +223,7 @@ exports[`Lease Deposits renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                -$7.88
+                -$8.75
               </div>
               <div
                 class="td"
@@ -231,7 +231,7 @@ exports[`Lease Deposits renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $492.13
+                $491.25
               </div>
             </div>
           </div>
@@ -299,7 +299,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $70
+                $66.5
               </div>
               <div
                 class="td"
@@ -307,7 +307,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $2,070
+                $2,066.5
               </div>
             </div>
           </div>
