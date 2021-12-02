@@ -1,7 +1,7 @@
-using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Areas.Property.Models.Search
 {
@@ -19,14 +19,9 @@ namespace Pims.Api.Areas.Property.Models.Search
         public string Address { get; set; }
 
         /// <summary>
-        /// get/set - The parcel PID.
+        /// get/set - The pin or pid property identifier.
         /// </summary>
-        public string PID { get; set; }
-
-        /// <summary>
-        /// get/set - The unique identifier for untitled properties.
-        /// </summary>
-        public int? PIN { get; set; }
+        public string PinOrPid { get; set; }
 
         #endregion
 
@@ -45,11 +40,10 @@ namespace Pims.Api.Areas.Property.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.PID = filter.GetStringValue(nameof(this.PID));
-            this.PIN = filter.GetIntNullValue(nameof(this.PIN));
-            this.Address = filter.GetStringValue(nameof(this.Address));
-
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+
+            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
+            this.Address = filter.GetStringValue(nameof(this.Address));
         }
         #endregion
 
@@ -64,17 +58,14 @@ namespace Pims.Api.Areas.Property.Models.Search
             {
                 Page = model.Page,
                 Quantity = model.Quantity,
+                Sort = model.Sort,
 
-                PID = model.PID,
-                PIN = model.PIN,
+                PinOrPid = model.PinOrPid,
                 Address = model.Address,
-
-                Sort = model.Sort
             };
 
             return filter;
         }
-
         /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
@@ -82,8 +73,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || this.PIN.HasValue
-                || !String.IsNullOrWhiteSpace(this.PID)
+                || !String.IsNullOrWhiteSpace(this.PinOrPid)
                 || !String.IsNullOrWhiteSpace(this.Address);
         }
         #endregion

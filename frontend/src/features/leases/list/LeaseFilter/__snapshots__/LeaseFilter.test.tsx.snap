@@ -89,7 +89,7 @@ exports[`Lease Filter matches snapshot 1`] = `
           >
             <option
               class="option"
-              value="pidOrPin"
+              value="pinOrPid"
             >
               PID/PIN
             </option>

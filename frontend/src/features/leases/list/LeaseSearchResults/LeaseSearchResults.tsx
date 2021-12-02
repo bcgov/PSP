@@ -49,9 +49,6 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     align: 'left',
 
     Cell: (props: CellProps<ILeaseSearchResult>) => {
-      // TODO: just for testing
-      props.row.original.properties.push(...props.row.original.properties);
-
       return (
         <LeaseProperties
           properties={props.row.original.properties}

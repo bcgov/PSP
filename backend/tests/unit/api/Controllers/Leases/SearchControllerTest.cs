@@ -29,14 +29,14 @@ namespace Pims.Api.Test.Controllers.Lease
         {
             new object [] { new SModel.LeaseFilterModel() { TenantName = "test" } },
             new object [] { new SModel.LeaseFilterModel() { LFileNo = "1234" } },
-            new object [] { new SModel.LeaseFilterModel() { PidOrPin = "123" } },
+            new object [] { new SModel.LeaseFilterModel() { PinOrPid = "123" } },
         };
 
         public readonly static IEnumerable<object[]> LeaseQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/lease/search?TenantName=test")},
             new object [] { new Uri("http://host/api/lease/search?LFileNo=1") },
-            new object [] { new Uri("http://host/api/lease/search?PidOrPin=2") },
+            new object [] { new Uri("http://host/api/lease/search?PinOrPid=2") },
         };
         #endregion
 

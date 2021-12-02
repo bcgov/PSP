@@ -18,7 +18,7 @@ exports[`renders correctly... 1`] = `
         >
           <option
             class="option"
-            value="pid"
+            value="pinOrPid"
           >
             PID/PIN
           </option>

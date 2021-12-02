@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -9,9 +12,6 @@ using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -29,8 +29,7 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             new object [] { new PropertyFilterModel() },
             new object [] { new PropertyFilterModel() { Address = "Address" } },
-            new object [] { new PropertyFilterModel() { PIN = 999999 } },
-            new object [] { new PropertyFilterModel() { PID = "foobar" } },
+            new object [] { new PropertyFilterModel() { PinOrPid = "999999" } },
         };
 
         public static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()

@@ -89,7 +89,7 @@ exports[`MapFilterBar renders correctly 1`] = `
             >
               <option
                 class="option"
-                value="pid"
+                value="pinOrPid"
               >
                 PID/PIN
               </option>
@@ -110,8 +110,8 @@ exports[`MapFilterBar renders correctly 1`] = `
           >
             <input
               class="form-control"
-              id="input-pid"
-              name="pid"
+              id="input-pinOrPid"
+              name="pinOrPid"
               placeholder="Enter a PID or PIN"
               value=""
             />

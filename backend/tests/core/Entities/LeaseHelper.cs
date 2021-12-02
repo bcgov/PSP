@@ -11,15 +11,15 @@ namespace Pims.Core.Test
         /// <summary>
         /// Create a new instance of a Property.
         /// </summary>
-        /// <param name="pidOrPin"></param>
+        /// <param name="pid"></param>
         /// <param name="lFileNo"></param>
         /// <param name="tenantName"></param>
         /// <returns></returns>
-        public static Entity.PimsLease CreateLease(int pidOrPin, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null)
+        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null)
         {
             var lease = new Entity.PimsLease()
             {
-                LeaseId = pidOrPin,
+                LeaseId = pid, 
                 LFileNo = lFileNo,
                 ConcurrencyControlNumber = 1,
             };

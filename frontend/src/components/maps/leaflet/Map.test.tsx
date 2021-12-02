@@ -120,7 +120,7 @@ function setup(props: Omit<TestProps, 'done'>) {
     findLayerListButton: () => document.querySelector('#layersControlButton') as HTMLElement,
     findLayerListContainer: () => document.querySelector('#layersContainer') as HTMLElement,
     findFilterBar: () => document.querySelector('.map-filter-bar') as HTMLElement,
-    findPidField: () => document.querySelector('#input-pid') as HTMLElement,
+    findPidOrPidField: () => document.querySelector('#input-pinOrPid') as HTMLElement,
     findSearchButton: () => document.querySelector('#search-button') as HTMLElement,
     findResetButton: () => document.querySelector('#reset-button') as HTMLElement,
     findZoomInButton: () => document.querySelector('.leaflet-control-zoom-in') as HTMLElement,
@@ -271,13 +271,14 @@ describe('MapProperties View', () => {
 
   it('makes the correct calls to load map data when filter is updated', async () => {
     const props = createProps();
-    const { ready, findPidField, findSearchButton } = setup({
+    const { ready, findPidOrPidField: findPidField, findSearchButton } = setup({
       ...props,
       properties: noParcels,
       selectedProperty: null,
     });
     await waitFor(() => ready);
     // type something in the filter bar
+
     const nameInput = findPidField();
     const searchButton = findSearchButton();
     userEvent.type(nameInput, '123-456-789');
@@ -302,7 +303,7 @@ describe('MapProperties View', () => {
 
   it('makes the correct calls to load the map data when the reset filter is clicked', async () => {
     const props = createProps();
-    const { ready, findPidField, findSearchButton, findResetButton } = setup({
+    const { ready, findPidOrPidField: findPidField, findSearchButton, findResetButton } = setup({
       ...props,
       properties: noParcels,
       selectedProperty: null,
