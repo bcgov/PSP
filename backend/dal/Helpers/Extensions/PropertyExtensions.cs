@@ -1,9 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Pims.Core.Extensions;
-using Pims.Dal.Security;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Pims.Core.Extensions;
+using Pims.Dal.Security;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -30,40 +30,28 @@ namespace Pims.Dal.Helpers.Extensions
 
             // Users are not allowed to view sensitive properties outside of their organization or sub-organizations.
             if (!viewSensitive)
+            {
                 query = query.Where(p => !(p.IsSensitive.HasValue && p.IsSensitive.Value));
-
-            if (!String.IsNullOrWhiteSpace(filter.ClassificationId))
-                query = query.Where(p => p.PropertyClassificationTypeCode == filter.ClassificationId);
-            if (!String.IsNullOrWhiteSpace(filter.PropertyTypeId))
-                query = query.Where(p => p.PropertyTypeCode == filter.PropertyTypeId);
-            if (!String.IsNullOrWhiteSpace(filter.TenureId))
-                query = query.Where(p => p.PropertyTenureTypeCode == filter.TenureId);
-            if (filter.NELatitude.HasValue && filter.NELongitude.HasValue && filter.SWLatitude.HasValue && filter.SWLongitude.HasValue)
-            {
-                var poly = new NetTopologySuite.Geometries.Envelope(filter.NELongitude.Value, filter.SWLongitude.Value, filter.NELatitude.Value, filter.SWLatitude.Value).ToPolygon();
-                query = query.Where(p => poly.Contains(p.Location));
             }
-            if (filter.Organizations?.Any() == true)
-                query = query.Where(p => p.GetOrganizations().Any(o => filter.Organizations.Contains(o.OrganizationId)));
-            if (!String.IsNullOrWhiteSpace(filter.Name))
-                query = query.Where(p => EF.Functions.Like(p.Name, $"%{filter.Name}%"));
 
-            if (!String.IsNullOrWhiteSpace(filter.PID))
+            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
-                var pidValue = filter.PID.Replace("-", "").Trim();
-                if (Int32.TryParse(pidValue, out int pid))
-                    query = query.Where(p => p.Pid == pid || p.Pin == pid);
+                var pinOrPidValue = filter.PinOrPid.Replace("-", "").Trim();
+                query = query.Where(p => p != null && (EF.Functions.Like(p.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(p.Pin.ToString(), $"%{pinOrPidValue}%")));
             }
-            if (filter.PIN.HasValue)
-                query = query.Where(p => p.Pin == filter.PIN);
-
-            if (!String.IsNullOrWhiteSpace(filter.Address))
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
                 query = query.Where(p => EF.Functions.Like(p.Address.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.Address.MunicipalityName, $"%{filter.Address}%"));
+            }
 
             if (filter.Sort?.Any() == true)
+            {
                 query = query.OrderByProperty(filter.Sort);
+            }
             else
+            {
                 query = query.OrderBy(p => p.PropertyTypeCode);
+            }
 
             return query;
         }
@@ -96,26 +84,6 @@ namespace Pims.Dal.Helpers.Extensions
             query = query.GenerateCommonPropertyQuery(user, filter);
 
             return query;
-        }
-
-        /// <summary>
-        /// Return the pid (if valued) or pin of the property.
-        /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
-        public static int? GetPidOrPin(this Entities.PimsProperty property)
-        {
-            return property.Pid != 0 ? property.Pid : property.Pin;
-        }
-
-        /// <summary>
-        /// Get the Tenant Name of the first associated lease to this property.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static string GetTenantName(this Entities.PimsProperty property)
-        {
-            return property.PimsPropertyLeases.FirstOrDefault(l => l != null).Lease?.GetFullName();
         }
     }
 }

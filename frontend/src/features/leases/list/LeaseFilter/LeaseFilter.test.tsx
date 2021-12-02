@@ -35,15 +35,15 @@ describe('Lease Filter', () => {
   it('searches by pid/pin', async () => {
     const { container, searchButton, setFilter } = setup();
 
-    fillInput(container, 'searchBy', 'pidOrPin', 'select');
-    fillInput(container, 'pidOrPin', '123');
+    fillInput(container, 'searchBy', 'pinOrPid', 'select');
+    fillInput(container, 'pinOrPid', '123');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pidOrPin: '123',
-        searchBy: 'pidOrPin',
+        pinOrPid: '123',
+        searchBy: 'pinOrPid',
         tenantName: '',
         programs: [],
       }),
@@ -60,7 +60,7 @@ describe('Lease Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '123',
-        pidOrPin: '',
+        pinOrPid: '',
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],
@@ -71,15 +71,15 @@ describe('Lease Filter', () => {
   it('searches tenant name', async () => {
     const { container, searchButton, setFilter } = setup();
 
-    fillInput(container, 'searchBy', 'pidOrPin', 'select');
+    fillInput(container, 'searchBy', 'pinOrPid', 'select');
     fillInput(container, 'tenantName', 'Chester');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pidOrPin: '',
-        searchBy: 'pidOrPin',
+        pinOrPid: '',
+        searchBy: 'pinOrPid',
         tenantName: 'Chester',
         programs: [],
       }),
@@ -89,14 +89,14 @@ describe('Lease Filter', () => {
   it('resets the filter when reset button is clicked', async () => {
     const { container, resetButton, setFilter } = setup();
 
-    fillInput(container, 'searchBy', 'pidOrPin', 'select');
-    fillInput(container, 'pidOrPin', 'foo-bar-baz');
+    fillInput(container, 'searchBy', 'pinOrPid', 'select');
+    fillInput(container, 'pinOrPid', 'foo-bar-baz');
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pidOrPin: '',
+        pinOrPid: '',
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],

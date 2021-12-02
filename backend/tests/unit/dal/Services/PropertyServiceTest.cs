@@ -23,11 +23,8 @@ namespace Pims.Dal.Test.Services
         public static IEnumerable<object[]> AllPropertyFilters =>
             new List<object[]>
             {
-                new object[] { new PropertyFilter(48.571155, -123.657596, 48.492947, -123.731803), 1 },
-                new object[] { new PropertyFilter(48.821333, -123.795017, 48.763431, -123.959783), 0 },
-                new object[] { new PropertyFilter() { ClassificationId = "Core Operational" }, 5 },
-                new object[] { new PropertyFilter() { PID = "111-111-111" }, 1 },
-                new object[] { new PropertyFilter() { PIN = 111 }, 1 },
+                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" }, 1 },
+                new object[] { new PropertyFilter() { PinOrPid = "111" }, 2 },
                 new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 5 },
                 new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
                 new object[] { new PropertyFilter(), 6 },
@@ -66,7 +63,7 @@ namespace Pims.Dal.Test.Services
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var filter = new PropertyFilter(50, 25, 50, 20);
+            var filter = new PropertyFilter();
 
             var service = helper.CreateService<PropertyService>(user);
 

@@ -26,8 +26,8 @@ namespace Pims.Dal.Test.Services
                 new object[] { new LeaseFilter() { TenantName = "fake" }, 0 },
                 new object[] { new LeaseFilter() { LFileNo = "123" }, 1 },
                 new object[] { new LeaseFilter() { LFileNo = "fake" }, 0 },
-                new object[] { new LeaseFilter() { PidOrPin = "456" }, 1 },
-                new object[] { new LeaseFilter() { PidOrPin = "789" }, 0 },
+                new object[] { new LeaseFilter() { PinOrPid = "456" }, 1 },
+                new object[] { new LeaseFilter() { PinOrPid = "789" }, 0 },
                 new object[] { new LeaseFilter(), 1 },
             };
         #endregion
