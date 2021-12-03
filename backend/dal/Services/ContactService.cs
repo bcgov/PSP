@@ -63,7 +63,7 @@ namespace Pims.Dal.Services
         public PimsContactMgrVw Get(string id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
-            var contact = Context.PimsContactMgrVws.Find(id);
+            var contact = Context.PimsContactMgrVws.Where(x => x.Id == id).FirstOrDefault();
 
             return contact;
         }

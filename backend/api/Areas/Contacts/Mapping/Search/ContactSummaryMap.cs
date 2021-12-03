@@ -9,7 +9,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Search
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsContactMgrVw, Model.ContactModel>()
+            config.NewConfig<Entity.PimsContactMgrVw, Model.ContactSummaryModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)

@@ -75,7 +75,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsOrganizationAddressHist> PimsOrganizationAddressHists { get; set; }
         public virtual DbSet<PimsOrganizationHist> PimsOrganizationHists { get; set; }
         public virtual DbSet<PimsOrganizationType> PimsOrganizationTypes { get; set; }
-        public virtual DbSet<PimsPerson> PimsPeople { get; set; }
+        public virtual DbSet<PimsPerson> PimsPerson { get; set; }
         public virtual DbSet<PimsPersonAddress> PimsPersonAddresses { get; set; }
         public virtual DbSet<PimsPersonAddressHist> PimsPersonAddressHists { get; set; }
         public virtual DbSet<PimsPersonHist> PimsPersonHists { get; set; }
