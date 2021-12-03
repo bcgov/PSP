@@ -1,23 +1,23 @@
+import { useContactDetail } from 'features/contacts/hooks/useContactDetail';
 import * as React from 'react';
 import styled from 'styled-components';
 
 import { ContactBreadcrumb } from '../..';
 import * as Styled from '../../styles';
+import PersonView from './Person';
 
 interface IContactViewContainerProps {
   match?: any;
 }
 
-//interface IContactContainerProps extends RouteComponentProps<MatchParams> {}
-
 const ContactViewContainer: React.FunctionComponent<IContactViewContainerProps> = props => {
-  //const [contactType, setContactType] = useState(getContactTypeFromId(id));
-  const { contact } = useContactDetail(props?.match?.params?.contactId);
+  const { contact } = useContactDetail(props?.match?.params?.id);
+  console.log(props?.match?.params);
   return (
     <ContactLayout>
       <ContactBreadcrumb />
       <Styled.H1>Contact</Styled.H1>
-      something
+      {contact?.person && <PersonView person={contact?.person} />}
     </ContactLayout>
   );
 };

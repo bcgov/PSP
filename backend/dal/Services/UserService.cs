@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,7 +13,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using MapsterMapper;
 
 namespace Pims.Dal.Services
 {
@@ -81,7 +81,7 @@ namespace Pims.Dal.Services
                 this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
                 var person = new PimsPerson() { Surname = surname, FirstName = givenName };
-                this.Context.PimsPeople.Add(person);
+                this.Context.PimsPerson.Add(person);
                 this.Context.CommitTransaction();
 
                 user = new PimsUser()

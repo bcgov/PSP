@@ -10,13 +10,13 @@ import { logError } from 'store/slices/network/networkSlice';
  * hook that fetches the lease given the lease id.
  * @param leaseId
  */
-export const useContactDetail = (contactId?: number) => {
+export const useContactDetail = (contactId?: string) => {
   const [contact, setContact] = useState<IContact>();
   const { getContact } = useApiContacts();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getContactById = async (id: number) => {
+    const getContactById = async (id: string) => {
       try {
         dispatch(showLoading());
         const { data } = await getContact(id);

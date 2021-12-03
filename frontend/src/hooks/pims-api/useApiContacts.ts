@@ -20,7 +20,7 @@ export const useApiContacts = () => {
         api.get<IPagedItems<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getContact: (id: number) => api.get<IContact>(`/contacts/${id}`),
+      getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
     }),
     [api],
   );
