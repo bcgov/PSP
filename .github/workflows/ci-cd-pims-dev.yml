@@ -1,0 +1,101 @@
+name: CI-CD PIMS Development
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  ##APP_PORT: 8080
+  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
+  DESTINATION: "dev"
+  OC_JOB_NAME: "dev"
+  ##GIT_URL: "${{github.server_url}}/${{github.repository}}"
+  ##GIT_BRANCH: "${{github.ref}}"
+  APP_NAME: "pims"
+  ##PROJ_PREFIX: "3cd915"
+  ##PROJ_TOOLS: "3cd915-tools"
+  PROJ_DEV: "dev"
+  PROJ_TEST: "test"
+  PROJ_PROD: "prod"
+  TAG_DEV: "dev"
+  TAG_TEST: "test"
+  TAG_PROD: "prod"
+
+on:
+  pull_request:
+    branches: [dev]
+  push:
+    paths:
+      - ".github/workflows/ci-cd-pims-dev.yml"
+
+jobs:
+  build-frontend:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+
+      - name: call scripts to build frontend
+        run: |
+          ./openshift/4.0/player.sh build app-base -apply
+          ./openshift/4.0/player.sh build app -apply
+
+  build-api:
+    name: Build api
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+
+      - name: call scripts to build api
+        run: |
+          ./openshift/4.0/player.sh build api -apply
+  
+  deploy:
+    name: Deploy frontend and api to OpenShift
+    needs: [build-frontend, build-api]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+
+      - name: call scripts to deploy api and frontend
+        run: |
+          RELEASE_TAG=latest
+          ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+  
+  notify:
+    name: Notify Teams Channel
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Notify Teams Channel
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          timezone: America/Los_Angeles
