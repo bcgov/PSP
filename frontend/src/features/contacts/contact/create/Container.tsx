@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import * as Styled from '../../styles';
 import { ContactTypeSelector } from './ContactTypeSelector/ContactTypeSelector';
+import Person from './Person/Person';
 
 interface MatchParams {
   id?: string;
@@ -34,6 +35,8 @@ export const Container: React.FunctionComponent<IContainerProps> = ({
         contactType={contactType}
         setContactType={setContactType}
       ></ContactTypeSelector>
+
+      <Person />
     </ContactLayout>
   );
 };

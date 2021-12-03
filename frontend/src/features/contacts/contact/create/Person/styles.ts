@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // common ui styling
-export * from 'features/contacts/styles';
+export * from 'features/contacts/contact/create';
 
 export const CreatePersonLayout = styled.div`
   display: flex;
