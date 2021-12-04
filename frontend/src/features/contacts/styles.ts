@@ -9,6 +9,11 @@ export const H2 = styled.h2`
   text-align: left;
 `;
 
+export const H2Primary = styled.h2`
+  text-align: left;
+  color: ${props => props.theme.css.primaryColor};
+`;
+
 export const RowAligned = styled(Row)`
   text-align: left;
 `;

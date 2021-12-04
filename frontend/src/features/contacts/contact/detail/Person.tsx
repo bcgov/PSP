@@ -35,13 +35,13 @@ const PersonView: React.FunctionComponent<IPersonViewProps> = ({ person }) => {
   phoneTypes[ContactMethodTypes.PerseMobil] = 'Mobile';
   phoneTypes[ContactMethodTypes.PersPhone] = 'Home';
   phoneTypes[ContactMethodTypes.WorkMobil] = 'Work';
-  phoneTypes[ContactMethodTypes.WorkPhone] = 'Fax???';
+  phoneTypes[ContactMethodTypes.WorkPhone] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
 
   const emailTypes: Dictionary<string> = {};
-  emailTypes[ContactMethodTypes.PerseEmail] = 'Personal';
   emailTypes[ContactMethodTypes.WorkEmail] = 'Work';
+  emailTypes[ContactMethodTypes.PerseEmail] = 'Personal';
   const personEmails: ContactInfoField[] = getContactInfo(person, emailTypes);
 
   const personAddresses: AddressField[] = person.addresses.reduce(
@@ -97,16 +97,16 @@ const PersonView: React.FunctionComponent<IPersonViewProps> = ({ person }) => {
         </Styled.RowAligned>
       </FormSection>
       <FormSection key={person.id + '-Contacts'} className="mb-4">
-        <Styled.H2>Contact info</Styled.H2>
-        <Styled.RowAligned>
+        <Styled.H2Primary>Contact info</Styled.H2Primary>
+        <Styled.RowAligned className="pb-4">
           <Col md={2}>
             <strong>Email:</strong>
           </Col>
           <Col>
-            {personEmails.length === 0 && <Col md="auto">N.A</Col>}
+            {personEmails.length === 0 && <span>N.A</span>}
             {personEmails.map((field: ContactInfoField, index: number) => (
               <Styled.RowAligned>
-                <Col md="auto">{field.info}</Col>
+                <Col md="4">{field.info}</Col>
                 <Col md="auto">
                   <em>{field.label}</em>
                 </Col>
@@ -118,19 +118,21 @@ const PersonView: React.FunctionComponent<IPersonViewProps> = ({ person }) => {
           <Col md={2}>
             <strong>Phone:</strong>
           </Col>
-          {personPhoneNumbers.length === 0 && <Col md="auto">N.A</Col>}
-          {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
-            <Styled.RowAligned>
-              <Col md="auto">{phoneFormatter(field.info)}</Col>
-              <Col md="auto">
-                <em>{field.label}</em>
-              </Col>
-            </Styled.RowAligned>
-          ))}
+          <Col>
+            {personPhoneNumbers.length === 0 && <span>N.A</span>}
+            {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
+              <Styled.RowAligned>
+                <Col md="4">{phoneFormatter(field.info)}</Col>
+                <Col md="auto">
+                  <em>{field.label}</em>
+                </Col>
+              </Styled.RowAligned>
+            ))}
+          </Col>
         </Styled.RowAligned>
       </FormSection>
       <FormSection key={person.id + '-Address'} className="mb-4">
-        <Styled.H2>Address</Styled.H2>
+        <Styled.H2Primary>Address</Styled.H2Primary>
         {personAddresses.map((field: AddressField, index: number) => (
           <Styled.RowAligned className="pb-3">
             <Col>
@@ -172,15 +174,24 @@ function getContactInfo(
   person: IContactPerson,
   validTypes: Dictionary<string>,
 ): ContactInfoField[] {
-  return person.contactMethods.reduce((accumulator: ContactInfoField[], method: IContactMethod) => {
-    if (Object.keys(validTypes).includes(method.contactMethodType.id)) {
-      accumulator.push({
-        info: method.value,
-        label: validTypes[method.contactMethodType.id],
-      });
-    }
-    return accumulator;
-  }, []);
+  // Get only the valid types
+  let filteredFields = person.contactMethods.reduce(
+    (accumulator: ContactInfoField[], method: IContactMethod) => {
+      if (Object.keys(validTypes).includes(method.contactMethodType.id)) {
+        accumulator.push({
+          info: method.value,
+          label: validTypes[method.contactMethodType.id],
+        });
+      }
+      return accumulator;
+    },
+    [],
+  );
+
+  // Sort according to the dictionary order
+  return filteredFields.sort((a, b) => {
+    return Object.values(validTypes).indexOf(a.label) - Object.values(validTypes).indexOf(b.label);
+  });
 }
 
 export default PersonView;
