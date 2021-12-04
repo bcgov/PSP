@@ -102,15 +102,15 @@ const PersonView: React.FunctionComponent<IPersonViewProps> = ({ person }) => {
           <Col md={2}>
             <strong>Email:</strong>
           </Col>
-          <Col md="auto">
-            {personEmails.length === 0 && <span>N.A</span>}
+          <Col>
+            {personEmails.length === 0 && <Col md="auto">N.A</Col>}
             {personEmails.map((field: ContactInfoField, index: number) => (
-              <>
-                <Col md="3">(field.info)</Col>
-                <Col>
+              <Styled.RowAligned>
+                <Col md="auto">{field.info}</Col>
+                <Col md="auto">
                   <em>{field.label}</em>
                 </Col>
-              </>
+              </Styled.RowAligned>
             ))}
           </Col>
         </Styled.RowAligned>
@@ -118,14 +118,14 @@ const PersonView: React.FunctionComponent<IPersonViewProps> = ({ person }) => {
           <Col md={2}>
             <strong>Phone:</strong>
           </Col>
-          {personPhoneNumbers.length === 0 && <span>N.A</span>}
+          {personPhoneNumbers.length === 0 && <Col md="auto">N.A</Col>}
           {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
-            <>
-              <Col md="3">{phoneFormatter(field.info)}</Col>
-              <Col>
+            <Styled.RowAligned>
+              <Col md="auto">{phoneFormatter(field.info)}</Col>
+              <Col md="auto">
                 <em>{field.label}</em>
               </Col>
-            </>
+            </Styled.RowAligned>
           ))}
         </Styled.RowAligned>
       </FormSection>
