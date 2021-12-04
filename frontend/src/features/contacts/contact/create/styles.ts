@@ -24,15 +24,32 @@ export const H3 = styled.h3`
 // TODO: This is common form look-and-feel. Should be abstracted for all forms
 export const Form = styled(FormikForm)`
   &#createForm {
-    input,
-    select,
-    textarea {
-      border: 2px solid #606060;
-      border-radius: 4px;
-      background-color: #ffffff;
-      font-size: 1.6rem;
-      color: #000000;
-      text-decoration: none;
+    .form-group {
+      label {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: ${props => props.theme.css.formTextColor};
+        text-decoration: none solid rgb(33, 37, 41);
+        line-height: 2rem;
+      }
+
+      input,
+      select,
+      textarea {
+        border: 2px solid #606060;
+        border-radius: 4px;
+        background-color: #ffffff;
+        font-size: 1.6rem;
+        color: #000000;
+        text-decoration: none;
+      }
+
+      &.required {
+        label:after {
+          content: ' *';
+          color: red;
+        }
+      }
     }
   }
 `;
@@ -47,7 +64,12 @@ export const FormLabel = styled(FormBase.Label)`
 
 export const SubtleText = styled.span`
   font-size: 1.6rem;
+  font-weight: 400;
   color: ${props => props.theme.css.subtleColor};
   text-decoration: none solid rgb(170, 170, 170);
-  line-height: 22px;
+  line-height: 2rem;
+`;
+
+export const PadBox = styled.div`
+  padding: 2rem 0;
 `;

@@ -165,7 +165,7 @@ const AppRouter: React.FC = () => {
           path="/contact/new"
           component={ContactCreateContainer}
           layout={AuthLayout}
-          claim={[Claims.CONTACT_CREATE]}
+          claim={[Claims.CONTACT_ADD]}
           title={getTitle('Create Contactj')}
         />
         <AppRoute

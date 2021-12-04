@@ -1,4 +1,5 @@
 import { TextArea } from 'components/common/form';
+import { Stack } from 'components/common/Stack/Stack';
 import * as Styled from 'features/contacts/contact/create/styles';
 import * as React from 'react';
 
@@ -11,8 +12,10 @@ export interface ICommentNotesProps {}
 export const CommentNotes: React.FunctionComponent<ICommentNotesProps> = () => {
   return (
     <>
-      <Styled.FormLabel>Comments</Styled.FormLabel>
-      <Styled.SubtleText>(Optional)</Styled.SubtleText>
+      <Stack $direction="row" gap={1.6}>
+        <Styled.FormLabel>Comments</Styled.FormLabel>
+        <Styled.SubtleText>(Optional)</Styled.SubtleText>
+      </Stack>
       <TextArea rows={5} field="comment" />
     </>
   );
