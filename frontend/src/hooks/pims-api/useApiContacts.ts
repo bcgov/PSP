@@ -6,6 +6,7 @@ import React from 'react';
 import { IContactFilter } from '../../features/contacts/interfaces';
 import { IContactSearchResult } from './../../interfaces/IContactSearchResult';
 import { IPaginateRequest, useAxiosApi } from '.';
+import { IApiPerson } from './interfaces/IApiPerson';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the contacts endpoints.
@@ -21,8 +22,7 @@ export const useApiContacts = () => {
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
-      // TODO: implement call to the backend
-      postContact: () => Promise.resolve(),
+      postPerson: (person: IApiPerson) => api.post<IApiPerson>(`/persons`, person),
     }),
     [api],
   );
