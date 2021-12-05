@@ -8,7 +8,17 @@ exports[`ContactContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c1 {
+  .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
   grid-area: breadcrumb;
 }
 
@@ -30,12 +40,186 @@ exports[`ContactContainer component renders as expected 1`] = `
   text-align: left;
 }
 
+.c8 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c4 {
+  gap: 5rem;
+  padding: 0.5rem 3rem;
+}
+
+.c4 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 1.6rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 1.6rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c16 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 2rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c9 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c10 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c5#createForm .form-group label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c5#createForm .form-group input,
+.c5#createForm .form-group select,
+.c5#createForm .form-group textarea {
+  border: 2px solid #606060;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 1.6rem;
+  color: #000000;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c5#createForm .form-group.required label:after {
+  content: ' *';
+  color: red;
+}
+
+.c13 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c14 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  -webkit-text-decoration: none solid rgb(170,170,170);
+  text-decoration: none solid rgb(170,170,170);
+  line-height: 2rem;
+}
+
+.c15 {
+  padding: 2rem 0;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+}
+
+.c11 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c11:before {
+  content: '* ';
+  color: #606060;
+  font-weight: 700;
+}
+
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-align: left;
   height: 100%;
   width: 50%;
   min-width: 30rem;
   overflow: auto;
   padding: 1rem;
+  gap: 1.6rem;
 }
 
 <div
@@ -70,6 +254,268 @@ exports[`ContactContainer component renders as expected 1`] = `
     >
       Add a Contact
     </h1>
+    <div
+      class="c3 c4"
+    >
+      <div
+        class="form-check"
+      >
+        <input
+          checked=""
+          class="form-check-input"
+          id="contact-individual"
+          type="radio"
+        />
+        <label
+          class="form-check-label"
+          for="contact-individual"
+          title=""
+        >
+          Individual
+        </label>
+      </div>
+      <div
+        class="form-check"
+      >
+        <input
+          class="form-check-input"
+          id="contact-organization"
+          type="radio"
+        />
+        <label
+          class="form-check-label"
+          for="contact-organization"
+          title=""
+        >
+          Organization
+        </label>
+      </div>
+    </div>
+    <form
+      action="#"
+      class="c5"
+      id="createForm"
+    >
+      <div
+        class="c6"
+      >
+        <div
+          class="c7"
+        >
+          <div
+            class="c8"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-4"
+              >
+                <div
+                  class="required input form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-firstName"
+                  >
+                    First Name 
+                  </label>
+                  <input
+                    class="form-control"
+                    id="input-firstName"
+                    name="firstName"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-3"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-middleNames"
+                  >
+                    Middle 
+                  </label>
+                  <input
+                    class="form-control"
+                    id="input-middleNames"
+                    name="middleNames"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="required input form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-surname"
+                  >
+                    Last Name 
+                  </label>
+                  <input
+                    class="form-control"
+                    id="input-surname"
+                    name="surname"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-7"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-preferredName"
+                  >
+                    Preferred Name 
+                  </label>
+                  <input
+                    class="form-control"
+                    id="input-preferredName"
+                    name="preferredName"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="col"
+              />
+            </div>
+          </div>
+          <div
+            class="c8"
+          >
+            <h2
+              class="c9"
+            >
+              Organization
+            </h2>
+            <h3
+              class="c10"
+            >
+              Link to an existing organization
+            </h3>
+          </div>
+          <div
+            class="c8"
+          >
+            <h2
+              class="c9"
+            >
+              Contact info
+            </h2>
+            <p
+              class="c11"
+            >
+              Contacts must have a minimum of one method of contact to be saved. (ex: email, phone or address)
+            </p>
+          </div>
+          <div
+            class="c8"
+          >
+            <h2
+              class="c9"
+            >
+              Address
+            </h2>
+            <h3
+              class="c10"
+            >
+              Mailing Address
+            </h3>
+          </div>
+          <div
+            class="c8"
+          >
+            <h3
+              class="c10"
+            >
+              Property Address
+            </h3>
+          </div>
+          <div
+            class="c8"
+          >
+            <h3
+              class="c10"
+            >
+              Billing Address
+            </h3>
+          </div>
+          <div
+            class="c8"
+          >
+            <div
+              class="c12"
+            >
+              <label
+                class="c13 form-label"
+              >
+                Comments
+              </label>
+              <span
+                class="c14"
+              >
+                (Optional)
+              </span>
+            </div>
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-comment"
+                name="comment"
+                rows="5"
+              />
+            </div>
+          </div>
+          <div
+            class="c15 w-100"
+          >
+            <div
+              class="c16"
+            >
+              <button
+                class="Button btn btn-secondary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Cancel
+                </div>
+              </button>
+              <button
+                class="Button btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Save
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </DocumentFragment>
 `;

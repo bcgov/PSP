@@ -5,12 +5,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import * as Styled from '../../styles';
-import { ContactTypeSelector } from './ContactTypeSelector/ContactTypeSelector';
+import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
 import Person from './Person/Person';
 
-export interface IContainerProps {}
+export interface IContactCreateContainerProps {}
 
-export const Container: React.FunctionComponent<IContainerProps> = () => {
+export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = () => {
   // get default contact type from URL; e.g. contact/new?type=P
   const { type } = useQuery();
   const [contactType, setContactType] = useState(getContactType(type as string));
@@ -50,4 +50,4 @@ const getContactType = (value?: string) => {
   return ContactTypes.INDIVIDUAL;
 };
 
-export default Container;
+export default ContactCreateContainer;

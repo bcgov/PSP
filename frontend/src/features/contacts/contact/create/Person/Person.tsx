@@ -1,6 +1,5 @@
 import { Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
-import { Scrollable } from 'components/common/Scrollable/Scrollable';
 import { Stack } from 'components/common/Stack/Stack';
 import { Formik } from 'formik';
 import { defaultPerson } from 'interfaces/IFormPerson';
