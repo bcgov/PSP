@@ -1,5 +1,5 @@
-using Pims.Dal.Services;
 using System.Security.Claims;
+using Pims.Dal.Services;
 
 namespace Pims.Dal
 {
@@ -12,6 +12,7 @@ namespace Pims.Dal
         ILookupService Lookup { get; }
 
         #region Accounts
+        IPersonService Person { get; }
         IOrganizationService Organization { get; }
         ClaimsPrincipal Principal { get; }
         IUserService User { get; }

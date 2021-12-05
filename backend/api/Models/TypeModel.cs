@@ -1,7 +1,7 @@
-namespace Pims.Api.Areas.Lease.Models.Lease
+namespace Pims.Api.Models
 {
     /// <summary>
-    /// Provides a lease-oriented type model.
+    /// Provides a  type model.
     /// </summary>
     public class TypeModel<T>
     {

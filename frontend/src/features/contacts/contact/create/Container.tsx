@@ -3,23 +3,18 @@ import { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ContactBreadcrumb, ContactTypeSelector } from '../..';
+import { ContactBreadcrumb, ContactTypes, ContactTypeSelector } from '../..';
 import * as Styled from '../../styles';
 
 interface MatchParams {
   id?: string;
 }
 
-export enum ContactTypes {
-  ORGANIZATION = 'O',
-  INDIVIDUAL = 'P',
-}
-
-export interface IContactContainerProps extends RouteComponentProps<MatchParams> {
+export interface IContactCreateContainerProps extends RouteComponentProps<MatchParams> {
   type: ContactTypes;
 }
 
-export const ContactContainer: React.FunctionComponent<IContactContainerProps> = ({
+export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = ({
   match: {
     params: { id },
   },
@@ -55,4 +50,4 @@ const getContactTypeFromId = (id?: string) => {
   return ContactTypes.INDIVIDUAL;
 };
 
-export default ContactContainer;
+export default ContactCreateContainer;

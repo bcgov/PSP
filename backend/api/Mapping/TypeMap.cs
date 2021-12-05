@@ -1,8 +1,8 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Lease.Models.Lease;
+using Model = Pims.Api.Models;
 
-namespace Pims.Api.Areas.Lease.Mapping.Lease
+namespace Pims.Api.Mapping
 {
     public class TypeMap : IRegister
     {

@@ -10,6 +10,8 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).ToArray();
+        public ICollection<PimsAddress> GetAddresses() => PimsPersonAddresses?.Select(pa => pa.Address).ToArray();
+
         #endregion
 
         #region Constructors
@@ -18,7 +20,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="surname"></param>
         /// <param name="firstname"></param>
-        public PimsPerson(string surname, string firstname, PimsAddress address):this()
+        public PimsPerson(string surname, string firstname, PimsAddress address) : this()
         {
             if (String.IsNullOrWhiteSpace(surname)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(surname));
             if (String.IsNullOrWhiteSpace(firstname)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(firstname));

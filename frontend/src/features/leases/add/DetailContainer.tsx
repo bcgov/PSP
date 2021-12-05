@@ -6,9 +6,9 @@ import { useContext } from 'react';
 
 import { LeasePageNames, leasePages } from '../detail/LeaseContainer';
 
-interface IDetailContainerProps {}
+interface ILeaseDetailContainerProps {}
 
-export const DetailContainer: React.FunctionComponent<IDetailContainerProps> = props => {
+export const LeaseDetailContainer: React.FunctionComponent<ILeaseDetailContainerProps> = props => {
   const leasePage = leasePages.get(LeasePageNames.DETAILS);
   const { setTrayPage } = useContext(SidebarStateContext);
   const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
@@ -28,4 +28,4 @@ export const DetailContainer: React.FunctionComponent<IDetailContainerProps> = p
   );
 };
 
-export default DetailContainer;
+export default LeaseDetailContainer;

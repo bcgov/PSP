@@ -1,6 +1,6 @@
 namespace Pims.Api.Areas.Contact.Models.Search
 {
-    public class ContactModel
+    public class ContactSummaryModel
     {
         #region Properties
         /// <summary>

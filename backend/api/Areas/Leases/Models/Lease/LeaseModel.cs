@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
