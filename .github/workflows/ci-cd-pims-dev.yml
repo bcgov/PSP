@@ -24,9 +24,9 @@ env:
 on:
   pull_request:
     branches: [dev]
-  push:
-    paths:
-      - ".github/workflows/ci-cd-pims-dev.yml"
+  #push:
+   # paths:
+    #  - ".github/workflows/ci-cd-pims-dev.yml"
 
 jobs:
   build-frontend:
