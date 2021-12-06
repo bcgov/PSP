@@ -33,4 +33,13 @@ namespace Pims.Dal.Entities
         }
         #endregion
     }
+
+    public static class AddressUsageTypes
+    {
+        public const string Mailing = "MAILADDR";
+        public const string ProofOfInsurance = "INSURE";
+        public const string RentalPayment = "RENTAL";
+        public const string PropertyNotification = "PROPNOTIFY";
+        public const string Physical = "PHYSADDR";
+    }
 }

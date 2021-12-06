@@ -60,7 +60,7 @@ export const convertToProperty = (
       propertyTypeId: property.propertyTypeId,
       address: {
         id: property.ADDRESS_ID,
-        addressTypeId: AddressTypes.Physical,
+        addressTypeId: AddressTypes.Mailing,
         municipality: property.MUNICIPALITY_NAME,
         provinceId: 1,
         province: property.PROVINCE_STATE_CODE,

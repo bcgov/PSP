@@ -149,7 +149,7 @@ describe('mapUtils tests', () => {
         longitude: 2,
         isSensitive: false,
         address: {
-          addressTypeId: AddressTypes.Physical,
+          addressTypeId: AddressTypes.Mailing,
           streetAddress1: '1243 St',
           provinceId: 1,
           municipality: '',
@@ -199,7 +199,7 @@ describe('mapUtils tests', () => {
         dataSourceId: PropertyDataSourceTypes.PAIMS,
         dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
         address: {
-          addressTypeId: AddressTypes.Physical,
+          addressTypeId: AddressTypes.Mailing,
           streetAddress1: '1243 St',
           provinceId: 1,
           municipality: '',
@@ -221,7 +221,7 @@ describe('mapUtils tests', () => {
             properties: {
               PROPERTY_ID: 1,
               address: {
-                addressTypeId: AddressTypes.Physical,
+                addressTypeId: AddressTypes.Mailing,
                 streetAddress1: '1243 St',
                 provinceId: 1,
                 municipality: '',
@@ -252,7 +252,7 @@ describe('mapUtils tests', () => {
             properties: {
               PROPERTY_ID: 1,
               address: {
-                addressTypeId: AddressTypes.Physical,
+                addressTypeId: AddressTypes.Mailing,
                 streetAddress1: '1243 St',
                 provinceId: 1,
                 municipality: '',

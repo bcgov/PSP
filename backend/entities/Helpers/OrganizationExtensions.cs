@@ -62,7 +62,7 @@ namespace Pims.Dal.Entities.Helpers
         /// <returns></returns>
         public static PimsAddress GetMailingAddress(this PimsOrganization organization)
         {
-            return organization?.PimsOrganizationAddresses.FirstOrDefault(a => a?.AddressUsageTypeCode == "MAILADDR")?.Address;
+            return organization?.PimsOrganizationAddresses.FirstOrDefault(a => a?.AddressUsageTypeCode == AddressUsageTypes.Mailing)?.Address;
         }
 
         /// <summary>
