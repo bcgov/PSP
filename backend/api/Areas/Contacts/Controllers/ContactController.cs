@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Core.Converters;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -55,7 +58,7 @@ namespace Pims.Api.Areas.Contact.Controllers
 
             if (contactView.OrganizationId.HasValue)
             {
-                var organization = _pimsService.Organization.Get(contactView.OrganizationId.Value);
+                var organization = _pimsService.Organization.GetComplete(contactView.OrganizationId.Value);
                 var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
                 mappedOrganization.Id = contactView.Id;
                 return new JsonResult(mappedOrganization);

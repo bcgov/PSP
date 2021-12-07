@@ -32,15 +32,22 @@ export interface IContactPerson {
   isDisabled: boolean;
   fullName: string;
   preferredName: string;
-  organizations: IContactOrganization[];
-  addresses: IContactAddress[];
-  contactMethods: IContactMethod[];
+  organizations?: IContactOrganization[];
+  addresses?: IContactAddress[];
+  contactMethods?: IContactMethod[];
   comment: string;
 }
 
 export interface IContactOrganization {
   id: string;
+  isDisabled: boolean;
   name: string;
+  alias: string;
+  incorporationNumber: string;
+  persons?: IContactPerson[];
+  addresses?: IContactAddress[];
+  contactMethods?: IContactMethod[];
+  comment: string;
 }
 
 export interface IContact {
