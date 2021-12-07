@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import * as API from 'constants/API';
 import { catchAxiosError } from 'customAxios';
