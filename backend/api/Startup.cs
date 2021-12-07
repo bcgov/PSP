@@ -1,3 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using HealthChecks.UI.Client;
 using Mapster;
 using Microsoft.AspNetCore.Authentication;
@@ -27,24 +39,11 @@ using Pims.Api.Helpers.Routes.Constraints;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Dal;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
 using Prometheus;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Pims.Api
 {

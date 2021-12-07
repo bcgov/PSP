@@ -14,6 +14,7 @@ namespace Pims.Dal.Services
         IEnumerable<PimsOrganization> GetChildren(long parentId);
         Paged<PimsOrganization> Get(int page, int quantity);
         Paged<PimsOrganization> Get(OrganizationFilter filter = null);
+        PimsOrganization GetComplete(long id);
         PimsOrganization Add(PimsOrganization add);
         PimsOrganization Update(PimsOrganization update);
         void Delete(PimsOrganization delete);

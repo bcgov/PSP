@@ -43,7 +43,7 @@ namespace Pims.Dal.Entities.Helpers
         /// </summary>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static string GetFullName(this PimsOrganization organization)
+        public static string GetFirstPersonFullName(this PimsOrganization organization)
         {
             PimsPerson person = organization.GetPersons().FirstOrDefault();
             if (person != null)
