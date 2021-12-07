@@ -36,10 +36,10 @@ namespace Pims.Dal.Entities
 
     public static class AddressUsageTypes
     {
-        public const string Mailing = "MAILADDR";
-        public const string ProofOfInsurance = "INSURE";
-        public const string RentalPayment = "RENTAL";
-        public const string PropertyNotification = "PROPNOTIFY";
-        public const string Physical = "PHYSADDR";
+        public const string Mailing = "MAILING";
+        public const string Billing = "BILLING";
+        public const string Residential = "RESIDNT";
+        public const string Unknown = "UNKNOWN";
+        public const string EtlUnknown = "ETLUNKN";
     }
 }
