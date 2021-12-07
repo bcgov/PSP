@@ -91,10 +91,6 @@ export const FormDescriptionBody = styled(TextArea)`
   font-weight: 400;
 `;
 
-export const TenantNotes = styled(TextArea)`
-  margin-left: 9.5rem;
-`;
-
 export const FormControl = styled(Form.Control)`
   grid-column: controls;
   grid-row: auto;
@@ -111,13 +107,14 @@ export const FormGrid = styled.div`
     margin: 0 0.5rem 0 0;
   }
 
-  & > .input {
+  & > .input,
+  & > .notes {
     grid-column: controls;
     grid-row: auto;
     border-left: 1px solid #666666;
   }
 
-  & .form-control:not(.description) {
+  & .form-control:not(.description, .notes) {
     font-weight: 700;
   }
 
@@ -127,7 +124,7 @@ export const FormGrid = styled.div`
     grid-row: auto;
   }
 
-  & > .textarea,
+  & > .textarea :not(.notes),
   & > h3 {
     grid-column: span 2;
     border-left: none;

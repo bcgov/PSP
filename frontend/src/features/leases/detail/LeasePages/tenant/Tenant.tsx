@@ -55,10 +55,12 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
               (tenantNote: string, index) =>
                 !!tenantNote && (
                   <Styled.SpacedInlineListItem key={`notes-${index}`}>
-                    <TenantNotes
-                      disabled={true}
-                      nameSpace={withNameSpace(nameSpace, `tenantNotes.${index}`)}
-                    ></TenantNotes>
+                    <FormSection>
+                      <TenantNotes
+                        disabled={true}
+                        nameSpace={withNameSpace(nameSpace, `tenantNotes.${index}`)}
+                      />
+                    </FormSection>
                   </Styled.SpacedInlineListItem>
                 ),
             )}
