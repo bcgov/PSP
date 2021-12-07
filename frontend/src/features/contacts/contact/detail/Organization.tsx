@@ -1,5 +1,4 @@
 import { FormSection } from 'components/common/form/styles';
-import { AddressTypes } from 'constants/addressTypes';
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { Dictionary } from 'interfaces/Dictionary';
 import {
@@ -10,7 +9,7 @@ import {
 } from 'interfaces/IContact';
 import * as React from 'react';
 import { Col } from 'react-bootstrap';
-import { FaCircle, FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { FaCircle, FaRegBuilding } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { phoneFormatter } from 'utils/formUtils';
 
