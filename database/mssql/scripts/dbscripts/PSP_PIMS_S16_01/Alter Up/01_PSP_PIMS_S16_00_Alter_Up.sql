@@ -23,14 +23,6 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Drop procedure dbo.pims_error_handling
-PRINT N'Drop procedure dbo.pims_error_handling'
-GO
-DROP PROCEDURE [dbo].[pims_error_handling]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
 -- Create procedure dbo.pims_error_handling
 PRINT N'Create procedure dbo.pims_error_handling'
 GO
