@@ -55,6 +55,11 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         public CountryModel Country { get; set; }
 
         /// <summary>
+        /// get/set - The free-form value of country when country code is "Other".
+        /// </summary>
+        public string CountryOther { get; set; }
+
+        /// <summary>
         /// get/set - The postal code.
         /// </summary>
         public string Postal { get; set; }

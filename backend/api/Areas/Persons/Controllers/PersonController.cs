@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +53,16 @@ namespace Pims.Api.Areas.Persons.Controllers
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult AddPerson([FromBody] Models.Person.PersonCreateModel model)
         {
+            // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
+            var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
+            foreach (var address in model?.Addresses)
+            {
+                if (otherCountry != null && address?.CountryId != otherCountry.CountryId)
+                {
+                    address.CountryOther = null;
+                }
+            }
+
             var entity = _mapper.Map<Dal.Entities.PimsPerson>(model);
             var created = _pimsService.Person.Add(entity);
             var response = _mapper.Map<Areas.Contact.Models.Contact.ContactModel>(created);

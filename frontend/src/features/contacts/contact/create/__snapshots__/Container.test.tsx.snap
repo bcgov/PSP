@@ -503,7 +503,7 @@ exports[`ContactContainer component renders as expected 1`] = `
               </button>
               <button
                 class="Button btn btn-primary"
-                type="button"
+                type="submit"
               >
                 <div
                   class="Button__value"

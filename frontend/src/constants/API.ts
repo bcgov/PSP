@@ -49,6 +49,7 @@ export interface IGeoSearchParams {
 export const ORGANIZATION_TYPES = 'PimsOrganization';
 export const ROLE_TYPES = 'PimsRole';
 export const PROVINCE_TYPES = 'PimsProvinceState';
+export const COUNTRY_CODE_SET_NAME = 'PimsCountry';
 export const ADMINISTRATIVE_AREA_TYPES = 'PimsAdministrativeArea';
 export const PROPERTY_CLASSIFICATION_TYPES = 'PimsPropertyClassification';
 export const AREA_UNIT_TYPES = 'PimsAreaUnitType';
