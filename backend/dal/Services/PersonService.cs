@@ -34,7 +34,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public IEnumerable<PimsPerson> GetAll()
         {
-            return this.Context.PimsPerson.AsNoTracking().ToArray();
+            return this.Context.PimsPeople.AsNoTracking().ToArray();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public PimsPerson Get(long id)
         {
-            return this.Context.PimsPerson
+            return this.Context.PimsPeople
                 .Include(p => p.PimsPersonAddresses)
                     .ThenInclude(pa => pa.Address)
                     .ThenInclude(a => a.Country)
