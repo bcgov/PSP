@@ -32,13 +32,13 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Drop primary key constraint dbo.TENNTX_PK
-PRINT N'Drop primary key constraint dbo.TENNTX_PK'
-GO
-ALTER TABLE [dbo].[PIMS_TENANT]
-	DROP CONSTRAINT [TENNTX_PK]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+--PRINT N'Drop primary key constraint dbo.TENNTX_PK'
+--GO
+--ALTER TABLE [dbo].[PIMS_TENANT]
+--	DROP CONSTRAINT [TENNTX_PK]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Drop table dbo.PIMS_TENANT
 PRINT N'Drop table dbo.PIMS_TENANT'
