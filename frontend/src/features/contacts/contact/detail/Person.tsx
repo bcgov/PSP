@@ -1,5 +1,4 @@
 import { FormSection } from 'components/common/form/styles';
-import { AddressTypes } from 'constants/addressTypes';
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { Dictionary } from 'interfaces/Dictionary';
 import {
