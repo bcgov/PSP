@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities
     public partial class PimsPerson : IDisableBaseAppEntity
     {
         #region Properties
-        public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).ToArray();
+        public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o => { o.PimsPersonOrganizations = null; return o; }).ToArray();
         public ICollection<PimsAddress> GetAddresses() => PimsPersonAddresses?.Select(pa => pa.Address).ToArray();
 
         #endregion

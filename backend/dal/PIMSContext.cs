@@ -75,7 +75,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsOrganizationAddressHist> PimsOrganizationAddressHists { get; set; }
         public virtual DbSet<PimsOrganizationHist> PimsOrganizationHists { get; set; }
         public virtual DbSet<PimsOrganizationType> PimsOrganizationTypes { get; set; }
-        public virtual DbSet<PimsPerson> PimsPerson { get; set; }
+        public virtual DbSet<PimsPerson> PimsPeople { get; set; }
         public virtual DbSet<PimsPersonAddress> PimsPersonAddresses { get; set; }
         public virtual DbSet<PimsPersonAddressHist> PimsPersonAddressHists { get; set; }
         public virtual DbSet<PimsPersonHist> PimsPersonHists { get; set; }
@@ -11282,25 +11282,22 @@ namespace Pims.Dal
             modelBuilder.Entity<PimsTenant>(entity =>
             {
                 entity.HasKey(e => e.TenantId)
-                    .HasName("PIMS_TENANT_PK");
+                    .HasName("PK__PIMS_TEN__5E0E988A42D52538");
 
                 entity.ToTable("PIMS_TENANT");
 
                 entity.Property(e => e.TenantId)
                     .HasColumnName("TENANT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])")
-                    .HasComment("Auto-sequenced unique key value");
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])");
 
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(6)
-                    .HasColumnName("CODE")
-                    .HasComment("Code value for entry");
+                    .HasColumnName("CODE");
 
                 entity.Property(e => e.ConcurrencyControlNumber)
                     .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("(CONVERT([bigint],(1)))")
-                    .HasComment("Concurrency control number");
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp)
                     .HasColumnType("datetime")
@@ -11326,20 +11323,17 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(500)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Description of the entry for display purposes");
+                    .HasColumnName("DESCRIPTION");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(150)
-                    .HasColumnName("NAME")
-                    .HasComment("Name of the entry for display purposes");
+                    .HasColumnName("NAME");
 
                 entity.Property(e => e.Settings)
                     .IsRequired()
                     .HasMaxLength(2000)
-                    .HasColumnName("SETTINGS")
-                    .HasComment("Serialized JSON value for the configuration");
+                    .HasColumnName("SETTINGS");
             });
 
             modelBuilder.Entity<PimsUser>(entity =>

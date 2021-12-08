@@ -9,14 +9,14 @@ import {
 } from 'interfaces/IContact';
 import * as React from 'react';
 import { Col } from 'react-bootstrap';
-import { FaCircle, FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { FaCircle, FaRegBuilding } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { phoneFormatter } from 'utils/formUtils';
 
 import * as Styled from '../../styles';
 
-export interface PersonViewProps {
-  person: IContactPerson;
+export interface OrganizationViewProps {
+  organization: IContactOrganization;
 }
 
 interface ContactInfoField {
@@ -34,25 +34,25 @@ interface AddressField {
   postal?: string;
 }
 
-const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
+const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
   const phoneTypes: Dictionary<string> = {};
   phoneTypes[ContactMethodTypes.WorkMobil] = 'Mobile';
-  phoneTypes[ContactMethodTypes.WorkPhone] = 'Home';
-  phoneTypes[ContactMethodTypes.PersPhone] = 'Work';
+  phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
+  phoneTypes[ContactMethodTypes.PersPhone] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
-  const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
+  const personPhoneNumbers: ContactInfoField[] = getContactInfo(organization, phoneTypes);
 
   const emailTypes: Dictionary<string> = {};
   emailTypes[ContactMethodTypes.WorkEmail] = 'Work';
   emailTypes[ContactMethodTypes.PerseEmail] = 'Personal';
-  const personEmails: ContactInfoField[] = getContactInfo(person, emailTypes);
+  const personEmails: ContactInfoField[] = getContactInfo(organization, emailTypes);
 
   let personAddresses: AddressField[];
-  if (person.addresses === undefined) {
+  if (organization.addresses === undefined) {
     personAddresses = [];
   } else {
-    personAddresses = person.addresses.reduce(
+    personAddresses = organization.addresses.reduce(
       (accumulator: AddressField[], value: IContactAddress) => {
         accumulator.push({
           label: value.addressType.description,
@@ -74,53 +74,43 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
 
   return (
     <>
-      <FormSection key={'contact-person-' + person.id + '-names'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-names'} className="mb-4">
         <Styled.RowAligned>
           <Col>
-            <Styled.H2 data-testid="contact-person-fullname">
-              <FaRegUser size={20} className="mr-2" />
-              {person.fullName}
+            <Styled.H2>
+              <FaRegBuilding size={20} className="mr-2" />
+              <span data-testid="contact-organization-fullname">{organization.name}</span>
             </Styled.H2>
           </Col>
           <Col md="auto" className="ml-auto">
-            <Styled.StatusIndicators className={person.isDisabled ? 'inactive' : 'active'}>
+            <Styled.StatusIndicators className={organization.isDisabled ? 'inactive' : 'active'}>
               <FaCircle size={7} className="mr-2" />
-              <span data-testid="contact-person-status">
-                {person.isDisabled ? 'INACTIVE' : 'ACTIVE'}
+              <span data-testid="contact-organization-status">
+                {organization.isDisabled ? 'INACTIVE' : 'ACTIVE'}
               </span>
             </Styled.StatusIndicators>
           </Col>
         </Styled.RowAligned>
         <Styled.RowAligned>
-          <Col md="auto">
-            <strong>Preferred name:</strong>
-          </Col>
-          <Col md="auto">
-            <span data-testid="contact-person-preferred">{person.preferredName}</span>
-          </Col>
-        </Styled.RowAligned>
-      </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-organization'} className="mb-4">
-        <Styled.RowAligned>
-          <Col md="auto">
-            <FaRegBuilding className="mr-2" />
-            <strong>Organization(s):</strong>
-          </Col>
-          <Col md="auto">
-            {person.organizations &&
-              person.organizations.map((organization: IContactOrganization, index: number) => (
-                <Link
-                  to={'/organization/' + organization.id}
-                  data-testid="contact-person-organization"
-                  key={'person-org-' + index}
-                >
-                  {organization.name}
-                </Link>
-              ))}
+          <Col className="ml-5">
+            <div>
+              <strong>Alias:</strong>
+            </div>
+            <div>
+              <span data-testid="contact-organization-alias">{organization.alias}</span>
+            </div>
+            <div>
+              <strong>Incorporation Number:</strong>
+            </div>
+            <div>
+              <span data-testid="contact-organization-incorporationNumber">
+                {organization.incorporationNumber}
+              </span>
+            </div>
           </Col>
         </Styled.RowAligned>
       </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-contacts'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-contacts'} className="mb-4">
         <Styled.H2Primary>Contact info</Styled.H2Primary>
         <Styled.RowAligned className="pb-4">
           <Col md={2}>
@@ -129,7 +119,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col>
             {personEmails.length === 0 && <span>N.A</span>}
             {personEmails.map((field: ContactInfoField, index: number) => (
-              <Styled.RowAligned key={'person-email-' + index}>
+              <Styled.RowAligned key={'org-email-' + index}>
                 <Col md="4" data-testid="email-value">
                   {field.info}
                 </Col>
@@ -147,7 +137,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col>
             {personPhoneNumbers.length === 0 && <span>N.A</span>}
             {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
-              <Styled.RowAligned key={'person-phone-' + index}>
+              <Styled.RowAligned key={'org-phone-' + index}>
                 <Col md="4" data-testid="phone-value">
                   {phoneFormatter(field.info)}
                 </Col>
@@ -159,34 +149,53 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           </Col>
         </Styled.RowAligned>
       </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-address'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-address'} className="mb-4">
         <Styled.H2Primary>Address</Styled.H2Primary>
         {personAddresses.map((field: AddressField, index: number) => (
-          <Styled.RowAligned className="pb-3" key={'person-address-' + index}>
-            <Col>
-              <div className="pb-2">
-                <strong>{field.label}</strong>
-              </div>
-              <span data-testid="contact-person-address">
-                {field.streetAddress1 && <div>{field.streetAddress1} </div>}
-                {field.streetAddress2 && <div>{field.streetAddress2} </div>}
-                {field.streetAddress3 && <div>{field.streetAddress3} </div>}
-                <div>{field.municipalityAndProvince} </div>
-                {field.postal && <div>{field.postal} </div>}
-                {field.country && <div>{field.country}</div>}
-                {index + 1 !== personAddresses.length && <hr></hr>}
-              </span>
+          <Styled.RowAligned className="pb-3" key={'org-address-' + index}>
+            <Col md="4">
+              <strong>{field.label}:</strong>
+            </Col>
+            <Col data-testid="contact-organization-address">
+              {field.streetAddress1 && <div>{field.streetAddress1} </div>}
+              {field.streetAddress2 && <div>{field.streetAddress2} </div>}
+              {field.streetAddress3 && <div>{field.streetAddress3} </div>}
+              <div>{field.municipalityAndProvince} </div>
+              {field.postal && <div>{field.postal} </div>}
+              {field.country && <div>{field.country}</div>}
+              {index + 1 !== personAddresses.length && <hr></hr>}
             </Col>
           </Styled.RowAligned>
         ))}
       </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-comments'}>
+      <FormSection key={'contact-org-' + organization.id + '-individual'} className="mb-4">
+        <Styled.RowAligned>
+          <Col>
+            <Styled.H2Primary>Individual Contacts</Styled.H2Primary>
+          </Col>
+        </Styled.RowAligned>
+        <Styled.RowAligned>
+          <Col>
+            {organization.persons &&
+              organization.persons.map((person: IContactPerson, index: number) => (
+                <Link
+                  to={'/person/' + person.id}
+                  data-testid="contact-organization-person"
+                  key={'org-person-' + index}
+                >
+                  {person.fullName}
+                </Link>
+              ))}
+          </Col>
+        </Styled.RowAligned>
+      </FormSection>
+      <FormSection key={'contact-person-' + organization.id + '-comments'}>
         <Styled.RowAligned>
           <Col>
             <div>
               <strong>Comments:</strong>
             </div>
-            <span data-testid="contact-person-comment">{person.comment}</span>
+            <div data-testid="contact-organization-comment">{organization.comment}</div>
           </Col>
         </Styled.RowAligned>
       </FormSection>
@@ -195,14 +204,15 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
 };
 
 function getContactInfo(
-  person: IContactPerson,
+  organization: IContactOrganization,
   validTypes: Dictionary<string>,
 ): ContactInfoField[] {
-  if (person.contactMethods === undefined) {
+  if (organization.contactMethods === undefined) {
     return [];
   }
+
   // Get only the valid types
-  let filteredFields = person.contactMethods.reduce(
+  let filteredFields = organization.contactMethods.reduce(
     (accumulator: ContactInfoField[], method: IContactMethod) => {
       if (Object.keys(validTypes).includes(method.contactMethodType.id)) {
         accumulator.push({
@@ -221,4 +231,4 @@ function getContactInfo(
   });
 }
 
-export default PersonView;
+export default OrganizationView;

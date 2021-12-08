@@ -81,7 +81,7 @@ namespace Pims.Dal.Services
                 this.Logger.LogInformation($"User Activation: key:{key}, email:{email}, username:{username}, first:{givenName}, surname:{surname}");
 
                 var person = new PimsPerson() { Surname = surname, FirstName = givenName };
-                this.Context.PimsPerson.Add(person);
+                this.Context.PimsPeople.Add(person);
                 this.Context.CommitTransaction();
 
                 user = new PimsUser()

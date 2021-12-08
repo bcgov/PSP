@@ -54,7 +54,7 @@ const mockParcel = {
   addressId: 1,
   address: {
     id: 1,
-    addressTypeId: AddressTypes.Physical,
+    addressTypeId: AddressTypes.Mailing,
     streetAddress1: '1234 mock Street',
     municipality: 'Victoria',
     provinceId: 1,
