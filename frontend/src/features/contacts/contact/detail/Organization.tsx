@@ -179,7 +179,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
             {organization.persons &&
               organization.persons.map((person: IContactPerson, index: number) => (
                 <Link
-                  to={'/person/' + person.id}
+                  to={'/contact/P' + person.id}
                   data-testid="contact-organization-person"
                   key={'org-person-' + index}
                 >

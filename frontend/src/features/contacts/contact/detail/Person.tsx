@@ -110,7 +110,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
             {person.organizations &&
               person.organizations.map((organization: IContactOrganization, index: number) => (
                 <Link
-                  to={'/organization/' + organization.id}
+                  to={'/contact/O' + organization.id}
                   data-testid="contact-person-organization"
                   key={'person-org-' + index}
                 >
