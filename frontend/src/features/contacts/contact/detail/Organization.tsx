@@ -15,7 +15,7 @@ import { phoneFormatter } from 'utils/formUtils';
 
 import * as Styled from '../../styles';
 
-interface IOrganizationViewProps {
+export interface OrganizationViewProps {
   organization: IContactOrganization;
 }
 
@@ -29,12 +29,12 @@ interface AddressField {
   label: string;
 }
 
-const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ organization }) => {
+const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
   const phoneTypes: Dictionary<string> = {};
-  phoneTypes[ContactMethodTypes.PerseMobil] = 'Mobile';
+  phoneTypes[ContactMethodTypes.WorkMobil] = 'Mobile';
+  phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
   phoneTypes[ContactMethodTypes.PersPhone] = 'Home';
-  phoneTypes[ContactMethodTypes.WorkMobil] = 'Work';
-  phoneTypes[ContactMethodTypes.WorkPhone] = 'Fax';
+  phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(organization, phoneTypes);
 
@@ -59,18 +59,20 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
 
   return (
     <>
-      <FormSection key={organization.id + '-Names'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-names'} className="mb-4">
         <Styled.RowAligned>
           <Col>
-            <Styled.H2 data-testid="contact-organization-fullname">
+            <Styled.H2>
               <FaRegBuilding size={20} className="mr-2" />
-              {organization.name}
+              <span data-testid="contact-organization-fullname">{organization.name}</span>
             </Styled.H2>
           </Col>
           <Col md="auto" className="ml-auto">
             <Styled.StatusIndicators className={organization.isDisabled ? 'inactive' : 'active'}>
               <FaCircle size={7} className="mr-2" />
-              <span>{organization.isDisabled ? 'INACTIVE' : 'ACTIVE'}</span>
+              <span data-testid="contact-organization-status">
+                {organization.isDisabled ? 'INACTIVE' : 'ACTIVE'}
+              </span>
             </Styled.StatusIndicators>
           </Col>
         </Styled.RowAligned>
@@ -93,7 +95,7 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
           </Col>
         </Styled.RowAligned>
       </FormSection>
-      <FormSection key={organization.id + '-Contacts'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-contacts'} className="mb-4">
         <Styled.H2Primary>Contact info</Styled.H2Primary>
         <Styled.RowAligned className="pb-4">
           <Col md={2}>
@@ -103,7 +105,9 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
             {personEmails.length === 0 && <span>N.A</span>}
             {personEmails.map((field: ContactInfoField, index: number) => (
               <Styled.RowAligned>
-                <Col md="4">{field.info}</Col>
+                <Col md="4" data-testid="email-value">
+                  {field.info}
+                </Col>
                 <Col md="auto">
                   <em>{field.label}</em>
                 </Col>
@@ -119,7 +123,9 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
             {personPhoneNumbers.length === 0 && <span>N.A</span>}
             {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
               <Styled.RowAligned>
-                <Col md="4">{phoneFormatter(field.info)}</Col>
+                <Col md="4" data-testid="phone-value">
+                  {phoneFormatter(field.info)}
+                </Col>
                 <Col md="auto">
                   <em>{field.label}</em>
                 </Col>
@@ -128,28 +134,26 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
           </Col>
         </Styled.RowAligned>
       </FormSection>
-      <FormSection key={organization.id + '-Address'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-address'} className="mb-4">
         <Styled.H2Primary>Address</Styled.H2Primary>
         {personAddresses.map((field: AddressField, index: number) => (
           <Styled.RowAligned className="pb-3">
             <Col md="4">
               <strong>{field.label}:</strong>
             </Col>
-            <Col>
-              <div>{field.address.streetAddress1}</div>
-              <div>{field.address.streetAddress2}</div>
-              <div>{field.address.streetAddress3}</div>
-              <div>
-                {field.address.municipality} {field.address.provinceCode}
-              </div>
-              <div>{field.address.postal}</div>
+            <Col data-testid="contact-organization-address">
+              <div>{field.address.streetAddress1} </div>
+              {field.address.streetAddress2 && <div>{field.address.streetAddress2} </div>}
+              {field.address.streetAddress3 && <div>{field.address.streetAddress3} </div>}
+              <div>{field.address.municipality + ' ' + field.address.provinceCode} </div>
+              <div>{field.address.postal} </div>
               <div>{field.address.country}</div>
               {index + 1 !== personAddresses.length && <hr></hr>}
             </Col>
           </Styled.RowAligned>
         ))}
       </FormSection>
-      <FormSection key={organization.id + '-Organization'} className="mb-4">
+      <FormSection key={'contact-org-' + organization.id + '-individual'} className="mb-4">
         <Styled.RowAligned>
           <Col>
             <Styled.H2Primary>Individual Contacts</Styled.H2Primary>
@@ -158,12 +162,10 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
         <Styled.RowAligned>
           <Col>
             {organization.persons &&
-              organization.persons.map((person: IContactPerson, index: number) => (
-                <>
-                  <span data-testid={'contact-organization-person-' + index}>
-                    <Link to={'/person/' + person.id}>{person.fullName}</Link>
-                  </span>
-                </>
+              organization.persons.map((person: IContactPerson) => (
+                <Link to={'/person/' + person.id} data-testid="contact-organization-person">
+                  {person.fullName}
+                </Link>
               ))}
           </Col>
         </Styled.RowAligned>
@@ -174,7 +176,7 @@ const OrganizationView: React.FunctionComponent<IOrganizationViewProps> = ({ org
             <div>
               <strong>Comments:</strong>
             </div>
-            {organization.comment}
+            <div data-testid="contact-organization-comment">{organization.comment}</div>
           </Col>
         </Styled.RowAligned>
       </FormSection>

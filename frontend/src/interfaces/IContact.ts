@@ -5,8 +5,8 @@ export interface IContactAddress {
   rowVersion: number;
   addressType: ITypeCode<string>;
   streetAddress1: string;
-  streetAddress2: string;
-  streetAddress3: string;
+  streetAddress2?: string;
+  streetAddress3?: string;
   regionId?: number;
   region: string;
   districtId?: number;

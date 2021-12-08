@@ -13,7 +13,6 @@ interface IContactViewContainerProps {
 
 const ContactViewContainer: React.FunctionComponent<IContactViewContainerProps> = props => {
   const { contact } = useContactDetail(props?.match?.params?.id);
-  console.log(props?.match?.params);
   return (
     <ContactLayout>
       <ContactBreadcrumb />
