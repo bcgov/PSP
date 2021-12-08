@@ -1,12 +1,12 @@
 import { TextArea } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import * as Styled from 'features/contacts/contact/create/styles';
-import * as React from 'react';
+import React from 'react';
 
 export interface ICommentNotesProps {}
 
 /**
- * Displays comments directly associated with this Individual Contact.
+ * Displays comments directly associated with this Contact Person.
  * @param {ICommentNotesProps} param0
  */
 export const CommentNotes: React.FunctionComponent<ICommentNotesProps> = () => {

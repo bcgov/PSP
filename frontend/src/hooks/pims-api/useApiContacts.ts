@@ -1,12 +1,11 @@
 import { IPagedItems } from 'interfaces';
-import { IContact } from 'interfaces/IContact';
+import { IContact, IContactPersonCreate } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
 
 import { IContactFilter } from '../../features/contacts/interfaces';
 import { IContactSearchResult } from './../../interfaces/IContactSearchResult';
 import { IPaginateRequest, useAxiosApi } from '.';
-import { IApiPerson } from './interfaces/IApiPerson';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the contacts endpoints.
@@ -22,7 +21,8 @@ export const useApiContacts = () => {
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
-      postPerson: (person: IApiPerson) => api.post<IApiPerson>(`/persons`, person),
+      postPerson: (person: IContactPersonCreate) =>
+        api.post<IContactPersonCreate>(`/persons`, person),
     }),
     [api],
   );

@@ -5,13 +5,14 @@ import * as API from 'constants/API';
 import { Formik } from 'formik';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { defaultPerson } from 'interfaces/IFormPerson';
+import { defaultCreatePerson } from 'interfaces/IContact';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { PadBox } from '../styles';
+import Address from './address/Address';
 import CommentNotes from './comments/CommentNotes';
 import * as Styled from './styles';
 
@@ -23,10 +24,11 @@ export const Person: React.FunctionComponent<IPersonProps> = props => {
   const { goBack } = useHistory();
 
   const countries = useMemo(() => getByType(API.COUNTRY_CODE_SET_NAME), [getByType]);
+  const provinces = useMemo(() => getByType(API.PROVINCE_CODE_SET_NAME), [getByType]);
 
   return (
     <Formik
-      initialValues={{ ...defaultPerson }}
+      initialValues={{ ...defaultCreatePerson }}
       enableReinitialize
       onSubmit={async values => {
         try {
@@ -78,6 +80,7 @@ export const Person: React.FunctionComponent<IPersonProps> = props => {
               <FormSection>
                 <Styled.H2>Address</Styled.H2>
                 <Styled.H3>Mailing Address</Styled.H3>
+                <Address namespace="addresses.0" countries={countries} provinceStates={provinces} />
               </FormSection>
 
               <FormSection>
