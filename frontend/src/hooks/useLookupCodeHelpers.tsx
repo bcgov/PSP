@@ -19,7 +19,7 @@ export function useLookupCodeHelpers() {
 
   const getByType = useCallback(
     (type: string) =>
-      lookupCodes.filter(
+      (lookupCodes || []).filter(
         (code: { type: string; isDisabled: boolean }) =>
           code.type === type && code.isDisabled !== true,
       ),
@@ -28,7 +28,7 @@ export function useLookupCodeHelpers() {
 
   const getPublicByType = useCallback(
     (type: string) =>
-      lookupCodes.filter(
+      (lookupCodes || []).filter(
         (code: ILookupCode) =>
           code.type === type && code.isDisabled === false && code.isPublic !== false,
       ),
