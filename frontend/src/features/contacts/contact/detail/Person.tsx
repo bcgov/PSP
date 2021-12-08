@@ -26,8 +26,13 @@ interface ContactInfoField {
 }
 
 interface AddressField {
-  address: IContactAddress;
   label: string;
+  streetAddress1?: string;
+  streetAddress2?: string;
+  streetAddress3?: string;
+  municipalityAndProvince?: string;
+  country?: string;
+  postal?: string;
 }
 
 const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
@@ -50,7 +55,17 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   } else {
     personAddresses = person.addresses.reduce(
       (accumulator: AddressField[], value: IContactAddress) => {
-        accumulator.push({ label: value.addressType.description, address: value });
+        accumulator.push({
+          label: value.addressType.description,
+          streetAddress1: value.streetAddress1,
+          streetAddress2: value.streetAddress2,
+          streetAddress3: value.streetAddress3,
+          municipalityAndProvince:
+            (value.municipality !== undefined ? value.municipality + ' ' : '') +
+            value.province.provinceStateCode,
+          country: value.country?.description,
+          postal: value.postal,
+        });
 
         return accumulator;
       },
@@ -94,10 +109,11 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           </Col>
           <Col md="auto">
             {person.organizations &&
-              person.organizations.map((organization: IContactOrganization) => (
+              person.organizations.map((organization: IContactOrganization, index: number) => (
                 <Link
                   to={'/organization/' + organization.id}
                   data-testid="contact-person-organization"
+                  key={'person-org-' + index}
                 >
                   {organization.name}
                 </Link>
@@ -114,7 +130,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col>
             {personEmails.length === 0 && <span>N.A</span>}
             {personEmails.map((field: ContactInfoField, index: number) => (
-              <Styled.RowAligned>
+              <Styled.RowAligned key={'person-email-' + index}>
                 <Col md="4" data-testid="email-value">
                   {field.info}
                 </Col>
@@ -132,7 +148,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col>
             {personPhoneNumbers.length === 0 && <span>N.A</span>}
             {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
-              <Styled.RowAligned>
+              <Styled.RowAligned key={'person-phone-' + index}>
                 <Col md="4" data-testid="phone-value">
                   {phoneFormatter(field.info)}
                 </Col>
@@ -147,21 +163,18 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
       <FormSection key={'contact-person-' + person.id + '-address'} className="mb-4">
         <Styled.H2Primary>Address</Styled.H2Primary>
         {personAddresses.map((field: AddressField, index: number) => (
-          <Styled.RowAligned className="pb-3">
+          <Styled.RowAligned className="pb-3" key={'person-address-' + index}>
             <Col>
               <div className="pb-2">
                 <strong>{field.label}</strong>
-                {field.address.addressType.id === AddressTypes.Mailing && (
-                  <em className="ml-4">from organization</em>
-                )}
               </div>
               <span data-testid="contact-person-address">
-                <div>{field.address.streetAddress1} </div>
-                {field.address.streetAddress2 && <div>{field.address.streetAddress2} </div>}
-                {field.address.streetAddress3 && <div>{field.address.streetAddress3} </div>}
-                <div>{field.address.municipality + ' ' + field.address.provinceCode} </div>
-                <div>{field.address.postal} </div>
-                <div>{field.address.country}</div>
+                {field.streetAddress1 && <div>{field.streetAddress1} </div>}
+                {field.streetAddress2 && <div>{field.streetAddress2} </div>}
+                {field.streetAddress3 && <div>{field.streetAddress3} </div>}
+                <div>{field.municipalityAndProvince} </div>
+                {field.postal && <div>{field.postal} </div>}
+                {field.country && <div>{field.country}</div>}
                 {index + 1 !== personAddresses.length && <hr></hr>}
               </span>
             </Col>

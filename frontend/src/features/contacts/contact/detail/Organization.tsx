@@ -25,8 +25,13 @@ interface ContactInfoField {
 }
 
 interface AddressField {
-  address: IContactAddress;
   label: string;
+  streetAddress1?: string;
+  streetAddress2?: string;
+  streetAddress3?: string;
+  municipalityAndProvince?: string;
+  country?: string;
+  postal?: string;
 }
 
 const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
@@ -49,7 +54,17 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
   } else {
     personAddresses = organization.addresses.reduce(
       (accumulator: AddressField[], value: IContactAddress) => {
-        accumulator.push({ label: value.addressType.description, address: value });
+        accumulator.push({
+          label: value.addressType.description,
+          streetAddress1: value.streetAddress1,
+          streetAddress2: value.streetAddress2,
+          streetAddress3: value.streetAddress3,
+          municipalityAndProvince:
+            (value.municipality !== undefined ? value.municipality + ' ' : '') +
+            value.province.provinceStateCode,
+          country: value.country?.description,
+          postal: value.postal,
+        });
 
         return accumulator;
       },
@@ -85,7 +100,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
               <span data-testid="contact-organization-alias">{organization.alias}</span>
             </div>
             <div>
-              <strong>Incorportation Number:</strong>
+              <strong>Incorporation Number:</strong>
             </div>
             <div>
               <span data-testid="contact-organization-incorporationNumber">
@@ -103,8 +118,8 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           </Col>
           <Col>
             {personEmails.length === 0 && <span>N.A</span>}
-            {personEmails.map((field: ContactInfoField) => (
-              <Styled.RowAligned>
+            {personEmails.map((field: ContactInfoField, index: number) => (
+              <Styled.RowAligned key={'org-email-' + index}>
                 <Col md="4" data-testid="email-value">
                   {field.info}
                 </Col>
@@ -122,7 +137,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           <Col>
             {personPhoneNumbers.length === 0 && <span>N.A</span>}
             {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
-              <Styled.RowAligned>
+              <Styled.RowAligned key={'org-phone-' + index}>
                 <Col md="4" data-testid="phone-value">
                   {phoneFormatter(field.info)}
                 </Col>
@@ -137,17 +152,17 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
       <FormSection key={'contact-org-' + organization.id + '-address'} className="mb-4">
         <Styled.H2Primary>Address</Styled.H2Primary>
         {personAddresses.map((field: AddressField, index: number) => (
-          <Styled.RowAligned className="pb-3">
+          <Styled.RowAligned className="pb-3" key={'org-address-' + index}>
             <Col md="4">
               <strong>{field.label}:</strong>
             </Col>
             <Col data-testid="contact-organization-address">
-              <div>{field.address.streetAddress1} </div>
-              {field.address.streetAddress2 && <div>{field.address.streetAddress2} </div>}
-              {field.address.streetAddress3 && <div>{field.address.streetAddress3} </div>}
-              <div>{field.address.municipality + ' ' + field.address.provinceCode} </div>
-              <div>{field.address.postal} </div>
-              <div>{field.address.country}</div>
+              {field.streetAddress1 && <div>{field.streetAddress1} </div>}
+              {field.streetAddress2 && <div>{field.streetAddress2} </div>}
+              {field.streetAddress3 && <div>{field.streetAddress3} </div>}
+              <div>{field.municipalityAndProvince} </div>
+              {field.postal && <div>{field.postal} </div>}
+              {field.country && <div>{field.country}</div>}
               {index + 1 !== personAddresses.length && <hr></hr>}
             </Col>
           </Styled.RowAligned>
@@ -162,8 +177,12 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
         <Styled.RowAligned>
           <Col>
             {organization.persons &&
-              organization.persons.map((person: IContactPerson) => (
-                <Link to={'/person/' + person.id} data-testid="contact-organization-person">
+              organization.persons.map((person: IContactPerson, index: number) => (
+                <Link
+                  to={'/person/' + person.id}
+                  data-testid="contact-organization-person"
+                  key={'org-person-' + index}
+                >
                   {person.fullName}
                 </Link>
               ))}

@@ -19,7 +19,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         public bool IsDisabled { get; set; }
 
         /// <summary>
-        /// get/set - The organization's concatenated name.
+        /// get/set - The organization's name.
         /// </summary>
         public string Name { get; set; }
 
@@ -34,7 +34,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         public string IncorporationNumber { get; set; }
 
         /// <summary>
-        /// get/set - The organization's organizations.
+        /// get/set - The organization's persons.
         /// </summary>
         public IList<PersonModel> Persons { get; set; }
 

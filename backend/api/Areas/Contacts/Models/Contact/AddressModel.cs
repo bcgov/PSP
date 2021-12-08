@@ -40,54 +40,19 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         public string StreetAddress3 { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the region.
-        /// </summary>
-        public int? RegionId { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the region.
-        /// </summary>
-        public string Region { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to the district.
-        /// </summary>
-        public int? DistrictId { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the district.
-        /// </summary>
-        public string District { get; set; }
-
-        /// <summary>
         /// get/set - The name of the municipality name.
         /// </summary>
         public string Municipality { get; set; }
 
         /// <summary>
-        /// get/set - Foreign key to the province.
+        /// get/set - The address's province.
         /// </summary>
-        public int ProvinceId { get; set; }
+        public ProvinceStateModel Province { get; set; }
 
         /// <summary>
-        /// get/set - The name of the province.
+        /// get/set - The address's country.
         /// </summary>
-        public string Province { get; set; }
-
-        /// <summary>
-        /// get/set - The province code.
-        /// </summary>
-        public string ProvinceCode { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to country.
-        /// </summary>
-        public int CountryId { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the country.
-        /// </summary>
-        public string Country { get; set; }
+        public CountryModel Country { get; set; }
 
         /// <summary>
         /// get/set - The postal code.

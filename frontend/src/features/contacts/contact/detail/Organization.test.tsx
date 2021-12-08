@@ -200,14 +200,13 @@ describe('Contact OrganizationView component', () => {
       id: 1,
       rowVersion: 0,
       streetAddress1: 'Test Street',
-      region: '',
-      district: '',
       municipality: 'Victoria',
-      provinceId: 0,
-      province: '',
-      provinceCode: 'BC',
-      countryId: 0,
-      country: 'Canada',
+      province: {
+        provinceStateId: 1,
+        provinceStateCode: 'BC',
+        description: 'British Columbia',
+      },
+      country: { countryId: 1, countryCode: 'CA', description: 'Canada' },
       postal: 'v0v 1v1',
       addressType: {
         id: AddressTypes.Mailing,
@@ -219,14 +218,13 @@ describe('Contact OrganizationView component', () => {
       id: 2,
       rowVersion: 0,
       streetAddress1: 'Fixture Street',
-      region: '',
-      district: '',
       municipality: 'Vancouver',
-      provinceId: 0,
-      province: '',
-      provinceCode: 'BC',
-      countryId: 0,
-      country: 'Canada',
+      province: {
+        provinceStateId: 1,
+        provinceStateCode: 'BC',
+        description: 'British Columbia',
+      },
+      country: { countryId: 1, countryCode: 'CA', description: 'Canada' },
       postal: 'v0v 1v1',
       addressType: {
         id: AddressTypes.Residential,
@@ -248,10 +246,10 @@ describe('Contact OrganizationView component', () => {
 
     // Verify that the display is in the correct order
     expect(addressElements[0].textContent).toBe(
-      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${mailingAddress.provinceCode} ${mailingAddress.postal} ${mailingAddress.country}`,
+      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${mailingAddress.province.provinceStateCode} ${mailingAddress.postal} ${mailingAddress.country?.description}`,
     );
     expect(addressElements[1].textContent).toBe(
-      `${residentialAddress.streetAddress1} ${residentialAddress.municipality} ${residentialAddress.provinceCode} ${residentialAddress.postal} ${residentialAddress.country}`,
+      `${residentialAddress.streetAddress1} ${residentialAddress.municipality} ${residentialAddress.province.provinceStateCode} ${residentialAddress.postal} ${residentialAddress.country?.description}`,
     );
   });
 

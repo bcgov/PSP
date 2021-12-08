@@ -1,23 +1,28 @@
 import ITypeCode from './ITypeCode';
 
+export interface IContactCountry {
+  countryId: number;
+  countryCode: string;
+  description: string;
+}
+
+export interface IContactProvince {
+  provinceStateId: number;
+  provinceStateCode: string;
+  description: string;
+}
+
 export interface IContactAddress {
   id: number;
   rowVersion: number;
   addressType: ITypeCode<string>;
-  streetAddress1: string;
+  streetAddress1?: string;
   streetAddress2?: string;
   streetAddress3?: string;
-  regionId?: number;
-  region: string;
-  districtId?: number;
-  district: string;
-  municipality: string;
-  provinceId: number;
-  province: string;
-  provinceCode: string;
-  countryId: number;
-  country: string;
-  postal: string;
+  municipality?: string;
+  province: IContactProvince;
+  country?: IContactCountry;
+  postal?: string;
 }
 
 export interface IContactMethod {
