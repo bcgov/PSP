@@ -103,7 +103,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           </Col>
           <Col>
             {personEmails.length === 0 && <span>N.A</span>}
-            {personEmails.map((field: ContactInfoField, index: number) => (
+            {personEmails.map((field: ContactInfoField) => (
               <Styled.RowAligned>
                 <Col md="4" data-testid="email-value">
                   {field.info}
@@ -170,7 +170,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           </Col>
         </Styled.RowAligned>
       </FormSection>
-      <FormSection key={organization.id + '-Comments'}>
+      <FormSection key={'contact-person-' + organization.id + '-comments'}>
         <Styled.RowAligned>
           <Col>
             <div>
