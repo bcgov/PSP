@@ -9,15 +9,14 @@ import {
 } from 'interfaces/IContact';
 import { phoneFormatter } from 'utils/formUtils';
 import { render, RenderOptions } from 'utils/test-utils';
-import OrganizationView, { OrganizationViewProps } from './Organization';
+import PersonView, { PersonViewProps } from './Person';
 
-const fakeOrganization: IContactOrganization = {
-  id: '123',
+const fakePerson: IContactPerson = {
+  id: 1,
   isDisabled: false,
-  name: 'Fake Corp Incorporated',
-  alias: 'Fake Inc',
-  incorporationNumber: '987',
-  persons: [],
+  fullName: 'Test name full',
+  preferredName: 'Preferred',
+  organizations: [],
   addresses: [],
   contactMethods: [],
   comment: '',
@@ -25,10 +24,10 @@ const fakeOrganization: IContactOrganization = {
 
 const history = createMemoryHistory();
 
-describe('Contact OrganizationView component', () => {
-  const setup = (renderOptions: RenderOptions & OrganizationViewProps) => {
+describe('Contact PersonView component', () => {
+  const setup = (renderOptions: RenderOptions & PersonViewProps) => {
     // render component under test
-    const component = render(<OrganizationView organization={renderOptions.organization} />, {
+    const component = render(<PersonView person={renderOptions.person} />, {
       ...renderOptions,
       history,
     });
@@ -38,46 +37,41 @@ describe('Contact OrganizationView component', () => {
     };
   };
   it('renders as expected', () => {
-    const { component } = setup({ organization: fakeOrganization });
+    const { component } = setup({ person: fakePerson });
     expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('Shows status information', () => {
     const { component } = setup({
-      organization: {
-        ...fakeOrganization,
+      person: {
+        ...fakePerson,
         isDisabled: true,
       },
     });
 
-    var statusElement = component.getByTestId('contact-organization-status');
+    var statusElement = component.getByTestId('contact-person-status');
     expect(statusElement.textContent).toBe('INACTIVE');
   });
 
   it('Shows base information', () => {
-    const testName = 'My corp name';
-    const testAlias = 'My corp alias';
-    const testIncNumber = '77789';
+    const testName = 'John Doe Smith';
+    const preferredName = 'My corp alias';
     const { component } = setup({
-      organization: {
-        ...fakeOrganization,
-        name: testName,
-        alias: testAlias,
-        incorporationNumber: testIncNumber,
+      person: {
+        ...fakePerson,
+        fullName: testName,
+        preferredName: preferredName,
       },
     });
 
-    var statusElement = component.getByTestId('contact-organization-status');
+    var statusElement = component.getByTestId('contact-person-status');
     expect(statusElement.textContent).toBe('ACTIVE');
 
-    var nameElement = component.getByTestId('contact-organization-fullname');
+    var nameElement = component.getByTestId('contact-person-fullname');
     expect(nameElement.textContent).toBe(testName);
 
-    var aliasElement = component.getByTestId('contact-organization-alias');
-    expect(aliasElement.textContent).toBe(testAlias);
-
-    var incorporationElement = component.getByTestId('contact-organization-incorporationNumber');
-    expect(incorporationElement.textContent).toBe(testIncNumber);
+    var preferredElement = component.getByTestId('contact-person-preferred');
+    expect(preferredElement.textContent).toBe(preferredName);
   });
 
   it('Shows email information', () => {
@@ -104,8 +98,8 @@ describe('Contact OrganizationView component', () => {
 
     const contactInfo: IContactMethod[] = [personalEmail, workEmail];
     const { component } = setup({
-      organization: {
-        ...fakeOrganization,
+      person: {
+        ...fakePerson,
         contactMethods: contactInfo,
       },
     });
@@ -178,8 +172,8 @@ describe('Contact OrganizationView component', () => {
       personalMobile,
     ];
     const { component } = setup({
-      organization: {
-        ...fakeOrganization,
+      person: {
+        ...fakePerson,
         contactMethods: contactInfo,
       },
     });
@@ -192,6 +186,31 @@ describe('Contact OrganizationView component', () => {
     expect(phoneValueElements[1].textContent).toBe(phoneFormatter(workPhone.value));
     expect(phoneValueElements[2].textContent).toBe(phoneFormatter(personalPhone.value));
     expect(phoneValueElements[3].textContent).toBe(phoneFormatter(faxPhone.value));
+  });
+
+  it('Shows organization information', () => {
+    const organization: IContactOrganization = {
+      id: '1',
+      isDisabled: false,
+      name: 'Test Corp Incorporated',
+      alias: 'Test Inc',
+      incorporationNumber: '123456',
+      comment: 'test comment',
+    };
+
+    const organizationsInfo: IContactOrganization[] = [organization];
+    const { component } = setup({
+      person: {
+        ...fakePerson,
+        organizations: organizationsInfo,
+      },
+    });
+
+    var organizationElements = component.getAllByTestId('contact-person-organization');
+    expect(organizationElements.length).toBe(1);
+
+    // Verify that the display is in the correct order
+    expect(organizationElements[0].textContent).toBe(organization.name);
   });
 
   it('Shows address information', () => {
@@ -236,13 +255,13 @@ describe('Contact OrganizationView component', () => {
 
     const addressInfo: IContactAddress[] = [mailingAddress, residentialAddress];
     const { component } = setup({
-      organization: {
-        ...fakeOrganization,
+      person: {
+        ...fakePerson,
         addresses: addressInfo,
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-organization-address');
+    var addressElements = component.getAllByTestId('contact-person-address');
     expect(addressElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -254,57 +273,16 @@ describe('Contact OrganizationView component', () => {
     );
   });
 
-  it('Shows individual contacts information', () => {
-    const person1: IContactPerson = {
-      id: 1,
-      isDisabled: false,
-      fullName: 'Sarah Dawn Abraham',
-      preferredName: 'Saray',
-      comment: '',
-    };
-    const person2: IContactPerson = {
-      id: 2,
-      isDisabled: false,
-      fullName: 'Sam Johnson',
-      preferredName: 'Sammi',
-      comment: '',
-    };
-
-    const person3: IContactPerson = {
-      id: 3,
-      isDisabled: false,
-      fullName: 'Pete Zamboni',
-      preferredName: 'Peter',
-      comment: '',
-    };
-
-    const personsInfo: IContactPerson[] = [person1, person2, person3];
-    const { component } = setup({
-      organization: {
-        ...fakeOrganization,
-        persons: personsInfo,
-      },
-    });
-
-    var personElements = component.getAllByTestId('contact-organization-person');
-    expect(personElements.length).toBe(3);
-
-    // Verify that the display is in the correct order
-    expect(personElements[0].textContent).toBe(person1.fullName);
-    expect(personElements[1].textContent).toBe(person2.fullName);
-    expect(personElements[2].textContent).toBe(person3.fullName);
-  });
-
   it('Shows comment information', () => {
     const testComment: string = 'A test comment :)';
     const { component } = setup({
-      organization: {
-        ...fakeOrganization,
+      person: {
+        ...fakePerson,
         comment: testComment,
       },
     });
 
-    var commentElement = component.getByTestId('contact-organization-comment');
+    var commentElement = component.getByTestId('contact-person-comment');
     expect(commentElement.textContent).toBe(testComment);
   });
 });
