@@ -10,7 +10,7 @@ namespace Pims.Api.Mapping.Lookup
         {
             config.NewConfig<Entity.PimsProvinceState, Model.LookupModel>()
                  .Map(dest => dest.Id, src => src.Id)
-                 .Map(dest => dest.ParentId, src => src.Country != null ? src.Country.Code : "")
+                 .Map(dest => dest.ParentId, src => src.CountryId)
                  .Map(dest => dest.Code, src => src.Code)
                  .Map(dest => dest.Name, src => src.Description)
                  .Map(dest => dest.IsDisabled, src => src.IsDisabled)
