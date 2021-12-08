@@ -1,5 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { render, RenderOptions } from 'utils/test-utils';
+
 import ContactViewContainer from './Container';
 
 const history = createMemoryHistory();
