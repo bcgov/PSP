@@ -1,5 +1,5 @@
-import { AddressTypes } from 'constants/index';
 import { ContactMethodTypes } from 'constants/contactMethodType';
+import { AddressTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import {
   IContactAddress,
@@ -9,6 +9,7 @@ import {
 } from 'interfaces/IContact';
 import { phoneFormatter } from 'utils/formUtils';
 import { render, RenderOptions } from 'utils/test-utils';
+
 import PersonView, { PersonViewProps } from './Person';
 
 const fakePerson: IContactPerson = {
