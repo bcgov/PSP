@@ -17,4 +17,4 @@ VALUES
   (1, N'CA', N'Canada', 1),
   (2, N'US', N'United States of America', 2),
   (3, N'MX', N'Mexico', 3),
-  (4, N'OTHER', N'Other', 9);
+  (4, N'OTHER', N'Other', 99);
