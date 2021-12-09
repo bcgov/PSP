@@ -1,3 +1,4 @@
+using Pims.Api.Models;
 using System;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
@@ -39,6 +40,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - Area unit description.
         /// </summary>
         public string AreaUnit { get; set; }
+
+        /// <summary>
+        /// get/set - Area unit type.
+        /// </summary>
+        public TypeModel<string> AreaUnitType { get; set; }
 
         /// <summary>
         /// get/set - The land area of the property.

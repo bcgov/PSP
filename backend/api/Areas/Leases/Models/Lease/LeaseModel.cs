@@ -38,10 +38,21 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string MotiName { get; set; }
 
         /// <summary>
+        /// get/set - The string value of the moti region, user assigned.
+        /// </summary>
+        /// <value></value>
+        public string MotiRegion { get; set; }
+
+        /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
         /// <value></value>
         public string ProgramName { get; set; }
+
+        /// <summary>
+        /// get/set - The location of documents related to this lease.
+        /// </summary>
+        public string DocumentationReference { get; set; }
 
         /// <summary>
         /// get/set - The lease notes.
@@ -135,6 +146,16 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - The entity responsible for this lease.
         /// </summary>
         public TypeModel<string> PurposeType { get; set; }
+
+        /// <summary>
+        /// get/set - The status of this lease within PIMS, Draft by default.
+        /// </summary>
+        public TypeModel<string> StatusType { get; set; }
+
+        /// <summary>
+        /// get/set - The status of this lease within PIMS, Draft by default.
+        /// </summary>
+        public TypeModel<string> ProgramType { get; set; }
 
         /// <summary>
         /// get/set - The date this entity assumed responsibility for this lease.

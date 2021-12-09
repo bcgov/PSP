@@ -37,8 +37,8 @@ const EditUserPage = (props: IEditUserPageProps) => {
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
-  const organizations = getByType(API.ORGANIZATION_CODE_SET_NAME);
-  const roles = getByType(API.ROLE_CODE_SET_NAME);
+  const organizations = getByType(API.ORGANIZATION_TYPES);
+  const roles = getByType(API.ROLE_TYPES);
 
   const user = useAppSelector(state => state.users.userDetail);
   const mapLookupCode = (code: ILookupCode): SelectOption => ({

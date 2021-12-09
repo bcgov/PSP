@@ -86,14 +86,14 @@ const lCodes = {
       id: 1,
       isDisabled: false,
       name: 'Ministry of Advanced Education',
-      type: API.ORGANIZATION_CODE_SET_NAME,
+      type: API.ORGANIZATION_TYPES,
     },
     {
       code: 'KPU',
       id: 181,
       isDisabled: false,
       name: 'Kwantlen Polytechnic University',
-      type: API.ORGANIZATION_CODE_SET_NAME,
+      type: API.ORGANIZATION_TYPES,
     },
   ],
 };
