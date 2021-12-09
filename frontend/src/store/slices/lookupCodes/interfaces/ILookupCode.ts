@@ -7,7 +7,6 @@ export interface ILookupCode {
   isVisible?: boolean;
   type: string;
   parentId?: number;
-  sortOrder?: number;
   key?: string;
   description?: string;
   displayOrder?: number;

@@ -117,5 +117,23 @@ export const defaultCreatePerson: IContactPersonCreate = {
       countryOther: '',
       postal: '',
     },
+    {
+      addressType: AddressTypes.Mailing,
+      streetAddress1: '',
+      streetAddress2: '',
+      streetAddress3: '',
+      municipality: '',
+      countryOther: '',
+      postal: '',
+    },
+    {
+      addressType: AddressTypes.Mailing,
+      streetAddress1: '',
+      streetAddress2: '',
+      streetAddress3: '',
+      municipality: '',
+      countryOther: '',
+      postal: '',
+    },
   ],
 };

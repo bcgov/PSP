@@ -1,15 +1,12 @@
-import { Input, Select } from 'components/common/form';
+import { Input, Select, SelectOption } from 'components/common/form';
 import { CountryCodes } from 'constants/countryCodes';
-import { Dictionary } from 'interfaces/Dictionary';
-import React, { useCallback, useState } from 'react';
+import useAddressHelpers from 'features/contacts/hooks/useAddressHelpers';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import { mapLookupCode } from 'utils';
 import { withNameSpace } from 'utils/formUtils';
 
 export interface IAddressProps {
-  countries: ILookupCode[];
-  provinceStates: ILookupCode[];
   namespace?: string;
 }
 
@@ -17,15 +14,12 @@ export interface IAddressProps {
  * Displays addresses directly associated with this Contact Person.
  * @param {IAddressProps} param0
  */
-export const Address: React.FunctionComponent<IAddressProps> = ({
-  countries,
-  provinceStates,
-  namespace,
-}) => {
+export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) => {
+  const { countries, provinces, getFieldLabel } = useAddressHelpers();
   const [selectedCountry, setSelectedCountry] = useState(CountryCodes.Canada);
 
-  const countryOptions = countries.map(c => mapLookupCode(c));
-  const provinceOptions = provinceStates.map(c => mapLookupCode(c));
+  const countryOptions = useMemo(() => countries.map(c => mapLookupCode(c)), [countries]);
+  const provinceOptions = useMemo(() => provinces.map(c => mapLookupCode(c)), [provinces]);
 
   const onCountryChanged = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,10 +53,11 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
       </Row>
       <Row>
         <Col md={4}>
-          <Select
-            field={withNameSpace(namespace, 'provinceId')}
-            options={provinceOptions}
-            label={getUiLabel('province', selectedCountry)}
+          <ProvinceOrCountryName
+            namespace={namespace}
+            selectedCountry={selectedCountry}
+            provinceOptions={provinceOptions}
+            getFieldLabel={getFieldLabel}
           />
         </Col>
       </Row>
@@ -70,7 +65,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
         <Col md={4}>
           <Input
             field={withNameSpace(namespace, 'postal')}
-            label={getUiLabel('postal', selectedCountry)}
+            label={getFieldLabel('postal', selectedCountry)}
           />
         </Col>
       </Row>
@@ -78,15 +73,30 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
   );
 };
 
-const uiLabels = new Map<string, Dictionary<string>>([
-  [CountryCodes.Canada, { province: 'Province', postal: 'Postal Code' }],
-  [CountryCodes.US, { province: 'State', postal: 'Zip Code' }],
-  [CountryCodes.Other, { province: '', postal: 'Postal Code' }],
-]);
-
-function getUiLabel(label: string, countryCode = CountryCodes.Canada) {
-  const entry = uiLabels.get(countryCode) || {};
-  return entry[label] || '';
+interface IProvinceOrCountryName {
+  selectedCountry: CountryCodes;
+  provinceOptions: SelectOption[];
+  getFieldLabel: Function;
+  namespace?: string;
 }
+
+const ProvinceOrCountryName: React.FunctionComponent<IProvinceOrCountryName> = ({
+  selectedCountry,
+  provinceOptions,
+  getFieldLabel,
+  namespace,
+}) => {
+  if (selectedCountry === CountryCodes.Other) {
+    return <Input field={withNameSpace(namespace, 'countryOther')} label="Country name" />;
+  }
+
+  return (
+    <Select
+      field={withNameSpace(namespace, 'provinceId')}
+      options={provinceOptions}
+      label={getFieldLabel('province', selectedCountry)}
+    />
+  );
+};
 
 export default Address;
