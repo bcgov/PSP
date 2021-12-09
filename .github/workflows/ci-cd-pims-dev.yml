@@ -44,7 +44,7 @@ jobs:
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
 
-      - name: call scripts to build frontend
+      - name: Call scripts to build frontend
         run: |
           ./openshift/4.0/player.sh build app-base -apply
           ./openshift/4.0/player.sh build app -apply
@@ -64,7 +64,7 @@ jobs:
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
 
-      - name: call scripts to build api
+      - name: Call scripts to build api
         run: |
           ./openshift/4.0/player.sh build api -apply
   
