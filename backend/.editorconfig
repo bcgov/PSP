@@ -79,4 +79,7 @@ dotnet_diagnostic.S3442.severity = error
 dotnet_diagnostic.S125.severity = warning
 # S4136 Method overloads should be adjacent
 dotnet_diagnostic.S4136.severity = none
+# S1128 Remove this unnecessary 'using'
+dotnet_diagnostic.S1128.severity = warning
+
 
