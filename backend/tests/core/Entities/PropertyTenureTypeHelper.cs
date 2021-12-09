@@ -13,21 +13,21 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PropertyTenureType CreatePropertyTenureType(string id)
+        public static Entity.PimsPropertyTenureType CreatePropertyTenureType(string id)
         {
-            return new Entity.PropertyTenureType(id, "") { RowVersion = 1 };
+            return new Entity.PimsPropertyTenureType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of PropertyTenureType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.PropertyTenureType> CreateDefaultPropertyTenureTypes()
+        public static List<Entity.PimsPropertyTenureType> CreateDefaultPropertyTenureTypes()
         {
-            return new List<Entity.PropertyTenureType>()
+            return new List<Entity.PimsPropertyTenureType>()
             {
-                new Entity.PropertyTenureType("Land", "") { RowVersion = 1 },
-                new Entity.PropertyTenureType("Building", "") { RowVersion = 1 }
+                new Entity.PimsPropertyTenureType("Land") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyTenureType("Building") { ConcurrencyControlNumber = 1 }
             };
         }
     }

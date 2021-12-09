@@ -42,7 +42,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c30 {
+.c31 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -54,13 +54,13 @@ exports[`LeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c30 .form-label {
+.c31 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c32 {
+.c33 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -72,7 +72,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c32 .form-label {
+.c33 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -185,9 +185,16 @@ exports[`LeaseContainer component renders as expected 1`] = `
   background-color: white;
 }
 
-.c28 {
+.c29 {
   font-size: 1.6rem;
   font-weight: 700;
+}
+
+.c28 {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid black !important;
+  border-radius: 0;
 }
 
 .c26 {
@@ -201,13 +208,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c26 > .input {
+.c26 > .input,
+.c26 > .notes {
   grid-column: controls;
   grid-row: auto;
   border-left: 1px solid #666666;
 }
 
-.c26 .form-control:not(.description) {
+.c26 .form-control:not(.description,.notes) {
   font-weight: 700;
 }
 
@@ -217,7 +225,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c26 > .textarea,
+.c26 > .textarea :not(.notes),
 .c26 > h3 {
   grid-column: span 2;
   border-left: none;
@@ -234,25 +242,25 @@ exports[`LeaseContainer component renders as expected 1`] = `
   align-items: center;
 }
 
-.c31 input.form-control {
+.c32 input.form-control {
   text-align: left;
 }
 
-.c29 {
+.c30 {
   gap: 5rem;
 }
 
-.c29 .form-control:disabled {
+.c30 .form-control:disabled {
   border: none;
   background: none;
 }
 
-.c33 {
+.c34 {
   background-color: white;
   padding-left: 8rem;
 }
 
-.c33.table .thead .th {
+.c34.table .thead .th {
   font-weight: 700;
   border-top: none;
   padding: 1rem 0.5rem;
@@ -260,28 +268,27 @@ exports[`LeaseContainer component renders as expected 1`] = `
   font-size: 14px;
 }
 
-.c33.table .tbody .td {
+.c34.table .tbody .td {
   border: none;
   font-size: 14px;
 }
 
-.c33.table .tbody .tr-wrapper:nth-child(even) {
+.c34.table .tbody .tr-wrapper:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.c33.table .tbody .tr-wrapper .tr.selected {
+.c34.table .tbody .tr-wrapper .tr.selected {
   font-weight: 700;
   margin-left: -8rem;
 }
 
-.c33.table .tbody .tr-wrapper .tr.selected:before {
+.c34.table .tbody .tr-wrapper .tr.selected:before {
   content: 'current';
   padding-right: 1.5rem;
   background-image: url(caret-right.svg);
   background-repeat: no-repeat;
   background-position: right;
   width: 8rem;
-  height: 3.1rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -445,6 +452,15 @@ exports[`LeaseContainer component renders as expected 1`] = `
   color: white;
   padding: 1rem 2rem;
   border-radius: 0.4rem;
+}
+
+.c21.inverted {
+  background: white;
+  border: 0.1rem solid;
+}
+
+.c21.inverted h4 {
+  font-weight: 700;
 }
 
 .c23 {
@@ -746,6 +762,39 @@ exports[`LeaseContainer component renders as expected 1`] = `
                   />
                 </div>
               </div>
+              <div
+                class="c21 inverted"
+              >
+                <h4
+                  class="c22"
+                >
+                  Current Term
+                </h4>
+                <div
+                  class="c2 c23"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    Start date:
+                  </label>
+                  <div
+                    class="c24"
+                  />
+                </div>
+                <div
+                  class="c2 c23"
+                >
+                  <label
+                    class="form-label"
+                  >
+                    Expiry:
+                  </label>
+                  <div
+                    class="c24"
+                  />
+                </div>
+              </div>
             </li>
             <li>
               <h3
@@ -772,6 +821,150 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     value=""
                   />
                 </div>
+                <br />
+                <label
+                  class="form-label"
+                >
+                  Type
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-type.description"
+                    name="type.description"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  Receivable To:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-paymentReceivableType.description"
+                    name="paymentReceivableType.description"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  Category:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-categoryType.description"
+                    name="categoryType.description"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  Purpose:
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-purposeType.description"
+                    name="purposeType.description"
+                    value=""
+                  />
+                </div>
+                <br />
+                <label
+                  class="form-label"
+                >
+                  Initiator: 
+                  <span
+                    data-testid="tooltip-icon"
+                  >
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-initiatorType.description"
+                    name="initiatorType.description"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  Responsibility: 
+                  <span
+                    data-testid="tooltip-icon"
+                  >
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </label>
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    disabled=""
+                    id="input-responsibilityType.description"
+                    name="responsibilityType.description"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="form-label"
+                >
+                  Effective Date:
+                </label>
+                <input
+                  class="c28 form-control"
+                  disabled=""
+                  value=""
+                />
                 <br />
                 <label
                   class="form-label"
@@ -840,7 +1033,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
               </div>
             </li>
             <label
-              class="c28 form-label"
+              class="c29 form-label"
             >
               Description
             </label>
@@ -864,10 +1057,10 @@ exports[`LeaseContainer component renders as expected 1`] = `
               Terms
             </h3>
             <div
-              class="c2 c29"
+              class="c2 c30"
             >
               <div
-                class="c30 c31 form-group"
+                class="c31 c32 form-group"
               >
                 <label
                   class="form-label"
@@ -887,24 +1080,24 @@ exports[`LeaseContainer component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="c32 input form-group"
+                class="c33 input form-group"
               >
                 <label
                   class="form-label"
-                  for="input-paymentFrequencyType"
+                  for="input-paymentFrequencyType.description"
                 >
                   Payment frequency: 
                 </label>
                 <input
                   class="form-control"
                   disabled=""
-                  id="input-paymentFrequencyType"
-                  name="paymentFrequencyType"
+                  id="input-paymentFrequencyType.description"
+                  name="paymentFrequencyType.description"
                   value=""
                 />
               </div>
               <div
-                class="c32 input form-group"
+                class="c33 input form-group"
               >
                 <label
                   class="form-label"
@@ -922,7 +1115,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="table c33"
+              class="table c34"
               role="table"
             >
               <div
@@ -937,7 +1130,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     class="th"
                     colspan="1"
                     role="columnheader"
-                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   >
                     <div
                       class="sortable-column"
@@ -949,7 +1142,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     class="th"
                     colspan="1"
                     role="columnheader"
-                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   >
                     <div
                       class="sortable-column"
@@ -961,7 +1154,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     class="th"
                     colspan="1"
                     role="columnheader"
-                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   >
                     <div
                       class="sortable-column"
@@ -973,7 +1166,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     class="th"
                     colspan="1"
                     role="columnheader"
-                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   >
                     <div
                       class="sortable-column"
@@ -985,7 +1178,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
                     class="th"
                     colspan="1"
                     role="columnheader"
-                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   >
                     <div
                       class="sortable-column"
@@ -996,53 +1189,9 @@ exports[`LeaseContainer component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="tbody"
-                role="rowgroup"
+                class="no-rows-message"
               >
-                <div
-                  class="tr-wrapper"
-                >
-                  <div
-                    class="tr"
-                    role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 150px;"
-                  >
-                    <div
-                      class="td"
-                      role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
-                      title=""
-                    >
-                      initial term
-                    </div>
-                    <div
-                      class="td"
-                      role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
-                      title=""
-                    />
-                    <div
-                      class="td"
-                      role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
-                      title=""
-                    />
-                    <div
-                      class="td"
-                      role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
-                      title=""
-                    />
-                    <div
-                      class="td"
-                      role="cell"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: flex-start; text-align: left; align-items: center; display: flex;"
-                      title=""
-                    >
-                      exercised
-                    </div>
-                  </div>
-                </div>
+                No rows to display
               </div>
             </div>
           </div>
@@ -1050,7 +1199,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
             class="c18"
           >
             <label
-              class="c28 form-label"
+              class="c29 form-label"
             >
               Lease Notes
             </label>

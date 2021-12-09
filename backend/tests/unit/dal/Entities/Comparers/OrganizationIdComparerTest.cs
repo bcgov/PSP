@@ -19,12 +19,12 @@ namespace Pims.Dal.Test.Entities
         public static IEnumerable<object[]> Organizations =>
             new List<object[]>
             {
-                new object[] { new Organization(), new Organization(), true },
-                new object[] { new Organization("code", EntityHelper.CreateOrganizationType("TYPE"), EntityHelper.CreateOrganizationIdentifierType("ID"), EntityHelper.CreateAddress(1)), new Organization("code", EntityHelper.CreateOrganizationType("TYPE"), EntityHelper.CreateOrganizationIdentifierType("ID"), EntityHelper.CreateAddress(1)), true },
-                new object[] { new Organization() { Id = 1 }, new Organization() { Id = 1 }, true },
-                new object[] { new Organization() { Id = 1 }, new Organization() { Id = 2 }, false },
-                new object[] { null, new Organization(), false },
-                new object[] { new Organization(), null, false },
+                new object[] { new PimsOrganization(), new PimsOrganization(), true },
+                new object[] { new PimsOrganization("code", EntityHelper.CreateOrganizationType("TYPE"), EntityHelper.CreateOrganizationIdentifierType("ID"), EntityHelper.CreateAddress(1)), new PimsOrganization("code", EntityHelper.CreateOrganizationType("TYPE"), EntityHelper.CreateOrganizationIdentifierType("ID"), EntityHelper.CreateAddress(1)), true },
+                new object[] { new PimsOrganization() { Id = 1 }, new PimsOrganization() { Id = 1 }, true },
+                new object[] { new PimsOrganization() { Id = 1 }, new PimsOrganization() { Id = 2 }, false },
+                new object[] { null, new PimsOrganization(), false },
+                new object[] { new PimsOrganization(), null, false },
                 new object[] { null, null, false },
             };
         #endregion
@@ -32,7 +32,7 @@ namespace Pims.Dal.Test.Entities
         #region Tests
         [Theory]
         [MemberData(nameof(Organizations))]
-        public void OrganizationIdComparer_Equal(Organization val1, Organization val2, bool expectedResult)
+        public void OrganizationIdComparer_Equal(PimsOrganization val1, PimsOrganization val2, bool expectedResult)
         {
             // Arrange
             var comparer = new OrganizationIdComparer();

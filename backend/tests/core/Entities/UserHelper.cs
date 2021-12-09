@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -13,7 +14,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static Entity.User CreateUser(string username)
+        public static Entity.PimsUser CreateUser(string username)
         {
             return CreateUser(1, Guid.NewGuid(), username);
         }
@@ -30,20 +31,20 @@ namespace Pims.Core.Test
         /// <param name="role"></param>
         /// <param name="organization"></param>
         /// <returns></returns>
-        public static Entity.User CreateUser(long id, Guid keycloakUserId, string username, string firstName = "given name", string lastName = "surname", Entity.Role role = null, Entity.Organization organization = null)
+        public static Entity.PimsUser CreateUser(long id, Guid keycloakUserId, string username, string firstName = "given name", string lastName = "surname", Entity.PimsRole role = null, Entity.PimsOrganization organization = null, Entity.PimsAddress address = null)
         {
             organization ??= EntityHelper.CreateOrganization(id, "Organization 1");
             role ??= EntityHelper.CreateRole("Real Estate Manager");
-            var person = new Entity.Person(lastName, firstName);
-            var user = new Entity.User(keycloakUserId, username, person)
+            var person = new Entity.PimsPerson(lastName, firstName, address);
+            person.PimsContactMethods = new List<Entity.PimsContactMethod>();
+            var user = new Entity.PimsUser(keycloakUserId, username, person)
             {
                 Id = id,
-                IssueOn = DateTime.UtcNow,
-                RowVersion = 1
+                IssueDate = DateTime.UtcNow,
+                ConcurrencyControlNumber = 1
             };
-
-            user.Roles.Add(role);
-            user.Organizations.Add(organization);
+            user.PimsUserRoles.Add(new Entity.PimsUserRole() { Role = role, RoleId = role.Id, User = user, UserId = user.Id});
+            user.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { Organization = organization, OrganizationId = organization.Id, User = user, UserId = user.Id });
 
             return user;
         }

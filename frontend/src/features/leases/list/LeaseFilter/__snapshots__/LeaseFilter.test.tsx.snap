@@ -21,7 +21,7 @@ exports[`Lease Filter matches snapshot 1`] = `
   gap: 0.8rem;
 }
 
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -33,18 +33,45 @@ exports[`Lease Filter matches snapshot 1`] = `
   gap: 0.8rem;
 }
 
-.c1 .form-label {
+.c2 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
+.c1 {
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.5rem;
+}
+
+.c1 .form-check-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 .form-check-label p {
+  margin-left: 1rem;
+}
+
+.c3 {
+  -webkit-flex: 3 1 auto;
+  -ms-flex: 3 1 auto;
+  flex: 3 1 auto;
+  max-width: 31rem;
+}
+
 <form
-    class="c0"
+    class="c0 c1"
     novalidate=""
   >
-    <b>
-      Search for a Lease or License:
+    <b
+      class="pr-3 text-nowrap"
+    >
+      Search by:
     </b>
     <div
       class="input-group"
@@ -62,7 +89,7 @@ exports[`Lease Filter matches snapshot 1`] = `
           >
             <option
               class="option"
-              value="pidOrPin"
+              value="pinOrPid"
             >
               PID/PIN
             </option>
@@ -92,7 +119,7 @@ exports[`Lease Filter matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c1 input form-group"
+      class="c2 c3 ml-3 mr-5 input form-group"
     >
       <label
         class="form-label"
@@ -107,8 +134,43 @@ exports[`Lease Filter matches snapshot 1`] = `
         value=""
       />
     </div>
+    <span>
+      Program
+    </span>
+    <div
+      class="multiselect-container multiSelectContainer "
+      id="properties-selector"
+      style="width: auto; color: black; flex: 3 1 auto; max-width: 32em;"
+    >
+      <div
+        class="search-wrapper searchWrapper "
+        style="background: white; border: 1px solid #606060;"
+      >
+        <input
+          autocomplete="off"
+          class="searchBox"
+          id="properties-selector_input"
+          placeholder="Select Program(s)"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="optionListContainer displayNone"
+      >
+        <ul
+          class="optionContainer"
+        >
+          <span
+            class="notFound"
+          >
+            No Options Available
+          </span>
+        </ul>
+      </div>
+    </div>
     <button
-      class="Button Button--icon-only primary btn btn-primary"
+      class="Button Button--icon-only ml-5 btn btn-primary"
       data-testid="search"
       id="search-button"
       type="submit"

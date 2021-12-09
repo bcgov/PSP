@@ -35,7 +35,7 @@ namespace Pims.Api.Helpers
         {
             return new JsonSerializerOptions()
             {
-                IgnoreNullValues = !String.IsNullOrWhiteSpace(configuration["Serialization:Json:IgnoreNullValues"]) && Boolean.Parse(configuration["Serialization:Json:IgnoreNullValues"]),
+                DefaultIgnoreCondition = (!String.IsNullOrWhiteSpace(configuration["Serialization:Json:IgnoreNullValues"]) && Boolean.Parse(configuration["Serialization:Json:IgnoreNullValues"])) ? JsonIgnoreCondition.WhenWritingNull : JsonIgnoreCondition.Never,
                 PropertyNameCaseInsensitive = !String.IsNullOrWhiteSpace(configuration["Serialization:Json:PropertyNameCaseInsensitive"]) && Boolean.Parse(configuration["Serialization:Json:PropertyNameCaseInsensitive"]),
                 PropertyNamingPolicy = configuration["Serialization:Json:PropertyNamingPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null,
                 WriteIndented = !string.IsNullOrWhiteSpace(configuration["Serialization:Json:WriteIndented"]) && Boolean.Parse(configuration["Serialization:Json:WriteIndented"]),

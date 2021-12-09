@@ -93,7 +93,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
         public IActionResult AddClaim([FromBody] Model.ClaimModel model)
         {
-            var entity = _mapper.Map<Entity.Claim>(model); // TODO: Return bad request.
+            var entity = _mapper.Map<Entity.PimsClaim>(model); // TODO: Return bad request.
             _pimsService.Claim.Add(entity);
             var claim = _mapper.Map<Model.ClaimModel>(entity);
 
@@ -114,7 +114,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
         public IActionResult UpdateClaim(Guid key, [FromBody] Model.ClaimModel model)
         {
-            var entity = _mapper.Map<Claim>(model);
+            var entity = _mapper.Map<PimsClaim>(model);
             _pimsService.Claim.Update(entity);
 
             var claim = _mapper.Map<Model.ClaimModel>(entity);
@@ -135,7 +135,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
         public IActionResult DeleteClaim(Guid key, [FromBody] Model.ClaimModel model)
         {
-            var entity = _mapper.Map<Claim>(model);
+            var entity = _mapper.Map<PimsClaim>(model);
             _pimsService.Claim.Delete(entity);
 
             return new JsonResult(model);

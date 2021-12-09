@@ -68,7 +68,7 @@ export interface IProperty {
   evaluations?: IPropertyEvaluation[];
   surplusDeclaration?: IPropertySurplus;
 
-  createdOn?: Date | string | Moment;
+  appCreateTimestamp?: Date | string | Moment;
   updatedOn?: Date | string | Moment;
   updatedByEmail?: string;
   updatedByName?: string;

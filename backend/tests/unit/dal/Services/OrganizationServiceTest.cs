@@ -50,7 +50,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.Organization>>(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsOrganization>>(result);
             result.Items.Count.Should().Be(1);
         }
 
@@ -79,10 +79,10 @@ namespace Pims.Dal.Test.Services
 
             using var init = helper.InitializeDatabase(user);
             var organization1 = init.CreateOrganization(100, "TST");
-            organization1.ParentId = 0;
+            organization1.PrntOrganizationId = 0;
             organization1.IsDisabled = false;
             var organization2 = init.CreateOrganization(101, "TST2");
-            organization2.ParentId = 0;
+            organization2.PrntOrganizationId = 0;
             var organization3 = init.CreateOrganization(102, "TST3");
             organization3.IsDisabled = true;
             var organization4 = init.CreateOrganization(200, "TST4");
@@ -97,7 +97,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.Organization>>(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsOrganization>>(result);
             Assert.Equal(expectedCount, result.Items.Count);
         }
 
@@ -118,7 +118,7 @@ namespace Pims.Dal.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<IEnumerable<Entity.Organization>>(result);
+            Assert.IsAssignableFrom<IEnumerable<Entity.PimsOrganization>>(result);
             Assert.NotEmpty(result);
         }
 
@@ -141,7 +141,7 @@ namespace Pims.Dal.Test.Services
             var result = service.Get(19);
 
             // Assert
-            Assert.Equal("TST", result.Name);
+            Assert.Equal("TST", result.OrganizationName);
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace Pims.Dal.Test.Services
             var init = helper.InitializeDatabase(user);
             var service = helper.CreateService<OrganizationService>(user);
 
-            var orgType = init.OrganizationTypes.First();
+            var orgType = init.PimsOrganizationTypes.First();
             var organization = EntityHelper.CreateOrganization(19, "TST", orgType);
 
             // Act
@@ -231,7 +231,7 @@ namespace Pims.Dal.Test.Services
             init.AddAndSaveChanges(organization);
             var newName = "Update";
             var updatedOrganization = init.CreateOrganization(19, newName);
-            updatedOrganization.RowVersion = organization.RowVersion;
+            updatedOrganization.ConcurrencyControlNumber = organization.ConcurrencyControlNumber;
 
             var service = helper.CreateService<OrganizationService>(user);
 
@@ -239,7 +239,7 @@ namespace Pims.Dal.Test.Services
             service.Update(updatedOrganization);
 
             // Assert
-            organization.Name.Should().Be(newName);
+            organization.OrganizationName.Should().Be(newName);
 
         }
 
@@ -318,7 +318,7 @@ namespace Pims.Dal.Test.Services
             service.Delete(organization);
 
             // Assert
-            context.Organizations.FirstOrDefault().Should().BeNull();
+            context.PimsOrganizations.FirstOrDefault().Should().BeNull();
         }
         #endregion
         #endregion

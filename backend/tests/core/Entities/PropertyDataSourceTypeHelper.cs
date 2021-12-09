@@ -13,21 +13,21 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Entity.PropertyDataSourceType CreatePropertyDataSourceType(string id)
+        public static Entity.PimsPropertyDataSourceType CreatePropertyDataSourceType(string id)
         {
-            return new Entity.PropertyDataSourceType(id, "") { RowVersion = 1 };
+            return new Entity.PimsPropertyDataSourceType(id) { ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
         /// Creates a default list of PropertyDataSourceType.
         /// </summary>
         /// <returns></returns>
-        public static List<Entity.PropertyDataSourceType> CreateDefaultPropertyDataSourceTypes()
+        public static List<Entity.PimsPropertyDataSourceType> CreateDefaultPropertyDataSourceTypes()
         {
-            return new List<Entity.PropertyDataSourceType>()
+            return new List<Entity.PimsPropertyDataSourceType>()
             {
-                new Entity.PropertyDataSourceType("LIS", "") { RowVersion = 1 },
-                new Entity.PropertyDataSourceType("PAIMS", "") { RowVersion = 1 }
+                new Entity.PimsPropertyDataSourceType("LIS") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyDataSourceType("PAIMS") { ConcurrencyControlNumber = 1 }
             };
         }
     }

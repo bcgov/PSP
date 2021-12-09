@@ -30,8 +30,7 @@ namespace Pims.Api.Test.Controllers.Property
         {
             new object [] { new SModel.PropertyFilterModel() },
             new object [] { new SModel.PropertyFilterModel() { Address = "Address" } },
-            new object [] { new SModel.PropertyFilterModel() { PIN = 999999 } },
-            new object [] { new SModel.PropertyFilterModel() { PID = "foobar" } },
+            new object [] { new SModel.PropertyFilterModel() { PinOrPid = "999999" } },
         };
 
         public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
@@ -59,7 +58,7 @@ namespace Pims.Api.Test.Controllers.Property
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.Property>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
 
             service.Setup(m => m.Property.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
@@ -89,7 +88,7 @@ namespace Pims.Api.Test.Controllers.Property
 
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
-            var page = new Paged<Entity.Property>(properties);
+            var page = new Paged<Entity.PimsProperty>(properties);
 
             service.Setup(m => m.Property.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 

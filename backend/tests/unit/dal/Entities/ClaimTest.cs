@@ -19,11 +19,11 @@ namespace Pims.Dal.Test.Entities
         {
             // Arrange
             // Act
-            var claim = new Claim();
+            var claim = new PimsClaim();
 
             // Assert
             claim.Name.Should().BeNull();
-            claim.Roles.Should().BeEmpty();
+            claim.GetRoles().Should().BeEmpty();
         }
 
         [Fact]
@@ -34,13 +34,13 @@ namespace Pims.Dal.Test.Entities
             var name = "name";
 
             // Act
-            var claim = new Claim(uid, name);
+            var claim = new PimsClaim(uid, name);
 
             // Assert
-            claim.Id.Should().Be(0);
-            claim.Key.Should().Be(uid);
+            claim.ClaimId.Should().Be(0);
+            claim.ClaimUid.Should().Be(uid);
             claim.Name.Should().Be(name);
-            claim.Roles.Should().BeEmpty();
+            claim.GetRoles().Should().BeEmpty();
         }
         #endregion
     }

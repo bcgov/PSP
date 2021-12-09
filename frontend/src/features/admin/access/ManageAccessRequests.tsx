@@ -55,7 +55,7 @@ const ManageAccessRequests = () => {
       ({
         id: ar.id as number,
         userId: ar.user.id as number,
-        businessIdentifier: ar.user.businessIdentifier as string,
+        businessIdentifierValue: ar.user.businessIdentifierValue as string,
         firstName: ar.user.firstName as string,
         surname: ar.user.surname as string,
         email: ar.user.email as string,

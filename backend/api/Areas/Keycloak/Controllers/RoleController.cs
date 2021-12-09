@@ -120,8 +120,8 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         [HasPermission(Permissions.AdminRoles)]
         public async Task<IActionResult> UpdateRoleAsync(Guid key, [FromBody] Model.Update.RoleModel model)
         {
-            var role = _mapper.Map<Entity.Role>(model);
-            role.Key = key;
+            var role = _mapper.Map<Entity.PimsRole>(model);
+            role.RoleUid = key;
             await _keycloakService.UpdateRoleAsync(role);
             var result = _mapper.Map<Model.RoleModel>(role);
 

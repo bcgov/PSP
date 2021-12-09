@@ -18,10 +18,10 @@ namespace Pims.Core.Test
         /// <param name="code"></param>
         /// <param name="country"></param>
         /// <returns></returns>
-        public static Entity.Province CreateProvince(int id, string code, Entity.Country country = null)
+        public static Entity.PimsProvinceState CreateProvince(short id, string code, Entity.PimsCountry country = null)
         {
             country ??= EntityHelper.CreateCountry(1, "CAN");
-            return new Entity.Province(code, country) { Id = id, RowVersion = 1 };
+            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
         }
 
         /// <summary>
@@ -29,13 +29,13 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="country"></param>
         /// <returns></returns>
-        public static List<Entity.Province> CreateDefaultProvinces(Entity.Country country = null)
+        public static List<Entity.PimsProvinceState> CreateDefaultProvinces(Entity.PimsCountry country = null)
         {
             country ??= EntityHelper.CreateCountry(1, "CAN");
-            return new List<Entity.Province>()
+            return new List<Entity.PimsProvinceState>()
             {
-                new Entity.Province("ON", country) { Id = 1, RowVersion = 1 },
-                new Entity.Province("BC", country) { Id = 2,  RowVersion = 1 },
+                new Entity.PimsProvinceState("ON", country) { ProvinceStateId = 1, ConcurrencyControlNumber = 1 },
+                new Entity.PimsProvinceState("BC", country) { ProvinceStateId = 2,  ConcurrencyControlNumber = 1 },
             };
         }
 
@@ -47,10 +47,10 @@ namespace Pims.Core.Test
         /// <param name="code"></param>
         /// <param name="country"></param>
         /// <returns></returns>
-        public static Entity.Province CreateProvince(this PimsContext context, int id, string code, Entity.Country country = null)
+        public static Entity.PimsProvinceState CreateProvince(this PimsContext context, short id, string code, Entity.PimsCountry country = null)
         {
-            country ??= context.Countries.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a country.");
-            return new Entity.Province(code, country) { Id = id, RowVersion = 1 };
+            country ??= context.PimsCountries.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a country.");
+            return new Entity.PimsProvinceState(code, country) { ProvinceStateId = id, ConcurrencyControlNumber = 1 };
         }
 
     }

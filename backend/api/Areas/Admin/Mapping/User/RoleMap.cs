@@ -8,30 +8,32 @@ namespace Pims.Api.Areas.Admin.Mapping.User
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.Role, Model.RoleModel>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Entity.PimsRole, Model.RoleModel>()
+                .Map(dest => dest.Id, src => src.RoleId)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Entity.BaseEntity, Api.Models.BaseModel>();
+                .Inherits<Entity.IBaseEntity, Api.Models.BaseModel>();
 
-            config.NewConfig<Model.RoleModel, Entity.Role>()
-                .Map(dest => dest.Id, src => src.Id)
+            config.NewConfig<Model.RoleModel, Entity.PimsRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
                 .Map(dest => dest.KeycloakGroupId, src => src.KeycloakGroupId)
-                .Map(dest => dest.Key, src => src.KeycloakGroupId)
+                .Map(dest => dest.RoleUid, src => src.KeycloakGroupId)
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsPublic, src => src.IsPublic)
-                .Inherits<Api.Models.BaseModel, Entity.BaseEntity>();
+                .Inherits<Api.Models.BaseModel, Entity.IBaseEntity>();
 
-            config.NewConfig<Entity.UserRole, Model.RoleModel>()
+            config.NewConfig<Entity.PimsUserRole, Model.RoleModel>()
                 .Map(dest => dest.Id, src => src.RoleId)
                 .Map(dest => dest.KeycloakGroupId, src => src.Role.KeycloakGroupId)
                 .Map(dest => dest.Name, src => src.Role.Name);
 
-            config.NewConfig<Model.RoleModel, Entity.UserRole>()
-                .Map(dest => dest.RoleId, src => src.Id);
+            config.NewConfig<Model.RoleModel, Entity.PimsUserRole>()
+                .Map(dest => dest.RoleId, src => src.Id)
+                .Map(dest => dest.Role, src => src)
+                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion);
         }
     }
 }

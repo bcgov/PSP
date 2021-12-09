@@ -7,17 +7,16 @@ namespace Pims.Api.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.BaseAppEntity, Models.BaseAppModel>()
-                .Map(dest => dest.CreatedOn, src => src.CreatedOn)
-                .Map(dest => dest.UpdatedOn, src => src.UpdatedOn)
-                .Map(dest => dest.UpdatedByName, src => src.UpdatedByName ?? src.CreatedByName)
-                .Map(dest => dest.UpdatedByEmail, src => src.UpdatedByEmail ?? src.CreatedByEmail)
-                .Inherits<Entity.BaseEntity, Models.BaseModel>();
+            config.NewConfig<Entity.IDisableBaseAppEntity, Models.BaseAppModel>()
+                .Map(dest => dest.AppCreateTimestamp, src => src.AppCreateTimestamp)
+                .Map(dest => dest.UpdatedOn, src => src.AppLastUpdateTimestamp)
+                .Map(dest => dest.UpdatedByName, src => src.AppLastUpdateUserid)
+                .Inherits<Entity.IBaseEntity, Models.BaseModel>();
 
-            config.NewConfig<Models.BaseAppModel, Entity.BaseAppEntity>()
-                .Map(dest => dest.CreatedOn, src => src.CreatedOn)
-                .Map(dest => dest.UpdatedOn, src => src.UpdatedOn)
-                .Inherits<Models.BaseModel, Entity.BaseEntity>();
+            config.NewConfig<Models.BaseAppModel, Entity.IDisableBaseAppEntity>()
+                .Map(dest => dest.AppCreateTimestamp, src => src.AppCreateTimestamp)
+                .Map(dest => dest.AppLastUpdateTimestamp, src => src.UpdatedOn)
+                .Inherits<Models.BaseModel, Entity.IBaseEntity>();
         }
     }
 }

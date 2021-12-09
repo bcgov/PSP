@@ -150,10 +150,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions permission, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -171,10 +171,10 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="message"></param>
         /// <typeparam name="T"></typeparam>
         /// <exception type="ArgumentNullException">Entity argument cannot be null.</exception>
-        /// <exception type="RowVersionMissingException">Entity.RowVersion cannot be null.</exception>
+        /// <exception type="ConcurrencyControlNumberMissingException">Entity.ConcurrencyControlNumber cannot be null.</exception>
         /// <exception type="NotAuthorizedException">User must have specified 'role'.</exception>
         /// <returns></returns>
-        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null) where T : BaseEntity
+        public static T ThrowIfNotAllowedToEdit<T>(this ClaimsPrincipal user, string paramName, T entity, Permissions[] permission, string message = null) where T : class, IBaseEntity
         {
             entity.ThrowIfNull(paramName);
             user.ThrowIfNotAuthorized(permission, message);
@@ -189,16 +189,16 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static Organization GetOrganization(this ClaimsPrincipal user, PimsContext context)
+        public static PimsOrganization GetOrganization(this ClaimsPrincipal user, PimsContext context)
         {
             var organizationIds = user.GetOrganizations();
 
             if (organizationIds == null || !organizationIds.Any()) return null;
 
-            var organizations = context.Organizations.Where(a => organizationIds.Contains(a.Id)).OrderBy(a => a.ParentId);
+            var organizations = context.PimsOrganizations.Where(a => organizationIds.Contains(a.OrganizationId)).OrderBy(a => a.PrntOrganizationId);
 
             // If one of the organizations is a parent, return it.
-            var parentOrganization = organizations.FirstOrDefault(a => a.ParentId == null);
+            var parentOrganization = organizations.FirstOrDefault(a => a.PrntOrganizationId == null);
             if (parentOrganization != null)
                 return parentOrganization;
 

@@ -28,7 +28,7 @@ export const UsersFilterBar: React.FC<IProps> = ({
   return (
     <FilterBar<IUsersFilter> initialValues={value} onChange={onChange}>
       <Col className="bar-item">
-        <Input field="businessIdentifier" placeholder="IDIR/BCeID" />
+        <Input field="businessIdentifierValue" placeholder="IDIR/BCeID" />
       </Col>
       <Col className="bar-item">
         <Input field="firstName" placeholder="First name" />

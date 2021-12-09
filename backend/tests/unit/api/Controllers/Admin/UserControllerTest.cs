@@ -40,8 +40,8 @@ namespace PimsApi.Test.Admin.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var users = new Entity.User[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
-            var paged = new Entity.Models.Paged<Entity.User>(users);
+            var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
+            var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
             // Act
@@ -64,8 +64,8 @@ namespace PimsApi.Test.Admin.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var users = new Entity.User[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
-            var paged = new Entity.Models.Paged<Entity.User>(users);
+            var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
+            var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             var filter = new Entity.Models.UserFilter(1, 1, "organization", "username", "lastname", "firstname", "email", false, "role", null, "position");
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
@@ -91,8 +91,8 @@ namespace PimsApi.Test.Admin.Controllers
 
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
-            var users = new Entity.User[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
-            var paged = new Entity.Models.Paged<Entity.User>(users);
+            var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
+            var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             var filter = new Entity.Models.UserFilter(1, 1, "organization", "username", "lastname", "firstname", "email", false, "role", null, "position");
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
 
@@ -122,14 +122,14 @@ namespace PimsApi.Test.Admin.Controllers
             service.Setup(m => m.User.Get(It.IsAny<Guid>())).Returns(user);
 
             // Act
-            var result = controller.GetUser(user.KeycloakUserId.Value);
+            var result = controller.GetUser(user.GuidIdentifierValue.Value);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.UserModel>(user), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.User.Get(user.KeycloakUserId.Value), Times.Once());
+            service.Verify(m => m.User.Get(user.GuidIdentifierValue.Value), Times.Once());
         }
         #endregion
 
@@ -144,8 +144,8 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
-            var organization = user.Organizations.First();
-            service.Setup(m => m.User.Add(It.IsAny<Entity.User>())).Callback<Entity.User>(u => { });
+            var organization = user.GetOrganizations().First();
+            service.Setup(m => m.User.Add(It.IsAny<Entity.PimsUser>())).Callback<Entity.PimsUser>(u => { });
             var model = mapper.Map<Model.UserModel>(user);
             model.Email = "test@test.com";
 
@@ -159,9 +159,9 @@ namespace PimsApi.Test.Admin.Controllers
             // actualResult.Email.Should().Be(user.Email);
             actualResult.FirstName.Should().Be(user.Person.FirstName);
             actualResult.Surname.Should().Be(user.Person.Surname);
-            actualResult.RowVersion.Should().Be(user.RowVersion);
-            actualResult.BusinessIdentifier.Should().Be(user.BusinessIdentifier);
-            service.Verify(m => m.User.Add(It.IsAny<Entity.User>()), Times.Once());
+            actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
+            actualResult.BusinessIdentifier.Should().Be(user.BusinessIdentifierValue);
+            service.Verify(m => m.User.Add(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
         #endregion
 
@@ -176,12 +176,12 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
-            service.Setup(m => m.User.Update(It.IsAny<Entity.User>()));
+            service.Setup(m => m.User.Update(It.IsAny<Entity.PimsUser>()));
             var model = mapper.Map<Model.UserModel>(user);
             model.Email = "test@test.com";
 
             // Act
-            var result = controller.UpdateUser(user.KeycloakUserId.Value, model);
+            var result = controller.UpdateUser(user.GuidIdentifierValue.Value, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
@@ -190,9 +190,9 @@ namespace PimsApi.Test.Admin.Controllers
             // actualResult.Email.Should().Be(user.Email);
             actualResult.FirstName.Should().Be(user.Person.FirstName);
             actualResult.Surname.Should().Be(user.Person.Surname);
-            actualResult.RowVersion.Should().Be(user.RowVersion);
-            actualResult.BusinessIdentifier.Should().Be(user.BusinessIdentifier);
-            service.Verify(m => m.User.Update(It.IsAny<Entity.User>()), Times.Once());
+            actualResult.RowVersion.Should().Be(user.ConcurrencyControlNumber);
+            actualResult.BusinessIdentifier.Should().Be(user.BusinessIdentifierValue);
+            service.Verify(m => m.User.Update(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
         #endregion
 
@@ -207,19 +207,19 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var user = EntityHelper.CreateUser("user1");
-            service.Setup(m => m.User.Delete(It.IsAny<Entity.User>()));
+            service.Setup(m => m.User.Delete(It.IsAny<Entity.PimsUser>()));
             var model = mapper.Map<Model.UserModel>(user);
             model.Email = "test@.test.com";
 
             // Act
-            var result = controller.DeleteUser(user.KeycloakUserId.Value, model);
+            var result = controller.DeleteUser(user.GuidIdentifierValue.Value, model);
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.UserModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.User.Delete(It.IsAny<Entity.User>()), Times.Once());
+            service.Verify(m => m.User.Delete(It.IsAny<Entity.PimsUser>()), Times.Once());
         }
         #endregion
         #endregion

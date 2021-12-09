@@ -1,5 +1,3 @@
-import { PAYMENT_RECEIVABLE_CODE_SET_NAME } from 'constants/API';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { ILease } from 'interfaces';
 import * as React from 'react';
 import { prettyFormatDate } from 'utils';
@@ -17,10 +15,6 @@ interface ILeaseHeaderProps {
  * @param {ILeaseHeaderProps} param0
  */
 export const LeaseHeader: React.FunctionComponent<ILeaseHeaderProps> = ({ lease }) => {
-  const { getCodeById } = useLookupCodeHelpers();
-  const paymentReceivableType = lease?.paymentReceivableTypeId
-    ? getCodeById(PAYMENT_RECEIVABLE_CODE_SET_NAME, lease?.paymentReceivableTypeId)
-    : '';
   return (
     <Styled.LeaseHeader className="lease-header">
       <Styled.LeaseH1>Lease / License</Styled.LeaseH1>
@@ -30,7 +24,7 @@ export const LeaseHeader: React.FunctionComponent<ILeaseHeaderProps> = ({ lease 
         <b>{prettyFormatDate(lease?.expiryDate)}</b>
       </Styled.LeaseHeaderText>
       <Styled.LeaseHeaderText>
-        <b>{paymentReceivableType}</b>
+        <b>{lease?.paymentReceivableType?.description}</b>
       </Styled.LeaseHeaderText>
       <Styled.LeaseHeaderRight>
         <StackedPidTenantFields lease={lease} />

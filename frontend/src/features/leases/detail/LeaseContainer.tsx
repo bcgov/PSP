@@ -15,6 +15,7 @@ import {
   LeasePageForm,
   useLeaseDetail,
 } from '..';
+import Deposits from './LeasePages/deposits/Deposits';
 import Details from './LeasePages/details/Details';
 import Improvements from './LeasePages/improvements/Improvements';
 import Insurance from './LeasePages/insurance/Insurance';
@@ -55,7 +56,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
   [LeasePageNames.IMPROVEMENTS, { component: <Improvements />, title: 'Improvements' }],
   [LeasePageNames.INSURANCE, { component: <Insurance />, title: 'Insurance' }],
-  [LeasePageNames.DEPOSIT, { component: <></>, title: 'Deposit' }],
+  [LeasePageNames.DEPOSIT, { component: <Deposits />, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
   [LeasePageNames.SURPLUS, { component: <Surplus />, title: 'Surplus Declaration' }],
 ]);

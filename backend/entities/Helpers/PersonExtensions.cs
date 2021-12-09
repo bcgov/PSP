@@ -14,9 +14,9 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetWorkEmail(this Person person)
+        public static string GetWorkEmail(this PimsPerson person)
         {
-            return person?.ContactMethods.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail)?.Value;
+            return person?.PimsContactMethods?.OrderByDescending(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -25,10 +25,10 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetEmail(this Person person)
+        public static string GetEmail(this PimsPerson person)
         {
-            return person?.ContactMethods.OrderBy(cm => cm.ContactMethodTypeId == "WORKEMAIL" ? 0 : 1).ThenByDescending(cm => cm.IsPreferredMethod)
-                .FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.WorkEmail || cm.ContactMethodTypeId == ContactMethodTypes.PerseEmail)?.Value;
+            return person?.PimsContactMethods.OrderBy(cm => cm.ContactMethodTypeCode == "WORKEMAIL" ? 0 : 1).ThenByDescending(cm => cm.IsPreferredMethod)
+                .FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.WorkEmail || cm.ContactMethodTypeCode == ContactMethodTypes.PerseEmail)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetLandlinePhoneNumber(this Person person)
+        public static string GetLandlinePhoneNumber(this PimsPerson person)
         {
-            return person?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.PersPhone || cm.ContactMethodTypeId == ContactMethodTypes.WorkPhone)?.Value;
+            return person?.PimsContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.PersPhone || cm.ContactMethodTypeCode == ContactMethodTypes.WorkPhone)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetMobilePhoneNumber(this Person person)
+        public static string GetMobilePhoneNumber(this PimsPerson person)
         {
-            return person?.ContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeId == ContactMethodTypes.PerseMobil || cm.ContactMethodTypeId == ContactMethodTypes.WorkMobil)?.Value;
+            return person?.PimsContactMethods.OrderBy(cm => cm.IsPreferredMethod).FirstOrDefault(cm => cm.ContactMethodTypeCode == ContactMethodTypes.PerseMobil || cm.ContactMethodTypeCode == ContactMethodTypes.WorkMobil)?.ContactMethodValue;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static string GetFullName(this Person person)
+        public static string GetFullName(this PimsPerson person)
         {
             string[] names = { person.FirstName, person.MiddleNames, person.Surname };
             return String.Join(" ", names.Where(n => n != null && n.Trim() != String.Empty));
@@ -70,9 +70,20 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public static Address GetMailingAddress(this Person person)
+        public static PimsAddress GetMailingAddress(this PimsPerson person)
         {
-            return person?.Address?.AddressTypeId == "MAILADDR" ? person.Address : null;
+            return person?.PimsPersonAddresses.FirstOrDefault(a => a?.AddressUsageTypeCode == "MAILADDR")?.Address;
+        }
+
+        /// <summary>
+        /// DEPRECATED, either get an address by type, or get all addresses for a person.
+        /// Get a single address from this user's address list.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public static PimsAddress GetSingleAddress(this PimsPerson person)
+        {
+            return person?.PimsPersonAddresses.FirstOrDefault()?.Address;
         }
     }
 }

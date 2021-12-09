@@ -107,13 +107,14 @@ export const FormGrid = styled.div`
     margin: 0 0.5rem 0 0;
   }
 
-  & > .input {
+  & > .input,
+  & > .notes {
     grid-column: controls;
     grid-row: auto;
     border-left: 1px solid #666666;
   }
 
-  & .form-control:not(.description) {
+  & .form-control:not(.description, .notes) {
     font-weight: 700;
   }
 
@@ -123,7 +124,7 @@ export const FormGrid = styled.div`
     grid-row: auto;
   }
 
-  & > .textarea,
+  & > .textarea :not(.notes),
   & > h3 {
     grid-column: span 2;
     border-left: none;
@@ -177,7 +178,6 @@ export const TermsTable = styled(Table)`
       background-repeat: no-repeat;
       background-position: right;
       width: 8rem;
-      height: 3.1rem;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -197,4 +197,10 @@ export const NestedInlineField = styled(InlineInput)`
   .form-label {
     min-width: 7rem;
   }
+`;
+
+export const SectiontHeader = styled(FormDescriptionLabel)`
+  color: ${props => props.theme.css.primaryColor};
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 `;

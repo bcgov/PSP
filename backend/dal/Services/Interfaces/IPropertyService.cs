@@ -7,12 +7,12 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IPropertyService interface, provides functions to interact with properties within the datasource.
     /// </summary>
-    public interface IPropertyService : IService<Property>
+    public interface IPropertyService : IService<PimsProperty>
     {
         int Count();
-        IEnumerable<Property> Get(PropertyFilter filter);
-        Paged<Property> GetPage(PropertyFilter filter);
-        Property Get(int id);
-        Property GetForPID(string pid);
+        IEnumerable<PimsProperty> Get(PropertyFilter filter);
+        Paged<PimsProperty> GetPage(PropertyFilter filter);
+        PimsProperty Get(int id);
+        PimsProperty GetForPID(string pid);
     }
 }

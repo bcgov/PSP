@@ -1,6 +1,6 @@
-using Pims.Core.Extensions;
 using System;
 using System.Collections.Generic;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The unique identifier for titled property, either pid or pin.
         /// </summary>
-        public string PidOrPin { get; set; }
+        public string PinOrPid { get; set; }
 
         /// <summary>
         /// get/set - The value of the tenant name.
@@ -26,6 +26,12 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The Program(s) to filter by.
+        /// </summary>
+        /// <value></value>
+        public IList<string> Programs { get; set; } = new List<string>();
         #endregion
 
         #region Constructors
@@ -39,14 +45,14 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         /// <param name="lFileNo"></param>
         /// <param name="tenantName"></param>
-        /// <param name="pidOrPin"></param>
+        /// <param name="pinOrPid"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public LeaseFilter(string lFileNo, string tenantName, string pidOrPin, string[] sort)
+        public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string[] sort)
         {
             this.LFileNo = lFileNo;
             this.TenantName = tenantName;
-            this.PidOrPin = pidOrPin;
+            this.PinOrPid = pinOrPid;
             this.Sort = sort;
         }
 
@@ -62,7 +68,7 @@ namespace Pims.Dal.Entities.Models
 
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
-            this.PidOrPin = filter.GetStringValue(nameof(this.PidOrPin));
+            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
         }
         #endregion
 
@@ -74,7 +80,7 @@ namespace Pims.Dal.Entities.Models
         public override bool IsValid()
         {
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.PidOrPin)
+                || !String.IsNullOrWhiteSpace(this.PinOrPid)
                 || !String.IsNullOrWhiteSpace(this.TenantName)
                 || !String.IsNullOrWhiteSpace(this.LFileNo);
         }
