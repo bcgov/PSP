@@ -47,7 +47,7 @@ describe('Tenant component', () => {
       lease: { ...defaultFormLease, tenantNotes: ['note one', 'note two'] },
     });
     const { getAllByText } = component;
-    const personTenant = getAllByText('Notes');
+    const personTenant = getAllByText('Notes:');
 
     expect(personTenant).toHaveLength(2);
   });
