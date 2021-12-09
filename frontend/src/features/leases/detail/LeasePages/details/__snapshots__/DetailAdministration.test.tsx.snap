@@ -34,13 +34,14 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   margin: 0 0.5rem 0 0;
 }
 
-.c1 > .input {
+.c1 > .input,
+.c1 > .notes {
   grid-column: controls;
   grid-row: auto;
   border-left: 1px solid #666666;
 }
 
-.c1 .form-control:not(.description) {
+.c1 .form-control:not(.description,.notes) {
   font-weight: 700;
 }
 
@@ -50,7 +51,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
   grid-row: auto;
 }
 
-.c1 > .textarea,
+.c1 > .textarea :not(.notes),
 .c1 > h3 {
   grid-column: span 2;
   border-left: none;
@@ -333,13 +334,14 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c1 > .input {
+.c1 > .input,
+.c1 > .notes {
   grid-column: controls;
   grid-row: auto;
   border-left: 1px solid #666666;
 }
 
-.c1 .form-control:not(.description) {
+.c1 .form-control:not(.description,.notes) {
   font-weight: 700;
 }
 
@@ -349,7 +351,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
   grid-row: auto;
 }
 
-.c1 > .textarea,
+.c1 > .textarea :not(.notes),
 .c1 > h3 {
   grid-column: span 2;
   border-left: none;

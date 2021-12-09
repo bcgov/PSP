@@ -198,13 +198,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c26 > .input {
+.c26 > .input,
+.c26 > .notes {
   grid-column: controls;
   grid-row: auto;
   border-left: 1px solid #666666;
 }
 
-.c26 .form-control:not(.description) {
+.c26 .form-control:not(.description,.notes) {
   font-weight: 700;
 }
 
@@ -214,7 +215,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c26 > .textarea,
+.c26 > .textarea :not(.notes),
 .c26 > h3 {
   grid-column: span 2;
   border-left: none;

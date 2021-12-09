@@ -67,13 +67,14 @@ exports[`Tenant component renders as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c3 > .input {
+.c3 > .input,
+.c3 > .notes {
   grid-column: controls;
   grid-row: auto;
   border-left: 1px solid #666666;
 }
 
-.c3 .form-control:not(.description) {
+.c3 .form-control:not(.description,.notes) {
   font-weight: 700;
 }
 
@@ -83,7 +84,7 @@ exports[`Tenant component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c3 > .textarea,
+.c3 > .textarea :not(.notes),
 .c3 > h3 {
   grid-column: span 2;
   border-left: none;
