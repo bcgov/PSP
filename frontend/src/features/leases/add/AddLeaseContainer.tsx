@@ -2,12 +2,11 @@ import GenericModal from 'components/common/GenericModal';
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
 import { AddLeaseLayout, LeaseBreadCrumb, LeaseHeader, LeaseIndex } from 'features/leases';
-import { FormikProps, getIn } from 'formik';
-import { IAddFormLease, IFormLease, ILease } from 'interfaces';
+import { FormikProps } from 'formik';
+import { IAddFormLease, ILease } from 'interfaces';
 import * as React from 'react';
 import { useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
 
 import { LeasePageNames, leasePages } from '../detail/LeaseContainer';
 import { useAddLease } from '../hooks/useAddLease';

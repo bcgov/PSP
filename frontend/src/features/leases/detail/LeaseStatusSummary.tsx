@@ -1,6 +1,5 @@
 import clsx from 'classnames';
 import { ILease } from 'interfaces';
-import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
 

@@ -11,7 +11,6 @@ import { IAddFormLease } from 'interfaces';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { couldStartTrivia } from 'typescript';
 
 import { LeaseH2 } from '../detail/styles';
 import * as Styled from './styles';

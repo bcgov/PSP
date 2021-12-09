@@ -1,6 +1,6 @@
 import { Button } from 'components/common/form';
 import { FormikProps } from 'formik';
-import { IAddFormLease, ILease } from 'interfaces';
+import { IAddFormLease } from 'interfaces';
 import * as React from 'react';
 
 import * as Styled from './styles';
