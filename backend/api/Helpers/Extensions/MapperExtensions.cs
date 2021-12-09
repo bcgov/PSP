@@ -1,4 +1,3 @@
-using Pims.Api.Areas.Lease.Models.Lease;
 using Pims.Api.Models;
 using Pims.Dal.Entities;
 
