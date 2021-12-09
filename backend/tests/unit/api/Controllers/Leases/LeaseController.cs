@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Controllers.Lease
         /// Make a successful request.
         /// </summary>
         [Fact]
-        public void GetProperties_All_Success()
+        public void GetLeases_All_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -35,7 +35,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
 
-            service.Setup(m => m.Lease.Get(It.IsAny<int>())).Returns(lease);
+            service.Setup(m => m.Lease.Get(It.IsAny<long>())).Returns(lease);
 
             // Act
             var result = controller.GetLease(1);
@@ -45,7 +45,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Lease.Get(It.IsAny<int>()), Times.Once());
+            service.Verify(m => m.Lease.Get(It.IsAny<long>()), Times.Once());
         }
         #endregion
         #endregion

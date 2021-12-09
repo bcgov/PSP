@@ -23,8 +23,8 @@ export const LeaseIndex: React.FunctionComponent<ILeaseAndLicenseIndexProps> = (
       {Array.from(leasePages.entries()).map(([pageName, page]) => (
         <StyledLeaseIndexLink
           key={`lease-${pageName}`}
-          to={`/lease/${leaseId}/?leasePageName=${pageName}`}
-          className={clsx({ active: currentPageName === pageName })}
+          to={!!leaseId ? `/lease/${leaseId}/?leasePageName=${pageName}` : '#'}
+          className={clsx({ active: currentPageName === pageName, disabled: !leaseId })}
         >
           {page.title}
         </StyledLeaseIndexLink>
@@ -38,6 +38,10 @@ const StyledLeaseIndexLink = styled(Link)`
   &:hover {
     text-decoration: none;
     color: ${props => props.theme.css.primaryColor};
+  }
+  &.disabled {
+    pointer-events: none;
+    color: ${props => props.theme.css.disabledColor};
   }
   &.active {
     font-weight: 700;

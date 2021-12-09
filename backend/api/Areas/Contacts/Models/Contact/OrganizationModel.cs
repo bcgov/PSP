@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Api.Areas.Contact.Models.Contact
 {
     /// <summary>
@@ -7,39 +9,49 @@ namespace Pims.Api.Areas.Contact.Models.Contact
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key to identify the organization.
+        /// get/set - The organization's id.
         /// </summary>
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The organization's company name.
+        /// get/set - The organization's disabled status flag.
+        /// </summary>
+        public bool IsDisabled { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// get/set - The organization's primary contact name.
+        /// get/set - The organization's alias name.
         /// </summary>
-        public string ContactName { get; set; }
+        public string Alias { get; set; }
 
         /// <summary>
-        /// get/set - The organizations's email.
+        /// get/set - The organization's incorporation number.
         /// </summary>
-        public string Email { get; set; }
+        public string IncorporationNumber { get; set; }
 
         /// <summary>
-        /// get/set - The organizations's mobile phone number.
+        /// get/set - The organization's persons.
         /// </summary>
-        public string Mobile { get; set; }
+        public IList<PersonModel> Persons { get; set; }
 
         /// <summary>
-        /// get/set - The organizations's landline phone number.
+        /// get/set - The organization's addresses.
         /// </summary>
-        public string Landline { get; set; }
+        public IList<AddressModel> Addresses { get; set; }
 
         /// <summary>
-        /// get/set - The person's address.
+        /// get/set - The organization's contact methods.
         /// </summary>
-        public AddressModel Address { get; set; }
+        public IList<ContactMethodModel> ContactMethods { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's Comment.
+        /// </summary>
+        public string Comment { get; set; }
         #endregion
     }
 }

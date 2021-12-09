@@ -113,20 +113,44 @@ namespace Pims.Dal.Services
             return this.Context.PimsRoles.AsNoTracking().OrderBy(a => a.Name).ToArray();
         }
 
-        /// <summary>
-        /// Get all roles sorted by code Id.
-        /// </summary>
         public IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes()
         {
             return this.Context.PimsLeasePayRvblTypes.AsNoTracking().OrderBy(a => a.LeasePayRvblTypeCode).ToArray();
         }
 
-        /// <summary>
-        /// Get all lease programs by id.
-        /// </summary>
         public IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes()
         {
             return this.Context.PimsLeaseProgramTypes.AsNoTracking().OrderBy(a => a.LeaseProgramTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeaseStatusType> GetLeaseStatusTypes()
+        {
+            return this.Context.PimsLeaseStatusTypes.AsNoTracking().OrderBy(a => a.LeaseStatusTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeaseLicenseType> GetLeaseTypes()
+        {
+            return this.Context.PimsLeaseLicenseTypes.AsNoTracking().OrderBy(a => a.LeaseLicenseTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeaseCategoryType> GetLeaseCategoryTypes()
+        {
+            return this.Context.PimsLeaseCategoryTypes.AsNoTracking().OrderBy(a => a.LeaseCategoryTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeasePurposeType> GetLeasePurposeTypes()
+        {
+            return this.Context.PimsLeasePurposeTypes.AsNoTracking().OrderBy(a => a.LeasePurposeTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes()
+        {
+            return this.Context.PimsLeaseResponsibilityTypes.AsNoTracking().OrderBy(a => a.LeaseResponsibilityTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes()
+        {
+            return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
         }
         #endregion
     }

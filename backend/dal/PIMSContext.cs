@@ -2554,7 +2554,6 @@ namespace Pims.Dal
                     .HasComment("User-specified lease category description not included in standard set of lease purposes");
 
                 entity.Property(e => e.LeaseCategoryTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
 
@@ -2563,7 +2562,6 @@ namespace Pims.Dal
                     .HasComment("Manually etered lease description, not the legal description");
 
                 entity.Property(e => e.LeaseInitiatorTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_INITIATOR_TYPE_CODE");
 
@@ -2582,7 +2580,6 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
 
                 entity.Property(e => e.LeasePmtFreqTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE");
 
@@ -2602,7 +2599,6 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_PURPOSE_TYPE_CODE");
 
                 entity.Property(e => e.LeaseResponsibilityTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
 
@@ -2667,13 +2663,11 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseCategoryTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseCategoryTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSCATT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseInitiatorTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation)
@@ -2691,7 +2685,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeasePmtFreqTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeasePmtFreqTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseProgramTypeCodeNavigation)
@@ -2709,7 +2702,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseResponsibilityTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseResponsibilityTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LRESPT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseStatusTypeCodeNavigation)
@@ -2881,14 +2873,12 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_CATEGORY_OTHER_DESC");
 
                 entity.Property(e => e.LeaseCategoryTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
 
                 entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
 
                 entity.Property(e => e.LeaseInitiatorTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_INITIATOR_TYPE_CODE");
 
@@ -2903,7 +2893,6 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
 
                 entity.Property(e => e.LeasePmtFreqTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE");
 
@@ -2922,7 +2911,6 @@ namespace Pims.Dal
                     .HasColumnName("LEASE_PURPOSE_TYPE_CODE");
 
                 entity.Property(e => e.LeaseResponsibilityTypeCode)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
 

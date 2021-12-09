@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 
@@ -57,7 +59,7 @@ namespace Pims.Dal.Services
             return leases;
         }
 
-        public PimsLease Get(int id)
+        public PimsLease Get(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsLeases.Include(l => l.PimsPropertyLeases)
@@ -82,6 +84,7 @@ namespace Pims.Dal.Services
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
                 .Include(l => l.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseCategoryTypeCodeNavigation)
+                .Include(l => l.LeaseStatusTypeCodeNavigation)
 
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
@@ -165,6 +168,61 @@ namespace Pims.Dal.Services
                 .ToArray();
 
             return new Paged<PimsLease>(items, filter.Page, filter.Quantity, query.Count());
+        }
+
+
+        /// <summary>
+        /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
+        /// Do not attempt to update any preexisiting properties, simply refer to them by id.
+        ///
+        /// By default, do not allow a property with existing leases to be associated unless the userOverride flag is true.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <param name="userOverride"></param>
+        /// <returns></returns>
+        private PimsLease AssociatePropertyLeases(PimsLease lease, bool userOverride = false)
+        {
+            lease.PimsPropertyLeases.ForEach(propertyLease => {
+                PimsProperty property = this.Context.PimsProperties
+                    .Include(p => p.PimsPropertyLeases)
+                    .ThenInclude(l => l.Lease)
+                    .FirstOrDefault(p => (propertyLease.Property != null && p.Pid == propertyLease.Property.Pid) ||
+                        (propertyLease.Property.Pin != null && p.Pin == propertyLease.Property.Pin));
+                if (property?.PropertyId == null)
+                {
+                    throw new InvalidOperationException($"Property with PID {propertyLease?.Property?.Pid.ToString() ?? ""} does not exist");
+                }
+                if (property?.PimsPropertyLeases.Any() == true && !userOverride)
+                {
+                    var genericOverrideErrorMsg = $"is attached to L-File # {property.PimsPropertyLeases.FirstOrDefault().Lease.LFileNo}";
+                    if(propertyLease?.Property?.Pin != null)
+                    {
+                        throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? ""} {genericOverrideErrorMsg}");
+                    }
+                    throw new UserOverrideException($"PID {propertyLease?.Property?.Pid.ToString() ?? ""} {genericOverrideErrorMsg}");
+                }
+                propertyLease.Property = null; // Remove the property to prevent inadvertent updates.
+                propertyLease.PropertyId = property.PropertyId;
+            });
+            return this.Context.GenerateLFileNo(lease);
+        }
+
+        /// <summary>
+        /// Add the passed lease to the database assuming the user has the require claims.
+        /// </summary>
+        /// <param name="lease"></param>
+        /// <param name="userOverride"></param>
+        /// <returns></returns>
+        public PimsLease Add(PimsLease lease, bool userOverride = false)
+        {
+            if (lease == null) throw new ArgumentNullException(nameof(lease), "lease cannot be null.");
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
+
+            lease = AssociatePropertyLeases(lease, userOverride);
+
+            this.Context.PimsLeases.Add(lease);
+            this.Context.CommitTransaction();
+            return Get(lease.LeaseId);
         }
         #endregion
     }

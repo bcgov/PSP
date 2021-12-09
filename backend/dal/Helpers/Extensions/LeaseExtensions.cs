@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -31,7 +33,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
-                var pinOrPidValue = filter.PinOrPid.Replace("-", "").Trim();
+                var pinOrPidValue = filter.PinOrPid.Replace("-", "").Trim().TrimStart('0');
                 query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null && (EF.Functions.Like(pl.Property.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(pl.Property.Pin.ToString(), $"%{pinOrPidValue}%"))));
             }
 
@@ -81,6 +83,33 @@ namespace Pims.Dal.Helpers.Extensions
             query = query.GenerateCommonLeaseQuery(filter);
 
             return query;
+        }
+
+        /// <summary>
+        /// Get the next available id from the PIMS_LEASE_ID_SEQ
+        /// </summary>
+        /// <param name="context"></param>
+        public static Int64 GetNextLeaseSequenceValue(this PimsContext context)
+        {
+            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
+            {
+                Direction = System.Data.ParameterDirection.Output
+            };
+            context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_LEASE_ID_SEQ;", result);
+
+            return (Int64)result.Value;
+        }
+
+        /// <summary>
+        /// Generate a new L File in format L-XXX-YYY using the lease id. Add the lease id and lfileno to the passed lease.
+        /// </summary>
+        /// <param name="context"></param>
+        public static PimsLease GenerateLFileNo(this PimsContext context, PimsLease lease)
+        {
+            Int64 leaseId = GetNextLeaseSequenceValue(context);
+            lease.LeaseId = leaseId;
+            lease.LFileNo = $"L-{lease.LeaseId.ToString().PadLeft(6, '0').Insert(3, "-")}";
+            return lease;
         }
 
         /// <summary>

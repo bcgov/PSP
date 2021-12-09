@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { ContactBreadcrumb } from '../..';
 import * as Styled from '../../styles';
+import OrganizationView from './Organization';
 import PersonView from './Person';
 
 interface IContactViewContainerProps {
@@ -12,12 +13,12 @@ interface IContactViewContainerProps {
 
 const ContactViewContainer: React.FunctionComponent<IContactViewContainerProps> = props => {
   const { contact } = useContactDetail(props?.match?.params?.id);
-  console.log(props?.match?.params);
   return (
     <ContactLayout>
       <ContactBreadcrumb />
       <Styled.H1>Contact</Styled.H1>
       {contact?.person && <PersonView person={contact?.person} />}
+      {contact?.organization && <OrganizationView organization={contact?.organization} />}
     </ContactLayout>
   );
 };
