@@ -75,3 +75,15 @@ export interface IProperty {
   rowVersion?: number;
   leases?: ILease[];
 }
+
+export interface IFormProperty
+  extends ExtendOverride<
+    IProperty,
+    {
+      areaUnitType?: string;
+      address?: IAddress;
+      propertyTypeId?: PropertyTypes;
+      landArea?: number;
+      landLegalDescription?: string;
+    }
+  > {}

@@ -45,39 +45,39 @@ let history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { id: 1, name: 'organizationVal', isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
-    { id: 2, name: 'disabledOrganization', isDisabled: true, type: API.ORGANIZATION_CODE_SET_NAME },
-    { id: 1, name: 'roleVal', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { id: 2, name: 'disabledRole', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { id: 1, name: 'organizationVal', isDisabled: false, type: API.ORGANIZATION_TYPES },
+    { id: 2, name: 'disabledOrganization', isDisabled: true, type: API.ORGANIZATION_TYPES },
+    { id: 1, name: 'roleVal', isDisabled: false, type: API.ROLE_TYPES },
+    { id: 2, name: 'disabledRole', isDisabled: true, type: API.ROLE_TYPES },
     {
       id: 1,
       name: 'Core Operational',
       isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
+      type: API.PROPERTY_CLASSIFICATION_TYPES,
     },
     {
       id: 2,
       name: 'Core Strategic',
       isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
+      type: API.PROPERTY_CLASSIFICATION_TYPES,
     },
     {
       id: 5,
       name: 'Disposed',
       isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
+      type: API.PROPERTY_CLASSIFICATION_TYPES,
     },
     {
       id: 6,
       name: 'Demolished',
       isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
+      type: API.PROPERTY_CLASSIFICATION_TYPES,
     },
     {
       id: 7,
       name: 'Subdivided',
       isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_CODE_SET_NAME,
+      type: API.PROPERTY_CLASSIFICATION_TYPES,
     },
   ] as ILookupCode[],
 };

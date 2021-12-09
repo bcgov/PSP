@@ -129,7 +129,7 @@ export const Input: React.FC<InputProps> = ({
           onChange={pattern ? handleRestrictedChange : handleChange}
         />
       </TooltipWrapper>
-      <DisplayError field={field} />
+      {!displayErrorTooltips && <DisplayError field={field} />}
     </Form.Group>
   );
 };

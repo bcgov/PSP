@@ -17,7 +17,7 @@ namespace Pims.Dal.Entities
 
         #region Constructors
         /// <summary>
-        /// Create a new instance of a LeaseStatusType class.
+        /// Create a new instance of a LeaseType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsLeaseStatusType(string id):this()

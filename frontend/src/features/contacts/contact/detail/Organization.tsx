@@ -55,7 +55,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
     personAddresses = organization.addresses.reduce(
       (accumulator: AddressField[], value: IContactAddress) => {
         accumulator.push({
-          label: value.addressType.description,
+          label: value.addressType.description || '',
           streetAddress1: value.streetAddress1,
           streetAddress2: value.streetAddress2,
           streetAddress3: value.streetAddress3,

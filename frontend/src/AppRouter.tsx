@@ -6,7 +6,7 @@ import { ContactListView } from 'features/contacts';
 import ContactCreateContainer from 'features/contacts/contact/create/Container';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import ContactEditContainer from 'features/contacts/contact/edit/Container';
-import { LeaseDetailContainer } from 'features/leases';
+import { AddLeaseContainer } from 'features/leases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -139,9 +139,9 @@ const AppRouter: React.FC = () => {
           protected
           path="/lease/new"
           exact
-          component={LeaseDetailContainer}
+          component={AddLeaseContainer}
           layout={AuthLayout}
-          claim={Claims.PROPERTY_VIEW}
+          claim={Claims.LEASE_ADD}
           title={getTitle('Create/Edit Lease & Licenses')}
         />
         <AppRoute

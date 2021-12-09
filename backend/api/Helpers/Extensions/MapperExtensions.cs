@@ -1,3 +1,5 @@
+using Pims.Api.Areas.Lease.Models.Lease;
+using Pims.Api.Models;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Helpers.Extensions
@@ -25,6 +27,16 @@ namespace Pims.Api.Helpers.Extensions
         public static string GetSubOrganizationName(this PimsOrganization organization)
         {
             return organization?.PrntOrganizationId.HasValue ?? false ? organization?.OrganizationName : null;
+        }
+
+        /// <summary>
+        /// Null coalescing method to get the type from an id.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetTypeId(this TypeModel<string> type)
+        {
+            return type?.Id;
         }
     }
 }

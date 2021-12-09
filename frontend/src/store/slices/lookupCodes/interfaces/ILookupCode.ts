@@ -8,4 +8,11 @@ export interface ILookupCode {
   type: string;
   parentId?: number;
   sortOrder?: number;
+  key?: string;
+  description?: string;
+  displayOrder?: number;
+  appCreateTimestamp?: string;
+  updatedOn?: string;
+  updatedByName?: string;
+  rowVersion?: number;
 }
