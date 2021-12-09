@@ -1,7 +1,7 @@
-using Microsoft.Extensions.DependencyInjection;
-using Pims.Dal.Services;
 using System;
 using System.Security.Claims;
+using Microsoft.Extensions.DependencyInjection;
+using Pims.Dal.Services;
 
 namespace Pims.Dal
 {
@@ -15,6 +15,10 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
+        /// <summary>
+        /// get - The person service.
+        /// </summary>
+        public IPersonService Person { get { return _serviceProvider.GetService<IPersonService>(); } }
 
         /// <summary>
         /// get - The organization service.

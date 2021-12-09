@@ -31,6 +31,13 @@ namespace Pims.Core.Test
             lease.MotiContact = $"{motiFirstName} {motiLastName}";
             lease.LeaseProgramTypeCodeNavigation = new Entity.PimsLeaseProgramType() { Id = "testProgramType" };
             lease.LeasePmtFreqTypeCodeNavigation = new Entity.PimsLeasePmtFreqType() { Id = "testFrequencyType" };
+            lease.LeasePurposeTypeCodeNavigation = new Entity.PimsLeasePurposeType() { Id = "testPurposeType" };
+            lease.LeaseStatusTypeCodeNavigation = new Entity.PimsLeaseStatusType() { Id = "testStatusType" };
+            lease.LeasePayRvblTypeCodeNavigation = new Entity.PimsLeasePayRvblType() { Id = "testRvblType" };
+            lease.LeaseCategoryTypeCodeNavigation = new Entity.PimsLeaseCategoryType() { Id = "testCategoryType" };
+            lease.LeaseInitiatorTypeCodeNavigation = new Entity.PimsLeaseInitiatorType() { Id = "testInitiatorType" };
+            lease.LeaseResponsibilityTypeCodeNavigation = new Entity.PimsLeaseResponsibilityType() { Id = "testResponsibilityType" };
+            lease.LeaseLicenseTypeCodeNavigation = new Entity.PimsLeaseLicenseType() { Id = "testType" };
             lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
             return lease;
         }

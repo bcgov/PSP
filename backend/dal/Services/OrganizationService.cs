@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -5,10 +9,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using MapsterMapper;
 
 namespace Pims.Dal.Services
 {
@@ -102,6 +102,31 @@ namespace Pims.Dal.Services
         }
 
         /// <summary>
+        /// Get the organization for the specified 'id' with reference objects.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="KeyNotFoundException">Organization does not exists for the specified 'id'.</exception>
+        /// <returns></returns>
+        public PimsOrganization GetComplete(long id)
+        {
+            return this.Context.PimsOrganizations
+               .Include(o => o.PimsOrganizationAddresses)
+                   .ThenInclude(pa => pa.Address)
+                   .ThenInclude(a => a.Country)
+               .Include(o => o.PimsOrganizationAddresses)
+                   .ThenInclude(pa => pa.Address)
+                   .ThenInclude(a => a.ProvinceState)
+               .Include(o => o.PimsOrganizationAddresses)
+                   .ThenInclude(pa => pa.AddressUsageTypeCodeNavigation)
+               .Include(o => o.PimsPersonOrganizations)
+                   .ThenInclude(po => po.Person)
+               .Include(o => o.PimsContactMethods)
+                   .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+               .Where(o => o.OrganizationId == id)
+               .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
         /// Get all the child organizations for the specified 'parentId'.
         /// </summary>
         /// <param name="parentId"></param>
@@ -134,7 +159,7 @@ namespace Pims.Dal.Services
             if (add.PrntOrganizationId.HasValue)
             {
                 var users = this.Context.PimsUsers.AsNoTracking().Where(u => u.GetOrganizations().Any(a => a.Id == add.PrntOrganizationId)).ToArray();
-                users.ForEach(u => add.PimsUserOrganizations.Add(new PimsUserOrganization() { UserId = u.Id, OrganizationId = add.PrntOrganizationId.Value}));
+                users.ForEach(u => add.PimsUserOrganizations.Add(new PimsUserOrganization() { UserId = u.Id, OrganizationId = add.PrntOrganizationId.Value }));
             }
             return add;
         }
@@ -247,7 +272,7 @@ namespace Pims.Dal.Services
             updateUsers.ForEach(u =>
             {
                 this.Context.Entry(u).State = EntityState.Detached;
-                delete.PimsUserOrganizations.Add(new PimsUserOrganization() { UserId = u.UserId, User = u, OrganizationId = delete.OrganizationId});
+                delete.PimsUserOrganizations.Add(new PimsUserOrganization() { UserId = u.UserId, User = u, OrganizationId = delete.OrganizationId });
             });
         }
         #endregion

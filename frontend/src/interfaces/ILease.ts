@@ -1,6 +1,7 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import {
+  IFormProperty,
   IInsurance,
   ILeaseImprovement,
   ILeaseSecurityDeposit,
@@ -16,47 +17,88 @@ export interface ILease {
   id?: number;
   lFileNo?: string;
   psFileNo?: string;
-  tfaFileNo?: string;
-  programName: string;
+  tfaFileNo?: number;
   expiryDate?: string;
   renewalDate?: string;
   startDate: string;
-  properties: IProperty[];
-  persons: IPerson[];
-  organizations: IOrganization[];
-  improvements: ILeaseImprovement[];
-  paymentFrequencyType?: ITypeCode<string>;
-  paymentReceivableType?: ITypeCode<string>;
-  securityDeposits: ILeaseSecurityDeposit[];
-  securityDepositReturns: ILeaseSecurityDepositReturn[];
-  categoryType?: ITypeCode<string>;
-  purposeType?: ITypeCode<string>;
-  responsibilityType?: ITypeCode<string>;
-  initiatorType?: ITypeCode<string>;
+  responsibilityEffectiveDate?: string;
+  paymentFrequencyType: ITypeCode<string>;
+  paymentReceivableType: ITypeCode<string>;
+  categoryType: ITypeCode<string>;
+  purposeType: ITypeCode<string>;
+  responsibilityType: ITypeCode<string>;
+  initiatorType: ITypeCode<string>;
   type?: ITypeCode<string>;
+  statusType: ITypeCode<string>;
+  programType: ITypeCode<string>;
+  otherType?: string;
+  otherProgramType?: string;
+  otherCategoryType?: string;
+  otherPurposeType?: string;
+  note?: string;
+  programName?: string;
+  motiName?: string;
+  motiRegion?: string;
   amount?: number;
   renewalCount: number;
-  note?: string;
-  motiName: string;
   description?: string;
   landArea?: number;
   areaUnit?: string;
-  tenantNotes: string[];
-  insurances: IInsurance[];
   isResidential: boolean;
   isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
   returnNotes?: string; // security deposit notes (free form text)
+  documentationReference?: string;
+  tenantNotes: string[];
+  insurances: IInsurance[];
   terms: ILeaseTerm[];
+  properties: IProperty[];
+  persons: IPerson[];
+  organizations: IOrganization[];
+  improvements: ILeaseImprovement[];
+  securityDeposits: ILeaseSecurityDeposit[];
+  securityDepositReturns: ILeaseSecurityDepositReturn[];
 }
 
 export interface IFormLease
   extends ExtendOverride<
     ILease,
     {
+      tfaFileNo: NumberFieldValue;
       amount: NumberFieldValue;
       renewalCount: NumberFieldValue;
       landArea: NumberFieldValue;
+      paymentFrequencyType?: ITypeCode<string>;
+      paymentReceivableType?: ITypeCode<string>;
+      categoryType?: ITypeCode<string>;
+      purposeType?: ITypeCode<string>;
+      responsibilityType?: ITypeCode<string>;
+      initiatorType?: ITypeCode<string>;
+      statusType?: ITypeCode<string>;
+      programType?: ITypeCode<string>;
+    }
+  > {}
+
+export interface IAddFormLease
+  extends ExtendOverride<
+    ILease,
+    {
+      amount: NumberFieldValue;
+      renewalCount: NumberFieldValue;
+      landArea: NumberFieldValue;
+      tfaFileNo: NumberFieldValue;
+      securityDeposits?: ILeaseSecurityDeposit[];
+      securityDepositReturn?: ILeaseSecurityDepositReturn[];
+      paymentFrequencyType?: string;
+      paymentReceivableType?: string;
+      categoryType?: string;
+      purposeType?: string;
+      responsibilityType?: string;
+      initiatorType?: string;
+      type?: string;
+      statusType?: string;
+      programType?: string;
+      properties: IFormProperty[];
     }
   > {}
 
@@ -65,7 +107,8 @@ export const defaultLease: ILease = {
   persons: [],
   properties: [],
   improvements: [],
-  programName: 'program',
+  statusType: { id: 'ACTIVE', description: 'Active', isDisabled: false },
+  programType: { id: 'OTHER', description: 'Other', isDisabled: false },
   startDate: '2020-01-01',
   paymentFrequencyType: { id: 'ANNUAL', description: 'Annually', isDisabled: false },
   paymentReceivableType: { id: 'RCVBL', description: 'Receivable', isDisabled: false },
@@ -113,4 +156,49 @@ export const defaultFormLease: IFormLease = {
   isOtherImprovement: false,
   returnNotes: '',
   terms: [],
+};
+
+export const defaultAddFormLease: IAddFormLease = {
+  lFileNo: '',
+  psFileNo: '',
+  tfaFileNo: '',
+  expiryDate: '',
+  renewalDate: '',
+  startDate: '',
+  responsibilityEffectiveDate: '',
+  paymentFrequencyType: '',
+  paymentReceivableType: '',
+  categoryType: '',
+  purposeType: '',
+  responsibilityType: '',
+  initiatorType: '',
+  type: '',
+  statusType: 'DRAFT',
+  programType: '',
+  otherType: '',
+  otherProgramType: '',
+  otherCategoryType: '',
+  otherPurposeType: '',
+  note: '',
+  motiName: '',
+  motiRegion: '',
+  amount: '',
+  renewalCount: '',
+  description: '',
+  landArea: '',
+  areaUnit: '',
+  isResidential: false,
+  isCommercialBuilding: false,
+  isOtherImprovement: false,
+  returnNotes: '',
+  documentationReference: '',
+  tenantNotes: [],
+  insurances: [],
+  terms: [],
+  properties: [{ pid: '', pin: '', areaUnitType: '' }],
+  persons: [],
+  organizations: [],
+  improvements: [],
+  securityDeposits: [],
+  securityDepositReturns: [],
 };

@@ -55,6 +55,23 @@ namespace Pims.Api.Areas.Lease.Controllers
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
         }
+
+        /// <summary>
+        /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
+        [HasPermission(Permissions.LeaseAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult AddLease(Models.Lease.LeaseModel leaseModel, bool userOverride = false)
+        {
+            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            var lease = _pimsService.Lease.Add(leaseEntity, userOverride);
+
+            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+        }
         #endregion
     }
 }
