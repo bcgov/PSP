@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultAddFormLease } from 'interfaces';
