@@ -51,6 +51,8 @@ dotnet_diagnostic.CA1801.severity = none # #TODO: Requires further analysis
 dotnet_diagnostic.CA1822.severity = warning
 # CS1591: Missing XML comment
 dotnet_diagnostic.CS1591.severity = none
+# CS8019: Using directive is unnecessary.
+dotnet_diagnostic.CS8019.severity = warning
 
 # SonarQube
 # S4487 Unread "private" fields should be removed.
@@ -82,4 +84,13 @@ dotnet_diagnostic.S4136.severity = none
 # S1128 Remove this unnecessary 'using'
 dotnet_diagnostic.S1128.severity = warning
 
+# Entity Framework files
+[**{entities/ef/*,PIMSContext}.cs]
+# CS8019: Using directive is unnecessary.
+dotnet_diagnostic.CS8019.severity = none
 
+# SonarQube
+# S1128 Remove this unnecessary 'using'
+dotnet_diagnostic.S1128.severity = none
+# S3251 Supply an implementation for this partial method.
+dotnet_diagnostic.S3251.severity = none
