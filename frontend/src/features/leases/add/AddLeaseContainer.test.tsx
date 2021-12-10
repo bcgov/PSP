@@ -58,9 +58,12 @@ describe('AddLeaseContainer component', () => {
 
     mockAxios.onPost().reply(200, {});
     userEvent.click(getByText('Save'));
-    await waitFor(() => {
-      expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
-    });
+    await waitFor(
+      () => {
+        expect(mockAxios.history.post[0].data).toEqual(expectedFormData);
+      },
+      { timeout: 3000 },
+    );
   });
 
   it('triggers the confirm popup', async () => {
