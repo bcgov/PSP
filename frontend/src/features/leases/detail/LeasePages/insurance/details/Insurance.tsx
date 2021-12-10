@@ -1,13 +1,16 @@
 import { FormSection } from 'components/common/form/styles';
-import { getIn, useFormikContext } from 'formik';
-import { IInsurance, ILease } from 'interfaces';
+import { IInsurance } from 'interfaces';
 import { Col, Row } from 'react-bootstrap';
 
 import Policy from './Policy';
 
-const Insurance: React.FunctionComponent = () => {
-  const { values } = useFormikContext<ILease>();
-  const insuranceList: IInsurance[] = getIn(values, 'insurances') ?? [];
+export interface InsuranceDetailsViewProps {
+  insuranceList: IInsurance[];
+}
+
+const InsuranceDetailsView: React.FunctionComponent<InsuranceDetailsViewProps> = ({
+  insuranceList,
+}) => {
   return (
     <>
       {insuranceList.map((insurance: IInsurance, index: number) => (
@@ -28,4 +31,4 @@ const Insurance: React.FunctionComponent = () => {
   );
 };
 
-export default Insurance;
+export default InsuranceDetailsView;

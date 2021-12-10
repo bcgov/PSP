@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Dal;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Collections.Generic;
-using System.Linq;
 using Model = Pims.Api.Models.Lookup;
 
 namespace Pims.Api.Controllers
@@ -109,6 +109,7 @@ namespace Pims.Api.Controllers
             var leasePurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePurposeTypes());
             var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseResponsibilityTypes());
             var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseInitiatorTypes());
+            var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetInsuranceTypes());
 
             var codes = new List<object>();
             codes.AddRange(roleCodes);
@@ -130,6 +131,7 @@ namespace Pims.Api.Controllers
             codes.AddRange(leasePurposeTypes);
             codes.AddRange(leaseResponsibilityTypes);
             codes.AddRange(leaseInitiatorTypes);
+            codes.AddRange(insuranceTypes);
             return new JsonResult(codes);
         }
         #endregion
