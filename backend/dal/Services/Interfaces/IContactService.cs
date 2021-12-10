@@ -11,6 +11,7 @@ namespace Pims.Dal.Services
     {
         int Count();
         IEnumerable<PimsContactMgrVw> Get(ContactFilter filter);
+        PimsContactMgrVw Get(string id);
         Paged<PimsContactMgrVw> GetPage(ContactFilter filter);
     }
 }

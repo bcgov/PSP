@@ -21,7 +21,7 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Description { get => OrganizationAlias; set => OrganizationAlias = value; }
 
-        public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(p=> p.Person).ToArray();
+        public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(po => po.Person).Select(p => { p.PimsPersonOrganizations = null; return p; }).ToArray();
         public ICollection<PimsUser> GetUsers() => PimsUserOrganizations?.Select(p => p.User).ToArray();
         #endregion
 
@@ -34,7 +34,7 @@ namespace Pims.Dal.Entities
         /// <param name="type"></param>
         /// <param name="identifierType"></param>
         /// <param name="address"></param>
-        public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address):this()
+        public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address) : this()
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException($"Argument '{nameof(name)}' is required.", nameof(name));
 

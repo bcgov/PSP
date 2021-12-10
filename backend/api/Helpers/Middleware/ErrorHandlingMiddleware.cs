@@ -146,6 +146,13 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogError(ex, "Invalid operation or bad request details.");
             }
+            else if (ex is UserOverrideException)
+            {
+                code = HttpStatusCode.Conflict;
+                message = ex.Message;
+
+                _logger.LogError(ex, "User override required to complete this action.");
+            }
             else if (ex is ApiHttpRequestException)
             {
                 var exception = ex as ApiHttpRequestException;

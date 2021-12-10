@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { ORGANIZATION_CODE_SET_NAME } from 'constants/API';
+import { ORGANIZATION_TYPES } from 'constants/API';
 import { find, values } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
 import React from 'react';
@@ -53,7 +53,7 @@ describe('getFetchLookupCodeAction action creator', () => {
         id: '1',
         isDisabled: false,
         name: 'Ministry of Advanced Education',
-        type: ORGANIZATION_CODE_SET_NAME,
+        type: ORGANIZATION_TYPES,
       },
     ],
   };

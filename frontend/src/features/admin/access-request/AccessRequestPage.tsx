@@ -44,8 +44,8 @@ const AccessRequestPage = () => {
   const data = useAppSelector(state => state.accessRequests);
 
   const { getPublicByType } = useLookupCodeHelpers();
-  const roles = getPublicByType(API.ROLE_CODE_SET_NAME);
-  const organizations = getPublicByType(API.ORGANIZATION_CODE_SET_NAME);
+  const roles = getPublicByType(API.ROLE_TYPES);
+  const organizations = getPublicByType(API.ORGANIZATION_TYPES);
 
   const accessRequest = data?.accessRequest;
   const initialValues: Partial<IAccessRequest> = {

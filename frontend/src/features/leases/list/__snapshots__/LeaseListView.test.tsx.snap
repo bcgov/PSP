@@ -303,7 +303,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
         />
         <button
           class="c10 btn btn-primary"
-          disabled=""
           type="button"
         >
           <svg
@@ -323,7 +322,6 @@ exports[`Lease and License List View matches snapshot 1`] = `
         </button>
         <button
           class="c10 btn btn-primary"
-          disabled=""
           type="button"
         >
           <svg

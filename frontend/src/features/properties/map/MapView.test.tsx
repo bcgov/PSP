@@ -127,7 +127,7 @@ const mockDetails: IPropertyDetail = {
     regionId: 1,
     districtId: 1,
     address: {
-      addressTypeId: AddressTypes.Physical,
+      addressTypeId: AddressTypes.Mailing,
       streetAddress1: '1234 mock Street',
       streetAddress2: 'N/A',
       municipality: '',
