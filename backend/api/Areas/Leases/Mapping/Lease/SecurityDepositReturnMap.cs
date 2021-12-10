@@ -20,8 +20,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.ReturnDate, src => src.ReturnDate)
                 .Map(dest => dest.ChequeNumber, src => src.ChequeNumber)
                 .Map(dest => dest.PayeeName, src => src.PayeeName)
-                .Map(dest => dest.PayeeAddress, src => src.PayeeAddress)
-                .Map(dest => dest.TerminationNote, src => src.TerminationNote);
+                .Map(dest => dest.PayeeAddress, src => src.PayeeAddress);
         }
     }
 }

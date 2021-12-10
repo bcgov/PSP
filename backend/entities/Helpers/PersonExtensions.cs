@@ -60,6 +60,10 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static string GetFullName(this PimsPerson person)
         {
+            if(person == null)
+            {
+                return null;
+            }
             string[] names = { person.FirstName, person.MiddleNames, person.Surname };
             return String.Join(" ", names.Where(n => n != null && n.Trim() != String.Empty));
         }
@@ -72,7 +76,7 @@ namespace Pims.Dal.Entities
         /// <returns></returns>
         public static PimsAddress GetMailingAddress(this PimsPerson person)
         {
-            return person?.PimsPersonAddresses.FirstOrDefault(a => a?.AddressUsageTypeCode == "MAILADDR")?.Address;
+            return person?.PimsPersonAddresses.FirstOrDefault(a => a?.AddressUsageTypeCode == AddressUsageTypes.Mailing)?.Address;
         }
 
         /// <summary>

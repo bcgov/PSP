@@ -27,7 +27,7 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - A collection of Improvements associated to this Lease
         /// </summary>
-        public ICollection<PimsPropertyImprovement> GetImprovements() => PimsPropertyLeases?.SelectMany(pl => pl.PimsPropertyImprovements).ToArray();
+        public ICollection<PimsPropertyImprovement> GetImprovements() => PimsPropertyImprovements;
         #endregion
 
         #region Constructors

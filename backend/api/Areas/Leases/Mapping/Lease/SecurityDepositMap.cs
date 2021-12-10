@@ -17,7 +17,6 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.SecurityDepositType, src => src.SecurityDepositTypeCodeNavigation.Description)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.AmountPaid, src => src.AmountPaid)
-                .Map(dest => dest.TotalAmount, src => src.TotalAmount)
                 .Map(dest => dest.AnnualInterestRate, src => src.AnnualInterestRate)
                 .Map(dest => dest.DepositDate, src => src.DepositDate);
         }

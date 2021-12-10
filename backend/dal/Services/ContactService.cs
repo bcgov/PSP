@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -5,10 +9,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Services
 {
@@ -53,6 +53,19 @@ namespace Pims.Dal.Services
             IEnumerable<PimsContactMgrVw> contacts = this.Context.GenerateContactQuery(filter).ToArray();
 
             return contacts;
+        }
+
+        /// <summary>
+        /// Get a contact with the given id.
+        /// </summary>
+        /// <param name="id">The id of the contact to retrieve</param>
+        /// <returns></returns>
+        public PimsContactMgrVw Get(string id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.ContactView);
+            var contact = Context.PimsContactMgrVws.Where(x => x.Id == id).FirstOrDefault();
+
+            return contact;
         }
 
         /// <summary>

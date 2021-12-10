@@ -3,6 +3,8 @@ PSP_PIMS S15.01 Sprint 15 2021-Nov-15
   - ETL_DATA_SOURCE_TRACE
 - Altered tables:
   - PIMS_PROPERTY_DATA_SOURCE_TYPE renamed to PIMS_DATA_SOURCE_TYPE
+  - PIMS_LEASE
+  - PIMS_SECURITY_DEPOSIT_RETURN
 - Requires additional metadata to meet standards
 
 PSP_PIMS S15.00 Sprint 15 2021-Nov-12

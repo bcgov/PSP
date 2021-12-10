@@ -12,7 +12,6 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     securityDepositType: 'Pet deposit',
     description: 'Pet deposit collected for one cat and one medium size dog.',
     amountPaid: 500.0,
-    totalAmount: 521.0,
     depositDate: '2021-09-15T00:00:00',
     annualInterestRate: 2.1,
   },
@@ -25,7 +24,6 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
     amountPaid: 2000.0,
-    totalAmount: 2084.0,
     depositDate: '2019-03-01T00:00:00',
     annualInterestRate: 2.1,
   },
@@ -51,6 +49,12 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedTableProps = {}) 
 };
 
 describe('DepositsReceivedTable component', () => {
+  beforeEach(() => {
+    Date.now = jest.fn().mockReturnValue(new Date('2020-11-30T18:33:37.000Z'));
+  });
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
   it('renders as expected', () => {
     const { asFragment } = setup({ dataSource: [...mockDeposits] });
     expect(asFragment()).toMatchSnapshot();

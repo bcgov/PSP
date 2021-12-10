@@ -143,6 +143,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             for="input-organization"
           >
             Organization
+             
           </label>
           <select
             class="form-select form-control"

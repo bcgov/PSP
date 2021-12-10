@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
@@ -21,6 +22,17 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.SurplusDeclaration, src => src);
+
+            config.NewConfig<Model.PropertyModel,Entity.PimsPropertyLease>()
+                .Map(dest => dest.PropertyId, src => src.Id)
+                .Map(dest => dest.Property, src => src)
+                .Map(dest => dest.LeaseArea, src => src.AreaUnit)
+                .Map(dest => dest.Property, src => src.AreaUnitType.GetTypeId());
+
+            config.NewConfig<Model.PropertyModel, Entity.PimsProperty> ()
+                .Map(dest => dest.PropertyId, src => src.Id)
+                .Map(dest => dest.Pid, src => src.PID == "" ? "-1" : src.PID)
+                .Map(dest => dest.Pin, src => src.PIN);
         }
     }
 }

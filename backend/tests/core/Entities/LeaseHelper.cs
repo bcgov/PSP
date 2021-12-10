@@ -28,9 +28,16 @@ namespace Pims.Core.Test
             var organization = new Entity.PimsOrganization();
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address });
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new Entity.PimsProperty() { Pid = pid }, Lease = lease });
-            lease.MotiName = new Entity.PimsPerson() { FirstName = motiFirstName, Surname = motiLastName };
+            lease.MotiContact = $"{motiFirstName} {motiLastName}";
             lease.LeaseProgramTypeCodeNavigation = new Entity.PimsLeaseProgramType() { Id = "testProgramType" };
             lease.LeasePmtFreqTypeCodeNavigation = new Entity.PimsLeasePmtFreqType() { Id = "testFrequencyType" };
+            lease.LeasePurposeTypeCodeNavigation = new Entity.PimsLeasePurposeType() { Id = "testPurposeType" };
+            lease.LeaseStatusTypeCodeNavigation = new Entity.PimsLeaseStatusType() { Id = "testStatusType" };
+            lease.LeasePayRvblTypeCodeNavigation = new Entity.PimsLeasePayRvblType() { Id = "testRvblType" };
+            lease.LeaseCategoryTypeCodeNavigation = new Entity.PimsLeaseCategoryType() { Id = "testCategoryType" };
+            lease.LeaseInitiatorTypeCodeNavigation = new Entity.PimsLeaseInitiatorType() { Id = "testInitiatorType" };
+            lease.LeaseResponsibilityTypeCodeNavigation = new Entity.PimsLeaseResponsibilityType() { Id = "testResponsibilityType" };
+            lease.LeaseLicenseTypeCodeNavigation = new Entity.PimsLeaseLicenseType() { Id = "testType" };
             lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
             return lease;
         }

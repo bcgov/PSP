@@ -1,6 +1,10 @@
-import axios from 'axios';
+import { Dispatch } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 import { isEmpty } from 'lodash';
+import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
+import { IGenericNetworkAction } from 'store/slices/network/interfaces';
+import { logError } from 'store/slices/network/networkSlice';
 import { store } from 'store/store';
 
 export const defaultEnvelope = (x: any) => ({ data: { records: x } });
@@ -85,6 +89,21 @@ export const CustomAxios = ({
   );
 
   return instance;
+};
+
+export const catchAxiosError = (
+  axiosError: AxiosError,
+  dispatch: Dispatch<any>,
+  errorNetworkAction: string,
+) => {
+  const payload: IGenericNetworkAction = {
+    name: errorNetworkAction,
+    status: axiosError?.response?.status,
+    error: axiosError,
+  };
+  dispatch(logError(payload));
+  dispatch(hideLoading());
+  throw Error(axiosError.message);
 };
 
 export default CustomAxios;

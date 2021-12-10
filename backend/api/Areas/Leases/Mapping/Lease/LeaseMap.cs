@@ -3,7 +3,7 @@ using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 using System.Linq;
-
+using Pims.Api.Helpers.Extensions;
 namespace Pims.Api.Areas.Lease.Mapping.Lease
 {
     public class LeaseMap : IRegister
@@ -30,6 +30,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Type, src => src.LeaseLicenseTypeCodeNavigation)
                 .Map(dest => dest.InitiatorType, src => src.LeaseInitiatorTypeCodeNavigation)
                 .Map(dest => dest.PurposeType, src => src.LeasePurposeTypeCodeNavigation)
+                .Map(dest => dest.StatusType, src => src.LeaseStatusTypeCodeNavigation)
                 .Map(dest => dest.Terms, src => src.PimsLeaseTerms)
                 .Map(dest => dest.ResponsibilityType, src => src.LeaseResponsibilityTypeCodeNavigation)
                 .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate)
@@ -44,6 +45,33 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Improvements, src => src.GetImprovements())
                 .Map(dest => dest.SecurityDeposits, src => src.PimsSecurityDepositReturns)
                 .Map(dest => dest.SecurityDepositReturns, src => src.PimsSecurityDepositReturns);
+
+            config.NewConfig< Model.LeaseModel, Entity.PimsLease>()
+                .Map(dest => dest.LeaseId, src => src.Id)
+                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
+                .Map(dest => dest.LeaseAmount, src => src.Amount)
+                .Map(dest => dest.PimsPropertyLeases, src => src.Properties)
+                .Map(dest => dest.LFileNo, src => src.LFileNo)
+                .Map(dest => dest.TfaFileNo, src => src.TfaFileNo)
+                .Map(dest => dest.PsFileNo, src => src.PsFileNo)
+                .Map(dest => dest.MotiContact, src => src.MotiName)
+                .Map(dest => dest.MotiRegion, src => src.MotiRegion)
+                .Map(dest => dest.OrigExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.OrigStartDate, src => src.StartDate)
+                .Map(dest => dest.LeaseProgramTypeCode, src => src.ProgramType.GetTypeId())
+                .Map(dest => dest.LeasePayRvblTypeCode, src => src.PaymentReceivableType.GetTypeId())
+                .Map(dest => dest.LeasePmtFreqTypeCode, src => src.PaymentFrequencyType.GetTypeId())
+                .Map(dest => dest.LeaseCategoryTypeCode, src => src.CategoryType.GetTypeId())
+                .Map(dest => dest.LeaseLicenseTypeCode, src => src.Type.GetTypeId())
+                .Map(dest => dest.LeaseInitiatorTypeCode, src => src.InitiatorType.GetTypeId())
+                .Map(dest => dest.LeasePurposeTypeCode, src => src.PurposeType.GetTypeId())
+                .Map(dest => dest.LeaseResponsibilityTypeCode, src=>src.ResponsibilityType.GetTypeId())
+                .Map(dest => dest.LeaseStatusTypeCode, src => src.StatusType.GetTypeId())
+                .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate)
+                .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
+                .Map(dest => dest.LeaseNotes, src => src.Note)
+                .Map(dest => dest.LeaseDescription, src => src.Description)
+                .IgnoreNullValues(true);
         }
     }
 }
