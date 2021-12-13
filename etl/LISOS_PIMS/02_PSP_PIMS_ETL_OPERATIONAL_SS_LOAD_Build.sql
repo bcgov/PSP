@@ -57,6 +57,7 @@ CREATE TABLE [etl].[ETL_OPERATIONAL_SS_LOAD](
 	[Insurance_Expiry] [nvarchar](50) NULL,
 	[Checked_for_expiry] [nvarchar](100) NULL
 ) ON [PRIMARY]
+GO
 
 IF NOT EXISTS (SELECT * FROM etl.ETL_OPERATIONAL_SS_LOAD)
 BEGIN
