@@ -42,7 +42,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
-        public virtual DbSet<PimsInsurancePayeeType> PimsInsurancePayeeTypes { get; set; }
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
         public virtual DbSet<PimsLease> PimsLeases { get; set; }
         public virtual DbSet<PimsLeaseCategoryType> PimsLeaseCategoryTypes { get; set; }
@@ -654,7 +653,11 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.CoverageLimit).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.CoverageDescription).HasComment("Description of the insurance coverage");
+
+                entity.Property(e => e.CoverageLimit)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Monetary limit of the insurance coverage");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -664,17 +667,13 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasOne(d => d.BctfaRiskMgmtContact)
-                    .WithMany(p => p.PimsInsuranceBctfaRiskMgmtContacts)
-                    .HasForeignKey(d => d.BctfaRiskMgmtContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_INSRNC_BCTFA_CONTACT_FK");
+                entity.Property(e => e.ExpiryDate).HasComment("Date the insurance expires");
 
-                entity.HasOne(d => d.InsurancePayeeTypeCodeNavigation)
-                    .WithMany(p => p.PimsInsurances)
-                    .HasForeignKey(d => d.InsurancePayeeTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_INSPAY_PIM_INSRNC_FK");
+                entity.Property(e => e.IsInsuranceInPlace)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicator that digital license exists");
+
+                entity.Property(e => e.OtherInsuranceType).HasComment("Description of the non-standard insurance coverage type");
 
                 entity.HasOne(d => d.InsuranceTypeCodeNavigation)
                     .WithMany(p => p.PimsInsurances)
@@ -682,29 +681,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_INSPYT_PIM_INSRNC_FK");
 
-                entity.HasOne(d => d.InsurerContact)
-                    .WithMany(p => p.PimsInsuranceInsurerContacts)
-                    .HasForeignKey(d => d.InsurerContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_INSRNC_INSURER_CONTACT_FK");
-
-                entity.HasOne(d => d.InsurerOrg)
-                    .WithMany(p => p.PimsInsurances)
-                    .HasForeignKey(d => d.InsurerOrgId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ORG_PIM_INSRNC_FK");
-
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsInsurances)
                     .HasForeignKey(d => d.LeaseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LEASE_PIM_INSRNC_FK");
-
-                entity.HasOne(d => d.MotiRiskMgmtContact)
-                    .WithMany(p => p.PimsInsuranceMotiRiskMgmtContacts)
-                    .HasForeignKey(d => d.MotiRiskMgmtContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_INSRNCMOTI_CONTACT_FK");
             });
 
             modelBuilder.Entity<PimsInsuranceHist>(entity =>
@@ -715,24 +696,6 @@ namespace Pims.Dal
                 entity.Property(e => e.InsuranceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INSURANCE_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-            });
-
-            modelBuilder.Entity<PimsInsurancePayeeType>(entity =>
-            {
-                entity.HasKey(e => e.InsurancePayeeTypeCode)
-                    .HasName("INSPAY_PK");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsInsuranceType>(entity =>
@@ -857,7 +820,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseCategoryTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseCategoryTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSCATT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
@@ -881,7 +843,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeasePmtFreqTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeasePmtFreqTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseProgramTypeCodeNavigation)
@@ -899,7 +860,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseResponsibilityTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseResponsibilityTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LRESPT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseStatusTypeCodeNavigation)
@@ -2284,6 +2244,8 @@ namespace Pims.Dal
 
                 entity.Property(e => e.PropertyImprovementId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_ID_SEQ])");
 
+                entity.Property(e => e.Address).HasComment("Addresses affected");
+
                 entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
@@ -2308,9 +2270,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ImprovementDescription).HasComment("Description of the improvements");
 
-                entity.Property(e => e.StructureSize).HasComment("Size of the structure (house, building, bridge, etc,) ");
-
-                entity.Property(e => e.Unit).HasComment("Unit(s) affected");
+                entity.Property(e => e.StructureSize).HasComment("Size of the structure (house, building, bridge, etc,)");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsPropertyImprovements)
@@ -2678,7 +2638,7 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyTenureTypeCode)
                     .HasName("PRPTNR_PK");
 
-                entity.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel still accurately describes the legal title of the land parcel but the individual properties each can have different tenures by MoTI.");
+                entity.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
@@ -3201,7 +3161,9 @@ namespace Pims.Dal
             modelBuilder.Entity<PimsTenant>(entity =>
             {
                 entity.HasKey(e => e.TenantId)
-                    .HasName("PIMS_TENANT_PK");
+                    .HasName("TENNTX_PK");
+
+                entity.HasComment("Deprecated table to support legacy CITZ-PIMS application code.  This table will be removed once the code dependency is removed from the system.");
 
                 entity.Property(e => e.TenantId)
                     .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])")
@@ -3209,9 +3171,7 @@ namespace Pims.Dal
 
                 entity.Property(e => e.Code).HasComment("Code value for entry");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasDefaultValueSql("(CONVERT([bigint],(1)))")
-                    .HasComment("Concurrency control number");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 

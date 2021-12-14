@@ -11,10 +11,6 @@ interface PolicyProps {
 interface PolicyView {
   insuranceInPlace: string;
   limit: string;
-  assessmentDate: string;
-  payee: string;
-  insuredValue: string;
-  startDate: string;
   expiryDate: string;
   coverageDescription: string;
 }
@@ -22,12 +18,8 @@ interface PolicyView {
 const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   const columnWidth = 5;
   const policy: PolicyView = {
-    insuranceInPlace: insurance.insuranceInPlace ? 'Yes' : 'No',
+    insuranceInPlace: insurance.isInsuranceInPlace ? 'Yes' : 'No',
     limit: formatMoney(insurance.coverageLimit),
-    assessmentDate: prettyFormatDate(insurance.riskAssessmentCompletedDate) || '',
-    payee: insurance.insurancePayeeType.description || '',
-    insuredValue: formatMoney(insurance.insuredValue),
-    startDate: prettyFormatDate(insurance.startDate),
     expiryDate: prettyFormatDate(insurance.expiryDate),
     coverageDescription: insurance.coverageDescription,
   };
@@ -44,22 +36,6 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
             <Row>
               <LabelCol xs={columnWidth}>Limit:</LabelCol>
               <Col>{policy.limit}</Col>
-            </Row>
-            <Row>
-              <LabelCol xs={columnWidth}>Risk Assessment completed:</LabelCol>
-              <Col>{policy.assessmentDate}</Col>
-            </Row>
-            <Row>
-              <LabelCol xs={columnWidth}>BCTFA/MOTI (Insurance Payee):</LabelCol>
-              <Col>{policy.payee}</Col>
-            </Row>
-            <Row>
-              <LabelCol xs={columnWidth}>Insured value:</LabelCol>
-              <Col>{policy.insuredValue}</Col>
-            </Row>
-            <Row>
-              <LabelCol xs={columnWidth}>Policy start date:</LabelCol>
-              <Col>{policy.startDate}</Col>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Policy expiry date:</LabelCol>
