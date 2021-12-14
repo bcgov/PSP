@@ -208,6 +208,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<SecurityDepositReturnModel> SecurityDepositReturns { get; set; }
 
         /// <summary>
+        /// get/set - Notes accompanying Lease.
+        /// </summary>
+        public string ReturnNotes { get; set; }
+
+        /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).
         /// </summary>
         public bool IsResidential { get; set; }
