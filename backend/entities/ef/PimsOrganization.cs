@@ -21,7 +21,6 @@ namespace Pims.Dal.Entities
             InversePrntOrganization = new HashSet<PimsOrganization>();
             PimsAccessRequestOrganizations = new HashSet<PimsAccessRequestOrganization>();
             PimsContactMethods = new HashSet<PimsContactMethod>();
-            PimsInsurances = new HashSet<PimsInsurance>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
             PimsOrganizationAddresses = new HashSet<PimsOrganizationAddress>();
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
@@ -129,8 +128,6 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAccessRequestOrganization> PimsAccessRequestOrganizations { get; set; }
         [InverseProperty(nameof(PimsContactMethod.Organization))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
-        [InverseProperty(nameof(PimsInsurance.InsurerOrg))]
-        public virtual ICollection<PimsInsurance> PimsInsurances { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Organization))]
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; }
         [InverseProperty(nameof(PimsOrganizationAddress.Organization))]

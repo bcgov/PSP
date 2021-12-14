@@ -85,11 +85,11 @@ namespace Pims.Dal.Entities
         [StringLength(2000)]
         public string Description { get; set; }
         [Column("PID")]
-        public int Pid { get; set; }
+        public int? Pid { get; set; }
         [Column("PIN")]
         public int? Pin { get; set; }
         [Column("LAND_AREA")]
-        public float LandArea { get; set; }
+        public float? LandArea { get; set; }
         [Column("LAND_LEGAL_DESCRIPTION")]
         public string LandLegalDescription { get; set; }
         [Column("BOUNDARY", TypeName = "geometry")]

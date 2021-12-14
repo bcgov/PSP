@@ -15,7 +15,7 @@ namespace Pims.Dal.Entities
         [Column("PROPERTY_ID")]
         public long PropertyId { get; set; }
         [Column("PID")]
-        public int Pid { get; set; }
+        public int? Pid { get; set; }
         [Column("PID_PADDED")]
         [StringLength(9)]
         public string PidPadded { get; set; }
@@ -93,7 +93,7 @@ namespace Pims.Dal.Entities
         [StringLength(20)]
         public string PropertyAreaUnitTypeCode { get; set; }
         [Column("LAND_AREA")]
-        public float LandArea { get; set; }
+        public float? LandArea { get; set; }
         [Column("LAND_LEGAL_DESCRIPTION")]
         public string LandLegalDescription { get; set; }
         [Column("ENCUMBRANCE_REASON")]

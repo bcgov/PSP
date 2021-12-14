@@ -30,7 +30,7 @@ namespace Pims.Dal.Entities
         [Column("FORECAST_PAYMENT_PRE_TAX", TypeName = "money")]
         public decimal ForecastPaymentPreTax { get; set; }
         [Column("FORECAST_PAYMENT_PST", TypeName = "money")]
-        public decimal ForecastPaymentPst { get; set; }
+        public decimal? ForecastPaymentPst { get; set; }
         [Column("FORECAST_PAYMENT_GST", TypeName = "money")]
         public decimal ForecastPaymentGst { get; set; }
         [Column("FORECAST_PAYMENT_TOTAL", TypeName = "money")]

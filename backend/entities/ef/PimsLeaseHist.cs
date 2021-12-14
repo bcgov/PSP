@@ -29,7 +29,6 @@ namespace Pims.Dal.Entities
         [Column("LEASE_LICENSE_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseLicenseTypeCode { get; set; }
-        [Required]
         [Column("LEASE_CATEGORY_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseCategoryTypeCode { get; set; }
@@ -45,11 +44,9 @@ namespace Pims.Dal.Entities
         [Column("LEASE_INITIATOR_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseInitiatorTypeCode { get; set; }
-        [Required]
         [Column("LEASE_RESPONSIBILITY_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseResponsibilityTypeCode { get; set; }
-        [Required]
         [Column("LEASE_PMT_FREQ_TYPE_CODE")]
         [StringLength(20)]
         public string LeasePmtFreqTypeCode { get; set; }
