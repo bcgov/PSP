@@ -157,6 +157,11 @@ namespace Pims.Dal.Services
         {
             return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.InsuranceTypeCode).ToArray();
         }
+
+        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
+        {
+            return this.Context.PimsContactMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
+        }
         #endregion
     }
 }
