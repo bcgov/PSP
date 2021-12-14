@@ -42,7 +42,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - The person's addresses.
         /// </summary>
-        public IList<Areas.Contact.Models.Contact.AddressModel> Addresses { get; set; }
+        public IList<AddressCreateModel> Addresses { get; set; }
 
         /// <summary>
         /// get/set - The person's contact methods.

@@ -71,7 +71,7 @@ namespace Pims.Dal.Services
         public PimsPerson Add(PimsPerson add)
         {
             add.ThrowIfNull(nameof(add));
-            this.Context.PimsPerson.Add(add);
+            this.Context.PimsPeople.Add(add);
             this.Context.CommitTransaction();
 
             return Get(add.PersonId);
