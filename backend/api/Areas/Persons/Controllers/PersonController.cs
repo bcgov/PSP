@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -57,7 +56,7 @@ namespace Pims.Api.Areas.Persons.Controllers
             var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
             foreach (var address in model?.Addresses)
             {
-                if (otherCountry != null && address?.CountryId != otherCountry.CountryId)
+                if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
                 {
                     address.CountryOther = null;
                 }

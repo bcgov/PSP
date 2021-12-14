@@ -1,5 +1,9 @@
 import * as API from 'constants/API';
-import { ContactMethodTypes, validEmailTypes, validPhoneTypes } from 'constants/contactMethodType';
+import {
+  ContactMethodTypes,
+  emailContactMethods,
+  phoneContactMethods,
+} from 'constants/contactMethodType';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { useMemo } from 'react';
 import { ILookupCode } from 'store/slices/lookupCodes';
@@ -20,7 +24,7 @@ export function useContactMethodHelpers() {
 
   const phoneTypes = useMemo(() => {
     const unsorted = getByType(API.CONTACT_METHOD_TYPES).filter(x =>
-      validPhoneTypes.includes(x.id as ContactMethodTypes),
+      phoneContactMethods.includes(x.id as ContactMethodTypes),
     );
 
     return (unsorted as IHasDisplayOrder[]).sort(byDisplayOrder);
@@ -28,7 +32,7 @@ export function useContactMethodHelpers() {
 
   const emailTypes = useMemo(() => {
     const unsorted = getByType(API.CONTACT_METHOD_TYPES).filter(x =>
-      validEmailTypes.includes(x.id as ContactMethodTypes),
+      emailContactMethods.includes(x.id as ContactMethodTypes),
     );
 
     return (unsorted as IHasDisplayOrder[]).sort(byDisplayOrder);
