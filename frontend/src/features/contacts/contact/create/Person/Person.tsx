@@ -3,7 +3,7 @@ import { FormSection } from 'components/common/form/styles';
 import { Stack } from 'components/common/Stack/Stack';
 import { Formik } from 'formik';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { defaultCreatePerson } from 'interfaces/IContact';
+import { defaultCreatePerson } from 'interfaces/IContactCreate';
 import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
