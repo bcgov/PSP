@@ -14,6 +14,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
 
             config.NewConfig<Areas.Persons.Models.Person.AddressCreateModel, Entity.PimsAddress>()
                 .Map(dest => dest.AddressId, src => src.Id)
+                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.StreetAddress1, src => src.StreetAddress1)
                 .Map(dest => dest.StreetAddress2, src => src.StreetAddress2)
                 .Map(dest => dest.StreetAddress3, src => src.StreetAddress3)

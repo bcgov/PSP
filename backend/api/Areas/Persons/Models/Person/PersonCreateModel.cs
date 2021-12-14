@@ -47,7 +47,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - The person's contact methods.
         /// </summary>
-        public IList<Areas.Contact.Models.Contact.ContactMethodModel> ContactMethods { get; set; }
+        public IList<ContactMethodCreateModel> ContactMethods { get; set; }
 
         /// <summary>
         /// get/set - The person's Comment.

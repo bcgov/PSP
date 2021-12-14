@@ -8,7 +8,6 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
     {
         public void Register(TypeAdapterConfig config)
         {
-            // TODO: add mappings for related data - contact methods
             config.NewConfig<Model.PersonCreateModel, Entity.PimsPerson>()
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Surname, src => src.Surname)
@@ -17,6 +16,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Comment, src => src.Comment)
                 .Map(dest => dest.PimsPersonAddresses, src => src.Addresses)
+                .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
                 .IgnoreNullValues(true);
         }
     }
