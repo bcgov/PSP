@@ -49,7 +49,7 @@ export interface IGeoSearchParams {
 export const ORGANIZATION_TYPES = 'PimsOrganization';
 export const ROLE_TYPES = 'PimsRole';
 export const PROVINCE_TYPES = 'PimsProvinceState';
-export const COUNTRY_CODE_SET_NAME = 'PimsCountry';
+export const COUNTRY_TYPES = 'PimsCountry';
 export const ADMINISTRATIVE_AREA_TYPES = 'PimsAdministrativeArea';
 export const PROPERTY_CLASSIFICATION_TYPES = 'PimsPropertyClassification';
 export const AREA_UNIT_TYPES = 'PimsAreaUnitType';
@@ -62,6 +62,7 @@ export const LEASE_PURPOSE_TYPES = 'PimsLeasePurposeType';
 export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';
 export const LEASE_RESPONSIBILITY_TYPES = 'PimsLeaseResponsibilityType';
 export const INSURANCE_TYPES = 'PimsInsuranceType';
+export const CONTACT_METHOD_TYPES = 'PimsContactMethodType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations

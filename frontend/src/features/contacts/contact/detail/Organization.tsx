@@ -36,16 +36,16 @@ interface AddressField {
 
 const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
   const phoneTypes: Dictionary<string> = {};
-  phoneTypes[ContactMethodTypes.WorkMobil] = 'Mobile';
+  phoneTypes[ContactMethodTypes.WorkMobile] = 'Mobile';
   phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
-  phoneTypes[ContactMethodTypes.PersPhone] = 'Home';
+  phoneTypes[ContactMethodTypes.PersonalPhone] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(organization, phoneTypes);
 
   const emailTypes: Dictionary<string> = {};
   emailTypes[ContactMethodTypes.WorkEmail] = 'Work';
-  emailTypes[ContactMethodTypes.PerseEmail] = 'Personal';
+  emailTypes[ContactMethodTypes.PersonalEmail] = 'Personal';
   const personEmails: ContactInfoField[] = getContactInfo(organization, emailTypes);
 
   let personAddresses: AddressField[];

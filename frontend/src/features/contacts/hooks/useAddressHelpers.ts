@@ -26,12 +26,12 @@ export function useAddressHelpers() {
   const { getByType } = useLookupCodeHelpers();
 
   const countries = useMemo(() => {
-    const unsorted = getByType(API.COUNTRY_CODE_SET_NAME) as IHasDisplayOrder[];
+    const unsorted = getByType(API.COUNTRY_TYPES) as IHasDisplayOrder[];
     return unsorted.sort(byDisplayOrder);
   }, [getByType]);
 
   const provinces = useMemo(() => {
-    const unsorted = getByType(API.PROVINCE_CODE_SET_NAME) as IHasDisplayOrder[];
+    const unsorted = getByType(API.PROVINCE_TYPES) as IHasDisplayOrder[];
     return unsorted.sort(byDisplayOrder);
   }, [getByType]);
 
