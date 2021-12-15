@@ -89,6 +89,31 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string PsFileNo { get; set; }
 
         /// <summary>
+        /// get/set - The text description if the lease category type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherCategoryType { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease program type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherProgramType { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease purpose type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherPurposeType { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherType { get; set; }
+
+
+        /// <summary>
         /// get/set - The calculated expiry date of the lease
         /// </summary>
         /// <value></value>
