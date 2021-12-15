@@ -1,10 +1,14 @@
 import { Input, Select, SelectOption } from 'components/common/form';
 import { CountryCodes } from 'constants/countryCodes';
-import useAddressHelpers from 'features/contacts/hooks/useAddressHelpers';
-import React, { useCallback, useMemo, useState } from 'react';
+import { getIn, useFormikContext } from 'formik';
+import { Dictionary } from 'interfaces/Dictionary';
+import { ICreatePersonForm } from 'interfaces/ICreateContact';
+import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { mapLookupCode } from 'utils';
+import { Link } from 'react-router-dom';
 import { withNameSpace } from 'utils/formUtils';
+
+import useAddressHelpers from './useAddressHelpers';
 
 export interface IAddressProps {
   namespace?: string;
@@ -15,19 +19,35 @@ export interface IAddressProps {
  * @param {IAddressProps} param0
  */
 export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) => {
-  const { countries, provinces, getFieldLabel } = useAddressHelpers();
-  const [selectedCountry, setSelectedCountry] = useState(CountryCodes.Canada);
+  const {
+    defaultCountryId,
+    countries,
+    provinces,
+    formLabels,
+    selectedCountryCode,
+    setSelectedCountryId,
+  } = useAddressHelpers();
 
-  const countryOptions = useMemo(() => countries.map(c => mapLookupCode(c)), [countries]);
-  const provinceOptions = useMemo(() => provinces.map(c => mapLookupCode(c)), [provinces]);
+  const { values, setFieldValue } = useFormikContext<ICreatePersonForm>();
+  const countryId = getIn(values, withNameSpace(namespace, 'countryId'));
 
+  // set country to CANADA if none selected
+  useEffect(() => {
+    if (countryId === '') {
+      setFieldValue(withNameSpace(namespace, 'countryId'), defaultCountryId ?? '');
+      setFieldValue(withNameSpace(namespace, 'provinceId'), '');
+      setSelectedCountryId(defaultCountryId ?? '');
+    }
+  }, [countryId, defaultCountryId, namespace, setFieldValue, setSelectedCountryId]);
+
+  // clear associated fields (province, other country name) whenever country value is changed
   const onCountryChanged = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const countryId = e.target.value;
-      const countryCode = countries.find(c => c.id === countryId)?.code as CountryCodes;
-      setSelectedCountry(countryCode);
+      setSelectedCountryId(e.target.value);
+      setFieldValue(withNameSpace(namespace, 'provinceId'), '');
+      setFieldValue(withNameSpace(namespace, 'countryOther'), '');
     },
-    [countries],
+    [namespace, setFieldValue, setSelectedCountryId],
   );
 
   return (
@@ -35,13 +55,17 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
       <Row>
         <Col md={8}>
           <Input field={withNameSpace(namespace, 'streetAddress1')} label="Address (line 1)" />
+          <Link to="" onClick={() => {}}>
+            + Add an address line
+          </Link>
         </Col>
       </Row>
       <Row>
         <Col md={4}>
           <Select
+            label="Country"
             field={withNameSpace(namespace, 'countryId')}
-            options={countryOptions}
+            options={countries}
             onChange={onCountryChanged}
           />
         </Col>
@@ -55,18 +79,15 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
         <Col md={4}>
           <ProvinceOrCountryName
             namespace={namespace}
-            selectedCountry={selectedCountry}
-            provinceOptions={provinceOptions}
-            getFieldLabel={getFieldLabel}
+            selectedCountry={selectedCountryCode}
+            provinces={provinces}
+            formLabels={formLabels}
           />
         </Col>
       </Row>
       <Row>
         <Col md={4}>
-          <Input
-            field={withNameSpace(namespace, 'postal')}
-            label={getFieldLabel('postal', selectedCountry)}
-          />
+          <Input field={withNameSpace(namespace, 'postal')} label={formLabels.postal} />
         </Col>
       </Row>
     </>
@@ -74,16 +95,16 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
 };
 
 interface IProvinceOrCountryName {
-  selectedCountry: CountryCodes;
-  provinceOptions: SelectOption[];
-  getFieldLabel: Function;
+  selectedCountry: string;
+  provinces: SelectOption[];
+  formLabels: Dictionary<string>;
   namespace?: string;
 }
 
 const ProvinceOrCountryName: React.FunctionComponent<IProvinceOrCountryName> = ({
   selectedCountry,
-  provinceOptions,
-  getFieldLabel,
+  provinces,
+  formLabels,
   namespace,
 }) => {
   if (selectedCountry === CountryCodes.Other) {
@@ -93,8 +114,9 @@ const ProvinceOrCountryName: React.FunctionComponent<IProvinceOrCountryName> = (
   return (
     <Select
       field={withNameSpace(namespace, 'provinceId')}
-      options={provinceOptions}
-      label={getFieldLabel('province', selectedCountry)}
+      options={provinces}
+      label={formLabels.province}
+      placeholder={formLabels.provincePlaceholder}
     />
   );
 };

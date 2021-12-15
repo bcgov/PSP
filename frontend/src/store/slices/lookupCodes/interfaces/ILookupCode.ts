@@ -1,15 +1,15 @@
 export interface ILookupCode {
-  id: number | string;
+  id: string | number;
   code?: string;
   name: string;
   isDisabled: boolean;
   isPublic?: boolean;
   isVisible?: boolean;
   type: string;
-  parentId?: number;
+  parentId?: string | number;
   key?: string;
   description?: string;
-  displayOrder?: number;
+  displayOrder: number;
   appCreateTimestamp?: string;
   updatedOn?: string;
   updatedByName?: string;

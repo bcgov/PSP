@@ -3,7 +3,7 @@ import { FormSection } from 'components/common/form/styles';
 import { Stack } from 'components/common/Stack/Stack';
 import { Formik } from 'formik';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { defaultCreatePerson } from 'interfaces/IContactCreate';
+import { defaultCreatePerson } from 'interfaces/ICreateContact';
 import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -13,15 +13,15 @@ import Address from './address/Address';
 import CommentNotes from './comments/CommentNotes';
 import * as Styled from './styles';
 
-export interface IPersonProps {}
+export interface ICreatePersonFormProps {}
 
-export const Person: React.FunctionComponent<IPersonProps> = props => {
+export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
   const { postPerson } = useApiContacts();
   const { goBack } = useHistory();
 
   return (
     <Formik
-      initialValues={{ ...defaultCreatePerson }}
+      initialValues={defaultCreatePerson}
       enableReinitialize
       onSubmit={async values => {
         try {
@@ -73,17 +73,17 @@ export const Person: React.FunctionComponent<IPersonProps> = props => {
               <FormSection>
                 <Styled.H2>Address</Styled.H2>
                 <Styled.H3>Mailing Address</Styled.H3>
-                <Address namespace="addresses.0" />
+                <Address namespace="mailingAddress" />
               </FormSection>
 
               <FormSection>
                 <Styled.H3>Property Address</Styled.H3>
-                <Address namespace="addresses.1" />
+                <Address namespace="propertyAddress" />
               </FormSection>
 
               <FormSection>
                 <Styled.H3>Billing Address</Styled.H3>
-                <Address namespace="addresses.2" />
+                <Address namespace="billingAddress" />
               </FormSection>
 
               <FormSection>
@@ -103,4 +103,4 @@ export const Person: React.FunctionComponent<IPersonProps> = props => {
   );
 };
 
-export default Person;
+export default CreatePersonForm;

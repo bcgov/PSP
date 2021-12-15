@@ -10,8 +10,9 @@ import { mapLookupCode } from 'utils';
  */
 export function useLookupCodeHelpers() {
   const lookupCodes = useAppSelector(state => state.lookupCode.lookupCodes);
+
   const getCodeById = (type: string, id: number | string): string | undefined => {
-    const match = lookupCodes
+    const match = (lookupCodes || [])
       .filter((code: { type: string; id: number | string }) => code.type === type && code.id === id)
       ?.find((x: any) => x);
     return match?.code ?? match?.name;
@@ -19,10 +20,9 @@ export function useLookupCodeHelpers() {
 
   const getByType = useCallback(
     (type: string) =>
-      (lookupCodes || []).filter(
-        (code: { type: string; isDisabled: boolean }) =>
-          code.type === type && code.isDisabled !== true,
-      ),
+      (lookupCodes || [])
+        .filter(code => code.type === type && code.isDisabled !== true)
+        .sort(byDisplayOrder),
     [lookupCodes],
   );
 
@@ -35,7 +35,9 @@ export function useLookupCodeHelpers() {
     [lookupCodes],
   );
 
-  const getOptionsByType = (type: string) => getByType(type).map(mapLookupCode);
+  const getOptionsByType = useCallback((type: string) => getByType(type).map(mapLookupCode), [
+    getByType,
+  ]);
 
   /**
    * Return an array of SelectOptions containing property classifications.
@@ -59,6 +61,10 @@ export function useLookupCodeHelpers() {
     getPublicByType,
     lookupCodes,
   };
+}
+
+function byDisplayOrder(a: ILookupCode, b: ILookupCode) {
+  return a.displayOrder - b.displayOrder;
 }
 
 export default useLookupCodeHelpers;

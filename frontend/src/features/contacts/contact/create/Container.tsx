@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import * as Styled from '../../styles';
 import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
-import Person from './Person/Person';
+import CreatePersonForm from './Person/CreatePersonForm';
 
 export interface IContactCreateContainerProps {}
 
@@ -26,7 +26,7 @@ export const ContactCreateContainer: React.FunctionComponent<IContactCreateConta
       ></ContactTypeSelector>
 
       {/* TODO: Render Person Form or Organization Form depending on type query param */}
-      <Person />
+      <CreatePersonForm />
     </ContactLayout>
   );
 };
