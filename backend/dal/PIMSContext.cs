@@ -857,13 +857,11 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseCategoryTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseCategoryTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSCATT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseInitiatorTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation)
@@ -881,7 +879,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeasePmtFreqTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeasePmtFreqTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseProgramTypeCodeNavigation)
@@ -899,7 +896,6 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseResponsibilityTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseResponsibilityTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LRESPT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseStatusTypeCodeNavigation)
@@ -3201,17 +3197,11 @@ namespace Pims.Dal
             modelBuilder.Entity<PimsTenant>(entity =>
             {
                 entity.HasKey(e => e.TenantId)
-                    .HasName("PIMS_TENANT_PK");
+                    .HasName("PK__PIMS_TEN__5E0E988A42D52538");
 
-                entity.Property(e => e.TenantId)
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])")
-                    .HasComment("Auto-sequenced unique key value");
+                entity.Property(e => e.TenantId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])");
 
-                entity.Property(e => e.Code).HasComment("Code value for entry");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasDefaultValueSql("(CONVERT([bigint],(1)))")
-                    .HasComment("Concurrency control number");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3220,12 +3210,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description).HasComment("Description of the entry for display purposes");
-
-                entity.Property(e => e.Name).HasComment("Name of the entry for display purposes");
-
-                entity.Property(e => e.Settings).HasComment("Serialized JSON value for the configuration");
             });
 
             modelBuilder.Entity<PimsUser>(entity =>
