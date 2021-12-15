@@ -23,16 +23,15 @@ namespace Pims.Dal.Entities
         [Column("PROPERTY_IMPROVEMENT_TYPE_CODE")]
         [StringLength(20)]
         public string PropertyImprovementTypeCode { get; set; }
-        [Required]
         [Column("IMPROVEMENT_DESCRIPTION")]
         [StringLength(2000)]
         public string ImprovementDescription { get; set; }
         [Column("STRUCTURE_SIZE")]
         [StringLength(2000)]
         public string StructureSize { get; set; }
-        [Column("UNIT")]
+        [Column("ADDRESS")]
         [StringLength(2000)]
-        public string Unit { get; set; }
+        public string Address { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

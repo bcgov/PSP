@@ -27,18 +27,6 @@ namespace Pims.Dal.Entities
         [Column("INSURANCE_TYPE_CODE")]
         [StringLength(20)]
         public string InsuranceTypeCode { get; set; }
-        [Column("INSURER_ORG_ID")]
-        public long InsurerOrgId { get; set; }
-        [Column("INSURER_CONTACT_ID")]
-        public long InsurerContactId { get; set; }
-        [Column("MOTI_RISK_MGMT_CONTACT_ID")]
-        public long MotiRiskMgmtContactId { get; set; }
-        [Column("BCTFA_RISK_MGMT_CONTACT_ID")]
-        public long BctfaRiskMgmtContactId { get; set; }
-        [Required]
-        [Column("INSURANCE_PAYEE_TYPE_CODE")]
-        [StringLength(20)]
-        public string InsurancePayeeTypeCode { get; set; }
         [Column("OTHER_INSURANCE_TYPE")]
         [StringLength(200)]
         public string OtherInsuranceType { get; set; }
@@ -46,15 +34,11 @@ namespace Pims.Dal.Entities
         [StringLength(2000)]
         public string CoverageDescription { get; set; }
         [Column("COVERAGE_LIMIT", TypeName = "money")]
-        public decimal CoverageLimit { get; set; }
-        [Column("INSURED_VALUE", TypeName = "money")]
-        public decimal InsuredValue { get; set; }
-        [Column("START_DATE", TypeName = "date")]
-        public DateTime StartDate { get; set; }
+        public decimal? CoverageLimit { get; set; }
+        [Column("IS_INSURANCE_IN_PLACE")]
+        public bool? IsInsuranceInPlace { get; set; }
         [Column("EXPIRY_DATE", TypeName = "date")]
-        public DateTime ExpiryDate { get; set; }
-        [Column("RISK ASSESSMENT_COMPLETED_DATE", TypeName = "datetime")]
-        public DateTime? RiskAssessmentCompletedDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

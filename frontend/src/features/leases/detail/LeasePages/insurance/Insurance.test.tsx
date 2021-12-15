@@ -10,19 +10,11 @@ import Insurance from './Insurance';
 const mockInsurance: IInsurance = {
   id: 123459,
   insuranceType: { description: 'Test Insurance Type', id: '2135689', isDisabled: false },
-  insurerOrganization: mockOrganization,
-  insurerContact: mockUser,
-  motiRiskManagementContact: mockUser,
-  bctfaRiskManagementContact: mockUser,
-  insurancePayeeType: { description: 'Test Payee Type', id: '2135689', isDisabled: false },
   otherInsuranceType: '',
   coverageDescription: '',
   coverageLimit: 777,
-  insuredValue: 777,
-  startDate: '2021-01-01',
   expiryDate: '2022-01-01',
-  riskAssessmentCompletedDate: undefined,
-  insuranceInPlace: true,
+  isInsuranceInPlace: true,
 };
 
 const history = createMemoryHistory();
@@ -81,22 +73,5 @@ describe('Lease Insurance', () => {
     });
     const title = result.getByTestId('insurance-title');
     expect(title.textContent).toBe(mockInsurance.insuranceType.description);
-  });
-
-  it('Empty phone text', () => {
-    const testInsurance: IInsurance = { ...mockInsurance };
-    testInsurance.insurerContact.mobile = undefined;
-    testInsurance.insurerContact.landline = undefined;
-    const result = setup({
-      lease: {
-        ...defaultFormLease,
-        insurances: [testInsurance],
-        persons: [mockUser],
-        organizations: [mockOrganization],
-      },
-    });
-    const dataRow = result.getByTestId('col-phone');
-
-    expect(dataRow.textContent).toBe('N.A');
   });
 });

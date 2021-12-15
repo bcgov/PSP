@@ -14,9 +14,6 @@ namespace Pims.Dal.Entities
         public PimsPerson()
         {
             PimsContactMethods = new HashSet<PimsContactMethod>();
-            PimsInsuranceBctfaRiskMgmtContacts = new HashSet<PimsInsurance>();
-            PimsInsuranceInsurerContacts = new HashSet<PimsInsurance>();
-            PimsInsuranceMotiRiskMgmtContacts = new HashSet<PimsInsurance>();
             PimsLeaseTenants = new HashSet<PimsLeaseTenant>();
             PimsPersonAddresses = new HashSet<PimsPersonAddress>();
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
@@ -49,6 +46,9 @@ namespace Pims.Dal.Entities
         [Column("COMMENT")]
         [StringLength(2000)]
         public string Comment { get; set; }
+        [Column("ADDRESS_COMMENT")]
+        [StringLength(2000)]
+        public string AddressComment { get; set; }
         [Required]
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
@@ -93,12 +93,6 @@ namespace Pims.Dal.Entities
 
         [InverseProperty(nameof(PimsContactMethod.Person))]
         public virtual ICollection<PimsContactMethod> PimsContactMethods { get; set; }
-        [InverseProperty(nameof(PimsInsurance.BctfaRiskMgmtContact))]
-        public virtual ICollection<PimsInsurance> PimsInsuranceBctfaRiskMgmtContacts { get; set; }
-        [InverseProperty(nameof(PimsInsurance.InsurerContact))]
-        public virtual ICollection<PimsInsurance> PimsInsuranceInsurerContacts { get; set; }
-        [InverseProperty(nameof(PimsInsurance.MotiRiskMgmtContact))]
-        public virtual ICollection<PimsInsurance> PimsInsuranceMotiRiskMgmtContacts { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Person))]
         public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; }
         [InverseProperty(nameof(PimsPersonAddress.Person))]
