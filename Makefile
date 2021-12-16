@@ -264,8 +264,8 @@ db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
 	@cd database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
-db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01).
-	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
+db-upgrade: ## Script to upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01).
+	@echo "$(P) Upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01)"
 	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
 	
 db-scaffold: ## Requires local install of sqlcmd
