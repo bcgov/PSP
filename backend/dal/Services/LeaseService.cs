@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
@@ -113,26 +112,7 @@ namespace Pims.Dal.Services
                 .Include(t => t.PimsPropertyImprovements)
 
                 .Include(l => l.PimsInsurances)
-                    .ThenInclude(i => i.InsurancePayeeTypeCodeNavigation)
-                .Include(l => l.PimsInsurances)
                     .ThenInclude(i => i.InsuranceTypeCodeNavigation)
-                .Include(l => l.PimsInsurances)
-                    .ThenInclude(i => i.InsurerOrg)
-                    .ThenInclude(o => o.PimsPersonOrganizations)
-                    .ThenInclude(o => o.Person)
-                    .ThenInclude(p => p.PimsContactMethods)
-                .Include(l => l.PimsInsurances)
-                    .ThenInclude(i => i.InsurerOrg)
-                    .ThenInclude(o => o.PimsContactMethods)
-                .Include(l => l.PimsInsurances)
-                    .ThenInclude(i => i.InsurerContact)
-                    .ThenInclude(p => p.PimsContactMethods)
-                .Include(l => l.PimsInsurances)
-                    .ThenInclude(i => i.MotiRiskMgmtContact)
-                    .ThenInclude(p => p.PimsContactMethods)
-                .Include(l => l.PimsInsurances)
-                    .ThenInclude(i => i.BctfaRiskMgmtContact)
-                    .ThenInclude(p => p.PimsContactMethods)
 
                 .Include(l => l.PimsSecurityDeposits)
                     .ThenInclude(s => s.SecDepHolderTypeCodeNavigation)

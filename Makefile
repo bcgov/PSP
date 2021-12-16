@@ -270,7 +270,7 @@ db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or
 	
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
-	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities -v -f
+	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f
 
 keycloak-sync: ## Syncs accounts with Keycloak and PIMS
 	@echo "$(P) Syncing keycloak with PIMS..."

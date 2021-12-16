@@ -42,7 +42,6 @@ namespace Pims.Dal
         public virtual DbSet<PimsDistrict> PimsDistricts { get; set; }
         public virtual DbSet<PimsInsurance> PimsInsurances { get; set; }
         public virtual DbSet<PimsInsuranceHist> PimsInsuranceHists { get; set; }
-        public virtual DbSet<PimsInsurancePayeeType> PimsInsurancePayeeTypes { get; set; }
         public virtual DbSet<PimsInsuranceType> PimsInsuranceTypes { get; set; }
         public virtual DbSet<PimsLease> PimsLeases { get; set; }
         public virtual DbSet<PimsLeaseCategoryType> PimsLeaseCategoryTypes { get; set; }
@@ -162,88 +161,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AccessRequestId)
                     .HasName("ACRQST_PK");
 
-                entity.ToTable("PIMS_ACCESS_REQUEST");
+                entity.Property(e => e.AccessRequestId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ID_SEQ])");
 
-                entity.HasIndex(e => e.AccessRequestStatusTypeCode, "ACRQST_ACCESS_REQUEST_STATUS_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.RoleId, "ACRQST_ROLE_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.UserId, "ACRQST_USER_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AccessRequestId)
-                    .HasColumnName("ACCESS_REQUEST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AccessRequestStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ACCESS_REQUEST_STATUS_TYPE_CODE");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Note).HasColumnName("NOTE");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.AccessRequestStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsAccessRequests)
@@ -268,86 +200,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AccessRequestHistId)
                     .HasName("PIMS_ACRQST_H_PK");
 
-                entity.ToTable("PIMS_ACCESS_REQUEST_HIST");
+                entity.Property(e => e.AccessRequestHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.AccessRequestHistId, e.EndDateHist }, "PIMS_ACRQST_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.AccessRequestHistId)
-                    .HasColumnName("_ACCESS_REQUEST_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_H_ID_SEQ])");
-
-                entity.Property(e => e.AccessRequestId).HasColumnName("ACCESS_REQUEST_ID");
-
-                entity.Property(e => e.AccessRequestStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ACCESS_REQUEST_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAccessRequestOrganization>(entity =>
@@ -355,86 +210,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AccessRequestOrganizationId)
                     .HasName("ACRQOR_PK");
 
-                entity.ToTable("PIMS_ACCESS_REQUEST_ORGANIZATION");
+                entity.Property(e => e.AccessRequestOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ORGANIZATION_ID_SEQ])");
 
-                entity.HasIndex(e => e.AccessRequestId, "ACRQOR_ACCESS_REQUEST_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.OrganizationId, e.AccessRequestId }, "ACRQOR_ORGANIZATION_ACCESS_REQUEST_TUC")
-                    .IsUnique();
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.OrganizationId, "ACRQOR_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AccessRequestOrganizationId)
-                    .HasColumnName("ACCESS_REQUEST_ORGANIZATION_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ORGANIZATION_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AccessRequestId).HasColumnName("ACCESS_REQUEST_ID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.AccessRequest)
                     .WithMany(p => p.PimsAccessRequestOrganizations)
@@ -453,83 +245,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AccessRequestOrganizationHistId)
                     .HasName("PIMS_ACRQOR_H_PK");
 
-                entity.ToTable("PIMS_ACCESS_REQUEST_ORGANIZATION_HIST");
+                entity.Property(e => e.AccessRequestOrganizationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ORGANIZATION_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.AccessRequestOrganizationHistId, e.EndDateHist }, "PIMS_ACRQOR_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.AccessRequestOrganizationHistId)
-                    .HasColumnName("_ACCESS_REQUEST_ORGANIZATION_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ORGANIZATION_H_ID_SEQ])");
-
-                entity.Property(e => e.AccessRequestId).HasColumnName("ACCESS_REQUEST_ID");
-
-                entity.Property(e => e.AccessRequestOrganizationId).HasColumnName("ACCESS_REQUEST_ORGANIZATION_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAccessRequestStatusType>(entity =>
@@ -537,49 +255,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AccessRequestStatusTypeCode)
                     .HasName("ARQSTT_PK");
 
-                entity.ToTable("PIMS_ACCESS_REQUEST_STATUS_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AccessRequestStatusTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("ACCESS_REQUEST_STATUS_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsActivity>(entity =>
@@ -587,83 +273,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ActivityId)
                     .HasName("ACTVTY_PK");
 
-                entity.ToTable("PIMS_ACTIVITY");
+                entity.Property(e => e.ActivityId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_ID_SEQ])");
 
-                entity.HasIndex(e => e.ActivityModelId, "ACTVTY_ACTIVITY_MODEL_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.ProjectId, "ACTVTY_PROJECT_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.WorkflowId, "ACTVTY_WORKFLOW_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ActivityId)
-                    .HasColumnName("ACTIVITY_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ActivityModelId).HasColumnName("ACTIVITY_MODEL_ID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.WorkflowId).HasColumnName("WORKFLOW_ID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.ActivityModel)
                     .WithMany(p => p.PimsActivities)
@@ -687,83 +311,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ActivityHistId)
                     .HasName("PIMS_ACTVTY_H_PK");
 
-                entity.ToTable("PIMS_ACTIVITY_HIST");
+                entity.Property(e => e.ActivityHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ActivityHistId, e.EndDateHist }, "PIMS_ACTVTY_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ActivityHistId)
-                    .HasColumnName("_ACTIVITY_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_H_ID_SEQ])");
-
-                entity.Property(e => e.ActivityId).HasColumnName("ACTIVITY_ID");
-
-                entity.Property(e => e.ActivityModelId).HasColumnName("ACTIVITY_MODEL_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.WorkflowId).HasColumnName("WORKFLOW_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsActivityModel>(entity =>
@@ -771,81 +321,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ActivityModelId)
                     .HasName("ACTMDL_PK");
 
-                entity.ToTable("PIMS_ACTIVITY_MODEL");
+                entity.Property(e => e.ActivityModelId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_MODEL_ID_SEQ])");
 
-                entity.Property(e => e.ActivityModelId)
-                    .HasColumnName("ACTIVITY_MODEL_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_MODEL_ID_SEQ])");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsActivityModelHist>(entity =>
@@ -853,84 +345,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ActivityModelHistId)
                     .HasName("PIMS_ACTMDL_H_PK");
 
-                entity.ToTable("PIMS_ACTIVITY_MODEL_HIST");
+                entity.Property(e => e.ActivityModelHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_MODEL_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ActivityModelHistId, e.EndDateHist }, "PIMS_ACTMDL_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ActivityModelHistId)
-                    .HasColumnName("_ACTIVITY_MODEL_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACTIVITY_MODEL_H_ID_SEQ])");
-
-                entity.Property(e => e.ActivityModelId).HasColumnName("ACTIVITY_MODEL_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAddress>(entity =>
@@ -938,124 +355,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AddressId)
                     .HasName("ADDRSS_PK");
 
-                entity.ToTable("PIMS_ADDRESS");
+                entity.Property(e => e.AddressId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ADDRESS_ID_SEQ])");
 
-                entity.HasIndex(e => e.CountryId, "ADDRSS_COUNTRY_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.DistrictCode, "ADDRSS_DISTRICT_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.ProvinceStateId, "ADDRSS_PROVINCE_STATE_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => e.RegionCode, "ADDRSS_REGION_CODE_IDX");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AddressId)
-                    .HasColumnName("ADDRESS_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ADDRESS_ID_SEQ])");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COMMENT");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CountryId).HasColumnName("COUNTRY_ID");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.Latitude)
-                    .HasColumnType("numeric(8, 6)")
-                    .HasColumnName("LATITUDE");
-
-                entity.Property(e => e.Longitude)
-                    .HasColumnType("numeric(9, 6)")
-                    .HasColumnName("LONGITUDE");
-
-                entity.Property(e => e.MunicipalityName)
-                    .HasMaxLength(200)
-                    .HasColumnName("MUNICIPALITY_NAME");
-
-                entity.Property(e => e.OtherCountry)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_COUNTRY")
-                    .HasComment("Other country not listed in drop-down list");
-
-                entity.Property(e => e.PostalCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("POSTAL_CODE");
-
-                entity.Property(e => e.ProvinceStateId).HasColumnName("PROVINCE_STATE_ID");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.StreetAddress1)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_1");
-
-                entity.Property(e => e.StreetAddress2)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_2");
-
-                entity.Property(e => e.StreetAddress3)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_3");
+                entity.Property(e => e.OtherCountry).HasComment("Other country not listed in drop-down list");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.PimsAddresses)
@@ -1084,121 +400,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AddressHistId)
                     .HasName("PIMS_ADDRSS_H_PK");
 
-                entity.ToTable("PIMS_ADDRESS_HIST");
+                entity.Property(e => e.AddressHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ADDRESS_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.AddressHistId, e.EndDateHist }, "PIMS_ADDRSS_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.AddressHistId)
-                    .HasColumnName("_ADDRESS_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ADDRESS_H_ID_SEQ])");
-
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COMMENT");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.CountryId).HasColumnName("COUNTRY_ID");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.Latitude)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("LATITUDE");
-
-                entity.Property(e => e.Longitude)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("LONGITUDE");
-
-                entity.Property(e => e.MunicipalityName)
-                    .HasMaxLength(200)
-                    .HasColumnName("MUNICIPALITY_NAME");
-
-                entity.Property(e => e.OtherCountry)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_COUNTRY");
-
-                entity.Property(e => e.PostalCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("POSTAL_CODE");
-
-                entity.Property(e => e.ProvinceStateId).HasColumnName("PROVINCE_STATE_ID");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.StreetAddress1)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_1");
-
-                entity.Property(e => e.StreetAddress2)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_2");
-
-                entity.Property(e => e.StreetAddress3)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_3");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsAddressUsageType>(entity =>
@@ -1206,49 +410,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AddressUsageTypeCode)
                     .HasName("ADUSGT_PK");
 
-                entity.ToTable("PIMS_ADDRESS_USAGE_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AddressUsageTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("ADDRESS_USAGE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsAreaUnitType>(entity =>
@@ -1256,54 +428,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.AreaUnitTypeCode)
                     .HasName("ARUNIT_PK");
 
-                entity.ToTable("PIMS_AREA_UNIT_TYPE");
-
                 entity.HasComment("The area unit used for measuring Properties.  The units must be in metric: square metres or hectares.");
 
-                entity.Property(e => e.AreaUnitTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("AREA_UNIT_TYPE_CODE")
-                    .HasComment("The area unit used for measuring Properties.  The units must be in metric: square metres or hectares.");
+                entity.Property(e => e.AreaUnitTypeCode).HasComment("The area unit used for measuring Properties.  The units must be in metric: square metres or hectares.");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Translation of the code value into a description that can be displayed to the user.");
+                entity.Property(e => e.Description).HasComment("Translation of the code value into a description that can be displayed to the user.");
 
-                entity.Property(e => e.DisplayOrder)
-                    .HasColumnName("DISPLAY_ORDER")
-                    .HasComment("Order in which to display the code values, if required.");
+                entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code value is still active or is now disabled.");
             });
@@ -1313,94 +456,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ClaimId)
                     .HasName("CLMTYP_PK");
 
-                entity.ToTable("PIMS_CLAIM");
+                entity.Property(e => e.ClaimId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CLAIM_ID_SEQ])");
 
-                entity.HasIndex(e => e.ClaimUid, "CLMTYP_CLAIM_UID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.KeycloakRoleId, "CLMTYP_KEYCLOAK_ROLE_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ClaimId)
-                    .HasColumnName("CLAIM_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CLAIM_ID_SEQ])");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ClaimUid).HasColumnName("CLAIM_UID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(500)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.KeycloakRoleId).HasColumnName("KEYCLOAK_ROLE_ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("NAME");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsClaimHist>(entity =>
@@ -1408,93 +480,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ClaimHistId)
                     .HasName("PIMS_CLMTYP_H_PK");
 
-                entity.ToTable("PIMS_CLAIM_HIST");
+                entity.Property(e => e.ClaimHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CLAIM_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ClaimHistId, e.EndDateHist }, "PIMS_CLMTYP_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ClaimHistId)
-                    .HasColumnName("_CLAIM_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CLAIM_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ClaimId).HasColumnName("CLAIM_ID");
-
-                entity.Property(e => e.ClaimUid).HasColumnName("CLAIM_UID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(500)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.KeycloakRoleId).HasColumnName("KEYCLOAK_ROLE_ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("NAME");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsContactMethod>(entity =>
@@ -1502,95 +490,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ContactMethodId)
                     .HasName("CNTMTH_PK");
 
-                entity.ToTable("PIMS_CONTACT_METHOD");
+                entity.Property(e => e.ContactMethodId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CONTACT_METHOD_ID_SEQ])");
 
-                entity.HasIndex(e => e.ContactMethodTypeCode, "CNTMTH_CONTACT_METHOD_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.OrganizationId, "CNTMTH_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PersonId, "CNTMTH_PERSON_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ContactMethodId)
-                    .HasColumnName("CONTACT_METHOD_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CONTACT_METHOD_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.ContactMethodTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("CONTACT_METHOD_TYPE_CODE");
-
-                entity.Property(e => e.ContactMethodValue)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("CONTACT_METHOD_VALUE");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsPreferredMethod)
-                    .HasColumnName("IS_PREFERRED_METHOD")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.IsPreferredMethod).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.ContactMethodTypeCodeNavigation)
                     .WithMany(p => p.PimsContactMethods)
@@ -1614,93 +530,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ContactMethodHistId)
                     .HasName("PIMS_CNTMTH_H_PK");
 
-                entity.ToTable("PIMS_CONTACT_METHOD_HIST");
+                entity.Property(e => e.ContactMethodHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CONTACT_METHOD_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ContactMethodHistId, e.EndDateHist }, "PIMS_CNTMTH_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ContactMethodHistId)
-                    .HasColumnName("_CONTACT_METHOD_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CONTACT_METHOD_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.ContactMethodId).HasColumnName("CONTACT_METHOD_ID");
-
-                entity.Property(e => e.ContactMethodTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("CONTACT_METHOD_TYPE_CODE");
-
-                entity.Property(e => e.ContactMethodValue)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("CONTACT_METHOD_VALUE");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsPreferredMethod).HasColumnName("IS_PREFERRED_METHOD");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsContactMethodType>(entity =>
@@ -1708,102 +540,24 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ContactMethodTypeCode)
                     .HasName("CNTMTT_PK");
 
-                entity.ToTable("PIMS_CONTACT_METHOD_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ContactMethodTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("CONTACT_METHOD_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsContactMgrVw>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToView("PIMS_CONTACT_MGR_VW");
 
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(50)
-                    .HasColumnName("FIRST_NAME");
-
-                entity.Property(e => e.Id)
-                    .IsRequired()
-                    .HasMaxLength(25)
-                    .IsUnicode(false)
-                    .HasColumnName("ID");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.MailingAddress)
-                    .HasMaxLength(200)
-                    .HasColumnName("MAILING_ADDRESS");
-
-                entity.Property(e => e.MiddleNames)
-                    .HasMaxLength(200)
-                    .HasColumnName("MIDDLE_NAMES");
-
-                entity.Property(e => e.MunicipalityName)
-                    .HasMaxLength(200)
-                    .HasColumnName("MUNICIPALITY_NAME");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.OrganizationName)
-                    .HasMaxLength(200)
-                    .HasColumnName("ORGANIZATION_NAME");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
-
-                entity.Property(e => e.ProvinceState)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROVINCE_STATE");
-
-                entity.Property(e => e.Summary)
-                    .HasMaxLength(302)
-                    .HasColumnName("SUMMARY");
-
-                entity.Property(e => e.Surname)
-                    .HasMaxLength(50)
-                    .HasColumnName("SURNAME");
+                entity.Property(e => e.Id).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsCountry>(entity =>
@@ -1811,49 +565,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.CountryId)
                     .HasName("CNTRY_PK");
 
-                entity.ToTable("PIMS_COUNTRY");
+                entity.Property(e => e.CountryId).ValueGeneratedNever();
 
-                entity.Property(e => e.CountryId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("COUNTRY_ID");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.CountryCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("COUNTRY_CODE");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
             });
 
             modelBuilder.Entity<PimsDataSourceType>(entity =>
@@ -1861,54 +583,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.DataSourceTypeCode)
                     .HasName("PIDSRT_PK");
 
-                entity.ToTable("PIMS_DATA_SOURCE_TYPE");
-
                 entity.HasComment("Describes the source system of the data (PAIMS, LIS, etc.)");
 
-                entity.Property(e => e.DataSourceTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("DATA_SOURCE_TYPE_CODE")
-                    .HasComment("Code val;ue of the source system of the data (PAIMS, LIS, etc.)");
+                entity.Property(e => e.DataSourceTypeCode).HasComment("Code val;ue of the source system of the data (PAIMS, LIS, etc.)");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Description of the source system of the data (PAIMS, LIS, etc.)");
+                entity.Property(e => e.Description).HasComment("Description of the source system of the data (PAIMS, LIS, etc.)");
 
-                entity.Property(e => e.DisplayOrder)
-                    .HasColumnName("DISPLAY_ORDER")
-                    .HasComment("Defines the default display order of the descriptions");
+                entity.Property(e => e.DisplayOrder).HasComment("Defines the default display order of the descriptions");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code is still in use");
             });
@@ -1918,53 +611,19 @@ namespace Pims.Dal
                 entity.HasKey(e => e.DistrictCode)
                     .HasName("DSTRCT_PK");
 
-                entity.ToTable("PIMS_DISTRICT");
+                entity.Property(e => e.DistrictCode).ValueGeneratedNever();
 
-                entity.HasIndex(e => e.RegionCode, "DSTRCT_REGION_CODE_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DistrictCode)
-                    .ValueGeneratedNever()
-                    .HasColumnName("DISTRICT_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.DistrictName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DISTRICT_NAME");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.RegionCodeNavigation)
                     .WithMany(p => p.PimsDistricts)
@@ -1978,150 +637,43 @@ namespace Pims.Dal
                 entity.HasKey(e => e.InsuranceId)
                     .HasName("INSRNC_PK");
 
-                entity.ToTable("PIMS_INSURANCE");
+                entity.Property(e => e.InsuranceId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INSURANCE_ID_SEQ])");
 
-                entity.HasIndex(e => e.BctfaRiskMgmtContactId, "INSRNC_BCTFA_RISK_MGMT_CONTACT_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.InsurancePayeeTypeCode, "INSRNC_INSURANCE_PAYEE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.InsuranceTypeCode, "INSRNC_INSURANCE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.InsurerContactId, "INSRNC_INSURER_CONTACT_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.InsurerOrgId, "INSRNC_INSURER_ORG_ID_IDX");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeaseId, "INSRNC_LEASE_ID_IDX");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.MotiRiskMgmtContactId, "INSRNC_MOTI_RISK_MGMT_CONTACT_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.InsuranceId)
-                    .HasColumnName("INSURANCE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INSURANCE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.BctfaRiskMgmtContactId).HasColumnName("BCTFA_RISK_MGMT_CONTACT_ID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.CoverageDescription)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COVERAGE_DESCRIPTION");
+                entity.Property(e => e.CoverageDescription).HasComment("Description of the insurance coverage");
 
                 entity.Property(e => e.CoverageLimit)
-                    .HasColumnType("money")
-                    .HasColumnName("COVERAGE_LIMIT")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Monetary limit of the insurance coverage");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ExpiryDate)
-                    .HasColumnType("date")
-                    .HasColumnName("EXPIRY_DATE");
+                entity.Property(e => e.ExpiryDate).HasComment("Date the insurance expires");
 
-                entity.Property(e => e.InsurancePayeeTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("INSURANCE_PAYEE_TYPE_CODE");
+                entity.Property(e => e.IsInsuranceInPlace)
+                    .HasDefaultValueSql("(CONVERT([bit],(0)))")
+                    .HasComment("Indicator that digital license exists");
 
-                entity.Property(e => e.InsuranceTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("INSURANCE_TYPE_CODE");
-
-                entity.Property(e => e.InsuredValue)
-                    .HasColumnType("money")
-                    .HasColumnName("INSURED_VALUE");
-
-                entity.Property(e => e.InsurerContactId).HasColumnName("INSURER_CONTACT_ID");
-
-                entity.Property(e => e.InsurerOrgId).HasColumnName("INSURER_ORG_ID");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.MotiRiskMgmtContactId).HasColumnName("MOTI_RISK_MGMT_CONTACT_ID");
-
-                entity.Property(e => e.OtherInsuranceType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_INSURANCE_TYPE");
-
-                entity.Property(e => e.RiskAssessmentCompletedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("RISK ASSESSMENT_COMPLETED_DATE");
-
-                entity.Property(e => e.StartDate)
-                    .HasColumnType("date")
-                    .HasColumnName("START_DATE");
-
-                entity.HasOne(d => d.BctfaRiskMgmtContact)
-                    .WithMany(p => p.PimsInsuranceBctfaRiskMgmtContacts)
-                    .HasForeignKey(d => d.BctfaRiskMgmtContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_INSRNC_BCTFA_CONTACT_FK");
-
-                entity.HasOne(d => d.InsurancePayeeTypeCodeNavigation)
-                    .WithMany(p => p.PimsInsurances)
-                    .HasForeignKey(d => d.InsurancePayeeTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_INSPAY_PIM_INSRNC_FK");
+                entity.Property(e => e.OtherInsuranceType).HasComment("Description of the non-standard insurance coverage type");
 
                 entity.HasOne(d => d.InsuranceTypeCodeNavigation)
                     .WithMany(p => p.PimsInsurances)
@@ -2129,29 +681,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_INSPYT_PIM_INSRNC_FK");
 
-                entity.HasOne(d => d.InsurerContact)
-                    .WithMany(p => p.PimsInsuranceInsurerContacts)
-                    .HasForeignKey(d => d.InsurerContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_INSRNC_INSURER_CONTACT_FK");
-
-                entity.HasOne(d => d.InsurerOrg)
-                    .WithMany(p => p.PimsInsurances)
-                    .HasForeignKey(d => d.InsurerOrgId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_ORG_PIM_INSRNC_FK");
-
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsInsurances)
                     .HasForeignKey(d => d.LeaseId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LEASE_PIM_INSRNC_FK");
-
-                entity.HasOne(d => d.MotiRiskMgmtContact)
-                    .WithMany(p => p.PimsInsuranceMotiRiskMgmtContacts)
-                    .HasForeignKey(d => d.MotiRiskMgmtContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_PERSON_PIM_INSRNCMOTI_CONTACT_FK");
             });
 
             modelBuilder.Entity<PimsInsuranceHist>(entity =>
@@ -2159,175 +693,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.InsuranceHistId)
                     .HasName("PIMS_INSRNC_H_PK");
 
-                entity.ToTable("PIMS_INSURANCE_HIST");
+                entity.Property(e => e.InsuranceHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INSURANCE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.InsuranceHistId, e.EndDateHist }, "PIMS_INSRNC_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.InsuranceHistId)
-                    .HasColumnName("_INSURANCE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INSURANCE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.BctfaRiskMgmtContactId).HasColumnName("BCTFA_RISK_MGMT_CONTACT_ID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.CoverageDescription)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COVERAGE_DESCRIPTION");
-
-                entity.Property(e => e.CoverageLimit)
-                    .HasColumnType("money")
-                    .HasColumnName("COVERAGE_LIMIT");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ExpiryDate)
-                    .HasColumnType("date")
-                    .HasColumnName("EXPIRY_DATE");
-
-                entity.Property(e => e.InsuranceId).HasColumnName("INSURANCE_ID");
-
-                entity.Property(e => e.InsurancePayeeTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("INSURANCE_PAYEE_TYPE_CODE");
-
-                entity.Property(e => e.InsuranceTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("INSURANCE_TYPE_CODE");
-
-                entity.Property(e => e.InsuredValue)
-                    .HasColumnType("money")
-                    .HasColumnName("INSURED_VALUE");
-
-                entity.Property(e => e.InsurerContactId).HasColumnName("INSURER_CONTACT_ID");
-
-                entity.Property(e => e.InsurerOrgId).HasColumnName("INSURER_ORG_ID");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.MotiRiskMgmtContactId).HasColumnName("MOTI_RISK_MGMT_CONTACT_ID");
-
-                entity.Property(e => e.OtherInsuranceType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_INSURANCE_TYPE");
-
-                entity.Property(e => e.RiskAssessmentCompletedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("RISK ASSESSMENT_COMPLETED_DATE");
-
-                entity.Property(e => e.StartDate)
-                    .HasColumnType("date")
-                    .HasColumnName("START_DATE");
-            });
-
-            modelBuilder.Entity<PimsInsurancePayeeType>(entity =>
-            {
-                entity.HasKey(e => e.InsurancePayeeTypeCode)
-                    .HasName("INSPAY_PK");
-
-                entity.ToTable("PIMS_INSURANCE_PAYEE_TYPE");
-
-                entity.Property(e => e.InsurancePayeeTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("INSURANCE_PAYEE_TYPE_CODE");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsInsuranceType>(entity =>
@@ -2335,49 +703,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.InsuranceTypeCode)
                     .HasName("INSPYT_PK");
 
-                entity.ToTable("PIMS_INSURANCE_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.InsuranceTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("INSURANCE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLease>(entity =>
@@ -2385,280 +721,101 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseId)
                     .HasName("LEASE_PK");
 
-                entity.ToTable("PIMS_LEASE");
+                entity.Property(e => e.LeaseId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeaseCategoryTypeCode, "LEASE_LEASE_CATEGORY_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LeaseInitiatorTypeCode, "LEASE_LEASE_INITIATOR_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeaseLicenseTypeCode, "LEASE_LEASE_LICENSE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeasePayRvblTypeCode, "LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LeasePmtFreqTypeCode, "LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeaseProgramTypeCode, "LEASE_LEASE_PROGRAM_TYPE_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeasePurposeTypeCode, "LEASE_LEASE_PURPOSE_TYPE_CODE_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => e.LeaseResponsibilityTypeCode, "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LeaseStatusTypeCode, "LEASE_LEASE_STATUS_TYPE_CODE_IDX");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LFileNo, "LEASE_L_FILE_NO_IDX");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PsFileNo, "LEASE_PS_FILE_NO_IDX");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.TfaFileNo, "LEASE_TFA_FILE_NO_IDX");
-
-                entity.Property(e => e.LeaseId)
-                    .HasColumnName("LEASE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DocumentationReference)
-                    .HasMaxLength(500)
-                    .HasColumnName("DOCUMENTATION_REFERENCE")
-                    .HasComment("Location of documents pertianing to the lease/license");
+                entity.Property(e => e.DocumentationReference).HasComment("Location of documents pertianing to the lease/license");
 
                 entity.Property(e => e.HasDigitalFile)
-                    .IsRequired()
-                    .HasColumnName("HAS_DIGITAL_FILE")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicator that digital file exists");
 
                 entity.Property(e => e.HasDigitalLicense)
-                    .IsRequired()
-                    .HasColumnName("HAS_DIGITAL_LICENSE")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicator that digital license exists");
 
                 entity.Property(e => e.HasPhysicalFile)
-                    .IsRequired()
-                    .HasColumnName("HAS_PHYSICAL_FILE")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicator that phyical file exists");
 
                 entity.Property(e => e.HasPhysicialLicense)
-                    .IsRequired()
-                    .HasColumnName("HAS_PHYSICIAL_LICENSE")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicator that physical license exists");
 
-                entity.Property(e => e.InspectionDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("INSPECTION_DATE")
-                    .HasComment("Inspection date");
+                entity.Property(e => e.InspectionDate).HasComment("Inspection date");
 
-                entity.Property(e => e.InspectionNotes)
-                    .HasColumnName("INSPECTION_NOTES")
-                    .HasComment("Notes accompanying inspection");
+                entity.Property(e => e.InspectionNotes).HasComment("Notes accompanying inspection");
 
                 entity.Property(e => e.IsCommBldg)
-                    .HasColumnName("IS_COMM_BLDG")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is a commercial building");
 
                 entity.Property(e => e.IsExpired)
-                    .IsRequired()
-                    .HasColumnName("IS_EXPIRED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Incidcator that lease/license has expired");
 
                 entity.Property(e => e.IsOtherImprovement)
-                    .HasColumnName("IS_OTHER_IMPROVEMENT")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is improvement of another description");
 
                 entity.Property(e => e.IsSubjectToRta)
-                    .HasColumnName("IS_SUBJECT_TO_RTA")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is subject the Residential Tenancy Act");
 
-                entity.Property(e => e.LFileNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("L_FILE_NO")
-                    .HasComment("Generated identifying lease/licence number");
+                entity.Property(e => e.LFileNo).HasComment("Generated identifying lease/licence number");
 
-                entity.Property(e => e.LeaseAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("LEASE_AMOUNT")
-                    .HasComment("Lease/licence amount");
+                entity.Property(e => e.LeaseAmount).HasComment("Lease/licence amount");
 
-                entity.Property(e => e.LeaseCategoryOtherDesc)
-                    .HasMaxLength(200)
-                    .HasColumnName("LEASE_CATEGORY_OTHER_DESC")
-                    .HasComment("User-specified lease category description not included in standard set of lease purposes");
+                entity.Property(e => e.LeaseCategoryOtherDesc).HasComment("User-specified lease category description not included in standard set of lease purposes");
 
-                entity.Property(e => e.LeaseCategoryTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
+                entity.Property(e => e.LeaseDescription).HasComment("Manually etered lease description, not the legal description");
 
-                entity.Property(e => e.LeaseDescription)
-                    .HasColumnName("LEASE_DESCRIPTION")
-                    .HasComment("Manually etered lease description, not the legal description");
+                entity.Property(e => e.LeaseNotes).HasComment("Notes accompanying lease");
 
-                entity.Property(e => e.LeaseInitiatorTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_INITIATOR_TYPE_CODE");
+                entity.Property(e => e.LeasePurposeOtherDesc).HasComment("User-specified lease purpose description not included in standard set of lease purposes");
 
-                entity.Property(e => e.LeaseLicenseTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_LICENSE_TYPE_CODE");
+                entity.Property(e => e.MotiContact).HasComment("Contact of the MoTI person associated with the lease");
 
-                entity.Property(e => e.LeaseNotes)
-                    .HasColumnName("LEASE_NOTES")
-                    .HasComment("Notes accompanying lease");
+                entity.Property(e => e.MotiRegion).HasComment("MoTI region associated with the lease");
 
-                entity.Property(e => e.LeasePayRvblTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
+                entity.Property(e => e.OrigExpiryDate).HasComment("Original expiry date of the lease/license");
 
-                entity.Property(e => e.LeasePmtFreqTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE");
+                entity.Property(e => e.OrigStartDate).HasComment("Original start date of the lease/license");
 
-                entity.Property(e => e.LeaseProgramTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PROGRAM_TYPE_CODE");
+                entity.Property(e => e.OtherLeaseLicenseType).HasComment("Description of a non-standard lease/license type");
 
-                entity.Property(e => e.LeasePurposeOtherDesc)
-                    .HasMaxLength(200)
-                    .HasColumnName("LEASE_PURPOSE_OTHER_DESC")
-                    .HasComment("User-specified lease purpose description not included in standard set of lease purposes");
+                entity.Property(e => e.OtherLeaseProgramType).HasComment("Description of a non-standard lease program type");
 
-                entity.Property(e => e.LeasePurposeTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PURPOSE_TYPE_CODE");
+                entity.Property(e => e.OtherLeasePurposeType).HasComment("Description of a non-standard lease purpose type");
 
-                entity.Property(e => e.LeaseResponsibilityTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
+                entity.Property(e => e.PsFileNo).HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
 
-                entity.Property(e => e.LeaseStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_STATUS_TYPE_CODE");
+                entity.Property(e => e.ResponsibilityEffectiveDate).HasComment("Date current responsibility came into effect for this lease");
 
-                entity.Property(e => e.MotiContact)
-                    .HasMaxLength(200)
-                    .HasColumnName("MOTI_CONTACT")
-                    .HasComment("Contact of the MoTI person associated with the lease");
+                entity.Property(e => e.ReturnNotes).HasComment("Notes accompanying lease");
 
-                entity.Property(e => e.MotiRegion)
-                    .HasMaxLength(200)
-                    .HasColumnName("MOTI_REGION")
-                    .HasComment("MoTI region associated with the lease");
-
-                entity.Property(e => e.OrigExpiryDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ORIG_EXPIRY_DATE")
-                    .HasComment("Original expiry date of the lease/license");
-
-                entity.Property(e => e.OrigStartDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ORIG_START_DATE")
-                    .HasComment("Original start date of the lease/license");
-
-                entity.Property(e => e.OtherLeaseLicenseType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_LEASE_LICENSE_TYPE")
-                    .HasComment("Description of a non-standard lease/license type");
-
-                entity.Property(e => e.OtherLeaseProgramType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_LEASE_PROGRAM_TYPE")
-                    .HasComment("Description of a non-standard lease program type");
-
-                entity.Property(e => e.OtherLeasePurposeType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_LEASE_PURPOSE_TYPE")
-                    .HasComment("Description of a non-standard lease purpose type");
-
-                entity.Property(e => e.PsFileNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("PS_FILE_NO")
-                    .HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
-
-                entity.Property(e => e.ResponsibilityEffectiveDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("RESPONSIBILITY_EFFECTIVE_DATE")
-                    .HasComment("Date current responsibility came into effect for this lease");
-
-                entity.Property(e => e.ReturnNotes)
-                    .HasColumnName("RETURN_NOTES")
-                    .HasComment("Notes accompanying lease");
-
-                entity.Property(e => e.TfaFileNo)
-                    .HasColumnName("TFA_FILE_NO")
-                    .HasComment("Sourced from t_fileMain.TFA_File_Number");
+                entity.Property(e => e.TfaFileNo).HasComment("Sourced from t_fileMain.TFA_File_Number");
 
                 entity.HasOne(d => d.LeaseCategoryTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
@@ -2668,6 +825,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseInitiatorTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation)
@@ -2716,49 +874,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseCategoryTypeCode)
                     .HasName("LSCATT_PK");
 
-                entity.ToTable("PIMS_LEASE_CATEGORY_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LeaseCategoryTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeaseHist>(entity =>
@@ -2766,196 +892,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseHistId)
                     .HasName("PIMS_LEASE_H_PK");
 
-                entity.ToTable("PIMS_LEASE_HIST");
+                entity.Property(e => e.LeaseHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.LeaseHistId, e.EndDateHist }, "PIMS_LEASE_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.LeaseHistId)
-                    .HasColumnName("_LEASE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.DocumentationReference)
-                    .HasMaxLength(500)
-                    .HasColumnName("DOCUMENTATION_REFERENCE");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.HasDigitalFile).HasColumnName("HAS_DIGITAL_FILE");
-
-                entity.Property(e => e.HasDigitalLicense).HasColumnName("HAS_DIGITAL_LICENSE");
-
-                entity.Property(e => e.HasPhysicalFile).HasColumnName("HAS_PHYSICAL_FILE");
-
-                entity.Property(e => e.HasPhysicialLicense).HasColumnName("HAS_PHYSICIAL_LICENSE");
-
-                entity.Property(e => e.InspectionDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("INSPECTION_DATE");
-
-                entity.Property(e => e.IsCommBldg).HasColumnName("IS_COMM_BLDG");
-
-                entity.Property(e => e.IsExpired).HasColumnName("IS_EXPIRED");
-
-                entity.Property(e => e.IsOtherImprovement).HasColumnName("IS_OTHER_IMPROVEMENT");
-
-                entity.Property(e => e.IsSubjectToRta).HasColumnName("IS_SUBJECT_TO_RTA");
-
-                entity.Property(e => e.LFileNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("L_FILE_NO");
-
-                entity.Property(e => e.LeaseAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("LEASE_AMOUNT");
-
-                entity.Property(e => e.LeaseCategoryOtherDesc)
-                    .HasMaxLength(200)
-                    .HasColumnName("LEASE_CATEGORY_OTHER_DESC");
-
-                entity.Property(e => e.LeaseCategoryTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_CATEGORY_TYPE_CODE");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.LeaseInitiatorTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_INITIATOR_TYPE_CODE");
-
-                entity.Property(e => e.LeaseLicenseTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_LICENSE_TYPE_CODE");
-
-                entity.Property(e => e.LeasePayRvblTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
-
-                entity.Property(e => e.LeasePmtFreqTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE");
-
-                entity.Property(e => e.LeaseProgramTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PROGRAM_TYPE_CODE");
-
-                entity.Property(e => e.LeasePurposeOtherDesc)
-                    .HasMaxLength(200)
-                    .HasColumnName("LEASE_PURPOSE_OTHER_DESC");
-
-                entity.Property(e => e.LeasePurposeTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PURPOSE_TYPE_CODE");
-
-                entity.Property(e => e.LeaseResponsibilityTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE");
-
-                entity.Property(e => e.LeaseStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.MotiContact)
-                    .HasMaxLength(200)
-                    .HasColumnName("MOTI_CONTACT");
-
-                entity.Property(e => e.MotiRegion)
-                    .HasMaxLength(200)
-                    .HasColumnName("MOTI_REGION");
-
-                entity.Property(e => e.OrigExpiryDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ORIG_EXPIRY_DATE");
-
-                entity.Property(e => e.OrigStartDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ORIG_START_DATE");
-
-                entity.Property(e => e.OtherLeaseLicenseType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_LEASE_LICENSE_TYPE");
-
-                entity.Property(e => e.OtherLeaseProgramType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_LEASE_PROGRAM_TYPE");
-
-                entity.Property(e => e.OtherLeasePurposeType)
-                    .HasMaxLength(200)
-                    .HasColumnName("OTHER_LEASE_PURPOSE_TYPE");
-
-                entity.Property(e => e.PsFileNo)
-                    .HasMaxLength(50)
-                    .HasColumnName("PS_FILE_NO");
-
-                entity.Property(e => e.ResponsibilityEffectiveDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("RESPONSIBILITY_EFFECTIVE_DATE");
-
-                entity.Property(e => e.TfaFileNo).HasColumnName("TFA_FILE_NO");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeaseInitiatorType>(entity =>
@@ -2963,53 +902,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseInitiatorTypeCode)
                     .HasName("LINITT_PK");
 
-                entity.ToTable("PIMS_LEASE_INITIATOR_TYPE");
-
                 entity.HasComment("Describes the initiator of the lease");
 
-                entity.Property(e => e.LeaseInitiatorTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_INITIATOR_TYPE_CODE")
-                    .HasComment("Code value of the initiator of the lease");
+                entity.Property(e => e.LeaseInitiatorTypeCode).HasComment("Code value of the initiator of the lease");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Description of the initiator of the lease");
+                entity.Property(e => e.Description).HasComment("Description of the initiator of the lease");
 
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeaseLicenseType>(entity =>
@@ -3017,49 +926,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseLicenseTypeCode)
                     .HasName("LELIST_PK");
 
-                entity.ToTable("PIMS_LEASE_LICENSE_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LeaseLicenseTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_LICENSE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeasePayRvblType>(entity =>
@@ -3067,49 +944,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePayRvblTypeCode)
                     .HasName("LSPRTY_PK");
 
-                entity.ToTable("PIMS_LEASE_PAY_RVBL_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LeasePayRvblTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAY_RVBL_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeasePayment>(entity =>
@@ -3117,114 +962,29 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentId)
                     .HasName("LSPYMT_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT");
+                entity.Property(e => e.LeasePaymentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeasePaymentMethodTypeCode, "LSPYMT_LEASE_PAYMENT_METHOD_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LeasePaymentPeriodId, "LSPYMT_LEASE_PAYMENT_PERIOD_ID_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeaseTermId, "LSPYMT_LEASE_TERM_ID_IDX");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.LeasePaymentId)
-                    .HasColumnName("LEASE_PAYMENT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LeasePaymentMethodTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAYMENT_METHOD_TYPE_CODE");
-
-                entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
-
-                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(2000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.PaymentAmountGst)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_GST");
-
-                entity.Property(e => e.PaymentAmountPreTax)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_PRE_TAX");
-
-                entity.Property(e => e.PaymentAmountPst)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_PST");
-
-                entity.Property(e => e.PaymentAmountTotal)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_TOTAL");
-
-                entity.Property(e => e.PaymentReceivedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("PAYMENT_RECEIVED_DATE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.LeasePaymentMethodTypeCodeNavigation)
                     .WithMany(p => p.PimsLeasePayments)
@@ -3250,110 +1010,29 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentForecastId)
                     .HasName("LPFCST_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_FORECAST");
+                entity.Property(e => e.LeasePaymentForecastId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeasePaymentPeriodId, "LPFCST_LEASE_PAYMENT_PERIOD_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LeasePaymentStatusTypeCode, "LPFCST_LEASE_PAYMENT_STATUS_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.LeaseTermId, "LPFCST_LEASE_TERM_ID_IDX");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.LeasePaymentForecastId)
-                    .HasColumnName("LEASE_PAYMENT_FORECAST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ForecastPaymentGst)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_GST");
-
-                entity.Property(e => e.ForecastPaymentPreTax)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_PRE_TAX");
-
-                entity.Property(e => e.ForecastPaymentPst)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_PST");
-
-                entity.Property(e => e.ForecastPaymentTotal)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_TOTAL");
-
-                entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
-
-                entity.Property(e => e.LeasePaymentStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAYMENT_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
-
-                entity.Property(e => e.PaymentDueDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("PAYMENT_DUE_DATE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.LeasePaymentPeriod)
                     .WithMany(p => p.PimsLeasePaymentForecasts)
@@ -3379,106 +1058,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentForecastHistId)
                     .HasName("PIMS_LPFCST_H_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_FORECAST_HIST");
+                entity.Property(e => e.LeasePaymentForecastHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.LeasePaymentForecastHistId, e.EndDateHist }, "PIMS_LPFCST_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.LeasePaymentForecastHistId)
-                    .HasColumnName("_LEASE_PAYMENT_FORECAST_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ForecastPaymentGst)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_GST");
-
-                entity.Property(e => e.ForecastPaymentPreTax)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_PRE_TAX");
-
-                entity.Property(e => e.ForecastPaymentPst)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_PST");
-
-                entity.Property(e => e.ForecastPaymentTotal)
-                    .HasColumnType("money")
-                    .HasColumnName("FORECAST_PAYMENT_TOTAL");
-
-                entity.Property(e => e.LeasePaymentForecastId).HasColumnName("LEASE_PAYMENT_FORECAST_ID");
-
-                entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
-
-                entity.Property(e => e.LeasePaymentStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAYMENT_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
-
-                entity.Property(e => e.PaymentDueDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("PAYMENT_DUE_DATE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeasePaymentHist>(entity =>
@@ -3486,110 +1068,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentHistId)
                     .HasName("PIMS_LSPYMT_H_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_HIST");
+                entity.Property(e => e.LeasePaymentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.LeasePaymentHistId, e.EndDateHist }, "PIMS_LSPYMT_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.LeasePaymentHistId)
-                    .HasColumnName("_LEASE_PAYMENT_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LeasePaymentId).HasColumnName("LEASE_PAYMENT_ID");
-
-                entity.Property(e => e.LeasePaymentMethodTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAYMENT_METHOD_TYPE_CODE");
-
-                entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
-
-                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(2000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.PaymentAmountGst)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_GST");
-
-                entity.Property(e => e.PaymentAmountPreTax)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_PRE_TAX");
-
-                entity.Property(e => e.PaymentAmountPst)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_PST");
-
-                entity.Property(e => e.PaymentAmountTotal)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT_TOTAL");
-
-                entity.Property(e => e.PaymentReceivedDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("PAYMENT_RECEIVED_DATE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeasePaymentMethodType>(entity =>
@@ -3597,52 +1078,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentMethodTypeCode)
                     .HasName("LSPMMT_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_METHOD_TYPE");
+                entity.Property(e => e.LeasePaymentMethodTypeCode).HasComment("Payment method type code");
 
-                entity.Property(e => e.LeasePaymentMethodTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAYMENT_METHOD_TYPE_CODE")
-                    .HasComment("Payment method type code");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.Description).HasComment("Payment method type description");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Payment method type description");
-
-                entity.Property(e => e.DisplayOrder)
-                    .HasColumnName("DISPLAY_ORDER")
-                    .HasComment("Display order of the descriptions");
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this code disabled?");
             });
@@ -3652,84 +1104,31 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentPeriodId)
                     .HasName("LPYPER_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_PERIOD");
+                entity.Property(e => e.LeasePaymentPeriodId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_PERIOD_ID_SEQ])");
 
-                entity.Property(e => e.LeasePaymentPeriodId)
-                    .HasColumnName("LEASE_PAYMENT_PERIOD_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_PERIOD_ID_SEQ])");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsPeriodClosed)
-                    .IsRequired()
-                    .HasColumnName("IS_PERIOD_CLOSED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.PeriodStartDate)
-                    .HasColumnType("date")
-                    .HasColumnName("PERIOD_START_DATE");
+                entity.Property(e => e.IsPeriodClosed).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeasePaymentPeriodHist>(entity =>
@@ -3737,83 +1136,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentPeriodHistId)
                     .HasName("PIMS_LPYPER_H_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_PERIOD_HIST");
+                entity.Property(e => e.LeasePaymentPeriodHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_PERIOD_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.LeasePaymentPeriodHistId, e.EndDateHist }, "PIMS_LPYPER_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.LeasePaymentPeriodHistId)
-                    .HasColumnName("_LEASE_PAYMENT_PERIOD_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_PERIOD_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsPeriodClosed).HasColumnName("IS_PERIOD_CLOSED");
-
-                entity.Property(e => e.LeasePaymentPeriodId).HasColumnName("LEASE_PAYMENT_PERIOD_ID");
-
-                entity.Property(e => e.PeriodStartDate)
-                    .HasColumnType("date")
-                    .HasColumnName("PERIOD_START_DATE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeasePaymentStatusType>(entity =>
@@ -3821,54 +1146,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePaymentStatusTypeCode)
                     .HasName("LPSTST_PK");
 
-                entity.ToTable("PIMS_LEASE_PAYMENT_STATUS_TYPE");
-
                 entity.HasComment("Describes the status of forecast payments");
 
-                entity.Property(e => e.LeasePaymentStatusTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PAYMENT_STATUS_TYPE_CODE")
-                    .HasComment("Payment status type code");
+                entity.Property(e => e.LeasePaymentStatusTypeCode).HasComment("Payment status type code");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Payment status type description");
+                entity.Property(e => e.Description).HasComment("Payment status type description");
 
-                entity.Property(e => e.DisplayOrder)
-                    .HasColumnName("DISPLAY_ORDER")
-                    .HasComment("Display order of the descriptions");
+                entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this code disabled?");
             });
@@ -3878,49 +1174,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePmtFreqTypeCode)
                     .HasName("LSPMTF_PK");
 
-                entity.ToTable("PIMS_LEASE_PMT_FREQ_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LeasePmtFreqTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PMT_FREQ_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeaseProgramType>(entity =>
@@ -3928,49 +1192,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseProgramTypeCode)
                     .HasName("LSPRGT_PK");
 
-                entity.ToTable("PIMS_LEASE_PROGRAM_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LeaseProgramTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PROGRAM_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeasePurposeType>(entity =>
@@ -3978,49 +1210,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeasePurposeTypeCode)
                     .HasName("LPRPTY_PK");
 
-                entity.ToTable("PIMS_LEASE_PURPOSE_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LeasePurposeTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_PURPOSE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeaseResponsibilityType>(entity =>
@@ -4028,53 +1228,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseResponsibilityTypeCode)
                     .HasName("LRESPT_PK");
 
-                entity.ToTable("PIMS_LEASE_RESPONSIBILITY_TYPE");
-
                 entity.HasComment("Describes which organization is responsible for this lease");
 
-                entity.Property(e => e.LeaseResponsibilityTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_RESPONSIBILITY_TYPE_CODE")
-                    .HasComment("Code value of the organization responsible for this lease");
+                entity.Property(e => e.LeaseResponsibilityTypeCode).HasComment("Code value of the organization responsible for this lease");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Description of the organization responsible for this lease");
+                entity.Property(e => e.Description).HasComment("Description of the organization responsible for this lease");
 
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeaseStatusType>(entity =>
@@ -4082,53 +1252,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseStatusTypeCode)
                     .HasName("LSSTYP_PK");
 
-                entity.ToTable("PIMS_LEASE_STATUS_TYPE");
-
                 entity.HasComment("Describes the status of the lease");
 
-                entity.Property(e => e.LeaseStatusTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_STATUS_TYPE_CODE")
-                    .HasComment("Code value of the status of the lease");
+                entity.Property(e => e.LeaseStatusTypeCode).HasComment("Code value of the status of the lease");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Description of the status of the lease");
+                entity.Property(e => e.Description).HasComment("Description of the status of the lease");
 
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLeaseTenant>(entity =>
@@ -4136,98 +1276,29 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseTenantId)
                     .HasName("TENANT_PK");
 
-                entity.ToTable("PIMS_LEASE_TENANT");
+                entity.Property(e => e.LeaseTenantId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TENANT_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeaseId, "TENANT_LEASE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LessorTypeCode, "TENANT_LESSOR_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.OrganizationId, "TENANT_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.PersonId, "TENANT_PERSON_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.LeaseTenantId)
-                    .HasColumnName("LEASE_TENANT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TENANT_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.LessorTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LESSOR_TYPE_CODE");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(2000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsLeaseTenants)
@@ -4257,92 +1328,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseTenantHistId)
                     .HasName("PIMS_TENANT_H_PK");
 
-                entity.ToTable("PIMS_LEASE_TENANT_HIST");
+                entity.Property(e => e.LeaseTenantHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TENANT_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.LeaseTenantHistId, e.EndDateHist }, "PIMS_TENANT_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.LeaseTenantHistId)
-                    .HasColumnName("_LEASE_TENANT_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TENANT_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.LeaseTenantId).HasColumnName("LEASE_TENANT_ID");
-
-                entity.Property(e => e.LessorTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LESSOR_TYPE_CODE");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(2000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeaseTerm>(entity =>
@@ -4350,101 +1338,35 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseTermId)
                     .HasName("LSTERM_PK");
 
-                entity.ToTable("PIMS_LEASE_TERM");
+                entity.Property(e => e.LeaseTermId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeaseId, "LSTERM_LEASE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.LeaseTermStatusTypeCode, "LSTERM_LEASE_TERM_STATUS_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.LeaseTermId)
-                    .HasColumnName("LEASE_TERM_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TERM_ID_SEQ])");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.TermExpiryDate).HasComment("Expiry date of the current term of the lease/licence");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.TermRenewalDate).HasComment("Renewal date of the current term of the lease/licence");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.LeaseTermStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_TERM_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.TermExpiryDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERM_EXPIRY_DATE")
-                    .HasComment("Expiry date of the current term of the lease/licence");
-
-                entity.Property(e => e.TermRenewalDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERM_RENEWAL_DATE")
-                    .HasComment("Renewal date of the current term of the lease/licence");
-
-                entity.Property(e => e.TermStartDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERM_START_DATE")
-                    .HasComment("Start date of the current term of the lease/licence");
+                entity.Property(e => e.TermStartDate).HasComment("Start date of the current term of the lease/licence");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsLeaseTerms)
@@ -4464,96 +1386,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseTermHistId)
                     .HasName("PIMS_LSTERM_H_PK");
 
-                entity.ToTable("PIMS_LEASE_TERM_HIST");
+                entity.Property(e => e.LeaseTermHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TERM_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.LeaseTermHistId, e.EndDateHist }, "PIMS_LSTERM_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.LeaseTermHistId)
-                    .HasColumnName("_LEASE_TERM_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_TERM_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.LeaseTermId).HasColumnName("LEASE_TERM_ID");
-
-                entity.Property(e => e.LeaseTermStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_TERM_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.TermExpiryDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERM_EXPIRY_DATE");
-
-                entity.Property(e => e.TermRenewalDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERM_RENEWAL_DATE");
-
-                entity.Property(e => e.TermStartDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERM_START_DATE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeaseTermStatusType>(entity =>
@@ -4561,53 +1396,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LeaseTermStatusTypeCode)
                     .HasName("LTRMST_PK");
 
-                entity.ToTable("PIMS_LEASE_TERM_STATUS_TYPE");
-
                 entity.HasComment("Describes the status of the lease term");
 
-                entity.Property(e => e.LeaseTermStatusTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LEASE_TERM_STATUS_TYPE_CODE")
-                    .HasComment("Code value of the status of the lease term");
+                entity.Property(e => e.LeaseTermStatusTypeCode).HasComment("Code value of the status of the lease term");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Description of the status of the lease term");
+                entity.Property(e => e.Description).HasComment("Description of the status of the lease term");
 
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsLessorType>(entity =>
@@ -4615,49 +1420,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.LessorTypeCode)
                     .HasName("LSSRTY_PK");
 
-                entity.ToTable("PIMS_LESSOR_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.LessorTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("LESSOR_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsOrgIdentifierType>(entity =>
@@ -4665,49 +1438,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.OrgIdentifierTypeCode)
                     .HasName("ORGIDT_PK");
 
-                entity.ToTable("PIMS_ORG_IDENTIFIER_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.OrgIdentifierTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("ORG_IDENTIFIER_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsOrganization>(entity =>
@@ -4715,130 +1456,27 @@ namespace Pims.Dal
                 entity.HasKey(e => e.OrganizationId)
                     .HasName("ORG_PK");
 
-                entity.ToTable("PIMS_ORGANIZATION");
-
                 entity.HasComment("Information related to an organization identified in the PSP system.");
 
-                entity.HasIndex(e => e.DistrictCode, "ORG_DISTRICT_CODE_IDX");
+                entity.Property(e => e.OrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ID_SEQ])");
 
-                entity.HasIndex(e => e.OrganizationTypeCode, "ORG_ORGANIZATION_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.OrgIdentifierTypeCode, "ORG_ORG_IDENTIFIER_TYPE_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PrntOrganizationId, "ORG_PRNT_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => e.RegionCode, "ORG_REGION_CODE_IDX");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.OrganizationId)
-                    .HasColumnName("ORGANIZATION_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ID_SEQ])");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.IncorporationNumber).HasComment("Incorporation number of the orgnization");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COMMENT");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.IncorporationNumber)
-                    .HasMaxLength(50)
-                    .HasColumnName("INCORPORATION_NUMBER")
-                    .HasComment("Incorporation number of the orgnization");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrgIdentifierTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ORG_IDENTIFIER_TYPE_CODE");
-
-                entity.Property(e => e.OrganizationAlias)
-                    .HasMaxLength(200)
-                    .HasColumnName("ORGANIZATION_ALIAS");
-
-                entity.Property(e => e.OrganizationIdentifier)
-                    .HasMaxLength(100)
-                    .HasColumnName("ORGANIZATION_IDENTIFIER");
-
-                entity.Property(e => e.OrganizationName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("ORGANIZATION_NAME");
-
-                entity.Property(e => e.OrganizationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ORGANIZATION_TYPE_CODE");
-
-                entity.Property(e => e.PrntOrganizationId).HasColumnName("PRNT_ORGANIZATION_ID");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.Website)
-                    .HasMaxLength(200)
-                    .HasColumnName("WEBSITE");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.DistrictCodeNavigation)
                     .WithMany(p => p.PimsOrganizations)
@@ -4873,96 +1511,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.OrganizationAddressId)
                     .HasName("ORGADD_PK");
 
-                entity.ToTable("PIMS_ORGANIZATION_ADDRESS");
-
                 entity.HasComment("An associative entity to define multiple addresses for a person.");
 
-                entity.HasIndex(e => e.AddressId, "ORGADD_ADDRESS_ID_IDX");
+                entity.Property(e => e.OrganizationAddressId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ADDRESS_ID_SEQ])");
 
-                entity.HasIndex(e => e.AddressUsageTypeCode, "ORGADD_ADDRESS_USAGE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.OrganizationId, "ORGADD_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.OrganizationId, e.AddressId, e.AddressUsageTypeCode }, "ORGADD_UNQ_ADDR_TYPE_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.OrganizationAddressId)
-                    .HasColumnName("ORGANIZATION_ADDRESS_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ADDRESS_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AddressUsageTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ADDRESS_USAGE_TYPE_CODE");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsOrganizationAddresses)
@@ -4988,88 +1555,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.OrganizationAddressHistId)
                     .HasName("PIMS_ORGADD_H_PK");
 
-                entity.ToTable("PIMS_ORGANIZATION_ADDRESS_HIST");
+                entity.Property(e => e.OrganizationAddressHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ADDRESS_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.OrganizationAddressHistId, e.EndDateHist }, "PIMS_ORGADD_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.OrganizationAddressHistId)
-                    .HasColumnName("_ORGANIZATION_ADDRESS_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ADDRESS_H_ID_SEQ])");
-
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.AddressUsageTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ADDRESS_USAGE_TYPE_CODE");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.OrganizationAddressId).HasColumnName("ORGANIZATION_ADDRESS_ID");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsOrganizationHist>(entity =>
@@ -5077,120 +1565,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.OrganizationHistId)
                     .HasName("PIMS_ORG_H_PK");
 
-                entity.ToTable("PIMS_ORGANIZATION_HIST");
+                entity.Property(e => e.OrganizationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.OrganizationHistId, e.EndDateHist }, "PIMS_ORG_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.OrganizationHistId)
-                    .HasColumnName("_ORGANIZATION_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COMMENT");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IncorporationNumber)
-                    .HasMaxLength(50)
-                    .HasColumnName("INCORPORATION_NUMBER");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.OrgIdentifierTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ORG_IDENTIFIER_TYPE_CODE");
-
-                entity.Property(e => e.OrganizationAlias)
-                    .HasMaxLength(200)
-                    .HasColumnName("ORGANIZATION_ALIAS");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.OrganizationIdentifier)
-                    .HasMaxLength(100)
-                    .HasColumnName("ORGANIZATION_IDENTIFIER");
-
-                entity.Property(e => e.OrganizationName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("ORGANIZATION_NAME");
-
-                entity.Property(e => e.OrganizationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ORGANIZATION_TYPE_CODE");
-
-                entity.Property(e => e.PrntOrganizationId).HasColumnName("PRNT_ORGANIZATION_ID");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.Website)
-                    .HasMaxLength(200)
-                    .HasColumnName("WEBSITE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsOrganizationType>(entity =>
@@ -5198,49 +1575,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.OrganizationTypeCode)
                     .HasName("ORGTYP_PK");
 
-                entity.ToTable("PIMS_ORGANIZATION_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.OrganizationTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("ORGANIZATION_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPerson>(entity =>
@@ -5248,106 +1593,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PersonId)
                     .HasName("PERSON_PK");
 
-                entity.ToTable("PIMS_PERSON");
+                entity.Property(e => e.PersonId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ID_SEQ])");
 
-                entity.Property(e => e.PersonId)
-                    .HasColumnName("PERSON_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ID_SEQ])");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.BirthDate)
-                    .HasColumnType("date")
-                    .HasColumnName("BIRTH_DATE");
-
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COMMENT");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("FIRST_NAME");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.MiddleNames)
-                    .HasMaxLength(200)
-                    .HasColumnName("MIDDLE_NAMES");
-
-                entity.Property(e => e.NameSuffix)
-                    .HasMaxLength(50)
-                    .HasColumnName("NAME_SUFFIX");
-
-                entity.Property(e => e.PreferredName)
-                    .HasMaxLength(200)
-                    .HasColumnName("PREFERRED_NAME");
-
-                entity.Property(e => e.Surname)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("SURNAME");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPersonAddress>(entity =>
@@ -5355,96 +1617,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PersonAddressId)
                     .HasName("PERADD_PK");
 
-                entity.ToTable("PIMS_PERSON_ADDRESS");
-
                 entity.HasComment("An associative entity to define multiple addresses for a person.");
 
-                entity.HasIndex(e => e.AddressId, "PERADD_ADDRESS_ID_IDX");
+                entity.Property(e => e.PersonAddressId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ADDRESS_ID_SEQ])");
 
-                entity.HasIndex(e => e.AddressUsageTypeCode, "PERADD_ADDRESS_USAGE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PersonId, "PERADD_PERSON_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.PersonId, e.AddressId, e.AddressUsageTypeCode }, "PERADD_UNQ_ADDR_TYPE_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PersonAddressId)
-                    .HasColumnName("PERSON_ADDRESS_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ADDRESS_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AddressUsageTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ADDRESS_USAGE_TYPE_CODE");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsPersonAddresses)
@@ -5470,88 +1661,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PersonAddressHistId)
                     .HasName("PIMS_PERADD_H_PK");
 
-                entity.ToTable("PIMS_PERSON_ADDRESS_HIST");
+                entity.Property(e => e.PersonAddressHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ADDRESS_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PersonAddressHistId, e.EndDateHist }, "PIMS_PERADD_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PersonAddressHistId)
-                    .HasColumnName("_PERSON_ADDRESS_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ADDRESS_H_ID_SEQ])");
-
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.AddressUsageTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("ADDRESS_USAGE_TYPE_CODE");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.PersonAddressId).HasColumnName("PERSON_ADDRESS_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPersonHist>(entity =>
@@ -5559,109 +1671,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PersonHistId)
                     .HasName("PIMS_PERSON_H_PK");
 
-                entity.ToTable("PIMS_PERSON_HIST");
+                entity.Property(e => e.PersonHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PersonHistId, e.EndDateHist }, "PIMS_PERSON_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PersonHistId)
-                    .HasColumnName("_PERSON_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.BirthDate)
-                    .HasColumnType("date")
-                    .HasColumnName("BIRTH_DATE");
-
-                entity.Property(e => e.Comment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("COMMENT");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("FIRST_NAME");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.MiddleNames)
-                    .HasMaxLength(200)
-                    .HasColumnName("MIDDLE_NAMES");
-
-                entity.Property(e => e.NameSuffix)
-                    .HasMaxLength(50)
-                    .HasColumnName("NAME_SUFFIX");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
-
-                entity.Property(e => e.PreferredName)
-                    .HasMaxLength(200)
-                    .HasColumnName("PREFERRED_NAME");
-
-                entity.Property(e => e.Surname)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("SURNAME");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPersonOrganization>(entity =>
@@ -5669,86 +1681,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PersonOrganizationId)
                     .HasName("PERORG_PK");
 
-                entity.ToTable("PIMS_PERSON_ORGANIZATION");
+                entity.Property(e => e.PersonOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_ID_SEQ])");
 
-                entity.HasIndex(e => e.OrganizationId, "PERORG_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PersonId, "PERORG_PERSON_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.OrganizationId, e.PersonId }, "PERORG_PERSON_ORGANIZATION_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PersonOrganizationId)
-                    .HasColumnName("PERSON_ORGANIZATION_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsPersonOrganizations)
@@ -5766,83 +1715,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PersonOrganizationHistId)
                     .HasName("PIMS_PERORG_H_PK");
 
-                entity.ToTable("PIMS_PERSON_ORGANIZATION_HIST");
+                entity.Property(e => e.PersonOrganizationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PersonOrganizationHistId, e.EndDateHist }, "PIMS_PERORG_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PersonOrganizationHistId)
-                    .HasColumnName("_PERSON_ORGANIZATION_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
-
-                entity.Property(e => e.PersonOrganizationId).HasColumnName("PERSON_ORGANIZATION_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsProject>(entity =>
@@ -5850,99 +1725,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectId)
                     .HasName("PROJCT_PK");
 
-                entity.ToTable("PIMS_PROJECT");
+                entity.Property(e => e.ProjectId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_ID_SEQ])");
 
-                entity.HasIndex(e => e.ProjectRiskTypeCode, "PROJCT_PROJECT_RISK_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.ProjectStatusTypeCode, "PROJCT_PROJECT_STATUS_TYPE_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.ProjectTierTypeCode, "PROJCT_PROJECT_TIER_TYPE_CODE_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => e.ProjectTypeCode, "PROJCT_PROJECT_TYPE_CODE_IDX");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ProjectId)
-                    .HasColumnName("PROJECT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_ID_SEQ])");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ProjectRiskTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_RISK_TYPE_CODE");
-
-                entity.Property(e => e.ProjectStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.ProjectTierTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_TIER_TYPE_CODE");
-
-                entity.Property(e => e.ProjectTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_TYPE_CODE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.ProjectRiskTypeCodeNavigation)
                     .WithMany(p => p.PimsProjects)
@@ -5974,97 +1771,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectHistId)
                     .HasName("PIMS_PROJCT_H_PK");
 
-                entity.ToTable("PIMS_PROJECT_HIST");
+                entity.Property(e => e.ProjectHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ProjectHistId, e.EndDateHist }, "PIMS_PROJCT_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ProjectHistId)
-                    .HasColumnName("_PROJECT_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.ProjectRiskTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_RISK_TYPE_CODE");
-
-                entity.Property(e => e.ProjectStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.ProjectTierTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_TIER_TYPE_CODE");
-
-                entity.Property(e => e.ProjectTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_TYPE_CODE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsProjectNote>(entity =>
@@ -6072,75 +1781,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectNoteId)
                     .HasName("PROJNT_PK");
 
-                entity.ToTable("PIMS_PROJECT_NOTE");
+                entity.Property(e => e.ProjectNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_ID_SEQ])");
 
-                entity.HasIndex(e => e.ProjectId, "PROJNT_PROJECT_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ProjectNoteId)
-                    .HasColumnName("PROJECT_NOTE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.PimsProjectNotes)
@@ -6154,79 +1809,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectNoteHistId)
                     .HasName("PIMS_PROJNT_H_PK");
 
-                entity.ToTable("PIMS_PROJECT_NOTE_HIST");
+                entity.Property(e => e.ProjectNoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ProjectNoteHistId, e.EndDateHist }, "PIMS_PROJNT_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ProjectNoteHistId)
-                    .HasColumnName("_PROJECT_NOTE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.ProjectNoteId).HasColumnName("PROJECT_NOTE_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsProjectProperty>(entity =>
@@ -6234,86 +1819,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectPropertyId)
                     .HasName("PRJPRP_PK");
 
-                entity.ToTable("PIMS_PROJECT_PROPERTY");
+                entity.Property(e => e.ProjectPropertyId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PROPERTY_ID_SEQ])");
 
-                entity.HasIndex(e => e.ProjectId, "PRJPRP_PROJECT_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.PropertyId, e.ProjectId }, "PRJPRP_PROJECT_PROPERTY_TUC")
-                    .IsUnique();
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyId, "PRJPRP_PROPERTY_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProjectPropertyId)
-                    .HasColumnName("PROJECT_PROPERTY_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PROPERTY_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.PimsProjectProperties)
@@ -6333,83 +1855,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectPropertyHistId)
                     .HasName("PIMS_PRJPRP_H_PK");
 
-                entity.ToTable("PIMS_PROJECT_PROPERTY_HIST");
+                entity.Property(e => e.ProjectPropertyHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PROPERTY_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ProjectPropertyHistId, e.EndDateHist }, "PIMS_PRJPRP_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ProjectPropertyHistId)
-                    .HasColumnName("_PROJECT_PROPERTY_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PROPERTY_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.ProjectPropertyId).HasColumnName("PROJECT_PROPERTY_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsProjectRiskType>(entity =>
@@ -6417,49 +1865,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectRiskTypeCode)
                     .HasName("PRJRSK_PK");
 
-                entity.ToTable("PIMS_PROJECT_RISK_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProjectRiskTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_RISK_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsProjectStatusType>(entity =>
@@ -6467,69 +1883,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectStatusTypeCode)
                     .HasName("PRJSTY_PK");
 
-                entity.ToTable("PIMS_PROJECT_STATUS_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProjectStatusTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_STATUS_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.CodeGroup)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("CODE_GROUP");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.IsMilestone).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.IsMilestone)
-                    .IsRequired()
-                    .HasColumnName("IS_MILESTONE")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.IsTerminal)
-                    .IsRequired()
-                    .HasColumnName("IS_TERMINAL")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.Text)
-                    .IsRequired()
-                    .HasMaxLength(1000)
-                    .HasColumnName("TEXT");
+                entity.Property(e => e.IsTerminal).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsProjectTierType>(entity =>
@@ -6537,49 +1905,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectTierTypeCode)
                     .HasName("PROJTR_PK");
 
-                entity.ToTable("PIMS_PROJECT_TIER_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProjectTierTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_TIER_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsProjectType>(entity =>
@@ -6587,49 +1923,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectTypeCode)
                     .HasName("PRJTYP_PK");
 
-                entity.ToTable("PIMS_PROJECT_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProjectTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROJECT_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsProjectWorkflowModel>(entity =>
@@ -6637,86 +1941,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectWorkflowModelId)
                     .HasName("PRWKMD_PK");
 
-                entity.ToTable("PIMS_PROJECT_WORKFLOW_MODEL");
+                entity.Property(e => e.ProjectWorkflowModelId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_WORKFLOW_MODEL_ID_SEQ])");
 
-                entity.HasIndex(e => e.ProjectId, "PRWKMD_PROJECT_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.ProjectId, e.WorkflowModelId }, "PRWKMD_PROJECT_WORKFLOW_MODEL_TUC")
-                    .IsUnique();
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.WorkflowModelId, "PRWKMD_WORKFLOW_MODEL_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProjectWorkflowModelId)
-                    .HasColumnName("PROJECT_WORKFLOW_MODEL_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_WORKFLOW_MODEL_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.WorkflowModelId).HasColumnName("WORKFLOW_MODEL_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.PimsProjectWorkflowModels)
@@ -6736,83 +1977,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProjectWorkflowModelHistId)
                     .HasName("PIMS_PRWKMD_H_PK");
 
-                entity.ToTable("PIMS_PROJECT_WORKFLOW_MODEL_HIST");
+                entity.Property(e => e.ProjectWorkflowModelHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_WORKFLOW_MODEL_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.ProjectWorkflowModelHistId, e.EndDateHist }, "PIMS_PRWKMD_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.ProjectWorkflowModelHistId)
-                    .HasColumnName("_PROJECT_WORKFLOW_MODEL_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_WORKFLOW_MODEL_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.ProjectId).HasColumnName("PROJECT_ID");
-
-                entity.Property(e => e.ProjectWorkflowModelId).HasColumnName("PROJECT_WORKFLOW_MODEL_ID");
-
-                entity.Property(e => e.WorkflowModelId).HasColumnName("WORKFLOW_MODEL_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsProperty>(entity =>
@@ -6820,230 +1987,65 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyId)
                     .HasName("PRPRTY_PK");
 
-                entity.ToTable("PIMS_PROPERTY");
+                entity.Property(e => e.PropertyId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])");
 
-                entity.HasIndex(e => e.AddressId, "PRPRTY_ADDRESS_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.DistrictCode, "PRPRTY_DISTRICT_CODE_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyAreaUnitTypeCode, "PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX");
+                entity.Property(e => e.Boundary).HasComment("Spatial bundary of land");
 
-                entity.HasIndex(e => e.PropertyClassificationTypeCode, "PRPRTY_PROPERTY_CLASSIFICATION_TYPE_CODE_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => e.PropertyDataSourceTypeCode, "PRPRTY_PROPERTY_DATA_SOURCE_TYPE_CODE_IDX");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyManagerId, "PRPRTY_PROPERTY_MANAGER_ID_IDX");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.PropertyStatusTypeCode, "PRPRTY_PROPERTY_STATUS_TYPE_CODE_IDX");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyTenureTypeCode, "PRPRTY_PROPERTY_TENURE_TYPE_CODE_IDX");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.PropertyTypeCode, "PRPRTY_PROPERTY_TYPE_CODE_IDX");
+                entity.Property(e => e.Description).HasComment("Property description");
 
-                entity.HasIndex(e => e.PropMgmtOrgId, "PRPRTY_PROP_MGMT_ORG_ID_IDX");
-
-                entity.HasIndex(e => e.RegionCode, "PRPRTY_REGION_CODE_IDX");
-
-                entity.HasIndex(e => e.SurplusDeclarationTypeCode, "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX");
-
-                entity.Property(e => e.PropertyId)
-                    .HasColumnName("PROPERTY_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])");
-
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Boundary)
-                    .HasColumnType("geometry")
-                    .HasColumnName("BOUNDARY")
-                    .HasComment("Spatial bundary of land");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(2000)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Property description");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.EncumbranceReason)
-                    .HasMaxLength(500)
-                    .HasColumnName("ENCUMBRANCE_REASON")
-                    .HasComment("reason for property encumbreance");
+                entity.Property(e => e.EncumbranceReason).HasComment("reason for property encumbreance");
 
                 entity.Property(e => e.IsOwned)
-                    .IsRequired()
-                    .HasColumnName("IS_OWNED")
                     .HasDefaultValueSql("(CONVERT([bit],(1)))")
                     .HasComment("Is the property currently owned?");
 
                 entity.Property(e => e.IsPropertyOfInterest)
-                    .IsRequired()
-                    .HasColumnName("IS_PROPERTY_OF_INTEREST")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this a property of interest to the Ministry?");
 
                 entity.Property(e => e.IsSensitive)
-                    .IsRequired()
-                    .HasColumnName("IS_SENSITIVE")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this a sensitive property?");
 
                 entity.Property(e => e.IsVisibleToOtherAgencies)
-                    .IsRequired()
-                    .HasColumnName("IS_VISIBLE_TO_OTHER_AGENCIES")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is the property visible to other agencies?");
 
-                entity.Property(e => e.LandArea)
-                    .HasColumnName("LAND_AREA")
-                    .HasComment("Area occupied by property");
+                entity.Property(e => e.LandArea).HasComment("Area occupied by property");
 
-                entity.Property(e => e.LandLegalDescription)
-                    .HasColumnName("LAND_LEGAL_DESCRIPTION")
-                    .HasComment("Legal description of property");
+                entity.Property(e => e.LandLegalDescription).HasComment("Legal description of property");
 
-                entity.Property(e => e.Location)
-                    .HasColumnType("geometry")
-                    .HasColumnName("LOCATION")
-                    .HasComment("Geospatial location (pin) of property");
+                entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(250)
-                    .HasColumnName("NAME")
-                    .HasComment("Property name");
+                entity.Property(e => e.Name).HasComment("Property name");
 
-                entity.Property(e => e.Pid)
-                    .HasColumnName("PID")
-                    .HasComment("Property ID");
+                entity.Property(e => e.Pid).HasComment("Property ID");
 
-                entity.Property(e => e.Pin)
-                    .HasColumnName("PIN")
-                    .HasComment("Property number");
+                entity.Property(e => e.Pin).HasComment("Property number");
 
-                entity.Property(e => e.PropMgmtOrgId).HasColumnName("PROP_MGMT_ORG_ID");
+                entity.Property(e => e.PropertyDataSourceEffectiveDate).HasComment("Date the property was officially registered");
 
-                entity.Property(e => e.PropertyAreaUnitTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_AREA_UNIT_TYPE_CODE");
+                entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
 
-                entity.Property(e => e.PropertyClassificationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_CLASSIFICATION_TYPE_CODE");
+                entity.Property(e => e.SurplusDeclarationDate).HasComment("Date the property was declared surplus");
 
-                entity.Property(e => e.PropertyDataSourceEffectiveDate)
-                    .HasColumnType("date")
-                    .HasColumnName("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")
-                    .HasComment("Date the property was officially registered");
+                entity.Property(e => e.Zoning).HasComment("Current property zoning");
 
-                entity.Property(e => e.PropertyDataSourceTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_DATA_SOURCE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyManagerId).HasColumnName("PROPERTY_MANAGER_ID");
-
-                entity.Property(e => e.PropertyStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTenureTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TENURE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TYPE_CODE");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.SurplusDeclarationComment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("SURPLUS_DECLARATION_COMMENT")
-                    .HasComment("Comment regarding the surplus declaration");
-
-                entity.Property(e => e.SurplusDeclarationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("SURPLUS_DECLARATION_DATE")
-                    .HasComment("Date the property was declared surplus");
-
-                entity.Property(e => e.SurplusDeclarationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SURPLUS_DECLARATION_TYPE_CODE");
-
-                entity.Property(e => e.Zoning)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING")
-                    .HasComment("Current property zoning");
-
-                entity.Property(e => e.ZoningPotential)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING_POTENTIAL")
-                    .HasComment("Potential property zoning");
+                entity.Property(e => e.ZoningPotential).HasComment("Potential property zoning");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PimsProperties)
@@ -7121,86 +2123,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyActivityId)
                     .HasName("PRPACT_PK");
 
-                entity.ToTable("PIMS_PROPERTY_ACTIVITY");
+                entity.Property(e => e.PropertyActivityId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_ID_SEQ])");
 
-                entity.HasIndex(e => e.ActivityId, "PRPACT_ACTIVITY_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.PropertyId, e.ActivityId }, "PRPACT_PROPERTY_ACTIVITY_TUC")
-                    .IsUnique();
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyId, "PRPACT_PROPERTY_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyActivityId)
-                    .HasColumnName("PROPERTY_ACTIVITY_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ActivityId).HasColumnName("ACTIVITY_ID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Activity)
                     .WithMany(p => p.PimsPropertyActivities)
@@ -7218,217 +2157,16 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyActivityHistId)
                     .HasName("PIMS_PRPACT_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_ACTIVITY_HIST");
+                entity.Property(e => e.PropertyActivityHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyActivityHistId, e.EndDateHist }, "PIMS_PRPACT_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyActivityHistId)
-                    .HasColumnName("_PROPERTY_ACTIVITY_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACTIVITY_H_ID_SEQ])");
-
-                entity.Property(e => e.ActivityId).HasColumnName("ACTIVITY_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.PropertyActivityId).HasColumnName("PROPERTY_ACTIVITY_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyBoundaryVw>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToView("PIMS_PROPERTY_BOUNDARY_VW");
 
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.CountryCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("COUNTRY_CODE");
-
-                entity.Property(e => e.CountryName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("COUNTRY_NAME");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(2000)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.EncumbranceReason)
-                    .HasMaxLength(500)
-                    .HasColumnName("ENCUMBRANCE_REASON");
-
-                entity.Property(e => e.Geometry)
-                    .HasColumnType("geometry")
-                    .HasColumnName("GEOMETRY");
-
-                entity.Property(e => e.IsOwned).HasColumnName("IS_OWNED");
-
-                entity.Property(e => e.IsPropertyOfInterest).HasColumnName("IS_PROPERTY_OF_INTEREST");
-
-                entity.Property(e => e.IsSensitive).HasColumnName("IS_SENSITIVE");
-
-                entity.Property(e => e.IsVisibleToOtherAgencies).HasColumnName("IS_VISIBLE_TO_OTHER_AGENCIES");
-
-                entity.Property(e => e.LandArea).HasColumnName("LAND_AREA");
-
-                entity.Property(e => e.LandLegalDescription).HasColumnName("LAND_LEGAL_DESCRIPTION");
-
-                entity.Property(e => e.MunicipalityName)
-                    .HasMaxLength(200)
-                    .HasColumnName("MUNICIPALITY_NAME");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(250)
-                    .HasColumnName("NAME");
-
-                entity.Property(e => e.Pid).HasColumnName("PID");
-
-                entity.Property(e => e.PidPadded)
-                    .HasMaxLength(9)
-                    .IsUnicode(false)
-                    .HasColumnName("PID_PADDED");
-
-                entity.Property(e => e.Pin).HasColumnName("PIN");
-
-                entity.Property(e => e.PostalCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("POSTAL_CODE");
-
-                entity.Property(e => e.PropertyAreaUnitTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_AREA_UNIT_TYPE_CODE");
-
-                entity.Property(e => e.PropertyClassificationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_CLASSIFICATION_TYPE_CODE");
-
-                entity.Property(e => e.PropertyDataSourceEffectiveDate)
-                    .HasColumnType("date")
-                    .HasColumnName("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE");
-
-                entity.Property(e => e.PropertyDataSourceTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_DATA_SOURCE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTenureTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TENURE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TYPE_CODE");
-
-                entity.Property(e => e.ProvinceName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("PROVINCE_NAME");
-
-                entity.Property(e => e.ProvinceStateCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROVINCE_STATE_CODE");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.StreetAddress1)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_1");
-
-                entity.Property(e => e.StreetAddress2)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_2");
-
-                entity.Property(e => e.StreetAddress3)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_3");
-
-                entity.Property(e => e.Zoning)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING");
-
-                entity.Property(e => e.ZoningPotential)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING_POTENTIAL");
+                entity.Property(e => e.PidPadded).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsPropertyClassificationType>(entity =>
@@ -7436,49 +2174,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyClassificationTypeCode)
                     .HasName("PRPCLT_PK");
 
-                entity.ToTable("PIMS_PROPERTY_CLASSIFICATION_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyClassificationTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_CLASSIFICATION_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPropertyEvaluation>(entity =>
@@ -7486,89 +2192,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyEvaluationId)
                     .HasName("PRPEVL_PK");
 
-                entity.ToTable("PIMS_PROPERTY_EVALUATION");
+                entity.Property(e => e.PropertyEvaluationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_EVALUATION_ID_SEQ])");
 
-                entity.HasIndex(e => e.PropertyId, "PRPEVL_PROPERTY_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.PropertyEvaluationId)
-                    .HasColumnName("PROPERTY_EVALUATION_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_EVALUATION_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.EvaluationDate)
-                    .HasColumnType("date")
-                    .HasColumnName("EVALUATION_DATE");
-
-                entity.Property(e => e.Key).HasColumnName("KEY");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(1000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.Value)
-                    .HasColumnType("money")
-                    .HasColumnName("VALUE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropertyEvaluations)
@@ -7582,93 +2220,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyEvaluationHistId)
                     .HasName("PIMS_PRPEVL_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_EVALUATION_HIST");
+                entity.Property(e => e.PropertyEvaluationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_EVALUATION_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyEvaluationHistId, e.EndDateHist }, "PIMS_PRPEVL_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyEvaluationHistId)
-                    .HasColumnName("_PROPERTY_EVALUATION_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_EVALUATION_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.EvaluationDate)
-                    .HasColumnType("date")
-                    .HasColumnName("EVALUATION_DATE");
-
-                entity.Property(e => e.Key).HasColumnName("KEY");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(1000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.PropertyEvaluationId).HasColumnName("PROPERTY_EVALUATION_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.Value)
-                    .HasColumnType("money")
-                    .HasColumnName("VALUE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyHist>(entity =>
@@ -7676,168 +2230,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyHistId)
                     .HasName("PIMS_PRPRTY_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_HIST");
+                entity.Property(e => e.PropertyHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyHistId, e.EndDateHist }, "PIMS_PRPRTY_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyHistId)
-                    .HasColumnName("_PROPERTY_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_H_ID_SEQ])");
-
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(2000)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EncumbranceReason)
-                    .HasMaxLength(500)
-                    .HasColumnName("ENCUMBRANCE_REASON");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsOwned).HasColumnName("IS_OWNED");
-
-                entity.Property(e => e.IsPropertyOfInterest).HasColumnName("IS_PROPERTY_OF_INTEREST");
-
-                entity.Property(e => e.IsSensitive).HasColumnName("IS_SENSITIVE");
-
-                entity.Property(e => e.IsVisibleToOtherAgencies).HasColumnName("IS_VISIBLE_TO_OTHER_AGENCIES");
-
-                entity.Property(e => e.LandArea).HasColumnName("LAND_AREA");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(250)
-                    .HasColumnName("NAME");
-
-                entity.Property(e => e.Pid).HasColumnName("PID");
-
-                entity.Property(e => e.Pin).HasColumnName("PIN");
-
-                entity.Property(e => e.PropMgmtOrgId).HasColumnName("PROP_MGMT_ORG_ID");
-
-                entity.Property(e => e.PropertyAreaUnitTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_AREA_UNIT_TYPE_CODE");
-
-                entity.Property(e => e.PropertyClassificationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_CLASSIFICATION_TYPE_CODE");
-
-                entity.Property(e => e.PropertyDataSourceEffectiveDate)
-                    .HasColumnType("date")
-                    .HasColumnName("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE");
-
-                entity.Property(e => e.PropertyDataSourceTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_DATA_SOURCE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyManagerId).HasColumnName("PROPERTY_MANAGER_ID");
-
-                entity.Property(e => e.PropertyStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTenureTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TENURE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TYPE_CODE");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.SurplusDeclarationComment)
-                    .HasMaxLength(2000)
-                    .HasColumnName("SURPLUS_DECLARATION_COMMENT");
-
-                entity.Property(e => e.SurplusDeclarationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("SURPLUS_DECLARATION_DATE");
-
-                entity.Property(e => e.SurplusDeclarationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SURPLUS_DECLARATION_TYPE_CODE");
-
-                entity.Property(e => e.Zoning)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING");
-
-                entity.Property(e => e.ZoningPotential)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING_POTENTIAL");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyImprovement>(entity =>
@@ -7845,107 +2240,37 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyImprovementId)
                     .HasName("PIMPRV_PK");
 
-                entity.ToTable("PIMS_PROPERTY_IMPROVEMENT");
-
                 entity.HasComment("Description of property improvements associated with the lease.");
 
-                entity.HasIndex(e => new { e.LeaseId, e.PropertyImprovementTypeCode }, "PIMPRV_LEASE_IMPROVEMENT_TUC")
-                    .IsUnique();
+                entity.Property(e => e.PropertyImprovementId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_ID_SEQ])");
 
-                entity.HasIndex(e => e.PropertyImprovementTypeCode, "PIMPRV_PROPERTY_IMPROVEMENT_TYPE_CODE_IDX");
+                entity.Property(e => e.Address).HasComment("Addresses affected");
 
-                entity.HasIndex(e => e.LeaseId, "PIMPRV_PROPERTY_LEASE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.PropertyImprovementId)
-                    .HasColumnName("PROPERTY_IMPROVEMENT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_ID_SEQ])");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ImprovementDescription).HasComment("Description of the improvements");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ImprovementDescription)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .HasColumnName("IMPROVEMENT_DESCRIPTION")
-                    .HasComment("Description of the improvements");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.PropertyImprovementTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE");
-
-                entity.Property(e => e.StructureSize)
-                    .HasMaxLength(2000)
-                    .HasColumnName("STRUCTURE_SIZE")
-                    .HasComment("Size of the structure (house, building, bridge, etc,) ");
-
-                entity.Property(e => e.Unit)
-                    .HasMaxLength(2000)
-                    .HasColumnName("UNIT")
-                    .HasComment("Unit(s) affected");
+                entity.Property(e => e.StructureSize).HasComment("Size of the structure (house, building, bridge, etc,)");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsPropertyImprovements)
@@ -7965,97 +2290,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyImprovementHistId)
                     .HasName("PIMS_PIMPRV_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_IMPROVEMENT_HIST");
+                entity.Property(e => e.PropertyImprovementHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyImprovementHistId, e.EndDateHist }, "PIMS_PIMPRV_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyImprovementHistId)
-                    .HasColumnName("_PROPERTY_IMPROVEMENT_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ImprovementDescription)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .HasColumnName("IMPROVEMENT_DESCRIPTION");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.PropertyImprovementId).HasColumnName("PROPERTY_IMPROVEMENT_ID");
-
-                entity.Property(e => e.PropertyImprovementTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE");
-
-                entity.Property(e => e.StructureSize)
-                    .HasMaxLength(2000)
-                    .HasColumnName("STRUCTURE_SIZE");
-
-                entity.Property(e => e.Unit)
-                    .HasMaxLength(2000)
-                    .HasColumnName("UNIT");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyImprovementType>(entity =>
@@ -8063,52 +2300,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyImprovementTypeCode)
                     .HasName("PIMPRT_PK");
 
-                entity.ToTable("PIMS_PROPERTY_IMPROVEMENT_TYPE");
-
                 entity.HasComment("Description of the types of improvements made to a property during the lease.");
 
-                entity.Property(e => e.PropertyImprovementTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_IMPROVEMENT_TYPE_CODE")
-                    .HasComment("Code value of the types of improvements made to a property during the lease.");
+                entity.Property(e => e.PropertyImprovementTypeCode).HasComment("Code value of the types of improvements made to a property during the lease.");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Code description of the types of improvements made to a property during the lease.");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
+                entity.Property(e => e.Description).HasComment("Code description of the types of improvements made to a property during the lease.");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates if the code is disabled");
             });
@@ -8118,91 +2326,31 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyLeaseId)
                     .HasName("PROPLS_PK");
 
-                entity.ToTable("PIMS_PROPERTY_LEASE");
+                entity.Property(e => e.PropertyLeaseId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_LEASE_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeaseId, "PROPLS_LEASE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyId, "PROPLS_PROPERTY_ID_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.PropertyLeaseId)
-                    .HasColumnName("PROPERTY_LEASE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_LEASE_ID_SEQ])");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AreaUnitTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("AREA_UNIT_TYPE_CODE");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LeaseArea)
-                    .HasColumnName("LEASE_AREA")
-                    .HasComment("Leased area measurement");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+                entity.Property(e => e.LeaseArea).HasComment("Leased area measurement");
 
                 entity.HasOne(d => d.AreaUnitTypeCodeNavigation)
                     .WithMany(p => p.PimsPropertyLeases)
@@ -8227,221 +2375,16 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyLeaseHistId)
                     .HasName("PIMS_PROPLS_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_LEASE_HIST");
+                entity.Property(e => e.PropertyLeaseHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_LEASE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyLeaseHistId, e.EndDateHist }, "PIMS_PROPLS_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyLeaseHistId)
-                    .HasColumnName("_PROPERTY_LEASE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_LEASE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.AreaUnitTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("AREA_UNIT_TYPE_CODE");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LeaseArea).HasColumnName("LEASE_AREA");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyLeaseId).HasColumnName("PROPERTY_LEASE_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyLocationVw>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToView("PIMS_PROPERTY_LOCATION_VW");
 
-                entity.Property(e => e.AddressId).HasColumnName("ADDRESS_ID");
-
-                entity.Property(e => e.CountryCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("COUNTRY_CODE");
-
-                entity.Property(e => e.CountryName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("COUNTRY_NAME");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(2000)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DistrictCode).HasColumnName("DISTRICT_CODE");
-
-                entity.Property(e => e.EncumbranceReason)
-                    .HasMaxLength(500)
-                    .HasColumnName("ENCUMBRANCE_REASON");
-
-                entity.Property(e => e.Geometry)
-                    .HasColumnType("geometry")
-                    .HasColumnName("GEOMETRY");
-
-                entity.Property(e => e.IsOwned).HasColumnName("IS_OWNED");
-
-                entity.Property(e => e.IsPropertyOfInterest).HasColumnName("IS_PROPERTY_OF_INTEREST");
-
-                entity.Property(e => e.IsSensitive).HasColumnName("IS_SENSITIVE");
-
-                entity.Property(e => e.IsVisibleToOtherAgencies).HasColumnName("IS_VISIBLE_TO_OTHER_AGENCIES");
-
-                entity.Property(e => e.LandArea).HasColumnName("LAND_AREA");
-
-                entity.Property(e => e.LandLegalDescription).HasColumnName("LAND_LEGAL_DESCRIPTION");
-
-                entity.Property(e => e.MunicipalityName)
-                    .HasMaxLength(200)
-                    .HasColumnName("MUNICIPALITY_NAME");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(250)
-                    .HasColumnName("NAME");
-
-                entity.Property(e => e.Pid).HasColumnName("PID");
-
-                entity.Property(e => e.PidPadded)
-                    .HasMaxLength(9)
-                    .IsUnicode(false)
-                    .HasColumnName("PID_PADDED");
-
-                entity.Property(e => e.Pin).HasColumnName("PIN");
-
-                entity.Property(e => e.PostalCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("POSTAL_CODE");
-
-                entity.Property(e => e.PropertyAreaUnitTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_AREA_UNIT_TYPE_CODE");
-
-                entity.Property(e => e.PropertyClassificationTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_CLASSIFICATION_TYPE_CODE");
-
-                entity.Property(e => e.PropertyDataSourceEffectiveDate)
-                    .HasColumnType("date")
-                    .HasColumnName("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE");
-
-                entity.Property(e => e.PropertyDataSourceTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_DATA_SOURCE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyStatusTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_STATUS_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTenureTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TENURE_TYPE_CODE");
-
-                entity.Property(e => e.PropertyTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TYPE_CODE");
-
-                entity.Property(e => e.ProvinceName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("PROVINCE_NAME");
-
-                entity.Property(e => e.ProvinceStateCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROVINCE_STATE_CODE");
-
-                entity.Property(e => e.RegionCode).HasColumnName("REGION_CODE");
-
-                entity.Property(e => e.StreetAddress1)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_1");
-
-                entity.Property(e => e.StreetAddress2)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_2");
-
-                entity.Property(e => e.StreetAddress3)
-                    .HasMaxLength(200)
-                    .HasColumnName("STREET_ADDRESS_3");
-
-                entity.Property(e => e.Zoning)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING");
-
-                entity.Property(e => e.ZoningPotential)
-                    .HasMaxLength(50)
-                    .HasColumnName("ZONING_POTENTIAL");
+                entity.Property(e => e.PidPadded).IsUnicode(false);
             });
 
             modelBuilder.Entity<PimsPropertyOrganization>(entity =>
@@ -8449,86 +2392,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyOrganizationId)
                     .HasName("PRPORG_PK");
 
-                entity.ToTable("PIMS_PROPERTY_ORGANIZATION");
+                entity.Property(e => e.PropertyOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ORGANIZATION_ID_SEQ])");
 
-                entity.HasIndex(e => e.OrganizationId, "PRPORG_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyId, "PRPORG_PROPERTY_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.PropertyId, e.OrganizationId }, "PRPORG_PROPERTY_ORGANIZATION_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyOrganizationId)
-                    .HasColumnName("PROPERTY_ORGANIZATION_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ORGANIZATION_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsPropertyOrganizations)
@@ -8548,83 +2428,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyOrganizationHistId)
                     .HasName("PIMS_PRPORG_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_ORGANIZATION_HIST");
+                entity.Property(e => e.PropertyOrganizationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ORGANIZATION_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyOrganizationHistId, e.EndDateHist }, "PIMS_PRPORG_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyOrganizationHistId)
-                    .HasColumnName("_PROPERTY_ORGANIZATION_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ORGANIZATION_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyOrganizationId).HasColumnName("PROPERTY_ORGANIZATION_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyPropertyServiceFile>(entity =>
@@ -8632,86 +2438,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyPropertyServiceFileId)
                     .HasName("PRPRSF_PK");
 
-                entity.ToTable("PIMS_PROPERTY_PROPERTY_SERVICE_FILE");
+                entity.Property(e => e.PropertyPropertyServiceFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_PROPERTY_SERVICE_FILE_ID_SEQ])");
 
-                entity.HasIndex(e => e.PropertyId, "PRPRSF_PROPERTY_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyServiceFileId, "PRPRSF_PROPERTY_SERVICE_FILE_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.PropertyId, e.PropertyServiceFileId }, "PRPRSF_PROPERTY_SERVICE_FILE_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyPropertyServiceFileId)
-                    .HasColumnName("PROPERTY_PROPERTY_SERVICE_FILE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_PROPERTY_SERVICE_FILE_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyServiceFileId).HasColumnName("PROPERTY_SERVICE_FILE_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropertyPropertyServiceFiles)
@@ -8731,83 +2474,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyPropertyServiceFileHistId)
                     .HasName("PIMS_PRPRSF_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_PROPERTY_SERVICE_FILE_HIST");
+                entity.Property(e => e.PropertyPropertyServiceFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_PROPERTY_SERVICE_FILE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyPropertyServiceFileHistId, e.EndDateHist }, "PIMS_PRPRSF_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyPropertyServiceFileHistId)
-                    .HasColumnName("_PROPERTY_PROPERTY_SERVICE_FILE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_PROPERTY_SERVICE_FILE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyPropertyServiceFileId).HasColumnName("PROPERTY_PROPERTY_SERVICE_FILE_ID");
-
-                entity.Property(e => e.PropertyServiceFileId).HasColumnName("PROPERTY_SERVICE_FILE_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyServiceFile>(entity =>
@@ -8815,78 +2484,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyServiceFileId)
                     .HasName("PRPSVC_PK");
 
-                entity.ToTable("PIMS_PROPERTY_SERVICE_FILE");
+                entity.Property(e => e.PropertyServiceFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_SERVICE_FILE_ID_SEQ])");
 
-                entity.HasIndex(e => e.PropertyServiceFileTypeCode, "PRPSVC_PROPERTY_SERVICE_FILE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.PropertyServiceFileId)
-                    .HasColumnName("PROPERTY_SERVICE_FILE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_SERVICE_FILE_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.PropertyServiceFileTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_SERVICE_FILE_TYPE_CODE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.PropertyServiceFileTypeCodeNavigation)
                     .WithMany(p => p.PimsPropertyServiceFiles)
@@ -8900,82 +2512,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyServiceFileHistId)
                     .HasName("PIMS_PRPSVC_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_SERVICE_FILE_HIST");
+                entity.Property(e => e.PropertyServiceFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_SERVICE_FILE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyServiceFileHistId, e.EndDateHist }, "PIMS_PRPSVC_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyServiceFileHistId)
-                    .HasColumnName("_PROPERTY_SERVICE_FILE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_SERVICE_FILE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.PropertyServiceFileId).HasColumnName("PROPERTY_SERVICE_FILE_ID");
-
-                entity.Property(e => e.PropertyServiceFileTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_SERVICE_FILE_TYPE_CODE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyServiceFileType>(entity =>
@@ -8983,49 +2522,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyServiceFileTypeCode)
                     .HasName("PRSVFT_PK");
 
-                entity.ToTable("PIMS_PROPERTY_SERVICE_FILE_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyServiceFileTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_SERVICE_FILE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPropertyStatusType>(entity =>
@@ -9033,49 +2540,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyStatusTypeCode)
                     .HasName("PRPSTS_PK");
 
-                entity.ToTable("PIMS_PROPERTY_STATUS_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyStatusTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_STATUS_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPropertyTax>(entity =>
@@ -9083,108 +2558,31 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyTaxId)
                     .HasName("PRPTAX_PK");
 
-                entity.ToTable("PIMS_PROPERTY_TAX");
+                entity.Property(e => e.PropertyTaxId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_TAX_ID_SEQ])");
 
-                entity.HasIndex(e => e.PropertyId, "PRPTAX_PROPERTY_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PropertyTaxRemitTypeCode, "PRPTAX_PROPERTY_TAX_REMIT_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.PropertyTaxId)
-                    .HasColumnName("PROPERTY_TAX_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_TAX_ID_SEQ])");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.BctfaNotificationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("BCTFA_NOTIFICATION_DATE");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.LastPaymentDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("LAST_PAYMENT_DATE");
-
-                entity.Property(e => e.PaymentAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT");
-
-                entity.Property(e => e.PaymentNotes)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_NOTES");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyTaxRemitTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TAX_REMIT_TYPE_CODE");
-
-                entity.Property(e => e.TaxFolioNo)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("TAX_FOLIO_NO")
-                    .HasComment("Property tax folio number");
+                entity.Property(e => e.TaxFolioNo).HasComment("Property tax folio number");
 
                 entity.HasOne(d => d.Property)
                     .WithMany(p => p.PimsPropertyTaxes)
@@ -9204,105 +2602,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyTaxHistId)
                     .HasName("PIMS_PRPTAX_H_PK");
 
-                entity.ToTable("PIMS_PROPERTY_TAX_HIST");
+                entity.Property(e => e.PropertyTaxHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_TAX_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.PropertyTaxHistId, e.EndDateHist }, "PIMS_PRPTAX_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.PropertyTaxHistId)
-                    .HasColumnName("_PROPERTY_TAX_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_TAX_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.BctfaNotificationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("BCTFA_NOTIFICATION_DATE");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LastPaymentDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("LAST_PAYMENT_DATE");
-
-                entity.Property(e => e.PaymentAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_AMOUNT");
-
-                entity.Property(e => e.PaymentNotes)
-                    .HasColumnType("money")
-                    .HasColumnName("PAYMENT_NOTES");
-
-                entity.Property(e => e.PropertyId).HasColumnName("PROPERTY_ID");
-
-                entity.Property(e => e.PropertyTaxId).HasColumnName("PROPERTY_TAX_ID");
-
-                entity.Property(e => e.PropertyTaxRemitTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TAX_REMIT_TYPE_CODE");
-
-                entity.Property(e => e.TaxFolioNo)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("TAX_FOLIO_NO");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsPropertyTaxRemitType>(entity =>
@@ -9310,52 +2612,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyTaxRemitTypeCode)
                     .HasName("PTRMTT_PK");
 
-                entity.ToTable("PIMS_PROPERTY_TAX_REMIT_TYPE");
-
                 entity.HasComment("Description of property tax remittance types");
 
-                entity.Property(e => e.PropertyTaxRemitTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TAX_REMIT_TYPE_CODE")
-                    .HasComment("Code value of property tax remittance types");
+                entity.Property(e => e.PropertyTaxRemitTypeCode).HasComment("Code value of property tax remittance types");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Code description of property tax remittance types");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
+                entity.Property(e => e.Description).HasComment("Code description of property tax remittance types");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this code value disabled?");
             });
@@ -9365,51 +2638,19 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyTenureTypeCode)
                     .HasName("PRPTNR_PK");
 
-                entity.ToTable("PIMS_PROPERTY_TENURE_TYPE");
+                entity.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel");
 
-                entity.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel still accurately describes the legal title of the land parcel but the individual properties each can have different tenures by MoTI.");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyTenureTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TENURE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPropertyType>(entity =>
@@ -9417,49 +2658,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.PropertyTypeCode)
                     .HasName("PRPTYP_PK");
 
-                entity.ToTable("PIMS_PROPERTY_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PropertyTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("PROPERTY_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsProvinceState>(entity =>
@@ -9467,58 +2676,19 @@ namespace Pims.Dal
                 entity.HasKey(e => e.ProvinceStateId)
                     .HasName("PROVNC_PK");
 
-                entity.ToTable("PIMS_PROVINCE_STATE");
+                entity.Property(e => e.ProvinceStateId).ValueGeneratedNever();
 
-                entity.HasIndex(e => e.CountryId, "PROVNC_COUNTRY_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ProvinceStateId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("PROVINCE_STATE_ID");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.CountryId).HasColumnName("COUNTRY_ID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.ProvinceStateCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("PROVINCE_STATE_CODE");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.PimsProvinceStates)
@@ -9532,49 +2702,19 @@ namespace Pims.Dal
                 entity.HasKey(e => e.RegionCode)
                     .HasName("REGION_PK");
 
-                entity.ToTable("PIMS_REGION");
+                entity.Property(e => e.RegionCode).ValueGeneratedNever();
 
-                entity.Property(e => e.RegionCode)
-                    .ValueGeneratedNever()
-                    .HasColumnName("REGION_CODE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.RegionName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("REGION_NAME");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsRole>(entity =>
@@ -9582,100 +2722,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.RoleId)
                     .HasName("ROLE_PK");
 
-                entity.ToTable("PIMS_ROLE");
+                entity.Property(e => e.RoleId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_ID_SEQ])");
 
-                entity.HasIndex(e => e.KeycloakGroupId, "ROLE_KEYCLOAK_GROUP_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.RoleUid, "ROLE_ROLE_UID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.RoleId)
-                    .HasColumnName("ROLE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_ID_SEQ])");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(500)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.IsPublic)
-                    .IsRequired()
-                    .HasColumnName("IS_PUBLIC")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.KeycloakGroupId).HasColumnName("KEYCLOAK_GROUP_ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("NAME");
-
-                entity.Property(e => e.RoleUid).HasColumnName("ROLE_UID");
-
-                entity.Property(e => e.SortOrder).HasColumnName("SORT_ORDER");
+                entity.Property(e => e.IsPublic).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsRoleClaim>(entity =>
@@ -9683,86 +2748,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.RoleClaimId)
                     .HasName("ROLCLM_PK");
 
-                entity.ToTable("PIMS_ROLE_CLAIM");
+                entity.Property(e => e.RoleClaimId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_CLAIM_ID_SEQ])");
 
-                entity.HasIndex(e => e.ClaimId, "ROLCLM_CLAIM_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.RoleId, e.ClaimId }, "ROLCLM_ROLE_CLAIM_TUC")
-                    .IsUnique();
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.RoleId, "ROLCLM_ROLE_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.RoleClaimId)
-                    .HasColumnName("ROLE_CLAIM_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_CLAIM_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ClaimId).HasColumnName("CLAIM_ID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Claim)
                     .WithMany(p => p.PimsRoleClaims)
@@ -9782,83 +2784,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.RoleClaimHistId)
                     .HasName("PIMS_ROLCLM_H_PK");
 
-                entity.ToTable("PIMS_ROLE_CLAIM_HIST");
+                entity.Property(e => e.RoleClaimHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_CLAIM_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.RoleClaimHistId, e.EndDateHist }, "PIMS_ROLCLM_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.RoleClaimHistId)
-                    .HasColumnName("_ROLE_CLAIM_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_CLAIM_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ClaimId).HasColumnName("CLAIM_ID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.RoleClaimId).HasColumnName("ROLE_CLAIM_ID");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsRoleHist>(entity =>
@@ -9866,96 +2794,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.RoleHistId)
                     .HasName("PIMS_ROLE_H_PK");
 
-                entity.ToTable("PIMS_ROLE_HIST");
+                entity.Property(e => e.RoleHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.RoleHistId, e.EndDateHist }, "PIMS_ROLE_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.RoleHistId)
-                    .HasColumnName("_ROLE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.Description)
-                    .HasMaxLength(500)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.IsPublic).HasColumnName("IS_PUBLIC");
-
-                entity.Property(e => e.KeycloakGroupId).HasColumnName("KEYCLOAK_GROUP_ID");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("NAME");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.RoleUid).HasColumnName("ROLE_UID");
-
-                entity.Property(e => e.SortOrder).HasColumnName("SORT_ORDER");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsSecDepHolderType>(entity =>
@@ -9963,49 +2804,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecDepHolderTypeCode)
                     .HasName("SCHLDT_PK");
 
-                entity.ToTable("PIMS_SEC_DEP_HOLDER_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.SecDepHolderTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("SEC_DEP_HOLDER_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsSecurityDeposit>(entity =>
@@ -10013,114 +2822,29 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecurityDepositId)
                     .HasName("SECDEP_PK");
 
-                entity.ToTable("PIMS_SECURITY_DEPOSIT");
+                entity.Property(e => e.SecurityDepositId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeaseId, "SECDEP_LEASE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.SecurityDepositTypeCode, "SECDEP_SECURITY_DEPOSIT_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.HasIndex(e => e.SecDepHolderTypeCode, "SECDEP_SEC_DEP_HOLDER_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.SecurityDepositId)
-                    .HasColumnName("SECURITY_DEPOSIT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AmountPaid)
-                    .HasColumnType("money")
-                    .HasColumnName("AMOUNT_PAID");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AnnualInterestRate)
-                    .HasColumnType("numeric(5, 2)")
-                    .HasColumnName("ANNUAL_INTEREST_RATE");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DepositDate)
-                    .HasColumnType("date")
-                    .HasColumnName("DEPOSIT_DATE");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.OtherDepHolderTypeDesc)
-                    .HasMaxLength(100)
-                    .HasColumnName("OTHER_DEP_HOLDER_TYPE_DESC");
-
-                entity.Property(e => e.SecDepHolderTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SEC_DEP_HOLDER_TYPE_CODE");
-
-                entity.Property(e => e.SecurityDepositTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsSecurityDeposits)
@@ -10146,110 +2870,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecurityDepositHistId)
                     .HasName("PIMS_SECDEP_H_PK");
 
-                entity.ToTable("PIMS_SECURITY_DEPOSIT_HIST");
+                entity.Property(e => e.SecurityDepositHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.SecurityDepositHistId, e.EndDateHist }, "PIMS_SECDEP_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.SecurityDepositHistId)
-                    .HasColumnName("_SECURITY_DEPOSIT_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_H_ID_SEQ])");
-
-                entity.Property(e => e.AmountPaid)
-                    .HasColumnType("money")
-                    .HasColumnName("AMOUNT_PAID");
-
-                entity.Property(e => e.AnnualInterestRate)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("ANNUAL_INTEREST_RATE");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.DepositDate)
-                    .HasColumnType("date")
-                    .HasColumnName("DEPOSIT_DATE");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.OtherDepHolderTypeDesc)
-                    .HasMaxLength(100)
-                    .HasColumnName("OTHER_DEP_HOLDER_TYPE_DESC");
-
-                entity.Property(e => e.SecDepHolderTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SEC_DEP_HOLDER_TYPE_CODE");
-
-                entity.Property(e => e.SecurityDepositId).HasColumnName("SECURITY_DEPOSIT_ID");
-
-                entity.Property(e => e.SecurityDepositTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsSecurityDepositReturn>(entity =>
@@ -10257,128 +2880,45 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecurityDepositReturnId)
                     .HasName("SDRTRN_PK");
 
-                entity.ToTable("PIMS_SECURITY_DEPOSIT_RETURN");
+                entity.Property(e => e.SecurityDepositReturnId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ])");
 
-                entity.HasIndex(e => e.LeaseId, "SDRTRN_LEASE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.SecurityDepositTypeCode, "SDRTRN_SECURITY_DEPOSIT_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.SecurityDepositReturnId)
-                    .HasColumnName("SECURITY_DEPOSIT_RETURN_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ])");
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ChequeNumber).HasComment("Cheque number of the deposit return");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ClaimsAgainst).HasComment("Amount of claims against the deposit");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ChequeNumber)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("CHEQUE_NUMBER")
-                    .HasComment("Cheque number of the deposit return");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ClaimsAgainst)
-                    .HasColumnType("money")
-                    .HasColumnName("CLAIMS_AGAINST")
-                    .HasComment("Amount of claims against the deposit");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DepositTotal).HasComment("Total amount of the pet/security deposit (including interest)");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.PayeeAddress).HasComment("Address of cheque recipient");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.PayeeName).HasComment("Name of cheque recipient");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ReturnAmount).HasComment("Amount returned minus claims");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.ReturnDate).HasComment("Date of deposit return");
 
-                entity.Property(e => e.DepositTotal)
-                    .HasColumnType("money")
-                    .HasColumnName("DEPOSIT_TOTAL")
-                    .HasComment("Total amount of the pet/security deposit (including interest)");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.PayeeAddress)
-                    .HasMaxLength(500)
-                    .HasColumnName("PAYEE_ADDRESS")
-                    .HasComment("Address of cheque recipient");
-
-                entity.Property(e => e.PayeeName)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("PAYEE_NAME")
-                    .HasComment("Name of cheque recipient");
-
-                entity.Property(e => e.ReturnAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("RETURN_AMOUNT")
-                    .HasComment("Amount returned minus claims");
-
-                entity.Property(e => e.ReturnDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("RETURN_DATE")
-                    .HasComment("Date of deposit return");
-
-                entity.Property(e => e.SecurityDepositTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
-
-                entity.Property(e => e.TerminationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERMINATION_DATE")
-                    .HasComment("Date the lease/license was terminated or surrendered");
+                entity.Property(e => e.TerminationDate).HasComment("Date the lease/license was terminated or surrendered");
 
                 entity.HasOne(d => d.Lease)
                     .WithMany(p => p.PimsSecurityDepositReturns)
@@ -10398,118 +2938,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecurityDepositReturnHistId)
                     .HasName("PIMS_SDRTRN_H_PK");
 
-                entity.ToTable("PIMS_SECURITY_DEPOSIT_RETURN_HIST");
+                entity.Property(e => e.SecurityDepositReturnHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.SecurityDepositReturnHistId, e.EndDateHist }, "PIMS_SDRTRN_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.SecurityDepositReturnHistId)
-                    .HasColumnName("_SECURITY_DEPOSIT_RETURN_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ChequeNumber)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("CHEQUE_NUMBER");
-
-                entity.Property(e => e.ClaimsAgainst)
-                    .HasColumnType("money")
-                    .HasColumnName("CLAIMS_AGAINST");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.DepositTotal)
-                    .HasColumnType("money")
-                    .HasColumnName("DEPOSIT_TOTAL");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.LeaseId).HasColumnName("LEASE_ID");
-
-                entity.Property(e => e.PayeeAddress)
-                    .HasMaxLength(500)
-                    .HasColumnName("PAYEE_ADDRESS");
-
-                entity.Property(e => e.PayeeName)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("PAYEE_NAME");
-
-                entity.Property(e => e.ReturnAmount)
-                    .HasColumnType("money")
-                    .HasColumnName("RETURN_AMOUNT");
-
-                entity.Property(e => e.ReturnDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("RETURN_DATE");
-
-                entity.Property(e => e.SecurityDepositReturnId).HasColumnName("SECURITY_DEPOSIT_RETURN_ID");
-
-                entity.Property(e => e.SecurityDepositTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
-
-                entity.Property(e => e.TerminationDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("TERMINATION_DATE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsSecurityDepositType>(entity =>
@@ -10517,49 +2948,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SecurityDepositTypeCode)
                     .HasName("SECDPT_PK");
 
-                entity.ToTable("PIMS_SECURITY_DEPOSIT_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.SecurityDepositTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("SECURITY_DEPOSIT_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsStaticVariable>(entity =>
@@ -10567,42 +2966,15 @@ namespace Pims.Dal
                 entity.HasKey(e => e.StaticVariableName)
                     .HasName("STAVBL_PK");
 
-                entity.ToTable("PIMS_STATIC_VARIABLE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.StaticVariableName)
-                    .HasMaxLength(100)
-                    .HasColumnName("STATIC_VARIABLE_NAME");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.StaticVariableValue)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("STATIC_VARIABLE_VALUE");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
             });
 
             modelBuilder.Entity<PimsSurplusDeclarationType>(entity =>
@@ -10610,52 +2982,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.SurplusDeclarationTypeCode)
                     .HasName("SPDCLT_PK");
 
-                entity.ToTable("PIMS_SURPLUS_DECLARATION_TYPE");
-
                 entity.HasComment("Description of the surplus property type.");
 
-                entity.Property(e => e.SurplusDeclarationTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("SURPLUS_DECLARATION_TYPE_CODE")
-                    .HasComment("Code value of the surplus property type");
+                entity.Property(e => e.SurplusDeclarationTypeCode).HasComment("Code value of the surplus property type");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION")
-                    .HasComment("Code description of the surplus property type");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
+                entity.Property(e => e.Description).HasComment("Code description of the surplus property type");
 
                 entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Indicates that the code value is disabled");
             });
@@ -10665,86 +3008,21 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskId)
                     .HasName("TASK_PK");
 
-                entity.ToTable("PIMS_TASK");
+                entity.Property(e => e.TaskId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_ID_SEQ])");
 
-                entity.HasIndex(e => e.ActivityId, "TASK_ACTIVITY_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.TaskTemplateId, "TASK_TASK_TEMPLATE_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.UserId, e.ActivityId, e.TaskTemplateId }, "TASK_TEMPLATE_ACTIVITY_USER_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => e.UserId, "TASK_USER_ID_IDX");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.TaskId)
-                    .HasColumnName("TASK_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_ID_SEQ])");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ActivityId).HasColumnName("ACTIVITY_ID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.TaskTemplateId).HasColumnName("TASK_TEMPLATE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.HasOne(d => d.Activity)
                     .WithMany(p => p.PimsTasks)
@@ -10769,83 +3047,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskHistId)
                     .HasName("PIMS_TASK_H_PK");
 
-                entity.ToTable("PIMS_TASK_HIST");
+                entity.Property(e => e.TaskHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.TaskHistId, e.EndDateHist }, "PIMS_TASK_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.TaskHistId)
-                    .HasColumnName("_TASK_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_H_ID_SEQ])");
-
-                entity.Property(e => e.ActivityId).HasColumnName("ACTIVITY_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.TaskId).HasColumnName("TASK_ID");
-
-                entity.Property(e => e.TaskTemplateId).HasColumnName("TASK_TEMPLATE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsTaskTemplate>(entity =>
@@ -10853,83 +3057,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskTemplateId)
                     .HasName("TSKTMP_PK");
 
-                entity.ToTable("PIMS_TASK_TEMPLATE");
+                entity.Property(e => e.TaskTemplateId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_ID_SEQ])");
 
-                entity.HasIndex(e => e.TaskTemplateTypeCode, "TSKTMP_TASK_TEMPLATE_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.TaskTemplateId)
-                    .HasColumnName("TASK_TEMPLATE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.TaskTemplateTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("TASK_TEMPLATE_TYPE_CODE");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.TaskTemplateTypeCodeNavigation)
                     .WithMany(p => p.PimsTaskTemplates)
@@ -10943,93 +3087,25 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskTemplateActivityModelId)
                     .HasName("TSKTAM_PK");
 
-                entity.ToTable("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL");
+                entity.Property(e => e.TaskTemplateActivityModelId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_ID_SEQ])");
 
-                entity.HasIndex(e => e.ActivityModelId, "TSKTAM_ACTIVITY_MODEL_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.TaskTemplateId, e.ActivityModelId }, "TSKTAM_TASK_TEMPLATE_ACTIVITY_MODEL_TUC")
-                    .IsUnique();
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.TaskTemplateId, "TSKTAM_TASK_TEMPLATE_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.TaskTemplateActivityModelId)
-                    .HasColumnName("TASK_TEMPLATE_ACTIVITY_MODEL_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ActivityModelId).HasColumnName("ACTIVITY_MODEL_ID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ImplementationOrder).HasColumnName("IMPLEMENTATION_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.IsMandatory)
-                    .IsRequired()
-                    .HasColumnName("IS_MANDATORY")
-                    .HasDefaultValueSql("(CONVERT([bit],(1)))");
-
-                entity.Property(e => e.TaskTemplateId).HasColumnName("TASK_TEMPLATE_ID");
+                entity.Property(e => e.IsMandatory).HasDefaultValueSql("(CONVERT([bit],(1)))");
 
                 entity.HasOne(d => d.ActivityModel)
                     .WithMany(p => p.PimsTaskTemplateActivityModels)
@@ -11049,87 +3125,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskTemplateActivityModelHistId)
                     .HasName("PIMS_TSKTAM_H_PK");
 
-                entity.ToTable("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_HIST");
+                entity.Property(e => e.TaskTemplateActivityModelHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.TaskTemplateActivityModelHistId, e.EndDateHist }, "PIMS_TSKTAM_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.TaskTemplateActivityModelHistId)
-                    .HasColumnName("_TASK_TEMPLATE_ACTIVITY_MODEL_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_H_ID_SEQ])");
-
-                entity.Property(e => e.ActivityModelId).HasColumnName("ACTIVITY_MODEL_ID");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ImplementationOrder).HasColumnName("IMPLEMENTATION_ORDER");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.IsMandatory).HasColumnName("IS_MANDATORY");
-
-                entity.Property(e => e.TaskTemplateActivityModelId).HasColumnName("TASK_TEMPLATE_ACTIVITY_MODEL_ID");
-
-                entity.Property(e => e.TaskTemplateId).HasColumnName("TASK_TEMPLATE_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsTaskTemplateHist>(entity =>
@@ -11137,84 +3135,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskTemplateHistId)
                     .HasName("PIMS_TSKTMP_H_PK");
 
-                entity.ToTable("PIMS_TASK_TEMPLATE_HIST");
+                entity.Property(e => e.TaskTemplateHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.TaskTemplateHistId, e.EndDateHist }, "PIMS_TSKTMP_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.TaskTemplateHistId)
-                    .HasColumnName("_TASK_TEMPLATE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TASK_TEMPLATE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.TaskTemplateId).HasColumnName("TASK_TEMPLATE_ID");
-
-                entity.Property(e => e.TaskTemplateTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("TASK_TEMPLATE_TYPE_CODE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsTaskTemplateType>(entity =>
@@ -11222,106 +3145,47 @@ namespace Pims.Dal
                 entity.HasKey(e => e.TaskTemplateTypeCode)
                     .HasName("TSKTMT_PK");
 
-                entity.ToTable("PIMS_TASK_TEMPLATE_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.TaskTemplateTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("TASK_TEMPLATE_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsTenant>(entity =>
             {
                 entity.HasKey(e => e.TenantId)
-                    .HasName("PK__PIMS_TEN__5E0E988A42D52538");
+                    .HasName("TENNTX_PK");
 
-                entity.ToTable("PIMS_TENANT");
+                entity.HasComment("Deprecated table to support legacy CITZ-PIMS application code.  This table will be removed once the code dependency is removed from the system.");
 
                 entity.Property(e => e.TenantId)
-                    .HasColumnName("TENANT_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])");
+                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])")
+                    .HasComment("Auto-sequenced unique key value");
 
-                entity.Property(e => e.Code)
-                    .IsRequired()
-                    .HasMaxLength(6)
-                    .HasColumnName("CODE");
+                entity.Property(e => e.Code).HasComment("Code value for entry");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(500)
-                    .HasColumnName("DESCRIPTION");
+                entity.Property(e => e.Description).HasComment("Description of the entry for display purposes");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(150)
-                    .HasColumnName("NAME");
+                entity.Property(e => e.Name).HasComment("Name of the entry for display purposes");
 
-                entity.Property(e => e.Settings)
-                    .IsRequired()
-                    .HasMaxLength(2000)
-                    .HasColumnName("SETTINGS");
+                entity.Property(e => e.Settings).HasComment("Serialized JSON value for the configuration");
             });
 
             modelBuilder.Entity<PimsUser>(entity =>
@@ -11329,114 +3193,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserId)
                     .HasName("USER_PK");
 
-                entity.ToTable("PIMS_USER");
+                entity.Property(e => e.UserId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ID_SEQ])");
 
-                entity.HasIndex(e => e.BusinessIdentifierValue, "USER_BUSINESS_IDENTIFIER_VALUE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.GuidIdentifierValue, "USER_GUID_IDENTIFIER_VALUE_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.PersonId, "USER_PERSON_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("USER_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ApprovedById)
-                    .HasMaxLength(30)
-                    .HasColumnName("APPROVED_BY_ID");
-
-                entity.Property(e => e.BusinessIdentifierValue)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("BUSINESS_IDENTIFIER_VALUE");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ExpiryDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EXPIRY_DATE");
-
-                entity.Property(e => e.GuidIdentifierValue).HasColumnName("GUID_IDENTIFIER_VALUE");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.IssueDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ISSUE_DATE");
-
-                entity.Property(e => e.LastLogin)
-                    .HasColumnType("datetime")
-                    .HasColumnName("LAST_LOGIN");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(1000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
-
-                entity.Property(e => e.Position)
-                    .HasMaxLength(100)
-                    .HasColumnName("POSITION");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.PimsUsers)
@@ -11450,112 +3223,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserHistId)
                     .HasName("PIMS_USER_H_PK");
 
-                entity.ToTable("PIMS_USER_HIST");
+                entity.Property(e => e.UserHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.UserHistId, e.EndDateHist }, "PIMS_USER_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.UserHistId)
-                    .HasColumnName("_USER_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ApprovedById)
-                    .HasMaxLength(30)
-                    .HasColumnName("APPROVED_BY_ID");
-
-                entity.Property(e => e.BusinessIdentifierValue)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("BUSINESS_IDENTIFIER_VALUE");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.ExpiryDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EXPIRY_DATE");
-
-                entity.Property(e => e.GuidIdentifierValue).HasColumnName("GUID_IDENTIFIER_VALUE");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.IssueDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("ISSUE_DATE");
-
-                entity.Property(e => e.LastLogin)
-                    .HasColumnType("datetime")
-                    .HasColumnName("LAST_LOGIN");
-
-                entity.Property(e => e.Note)
-                    .HasMaxLength(1000)
-                    .HasColumnName("NOTE");
-
-                entity.Property(e => e.PersonId).HasColumnName("PERSON_ID");
-
-                entity.Property(e => e.Position)
-                    .HasMaxLength(100)
-                    .HasColumnName("POSITION");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsUserOrganization>(entity =>
@@ -11563,90 +3233,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserOrganizationId)
                     .HasName("USRORG_PK");
 
-                entity.ToTable("PIMS_USER_ORGANIZATION");
+                entity.Property(e => e.UserOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_ID_SEQ])");
 
-                entity.HasIndex(e => e.OrganizationId, "USRORG_ORGANIZATION_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.RoleId, "USRORG_ROLE_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.UserId, "USRORG_USER_ID_IDX");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.HasIndex(e => new { e.OrganizationId, e.UserId, e.RoleId }, "USRORG_USER_ROLE_ORGANIZATION_TUC")
-                    .IsUnique();
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.UserOrganizationId)
-                    .HasColumnName("USER_ORGANIZATION_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_ID_SEQ])");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Organization)
                     .WithMany(p => p.PimsUserOrganizations)
@@ -11672,85 +3275,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserOrganizationHistId)
                     .HasName("PIMS_USRORG_H_PK");
 
-                entity.ToTable("PIMS_USER_ORGANIZATION_HIST");
+                entity.Property(e => e.UserOrganizationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.UserOrganizationHistId, e.EndDateHist }, "PIMS_USRORG_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.UserOrganizationHistId)
-                    .HasColumnName("_USER_ORGANIZATION_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.OrganizationId).HasColumnName("ORGANIZATION_ID");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
-
-                entity.Property(e => e.UserOrganizationId).HasColumnName("USER_ORGANIZATION_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsUserRole>(entity =>
@@ -11758,86 +3285,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserRoleId)
                     .HasName("USERRL_PK");
 
-                entity.ToTable("PIMS_USER_ROLE");
+                entity.Property(e => e.UserRoleId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_ID_SEQ])");
 
-                entity.HasIndex(e => e.RoleId, "USERRL_ROLE_ID_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => e.UserId, "USERRL_USER_ID_IDX");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.HasIndex(e => new { e.UserId, e.RoleId }, "USERRL_USER_ROLE_TUC")
-                    .IsUnique();
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.UserRoleId)
-                    .HasColumnName("USER_ROLE_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_ID_SEQ])");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.PimsUserRoles)
@@ -11857,83 +3321,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.UserRoleHistId)
                     .HasName("PIMS_USERRL_H_PK");
 
-                entity.ToTable("PIMS_USER_ROLE_HIST");
+                entity.Property(e => e.UserRoleHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.UserRoleHistId, e.EndDateHist }, "PIMS_USERRL_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.UserRoleHistId)
-                    .HasColumnName("_USER_ROLE_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
-
-                entity.Property(e => e.UserId).HasColumnName("USER_ID");
-
-                entity.Property(e => e.UserRoleId).HasColumnName("USER_ROLE_ID");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsWorkflowModel>(entity =>
@@ -11941,83 +3331,23 @@ namespace Pims.Dal
                 entity.HasKey(e => e.WorkflowModelId)
                     .HasName("WFLMDL_PK");
 
-                entity.ToTable("PIMS_WORKFLOW_MODEL");
+                entity.Property(e => e.WorkflowModelId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORKFLOW_MODEL_ID_SEQ])");
 
-                entity.HasIndex(e => e.WorkflowModelTypeCode, "WFLMDL_WORKFLOW_MODEL_TYPE_CODE_IDX");
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.WorkflowModelId)
-                    .HasColumnName("WORKFLOW_MODEL_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORKFLOW_MODEL_ID_SEQ])");
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-                entity.Property(e => e.WorkflowModelTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("WORKFLOW_MODEL_TYPE_CODE");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.WorkflowModelTypeCodeNavigation)
                     .WithMany(p => p.PimsWorkflowModels)
@@ -12031,84 +3361,9 @@ namespace Pims.Dal
                 entity.HasKey(e => e.WorkflowModelHistId)
                     .HasName("PIMS_WFLMDL_H_PK");
 
-                entity.ToTable("PIMS_WORKFLOW_MODEL_HIST");
+                entity.Property(e => e.WorkflowModelHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORKFLOW_MODEL_H_ID_SEQ])");
 
-                entity.HasIndex(e => new { e.WorkflowModelHistId, e.EndDateHist }, "PIMS_WFLMDL_H_UK")
-                    .IsUnique();
-
-                entity.Property(e => e.WorkflowModelHistId)
-                    .HasColumnName("_WORKFLOW_MODEL_HIST_ID")
-                    .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORKFLOW_MODEL_H_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.AppCreateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppCreateUserGuid).HasColumnName("APP_CREATE_USER_GUID");
-
-                entity.Property(e => e.AppCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_CREATE_USERID");
-
-                entity.Property(e => e.AppLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("APP_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USER_DIRECTORY");
-
-                entity.Property(e => e.AppLastUpdateUserGuid).HasColumnName("APP_LAST_UPDATE_USER_GUID");
-
-                entity.Property(e => e.AppLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("APP_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasColumnName("CONCURRENCY_CONTROL_NUMBER");
-
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP");
-
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID");
-
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID");
-
-                entity.Property(e => e.EffectiveDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("EFFECTIVE_DATE_HIST")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.EndDateHist)
-                    .HasColumnType("datetime")
-                    .HasColumnName("END_DATE_HIST");
-
-                entity.Property(e => e.IsDisabled).HasColumnName("IS_DISABLED");
-
-                entity.Property(e => e.WorkflowModelId).HasColumnName("WORKFLOW_MODEL_ID");
-
-                entity.Property(e => e.WorkflowModelTypeCode)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .HasColumnName("WORKFLOW_MODEL_TYPE_CODE");
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsWorkflowModelType>(entity =>
@@ -12116,70 +3371,17 @@ namespace Pims.Dal
                 entity.HasKey(e => e.WorkflowModelTypeCode)
                     .HasName("WFLMDT_PK");
 
-                entity.ToTable("PIMS_WORKFLOW_MODEL_TYPE");
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.WorkflowModelTypeCode)
-                    .HasMaxLength(20)
-                    .HasColumnName("WORKFLOW_MODEL_TYPE_CODE");
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ConcurrencyControlNumber)
-                    .HasColumnName("CONCURRENCY_CONTROL_NUMBER")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbCreateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_CREATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.DbCreateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_CREATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.DbLastUpdateTimestamp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("DB_LAST_UPDATE_TIMESTAMP")
-                    .HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid)
-                    .IsRequired()
-                    .HasMaxLength(30)
-                    .HasColumnName("DB_LAST_UPDATE_USERID")
-                    .HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.DisplayOrder).HasColumnName("DISPLAY_ORDER");
-
-                entity.Property(e => e.IsDisabled)
-                    .IsRequired()
-                    .HasColumnName("IS_DISABLED")
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-            });
-
-            modelBuilder.Entity<PimsxTableDefinition>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("PIMSX_TableDefinitions");
-
-                entity.Property(e => e.Description).HasColumnName("DESCRIPTION");
-
-                entity.Property(e => e.HistRequired)
-                    .HasMaxLength(1)
-                    .HasColumnName("HIST_REQUIRED");
-
-                entity.Property(e => e.TableAlias)
-                    .HasMaxLength(255)
-                    .HasColumnName("TABLE_ALIAS");
-
-                entity.Property(e => e.TableName)
-                    .HasMaxLength(255)
-                    .HasColumnName("TABLE_NAME");
+                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.HasSequence("PIMS_ACCESS_REQUEST_H_ID_SEQ")

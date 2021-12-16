@@ -12,7 +12,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using Pims.Dal.Helpers.Extensions;
 using System.Linq;
 using System.Collections.Generic;
 
