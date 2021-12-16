@@ -48,7 +48,7 @@ const selectedUser = {
   surname: 'User',
   position: '',
   rowVersion: 1,
-  businessIdentifierValue: 'admin',
+  businessIdentifier: 'admin',
   lastLogin: '2020-10-14T17:45:39.7381599',
 };
 
