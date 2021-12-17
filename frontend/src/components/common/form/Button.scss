@@ -1,3 +1,5 @@
+@import '../../../colors.scss';
+
 .Button {
   display: flex;
   align-items: center;
@@ -9,6 +11,40 @@
     &:hover {
       text-decoration: none;
       opacity: 0.8;
+    }
+  }
+
+  &.btn-link {
+    font-weight: 400;
+    color: $link-color;
+    text-decoration: none;
+    min-height: 2.5rem;
+    line-height: 3rem;
+    padding: 0;
+
+    &:hover {
+      color: $link-hover-color;
+      text-decoration: underline;
+      background-color: transparent !important;
+    }
+
+    &:focus,
+    &.focus {
+      text-decoration: underline;
+      background-color: transparent !important;
+      box-shadow: none;
+    }
+
+    &:active,
+    &.active {
+      background-color: transparent !important;
+    }
+
+    &:disabled,
+    &.disabled {
+      color: $disabled-color;
+      background-color: transparent !important;
+      pointer-events: none;
     }
   }
 
