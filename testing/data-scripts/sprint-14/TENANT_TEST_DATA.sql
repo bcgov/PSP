@@ -141,4 +141,4 @@ SET
     [NOTE] = 'These are notes for the organization record',
     [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1
 WHERE
-    [LEASE_TENANT_ID] = 4
+    [LEASE_TENANT_ID] = 1
