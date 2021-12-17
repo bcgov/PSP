@@ -17,7 +17,7 @@ const formLabelMap = new Map<string, Dictionary<string>>([
 /**
  * Hook that provides several helpers to the Address component.
  */
-export function useAddressHelpers() {
+export default function useAddressHelpers() {
   const { getOptionsByType } = useLookupCodeHelpers();
 
   const countries = useMemo(() => getOptionsByType(API.COUNTRY_TYPES), [getOptionsByType]);
@@ -46,22 +46,6 @@ export function useAddressHelpers() {
     setProvinces(filteredProvinces);
   }, [allProvinces, countries, selectedCountryId]);
 
-  // const getProvinces = useCallback(
-  //   (countryId: NumberFieldValue) => {
-  //     const countryCode = countries.find(c => c.id === countryId)?.code as CountryCodes;
-  //     return formLabelMap.get(countryCode ?? CountryCodes.Canada);
-  //   },
-  //   [countries],
-  // );
-
-  // const getFormLabels = useCallback(
-  //   (countryId: NumberFieldValue) => {
-  //     const countryCode = countries.find(c => c.id === countryId)?.code as CountryCodes;
-  //     return formLabelMap.get(countryCode ?? CountryCodes.Canada);
-  //   },
-  //   [countries],
-  // );
-
   return {
     defaultCountryId,
     countries,
@@ -72,5 +56,3 @@ export function useAddressHelpers() {
     setSelectedCountryId,
   };
 }
-
-export default useAddressHelpers;

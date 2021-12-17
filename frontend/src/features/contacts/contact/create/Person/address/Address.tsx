@@ -1,14 +1,17 @@
-import { Input, Select, SelectOption } from 'components/common/form';
+import { Button, Input, Select, SelectOption } from 'components/common/form';
+import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
 import { getIn, useFormikContext } from 'formik';
 import { Dictionary } from 'interfaces/Dictionary';
 import { ICreatePersonForm } from 'interfaces/ICreateContact';
 import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { FaTimes } from 'react-icons/fa';
 import { withNameSpace } from 'utils/formUtils';
 
+import * as Styled from './styles';
 import useAddressHelpers from './useAddressHelpers';
+import useCounter from './useCounter';
 
 export interface IAddressProps {
   namespace?: string;
@@ -50,16 +53,50 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
     [namespace, setFieldValue, setSelectedCountryId],
   );
 
+  // this counter determines how many address lines we render in the form; e.g. street1, street2, etc
+  const { count, increment, decrement } = useCounter({ initial: 1, min: 1, max: 3 });
+
+  // clear extra address fields when they get removed from address form...
+  useEffect(() => {
+    if (count < 3) {
+      setFieldValue(withNameSpace(namespace, 'streetAddress3'), '');
+    }
+    if (count < 2) {
+      setFieldValue(withNameSpace(namespace, 'streetAddress2'), '');
+    }
+  }, [count, namespace, setFieldValue]);
+
   return (
     <>
       <Row>
         <Col md={8}>
           <Input field={withNameSpace(namespace, 'streetAddress1')} label="Address (line 1)" />
-          <Link to="" onClick={() => {}}>
-            + Add an address line
-          </Link>
+          {count > 1 && (
+            <Input field={withNameSpace(namespace, 'streetAddress2')} label="Address (line 2)" />
+          )}
+          {count > 2 && (
+            <Input field={withNameSpace(namespace, 'streetAddress3')} label="Address (line 3)" />
+          )}
+        </Col>
+        <Col style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
+          {count > 1 && (
+            <Stack justifyContent="flex-end" className="h-100">
+              <Styled.RemoveButton onClick={decrement}>
+                <FaTimes size="2rem" /> <span className="text">Remove</span>
+              </Styled.RemoveButton>
+            </Stack>
+          )}
         </Col>
       </Row>
+      {count < 3 && (
+        <Row style={{ marginTop: '-1rem', marginBottom: '1rem' }}>
+          <Col>
+            <Button variant="link" onClick={increment}>
+              + Add an address line
+            </Button>
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col md={4}>
           <Select
