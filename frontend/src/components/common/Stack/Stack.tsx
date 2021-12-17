@@ -21,6 +21,7 @@ interface IStackProps {
  */
 export const Stack = styled.div<IStackProps>`
   display: flex;
+  width: 100%;
   flex-direction: ${({ $direction = 'column' }) => $direction};
   gap: ${({ gap = 0 }) => (typeof gap === 'number' ? gap + 'rem' : gap)};
   align-items: ${({ alignItems = 'flex-start' }) => alignItems};
