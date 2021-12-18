@@ -1,13 +1,12 @@
-import { Button, Input, Select, SelectOption } from 'components/common/form';
+import { Input, Select } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
-import { getIn, useFormikContext } from 'formik';
-import { ICreatePersonForm } from 'interfaces/ICreateContact';
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
 import { withNameSpace } from 'utils/formUtils';
 
 import * as Styled from '../styles';
+import useContactInfoHelpers from './useContactInfoHelpers';
 
 export interface IContactPhone {
   namespace?: string;
@@ -19,18 +18,20 @@ export interface IContactPhone {
  * @param {IContactPhone} param0
  */
 export const ContactPhone: React.FunctionComponent<IContactPhone> = ({ namespace, onRemove }) => {
+  const { phoneTypes } = useContactInfoHelpers();
+
   return (
     <>
       <Row>
-        <Col md={7}>
+        <Col md={6}>
           <Input field={withNameSpace(namespace, 'value')} label="Phone" />
         </Col>
-        <Col md={3}>
+        <Col md={4}>
           <Select
             label="Phone type"
             field={withNameSpace(namespace, 'contactMethodTypeCode')}
-            options={[]}
-            onChange={() => null}
+            options={phoneTypes}
+            placeholder="Select..."
           />
         </Col>
         <Col md={2} style={{ paddingLeft: 0, paddingBottom: '2rem' }}>

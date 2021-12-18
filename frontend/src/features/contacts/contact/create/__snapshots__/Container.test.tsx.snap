@@ -435,7 +435,7 @@ exports[`ContactContainer component renders as expected 1`] = `
               class="row"
             >
               <div
-                class="col-md-7"
+                class="col-md-6"
               >
                 <div
                   class="input form-group"
@@ -455,7 +455,7 @@ exports[`ContactContainer component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="col-md-3"
+                class="col-md-4"
               >
                 <div
                   class="form-group"
@@ -470,7 +470,13 @@ exports[`ContactContainer component renders as expected 1`] = `
                     class="form-select form-control"
                     id="input-contactEmail.0.contactMethodTypeCode"
                     name="contactEmail.0.contactMethodTypeCode"
-                  />
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                  </select>
                 </div>
               </div>
               <div
@@ -493,7 +499,7 @@ exports[`ContactContainer component renders as expected 1`] = `
               class="row"
             >
               <div
-                class="col-md-7"
+                class="col-md-6"
               >
                 <div
                   class="input form-group"
@@ -513,7 +519,7 @@ exports[`ContactContainer component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="col-md-3"
+                class="col-md-4"
               >
                 <div
                   class="form-group"
@@ -528,7 +534,13 @@ exports[`ContactContainer component renders as expected 1`] = `
                     class="form-select form-control"
                     id="input-contactPhone.0.contactMethodTypeCode"
                     name="contactPhone.0.contactMethodTypeCode"
-                  />
+                  >
+                    <option
+                      value=""
+                    >
+                      Select...
+                    </option>
+                  </select>
                 </div>
               </div>
               <div
