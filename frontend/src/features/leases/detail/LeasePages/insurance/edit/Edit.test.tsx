@@ -4,6 +4,7 @@ import { defaultFormLease, IFormLease, IInsurance } from 'interfaces';
 import { noop } from 'lodash';
 import { mockOrganization, mockUser } from 'mocks/filterDataMock';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
+
 import InsuranceEditContainer from './EditContainer';
 
 const mockInsurance: IInsurance = {
