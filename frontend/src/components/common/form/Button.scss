@@ -14,6 +14,8 @@
     }
   }
 
+  // FIXME:This is here to deal with !important on buttons.scss
+  // Needs to be addressed as part of a larger refactoring of frontend styling
   &.btn-link {
     font-weight: 400;
     color: $link-color;

@@ -425,8 +425,127 @@ exports[`ContactContainer component renders as expected 1`] = `
             <p
               class="c11"
             >
-              Contacts must have a minimum of one method of contact to be saved. (ex: email, phone or address)
+              Contacts must have a minimum of one method of contact to be saved. 
+              <br />
+              <em>
+                (ex: email,phone or address)
+              </em>
             </p>
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-7"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-contactEmail.0.value"
+                  >
+                    Email 
+                  </label>
+                  <input
+                    class="form-control"
+                    id="input-contactEmail.0.value"
+                    name="contactEmail.0.value"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-3"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-contactEmail.0.contactMethodTypeCode"
+                  >
+                    Email type 
+                  </label>
+                  <select
+                    class="form-select form-control"
+                    id="input-contactEmail.0.contactMethodTypeCode"
+                    name="contactEmail.0.contactMethodTypeCode"
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-2"
+                style="padding-left: 0px; padding-bottom: 2rem;"
+              />
+            </div>
+            <button
+              class="Button btn btn-link"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                + Add another email address
+              </div>
+            </button>
+            <br />
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-7"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-contactPhone.0.value"
+                  >
+                    Phone 
+                  </label>
+                  <input
+                    class="form-control"
+                    id="input-contactPhone.0.value"
+                    name="contactPhone.0.value"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-3"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="input-contactPhone.0.contactMethodTypeCode"
+                  >
+                    Phone type 
+                  </label>
+                  <select
+                    class="form-select form-control"
+                    id="input-contactPhone.0.contactMethodTypeCode"
+                    name="contactPhone.0.contactMethodTypeCode"
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-2"
+                style="padding-left: 0px; padding-bottom: 2rem;"
+              />
+            </div>
+            <button
+              class="Button btn btn-link"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                + Add another email address
+              </div>
+            </button>
           </div>
           <div
             class="c8"

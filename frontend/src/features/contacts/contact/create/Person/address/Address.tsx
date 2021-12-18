@@ -6,10 +6,10 @@ import { Dictionary } from 'interfaces/Dictionary';
 import { ICreatePersonForm } from 'interfaces/ICreateContact';
 import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTimes } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
 import { withNameSpace } from 'utils/formUtils';
 
-import * as Styled from './styles';
+import * as Styled from '../styles';
 import useAddressHelpers from './useAddressHelpers';
 import useCounter from './useCounter';
 
@@ -82,7 +82,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
           {count > 1 && (
             <Stack justifyContent="flex-end" className="h-100">
               <Styled.RemoveButton onClick={decrement}>
-                <FaTimes size="2rem" /> <span className="text">Remove</span>
+                <MdClose size="2rem" /> <span className="text">Remove</span>
               </Styled.RemoveButton>
             </Stack>
           )}

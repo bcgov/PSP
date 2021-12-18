@@ -1,3 +1,4 @@
+import { Button } from 'components/common/form/Button';
 import styled from 'styled-components';
 
 // common ui styling
@@ -17,5 +18,23 @@ export const SummaryText = styled.p`
     content: '* ';
     color: #606060;
     font-weight: 700;
+  }
+`;
+
+export const RemoveButton = styled(Button).attrs({ variant: 'link' })`
+  && {
+    color: #aaaaaa;
+    text-decoration: none;
+    line-height: unset;
+    .text {
+      display: none;
+    }
+    &:hover {
+      color: #d8292f;
+      text-decoration: none;
+      .text {
+        display: inline;
+      }
+    }
   }
 `;

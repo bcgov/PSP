@@ -1,7 +1,7 @@
 import { Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { Stack } from 'components/common/Stack/Stack';
-import { Formik } from 'formik';
+import { FieldArray, Formik } from 'formik';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { defaultCreatePerson } from 'interfaces/ICreateContact';
 import { Col, Row } from 'react-bootstrap';
@@ -11,6 +11,8 @@ import { toast } from 'react-toastify';
 import { PadBox } from '../styles';
 import Address from './address/Address';
 import CommentNotes from './comments/CommentNotes';
+import { ContactEmail } from './contactInfo/ContactEmail';
+import { ContactPhone } from './contactInfo/ContactPhone';
 import * as Styled from './styles';
 
 export interface ICreatePersonFormProps {}
@@ -33,7 +35,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
         }
       }}
     >
-      {() => (
+      {({ values }) => (
         <Styled.Form id="createForm">
           <Styled.CreatePersonLayout>
             <Stack gap={1.6}>
@@ -65,9 +67,57 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
               <FormSection>
                 <Styled.H2>Contact info</Styled.H2>
                 <Styled.SummaryText>
-                  Contacts must have a minimum of one method of contact to be saved. (ex: email,
-                  phone or address)
+                  Contacts must have a minimum of one method of contact to be saved. <br />
+                  <em>(ex: email,phone or address)</em>
                 </Styled.SummaryText>
+
+                <FieldArray name="emailContactMethods">
+                  {({ push, remove, name }) => (
+                    <>
+                      {values.emailContactMethods.length > 0 &&
+                        values.emailContactMethods.map((email, index) => (
+                          <ContactEmail
+                            key={`contactEmail.${index}`}
+                            namespace={`contactEmail.${index}`}
+                            onRemove={index > 0 ? () => remove(index) : undefined}
+                          />
+                        ))}
+                      <Button
+                        variant="link"
+                        onClick={() => {
+                          push({ value: '', contactMethodTypeCode: '' });
+                        }}
+                      >
+                        + Add another email address
+                      </Button>
+                    </>
+                  )}
+                </FieldArray>
+
+                <br />
+
+                <FieldArray name="phoneContactMethods">
+                  {({ push, remove, name }) => (
+                    <>
+                      {values.phoneContactMethods.length > 0 &&
+                        values.phoneContactMethods.map((email, index) => (
+                          <ContactPhone
+                            key={`contactPhone.${index}`}
+                            namespace={`contactPhone.${index}`}
+                            onRemove={index > 0 ? () => remove(index) : undefined}
+                          />
+                        ))}
+                      <Button
+                        variant="link"
+                        onClick={() => {
+                          push({ value: '', contactMethodTypeCode: '' });
+                        }}
+                      >
+                        + Add another email address
+                      </Button>
+                    </>
+                  )}
+                </FieldArray>
               </FormSection>
 
               <FormSection>
