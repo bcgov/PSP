@@ -1,31 +1,48 @@
-import { FormSection } from 'components/common/form/styles';
-import { INSURANCE_TYPES, LEASE_PROGRAM_TYPES } from 'constants/API';
+import { INSURANCE_TYPES } from 'constants/API';
 import { getIn, useFormikContext } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IInsurance, ILease } from 'interfaces';
 import { useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 import InsuranceDetailsView from './details/Insurance';
-import InsuranceEditView from './edit/Edit';
+import InsuranceEditContainer from './edit/EditContainer';
 
 const InsuranceContainer: React.FunctionComponent = () => {
-  const { values } = useFormikContext<ILease>();
-  const insuranceList: IInsurance[] = getIn(values, 'insurances') ?? [];
+  const context = useFormikContext<ILease>();
+  const leaseId: number = getIn(context.values, 'id') || -1;
+  const insuranceList: IInsurance[] = getIn(context.values, 'insurances') ?? [];
 
   const lookupCodes = useLookupCodeHelpers();
-  const insuranceTypes = lookupCodes.getByType(INSURANCE_TYPES);
+  const insuranceTypes = lookupCodes.getByType(INSURANCE_TYPES).sort((a, b) => {
+    return (a.displayOrder || 0) - (b.displayOrder || 0);
+  });
 
   const [isEditing, setEditing] = useState(false);
   return (
     <>
-      asdas
-      <Button variant="link" onClick={() => setEditing(!isEditing)}>
-        {isEditing ? 'We are editing' : `We are not editing`}
-      </Button>
-      {!isEditing && <InsuranceDetailsView insuranceList={insuranceList} />}
+      {!isEditing && (
+        <>
+          <Button variant="link" onClick={() => setEditing(!isEditing)}>
+            Edit Insurances
+          </Button>
+          <InsuranceDetailsView insuranceList={insuranceList} insuranceTypes={insuranceTypes} />
+        </>
+      )}
       {isEditing && (
-        <InsuranceEditView insuranceList={insuranceList} insuranceTypes={insuranceTypes} />
+        <InsuranceEditContainer
+          leaseId={leaseId}
+          insuranceList={insuranceList}
+          insuranceTypes={insuranceTypes}
+          onSuccess={() => {
+            context.submitForm();
+            setEditing(false);
+          }}
+          onCancel={() => {
+            setEditing(false);
+            context.resetForm();
+          }}
+        />
       )}
     </>
   );

@@ -33,6 +33,10 @@ namespace Pims.Dal
         IContactService Contact { get; }
         #endregion
 
+        #region Insurance
+        IInsuranceService Insurance { get; }
+        #endregion
+
         #region Configuration
         ITenantService Tenant { get; }
         #endregion

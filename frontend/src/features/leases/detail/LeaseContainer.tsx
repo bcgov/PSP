@@ -75,11 +75,12 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
     leasePageName = LeasePageNames.DETAILS;
   }
   const leasePage = leasePages.get(leasePageName as LeasePageNames);
+
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
 
-  const { lease } = useLeaseDetail(props?.match?.params?.leaseId);
+  const { lease, refresh } = useLeaseDetail(props?.match?.params?.leaseId);
 
   return (
     <>
@@ -92,7 +93,7 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
         <LeaseHeader lease={lease} />
         <BackToSearchButton />
         <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
-        <LeasePageForm leasePage={leasePage} lease={lease}></LeasePageForm>
+        <LeasePageForm leasePage={leasePage} lease={lease} refreshLease={refresh}></LeasePageForm>
       </LeaseLayout>
       <LoadingBackdrop show={!lease} />
     </>

@@ -17,23 +17,12 @@ namespace Pims.Dal.Extensions
         /// <param name="entry"></param>
         public static void UndoAppCreatedEdits(this EntityEntry entry)
         {
-            if (entry.Entity is IDisableBaseAppEntity entity)
+            if (entry.Entity is IBaseAppEntity)
             {
-                var oCreatedOn = (DateTime)entry.OriginalValues[nameof(entity.AppCreateTimestamp)];
-                if (!oCreatedOn.Equals(entity.AppCreateTimestamp))
-                    entity.AppCreateTimestamp = oCreatedOn;
-
-                var oCreatedBy = (string)entry.OriginalValues[nameof(entity.AppCreateUserid)];
-                if (String.IsNullOrWhiteSpace(entity.AppCreateUserid) || !oCreatedBy.Equals(entity.AppCreateUserid))
-                    entity.AppCreateUserid = oCreatedBy;
-
-                var oCreatedByKey = (Guid?)entry.OriginalValues[nameof(entity.AppCreateUserGuid)];
-                if (!entity.AppCreateUserGuid.HasValue || !oCreatedByKey.Equals(entity.AppCreateUserGuid))
-                    entity.AppCreateUserGuid = oCreatedByKey;
-
-                var oCreatedByDirectory = (string)entry.OriginalValues[nameof(entity.AppCreateUserDirectory)];
-                if (String.IsNullOrWhiteSpace(entity.AppCreateUserDirectory) || !oCreatedByDirectory.Equals(entity.AppCreateUserDirectory))
-                    entity.AppCreateUserDirectory = oCreatedByDirectory;
+                entry.Property(nameof(IBaseAppEntity.AppCreateTimestamp)).IsModified = false;
+                entry.Property(nameof(IBaseAppEntity.AppCreateUserid)).IsModified = false;
+                entry.Property(nameof(IBaseAppEntity.AppCreateUserGuid)).IsModified = false;
+                entry.Property(nameof(IBaseAppEntity.AppCreateUserDirectory)).IsModified = false;
             }
         }
 
@@ -44,15 +33,10 @@ namespace Pims.Dal.Extensions
         /// <param name="entry"></param>
         public static void UndoDbCreatedEdits(this EntityEntry entry)
         {
-            if (entry.Entity is IDisableBaseAppEntity entity)
+            if (entry.Entity is IBaseAppEntity)
             {
-                var oCreatedOn = (DateTime)entry.OriginalValues[nameof(entity.DbCreateTimestamp)];
-                if (!oCreatedOn.Equals(entity.DbCreateTimestamp))
-                    entity.DbCreateTimestamp = oCreatedOn;
-
-                var oCreatedBy = (string)entry.OriginalValues[nameof(entity.DbCreateUserid)];
-                if (String.IsNullOrWhiteSpace(entity.DbCreateUserid) || !oCreatedBy.Equals(entity.DbCreateUserid))
-                    entity.DbCreateUserid = oCreatedBy;
+                entry.Property(nameof(IBaseAppEntity.DbCreateTimestamp)).IsModified = false;
+                entry.Property(nameof(IBaseAppEntity.DbCreateUserid)).IsModified = false;
             }
         }
 
@@ -115,7 +99,7 @@ namespace Pims.Dal.Extensions
         /// <param name="userDirectory"></param>
         public static void UpdateDbAuditProperties(this EntityEntry entry, string username)
         {
-            if (entry.Entity is IDisableBaseAppEntity entity)
+            if (entry.Entity is IBaseAppEntity entity)
             {
                 var date = DateTime.UtcNow;
                 if (entry.State == EntityState.Added)
