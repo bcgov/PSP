@@ -19,9 +19,9 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   const columnWidth = 5;
   const policy: PolicyView = {
     insuranceInPlace: insurance.isInsuranceInPlace ? 'Yes' : 'No',
-    limit: formatMoney(insurance.coverageLimit),
+    limit: insurance.coverageLimit ? formatMoney(insurance.coverageLimit) : '',
     expiryDate: prettyFormatDate(insurance.expiryDate),
-    coverageDescription: insurance.coverageDescription,
+    coverageDescription: insurance.coverageDescription || '',
   };
   return (
     <Row className="pt-3">

@@ -8,6 +8,4 @@ export const LabelCol = styled(Col)`
 
 export const SubTitle = styled.h2`
   color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
-  margin-bottom: 1rem;
 `;

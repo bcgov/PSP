@@ -1,14 +1,12 @@
 import axios from 'axios';
 import * as actionTypes from 'constants/actionTypes';
 import { catchAxiosError } from 'customAxios';
-import { useApiLeases } from 'hooks/pims-api/useApiLeases';
+import { IPaginateLeases, useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { logRequest, logSuccess } from 'store/slices/network/networkSlice';
 import { downloadFile } from 'utils/download';
-
-import { IPaginateLeases } from './../../../hooks/pims-api/useApiLeases';
 
 /**
  * hook that allows the user to export the currently filtered lease data.

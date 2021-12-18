@@ -60,3 +60,11 @@ export const FormSection = styled.div`
   padding: 2.5rem;
   background-color: ${props => props.theme.css.filterBackgroundColor};
 `;
+
+export const FormSectionClear = styled.div`
+  border-radius: 1rem;
+  width: 100%;
+  padding-top: 1rem;
+  padding-left: 2.5rem;
+  padding-bottom: 1rem;
+`;

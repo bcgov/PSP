@@ -4,8 +4,7 @@ import { defaultFormLease, IFormLease, IInsurance } from 'interfaces';
 import { noop } from 'lodash';
 import { mockOrganization, mockUser } from 'mocks/filterDataMock';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
-
-import InsuranceDetailsView from './Edit';
+import InsuranceEditContainer from './EditContainer';
 
 const mockInsurance: IInsurance = {
   id: 123459,
@@ -32,7 +31,7 @@ describe('Lease Insurance Details View', () => {
     // render component under test
     const result = render(
       <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
-        <InsuranceDetailsView
+        <InsuranceEditContainer
           insuranceList={renderOptions.lease?.insurances ?? defaultFormLease.insurances}
         />
       </Formik>,

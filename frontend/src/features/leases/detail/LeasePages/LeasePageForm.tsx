@@ -1,7 +1,6 @@
 import { ILeasePage } from 'features/leases';
 import { Form, Formik } from 'formik';
 import { defaultFormLease, ILease } from 'interfaces';
-import { noop } from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -10,6 +9,7 @@ import * as Styled from '../styles';
 export interface ILeasePageFormProps {
   leasePage: ILeasePage;
   lease?: ILease;
+  refreshLease: () => void;
 }
 
 /**
@@ -19,6 +19,7 @@ export interface ILeasePageFormProps {
 export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
   leasePage,
   lease,
+  refreshLease,
 }) => {
   return (
     <StyledLeasePage>
@@ -32,7 +33,9 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
           ...lease,
         }}
         enableReinitialize={true}
-        onSubmit={noop}
+        onSubmit={() => {
+          refreshLease();
+        }}
       >
         <ViewEditToggleForm id="leaseForm">{leasePage.component}</ViewEditToggleForm>
       </Formik>
