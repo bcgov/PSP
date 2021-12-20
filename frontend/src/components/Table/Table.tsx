@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import classNames from 'classnames';
 import clsx from 'classnames';
 import { Button } from 'components/common/form/Button';
+import { SelectedText } from 'components/common/styles';
 import TooltipWrapper from 'components/common/TooltipWrapper';
 import { Form, Formik, FormikProps } from 'formik';
 import useDeepCompareCallback from 'hooks/useDeepCompareCallback';
@@ -110,6 +111,7 @@ interface DetailsOptions<T extends object> {
 export interface TableProps<T extends object = {}, TFilter extends object = {}>
   extends TableOptions<T> {
   name: string;
+  showSelectedRowCount?: boolean;
   hideHeaders?: boolean;
   onRequestData?: (props: { pageIndex: number; pageSize: number }) => void;
   loading?: boolean; // TODO: Show loading indicator while fetching data from server
@@ -289,7 +291,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     useRowSelect,
     hooks => {
       hooks.visibleColumns.push(columns => {
-        return setExternalSelectedRows
+        return props.showSelectedRowCount
           ? [
               {
                 id: 'selection',
@@ -320,7 +322,8 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                     />
                   </div>
                 ),
-                maxWidth: 40,
+                maxWidth: 10,
+                minWidth: 10,
               },
               ...columns,
             ]
@@ -683,6 +686,11 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             />
           )}
           {props.tableToolbarText && <TableToolbarText>{props.tableToolbarText}</TableToolbarText>}
+          {!!props.showSelectedRowCount && (
+            <SelectedText className="mr-auto">
+              {props.selectedRows?.length ?? '0'} selected
+            </SelectedText>
+          )}
         </div>
       )}
     </>

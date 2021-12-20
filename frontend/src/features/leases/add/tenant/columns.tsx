@@ -1,16 +1,15 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { IconButton, InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import { IContactSearchResult } from 'interfaces';
 import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
-import { MdContactMail, MdEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import styled from 'styled-components';
 
-const columns: ColumnWithProps<IContactSearchResult>[] = [
+import AddLeaseTenantNote from './AddLeaseTenantNote';
+
+const columns = [
   {
     Header: '',
     accessor: 'isDisabled',
@@ -22,7 +21,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   },
   {
     Header: '',
-    accessor: 'id',
+    accessor: 'leaseTenantId',
     align: 'right',
     width: 20,
     maxWidth: 20,
@@ -38,7 +37,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     accessor: 'summary',
     align: 'left',
     clickable: true,
-    sortable: true,
     width: 80,
     maxWidth: 120,
     Cell: (props: CellProps<IContactSearchResult>) => (
@@ -48,7 +46,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'Last Name',
     accessor: 'surname',
-    sortable: true,
     align: 'left',
     width: 60,
     maxWidth: 100,
@@ -56,7 +53,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'First Name',
     accessor: 'firstName',
-    sortable: true,
     align: 'left',
     width: 60,
     maxWidth: 100,
@@ -64,7 +60,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'Organization',
     accessor: 'organizationName',
-    sortable: true,
     align: 'left',
     width: 80,
     maxWidth: 100,
@@ -86,7 +81,6 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: 'City',
     accessor: 'municipalityName',
-    sortable: true,
     align: 'left',
     minWidth: 50,
     width: 70,
@@ -99,25 +93,15 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 50,
   },
   {
-    Header: 'Update/View',
-    accessor: 'controls' as any, // this column is not part of the data model
-    width: 40,
-    maxWidth: 40,
+    Header: 'Notes',
+    accessor: 'note',
+    align: 'left',
+    width: 30,
+    maxWidth: 50,
     Cell: (props: CellProps<IContactSearchResult>) => (
-      <StyledDiv>
-        <IconButton variant="light">
-          <MdEdit size={22} />
-        </IconButton>
-        <IconButton variant="light">
-          <MdContactMail size={22} />
-        </IconButton>
-      </StyledDiv>
+      <AddLeaseTenantNote nameSpace={`tenants.${props.row.index}`} />
     ),
   },
-];
-const StyledDiv = styled(InlineFlexDiv)`
-  justify-content: space-around;
-  width: 100%;
-`;
+] as ColumnWithProps<IContactSearchResult>[];
 
 export default columns;

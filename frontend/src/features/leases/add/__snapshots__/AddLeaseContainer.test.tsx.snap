@@ -1669,7 +1669,8 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="Button btn btn-secondary"
+          class="Button Button--disabled btn btn-primary"
+          disabled=""
           type="button"
         >
           <div

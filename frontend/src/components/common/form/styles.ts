@@ -11,6 +11,13 @@ export const InlineForm = styled(Form)`
   gap: 0.8rem;
 `;
 
+export const InlineFilterBox = styled.div`
+  font-size: 1.44rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+`;
+
 export const InlineFastCurrencyInput = styled(FastCurrencyInput)`
   display: flex;
   align-items: baseline;
