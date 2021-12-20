@@ -26,7 +26,7 @@ namespace Pims.Dal.Services
 
         #region Methods
         /// <summary>
-        /// Get all organizations sorted by DisplayOrder and Name
+        /// Get all organizations sorted by Name
         /// </summary>
         public IEnumerable<PimsOrganization> GetOrganizations()
         {
