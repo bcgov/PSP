@@ -31,9 +31,12 @@ exports[`Contact Filter matches snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  row-gap: unset;
-  -webkit-column-gap: 0.4rem;
-  column-gap: 0.4rem;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  row-gap: 0.4rem;
+  -webkit-column-gap: unset;
+  column-gap: unset;
 }
 
 .c2.form-group .radio-group .form-check {
