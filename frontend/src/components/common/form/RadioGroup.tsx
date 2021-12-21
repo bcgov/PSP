@@ -75,7 +75,7 @@ export const RadioGroup = ({
     <StyledRadioGroup
       controlId={`input-${field}`}
       className={classNames(!!required ? 'required' : '', className)}
-      $flexDirection={flexDirection}
+      $flexDirection={flexDirection ?? 'column'}
     >
       {!!label && (
         <Form.Label>
