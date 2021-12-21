@@ -31,8 +31,7 @@ namespace Pims.Dal.Services
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             return this.Context.PimsInsurances
-                .Where(i => i.InsuranceId == id)
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
+                .FirstOrDefault(i => i.InsuranceId == id) ?? throw new KeyNotFoundException();
         }
 
 

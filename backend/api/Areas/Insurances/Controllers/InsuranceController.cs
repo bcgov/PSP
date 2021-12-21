@@ -42,7 +42,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
 
         #region Endpoints
         /// <summary>
-        /// Updates a list of insurances for an insurance.
+        /// Updates a list of insurances for a lease.
         /// </summary>
         /// <returns></returns>
         [HttpPost()]
@@ -76,9 +76,9 @@ namespace Pims.Api.Areas.Insurance.Controllers
 
             _pimsService.Insurance.CommitTransaction();
 
-            var modelsss = _mapper.Map<IList<Models.InsuranceModel>>(updatedEntities);
+            var insuranceModels = _mapper.Map<IList<Models.InsuranceModel>>(updatedEntities);
 
-            return new JsonResult(new Api.Models.BatchUpdate.Reply<InsuranceModel>(modelsss));
+            return new JsonResult(new Api.Models.BatchUpdate.Reply<InsuranceModel>(insuranceModels));
         }
         #endregion
     }

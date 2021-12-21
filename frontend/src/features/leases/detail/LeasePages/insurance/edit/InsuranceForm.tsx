@@ -2,6 +2,7 @@ import { FastDatePicker, TextArea } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import { FormSection, InlineInput } from 'components/common/form/styles';
 import { getIn, useFormikContext } from 'formik';
+import ITypeCode from 'interfaces/ITypeCode';
 import { Col, Row } from 'react-bootstrap';
 import { withNameSpace } from 'utils/formUtils';
 
@@ -14,15 +15,25 @@ interface IInsuranceRowProps {
 
 const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace }) => {
   const formikProps = useFormikContext<FormInsurance>();
-  const description = getIn(
+  const insuranceType: ITypeCode<string> = getIn(
     formikProps.values,
-    `${withNameSpace(nameSpace, 'insuranceType.description')}`,
+    `${withNameSpace(nameSpace, 'insuranceType')}`,
   );
 
   return (
-    <FormSection className="mb-3">
-      <SubTitle>{description}</SubTitle>
-      <Row className="py-2">
+    <FormSection className="mb-3" data-testid="insurance-form">
+      <SubTitle data-testid="insurance-form-title">{insuranceType.description}</SubTitle>
+      {insuranceType.id === 'OTHER' && (
+        <Row>
+          <Col md="4">
+            <div>
+              <strong>Insurance Type:</strong>
+            </div>
+            <InlineInput field={withNameSpace(nameSpace, 'otherInsuranceType')} />
+          </Col>
+        </Row>
+      )}
+      <Row className="py-4">
         <Col md="auto">
           <strong>Insurance In Place:</strong>
         </Col>
@@ -48,7 +59,11 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
           <div>
             <strong>Limit ($)</strong>
           </div>
-          <InlineInput type="number" field={withNameSpace(nameSpace, 'coverageLimit')} />
+          <InlineInput
+            type="number"
+            field={withNameSpace(nameSpace, 'coverageLimit')}
+            data-testid="insurance-form-limit"
+          />
           <div>
             <strong>Policy Expiry date:</strong>
           </div>
@@ -61,7 +76,11 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
           <div>
             <strong>Description of Coverage</strong>
           </div>
-          <TextArea rows={4} field={withNameSpace(nameSpace, 'coverageDescription')} />
+          <TextArea
+            rows={4}
+            field={withNameSpace(nameSpace, 'coverageDescription')}
+            data-testid="insurance-form-description"
+          />
         </Col>
       </Row>
     </FormSection>

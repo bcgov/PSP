@@ -1,5 +1,7 @@
 import { INSURANCE_TYPES } from 'constants/API';
+import { Claims } from 'constants/claims';
 import { getIn, useFormikContext } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IInsurance, ILease } from 'interfaces';
 import { useState } from 'react';
@@ -9,6 +11,8 @@ import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditContainer';
 
 const InsuranceContainer: React.FunctionComponent = () => {
+  const { hasClaim } = useKeycloakWrapper();
+
   const context = useFormikContext<ILease>();
   const leaseId: number = getIn(context.values, 'id') || -1;
   const insuranceList: IInsurance[] = getIn(context.values, 'insurances') ?? [];
@@ -29,7 +33,7 @@ const InsuranceContainer: React.FunctionComponent = () => {
           <InsuranceDetailsView insuranceList={insuranceList} insuranceTypes={insuranceTypes} />
         </>
       )}
-      {isEditing && (
+      {isEditing && hasClaim(Claims.LEASE_EDIT) && (
         <InsuranceEditContainer
           leaseId={leaseId}
           insuranceList={insuranceList}

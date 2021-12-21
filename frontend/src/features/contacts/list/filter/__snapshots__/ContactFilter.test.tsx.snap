@@ -31,10 +31,9 @@ exports[`Contact Filter matches snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  row-gap: 0.4rem;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
 }
 
 .c2.form-group .radio-group .form-check {
@@ -42,6 +41,14 @@ exports[`Contact Filter matches snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c2.form-group .radio-group .form-check .form-check-input {
@@ -50,6 +57,10 @@ exports[`Contact Filter matches snapshot 1`] = `
 
 .c2.form-group .radio-group .form-check-label {
   margin-left: 1rem;
+}
+
+.c2 .form-label {
+  margin-bottom: unset;
 }
 
 .c10 {

@@ -1,5 +1,5 @@
 import { IInsurance } from 'interfaces';
-import ITypeCode from 'interfaces/ITypeCode';
+import ITypeCode, { TypeCodeUtils } from 'interfaces/ITypeCode';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
@@ -26,12 +26,7 @@ export class FormInsurance {
   public static createEmpty(typeCode: ILookupCode): FormInsurance {
     let model = new FormInsurance();
     model.id = 0;
-    model.insuranceType = {
-      id: typeCode.id as string,
-      description: typeCode.name,
-      displayOrder: typeCode.displayOrder,
-      isDisabled: typeCode.isDisabled,
-    };
+    model.insuranceType = TypeCodeUtils.createFromLookup(typeCode);
     model.coverageLimit = '';
     model.isInsuranceInPlaceRadio = 'no';
     model.isNew = true;

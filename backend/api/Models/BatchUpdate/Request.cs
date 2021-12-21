@@ -8,7 +8,7 @@ namespace Pims.Api.Models.BatchUpdate
     public class Request<T>
     {
         /// <summary>
-        /// get/set - The insurance's Id
+        /// get/set - The batch request payload.
         /// </summary>
         public IList<EntryModification<T>> Payload { get; set; }
     }

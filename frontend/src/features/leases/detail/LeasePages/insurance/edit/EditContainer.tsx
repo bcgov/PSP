@@ -36,7 +36,6 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
 
       if (e.target.checked) {
         arrayHelpers.push(codeType.id);
-        //formikRef.current?.values.insurances.push(FormInsurance.createNew(codeType));
         formikRef.current.values.insurances[found].isShown = true;
       } else {
         const idx = formikRef.current?.values.visibleTypes.indexOf(codeType.id + '');
@@ -44,17 +43,12 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
         formikRef.current.values.insurances[found].isShown = false;
       }
     }
-
-    //let found = initialInsurances.find(x => x.insuranceType.id === codeType.id);
   };
 
   const { batchUpdateInsurances } = useUpdateInsurance();
 
   const handleSave = async (lease: IBatchUpdateRequest<IInsurance>) => {
-    console.log('Submited:', lease);
     const leaseResponse = await batchUpdateInsurances(leaseId, lease);
-    console.log(leaseResponse);
-
     if (leaseResponse?.errorMessages.length === 0) {
       onSuccess();
     }
@@ -87,8 +81,6 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
         const updatedVals = values.insurances.reduce(
           (accumulator: IEntryModification<IInsurance>[], entry: FormInsurance) => {
             const existingEntry = initialValues.insurances.find(i => i.id === entry.id && !i.isNew);
-            console.log(entry, existingEntry);
-
             if (existingEntry) {
               if (!entry.isShown) {
                 accumulator.push({
@@ -113,7 +105,6 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
           [],
         );
 
-        console.log('updated', updatedVals);
         formikHelpers.setSubmitting(false);
 
         if (updatedVals.length > 0) {
@@ -139,11 +130,11 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
                       id={`insurance-checbox-${index}`}
                       type="checkbox"
                       name="checkedTypes"
-                      value={code.type}
                       key={index + '-' + code.id}
                     >
                       <Form.Check.Input
                         id={'insurance-' + index}
+                        data-testid="insurance-checkbox"
                         type="checkbox"
                         name="checkedTypes"
                         value={code.id + ''}

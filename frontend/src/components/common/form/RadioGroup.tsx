@@ -40,7 +40,7 @@ type OptionalAttributes = {
   /** id for tooltip */
   toolTipId?: string;
   /** Flex direction for the group */
-  flexDirection?: string;
+  flexDirection?: 'column' | 'row';
 };
 
 // only "field" is required for <RadioGroup>, the rest are optional
@@ -75,7 +75,7 @@ export const RadioGroup = ({
     <StyledRadioGroup
       controlId={`input-${field}`}
       className={classNames(!!required ? 'required' : '', className)}
-      $isFlexColumn={flexDirection ? flexDirection === 'column' : true}
+      $flexDirection={flexDirection}
     >
       {!!label && (
         <Form.Label>
@@ -119,9 +119,9 @@ export const StyledRadioGroup = styled(Form.Group)`
     margin-bottom: 0;
     .radio-group {
       display: flex;
-      flex-direction: ${props => (props.$isFlexColumn ? 'column' : 'row')};
-      row-gap: ${props => (props.$isFlexColumn ? '0.4rem' : 'unset')};
-      column-gap: ${props => (props.$isFlexColumn ? 'unset' : '0.4rem')};
+      flex-direction: ${props => props.$flexDirection};
+      row-gap: ${props => (props.$flexDirection === 'column' ? '0.4rem' : 'unset')};
+      column-gap: ${props => (props.$flexDirection === 'column' ? 'unset' : '0.4rem')};
       .form-check {
         display: flex;
         align-items: center;

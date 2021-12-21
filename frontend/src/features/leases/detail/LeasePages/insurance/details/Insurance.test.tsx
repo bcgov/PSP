@@ -1,39 +1,64 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease, IInsurance } from 'interfaces';
+import { IInsurance, TypeCodeUtils } from 'interfaces';
 import { noop } from 'lodash';
-import { mockOrganization, mockUser } from 'mocks/filterDataMock';
+import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
 import InsuranceDetailsView from './Insurance';
 
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: [] },
+};
+
+const mockInsuranceTypeHome: ILookupCode = {
+  id: 'HOME',
+  name: 'Home Insurance',
+  type: 'PimsInsuranceType',
+  isDisabled: false,
+  displayOrder: 1,
+};
+const mockInsuranceTypeCar: ILookupCode = {
+  id: 'CAR',
+  name: 'Car insurance',
+  type: 'PimsInsuranceType',
+  isDisabled: false,
+  displayOrder: 2,
+};
+
 const mockInsurance: IInsurance = {
   id: 123459,
-  insuranceType: { description: 'Test Insurance Type', id: '2135689', isDisabled: false },
-  insurerOrganization: mockOrganization,
-  insurerContact: mockUser,
-  motiRiskManagementContact: mockUser,
-  bctfaRiskManagementContact: mockUser,
-  insurancePayeeType: { description: 'Test Payee Type', id: '2135689', isDisabled: false },
+  insuranceType: TypeCodeUtils.createFromLookup(mockInsuranceTypeHome),
   otherInsuranceType: '',
   coverageDescription: '',
   coverageLimit: 777,
-  insuredValue: 777,
-  startDate: '2021-01-01',
   expiryDate: '2022-01-01',
-  riskAssessmentCompletedDate: undefined,
-  insuranceInPlace: true,
+  isInsuranceInPlace: true,
+  rowVersion: 0,
 };
 
 const history = createMemoryHistory();
 
-describe('Lease Insurance Details View', () => {
-  const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): RenderResult => {
+describe('Lease Insurance', () => {
+  const setup = (
+    renderOptions: RenderOptions & {
+      insuranceList: IInsurance[];
+      insuranceTypes: ILookupCode[];
+    } = {
+      store: storeState,
+      insuranceList: [],
+      insuranceTypes: [],
+    },
+  ): RenderResult => {
     // render component under test
     const result = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
+      <Formik
+        onSubmit={noop}
+        initialValues={(renderOptions.insuranceList ?? [], renderOptions.insuranceTypes ?? [])}
+      >
         <InsuranceDetailsView
-          insuranceList={renderOptions.lease?.insurances ?? defaultFormLease.insurances}
+          insuranceList={renderOptions.insuranceList}
+          insuranceTypes={renderOptions.insuranceTypes}
         />
       </Formik>,
       {
@@ -46,27 +71,19 @@ describe('Lease Insurance Details View', () => {
 
   it('renders as expected', () => {
     const result = setup({
-      lease: {
-        ...defaultFormLease,
-        insurances: [mockInsurance],
-        persons: [mockUser],
-        organizations: [mockOrganization],
-      },
+      insuranceList: [mockInsurance],
+      insuranceTypes: [],
     });
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   it('Insurance count is correct', () => {
     const testInsurance: IInsurance = { ...mockInsurance };
-    testInsurance.insuranceType.description = 'Another Type';
+    testInsurance.insuranceType = TypeCodeUtils.createFromLookup(mockInsuranceTypeCar);
 
     const result = setup({
-      lease: {
-        ...defaultFormLease,
-        insurances: [mockInsurance, testInsurance],
-        persons: [mockUser],
-        organizations: [mockOrganization],
-      },
+      insuranceList: [mockInsurance, testInsurance],
+      insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
     });
     const titles = result.getAllByTestId('insurance-title');
     expect(titles.length).toBe(2);
@@ -74,31 +91,10 @@ describe('Lease Insurance Details View', () => {
 
   it('Insurance title is set', () => {
     const result = setup({
-      lease: {
-        ...defaultFormLease,
-        insurances: [mockInsurance],
-        persons: [mockUser],
-        organizations: [mockOrganization],
-      },
+      insuranceList: [mockInsurance],
+      insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
     });
     const title = result.getByTestId('insurance-title');
     expect(title.textContent).toBe(mockInsurance.insuranceType.description);
-  });
-
-  it('Empty phone text', () => {
-    const testInsurance: IInsurance = { ...mockInsurance };
-    testInsurance.insurerContact.mobile = undefined;
-    testInsurance.insurerContact.landline = undefined;
-    const result = setup({
-      lease: {
-        ...defaultFormLease,
-        insurances: [testInsurance],
-        persons: [mockUser],
-        organizations: [mockOrganization],
-      },
-    });
-    const dataRow = result.getByTestId('col-phone');
-
-    expect(dataRow.textContent).toBe('N.A');
   });
 });
