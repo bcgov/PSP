@@ -60,6 +60,7 @@ export const LEASE_CATEGORY_TYPES = 'PimsLeaseCategoryType';
 export const LEASE_PURPOSE_TYPES = 'PimsLeasePurposeType';
 export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';
 export const LEASE_RESPONSIBILITY_TYPES = 'PimsLeaseResponsibilityType';
+export const INSURANCE_TYPES = 'PimsInsuranceType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations

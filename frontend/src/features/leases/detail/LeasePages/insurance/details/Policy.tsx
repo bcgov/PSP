@@ -13,20 +13,26 @@ interface PolicyView {
   limit: string;
   expiryDate: string;
   coverageDescription: string;
+  otherInsuranceType?: string;
 }
 
 const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   const columnWidth = 5;
   const policy: PolicyView = {
     insuranceInPlace: insurance.isInsuranceInPlace ? 'Yes' : 'No',
-    limit: formatMoney(insurance.coverageLimit),
+    limit: insurance.coverageLimit ? formatMoney(insurance.coverageLimit) : '',
     expiryDate: prettyFormatDate(insurance.expiryDate),
-    coverageDescription: insurance.coverageDescription,
+    coverageDescription: insurance.coverageDescription || '',
+    otherInsuranceType: insurance.otherInsuranceType,
   };
   return (
     <Row className="pt-3">
       <Col>
-        <SubTitle>Policy</SubTitle>
+        <SubTitle>
+          Policy
+          {policy.otherInsuranceType && <span> - Other type: {policy.otherInsuranceType}</span>}
+        </SubTitle>
+
         <Row>
           <Col>
             <Row>

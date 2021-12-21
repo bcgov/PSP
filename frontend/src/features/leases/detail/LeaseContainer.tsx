@@ -18,7 +18,7 @@ import {
 import Deposits from './LeasePages/deposits/Deposits';
 import Details from './LeasePages/details/Details';
 import Improvements from './LeasePages/improvements/Improvements';
-import Insurance from './LeasePages/insurance/Insurance';
+import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
 import Surplus from './LeasePages/surplus/Surplus';
 import Tenant from './LeasePages/tenant/Tenant';
 
@@ -55,7 +55,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   ],
   [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
   [LeasePageNames.IMPROVEMENTS, { component: <Improvements />, title: 'Improvements' }],
-  [LeasePageNames.INSURANCE, { component: <Insurance />, title: 'Insurance' }],
+  [LeasePageNames.INSURANCE, { component: <InsuranceContainer />, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: <Deposits />, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
   [LeasePageNames.SURPLUS, { component: <Surplus />, title: 'Surplus Declaration' }],
@@ -75,11 +75,12 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
     leasePageName = LeasePageNames.DETAILS;
   }
   const leasePage = leasePages.get(leasePageName as LeasePageNames);
+
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
 
-  const { lease } = useLeaseDetail(props?.match?.params?.leaseId);
+  const { lease, refresh } = useLeaseDetail(props?.match?.params?.leaseId);
 
   return (
     <>
@@ -92,7 +93,7 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
         <LeaseHeader lease={lease} />
         <BackToSearchButton />
         <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
-        <LeasePageForm leasePage={leasePage} lease={lease}></LeasePageForm>
+        <LeasePageForm leasePage={leasePage} lease={lease} refreshLease={refresh}></LeasePageForm>
       </LeaseLayout>
       <LoadingBackdrop show={!lease} />
     </>

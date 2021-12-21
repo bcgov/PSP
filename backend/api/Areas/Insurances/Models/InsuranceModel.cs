@@ -1,10 +1,10 @@
 using System;
 using Pims.Api.Models;
 
-namespace Pims.Api.Areas.Lease.Models.Lease
+namespace Pims.Api.Areas.Insurance.Models
 {
     /// <summary>
-    /// Provides a lease-oriented insurance model.
+    /// Provides a insurance-oriented insurance model.
     /// </summary>
     public class InsuranceModel : BaseModel
     {

@@ -240,6 +240,8 @@ exports[`Contact List View matches snapshot 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   row-gap: 0.4rem;
+  -webkit-column-gap: unset;
+  column-gap: unset;
 }
 
 .c7.form-group .radio-group .form-check {
@@ -247,6 +249,14 @@ exports[`Contact List View matches snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c7.form-group .radio-group .form-check .form-check-input {
@@ -255,6 +265,10 @@ exports[`Contact List View matches snapshot 1`] = `
 
 .c7.form-group .radio-group .form-check-label {
   margin-left: 1rem;
+}
+
+.c7 .form-label {
+  margin-bottom: unset;
 }
 
 <div

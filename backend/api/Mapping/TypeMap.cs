@@ -13,6 +13,12 @@ namespace Pims.Api.Mapping
                 .Map("Description", "Description")
                 .Map("IsDisabled", "IsDisabled")
                 .Map("DisplayOrder", "DisplayOrder");
+
+            config.ForType(typeof(Model.TypeModel<string>), typeof(Entity.ITypeEntity<string>))
+                .Map("Id", "Id")
+                .Map("Description", "Description")
+                .Map("IsDisabled", "IsDisabled")
+                .Map("DisplayOrder", "DisplayOrder");
         }
     }
 }

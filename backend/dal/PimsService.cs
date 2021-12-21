@@ -74,6 +74,11 @@ namespace Pims.Dal
         /// get - The contact service.
         /// </summary>
         public IContactService Contact { get { return _serviceProvider.GetService<IContactService>(); } }
+
+        /// <summary>
+        /// get - The insurance service.
+        /// </summary>
+        public IInsuranceService Insurance { get { return _serviceProvider.GetService<IInsuranceService>(); } }
         #endregion
 
         #region Constructors
