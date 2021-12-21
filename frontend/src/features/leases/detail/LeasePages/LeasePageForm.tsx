@@ -1,6 +1,7 @@
 import { ILeasePage } from 'features/leases';
+import { apiLeaseToFormLease, formLeaseToApiLease } from 'features/leases/leaseUtils';
 import { Form, Formik } from 'formik';
-import { defaultFormLease, ILease } from 'interfaces';
+import { defaultFormLease, IFormLease, ILease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -10,6 +11,8 @@ export interface ILeasePageFormProps {
   leasePage: ILeasePage;
   lease?: ILease;
   refreshLease: () => void;
+  setLease: (lease: ILease) => void;
+  onUpdate: (lease: ILease, subRoute?: string | undefined) => Promise<ILease | undefined>;
 }
 
 /**
@@ -20,24 +23,40 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
   leasePage,
   lease,
   refreshLease,
+  setLease,
+  children,
+  onUpdate,
 }) => {
   return (
     <StyledLeasePage>
       <StyledLeasePageHeader>
-        <Styled.LeaseH2>{leasePage.title}</Styled.LeaseH2>
+        <Styled.LeaseH2>{leasePage.header ?? leasePage.title}</Styled.LeaseH2>
         {leasePage.description && <p>{leasePage.description}</p>}
       </StyledLeasePageHeader>
-      <Formik
+      <Formik<IFormLease>
         initialValues={{
           ...defaultFormLease,
-          ...lease,
+          ...apiLeaseToFormLease(lease),
         }}
         enableReinitialize={true}
-        onSubmit={() => {
-          refreshLease();
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            if (!leasePage.subRoute) {
+              refreshLease();
+            } else {
+              const updatedLease = await onUpdate(formLeaseToApiLease(values), leasePage.subRoute);
+              updatedLease && setLease(updatedLease);
+            }
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
-        <ViewEditToggleForm id="leaseForm">{leasePage.component}</ViewEditToggleForm>
+        {formikProps => (
+          <>
+            <ViewEditToggleForm id="leaseForm">{children}</ViewEditToggleForm>
+          </>
+        )}
       </Formik>
     </StyledLeasePage>
   );
@@ -76,7 +95,7 @@ const StyledLeasePageHeader = styled.div`
     height: 1rem;
     text-align: left;
   }
-  z-index: 1;
+  z-index: 10;
 `;
 
 const StyledLeasePage = styled.div`

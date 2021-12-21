@@ -44,7 +44,8 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.TenantNotes, src => src.PimsLeaseTenants != null ? src.PimsLeaseTenants.Select(t => t.Note) : null)
                 .Map(dest => dest.Improvements, src => src.GetImprovements())
                 .Map(dest => dest.SecurityDeposits, src => src.PimsSecurityDeposits)
-                .Map(dest => dest.SecurityDepositReturns, src => src.PimsSecurityDepositReturns);
+                .Map(dest => dest.SecurityDepositReturns, src => src.PimsSecurityDepositReturns)
+                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants);
 
             config.NewConfig< Model.LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
@@ -71,6 +72,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.LeaseNotes, src => src.Note)
                 .Map(dest => dest.LeaseDescription, src => src.Description)
+                .Map(dest => dest.PimsLeaseTenants, src => src.Tenants)
                 .IgnoreNullValues(true);
         }
     }

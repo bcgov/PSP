@@ -1,10 +1,14 @@
+import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
-import queryString from 'query-string';
+import { Claims } from 'constants/claims';
+import { getIn } from 'formik';
 import * as React from 'react';
-import { ReactElement, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { useContext } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 
 import {
   BackToSearchButton,
@@ -13,28 +17,33 @@ import {
   LeaseIndex,
   LeaseLayout,
   LeasePageForm,
+  LeaseRouter,
   useLeaseDetail,
 } from '..';
+import { useUpdateLease } from '../hooks/useUpdateLease';
 import Deposits from './LeasePages/deposits/Deposits';
 import Details from './LeasePages/details/Details';
 import Improvements from './LeasePages/improvements/Improvements';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
 import Surplus from './LeasePages/surplus/Surplus';
-import Tenant from './LeasePages/tenant/Tenant';
+import TenantContainer from './LeasePages/tenant/TenantContainer';
 
 export interface ILeaseAndLicenseContainerProps {
   match?: any;
 }
 
 export interface ILeasePage {
-  component: ReactElement;
+  component: any;
   title: string;
+  header?: ReactNode;
   description?: string;
+  subRoute?: string;
 }
 
 export enum LeasePageNames {
   DETAILS = 'details',
   TENANT = 'tenant',
+  EDIT_TENANT = 'edit-tenant',
   PAYMENTS = 'payments',
   IMPROVEMENTS = 'improvements',
   INSURANCE = 'insurance',
@@ -44,21 +53,32 @@ export enum LeasePageNames {
 }
 
 export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
-  [LeasePageNames.DETAILS, { component: <Details />, title: 'Details' }],
+  [LeasePageNames.DETAILS, { component: Details, title: 'Details' }],
   [
     LeasePageNames.TENANT,
     {
-      component: <Tenant />,
+      component: TenantContainer,
       title: 'Tenant',
+      header: (
+        <>
+          Tenant&nbsp;
+          <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
+            <Link to="?edit=true" className="float-right">
+              <FaEdit />
+            </Link>
+          </ProtectedComponent>
+        </>
+      ),
       description: 'The following is information related to the leasee or licensee',
+      subRoute: 'tenants',
     },
   ],
-  [LeasePageNames.PAYMENTS, { component: <></>, title: 'Payments' }],
-  [LeasePageNames.IMPROVEMENTS, { component: <Improvements />, title: 'Improvements' }],
-  [LeasePageNames.INSURANCE, { component: <InsuranceContainer />, title: 'Insurance' }],
-  [LeasePageNames.DEPOSIT, { component: <Deposits />, title: 'Deposit' }],
-  [LeasePageNames.SECURITY, { component: <></>, title: 'Physical Security' }],
-  [LeasePageNames.SURPLUS, { component: <Surplus />, title: 'Surplus Declaration' }],
+  [LeasePageNames.PAYMENTS, { component: undefined, title: 'Payments' }],
+  [LeasePageNames.IMPROVEMENTS, { component: Improvements, title: 'Improvements' }],
+  [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
+  [LeasePageNames.DEPOSIT, { component: Deposits, title: 'Deposit' }],
+  [LeasePageNames.SECURITY, { component: undefined, title: 'Physical Security' }],
+  [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
 ]);
 
 /**
@@ -69,19 +89,15 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
   const { setTrayPage } = useContext(SidebarStateContext);
   const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
 
-  const { search } = useLocation();
-  let { leasePageName } = queryString.parse(search);
-  if (leasePageName === undefined) {
-    leasePageName = LeasePageNames.DETAILS;
-  }
-  const leasePage = leasePages.get(leasePageName as LeasePageNames);
+  const { pathname } = useLocation();
+  const { lease, setLease, refresh } = useLeaseDetail(props?.match?.params?.leaseId);
+  const leasePageName = getLeasePageFromPath(pathname, props.match.url);
+  const leasePage = leasePages.get(leasePageName);
 
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
-
-  const { lease, refresh } = useLeaseDetail(props?.match?.params?.leaseId);
-
+  const { updateLease } = useUpdateLease();
   return (
     <>
       <LeaseLayout>
@@ -93,11 +109,27 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
         <LeaseHeader lease={lease} />
         <BackToSearchButton />
         <LeaseIndex currentPageName={leasePageName} leaseId={lease?.id}></LeaseIndex>
-        <LeasePageForm leasePage={leasePage} lease={lease} refreshLease={refresh}></LeasePageForm>
+        <LeasePageForm
+          refreshLease={refresh}
+          leasePage={leasePage}
+          lease={lease}
+          onUpdate={updateLease}
+          setLease={setLease}
+        >
+          <LeaseRouter />
+        </LeasePageForm>
       </LeaseLayout>
-      <LoadingBackdrop show={!lease} />
+      <LoadingBackdrop show={!!props?.match?.params?.leaseId && !lease} />
     </>
   );
+};
+
+const getLeasePageFromPath = (pathname: string, url: string) => {
+  const leasePageName = getIn(pathname.match(/\/lease\/.*?\/(.*)/), '1');
+  if (!leasePageName) {
+    return LeasePageNames.DETAILS;
+  }
+  return leasePageName;
 };
 
 export default LeaseContainer;

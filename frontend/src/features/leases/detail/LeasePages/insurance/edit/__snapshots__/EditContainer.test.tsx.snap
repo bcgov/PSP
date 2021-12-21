@@ -78,6 +78,16 @@ exports[`Lease Insurance renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
 .c3 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -100,16 +110,6 @@ exports[`Lease Insurance renders as expected 1`] = `
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
 }
 
 .c1.form-group {

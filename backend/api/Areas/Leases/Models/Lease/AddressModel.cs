@@ -78,6 +78,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string Province { get; set; }
 
         /// <summary>
+        /// get/set - The code name of the province.
+        /// </summary>
+        public string ProvinceCode { get; set; }
+
+        /// <summary>
         /// get/set - Foreign key to country.
         /// </summary>
         public int CountryId { get; set; }

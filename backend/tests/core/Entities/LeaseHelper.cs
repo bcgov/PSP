@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <param name="lFileNo"></param>
         /// <param name="tenantName"></param>
         /// <returns></returns>
-        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null)
+        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addTenant = false)
         {
             var lease = new Entity.PimsLease()
             {
@@ -38,7 +38,10 @@ namespace Pims.Core.Test
             lease.LeaseInitiatorTypeCodeNavigation = new Entity.PimsLeaseInitiatorType() { Id = "testInitiatorType" };
             lease.LeaseResponsibilityTypeCodeNavigation = new Entity.PimsLeaseResponsibilityType() { Id = "testResponsibilityType" };
             lease.LeaseLicenseTypeCodeNavigation = new Entity.PimsLeaseLicenseType() { Id = "testType" };
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
+            if(addTenant)
+            {
+                lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
+            }
             return lease;
         }
     }

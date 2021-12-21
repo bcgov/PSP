@@ -163,9 +163,8 @@ exports[`Contact Filter matches snapshot 1`] = `
   max-width: 20rem;
 }
 
-<form
+<div
     class="c0 c1"
-    novalidate=""
   >
     <div
       class="c2 form-group"
@@ -338,7 +337,7 @@ exports[`Contact Filter matches snapshot 1`] = `
       class="Button Button--icon-only c8 btn btn-primary"
       data-testid="search"
       id="search-button"
-      type="submit"
+      type="button"
     >
       <div
         class="Button__icon"
@@ -410,6 +409,6 @@ exports[`Contact Filter matches snapshot 1`] = `
     >
       Show Active contacts only
     </p>
-  </form>
+  </div>
 </DocumentFragment>
 `;

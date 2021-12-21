@@ -9,6 +9,7 @@ import {
   IOrganization,
   IPerson,
   IProperty,
+  ITenant,
 } from '.';
 import { ILeaseTerm } from './ILeaseTerm';
 import ITypeCode from './ITypeCode';
@@ -51,6 +52,7 @@ export interface ILease {
   documentationReference?: string;
   tenantNotes: string[];
   insurances: IInsurance[];
+  tenants: ITenant[];
   terms: ILeaseTerm[];
   properties: IProperty[];
   persons: IPerson[];
@@ -58,6 +60,7 @@ export interface ILease {
   improvements: ILeaseImprovement[];
   securityDeposits: ILeaseSecurityDeposit[];
   securityDepositReturns: ILeaseSecurityDepositReturn[];
+  rowVersion?: number;
 }
 
 export interface IFormLease
@@ -128,6 +131,7 @@ export const defaultLease: ILease = {
   isOtherImprovement: false,
   returnNotes: '',
   terms: [],
+  tenants: [],
 };
 
 export const defaultFormLease: IFormLease = {
@@ -156,6 +160,7 @@ export const defaultFormLease: IFormLease = {
   isOtherImprovement: false,
   returnNotes: '',
   terms: [],
+  tenants: [],
 };
 
 export const defaultAddFormLease: IAddFormLease = {
@@ -195,6 +200,7 @@ export const defaultAddFormLease: IAddFormLease = {
   tenantNotes: [],
   insurances: [],
   terms: [],
+  tenants: [],
   properties: [{ pid: '', pin: '', areaUnitType: '' }],
   persons: [],
   organizations: [],

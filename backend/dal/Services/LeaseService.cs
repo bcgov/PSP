@@ -136,7 +136,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public Paged<PimsLease> GetPage(LeaseFilter filter)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
@@ -203,6 +203,35 @@ namespace Pims.Dal.Services
             this.Context.PimsLeases.Add(lease);
             this.Context.CommitTransaction();
             return Get(lease.LeaseId);
+        }
+
+        /// <summary>
+        /// update the tenants on the lease
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="pimsLeaseTenants"></param>
+        /// <returns></returns>
+        public PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseTenants).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            if(existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+
+            foreach (var tenant in existingLease.PimsLeaseTenants)
+            {
+                if (!pimsLeaseTenants.Any(p => p.LeaseTenantId == tenant.LeaseTenantId))
+                {
+                    this.Context.Remove(tenant);
+                }
+            }
+            this.Context.SaveChanges();
+
+            this.Context.ChangeTracker.Clear();
+            this.Context.UpdateRange(pimsLeaseTenants);
+            this.Context.CommitTransaction();
+
+            return Get(existingLease.LeaseId);
         }
         #endregion
     }

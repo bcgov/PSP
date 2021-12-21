@@ -34,10 +34,6 @@ export function useLeaseDetail(leaseId: number) {
 
     if (leaseId) {
       getLeaseById(leaseId);
-    } else {
-      toast.error(
-        'No valid lease id provided, go back to the lease and license list and select a valid lease.',
-      );
     }
   }, [getLease, dispatch, leaseId, needsUpdate]);
 

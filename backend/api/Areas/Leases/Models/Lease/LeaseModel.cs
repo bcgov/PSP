@@ -183,6 +183,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<OrganizationModel> Organizations { get; set; }
 
         /// <summary>
+        /// get/set - A list of organization tenants associated with this lease
+        /// </summary>
+        public IEnumerable<TenantModel> Tenants { get; set; }
+
+        /// <summary>
         /// get/set - A list of properties associated with this lease
         /// </summary>
         public IEnumerable<PropertyModel> Properties { get; set; }

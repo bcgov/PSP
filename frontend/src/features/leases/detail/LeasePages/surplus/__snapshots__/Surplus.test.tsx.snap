@@ -23,6 +23,7 @@ exports[`Lease Surplus Declaration renders as expected 1`] = `
     <br />
     <div
       class="table"
+      data-testid="leasesTable"
       role="table"
     >
       <div

@@ -26,6 +26,8 @@ interface IProps<T extends object = {}> {
   customReset?: () => void;
   /** custom component field name to clear/reset */
   customResetField?: string;
+  /** type of the search button submit by default */
+  searchButtonType?: string;
 }
 
 const FilterBar = <T extends object = {}>(props: PropsWithChildren<IProps<T>>) => {
@@ -50,6 +52,7 @@ const FilterBar = <T extends object = {}>(props: PropsWithChildren<IProps<T>>) =
             {props.children}
             <Col className="bar-item flex-grow-0">
               <SearchButton
+                type={props.searchButtonType}
                 className={props.searchClassName ? props.searchClassName : 'bg-warning'}
                 disabled={isSubmitting}
               />
