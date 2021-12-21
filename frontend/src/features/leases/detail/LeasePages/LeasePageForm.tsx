@@ -40,10 +40,13 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
         }}
         enableReinitialize={true}
         onSubmit={async (values, { setSubmitting }) => {
-          refreshLease();
           try {
-            const updatedLease = await onUpdate(formLeaseToApiLease(values), leasePage.subRoute);
-            updatedLease && setLease(updatedLease);
+            if (!leasePage.subRoute) {
+              refreshLease();
+            } else {
+              const updatedLease = await onUpdate(formLeaseToApiLease(values), leasePage.subRoute);
+              updatedLease && setLease(updatedLease);
+            }
           } finally {
             setSubmitting(false);
           }

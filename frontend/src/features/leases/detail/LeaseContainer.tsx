@@ -75,7 +75,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   ],
   [LeasePageNames.PAYMENTS, { component: undefined, title: 'Payments' }],
   [LeasePageNames.IMPROVEMENTS, { component: Improvements, title: 'Improvements' }],
-  [LeasePageNames.INSURANCE, { component: Insurance, title: 'Insurance' }],
+  [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: Deposits, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: undefined, title: 'Physical Security' }],
   [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
@@ -90,7 +90,7 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
   const onClickManagement = () => setTrayPage(SidebarContextType.LEASE);
 
   const { pathname } = useLocation();
-  const { lease, setLease } = useLeaseDetail(props?.match?.params?.leaseId);
+  const { lease, setLease, refresh } = useLeaseDetail(props?.match?.params?.leaseId);
   const leasePageName = getLeasePageFromPath(pathname, props.match.url);
   const leasePage = leasePages.get(leasePageName);
 
@@ -98,7 +98,6 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
     throw Error('The requested lease page does not exist');
   }
   const { updateLease } = useUpdateLease();
-  const { lease, refresh } = useLeaseDetail(props?.match?.params?.leaseId);
   return (
     <>
       <LeaseLayout>
@@ -126,7 +125,8 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
 };
 
 const getLeasePageFromPath = (pathname: string, url: string) => {
-  const leasePageName = getIn(pathname.match(/\/lease\/.?\/(.*)/), '1');
+  const leasePageName = getIn(pathname.match(/\/lease\/.*?\/(.*)/), '1');
+  console.log(leasePageName);
   if (!leasePageName) {
     return LeasePageNames.DETAILS;
   }

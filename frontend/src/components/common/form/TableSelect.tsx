@@ -57,7 +57,6 @@ export const TableSelect = <T extends { id?: string | number }>({
 }: TableSelectProps<T>) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const existingItems: T[] = getIn(values, field);
-  console.log(existingItems);
   const columnsWithRemove = useMemo(
     () => getColumnsWithRemove<T>((rows: T[]) => setFieldValue(field, rows), [...columns]),
     [columns, field, setFieldValue],

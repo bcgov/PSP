@@ -37,7 +37,6 @@ export function useLeaseDetail(leaseId: number) {
     }
   }, [getLease, dispatch, leaseId, needsUpdate]);
 
-  return { lease, setLease };
   const refresh = () => {
     setRefreshIndex(r => r + 1);
   };

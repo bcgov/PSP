@@ -51,6 +51,12 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
                 </FormSection>
               </Styled.SpacedInlineListItem>
             ))}
+            {persons.length === 0 && organizations.length === 0 && (
+              <>
+                <p>There are no tenants associated to this lease.</p>
+                <p>Click the edit icon to add tenants.</p>
+              </>
+            )}
             {tenantNotes.map(
               (tenantNote: string, index) =>
                 !!tenantNote && (
