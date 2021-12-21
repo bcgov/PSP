@@ -126,7 +126,6 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
 
 const getLeasePageFromPath = (pathname: string, url: string) => {
   const leasePageName = getIn(pathname.match(/\/lease\/.*?\/(.*)/), '1');
-  console.log(leasePageName);
   if (!leasePageName) {
     return LeasePageNames.DETAILS;
   }
