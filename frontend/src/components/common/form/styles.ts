@@ -18,6 +18,11 @@ export const InlineFilterBox = styled.div`
   gap: 0.8rem;
 `;
 
+export const SaveTableWrapper = styled.div`
+  margin-top: 3rem;
+  font-size: 1.4rem;
+`;
+
 export const InlineFastCurrencyInput = styled(FastCurrencyInput)`
   display: flex;
   align-items: baseline;

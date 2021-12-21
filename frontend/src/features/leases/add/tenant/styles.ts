@@ -8,11 +8,6 @@ export const TenantH2 = styled.h2`
   color: ${props => props.theme.css.textColor};
 `;
 
-export const SaveTableWrapper = styled.div`
-  margin-top: 3rem;
-  font-size: 1.4rem;
-`;
-
 export const ContactListViewWrapper = styled(ContactListView)`
   & > div {
     padding: 0;

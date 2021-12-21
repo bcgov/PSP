@@ -1,4 +1,5 @@
 import { DisplayError } from 'components/common/form';
+import * as Styled from 'components/common/form/styles';
 import { ColumnWithProps, Table } from 'components/Table';
 import { getIn, useFormikContext } from 'formik';
 import _ from 'lodash';
@@ -6,8 +7,9 @@ import React, { ReactNode, useMemo } from 'react';
 import { Button, Container, FormControlProps } from 'react-bootstrap';
 import { getColumnsWithRemove } from 'utils/columnUtils';
 
-import { ISelectedTableHeaderProps } from './SelectedTableHeader';
-import * as Styled from './styles';
+export interface ISelectedTableHeaderProps {
+  selectedCount?: number;
+}
 
 type RequiredAttributes<T extends object> = {
   /** The field name */
@@ -35,17 +37,14 @@ type OptionalAttributes = {
   custom?: boolean;
   /** Optional label to be assigned to the add button */
   addLabel?: string;
-  /** Optional label to be assigned to the remove button */
-  removeLabel?: string;
 };
 
-// only "field" is required for <Input>, the rest are optional
-export type InputProps<T extends object> = FormControlProps &
+export type TableSelectProps<T extends object> = FormControlProps &
   OptionalAttributes &
   RequiredAttributes<T>;
 
 /**
- * Formik-connected Property List view allowing multiple properties to be selected/removed
+ * Formik-connected allowing multiple table rows to be selected/removed
  */
 export const TableSelect = <T extends { id?: string | number }>({
   field,
@@ -55,10 +54,10 @@ export const TableSelect = <T extends { id?: string | number }>({
   selectedTableHeader: SelectedTableHeader,
   columns,
   addLabel,
-  removeLabel,
-}: InputProps<T>) => {
+}: TableSelectProps<T>) => {
   const { values, setFieldValue } = useFormikContext<any>();
   const existingItems: T[] = getIn(values, field);
+  console.log(existingItems);
   const columnsWithRemove = useMemo(
     () => getColumnsWithRemove<T>((rows: T[]) => setFieldValue(field, rows), [...columns]),
     [columns, field, setFieldValue],
@@ -85,7 +84,7 @@ export const TableSelect = <T extends { id?: string | number }>({
       <Styled.SaveTableWrapper>
         <SelectedTableHeader selectedCount={existingItems?.length} />
         <Table<T>
-          name="Selected Items"
+          name="selected-items"
           columns={columnsWithRemove}
           data={existingItems ?? []}
           lockPageSize

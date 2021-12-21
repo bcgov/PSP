@@ -643,6 +643,7 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       <div
         {...getTableProps({ style: { minWidth: undefined } })}
         className={classNames('table', props.className ?? '')}
+        data-testid={`${props.name}`}
       >
         <div className="thead thead-light">
           {headerGroups.map(headerGroup => (

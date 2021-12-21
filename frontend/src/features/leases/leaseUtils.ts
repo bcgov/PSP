@@ -31,7 +31,6 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
 };
 
 export const apiLeaseToFormLease = (formLease?: ILease) => {
-  console.log(formLease);
   return !!formLease
     ? ({
         ...formLease,

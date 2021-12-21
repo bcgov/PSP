@@ -1,11 +1,8 @@
+import { ISelectedTableHeaderProps } from 'components/common/form';
 import * as CommonStyled from 'components/common/styles';
 import * as React from 'react';
 
 import * as Styled from './styles';
-
-export interface ISelectedTableHeaderProps {
-  selectedCount?: number;
-}
 
 const SelectedTableHeader: React.FC<ISelectedTableHeaderProps> = ({ selectedCount }) => {
   return (

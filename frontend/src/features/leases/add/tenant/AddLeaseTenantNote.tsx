@@ -2,17 +2,19 @@ import { TextArea } from 'components/common/form';
 import GenericModal from 'components/common/GenericModal';
 import { IconButton } from 'components/common/styles';
 import { getIn, useFormikContext } from 'formik';
-import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import { withNameSpace } from 'utils/formUtils';
 
-interface IAddLeaseTenantNoteProps {
+export interface IAddLeaseTenantNoteProps {
   nameSpace?: string;
 }
 
-const AddLeaseTenantNote: React.FunctionComponent<IAddLeaseTenantNoteProps> = ({ nameSpace }) => {
+export const AddLeaseTenantNote: React.FunctionComponent<IAddLeaseTenantNoteProps> = ({
+  nameSpace,
+}) => {
   const { values, setFieldValue } = useFormikContext();
   const [showNotes, setShowNotes] = useState(false);
   const [currentNote, setCurrentNote] = useState();
@@ -20,14 +22,14 @@ const AddLeaseTenantNote: React.FunctionComponent<IAddLeaseTenantNoteProps> = ({
   const noteValue = getIn(values, field);
   const summaryValue = getIn(values, withNameSpace(nameSpace, 'summary'));
 
-  useDeepCompareEffect(() => {
-    if (showNotes === true) {
+  useEffect(() => {
+    if (showNotes === false) {
       setCurrentNote(noteValue);
     }
-  }, [showNotes]);
+  }, [showNotes, noteValue]);
   return (
     <>
-      <IconButton onClick={() => setShowNotes(true)} variant="light">
+      <IconButton title="notes" onClick={() => setShowNotes(true)} variant="light">
         <FaRegFileAlt />
       </IconButton>
       <GenericModal
@@ -39,11 +41,11 @@ const AddLeaseTenantNote: React.FunctionComponent<IAddLeaseTenantNoteProps> = ({
             <p>
               Notes pertaining to <b>{summaryValue}</b>
             </p>
-            <TextArea field={field}></TextArea>
+            <TextArea field={field} data-testid="note-field"></TextArea>
           </>
         }
         closeButton
-        okButtonText="Ok"
+        okButtonText="Save"
         cancelButtonText="Cancel"
         handleCancel={() => {
           setFieldValue(field, currentNote);

@@ -136,7 +136,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public Paged<PimsLease> GetPage(LeaseFilter filter)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
@@ -213,7 +213,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         public PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseTenants).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
                  ?? throw new KeyNotFoundException();
             if(existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");

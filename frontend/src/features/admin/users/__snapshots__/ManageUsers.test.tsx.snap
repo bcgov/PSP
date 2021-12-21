@@ -330,6 +330,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
     >
       <div
         class="table"
+        data-testid="usersTable"
         role="table"
       >
         <div

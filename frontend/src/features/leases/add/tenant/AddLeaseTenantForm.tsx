@@ -4,19 +4,19 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { TableSelect } from '../../../../components/common/form/TableSelect';
 import AddLeaseFormButtons from '../AddLeaseFormButtons';
 import AddLeaseTenantListView from './AddLeastTenantListView';
 import columns from './columns';
 import SelectedTableHeader from './SelectedTableHeader';
 import * as Styled from './styles';
-import { TableSelect } from './TableSelect';
-interface IAddLeaseTenantFormProps {
+export interface IAddLeaseTenantFormProps {
   selectedTenants: IContactSearchResult[];
   setSelectedTenants: (selectedTenants: IContactSearchResult[]) => void;
   onCancel: () => void;
 }
 
-const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProps> = ({
+export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProps> = ({
   selectedTenants,
   setSelectedTenants,
   onCancel,
