@@ -110,6 +110,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
         <BaseAsyncTypeahead<T>
           ref={ref} // forward the ref to the inner typeahead control to be able to call its methods; e.g. typeahead.clear(), .blur() etc
           id={`typeahead-${field}`}
+          clearButton
           options={options}
           multiple={multiple}
           filterBy={filterBy}
@@ -117,18 +118,17 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
           minLength={minLength}
           isLoading={isLoading}
           useCache={false}
-          selected={[].concat(value)} // always set an array here - works for multiple and single selections
+          selected={value ? [].concat(value) : []} // always set an array here - works for multiple and single selections
           isInvalid={touch && error}
           onSearch={onSearch}
           onChange={handleChange}
           {...rest}
         >
-          {({ selected }: TypeaheadManagerChildProps) =>
-            // only show the search icon if no selection has been made
-            !isLoading &&
-            !selected.length && (
+          {/* hide the search icon when user is interacting with typeahead control */}
+          {({ selected, isMenuShown }: TypeaheadManagerChildProps) =>
+            isLoading || isMenuShown || selected.length ? null : (
               <div className="rbt-aux">
-                <FaSearch size="2.5rem" />
+                <FaSearch size="2.5rem" color="#bcbec5" />
               </div>
             )
           }
@@ -141,4 +141,8 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
 
 // React.forwardRef allows to pass a "ref" to the wrapped AsyncTypeahead to invoke methods on the inner typeahead - e.g. ref.clear(), ref.blur() etc
 // See https://www.carlrippon.com/react-forwardref-typescript/
-export const AsyncTypeahead = React.forwardRef(AsyncTypeaheadInner);
+
+// @ts-ignore
+export const AsyncTypeahead = React.forwardRef(AsyncTypeaheadInner) as <T extends TypeaheadModel>(
+  props: ITypeaheadFieldProps<T> & { ref?: React.ForwardedRef<BaseAsyncTypeahead<T>> },
+) => ReturnType<typeof AsyncTypeaheadInner>;
