@@ -1,14 +1,59 @@
+import cx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
-import React from 'react';
+import head from 'lodash/head';
+import React, { useCallback } from 'react';
+import Form from 'react-bootstrap/Form';
 import {
   AsyncTypeahead as BaseAsyncTypeahead,
   AsyncTypeaheadProps,
+  TypeaheadManagerChildProps,
   TypeaheadModel,
 } from 'react-bootstrap-typeahead';
+import { FaSearch } from 'react-icons/fa';
+
+import TooltipIcon from '../TooltipIcon';
+import TooltipWrapper from '../TooltipWrapper';
+import { DisplayError } from './DisplayError';
 
 export interface ITypeaheadFieldProps<T extends TypeaheadModel> extends AsyncTypeaheadProps<T> {
-  /** The form field name */
+  /* The form field name */
   field: string;
+
+  /* The form component label */
+  label?: string;
+
+  /* Class names to apply to the outer form group wrapper */
+  className?: string;
+
+  /* Custom class names to apply to the input element of the <AsyncTypeahead> component */
+  innerClassName?: string;
+
+  /* Whether or not the field is required. */
+  required?: boolean;
+
+  /* Whether or not multiple selections are allowed. */
+  multiple?: boolean;
+
+  /* Optional tooltip text to display after the label */
+  tooltip?: string;
+
+  /* Whether or not to display errors in a tooltip instead of in a div */
+  displayErrorTooltips?: boolean;
+
+  /* Whether or not a request is currently pending. Necessary for the component to know when new results are available. */
+  isLoading: boolean;
+
+  /* Callback to perform when the search is executed */
+  onSearch: (query: string) => void;
+
+  /* Invoked whenever items are added or removed. Receives an array of the selected options. */
+  onChange?: (selected: T[]) => void;
+
+  /* Full set of options, including any pre-selected options. Must either be an array of objects (recommended) or strings. */
+  options: T[];
+
+  /* The selected option(s) displayed in the input. Use this prop if you want to control the component via its parent. */
+  selected?: T[];
 }
 
 // Bypass client-side filtering by returning `true`. Results are already
@@ -18,46 +63,82 @@ const filterBy = () => true;
 /**
  * Formik-connected <AsyncTypeahead> form control
  */
-export function AsyncTypeahead<T extends TypeaheadModel>({
-  id,
-  multiple,
-  field,
-  options,
-  labelKey,
-  minLength = 3,
-  onSearch,
-  ...rest
-}: ITypeaheadFieldProps<T>) {
+function AsyncTypeaheadInner<T extends TypeaheadModel>(
+  {
+    id,
+    multiple,
+    field,
+    options,
+    labelKey,
+    minLength = 3,
+    isLoading = false,
+    label,
+    required,
+    tooltip,
+    displayErrorTooltips,
+    className,
+    onSearch,
+    ...rest
+  }: ITypeaheadFieldProps<T>,
+  ref: React.ForwardedRef<BaseAsyncTypeahead<T>>,
+) {
   // Hook into Formik state
   const { errors, touched, values, setFieldValue } = useFormikContext();
   const value = getIn(values, field);
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
 
+  const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
+
   // Invoked whenever items are added or removed. Receives an array of the selected options.
-  const handleChange = (selected: T[]) => {
-    if (!!multiple) {
-      setFieldValue(field, selected);
-    } else {
-      const newValue = selected.length > 0 ? selected[0] : '';
-      setFieldValue(field, newValue);
-    }
-  };
+  const handleChange = useCallback(
+    (selected: T[]) => {
+      if (!multiple) {
+        setFieldValue(field, head(selected) ?? '');
+      } else {
+        setFieldValue(field, selected);
+      }
+    },
+    [field, multiple, setFieldValue],
+  );
 
   return (
-    <BaseAsyncTypeahead
-      id={id}
-      options={options}
-      multiple={multiple}
-      filterBy={filterBy}
-      labelKey={labelKey}
-      minLength={minLength}
-      useCache={false}
-      selected={[].concat(value)} // always set an array here - works for multiple and single selections
-      isInvalid={!!touch && !!error}
-      onSearch={onSearch}
-      onChange={handleChange}
-      {...rest}
-    />
+    <Form.Group className={cx({ required: required }, className)}>
+      {label && <Form.Label htmlFor={`typeahead-${field}`}>{label}</Form.Label>}
+      {tooltip && <TooltipIcon toolTipId={`${field}-tooltip`} toolTip={tooltip} />}
+      <TooltipWrapper toolTipId={`${field}-error-tooltip}`} toolTip={errorTooltip}>
+        <BaseAsyncTypeahead<T>
+          ref={ref} // forward the ref to the inner typeahead control to be able to call its methods; e.g. typeahead.clear(), .blur() etc
+          id={`typeahead-${field}`}
+          options={options}
+          multiple={multiple}
+          filterBy={filterBy}
+          labelKey={labelKey}
+          minLength={minLength}
+          isLoading={isLoading}
+          useCache={false}
+          selected={[].concat(value)} // always set an array here - works for multiple and single selections
+          isInvalid={touch && error}
+          onSearch={onSearch}
+          onChange={handleChange}
+          {...rest}
+        >
+          {({ selected }: TypeaheadManagerChildProps) =>
+            // only show the search icon if no selection has been made
+            !isLoading &&
+            !selected.length && (
+              <div className="rbt-aux">
+                <FaSearch size="2.5rem" />
+              </div>
+            )
+          }
+        </BaseAsyncTypeahead>
+      </TooltipWrapper>
+      {!displayErrorTooltips && <DisplayError field={field} />}
+    </Form.Group>
   );
 }
+
+// React.forwardRef allows to pass a "ref" to the wrapped AsyncTypeahead to invoke methods on the inner typeahead - e.g. ref.clear(), ref.blur() etc
+// See https://www.carlrippon.com/react-forwardref-typescript/
+export const AsyncTypeahead = React.forwardRef(AsyncTypeaheadInner);
