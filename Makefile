@@ -255,7 +255,7 @@ db-clean: ## create a new, clean database using the script file in the database.
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
 	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --force-recreate database;
-	
+
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
 	@cd backend/dal; dotnet ef database drop;
@@ -264,6 +264,10 @@ db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
 	@cd database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
+db-upgrade: ## Script to upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01).
+	@echo "$(P) Upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01)"
+	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
+	
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
 	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f

@@ -25,7 +25,7 @@ exports[`Filter Bar Snapshot matches 1`] = `
           onFocus={[Function]}
           onMouseOut={[Function]}
           onMouseOver={[Function]}
-          type="submit"
+          type="button"
         >
           <div
             className="Button__icon"

@@ -44,7 +44,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]

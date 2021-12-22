@@ -2,6 +2,7 @@ export interface IContactSearchResult {
   id: number;
   personId?: number;
   organizationId?: number;
+  leaseTenantId?: number;
   isDisabled: boolean;
   summary: string;
   surname: string;
@@ -12,4 +13,5 @@ export interface IContactSearchResult {
   municipalityName: string;
   provinceState: string;
   provinceStateId: number;
+  note?: string;
 }

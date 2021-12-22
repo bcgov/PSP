@@ -11,10 +11,24 @@ import { ContactSearchResults } from './ContactSearchResults/ContactSearchResult
 import ContactFilter, { defaultFilter } from './filter/ContactFilter';
 import * as Styled from './styles';
 
+interface IContactListViewProps {
+  setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
+  selectedRows: IContactSearchResult[];
+  showSelectedRowCount?: boolean;
+  className?: string;
+  hideAddButton?: boolean;
+}
+
 /**
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
-export const ContactListView = () => {
+export const ContactListView = ({
+  setSelectedRows,
+  selectedRows,
+  className,
+  showSelectedRowCount,
+  hideAddButton,
+}: IContactListViewProps) => {
   const { getContacts } = useApiContacts();
   const {
     results,
@@ -51,16 +65,18 @@ export const ContactListView = () => {
   }, [error]);
 
   return (
-    <Styled.ListPage>
+    <Styled.ListPage className={className}>
       <Styled.Scrollable>
         <Styled.PageHeader>Contacts</Styled.PageHeader>
         <Styled.PageToolbar>
           <ContactFilter filter={filter as any} setFilter={changeFilter} />
           <Styled.Spacer />
-          <Styled.PrimaryButton>
-            <IoMdPersonAdd color="white" />
-            Add new contact
-          </Styled.PrimaryButton>
+          {!hideAddButton && (
+            <Styled.PrimaryButton>
+              <IoMdPersonAdd color="white" />
+              Add new contact
+            </Styled.PrimaryButton>
+          )}
           <Styled.Spacer />
         </Styled.PageToolbar>
         <ContactSearchResults
@@ -73,6 +89,9 @@ export const ContactListView = () => {
           setPageSize={setPageSize}
           setPageIndex={setCurrentPage}
           pageCount={totalPages}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+          showSelectedRowCount={showSelectedRowCount}
         />
       </Styled.Scrollable>
     </Styled.ListPage>

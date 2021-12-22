@@ -1,5 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { IContactSearchResult } from 'interfaces';
+import { noop } from 'lodash';
 import React from 'react';
 import { act, render, RenderOptions } from 'utils/test-utils';
 
@@ -8,9 +9,21 @@ import { ContactSearchResults, IContactSearchResultsProps } from './ContactSearc
 const setSort = jest.fn();
 
 // render component under test
-const setup = (renderOptions: RenderOptions & IContactSearchResultsProps = { results: [] }) => {
+const setup = (
+  renderOptions: Partial<RenderOptions & IContactSearchResultsProps> = { results: [] },
+) => {
   const { results, ...rest } = renderOptions;
-  const utils = render(<ContactSearchResults results={results} setSort={setSort} />, { ...rest });
+  const utils = render(
+    <ContactSearchResults
+      setSelectedRows={noop}
+      selectedRows={[]}
+      results={results ?? []}
+      setSort={setSort}
+    />,
+    {
+      ...rest,
+    },
+  );
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');
   // long css selector to: get the FIRST header or table, then get the SVG up/down sort buttons
   const sortButtons = utils.container.querySelector(

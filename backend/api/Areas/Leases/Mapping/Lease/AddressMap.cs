@@ -21,6 +21,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.District, src => src.DistrictCodeNavigation.DistrictName)
                 .Map(dest => dest.ProvinceId, src => src.ProvinceStateId)
                 .Map(dest => dest.Province, src => src.ProvinceState.Description)
+                .Map(dest => dest.ProvinceCode, src => src.ProvinceState.Code)
                 .Map(dest => dest.CountryId, src => src.CountryId)
                 .Map(dest => dest.Country, src => src.Country.Description)
                 .Map(dest => dest.Postal, src => src.PostalCode);

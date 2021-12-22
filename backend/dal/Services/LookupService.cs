@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Services
 {
@@ -151,6 +151,11 @@ namespace Pims.Dal.Services
         public IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes()
         {
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
+        {
+            return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.InsuranceTypeCode).ToArray();
         }
         #endregion
     }

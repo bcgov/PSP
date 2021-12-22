@@ -1,6 +1,6 @@
 import clsx from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { leasePages } from './LeaseContainer';
@@ -18,12 +18,13 @@ export const LeaseIndex: React.FunctionComponent<ILeaseAndLicenseIndexProps> = (
   currentPageName,
   leaseId,
 }) => {
+  const { url } = useRouteMatch();
   return (
     <StyledLeaseIndex>
       {Array.from(leasePages.entries()).map(([pageName, page]) => (
         <StyledLeaseIndexLink
           key={`lease-${pageName}`}
-          to={!!leaseId ? `/lease/${leaseId}/?leasePageName=${pageName}` : '#'}
+          to={!!leaseId ? `${url}/${pageName}` : '#'}
           className={clsx({ active: currentPageName === pageName, disabled: !leaseId })}
         >
           {page.title}
