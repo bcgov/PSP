@@ -33,7 +33,7 @@ namespace Pims.Dal.Services
         {
             return this.Context.PimsOrganizations.AsNoTracking()
                 .Where(o => o.IsDisabled != true)
-                .Where(o => EF.Functions.Like(o.OrganizationName, $"%{request.Search}%"))
+                .Where(o => EF.Functions.Like(o.OrganizationName, $"%{request.Search}%") || EF.Functions.Like(o.OrganizationAlias, $"%{request.Search}%"))
                 .OrderBy(a => a.OrganizationName)
                 .Take(request.Top)
                 .ToArray();
