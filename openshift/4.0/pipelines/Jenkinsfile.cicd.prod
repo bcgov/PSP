@@ -104,25 +104,28 @@ pipeline {
       }
     }
 
-  stage('Release Version') {
+    stage('Release Version') {
       steps {
         script {
           if (env.BRANCH_NAME  == 'master') {
-            version = sh(
-              returnStdout: true,
-              script: 'git describe --tags `git rev-list --tags --max-count=1`'
-            ).trim()
-            if (version != ''){
-              RELEASE_VERSION = version  + "-" + OC_JOB_NAME //release version convention e.g Release-OC_JOB_NAME pims-api:v0.2.0.7.3-test or pims-api:v0.2.0.7.3-master
+            timeout(time: 10, unit: 'MINUTES') {
+              version = input(message: 'Enter the version tag for this release in format v<major>.<minor>.<patch>-<IS>.<build> or enter nothing to use the most recently tagged version', parameters: [
+              string(name: 'RELEASE VERSION', defaultValue: '', description: '')])
             }
-            else{
+            if (version == '') {
+              version = sh(
+                    returnStdout: true,
+                    script: 'git describe --tags `git rev-list --tags --max-count=1`'
+                  ).trim()
+            }
+            if (version != '') {
+              RELEASE_VERSION = version  + '-' + OC_JOB_NAME //release version convention e.g Release-OC_JOB_NAME pims-api:v0.2.0.7.3-test or pims-api:v0.2.0.7.3-master
+            } else {
               error('***  No release version found. Aborting pipeline.  ***') //abort build if no release version is found for test, uat and prod
             }
-
           } else {
             error('***  Invalid git branch  ***') //master branch must have release after every sprint
           }
-          
         }
       }
     }
@@ -133,7 +136,6 @@ pipeline {
             def val = input(message: "Promote UAT Release version $RELEASE_VERSION to $DESTINATION?" , ok: 'Yes, go ahead')
             echo "${RELEASE_VERSION} has been approved for promotion. Proceeding..."
           }
-
         }
       }
     }
@@ -197,27 +199,4 @@ pipeline {
       }
     }
   } // stages
-  post {
-    success {
-      script {
-		      def upperDestination = "${DESTINATION}".toString().toUpperCase()
-          office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          message: "Application has been [deployed to ${upperDestination}](${VANITY_URL})",
-          status: 'Success',
-          color: '#00FF00', //green
-          factDefinitions: [
-            [name: "Release version", template: "${RELEASE_VERSION}"],
-            [name: "Remarks", template: "${BUILD_TRIGGER_BY}"]
-          ]       
-      }
-    }
-    failure {
-      script {
-          office365ConnectorSend webhookUrl: "${env.NOTIFICATION_WEBHOOK_URL}",
-          factDefinitions: [
-            [name: "Release version", template: "${RELEASE_VERSION}"]
-          ]
-      }
-    }
-  } // post-stages
 } // pipeline
