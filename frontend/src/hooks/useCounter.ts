@@ -7,14 +7,16 @@ interface ICounterProps {
 }
 
 /**
- * React hook to manage a counter state.
+ * React hook to manage state for a counter.
+ * It supports clamping the counter to a given range; e.g. [0..10]
+ *
  * @param props the hook properties
- * @returns
+ * @returns hook state and helper functions to increment, decrement and reset the counter
  */
 export default function useCounter({ initial = 0, min, max }: ICounterProps) {
-  // Increments the counter. Two scenarios are supported:
-  //   1. if no "range" passed to this hook, it will increment the counter indefinitely
-  //   2. if "range [min, max]" was provided, it will increment the counter until it reaches the maximum.
+  // Increments/decrements the counter. Two scenarios are supported:
+  //   1. if no "range" passed to this hook, it will increment/decrement the counter indefinitely
+  //   2. if "range [min, max]" was provided, it will increment/decrement the counter until it reaches the maximum.
   const [count, setCount] = useState(initial);
 
   const increment = useCallback(() => {
