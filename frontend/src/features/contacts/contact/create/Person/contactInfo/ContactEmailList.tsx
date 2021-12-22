@@ -1,0 +1,39 @@
+import { Button } from 'components/common/form';
+import { FieldArray } from 'formik';
+import { ICreateContactMethod } from 'interfaces/ICreateContact';
+import React from 'react';
+
+import { ContactEmail } from './ContactEmail';
+
+export interface IContactEmailList {
+  field: string;
+  contactEmails: ICreateContactMethod[];
+}
+
+/**
+ * Formik Field array wrapper around email contacts.
+ * @param {IContactEmailList} param0
+ */
+export const ContactEmailList: React.FunctionComponent<IContactEmailList> = ({
+  field,
+  contactEmails = [],
+}) => {
+  return (
+    <FieldArray name={field}>
+      {({ push, remove }) => (
+        <>
+          {contactEmails.map((email, index) => (
+            <ContactEmail
+              key={`${field}.${index}`}
+              namespace={`${field}.${index}`}
+              onRemove={index > 0 ? () => remove(index) : undefined}
+            />
+          ))}
+          <Button variant="link" onClick={() => push({ value: '', contactMethodTypeCode: '' })}>
+            + Add another email address
+          </Button>
+        </>
+      )}
+    </FieldArray>
+  );
+};

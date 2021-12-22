@@ -65,6 +65,7 @@ export const defaultCreatePerson: ICreatePersonForm = {
   surname: '',
   preferredName: '',
   comment: '',
+  organizationId: '',
   emailContactMethods: [
     {
       contactMethodTypeCode: '',

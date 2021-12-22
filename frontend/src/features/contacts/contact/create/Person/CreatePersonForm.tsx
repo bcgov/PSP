@@ -1,9 +1,12 @@
-import { Button, Input } from 'components/common/form';
+import { AsyncTypeahead, Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { Stack } from 'components/common/Stack/Stack';
-import { FieldArray, Formik } from 'formik';
+import { Formik } from 'formik';
+import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson } from 'interfaces/ICreateContact';
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -11,8 +14,8 @@ import { toast } from 'react-toastify';
 import { PadBox } from '../styles';
 import Address from './address/Address';
 import CommentNotes from './comments/CommentNotes';
-import { ContactEmail } from './contactInfo/ContactEmail';
-import { ContactPhone } from './contactInfo/ContactPhone';
+import { ContactEmailList } from './contactInfo/ContactEmailList';
+import { ContactPhoneList } from './contactInfo/ContactPhoneList';
 import * as Styled from './styles';
 
 export interface ICreatePersonFormProps {}
@@ -20,6 +23,28 @@ export interface ICreatePersonFormProps {}
 export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
   const { postPerson } = useApiContacts();
   const { goBack } = useHistory();
+
+  // organization type-ahead state
+  const { getOrganizationPredictions } = useApiAutocomplete();
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState<IAutocompletePrediction[]>([]);
+
+  // fetch autocomplete suggestions from server
+  const handleSearch = async (query: string) => {
+    try {
+      setIsLoading(true);
+      const { data } = await getOrganizationPredictions(query);
+      setOptions(data.predictions);
+      setIsLoading(false);
+    } catch (e) {
+      setOptions([]);
+      toast.error('Failed to get autocomplete results for supplied organization', {
+        autoClose: 7000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Formik
@@ -61,7 +86,18 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
 
               <FormSection>
                 <Styled.H2>Organization</Styled.H2>
-                <Styled.H3>Link to an existing organization</Styled.H3>
+                <Row>
+                  <Col md={7}>
+                    <AsyncTypeahead
+                      field="organizationId"
+                      label="Link to an existing organization"
+                      labelKey="text"
+                      isLoading={isLoading}
+                      options={options}
+                      onSearch={handleSearch}
+                    />
+                  </Col>
+                </Row>
               </FormSection>
 
               <FormSection>
@@ -70,54 +106,15 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
                   Contacts must have a minimum of one method of contact to be saved. <br />
                   <em>(ex: email,phone or address)</em>
                 </Styled.SummaryText>
-
-                <FieldArray name="emailContactMethods">
-                  {({ push, remove, name }) => (
-                    <>
-                      {values.emailContactMethods.length > 0 &&
-                        values.emailContactMethods.map((email, index) => (
-                          <ContactEmail
-                            key={`contactEmail.${index}`}
-                            namespace={`contactEmail.${index}`}
-                            onRemove={index > 0 ? () => remove(index) : undefined}
-                          />
-                        ))}
-                      <Button
-                        variant="link"
-                        onClick={() => {
-                          push({ value: '', contactMethodTypeCode: '' });
-                        }}
-                      >
-                        + Add another email address
-                      </Button>
-                    </>
-                  )}
-                </FieldArray>
-
+                <ContactEmailList
+                  field="emailContactMethods"
+                  contactEmails={values.emailContactMethods}
+                />
                 <br />
-
-                <FieldArray name="phoneContactMethods">
-                  {({ push, remove, name }) => (
-                    <>
-                      {values.phoneContactMethods.length > 0 &&
-                        values.phoneContactMethods.map((email, index) => (
-                          <ContactPhone
-                            key={`contactPhone.${index}`}
-                            namespace={`contactPhone.${index}`}
-                            onRemove={index > 0 ? () => remove(index) : undefined}
-                          />
-                        ))}
-                      <Button
-                        variant="link"
-                        onClick={() => {
-                          push({ value: '', contactMethodTypeCode: '' });
-                        }}
-                      >
-                        + Add another email address
-                      </Button>
-                    </>
-                  )}
-                </FieldArray>
+                <ContactPhoneList
+                  field="phoneContactMethods"
+                  contactPhones={values.phoneContactMethods}
+                />
               </FormSection>
 
               <FormSection>
@@ -139,6 +136,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
               <FormSection>
                 <CommentNotes />
               </FormSection>
+
               <PadBox className="w-100">
                 <Stack $direction="row" justifyContent="flex-end" gap={2}>
                   <Button variant="secondary">Cancel</Button>
