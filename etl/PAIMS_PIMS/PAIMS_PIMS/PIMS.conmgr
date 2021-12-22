@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="PIMS IS14"
+  DTS:ObjectName="PIMS IS15"
   DTS:DTSID="{BF7874F1-97E7-43B0-A72D-1D2E83B868AF}"
   DTS:CreationName="OLEDB">
   <DTS:ObjectData>
