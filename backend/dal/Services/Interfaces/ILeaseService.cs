@@ -14,5 +14,6 @@ namespace Pims.Dal.Services
         PimsLease Get(long id);
         Paged<PimsLease> GetPage(LeaseFilter filter);
         PimsLease Add(PimsLease lease, bool userOverride = false);
+        PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants);
     }
 }

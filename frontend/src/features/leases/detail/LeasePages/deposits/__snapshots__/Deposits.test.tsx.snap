@@ -49,6 +49,7 @@ exports[`Lease Deposits renders as expected 1`] = `
       </label>
       <div
         class="table"
+        data-testid="securityDepositsTable"
         role="table"
       >
         <div
@@ -324,6 +325,7 @@ Integer nec odio.
       </label>
       <div
         class="table"
+        data-testid="securityDepositReturnsTable"
         role="table"
       >
         <div

@@ -33,8 +33,7 @@ describe('LeaseIndex component', () => {
     const { getByText } = component;
     userEvent.click(getByText('Details'));
 
-    expect(history.location.pathname).toBe('/lease/1/');
-    expect(history.location.search).toBe('?leasePageName=details');
+    expect(history.location.pathname).toContain('details');
   });
 
   it('the active page displays the correct styling', () => {

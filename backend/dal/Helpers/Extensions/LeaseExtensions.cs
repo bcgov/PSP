@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;

@@ -1,13 +1,13 @@
 import { Button } from 'components/common/form';
 import { FormikProps } from 'formik';
-import { IAddFormLease } from 'interfaces';
+import { isEqual } from 'lodash';
 import * as React from 'react';
 
 import * as Styled from './styles';
 
 interface IAddLeaseFormButtonsProps {
   onCancel: () => void;
-  formikProps: FormikProps<IAddFormLease>;
+  formikProps: FormikProps<any>;
 }
 
 const AddLeaseFormButtons: React.FunctionComponent<IAddLeaseFormButtonsProps> = ({
@@ -20,9 +20,12 @@ const AddLeaseFormButtons: React.FunctionComponent<IAddLeaseFormButtonsProps> = 
         Cancel
       </Button>
       <Button
-        disabled={formikProps.isSubmitting}
+        disabled={
+          formikProps.isSubmitting ||
+          !formikProps.dirty ||
+          isEqual(formikProps.initialValues, formikProps.values)
+        }
         isSubmitting={formikProps.isSubmitting}
-        variant="secondary"
         onClick={async () => {
           formikProps.setSubmitting(true);
           formikProps.submitForm();

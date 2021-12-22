@@ -32,44 +32,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c0 {
-  width: 100%;
-  grid: 4rem 7.5rem 1fr / 22rem 1fr;
-  grid-template-areas: 'breadcrumb breadcrumb' 'leaseheader  leaseheader' 'leaseindex leasecontent';
-  display: grid;
-  height: 100%;
-  overflow: auto;
-  padding: 1rem;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
-  grid-area: breadcrumb;
-}
-
-.c1 .breadcrumb-item:not(:first-child)::before {
-  content: '>';
-  width: 0px;
-  margin-right: 1rem;
-}
-
-.c1 .breadcrumb li a {
-  max-height: 24px;
-}
-
-.c1 ol {
-  background-color: white;
-}
-
 .c18 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -137,6 +99,44 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  grid-area: breadcrumb;
+}
+
+.c1 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c1 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c1 ol {
+  background-color: white;
+}
+
+.c0 {
+  width: 100%;
+  grid: 4rem 7.5rem 1fr / 22rem 1fr;
+  grid-template-areas: 'breadcrumb breadcrumb' 'leaseheader  leaseheader' 'leaseindex leasecontent';
+  display: grid;
+  height: 100%;
+  overflow: auto;
+  padding: 1rem;
 }
 
 .c22 {
@@ -1669,7 +1669,8 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           </div>
         </button>
         <button
-          class="Button btn btn-secondary"
+          class="Button Button--disabled btn btn-primary"
+          disabled=""
           type="button"
         >
           <div

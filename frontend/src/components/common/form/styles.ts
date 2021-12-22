@@ -11,6 +11,18 @@ export const InlineForm = styled(Form)`
   gap: 0.8rem;
 `;
 
+export const InlineFilterBox = styled.div`
+  font-size: 1.44rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+`;
+
+export const SaveTableWrapper = styled.div`
+  margin-top: 3rem;
+  font-size: 1.4rem;
+`;
+
 export const InlineFastCurrencyInput = styled(FastCurrencyInput)`
   display: flex;
   align-items: baseline;
@@ -59,4 +71,12 @@ export const FormSection = styled.div`
   width: 100%;
   padding: 2.5rem;
   background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+export const FormSectionClear = styled.div`
+  border-radius: 1rem;
+  width: 100%;
+  padding-top: 1rem;
+  padding-left: 2.5rem;
+  padding-bottom: 1rem;
 `;
