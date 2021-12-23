@@ -1,5 +1,4 @@
 import { AddressTypes } from 'constants/addressTypes';
-import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 export interface ICreatePerson {
   id?: number;
@@ -24,8 +23,8 @@ export interface ICreateContactAddress {
   municipality?: string;
   regionId?: number;
   districtId?: number;
-  provinceId?: number;
-  countryId?: number;
+  provinceId?: string;
+  countryId?: string;
   countryOther?: string;
   postal?: string;
 }
@@ -49,14 +48,7 @@ export interface ICreatePersonForm
     }
   > {}
 
-export interface ICreateContactAddressForm
-  extends ExtendOverride<
-    ICreateContactAddress,
-    {
-      provinceId: NumberFieldValue;
-      countryId: NumberFieldValue;
-    }
-  > {}
+export interface ICreateContactAddressForm extends ExtendOverride<ICreateContactAddress, {}> {}
 
 export const defaultCreatePerson: ICreatePersonForm = {
   isDisabled: false,

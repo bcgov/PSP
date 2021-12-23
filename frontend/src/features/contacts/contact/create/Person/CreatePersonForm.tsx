@@ -1,21 +1,25 @@
 import { AsyncTypeahead, Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
+import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { Stack } from 'components/common/Stack/Stack';
+import {
+  Address,
+  ContactEmailList,
+  ContactPhoneList,
+  useAddressHelpers,
+} from 'features/contacts/contact/create';
 import { Formik } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson } from 'interfaces/ICreateContact';
+import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { PadBox } from '../styles';
-import Address from './address/Address';
 import CommentNotes from './comments/CommentNotes';
-import { ContactEmailList } from './contactInfo/ContactEmailList';
-import { ContactPhoneList } from './contactInfo/ContactPhoneList';
 import * as Styled from './styles';
 
 export interface ICreatePersonFormProps {}
@@ -23,6 +27,10 @@ export interface ICreatePersonFormProps {}
 export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
   const { postPerson } = useApiContacts();
   const { goBack } = useHistory();
+
+  // by default, set country to CANADA for addresses
+  const { defaultCountryId } = useAddressHelpers();
+  const initialValues = applyDefaultCountry(defaultCreatePerson, defaultCountryId);
 
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
@@ -48,7 +56,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
 
   return (
     <Formik
-      initialValues={defaultCreatePerson}
+      initialValues={initialValues}
       enableReinitialize
       onSubmit={async values => {
         try {
@@ -61,94 +69,111 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
       }}
     >
       {({ values }) => (
-        <Styled.Form id="createForm">
-          <Styled.CreatePersonLayout>
-            <Stack gap={1.6}>
-              <FormSection>
-                <Row>
-                  <Col md={4}>
-                    <Input field="firstName" label="First Name" required />
-                  </Col>
-                  <Col md={3}>
-                    <Input field="middleNames" label="Middle" />
-                  </Col>
-                  <Col>
-                    <Input field="surname" label="Last Name" required />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={7}>
-                    <Input field="preferredName" label="Preferred Name" />
-                  </Col>
-                  <Col></Col>
-                </Row>
-              </FormSection>
+        <>
+          {/* Show confirmation dialog when user tries to navigate away and form has unsaved changes */}
+          <UnsavedChangesPrompt />
 
-              <FormSection>
-                <Styled.H2>Organization</Styled.H2>
-                <Row>
-                  <Col md={7}>
-                    <AsyncTypeahead
-                      field="organizationId"
-                      label="Link to an existing organization"
-                      labelKey="text"
-                      isLoading={isLoading}
-                      options={options}
-                      onSearch={handleSearch}
-                    />
-                  </Col>
-                </Row>
-              </FormSection>
+          <Styled.Form id="createForm">
+            <Styled.CreatePersonLayout>
+              <Stack gap={1.6}>
+                <FormSection>
+                  <Row>
+                    <Col md={4}>
+                      <Input field="firstName" label="First Name" required />
+                    </Col>
+                    <Col md={3}>
+                      <Input field="middleNames" label="Middle" />
+                    </Col>
+                    <Col>
+                      <Input field="surname" label="Last Name" required />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={7}>
+                      <Input field="preferredName" label="Preferred Name" />
+                    </Col>
+                    <Col></Col>
+                  </Row>
+                </FormSection>
 
-              <FormSection>
-                <Styled.H2>Contact info</Styled.H2>
-                <Styled.SummaryText>
-                  Contacts must have a minimum of one method of contact to be saved. <br />
-                  <em>(ex: email,phone or address)</em>
-                </Styled.SummaryText>
-                <ContactEmailList
-                  field="emailContactMethods"
-                  contactEmails={values.emailContactMethods}
-                />
-                <br />
-                <ContactPhoneList
-                  field="phoneContactMethods"
-                  contactPhones={values.phoneContactMethods}
-                />
-              </FormSection>
+                <FormSection>
+                  <Styled.H2>Organization</Styled.H2>
+                  <Row>
+                    <Col md={7}>
+                      <AsyncTypeahead
+                        field="organizationId"
+                        label="Link to an existing organization"
+                        labelKey="text"
+                        isLoading={isLoading}
+                        options={options}
+                        onSearch={handleSearch}
+                      />
+                    </Col>
+                  </Row>
+                </FormSection>
 
-              <FormSection>
-                <Styled.H2>Address</Styled.H2>
-                <Styled.H3>Mailing Address</Styled.H3>
-                <Address namespace="mailingAddress" />
-              </FormSection>
+                <FormSection>
+                  <Styled.H2>Contact info</Styled.H2>
+                  <Styled.SummaryText>
+                    Contacts must have a minimum of one method of contact to be saved. <br />
+                    <em>(ex: email,phone or address)</em>
+                  </Styled.SummaryText>
+                  <ContactEmailList
+                    field="emailContactMethods"
+                    contactEmails={values.emailContactMethods}
+                  />
+                  <br />
+                  <ContactPhoneList
+                    field="phoneContactMethods"
+                    contactPhones={values.phoneContactMethods}
+                  />
+                </FormSection>
 
-              <FormSection>
-                <Styled.H3>Property Address</Styled.H3>
-                <Address namespace="propertyAddress" />
-              </FormSection>
+                <FormSection>
+                  <Styled.H2>Address</Styled.H2>
+                  <Styled.H3>Mailing Address</Styled.H3>
+                  <Address namespace="mailingAddress" />
+                </FormSection>
 
-              <FormSection>
-                <Styled.H3>Billing Address</Styled.H3>
-                <Address namespace="billingAddress" />
-              </FormSection>
+                <FormSection>
+                  <Styled.H3>Property Address</Styled.H3>
+                  <Address namespace="propertyAddress" />
+                </FormSection>
 
-              <FormSection>
-                <CommentNotes />
-              </FormSection>
+                <FormSection>
+                  <Styled.H3>Billing Address</Styled.H3>
+                  <Address namespace="billingAddress" />
+                </FormSection>
 
-              <PadBox className="w-100">
-                <Stack $direction="row" justifyContent="flex-end" gap={2}>
-                  <Button variant="secondary">Cancel</Button>
-                  <Button type="submit">Save</Button>
-                </Stack>
-              </PadBox>
-            </Stack>
-          </Styled.CreatePersonLayout>
-        </Styled.Form>
+                <FormSection>
+                  <CommentNotes />
+                </FormSection>
+
+                <PadBox className="w-100">
+                  <Stack $direction="row" justifyContent="flex-end" gap={2}>
+                    <Button variant="secondary">Cancel</Button>
+                    <Button type="submit">Save</Button>
+                  </Stack>
+                </PadBox>
+              </Stack>
+            </Styled.CreatePersonLayout>
+          </Styled.Form>
+        </>
       )}
     </Formik>
   );
 };
+
+function applyDefaultCountry(
+  formValues: ICreatePersonForm,
+  countryId: string = '',
+): ICreatePersonForm {
+  return {
+    ...formValues,
+    mailingAddress: { ...formValues.mailingAddress, countryId },
+    propertyAddress: { ...formValues.propertyAddress, countryId },
+    billingAddress: { ...formValues.billingAddress, countryId },
+  };
+}
 
 export default CreatePersonForm;

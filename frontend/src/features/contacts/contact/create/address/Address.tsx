@@ -10,8 +10,11 @@ import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
 import { withNameSpace } from 'utils/formUtils';
 
-import * as Styled from '../styles';
+import * as Styled from '../Person/styles';
 import useAddressHelpers from './useAddressHelpers';
+
+// re-export helper hooks
+export { useAddressHelpers };
 
 export interface IAddressProps {
   namespace?: string;
