@@ -16,7 +16,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Search
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.Properties, src => src.GetProperties())
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
-                .Map(dest => dest.TenantNames, src => src.PimsLeaseTenants.Select(t => t.Person.GetFullName()));
+                .Map(dest => dest.TenantNames, src => src.PimsLeaseTenants.Where(t => t != null && t.Person != null).Select(t => t.Person.GetFullName()));
         }
     }
 }
