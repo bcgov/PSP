@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Areas.Persons.Mapping.Person
@@ -9,6 +10,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
         {
             config.NewConfig<Areas.Persons.Models.Person.AddressCreateModel, Entity.PimsPersonAddress>()
                 .Map(dest => dest.AddressId, src => src.Id)
+                .Map(dest => dest.AddressUsageTypeCode, src => src.AddressTypeId.GetTypeId())
                 .Map(dest => dest.Address, src => src)
                 .IgnoreNullValues(true);
 

@@ -66,7 +66,7 @@ namespace Pims.Api.Areas.Persons.Controllers
             var created = _pimsService.Person.Add(entity);
             var response = _mapper.Map<Areas.Contact.Models.Contact.ContactModel>(created);
 
-            return CreatedAtAction(nameof(Areas.Contact.Controllers.ContactController.GetContact), nameof(Areas.Contact.Controllers.ContactController), new { id = response.Id }, response);
+            return new JsonResult(response);
         }
         #endregion
     }

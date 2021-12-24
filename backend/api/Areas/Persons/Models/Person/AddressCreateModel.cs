@@ -1,4 +1,6 @@
 
+using Pims.Api.Models;
+
 namespace Pims.Api.Areas.Persons.Models.Person
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - Foreign key to the address type.
         /// </summary>
-        public string AddressTypeId { get; set; }
+        public TypeModel<string> AddressTypeId { get; set; }
 
         /// <summary>
         /// get/set - The street address.

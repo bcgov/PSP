@@ -17,6 +17,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                 .Map(dest => dest.Comment, src => src.Comment)
                 .Map(dest => dest.PimsPersonAddresses, src => src.Addresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
+                .Map(dest => dest.PimsPersonOrganizations, src => src)
                 .IgnoreNullValues(true);
         }
     }
