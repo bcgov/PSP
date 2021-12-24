@@ -112,7 +112,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
       </Row>
       <Row>
         <Col md={4}>
-          <Input field="municipality" label="City" />
+          <Input field={withNameSpace(namespace, 'municipality')} label="City" />
         </Col>
       </Row>
       <Row>

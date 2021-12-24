@@ -8,6 +8,7 @@ import {
   ContactPhoneList,
   useAddressHelpers,
 } from 'features/contacts/contact/create';
+import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
 import { Formik } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
@@ -60,7 +61,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
       enableReinitialize
       onSubmit={async values => {
         try {
-          await postPerson(values);
+          await postPerson(personCreateFormToApiPerson(values));
           toast.info('Contact added successfully');
           goBack();
         } catch (error) {

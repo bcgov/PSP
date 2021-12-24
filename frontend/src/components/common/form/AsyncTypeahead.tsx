@@ -78,6 +78,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
     displayErrorTooltips,
     className,
     onSearch,
+    onChange,
     ...rest
   }: ITypeaheadFieldProps<T>,
   ref: React.ForwardedRef<BaseAsyncTypeahead<T>>,
@@ -121,7 +122,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
           selected={value ? [].concat(value) : []} // always set an array here - works for multiple and single selections
           isInvalid={touch && error}
           onSearch={onSearch}
-          onChange={handleChange}
+          onChange={onChange ? onChange : handleChange}
           {...rest}
         >
           {/* hide the search icon when user is interacting with typeahead control */}

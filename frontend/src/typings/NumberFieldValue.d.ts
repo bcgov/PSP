@@ -1,1 +1,1 @@
-export type NumberFieldValue = number | '';
+export type NumberFieldValue = number | string;
