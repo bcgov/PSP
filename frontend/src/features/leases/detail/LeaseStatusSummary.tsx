@@ -15,13 +15,7 @@ export const LeaseStatusSummary: React.FunctionComponent<ILeaseStatusSummaryProp
   lease,
 }) => {
   return !!lease ? (
-    <StyledLeaseStatusSummary
-      className={clsx({
-        draft: lease.statusType.id === 'DRAFT',
-        active: lease.statusType.id === 'ACTIVE',
-        inactive: lease.statusType.id === 'INACTIVE',
-      })}
-    >
+    <StyledLeaseStatusSummary className={lease.statusType.id.toLowerCase()}>
       <b>{lease?.statusType?.description}</b>
       <b>{lease?.lFileNo ?? ''}</b>
     </StyledLeaseStatusSummary>
@@ -56,6 +50,18 @@ const StyledLeaseStatusSummary = styled.div`
     border: 1px solid ${props => props.theme.css.completedColor};
     b:first-child {
       color: ${props => props.theme.css.completedColor};
+    }
+  }
+  &.terminated {
+    border: 1px solid ${props => props.theme.css.dangerColor};
+    b:first-child {
+      color: ${props => props.theme.css.dangerColor};
+    }
+  }
+  &.discard {
+    border: 1px solid ${props => props.theme.css.discardedColor};
+    b:first-child {
+      color: ${props => props.theme.css.discardedColor};
     }
   }
   &.draft {

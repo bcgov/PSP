@@ -72,6 +72,24 @@ namespace Pims.Api.Areas.Lease.Controllers
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
         }
+
+        /// <summary>
+        /// Update the specified lease, and attached properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.LeaseEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult UpdateLease(Models.Lease.LeaseModel leaseModel, bool userOverride = false)
+        {
+            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            _pimsService.Lease.Update(leaseEntity, false);
+            var lease = _pimsService.Lease.UpdatePropertyLeases(leaseModel.Id, leaseModel.RowVersion, leaseEntity.PimsPropertyLeases, userOverride);
+
+            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+        }
         #endregion
     }
 }

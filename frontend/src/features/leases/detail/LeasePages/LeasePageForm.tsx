@@ -1,10 +1,24 @@
 import { ILeasePage } from 'features/leases';
-import { apiLeaseToFormLease, formLeaseToApiLease } from 'features/leases/leaseUtils';
+import {
+  addFormLeaseToApiLease,
+  apiLeaseToAddFormLease,
+  apiLeaseToFormLease,
+  formLeaseToApiLease,
+} from 'features/leases/leaseUtils';
 import { Form, Formik } from 'formik';
-import { defaultFormLease, IFormLease, ILease } from 'interfaces';
+import {
+  defaultAddFormLease,
+  defaultFormLease,
+  IAddFormLease,
+  IFormLease,
+  ILease,
+} from 'interfaces';
+import queryString from 'query-string';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { LeasePageNames, leasePages } from '../LeaseContainer';
 import * as Styled from '../styles';
 
 export interface ILeasePageFormProps {
@@ -12,7 +26,6 @@ export interface ILeasePageFormProps {
   lease?: ILease;
   refreshLease: () => void;
   setLease: (lease: ILease) => void;
-  onUpdate: (lease: ILease, subRoute?: string | undefined) => Promise<ILease | undefined>;
 }
 
 /**
@@ -25,39 +38,44 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
   refreshLease,
   setLease,
   children,
-  onUpdate,
 }) => {
+  const location = useLocation();
+  const { edit } = queryString.parse(location.search);
   return (
     <StyledLeasePage>
       <StyledLeasePageHeader>
         <Styled.LeaseH2>{leasePage.header ?? leasePage.title}</Styled.LeaseH2>
         {leasePage.description && <p>{leasePage.description}</p>}
       </StyledLeasePageHeader>
-      <Formik<IFormLease>
-        initialValues={{
-          ...defaultFormLease,
-          ...apiLeaseToFormLease(lease),
-        }}
-        enableReinitialize={true}
-        onSubmit={async (values, { setSubmitting }) => {
-          try {
-            if (!leasePage.subRoute) {
-              refreshLease();
-            } else {
-              const updatedLease = await onUpdate(formLeaseToApiLease(values), leasePage.subRoute);
-              updatedLease && setLease(updatedLease);
-            }
-          } finally {
-            setSubmitting(false);
+      {!edit ? (
+        <Formik<IFormLease | IAddFormLease>
+          initialValues={
+            leasePage.title !== leasePages.get(LeasePageNames.DETAILS)?.title
+              ? ({
+                  ...defaultFormLease,
+                  ...apiLeaseToFormLease(lease),
+                } as IFormLease)
+              : ({ ...defaultAddFormLease, ...apiLeaseToAddFormLease(lease) } as IAddFormLease)
           }
-        }}
-      >
-        {formikProps => (
-          <>
-            <ViewEditToggleForm id="leaseForm">{children}</ViewEditToggleForm>
-          </>
-        )}
-      </Formik>
+          enableReinitialize={true}
+          validationSchema={leasePage?.validation}
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              refreshLease();
+            } finally {
+              setSubmitting(false);
+            }
+          }}
+        >
+          {formikProps => (
+            <>
+              <ViewEditToggleForm id="leaseForm">{children}</ViewEditToggleForm>
+            </>
+          )}
+        </Formik>
+      ) : (
+        <>{children}</>
+      )}
     </StyledLeasePage>
   );
 };
@@ -103,6 +121,9 @@ const StyledLeasePage = styled.div`
   height: 100%;
   overflow-y: auto;
   grid-area: leasecontent;
+  flex-direction: column;
+  display: flex;
+  text-align: left;
 `;
 
 export default LeasePageForm;

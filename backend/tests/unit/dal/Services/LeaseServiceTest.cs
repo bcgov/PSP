@@ -6,6 +6,7 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Pims.Dal.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -142,6 +143,7 @@ namespace Pims.Dal.Test.Services
             updatedLease.PimsLeaseTenants.Should().Contain(addTenantPerson);
             updatedLease.PimsLeaseTenants.Should().Contain(addTenantOrganization);
         }
+
         [Fact]
         public void Update_Lease_Tenants_Update()
         {
@@ -163,7 +165,6 @@ namespace Pims.Dal.Test.Services
             // Act
             var updateTenant = lease.PimsLeaseTenants.FirstOrDefault();
             updateTenant.PersonId = updatePerson.PersonId;
-            context.ChangeTracker.Clear();
             var updatedLease = service.UpdateLeaseTenants(1, 2, lease.PimsLeaseTenants);
 
             // Assert
@@ -279,6 +280,264 @@ namespace Pims.Dal.Test.Services
                 service.UpdateLeaseTenants(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsLeaseTenants));
         }
         #endregion
+
+        #region Update Lease Properties
+        [Fact]
+        public void Update_Lease_Properties_Add()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var propertyOne = EntityHelper.CreateProperty(1);
+            helper.CreatePimsContext(user, true).AddRange(propertyOne, lease);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+
+            // Act
+            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
+            lease.PimsPropertyLeases.Add(addProperty);
+            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+
+            // Assert
+            Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
+            updatedLease.PimsPropertyLeases.Should().Contain(addProperty);
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_AddPropertyInLease()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var propertyOne = EntityHelper.CreateProperty(1);
+            var context = helper.CreatePimsContext(user, true);
+            context.AddRange(propertyOne, lease);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+            var leaseTwo = context.CreateLease(2, addProperty: false);
+            propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
+
+            // Act
+            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
+            lease.PimsPropertyLeases.Add(addProperty);
+
+            // Assert
+            Assert.Throws<UserOverrideException>(() =>
+                service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases));
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_AddPropertyInLeaseOverride()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var propertyOne = EntityHelper.CreateProperty(1);
+            var context = helper.CreatePimsContext(user, true);
+            context.AddRange(propertyOne, lease);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+            var leaseTwo = context.CreateLease(2, addProperty: false);
+            propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
+
+            // Act
+            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
+            lease.PimsPropertyLeases.Add(addProperty);
+            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases, true);
+
+            // Assert
+            Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
+            updatedLease.PimsPropertyLeases.Should().Contain(addProperty);
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_AddNonExistantProperty()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            helper.CreatePimsContext(user, true).AddRange(lease);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+
+            // Act
+            var propertyOne = EntityHelper.CreateProperty(1);
+            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
+            lease.PimsPropertyLeases.Add(addProperty);
+
+            // Act
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+                service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases));
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_Update()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var propertyOne = EntityHelper.CreateProperty(1);
+            lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne });
+            var context = helper.CreatePimsContext(user, true);
+            context.AddRange(lease, propertyOne);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+
+            // Act
+            var updateProperty = EntityHelper.CreateProperty(context, 2);
+            var propertyToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
+            propertyToUpdate.PropertyId = updateProperty.PropertyId;
+            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+
+            // Assert
+            Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
+            updatedLease.PimsPropertyLeases.Should().Contain(propertyToUpdate);
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_UpdateNonExistantProperty()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var propertyOne = EntityHelper.CreateProperty(1);
+            lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne });
+            var context = helper.CreatePimsContext(user, true);
+            context.AddRange(lease, propertyOne);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+
+            // Act
+            var propertyToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
+            propertyToUpdate.Property = EntityHelper.CreateProperty(2);
+
+            // Act
+            // Assert
+            Assert.Throws<InvalidOperationException>(() =>
+                service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases));
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_Remove()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var propertyOne = EntityHelper.CreateProperty(1);
+            lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId });
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(lease);
+
+            var service = helper.CreateService<LeaseService>(user);
+
+            // Act
+            var deleteProperty = lease.PimsPropertyLeases.FirstOrDefault();
+            lease.PimsPropertyLeases.Remove(deleteProperty);
+            context.ChangeTracker.Clear();
+            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+
+            // Assert
+            updatedLease.PimsPropertyLeases.Should().BeEmpty();
+        }
+        [Fact]
+        public void Update_Lease_Properties_AddRemove()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+            var property = EntityHelper.CreateProperty(1);
+            var context = helper.CreatePimsContext(user, true);
+            context.AddRange(property, lease);
+            var service = helper.CreateService<LeaseService>(user);
+            helper.SaveChanges();
+
+            // Act
+            var deleteProperty = lease.PimsPropertyLeases.FirstOrDefault();
+            lease.PimsPropertyLeases.Remove(deleteProperty);
+
+            var addProperty = EntityHelper.CreateProperty(context, 2);
+            helper.SaveChanges();
+
+            var addPropertyLease = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = addProperty.PropertyId, Property = addProperty };
+            lease.PimsPropertyLeases.Add(addPropertyLease);
+            var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
+
+            // Assert
+            Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
+            updatedLease.PimsPropertyLeases.Should().NotContain(deleteProperty);
+            updatedLease.PimsPropertyLeases.Should().Contain(addPropertyLease);
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_NotAuthorized()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var lease = EntityHelper.CreateLease(1);
+
+            var service = helper.CreateService<LeaseService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() =>
+                service.UpdatePropertyLeases(1, 1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_NotFound()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
+
+            var service = helper.CreateService<LeaseService>(user);
+
+            // Act
+            // Assert
+            Assert.Throws<KeyNotFoundException>(() =>
+                service.UpdatePropertyLeases(1, 1, new List<Pims.Dal.Entities.PimsPropertyLease>()));
+        }
+
+        [Fact]
+        public void Update_Lease_Properties_Concurrency()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
+
+            var lease = EntityHelper.CreateLease(1);
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+
+            var service = helper.CreateService<LeaseService>(user);
+
+            // Act
+            lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
+
+            // Assert
+            Assert.Throws<DbUpdateConcurrencyException>(() =>
+                service.UpdatePropertyLeases(lease.LeaseId, lease.ConcurrencyControlNumber, lease.PimsPropertyLeases));
+        }
+        #endregion
+
         #endregion
     }
 }

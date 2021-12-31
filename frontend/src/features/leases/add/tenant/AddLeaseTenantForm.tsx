@@ -1,7 +1,13 @@
-import { useFormikContext } from 'formik';
-import { IContactSearchResult, IFormLease } from 'interfaces';
+import { Formik, FormikProps, useFormikContext } from 'formik';
+import {
+  defaultAddFormLease,
+  defaultFormLease,
+  IAddFormLease,
+  IContactSearchResult,
+  IFormLease,
+} from 'interfaces';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { TableSelect } from '../../../../components/common/form/TableSelect';
@@ -14,14 +20,19 @@ export interface IAddLeaseTenantFormProps {
   selectedTenants: IContactSearchResult[];
   setSelectedTenants: (selectedTenants: IContactSearchResult[]) => void;
   onCancel: () => void;
+  onSubmit: (lease: IFormLease) => Promise<void>;
+  initialValues?: IFormLease;
+  formikRef: React.Ref<FormikProps<IFormLease>>;
 }
 
 export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProps> = ({
   selectedTenants,
   setSelectedTenants,
   onCancel,
+  onSubmit,
+  initialValues,
+  formikRef,
 }) => {
-  const formikProps = useFormikContext<IFormLease>();
   return (
     <>
       <Styled.TenantH2>Add tenants to this Lease/License</Styled.TenantH2>
@@ -29,27 +40,43 @@ export const AddLeaseTenantForm: React.FunctionComponent<IAddLeaseTenantFormProp
         If the tenants are not already set up as contacts, you will have to add them first (under{' '}
         {<Link to="/contact/list">Contacts</Link>}) before you can find them here.
       </p>
-      <StyledFormBody>
-        <TableSelect<IContactSearchResult>
-          selectedItems={selectedTenants}
-          columns={columns}
-          field="tenants"
-          addLabel="Add selected tenants"
-          selectedTableHeader={SelectedTableHeader}
-        >
-          <AddLeaseTenantListView
-            setSelectedTenants={setSelectedTenants}
-            selectedTenants={selectedTenants}
-          />
-        </TableSelect>
-        <AddLeaseFormButtons formikProps={formikProps} onCancel={onCancel} />
-      </StyledFormBody>
+      <Formik
+        onSubmit={values => onSubmit(values)}
+        innerRef={formikRef}
+        enableReinitialize
+        initialValues={{ ...defaultFormLease, ...initialValues }}
+      >
+        {formikProps => (
+          <>
+            <Prompt
+              when={formikProps.dirty}
+              message="You have made changes on this form. Do you wish to leave without saving?"
+            />
+            <StyledFormBody>
+              <TableSelect<IContactSearchResult>
+                selectedItems={selectedTenants}
+                columns={columns}
+                field="tenants"
+                addLabel="Add selected tenants"
+                selectedTableHeader={SelectedTableHeader}
+              >
+                <AddLeaseTenantListView
+                  setSelectedTenants={setSelectedTenants}
+                  selectedTenants={selectedTenants}
+                />
+              </TableSelect>
+              <AddLeaseFormButtons formikProps={formikProps} onCancel={onCancel} />
+            </StyledFormBody>
+          </>
+        )}
+      </Formik>
     </>
   );
 };
 
 const StyledFormBody = styled.div`
   margin-top: 3rem;
+  text-align: left;
 `;
 
 export default AddLeaseTenantForm;

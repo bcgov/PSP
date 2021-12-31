@@ -15,23 +15,31 @@ export const useUpdateLease = () => {
   const { putLease } = useApiLeases();
   const dispatch = useDispatch();
 
-  const updateLease = async (lease: ILease, subRoute?: string) => {
+  const updateLease = async (
+    lease: ILease,
+    setUserOverride?: (userOverride?: string) => void,
+    userOverride: boolean = false,
+    subRoute?: string,
+  ) => {
     if (lease.id === undefined) {
       throw Error('Cannot update a lease with no id.');
     }
     try {
       dispatch(showLoading());
-      const response = await putLease(lease, subRoute);
+      const response = await putLease(lease, subRoute, userOverride);
       toast.success('Lease/License saved');
       return response?.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
-        if (axiosError?.response?.status === 400) {
+        if (axiosError?.response?.status === 409) {
+          setUserOverride && setUserOverride(axiosError?.response.data.error);
+        } else if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
         } else {
           toast.error('Save error. Check responses and try again.');
         }
+
         dispatch(
           logError({
             name: 'UpdateLease',

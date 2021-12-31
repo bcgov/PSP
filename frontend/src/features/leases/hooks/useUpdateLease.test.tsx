@@ -53,7 +53,7 @@ describe('useUpdateLease functions', () => {
       mockAxios.onPut(url).reply(200, defaultLeaseWithId);
 
       const { updateLease } = setup();
-      const leaseResponse = await updateLease(defaultLeaseWithId, 'tenants');
+      const leaseResponse = await updateLease(defaultLeaseWithId, undefined, undefined, 'tenants');
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
@@ -65,7 +65,7 @@ describe('useUpdateLease functions', () => {
       mockAxios.onPut(url).reply(400, MOCK.ERROR);
 
       const { updateLease } = setup();
-      await updateLease(defaultLeaseWithId, 'tenants');
+      await updateLease(defaultLeaseWithId, undefined, undefined, 'tenants');
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
       expect(toastErrorSpy).toHaveBeenCalled();

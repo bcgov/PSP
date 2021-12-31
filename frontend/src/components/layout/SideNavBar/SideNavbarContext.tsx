@@ -1,6 +1,6 @@
 import { noop } from 'lodash';
 import * as React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { SidebarContextType } from './SideTray';
 

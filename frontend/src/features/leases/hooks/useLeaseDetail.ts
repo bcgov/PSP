@@ -1,19 +1,20 @@
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILease } from 'interfaces';
-import { useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 import { logError } from 'store/slices/network/networkSlice';
 
+import { LeaseStateContext } from './../context/LeaseContext';
+
 export function useLeaseDetail(leaseId: number) {
-  const [needsUpdate, setRefreshIndex] = useState<number>(0);
-  const [lease, setLease] = useState<ILease>();
+  const { lease, setLease } = useContext(LeaseStateContext);
   const { getLease } = useApiLeases();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getLeaseById = async (id: number) => {
+  const getLeaseById = useMemo(
+    () => async (id: number) => {
       try {
         dispatch(showLoading());
         const { data } = await getLease(id);
@@ -30,20 +31,19 @@ export function useLeaseDetail(leaseId: number) {
       } finally {
         dispatch(hideLoading());
       }
-    };
+    },
+    [dispatch, getLease, setLease],
+  );
 
+  useEffect(() => {
     if (leaseId) {
       getLeaseById(leaseId);
     }
-  }, [getLease, dispatch, leaseId, needsUpdate]);
-
-  const refresh = () => {
-    setRefreshIndex(r => r + 1);
-  };
+  }, [leaseId, getLeaseById]);
 
   return {
     lease,
-    refresh,
     setLease,
+    refresh: () => getLeaseById(leaseId),
   };
 }

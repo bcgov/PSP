@@ -35,6 +35,8 @@ describe('AddLeaseTenantForm component', () => {
           selectedTenants={renderOptions.selectedTenants ?? []}
           setSelectedTenants={renderOptions.setSelectedTenants ?? noop}
           onCancel={renderOptions.onCancel ?? noop}
+          onSubmit={noop as any}
+          formikRef={{} as any}
         />
       </Formik>,
       {
@@ -105,7 +107,7 @@ describe('AddLeaseTenantForm component', () => {
       findFirstRowTableTwo,
       findCell,
     } = await setup({
-      initialValues: { tenants: [] },
+      initialValues: { tenants: [] } as any,
       selectedTenants: [sampleContactResponse[0] as any],
     });
 
@@ -129,7 +131,7 @@ describe('AddLeaseTenantForm component', () => {
     const {
       component: { getByText, getByTestId, findAllByTitle },
     } = await setup({
-      initialValues: { tenants: sampleContactResponse },
+      initialValues: { tenants: sampleContactResponse } as any,
       selectedTenants: [sampleContactResponse[0] as any],
     });
     const addButton = getByText('Add selected tenants');
@@ -150,7 +152,7 @@ describe('AddLeaseTenantForm component', () => {
       findCell,
       component: { findAllByTitle },
     } = await setup({
-      initialValues: { tenants: sampleContactResponse },
+      initialValues: { tenants: sampleContactResponse } as any,
     });
 
     await findAllByTitle('Click to remove');
