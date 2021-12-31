@@ -1,4 +1,4 @@
-import { Input, Select } from 'components/common/form';
+import { Select } from 'components/common/form';
 import { InlineCol } from 'components/common/form/styles';
 import * as API from 'constants/API';
 import { FormikProps } from 'formik';

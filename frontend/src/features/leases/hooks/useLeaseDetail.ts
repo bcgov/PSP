@@ -1,6 +1,5 @@
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { ILease } from 'interfaces';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';

@@ -1,11 +1,5 @@
-import { Formik, FormikProps, useFormikContext } from 'formik';
-import {
-  defaultAddFormLease,
-  defaultFormLease,
-  IAddFormLease,
-  IContactSearchResult,
-  IFormLease,
-} from 'interfaces';
+import { Formik, FormikProps } from 'formik';
+import { defaultFormLease, IContactSearchResult, IFormLease } from 'interfaces';
 import * as React from 'react';
 import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';

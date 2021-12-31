@@ -1,4 +1,3 @@
-import clsx from 'classnames';
 import { ILease } from 'interfaces';
 import * as React from 'react';
 import styled from 'styled-components';

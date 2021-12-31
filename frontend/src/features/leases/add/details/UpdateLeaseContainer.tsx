@@ -19,7 +19,6 @@ interface IAddLeaseParams {
 
 export const UpdateLeaseContainer: React.FunctionComponent = props => {
   const { lease, setLease } = useContext(LeaseStateContext);
-  console.log(lease);
   const [addLeaseParams, setAddLeaseParams] = useState<IAddLeaseParams | undefined>();
   const { updateLease } = useUpdateLease();
   const history = useHistory();
