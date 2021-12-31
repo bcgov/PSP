@@ -14,7 +14,8 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PropertyImprovementTypeId, src => src.PropertyImprovementTypeCode)
                 .Map(dest => dest.PropertyImprovementType, src => src.PropertyImprovementTypeCodeNavigation.Description)
                 .Map(dest => dest.Description, src => src.ImprovementDescription)
-                .Map(dest => dest.StructureSize, src => src.StructureSize);
+                .Map(dest => dest.StructureSize, src => src.StructureSize)
+                .Map(dest => dest.Address, src => src.Address);
         }
     }
 }
