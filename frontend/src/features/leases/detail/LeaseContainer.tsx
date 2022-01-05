@@ -7,8 +7,7 @@ import { getIn } from 'formik';
 import * as React from 'react';
 import { ReactNode } from 'react';
 import { useContext } from 'react';
-import { FaEdit } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import {
