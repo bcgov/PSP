@@ -1,4 +1,3 @@
-import { useKeycloak } from '@react-keycloak/web';
 import { createMemoryHistory } from 'history';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { defaultLease, ILease } from 'interfaces';
