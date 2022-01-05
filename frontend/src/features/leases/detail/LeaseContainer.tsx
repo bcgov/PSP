@@ -93,9 +93,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
         <>
           Improvements
           <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
-            <Link to="?edit=true" className="float-right">
-              <FaEdit />
-            </Link>
+            <LeaseEditButton linkTo="?edit=true" />
           </ProtectedComponent>
         </>
       ),
@@ -142,8 +140,8 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
         >
           <LeaseRouter />
         </LeasePageForm>
+        <LoadingBackdrop show={!!props?.match?.params?.leaseId && !lease} />
       </LeaseLayout>
-      <LoadingBackdrop show={!!props?.match?.params?.leaseId && !lease} />
     </>
   );
 };

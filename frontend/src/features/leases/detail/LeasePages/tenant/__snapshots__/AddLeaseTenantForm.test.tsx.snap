@@ -55,6 +55,15 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
   font-size: 1.4rem;
 }
 
+.c23 .table .tr .td:first-of-type,
+.c23 .table .tr .td:nth-of-type(2),
+.c23 .table .tr .th:first-of-type,
+.c23 .table .tr .th:nth-of-type(2) {
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+}
+
 .c13 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -644,7 +653,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 <div
                   class="tr"
                   role="row"
-                  style="display: flex; flex: 1 0 auto; min-width: 460px;"
+                  style="display: flex; flex: 1 0 auto; min-width: 440px;"
                 >
                   <div
                     class="th"
@@ -670,7 +679,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     class="th"
                     colspan="1"
                     role="columnheader"
-                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                   >
                     <div
                       class="sortable-column"
@@ -1015,7 +1024,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 480px;"
+              style="display: flex; flex: 1 0 auto; min-width: 460px;"
             >
               <div
                 class="th"
@@ -1031,7 +1040,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                 class="th"
                 colspan="1"
                 role="columnheader"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               >
                 <div
                   class="sortable-column"

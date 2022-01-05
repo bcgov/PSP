@@ -15,8 +15,9 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Header: '',
     accessor: 'isDisabled',
     align: 'right',
-    width: 20,
-    maxWidth: 20,
+    width: 10,
+    maxWidth: 10,
+    minWidth: 10,
     Cell: (props: CellProps<IContactSearchResult>) =>
       props.row.original.isDisabled ? <Inactive /> : <Active />,
   },

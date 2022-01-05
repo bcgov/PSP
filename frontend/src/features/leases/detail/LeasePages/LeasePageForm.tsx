@@ -1,13 +1,7 @@
 import { ILeasePage } from 'features/leases';
-import { apiLeaseToAddFormLease, apiLeaseToFormLease } from 'features/leases/leaseUtils';
+import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { Form, Formik } from 'formik';
-import {
-  defaultAddFormLease,
-  defaultFormLease,
-  IAddFormLease,
-  IFormLease,
-  ILease,
-} from 'interfaces';
+import { defaultFormLease, IFormLease, ILease } from 'interfaces';
 import queryString from 'query-string';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -43,14 +37,14 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
         {leasePage.description && <p>{leasePage.description}</p>}
       </StyledLeasePageHeader>
       {!edit ? (
-        <Formik<IFormLease | IAddFormLease>
+        <Formik<IFormLease>
           initialValues={
             leasePage.title !== leasePages.get(LeasePageNames.DETAILS)?.title
               ? ({
                   ...defaultFormLease,
                   ...apiLeaseToFormLease(lease),
                 } as IFormLease)
-              : ({ ...defaultAddFormLease, ...apiLeaseToAddFormLease(lease) } as IAddFormLease)
+              : { ...defaultFormLease, ...apiLeaseToFormLease(lease) }
           }
           enableReinitialize={true}
           validationSchema={leasePage?.validation}

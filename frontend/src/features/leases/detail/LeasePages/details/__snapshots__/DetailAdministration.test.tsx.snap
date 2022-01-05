@@ -108,8 +108,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         <input
           class="form-control"
-          id="input-type.description"
-          name="type.description"
+          id="input-type"
+          name="type"
           value=""
         />
       </div>
@@ -123,8 +123,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         <input
           class="form-control"
-          id="input-paymentReceivableType.description"
-          name="paymentReceivableType.description"
+          id="input-paymentReceivableType"
+          name="paymentReceivableType"
           value=""
         />
       </div>
@@ -138,8 +138,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         <input
           class="form-control"
-          id="input-categoryType.description"
-          name="categoryType.description"
+          id="input-categoryType"
+          name="categoryType"
           value=""
         />
       </div>
@@ -153,8 +153,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         <input
           class="form-control"
-          id="input-purposeType.description"
-          name="purposeType.description"
+          id="input-purposeType"
+          name="purposeType"
           value=""
         />
       </div>
@@ -187,8 +187,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         <input
           class="form-control"
-          id="input-initiatorType.description"
-          name="initiatorType.description"
+          id="input-initiatorType"
+          name="initiatorType"
           value=""
         />
       </div>
@@ -220,8 +220,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         <input
           class="form-control"
-          id="input-responsibilityType.description"
-          name="responsibilityType.description"
+          id="input-responsibilityType"
+          name="responsibilityType"
           value=""
         />
       </div>
@@ -409,8 +409,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-type.description"
-          name="type.description"
+          id="input-type"
+          name="type"
           value=""
         />
       </div>
@@ -424,8 +424,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-paymentReceivableType.description"
-          name="paymentReceivableType.description"
+          id="input-paymentReceivableType"
+          name="paymentReceivableType"
           value=""
         />
       </div>
@@ -439,8 +439,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-categoryType.description"
-          name="categoryType.description"
+          id="input-categoryType"
+          name="categoryType"
           value=""
         />
       </div>
@@ -454,8 +454,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-purposeType.description"
-          name="purposeType.description"
+          id="input-purposeType"
+          name="purposeType"
           value=""
         />
       </div>
@@ -488,8 +488,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-initiatorType.description"
-          name="initiatorType.description"
+          id="input-initiatorType"
+          name="initiatorType"
           value=""
         />
       </div>
@@ -521,8 +521,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-responsibilityType.description"
-          name="responsibilityType.description"
+          id="input-responsibilityType"
+          name="responsibilityType"
           value=""
         />
       </div>

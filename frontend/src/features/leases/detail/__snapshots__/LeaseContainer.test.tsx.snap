@@ -52,6 +52,31 @@ exports[`LeaseContainer component renders as expected 1`] = `
   background-color: white;
 }
 
+.c17 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 .c4 {
   padding: 2rem;
   font-family: 'BCSans-Bold';
@@ -485,47 +510,14 @@ exports[`LeaseContainer component renders as expected 1`] = `
         id="leaseForm"
       />
     </div>
-  </div>
-  .c0 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-@media only screen and (max-width:715px) {
-
-}
-
-@media (max-width:560px) {
-
-}
-
-<div
-    class="c0"
-  >
     <div
-      class="spinner-border text-warning"
-      data-testid="filter-backdrop-loading"
-    />
+      class="c17"
+    >
+      <div
+        class="spinner-border text-warning"
+        data-testid="filter-backdrop-loading"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;
