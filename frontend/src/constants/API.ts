@@ -63,6 +63,7 @@ export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';
 export const LEASE_RESPONSIBILITY_TYPES = 'PimsLeaseResponsibilityType';
 export const INSURANCE_TYPES = 'PimsInsuranceType';
 export const CONTACT_METHOD_TYPES = 'PimsContactMethodType';
+export const PROPERTY_IMPROVEMENT_TYPES = 'PimsPropertyImprovementType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations

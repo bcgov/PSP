@@ -162,6 +162,11 @@ namespace Pims.Dal.Services
         {
             return this.Context.PimsContactMethodTypes.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
         }
+
+        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
+        {
+            return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.PropertyImprovementTypeCode).ToArray();
+        }
         #endregion
     }
 }

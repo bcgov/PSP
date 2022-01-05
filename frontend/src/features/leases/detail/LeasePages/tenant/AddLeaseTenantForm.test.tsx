@@ -140,7 +140,7 @@ describe('AddLeaseTenantForm component', () => {
     await findAllByTitle('Click to remove');
     const dataRows = within(getByTestId('selected-items')).getAllByRole('row');
     expect(dataRows).not.toBeNull();
-    expect(dataRows).toHaveLength(4);
+    expect(dataRows).toHaveLength(3);
   });
 
   it('items can be removed', async () => {
@@ -150,10 +150,14 @@ describe('AddLeaseTenantForm component', () => {
     const {
       findFirstRowTableTwo,
       findCell,
-      component: { findAllByTitle },
+      component: { findAllByTitle, getByText },
     } = await setup({
       initialValues: { tenants: sampleContactResponse } as any,
+      selectedTenants: [sampleContactResponse[0] as any],
     });
+
+    const addButton = getByText('Add selected tenants');
+    userEvent.click(addButton);
 
     await findAllByTitle('Click to remove');
     let dataRow = findFirstRowTableTwo() as HTMLElement;

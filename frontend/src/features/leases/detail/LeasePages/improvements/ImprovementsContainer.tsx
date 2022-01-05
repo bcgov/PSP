@@ -4,20 +4,21 @@ import queryString from 'query-string';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { AddLeaseTenantContainer } from './AddLeaseTenantContainer';
-import { Tenant } from './Tenant';
-interface ITenantContainerProps {}
+import { AddImprovementsContainer } from './AddImprovementsContainer';
+import { Improvements } from './Improvements';
 
-const TenantContainer: React.FunctionComponent<ITenantContainerProps> = props => {
+interface IImprovementsContainerProps {}
+
+export const ImprovementsContainer: React.FunctionComponent<IImprovementsContainerProps> = props => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);
   return !!edit ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
-      <AddLeaseTenantContainer />
+      <AddImprovementsContainer />
     </ProtectedComponent>
   ) : (
-    <Tenant />
+    <Improvements disabled={true} />
   );
 };
 
-export default TenantContainer;
+export default ImprovementsContainer;

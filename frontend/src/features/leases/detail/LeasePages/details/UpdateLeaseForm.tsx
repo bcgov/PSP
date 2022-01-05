@@ -1,15 +1,14 @@
+import AddLeaseFormButtons from 'features/leases/add/AddLeaseFormButtons';
+import { LeaseSchema } from 'features/leases/add/AddLeaseYupSchema';
+import AdministrationSubForm from 'features/leases/add/AdministrationSubForm';
+import LeaseDatesSubForm from 'features/leases/add/LeaseDatesSubForm';
+import PropertyInformationSubForm from 'features/leases/add/PropertyInformationSubForm';
+import ReferenceSubForm from 'features/leases/add/ReferenceSubForm';
+import * as Styled from 'features/leases/add/styles';
 import { Formik, FormikProps } from 'formik';
 import { defaultAddFormLease, IAddFormLease } from 'interfaces';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
-
-import AddLeaseFormButtons from '../AddLeaseFormButtons';
-import { LeaseSchema } from '../AddLeaseYupSchema';
-import AdministrationSubForm from '../AdministrationSubForm';
-import LeaseDatesSubForm from '../LeaseDatesSubForm';
-import PropertyInformationSubForm from '../PropertyInformationSubForm';
-import ReferenceSubForm from '../ReferenceSubForm';
-import * as Styled from '../styles';
 
 interface IUpdateLeaseFormProps {
   onCancel: () => void;

@@ -1,11 +1,11 @@
+import { TableSelect } from 'components/common/form';
+import AddLeaseFormButtons from 'features/leases/add/AddLeaseFormButtons';
 import { Formik, FormikProps } from 'formik';
 import { defaultFormLease, IContactSearchResult, IFormLease } from 'interfaces';
 import * as React from 'react';
 import { Link, Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { TableSelect } from '../../../../components/common/form/TableSelect';
-import AddLeaseFormButtons from '../AddLeaseFormButtons';
 import AddLeaseTenantListView from './AddLeastTenantListView';
 import columns from './columns';
 import SelectedTableHeader from './SelectedTableHeader';

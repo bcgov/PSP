@@ -21,6 +21,7 @@ export const LeaseH2 = styled.h2`
 `;
 
 export const LeaseH3 = styled.h3`
+  font-family: 'BcSans-Bold'
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
@@ -34,6 +35,14 @@ export const LeaseH4 = styled.h4`
   color: white;
   text-align: center;
   padding-bottom: 1rem;
+`;
+
+export const LeaseH5 = styled.h5`
+  font-size: 1.6rem;
+  color: black;
+  text-align: left;
+  padding-top: 1.5rem;
+  font-family: BcSans-Bold;
 `;
 
 export const LeaseHeaderRight = styled.div`
@@ -123,7 +132,8 @@ export const FormGrid = styled.div`
   }
 
   & > .textarea :not(.notes),
-  & > h3 {
+  & > h3,
+  & > h5 {
     grid-column: span 2;
     border-left: none;
   }

@@ -1,6 +1,6 @@
 import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { Claims } from 'constants/claims';
-import { UpdateLeaseContainer } from 'features/leases/add/details/UpdateLeaseContainer';
+import { UpdateLeaseContainer } from 'features/leases/detail/LeasePages/details/UpdateLeaseContainer';
 import queryString from 'query-string';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';

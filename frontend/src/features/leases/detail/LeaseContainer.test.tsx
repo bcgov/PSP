@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { createMemoryHistory } from 'history';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { defaultLease, ILease } from 'interfaces';
@@ -28,6 +29,7 @@ jest.mock('hooks/pims-api/useApiLeases');
 ((useApiLeases as unknown) as jest.Mock<Partial<typeof useApiLeases>>).mockReturnValue({
   getLease,
 });
+jest.mock('@react-keycloak/web');
 
 describe('LeaseContainer component', () => {
   const setup = (renderOptions?: RenderOptions & ILeaseAndLicenseContainerProps) => {
@@ -36,6 +38,7 @@ describe('LeaseContainer component', () => {
       <LeaseContainer match={renderOptions?.match ?? { params: { leaseId: 1 } }} />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
         history,
       },
     );

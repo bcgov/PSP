@@ -66,7 +66,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
-            service.Setup(m => m.Lease.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>())).Returns(lease);
+            service.Setup(m => m.Lease.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyLease>>(), It.IsAny<bool>())).Returns(lease);
 
             // Act
             var result = controller.UpdateLease(mapper.Map<Model.LeaseModel>(lease));
@@ -77,6 +77,36 @@ namespace Pims.Api.Test.Controllers.Lease
             var expectedResult = mapper.Map<Model.LeaseModel>(lease);
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>()), Times.Once());
+        }
+        #endregion
+        #region UpdateImprovements
+        /// <summary>
+        /// Make a successful request.
+        /// </summary>
+        [Fact]
+        public void UpdateImprovements_All_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<PropertyImprovementController>(Permissions.PropertyEdit);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Id = 1 } };
+
+            var service = helper.GetService<Mock<IPimsService>>();
+            var mapper = helper.GetService<IMapper>();
+
+            service.Setup(m => m.Lease.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease);
+
+            // Act
+            var result = controller.UpdateImprovements(lease.Id, mapper.Map<Model.LeaseModel>(lease));
+
+            // Assert
+            var actionResult = Assert.IsType<JsonResult>(result);
+            var actualResult = Assert.IsType<Model.LeaseModel>(actionResult.Value);
+            var expectedResult = mapper.Map<Model.LeaseModel>(lease);
+            Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
+            service.Verify(m => m.Lease.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>()), Times.Once());
         }
         #endregion
         #endregion

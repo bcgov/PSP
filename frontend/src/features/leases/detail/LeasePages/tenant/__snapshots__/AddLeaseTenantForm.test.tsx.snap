@@ -336,6 +336,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
 
 .c0 {
   margin-top: 3rem;
+  text-align: left;
 }
 
 <div
@@ -1001,7 +1002,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
         <p
           class="c22"
         >
-           Tenants associated with this Lease/License
+          0 Tenants associated with this Lease/License
         </p>
         <div
           class="table"

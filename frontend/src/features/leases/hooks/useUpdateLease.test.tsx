@@ -48,9 +48,8 @@ describe('useUpdateLease functions', () => {
     jest.restoreAllMocks();
   });
   describe('updateLease', () => {
-    const url = `/leases/1/tenants`;
     it('Request successful, dispatches success with correct response', async () => {
-      mockAxios.onPut(url).reply(200, defaultLeaseWithId);
+      mockAxios.onPut().reply(200, defaultLeaseWithId);
 
       const { updateLease } = setup();
       const leaseResponse = await updateLease(defaultLeaseWithId, undefined, undefined, 'tenants');
@@ -62,7 +61,7 @@ describe('useUpdateLease functions', () => {
     });
 
     it('400 Request failure, dispatches error with correct response', async () => {
-      mockAxios.onPut(url).reply(400, MOCK.ERROR);
+      mockAxios.onPut().reply(400, MOCK.ERROR);
 
       const { updateLease } = setup();
       await updateLease(defaultLeaseWithId, undefined, undefined, 'tenants');

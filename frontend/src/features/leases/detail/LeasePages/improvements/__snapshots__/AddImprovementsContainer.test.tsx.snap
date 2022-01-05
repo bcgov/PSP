@@ -1,0 +1,364 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Update lease container component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c2 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c7 {
+  width: 100%;
+  padding: 0.5rem 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 1rem;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0rem;
+  background-color: white;
+}
+
+.c7 .btn {
+  min-height: 3rem;
+}
+
+.c3 {
+  font-family: 'BcSans-Bold' font-size:2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+.c5 {
+  font-size: 1.6rem;
+  color: black;
+  text-align: left;
+  padding-top: 1.5rem;
+  font-family: BcSans-Bold;
+}
+
+.c6 {
+  font-family: 'BCSans';
+}
+
+.c4 {
+  display: grid;
+  grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
+  grid-auto-flow: row;
+}
+
+.c4 .form-label,
+.c4 .form-group {
+  margin: 0 0.5rem 0 0;
+}
+
+.c4 > .input,
+.c4 > .notes {
+  grid-column: controls;
+  grid-row: auto;
+  border-left: 1px solid #666666;
+}
+
+.c4 .form-control:not(.description,.notes) {
+  font-family: 'BCSans-Bold';
+}
+
+.c4 > label,
+.c4 > fieldset {
+  grid-column: labels;
+  grid-row: auto;
+}
+
+.c4 > .textarea :not(.notes),
+.c4 > h3,
+.c4 > h5 {
+  grid-column: span 2;
+  border-left: none;
+}
+
+.c4 .form-label {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  gap: 2.5rem;
+}
+
+.c1 .formgrid .textarea:not(.notes) {
+  grid-column: span 2;
+  border-left: 0;
+}
+
+.c0 {
+  margin-left: 1rem;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group input {
+  border-left: 0;
+  width: 70%;
+}
+
+.c0 .form-group textarea {
+  width: 85%;
+  resize: none;
+}
+
+.c0 .improvements .formgrid {
+  row-gap: 0.5rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c0 .improvements .formgrid > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c0 .improvements .formgrid > .input {
+  border-left: 0;
+}
+
+.c0 .improvements .formgrid .form-control {
+  font-family: 'BcSans';
+}
+
+.c0 .improvements .formgrid h5 {
+  padding-top: 0;
+}
+
+<form
+    class="c0"
+  >
+    <div
+      class="c1 improvements"
+    >
+      <div
+        class="c2"
+      >
+        <h3
+          class="c3"
+        >
+          Commercial
+        </h3>
+        <div
+          class="c4 formgrid"
+        >
+          <label
+            class="form-label"
+          >
+            Address:
+          </label>
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-improvements.0.address"
+              name="improvements.0.address"
+              value=""
+            />
+          </div>
+          <label
+            class="form-label"
+          >
+            Structure size:
+          </label>
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-improvements.0.structureSize"
+              name="improvements.0.structureSize"
+              value=""
+            />
+          </div>
+          <h5
+            class="c5"
+          >
+            Description:
+          </h5>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.0.description"
+              name="improvements.0.description"
+              rows="5"
+            />
+          </div>
+        </div>
+        <h3
+          class="c3"
+        >
+          Other Improvements
+        </h3>
+        <div
+          class="c4 formgrid"
+        >
+          <label
+            class="form-label"
+          >
+            Address:
+          </label>
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-improvements.1.address"
+              name="improvements.1.address"
+              value=""
+            />
+          </div>
+          <label
+            class="form-label"
+          >
+            Structure size:
+          </label>
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-improvements.1.structureSize"
+              name="improvements.1.structureSize"
+              value=""
+            />
+          </div>
+          <h5
+            class="c5"
+          >
+            Description:
+          </h5>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.1.description"
+              name="improvements.1.description"
+              rows="5"
+            />
+          </div>
+        </div>
+        <h3
+          class="c3"
+        >
+          Residential
+        </h3>
+        <div
+          class="c4 formgrid"
+        >
+          <label
+            class="form-label"
+          >
+            Address:
+          </label>
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-improvements.2.address"
+              name="improvements.2.address"
+              value=""
+            />
+          </div>
+          <label
+            class="form-label"
+          >
+            Structure size:
+          </label>
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-improvements.2.structureSize"
+              name="improvements.2.structureSize"
+              value=""
+            />
+          </div>
+          <h5
+            class="c5"
+          >
+            Description:
+          </h5>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.2.description"
+              name="improvements.2.description"
+              rows="5"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c7"
+    >
+      <button
+        class="Button btn btn-secondary"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Cancel
+        </div>
+      </button>
+      <button
+        class="Button Button--disabled btn btn-primary"
+        disabled=""
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Save
+        </div>
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

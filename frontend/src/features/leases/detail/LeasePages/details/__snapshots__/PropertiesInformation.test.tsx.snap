@@ -9,7 +9,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
     class="Toastify"
   />
   .c0 {
-  font-size: 2rem;
+  font-family: 'BcSans-Bold' font-size:2rem;
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
@@ -35,7 +35,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
 }
 
 .c1 .form-control:not(.description,.notes) {
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 .c1 > label,
@@ -45,7 +45,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
 }
 
 .c1 > .textarea :not(.notes),
-.c1 > h3 {
+.c1 > h3,
+.c1 > h5 {
   grid-column: span 2;
   border-left: none;
 }

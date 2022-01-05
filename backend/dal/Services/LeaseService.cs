@@ -249,6 +249,25 @@ namespace Pims.Dal.Services
         }
 
         /// <summary>
+        /// update the tenants on the lease
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="pimsPropertyImprovements"></param>
+        /// <returns></returns>
+        public PimsLease UpdateLeaseImprovements(long leaseId, long rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsPropertyImprovements).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            if (existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+
+            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
+            this.Context.CommitTransaction();
+
+            return Get(existingLease.LeaseId);
+        }
+
+        /// <summary>
         /// update the properties on the lease
         /// </summary>
         /// <param name="leaseId"></param>

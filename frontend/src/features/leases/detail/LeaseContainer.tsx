@@ -1,11 +1,14 @@
+import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { SidebarStateContext } from 'components/layout/SideNavBar/SideNavbarContext';
 import { SidebarContextType } from 'components/layout/SideNavBar/SideTray';
 import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBackdrop';
+import { Claims } from 'constants/claims';
 import { getIn } from 'formik';
 import * as React from 'react';
 import { ReactNode } from 'react';
 import { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { FaEdit } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import {
@@ -22,7 +25,7 @@ import { LeaseSchema } from '../add/AddLeaseYupSchema';
 import LeaseEditButton from './LeaseEditButton';
 import Deposits from './LeasePages/deposits/Deposits';
 import DetailContainer from './LeasePages/details/DetailContainer';
-import Improvements from './LeasePages/improvements/Improvements';
+import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
 import Surplus from './LeasePages/surplus/Surplus';
 import TenantContainer from './LeasePages/tenant/TenantContainer';
@@ -73,7 +76,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       title: 'Tenant',
       header: (
         <>
-          Tenant&nbsp;
+          Tenant
           <LeaseEditButton linkTo="?edit=true" />
         </>
       ),
@@ -81,7 +84,23 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     },
   ],
   [LeasePageNames.PAYMENTS, { component: undefined, title: 'Payments' }],
-  [LeasePageNames.IMPROVEMENTS, { component: Improvements, title: 'Improvements' }],
+  [
+    LeasePageNames.IMPROVEMENTS,
+    {
+      component: ImprovementsContainer,
+      title: 'Improvements',
+      header: (
+        <>
+          Improvements
+          <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
+            <Link to="?edit=true" className="float-right">
+              <FaEdit />
+            </Link>
+          </ProtectedComponent>
+        </>
+      ),
+    },
+  ],
   [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: Deposits, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: undefined, title: 'Physical Security' }],
