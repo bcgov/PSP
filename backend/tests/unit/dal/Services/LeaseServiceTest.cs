@@ -305,7 +305,7 @@ namespace Pims.Dal.Test.Services
             updatedLease.PimsPropertyLeases.Should().Contain(addProperty);
         }
 
-        [Fact(Skip = "this is corrected in a separate PR")]
+        [Fact]
         public void Update_Lease_Properties_AddPropertyInLease()
         {
             // Arrange
@@ -319,10 +319,11 @@ namespace Pims.Dal.Test.Services
             var service = helper.CreateService<LeaseService>(user);
             helper.SaveChanges();
             var leaseTwo = context.CreateLease(2, addProperty: false);
-            propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
+            propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, Lease = leaseTwo, PropertyId = propertyOne.PropertyId } };
+            helper.SaveChanges();
 
             // Act
-            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne };
+            var addProperty = new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, Lease = lease, PropertyId = propertyOne.PropertyId, Property = propertyOne };
             lease.PimsPropertyLeases.Add(addProperty);
 
             // Assert
@@ -379,7 +380,7 @@ namespace Pims.Dal.Test.Services
                 service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases));
         }
 
-        [Fact(Skip = "this is corrected in a separate PR")]
+        [Fact]
         public void Update_Lease_Properties_Update()
         {
             // Arrange
@@ -396,13 +397,16 @@ namespace Pims.Dal.Test.Services
 
             // Act
             var updateProperty = EntityHelper.CreateProperty(context, 2);
+            helper.SaveChanges();
             var propertyToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
             propertyToUpdate.PropertyId = updateProperty.PropertyId;
+            propertyToUpdate.Property = updateProperty;
+            context.ChangeTracker.Clear();
             var updatedLease = service.UpdatePropertyLeases(1, 2, lease.PimsPropertyLeases);
 
             // Assert
             Assert.Equal(1, updatedLease.PimsPropertyLeases.Count);
-            updatedLease.PimsPropertyLeases.Should().Contain(propertyToUpdate);
+            updatedLease.PimsPropertyLeases.FirstOrDefault().PropertyId.Should().Be(updateProperty.PropertyId);
         }
 
         [Fact]
