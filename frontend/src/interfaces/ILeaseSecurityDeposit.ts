@@ -8,7 +8,6 @@ export interface ILeaseSecurityDeposit {
   securityDepositType: string;
   description: string;
   amountPaid: number;
-  totalAmount: number;
   depositDate: Date | string | Moment;
   annualInterestRate: number;
 }

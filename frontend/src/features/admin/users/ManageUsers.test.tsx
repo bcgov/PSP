@@ -43,17 +43,17 @@ const lCodes = {
       name: 'organizationVal',
       code: '',
       isDisabled: false,
-      type: API.ORGANIZATION_CODE_SET_NAME,
+      type: API.ORGANIZATION_TYPES,
     },
     {
       id: 2,
       name: 'disabledOrganization',
       code: '',
       isDisabled: true,
-      type: API.ORGANIZATION_CODE_SET_NAME,
+      type: API.ORGANIZATION_TYPES,
     },
-    { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_TYPES },
+    { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_TYPES },
   ] as ILookupCode[],
 };
 const mockAxios = new MockAdapter(axios);
@@ -72,7 +72,7 @@ const getStore = (includeDate?: boolean) =>
         items: [
           {
             id: 1,
-            businessIdentifierValue: 'testername1',
+            businessIdentifier: 'testername1',
             firstName: 'testUserFirst1',
             surname: 'testUserLast1',
             isDisabled: false,
@@ -83,7 +83,7 @@ const getStore = (includeDate?: boolean) =>
           },
           {
             id: 2,
-            businessIdentifierValue: 'testername2',
+            businessIdentifier: 'testername2',
             firstName: 'testUser',
             surname: 'testUser',
             isDisabled: true,

@@ -11,7 +11,8 @@ namespace Pims.Dal.Services
     {
         int Count();
         IEnumerable<PimsLease> Get(LeaseFilter filter);
-        PimsLease Get(int id);
+        PimsLease Get(long id);
         Paged<PimsLease> GetPage(LeaseFilter filter);
+        PimsLease Add(PimsLease lease, bool userOverride = false);
     }
 }

@@ -27,3 +27,18 @@ export const phoneFormatter = (phoneNumber?: string) => {
   }
   return '';
 };
+
+export function stringToNull(value: any) {
+  return emptyStringToNull(value, value);
+}
+
+export function emptyStringToNull(value: any, originalValue: any) {
+  if (typeof originalValue === 'string' && originalValue === '') {
+    return undefined;
+  }
+  return value;
+}
+
+export function stringToTypeCode(value?: string) {
+  return !!value ? { id: value } : undefined;
+}

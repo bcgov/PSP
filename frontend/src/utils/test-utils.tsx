@@ -63,7 +63,6 @@ export const fillInput = async (
 
   // abort early if no input field found
   if (!input) return { input };
-
   if (type === 'input') {
     fireEvent.change(input, {
       target: {
@@ -228,5 +227,49 @@ function render(
   return rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });
 }
 
+async function renderAsync(
+  ui: React.ReactElement,
+  options: Omit<RenderOptions, 'wrapper'> = {},
+): Promise<RenderResult> {
+  const {
+    store,
+    history,
+    useMockAuthentication = false,
+    organizations,
+    claims,
+    roles,
+    ...renderOptions
+  } = options;
+
+  // mock authentication state prior to rendering. Check first that keycloak has been mocked!
+  if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
+    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
+      mockKeycloak({
+        claims: claims ?? [],
+        roles: roles ?? [],
+        organizations: organizations ?? [1],
+        authenticated: true,
+      });
+    }
+  }
+
+  function AllTheProviders({ children }: PropsWithChildren) {
+    return (
+      <TestCommonWrapper store={store} history={history}>
+        <ToastContainer
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+        />
+        <FilterProvider>{children}</FilterProvider>
+      </TestCommonWrapper>
+    );
+  }
+  return await rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });
+}
+
 // override render method
-export { render };
+export { render, renderAsync };

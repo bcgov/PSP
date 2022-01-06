@@ -12,7 +12,8 @@
   lightVariantColor: $light-variant-color;
   darkVariantColor: $dark-variant-color;
   textColor: $text-color;
-  formBackground: $form-background-color;
+  formBackgroundColor: $form-background-color;
+  primaryBackgroundColor: $primary-background-color;
   dropdownBackgroundColor: $dropdown-background-color;
   accentColor: $accent-color;
   lightAccentColor: $light-accent-color;
@@ -26,6 +27,7 @@
   slideOutBlue: $slide-out-blue;
   disabledColor: $disabled-color;
   filterBoxColor: $filter-box-color;
+  draftColor: $draft-color;
 
   // table ui
   tableHoverColor: $table-hover-color;

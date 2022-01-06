@@ -52,7 +52,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <returns>An array of leases matching the filter</returns>
         [HttpGet]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
@@ -70,7 +70,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <param name="filter"></param>
         /// <returns>An array of leases matching the filter</returns>
         [HttpPost("filter")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]

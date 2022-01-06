@@ -73,8 +73,8 @@ namespace Pims.Api.Test.Controllers.Contact
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<SModel.ContactModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
+            var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }
@@ -102,8 +102,8 @@ namespace Pims.Api.Test.Controllers.Contact
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<Models.PageModel<SModel.ContactModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
+            var actualResult = Assert.IsType<Models.PageModel<SModel.ContactSummaryModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<Models.PageModel<SModel.ContactSummaryModel>>(new Paged<Entity.PimsContactMgrVw>(contacts));
             Assert.Equal(expectedResult, actualResult, new DeepPropertyCompare());
             service.Verify(m => m.Contact.GetPage(It.IsAny<ContactFilter>()), Times.Once());
         }

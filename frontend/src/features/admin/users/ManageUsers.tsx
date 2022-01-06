@@ -45,8 +45,8 @@ const downloadUsers = (filter: IPaginateParams) =>
 export const ManageUsers = () => {
   const dispatch = useDispatch();
   const { getByType } = useLookupCodeHelpers();
-  const organizations = useMemo(() => getByType(API.ORGANIZATION_CODE_SET_NAME), [getByType]);
-  const roles = useMemo(() => getByType(API.ROLE_CODE_SET_NAME), [getByType]);
+  const organizations = useMemo(() => getByType(API.ORGANIZATION_TYPES), [getByType]);
+  const roles = useMemo(() => getByType(API.ROLE_TYPES), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
 
   const pagedUsers = useAppSelector(state => {
@@ -95,7 +95,7 @@ export const ManageUsers = () => {
       id: u.id,
       keycloakUserId: u.keycloakUserId,
       email: u.email,
-      businessIdentifierValue: u.businessIdentifierValue,
+      businessIdentifierValue: u.businessIdentifier,
       firstName: u.firstName,
       surname: u.surname,
       isDisabled: u.isDisabled,

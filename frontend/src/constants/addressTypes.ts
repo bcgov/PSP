@@ -1,7 +1,7 @@
 export enum AddressTypes {
-  Mailing = 'MAILADDR',
-  ProofOfInsurance = 'INSURE',
-  RentalPayment = 'RENTAL',
-  PropertyNotification = 'PROPNOTIFY',
-  Physical = 'PHYSADDR',
+  Mailing = 'MAILING',
+  Billing = 'BILLING',
+  Residential = 'RESIDNT',
+  Unknown = 'UNKNOWN',
+  EtlUnknown = 'ETLUNKN',
 }
