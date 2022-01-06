@@ -1,9 +1,9 @@
+using System.Linq;
 using Mapster;
+using Pims.Api.Helpers.Extensions;
 using Pims.Dal.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
-using System.Linq;
-using Pims.Api.Helpers.Extensions;
 namespace Pims.Api.Areas.Lease.Mapping.Lease
 {
     public class LeaseMap : IRegister
@@ -45,9 +45,10 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Improvements, src => src.GetImprovements())
                 .Map(dest => dest.SecurityDeposits, src => src.PimsSecurityDeposits)
                 .Map(dest => dest.SecurityDepositReturns, src => src.PimsSecurityDepositReturns)
-                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants);
+                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
+                .Map(dest => dest.ReturnNotes, src => src.ReturnNotes);
 
-            config.NewConfig< Model.LeaseModel, Entity.PimsLease>()
+            config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.LeaseAmount, src => src.Amount)
@@ -57,6 +58,11 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
                 .Map(dest => dest.MotiContact, src => src.MotiName)
                 .Map(dest => dest.MotiRegion, src => src.MotiRegion)
+                .Map(dest => dest.LeaseCategoryOtherDesc, src => src.OtherCategoryType)
+                .Map(dest => dest.OtherLeaseProgramType, src => src.OtherProgramType)
+                .Map(dest => dest.OtherLeasePurposeType, src => src.OtherPurposeType)
+                .Map(dest => dest.LeasePurposeOtherDesc, src => src.OtherPurposeType)
+                .Map(dest => dest.OtherLeaseLicenseType, src => src.OtherType)
                 .Map(dest => dest.OrigExpiryDate, src => src.ExpiryDate)
                 .Map(dest => dest.OrigStartDate, src => src.StartDate)
                 .Map(dest => dest.LeaseProgramTypeCode, src => src.ProgramType.GetTypeId())
@@ -66,7 +72,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.LeaseLicenseTypeCode, src => src.Type.GetTypeId())
                 .Map(dest => dest.LeaseInitiatorTypeCode, src => src.InitiatorType.GetTypeId())
                 .Map(dest => dest.LeasePurposeTypeCode, src => src.PurposeType.GetTypeId())
-                .Map(dest => dest.LeaseResponsibilityTypeCode, src=>src.ResponsibilityType.GetTypeId())
+                .Map(dest => dest.LeaseResponsibilityTypeCode, src => src.ResponsibilityType.GetTypeId())
                 .Map(dest => dest.LeaseStatusTypeCode, src => src.StatusType.GetTypeId())
                 .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate)
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
