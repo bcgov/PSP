@@ -1,13 +1,13 @@
 import { Button } from 'components/common/form';
 import { FieldArray } from 'formik';
-import { ICreateContactMethod } from 'interfaces/ICreateContact';
+import { ICreateContactMethodForm } from 'interfaces/ICreateContact';
 import React from 'react';
 
 import { ContactPhone } from './ContactPhone';
 
 export interface IContactPhoneList {
   field: string;
-  contactPhones: ICreateContactMethod[];
+  contactPhones: ICreateContactMethodForm[];
 }
 
 /**

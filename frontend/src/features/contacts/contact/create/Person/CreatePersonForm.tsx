@@ -2,12 +2,7 @@ import { AsyncTypeahead, Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { Stack } from 'components/common/Stack/Stack';
-import {
-  Address,
-  ContactEmailList,
-  ContactPhoneList,
-  useAddressHelpers,
-} from 'features/contacts/contact/create';
+import { Address, ContactEmailList, ContactPhoneList } from 'features/contacts/contact/create';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
 import { Formik } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
@@ -29,35 +24,31 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
   const { postPerson } = useApiContacts();
   const { goBack } = useHistory();
 
-  // by default, set country to CANADA for addresses
-  const { defaultCountryId } = useAddressHelpers();
-  const initialValues = applyDefaultCountry(defaultCreatePerson, defaultCountryId);
-
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
-  const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<IAutocompletePrediction[]>([]);
+  const [isTypeaheadLoading, setIsTypeaheadLoading] = useState(false);
+  const [matchedOrgs, setMatchedOrgs] = useState<IAutocompletePrediction[]>([]);
 
   // fetch autocomplete suggestions from server
-  const handleSearch = async (query: string) => {
+  const handleTypeaheadSearch = async (query: string) => {
     try {
-      setIsLoading(true);
+      setIsTypeaheadLoading(true);
       const { data } = await getOrganizationPredictions(query);
-      setOptions(data.predictions);
-      setIsLoading(false);
+      setMatchedOrgs(data.predictions);
+      setIsTypeaheadLoading(false);
     } catch (e) {
-      setOptions([]);
+      setMatchedOrgs([]);
       toast.error('Failed to get autocomplete results for supplied organization', {
         autoClose: 7000,
       });
     } finally {
-      setIsLoading(false);
+      setIsTypeaheadLoading(false);
     }
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={defaultCreatePerson}
       enableReinitialize
       onSubmit={async values => {
         try {
@@ -105,9 +96,9 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
                         field="organizationId"
                         label="Link to an existing organization"
                         labelKey="text"
-                        isLoading={isLoading}
-                        options={options}
-                        onSearch={handleSearch}
+                        isLoading={isTypeaheadLoading}
+                        options={matchedOrgs}
+                        onSearch={handleTypeaheadSearch}
                       />
                     </Col>
                   </Row>
@@ -164,17 +155,5 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     </Formik>
   );
 };
-
-function applyDefaultCountry(
-  formValues: ICreatePersonForm,
-  countryId: string = '',
-): ICreatePersonForm {
-  return {
-    ...formValues,
-    mailingAddress: { ...formValues.mailingAddress, countryId },
-    propertyAddress: { ...formValues.propertyAddress, countryId },
-    billingAddress: { ...formValues.billingAddress, countryId },
-  };
-}
 
 export default CreatePersonForm;

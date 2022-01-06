@@ -1,6 +1,8 @@
 import { AddressTypes } from 'constants/addressTypes';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
+import ITypeCode from './ITypeCode';
+
 export interface ICreatePerson {
   id?: number;
   surname: string;
@@ -33,7 +35,7 @@ export interface ICreateContactAddress {
 export interface ICreateContactMethod {
   id?: number;
   rowVersion?: number;
-  contactMethodTypeCode: string;
+  contactMethodTypeCode: ITypeCode<string>;
   value: string;
 }
 
@@ -42,13 +44,16 @@ export interface ICreatePersonForm
     ICreatePerson,
     {
       organizationId: NumberFieldValue;
-      emailContactMethods: ICreateContactMethod[];
-      phoneContactMethods: ICreateContactMethod[];
+      emailContactMethods: ICreateContactMethodForm[];
+      phoneContactMethods: ICreateContactMethodForm[];
       mailingAddress: ICreateContactAddressForm;
       propertyAddress: ICreateContactAddressForm;
       billingAddress: ICreateContactAddressForm;
     }
   > {}
+
+export interface ICreateContactMethodForm
+  extends ExtendOverride<ICreateContactMethod, { contactMethodTypeCode: string }> {}
 
 export interface ICreateContactAddressForm
   extends ExtendOverride<

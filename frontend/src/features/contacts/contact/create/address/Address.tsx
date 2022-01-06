@@ -26,7 +26,6 @@ export interface IAddressProps {
  */
 export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) => {
   const {
-    defaultCountryId,
     countries,
     provinces,
     formLabels,
@@ -34,17 +33,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
     setSelectedCountryId,
   } = useAddressHelpers();
 
-  const { values, setFieldValue } = useFormikContext<ICreatePersonForm>();
-  const countryId = getIn(values, withNameSpace(namespace, 'countryId'));
-
-  // set country to CANADA if none selected
-  useEffect(() => {
-    if (countryId === '') {
-      setFieldValue(withNameSpace(namespace, 'countryId'), defaultCountryId ?? '');
-      setFieldValue(withNameSpace(namespace, 'provinceId'), '');
-      setSelectedCountryId(defaultCountryId ?? '');
-    }
-  }, [countryId, defaultCountryId, namespace, setFieldValue, setSelectedCountryId]);
+  const { setFieldValue } = useFormikContext<ICreatePersonForm>();
 
   // clear associated fields (province, other country name) whenever country value is changed
   const onCountryChanged = useCallback(
@@ -107,6 +96,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
             field={withNameSpace(namespace, 'countryId')}
             options={countries}
             onChange={onCountryChanged}
+            placeholder="Select..."
           />
         </Col>
       </Row>

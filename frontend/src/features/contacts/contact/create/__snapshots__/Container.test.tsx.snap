@@ -8,62 +8,7 @@ exports[`ContactContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c1 {
-  grid-area: breadcrumb;
-}
-
-.c1 .breadcrumb-item:not(:first-child)::before {
-  content: '>';
-  width: 0px;
-  margin-right: 1rem;
-}
-
-.c1 .breadcrumb li a {
-  max-height: 24px;
-}
-
-.c1 ol {
-  background-color: white;
-}
-
-.c2 {
-  text-align: left;
-}
-
-.c8 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c4 {
-  gap: 5rem;
-  padding: 0.5rem 3rem;
-}
-
-.c4 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 2rem;
-}
-
-.c7 {
+  .c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -123,6 +68,10 @@ exports[`ContactContainer component renders as expected 1`] = `
   justify-content: flex-end;
 }
 
+.c2 {
+  text-align: left;
+}
+
 .c9 {
   font-size: 2rem;
   font-weight: 700;
@@ -131,7 +80,7 @@ exports[`ContactContainer component renders as expected 1`] = `
   line-height: 2.9rem;
 }
 
-.c10 {
+.c11 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -195,17 +144,68 @@ exports[`ContactContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c11 {
+.c10 {
   color: #494949;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c11:before {
+.c10:before {
   content: '* ';
   color: #606060;
   font-weight: 700;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  grid-area: breadcrumb;
+}
+
+.c1 .breadcrumb-item:not(:first-child)::before {
+  content: '>';
+  width: 0px;
+  margin-right: 1rem;
+}
+
+.c1 .breadcrumb li a {
+  max-height: 24px;
+}
+
+.c1 ol {
+  background-color: white;
+}
+
+.c8 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c4 {
+  gap: 5rem;
+  padding: 0.5rem 3rem;
+}
+
+.c4 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
 }
 
 .c0 {
@@ -408,11 +408,71 @@ exports[`ContactContainer component renders as expected 1`] = `
             >
               Organization
             </h2>
-            <h3
-              class="c10"
+            <div
+              class="row"
             >
-              Link to an existing organization
-            </h3>
+              <div
+                class="col-md-7"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="form-label"
+                    for="typeahead-organizationId"
+                  >
+                    Link to an existing organization
+                  </label>
+                  <div
+                    class="rbt"
+                    style="outline: none; position: relative;"
+                    tabindex="-1"
+                  >
+                    <div
+                      style="display: flex; flex: 1; height: 100%; position: relative;"
+                    >
+                      <input
+                        aria-autocomplete="both"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        autocomplete="off"
+                        class="rbt-input-main form-control rbt-input"
+                        role="combobox"
+                        type="text"
+                        value=""
+                      />
+                      <input
+                        aria-hidden="true"
+                        class="rbt-input-hint"
+                        readonly=""
+                        style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: solid solid solid solid; border-width: 2px 2px 2px 2px; font-size: 1.6rem; line-height: normal; padding: 1px 1px 1px 1px;"
+                        tabindex="-1"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="rbt-aux"
+                    >
+                      <svg
+                        color="#bcbec5"
+                        fill="currentColor"
+                        height="2.5rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        style="color: rgb(188, 190, 197);"
+                        viewBox="0 0 512 512"
+                        width="2.5rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="c8"
@@ -423,7 +483,7 @@ exports[`ContactContainer component renders as expected 1`] = `
               Contact info
             </h2>
             <p
-              class="c11"
+              class="c10"
             >
               Contacts must have a minimum of one method of contact to be saved. 
               <br />
@@ -442,14 +502,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-contactEmail.0.value"
+                    for="input-emailContactMethods.0.value"
                   >
                     Email 
                   </label>
                   <input
                     class="form-control"
-                    id="input-contactEmail.0.value"
-                    name="contactEmail.0.value"
+                    id="input-emailContactMethods.0.value"
+                    name="emailContactMethods.0.value"
                     value=""
                   />
                 </div>
@@ -462,14 +522,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-contactEmail.0.contactMethodTypeCode"
+                    for="input-emailContactMethods.0.contactMethodTypeCode"
                   >
                     Email type 
                   </label>
                   <select
                     class="form-select form-control"
-                    id="input-contactEmail.0.contactMethodTypeCode"
-                    name="contactEmail.0.contactMethodTypeCode"
+                    id="input-emailContactMethods.0.contactMethodTypeCode"
+                    name="emailContactMethods.0.contactMethodTypeCode"
                   >
                     <option
                       value=""
@@ -506,14 +566,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-contactPhone.0.value"
+                    for="input-phoneContactMethods.0.value"
                   >
                     Phone 
                   </label>
                   <input
                     class="form-control"
-                    id="input-contactPhone.0.value"
-                    name="contactPhone.0.value"
+                    id="input-phoneContactMethods.0.value"
+                    name="phoneContactMethods.0.value"
                     value=""
                   />
                 </div>
@@ -526,14 +586,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-contactPhone.0.contactMethodTypeCode"
+                    for="input-phoneContactMethods.0.contactMethodTypeCode"
                   >
                     Phone type 
                   </label>
                   <select
                     class="form-select form-control"
-                    id="input-contactPhone.0.contactMethodTypeCode"
-                    name="contactPhone.0.contactMethodTypeCode"
+                    id="input-phoneContactMethods.0.contactMethodTypeCode"
+                    name="phoneContactMethods.0.contactMethodTypeCode"
                   >
                     <option
                       value=""
@@ -555,7 +615,7 @@ exports[`ContactContainer component renders as expected 1`] = `
               <div
                 class="Button__value"
               >
-                + Add another email address
+                + Add another phone number
               </div>
             </button>
           </div>
@@ -568,7 +628,7 @@ exports[`ContactContainer component renders as expected 1`] = `
               Address
             </h2>
             <h3
-              class="c10"
+              class="c11"
             >
               Mailing Address
             </h3>
@@ -678,14 +738,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-municipality"
+                    for="input-mailingAddress.municipality"
                   >
                     City 
                   </label>
                   <input
                     class="form-control"
-                    id="input-municipality"
-                    name="municipality"
+                    id="input-mailingAddress.municipality"
+                    name="mailingAddress.municipality"
                     value=""
                   />
                 </div>
@@ -715,84 +775,6 @@ exports[`ContactContainer component renders as expected 1`] = `
                       value=""
                     >
                       Select province
-                    </option>
-                    <option
-                      class="option"
-                      value="1"
-                    >
-                      British Columbia
-                    </option>
-                    <option
-                      class="option"
-                      value="2"
-                    >
-                      Alberta
-                    </option>
-                    <option
-                      class="option"
-                      value="3"
-                    >
-                      Manitoba
-                    </option>
-                    <option
-                      class="option"
-                      value="4"
-                    >
-                      Newfoundland
-                    </option>
-                    <option
-                      class="option"
-                      value="5"
-                    >
-                      New Brunswick
-                    </option>
-                    <option
-                      class="option"
-                      value="6"
-                    >
-                      Nova Scotia
-                    </option>
-                    <option
-                      class="option"
-                      value="7"
-                    >
-                      North West Territories
-                    </option>
-                    <option
-                      class="option"
-                      value="8"
-                    >
-                      Nunavut
-                    </option>
-                    <option
-                      class="option"
-                      value="9"
-                    >
-                      Ontario
-                    </option>
-                    <option
-                      class="option"
-                      value="10"
-                    >
-                      Prince Edward Island
-                    </option>
-                    <option
-                      class="option"
-                      value="11"
-                    >
-                      Quebec
-                    </option>
-                    <option
-                      class="option"
-                      value="12"
-                    >
-                      Saskatchewan
-                    </option>
-                    <option
-                      class="option"
-                      value="13"
-                    >
-                      Yukon Territory
                     </option>
                   </select>
                 </div>
@@ -827,7 +809,7 @@ exports[`ContactContainer component renders as expected 1`] = `
             class="c8"
           >
             <h3
-              class="c10"
+              class="c11"
             >
               Property Address
             </h3>
@@ -937,14 +919,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-municipality"
+                    for="input-propertyAddress.municipality"
                   >
                     City 
                   </label>
                   <input
                     class="form-control"
-                    id="input-municipality"
-                    name="municipality"
+                    id="input-propertyAddress.municipality"
+                    name="propertyAddress.municipality"
                     value=""
                   />
                 </div>
@@ -974,84 +956,6 @@ exports[`ContactContainer component renders as expected 1`] = `
                       value=""
                     >
                       Select province
-                    </option>
-                    <option
-                      class="option"
-                      value="1"
-                    >
-                      British Columbia
-                    </option>
-                    <option
-                      class="option"
-                      value="2"
-                    >
-                      Alberta
-                    </option>
-                    <option
-                      class="option"
-                      value="3"
-                    >
-                      Manitoba
-                    </option>
-                    <option
-                      class="option"
-                      value="4"
-                    >
-                      Newfoundland
-                    </option>
-                    <option
-                      class="option"
-                      value="5"
-                    >
-                      New Brunswick
-                    </option>
-                    <option
-                      class="option"
-                      value="6"
-                    >
-                      Nova Scotia
-                    </option>
-                    <option
-                      class="option"
-                      value="7"
-                    >
-                      North West Territories
-                    </option>
-                    <option
-                      class="option"
-                      value="8"
-                    >
-                      Nunavut
-                    </option>
-                    <option
-                      class="option"
-                      value="9"
-                    >
-                      Ontario
-                    </option>
-                    <option
-                      class="option"
-                      value="10"
-                    >
-                      Prince Edward Island
-                    </option>
-                    <option
-                      class="option"
-                      value="11"
-                    >
-                      Quebec
-                    </option>
-                    <option
-                      class="option"
-                      value="12"
-                    >
-                      Saskatchewan
-                    </option>
-                    <option
-                      class="option"
-                      value="13"
-                    >
-                      Yukon Territory
                     </option>
                   </select>
                 </div>
@@ -1086,7 +990,7 @@ exports[`ContactContainer component renders as expected 1`] = `
             class="c8"
           >
             <h3
-              class="c10"
+              class="c11"
             >
               Billing Address
             </h3>
@@ -1196,14 +1100,14 @@ exports[`ContactContainer component renders as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="input-municipality"
+                    for="input-billingAddress.municipality"
                   >
                     City 
                   </label>
                   <input
                     class="form-control"
-                    id="input-municipality"
-                    name="municipality"
+                    id="input-billingAddress.municipality"
+                    name="billingAddress.municipality"
                     value=""
                   />
                 </div>
@@ -1233,84 +1137,6 @@ exports[`ContactContainer component renders as expected 1`] = `
                       value=""
                     >
                       Select province
-                    </option>
-                    <option
-                      class="option"
-                      value="1"
-                    >
-                      British Columbia
-                    </option>
-                    <option
-                      class="option"
-                      value="2"
-                    >
-                      Alberta
-                    </option>
-                    <option
-                      class="option"
-                      value="3"
-                    >
-                      Manitoba
-                    </option>
-                    <option
-                      class="option"
-                      value="4"
-                    >
-                      Newfoundland
-                    </option>
-                    <option
-                      class="option"
-                      value="5"
-                    >
-                      New Brunswick
-                    </option>
-                    <option
-                      class="option"
-                      value="6"
-                    >
-                      Nova Scotia
-                    </option>
-                    <option
-                      class="option"
-                      value="7"
-                    >
-                      North West Territories
-                    </option>
-                    <option
-                      class="option"
-                      value="8"
-                    >
-                      Nunavut
-                    </option>
-                    <option
-                      class="option"
-                      value="9"
-                    >
-                      Ontario
-                    </option>
-                    <option
-                      class="option"
-                      value="10"
-                    >
-                      Prince Edward Island
-                    </option>
-                    <option
-                      class="option"
-                      value="11"
-                    >
-                      Quebec
-                    </option>
-                    <option
-                      class="option"
-                      value="12"
-                    >
-                      Saskatchewan
-                    </option>
-                    <option
-                      class="option"
-                      value="13"
-                    >
-                      Yukon Territory
                     </option>
                   </select>
                 </div>
