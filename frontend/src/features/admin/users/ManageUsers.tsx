@@ -95,7 +95,7 @@ export const ManageUsers = () => {
       id: u.id,
       keycloakUserId: u.keycloakUserId,
       email: u.email,
-      businessIdentifierValue: u.businessIdentifierValue,
+      businessIdentifierValue: u.businessIdentifier,
       firstName: u.firstName,
       surname: u.surname,
       isDisabled: u.isDisabled,

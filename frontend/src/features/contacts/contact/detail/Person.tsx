@@ -37,8 +37,8 @@ interface AddressField {
 const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   const phoneTypes: Dictionary<string> = {};
   phoneTypes[ContactMethodTypes.WorkMobil] = 'Mobile';
-  phoneTypes[ContactMethodTypes.WorkPhone] = 'Home';
-  phoneTypes[ContactMethodTypes.PersPhone] = 'Work';
+  phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
+  phoneTypes[ContactMethodTypes.PersPhone] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
@@ -109,13 +109,16 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col md="auto">
             {person.organizations &&
               person.organizations.map((organization: IContactOrganization, index: number) => (
-                <Link
-                  to={'/contact/O' + organization.id}
-                  data-testid="contact-person-organization"
-                  key={'person-org-' + index}
-                >
-                  {organization.name}
-                </Link>
+                <>
+                  <Link
+                    to={'/contact/O' + organization.id}
+                    data-testid="contact-person-organization"
+                    key={'person-org-' + index}
+                  >
+                    {organization.name}
+                  </Link>
+                  <br />
+                </>
               ))}
           </Col>
         </Styled.RowAligned>
