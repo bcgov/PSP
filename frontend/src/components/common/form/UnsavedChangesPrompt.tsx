@@ -1,5 +1,4 @@
 import { useFormikContext } from 'formik';
-import { isEqual } from 'lodash';
 import React, { useEffect } from 'react';
 import { Prompt } from 'react-router-dom';
 
@@ -18,7 +17,7 @@ export const UnsavedChangesPrompt: React.FC<IUnsavedChangesPrompt> = ({
   message = DEFAULT_PROMPT_MESSAGE,
   resetFormUponConfirmation = true,
 }) => {
-  const { values, initialValues, dirty, resetForm } = useFormikContext();
+  const { dirty, resetForm } = useFormikContext();
 
   // if we navigate away from this page successfully, reset the form.
   useEffect(() => {
@@ -29,5 +28,5 @@ export const UnsavedChangesPrompt: React.FC<IUnsavedChangesPrompt> = ({
     };
   }, [resetForm, resetFormUponConfirmation]);
 
-  return <Prompt when={dirty && !isEqual(initialValues, values)} message={message} />;
+  return <Prompt when={dirty} message={message} />;
 };

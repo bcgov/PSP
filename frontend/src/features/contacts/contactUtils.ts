@@ -65,5 +65,6 @@ function addressFormToApiAddress(formAddress: ICreateContactAddressForm): ICreat
     ...formAddress,
     countryId: parseInt(formAddress.countryId.toString()) || 0,
     provinceId: parseInt(formAddress.provinceId.toString()) || 0,
-  };
+    addressTypeId: stringToTypeCode(formAddress.addressTypeId),
+  } as ICreateContactAddress;
 }

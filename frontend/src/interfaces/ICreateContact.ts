@@ -19,7 +19,7 @@ export interface ICreatePerson {
 export interface ICreateContactAddress {
   id?: number;
   rowVersion?: number;
-  addressTypeId: string;
+  addressTypeId: ITypeCode<string>;
   streetAddress1: string;
   streetAddress2?: string;
   streetAddress3?: string;
@@ -58,7 +58,7 @@ export interface ICreateContactMethodForm
 export interface ICreateContactAddressForm
   extends ExtendOverride<
     ICreateContactAddress,
-    { countryId: NumberFieldValue; provinceId: NumberFieldValue }
+    { countryId: NumberFieldValue; provinceId: NumberFieldValue; addressTypeId: string }
   > {}
 
 export const defaultCreatePerson: ICreatePersonForm = {

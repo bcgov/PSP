@@ -8,10 +8,10 @@ import { Formik } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
+import { defaultCreatePerson } from 'interfaces/ICreateContact';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { PadBox } from '../styles';
@@ -22,7 +22,7 @@ export interface ICreatePersonFormProps {}
 
 export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
   const { postPerson } = useApiContacts();
-  const { goBack } = useHistory();
+  const history = useHistory();
 
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
@@ -50,13 +50,15 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     <Formik
       initialValues={defaultCreatePerson}
       enableReinitialize
-      onSubmit={async values => {
+      onSubmit={async (values, { resetForm }) => {
         try {
           await postPerson(personCreateFormToApiPerson(values));
+          resetForm({ values });
           toast.info('Contact added successfully');
-          goBack();
+          history.push(`/contact/list`);
         } catch (error) {
           toast.error('Failed to add contact', { autoClose: 7000 });
+          history.push(`/contact/list`);
         }
       }}
     >
