@@ -4,5 +4,5 @@ export interface ILeaseImprovement {
   propertyImprovementType: string;
   description: string;
   structureSize: string;
-  unit: string;
+  address: string;
 }
