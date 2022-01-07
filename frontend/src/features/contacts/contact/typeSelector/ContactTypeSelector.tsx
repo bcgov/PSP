@@ -41,6 +41,8 @@ const StyledInlineFlex = styled(InlineFlexDiv)`
   gap: 5rem;
   background-color: ${props => props.theme.css.filterBackgroundColor};
   padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+  margin-right: 2.5rem;
   .form-check {
     display: flex;
     align-items: center;

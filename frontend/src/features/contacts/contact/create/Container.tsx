@@ -38,7 +38,7 @@ const ContactLayout = styled.div`
   height: 100%;
   width: 50%;
   min-width: 30rem;
-  overflow: auto;
+  overflow: hidden;
   padding: 1rem;
   gap: 1.6rem;
 `;

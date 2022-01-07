@@ -9,6 +9,8 @@ export const CreatePersonLayout = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: auto;
+  padding-right: 1rem;
 `;
 
 interface ISummaryText {
@@ -37,4 +39,10 @@ export const RemoveButton = styled(Button).attrs({ variant: 'link' })`
       }
     }
   }
+`;
+
+export const ErrorMessage = styled(Stack).attrs({ $direction: 'row' })`
+  color: #d8292f;
+  font-size: 1.6rem;
+  width: auto;
 `;

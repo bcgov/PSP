@@ -63,8 +63,8 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
       // combine yup schema validation with custom rules
       const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
-        errors.needsEmailOrPhoneOrAddress =
-          'The contact should have an Email, a Phone or an Address';
+        errors.needsContactMethod =
+          'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
       }
       return errors;
     } catch (err) {
@@ -139,7 +139,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
                   <Styled.SummaryText
                     $direction="row"
                     alignItems="flex-start"
-                    variant={getIn(errors, 'needsEmailOrPhoneOrAddress') ? 'error' : 'text'}
+                    variant={getIn(errors, 'needsContactMethod') ? 'error' : 'text'}
                     gap="0.5rem"
                   >
                     <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
@@ -180,12 +180,12 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
                 </FormSection>
 
                 <PadBox className="w-100">
-                  <Stack $direction="row" justifyContent="flex-end" gap={2}>
+                  <Stack $direction="row" justifyContent="flex-end" alignItems="stretch" gap={2}>
                     {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
-                      <div className="mr-3 invalid-feedback w-auto" style={{ fontSize: '100%' }}>
-                        <AiOutlineExclamationCircle size="2rem" className="mr-2" />
-                        Please complete required fields
-                      </div>
+                      <Styled.ErrorMessage gap="0.5rem" className="mr-3" alignItems="center">
+                        <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
+                        <span>Please complete required fields</span>
+                      </Styled.ErrorMessage>
                     ) : null}
                     <Button variant="secondary">Cancel</Button>
                     <Button type="submit">Save</Button>

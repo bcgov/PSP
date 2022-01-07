@@ -81,5 +81,5 @@ export const SubtleText = styled.span`
 `;
 
 export const PadBox = styled.div`
-  padding: 2rem 0;
+  padding: 1rem 4rem;
 `;
