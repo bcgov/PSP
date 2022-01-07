@@ -1,9 +1,9 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Pims.Dal
 {
@@ -26,6 +26,7 @@ namespace Pims.Dal
             services.AddScoped<Services.IProvinceService, Services.ProvinceService>();
             services.AddScoped<Services.ILookupService, Services.LookupService>();
             services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
+            services.AddScoped<Services.IPersonService, Services.PersonService>();
             services.AddScoped<Services.IUserService, Services.UserService>();
             services.AddScoped<Services.IRoleService, Services.RoleService>();
             services.AddScoped<Services.IClaimService, Services.ClaimService>();

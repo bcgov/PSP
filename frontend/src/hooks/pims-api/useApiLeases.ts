@@ -1,4 +1,4 @@
-import { ILeaseFilter } from 'features/leases/interfaces';
+import { ILeaseFilter } from 'features/leases';
 import { ILease, ILeaseSearchResult, IPagedItems } from 'interfaces';
 import queryString from 'query-string';
 import React from 'react';
@@ -19,6 +19,18 @@ export const useApiLeases = () => {
           `/leases/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getLease: (id: number) => api.get<ILease>(`/leases/${id}`),
+      postLease: (lease: ILease, userOverride: boolean = false) =>
+        api.post<ILease>(`/leases?userOverride=${userOverride}`, lease),
+      exportLeases: (filter: IPaginateLeases, outputFormat: 'csv' | 'excel' = 'excel') =>
+        api.get(
+          `/reports/leases?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
     }),
     [api],
   );

@@ -37,8 +37,8 @@ const EditUserPage = (props: IEditUserPageProps) => {
   }, [userId, fetchUserDetail]);
 
   const { getByType } = useLookupCodeHelpers();
-  const organizations = getByType(API.ORGANIZATION_CODE_SET_NAME);
-  const roles = getByType(API.ROLE_CODE_SET_NAME);
+  const organizations = getByType(API.ORGANIZATION_TYPES);
+  const roles = getByType(API.ROLE_TYPES);
 
   const user = useAppSelector(state => state.users.userDetail);
   const mapLookupCode = (code: ILookupCode): SelectOption => ({
@@ -96,7 +96,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    businessIdentifierValue: user.businessIdentifierValue ?? '',
+    businessIdentifierValue: user.businessIdentifier ?? '',
     firstName: user.firstName ?? '',
     surname: user.surname ?? '',
     email: user.email ?? '',
@@ -140,7 +140,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
               await updateUser({
                 id: user.id,
                 keycloakUserId: user.keycloakUserId,
-                businessIdentifierValue: user.businessIdentifierValue,
+                businessIdentifier: user.businessIdentifier,
                 displayName: values.displayName,
                 firstName: values.firstName,
                 surname: values.surname,

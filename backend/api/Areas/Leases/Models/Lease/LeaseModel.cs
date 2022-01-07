@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
@@ -37,10 +38,21 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string MotiName { get; set; }
 
         /// <summary>
+        /// get/set - The string value of the moti region, user assigned.
+        /// </summary>
+        /// <value></value>
+        public string MotiRegion { get; set; }
+
+        /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
         /// <value></value>
         public string ProgramName { get; set; }
+
+        /// <summary>
+        /// get/set - The location of documents related to this lease.
+        /// </summary>
+        public string DocumentationReference { get; set; }
 
         /// <summary>
         /// get/set - The lease notes.
@@ -75,6 +87,31 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// </summary>
         /// <value></value>
         public string PsFileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease category type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherCategoryType { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease program type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherProgramType { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease purpose type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherPurposeType { get; set; }
+
+        /// <summary>
+        /// get/set - The text description if the lease type is set to "other"
+        /// </summary>
+        /// <value></value>
+        public string OtherType { get; set; }
+
 
         /// <summary>
         /// get/set - The calculated expiry date of the lease
@@ -136,6 +173,16 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public TypeModel<string> PurposeType { get; set; }
 
         /// <summary>
+        /// get/set - The status of this lease within PIMS, Draft by default.
+        /// </summary>
+        public TypeModel<string> StatusType { get; set; }
+
+        /// <summary>
+        /// get/set - The status of this lease within PIMS, Draft by default.
+        /// </summary>
+        public TypeModel<string> ProgramType { get; set; }
+
+        /// <summary>
         /// get/set - The date this entity assumed responsibility for this lease.
         /// </summary>
         public DateTime? ResponsibilityEffectiveDate { get; set; }
@@ -184,6 +231,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - A collection of Security Deposit Returns associated to this Lease
         /// </summary>
         public IEnumerable<SecurityDepositReturnModel> SecurityDepositReturns { get; set; }
+
+        /// <summary>
+        /// get/set - Notes accompanying Lease.
+        /// </summary>
+        public string ReturnNotes { get; set; }
 
         /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).

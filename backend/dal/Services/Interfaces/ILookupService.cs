@@ -21,5 +21,11 @@ namespace Pims.Dal.Services
         IEnumerable<PimsRole> GetRoles();
         IEnumerable<PimsLeasePayRvblType> GetPaymentReceivableTypes();
         IEnumerable<PimsLeaseProgramType> GetLeaseProgramTypes();
+        IEnumerable<PimsLeaseStatusType> GetLeaseStatusTypes();
+        IEnumerable<PimsLeaseLicenseType> GetLeaseTypes();
+        IEnumerable<PimsLeaseCategoryType> GetLeaseCategoryTypes();
+        IEnumerable<PimsLeasePurposeType> GetLeasePurposeTypes();
+        IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes();
+        IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes();
     }
 }

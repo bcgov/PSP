@@ -35,9 +35,7 @@ const PropertyListView: React.FC = () => {
   const { getByType } = useLookupCodeHelpers();
   const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
 
-  const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_CODE_SET_NAME), [
-    getByType,
-  ]);
+  const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 

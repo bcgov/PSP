@@ -25,7 +25,7 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
     insuranceInPlace: insurance.insuranceInPlace ? 'Yes' : 'No',
     limit: formatMoney(insurance.coverageLimit),
     assessmentDate: prettyFormatDate(insurance.riskAssessmentCompletedDate) || '',
-    payee: insurance.insurancePayeeType.description,
+    payee: insurance.insurancePayeeType.description || '',
     insuredValue: formatMoney(insurance.insuredValue),
     startDate: prettyFormatDate(insurance.startDate),
     expiryDate: prettyFormatDate(insurance.expiryDate),

@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event';
+import { Claims } from 'constants/index';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import { ILeaseSearchResult } from 'interfaces';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
@@ -11,6 +12,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
 };
 
+jest.mock('@react-keycloak/web');
 jest.mock('hooks/pims-api/useApiLeases');
 const getLeases = jest.fn();
 (useApiLeases as jest.Mock).mockReturnValue({
@@ -19,7 +21,7 @@ const getLeases = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<LeaseListView />, { ...renderOptions });
+  const utils = render(<LeaseListView />, { ...renderOptions, claims: [Claims.LEASE_VIEW] });
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
 };

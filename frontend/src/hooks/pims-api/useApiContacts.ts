@@ -1,8 +1,9 @@
 import { IPagedItems } from 'interfaces';
+import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IContactFilter } from './../../features/contact/interfaces';
+import { IContactFilter } from '../../features/contacts/interfaces';
 import { IContactSearchResult } from './../../interfaces/IContactSearchResult';
 import { IPaginateRequest, useAxiosApi } from '.';
 
@@ -19,6 +20,7 @@ export const useApiContacts = () => {
         api.get<IPagedItems<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
+      getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
     }),
     [api],
   );

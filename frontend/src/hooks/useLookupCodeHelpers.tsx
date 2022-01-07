@@ -45,7 +45,7 @@ export function useLookupCodeHelpers() {
   const getPropertyClassificationTypeOptions = (
     filter?: (value: SelectOption, index: number, array: SelectOption[]) => unknown,
   ) => {
-    const classifications = getByType(API.PROPERTY_CLASSIFICATION_CODE_SET_NAME);
+    const classifications = getByType(API.PROPERTY_CLASSIFICATION_TYPES);
     return filter
       ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c)).filter(filter)
       : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
