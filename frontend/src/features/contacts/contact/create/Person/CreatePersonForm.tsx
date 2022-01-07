@@ -4,19 +4,21 @@ import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPromp
 import { Stack } from 'components/common/Stack/Stack';
 import { Address, ContactEmailList, ContactPhoneList } from 'features/contacts/contact/create';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
-import { Formik } from 'formik';
+import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson } from 'interfaces/ICreateContact';
+import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { PadBox } from '../styles';
 import CommentNotes from './comments/CommentNotes';
 import * as Styled from './styles';
+import { hasAddress, hasEmail, hasPhoneNumber, validationSchema } from './validation';
 
 export interface ICreatePersonFormProps {}
 
@@ -46,13 +48,30 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     }
   };
 
+  const handleValidate = (values: ICreatePersonForm) => {
+    try {
+      validateYupSchema(values, validationSchema, true);
+      // combine yup schema validation with custom rules
+      const errors = {} as any;
+      if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
+        errors.needsEmailOrPhoneOrAddress =
+          'The contact should have an Email, a Phone or an Address';
+      }
+      return errors;
+    } catch (err) {
+      return yupToFormErrors(err);
+    }
+  };
+
   return (
     <Formik
       initialValues={defaultCreatePerson}
       enableReinitialize
-      onSubmit={async (values, { resetForm }) => {
+      validate={handleValidate}
+      onSubmit={async (values, { resetForm, setSubmitting }) => {
         try {
           await postPerson(personCreateFormToApiPerson(values));
+          setSubmitting(false);
           resetForm({ values });
           toast.info('Contact added successfully');
           history.push(`/contact/list`);
@@ -62,7 +81,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
         }
       }}
     >
-      {({ values }) => (
+      {({ values, errors }) => (
         <>
           {/* Show confirmation dialog when user tries to navigate away and form has unsaved changes */}
           <UnsavedChangesPrompt />
@@ -142,6 +161,13 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
                 <FormSection>
                   <CommentNotes />
                 </FormSection>
+
+                {(errors as any).needsEmailOrPhoneOrAddress && (
+                  <div className="invalid-feedback font-weight-bold">
+                    <AiOutlineExclamationCircle size="2rem" />
+                    <span className="ml-2">{(errors as any).needsEmailOrPhoneOrAddress}</span>
+                  </div>
+                )}
 
                 <PadBox className="w-100">
                   <Stack $direction="row" justifyContent="flex-end" gap={2}>
