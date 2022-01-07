@@ -10,7 +10,7 @@
       DTS:ConnectionString="Data Source=127.0.0.1,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Auto Translate=False;">
       <DTS:Password
         DTS:Name="Password"
-        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA1mUTV2pQrESdnKDHC1rXUwAAAAACAAAAAAAQZgAAAAEAACAAAAAMA82v9InIu7CFl57154NpPKgAlFCADT1WjaqQKOgtlwAAAAAOgAAAAAIAACAAAADRNnOodK1/tG6Mxb5hZvyOWh4cLEmcIWBsRD+sRTd7RpAAAACAL3HQWqXVC/WAnn4J8dgdjXrnveUJmO0yp0/QHnbd3rF9cKh/xSnjaU87Sjv2pZNwAZ96L7f707oIZqtwb9Hc45LfJnzfOBp0O6SUV3gxw5LHeOYO2l3LHQ7z1lmvUXWX+m5XZFp0/0j4LTmb96Ipp2yEUDA3CZ3wu1aHiidwLsnTC/pfzPeFAtcq3mEd5INAAAAAcOKtiDsmASCbwNoWq4CreDubHvH9FaNSrJUoqcPZF8PKm4s9BwOvJX98lkH41xWX77YAV5nq+2y/j4MWY2eLPg==</DTS:Password>
+        Sensitive="1"></DTS:Password>
     </DTS:ConnectionManager>
   </DTS:ObjectData>
 </DTS:ConnectionManager>
