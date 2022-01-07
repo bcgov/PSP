@@ -32,9 +32,9 @@ export const Improvement: React.FunctionComponent<IImprovementProps> = ({
     <>
       <Styled.LeaseH3>{title}</Styled.LeaseH3>
       <Styled.FormGrid>
-        <Form.Label>Unit #</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'unit')} />
-        <Form.Label>House size:</Form.Label>
+        <Form.Label>Address:</Form.Label>
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'address')} />
+        <Form.Label>Structure size:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'structureSize')} />
         <Styled.FormDescriptionLabel>Description</Styled.FormDescriptionLabel>
         <Styled.FormDescriptionBody
