@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>FilterSearchButton</name>
+   <name>labelLeaseProgramName</name>
    <tag></tag>
-   <elementGuidId>d6a73b63-2a7f-4bc0-af68-8a0efe90140b</elementGuidId>
+   <elementGuidId>e74b4227-aac7-4e95-a379-a4ca266cf9e1</elementGuidId>
    <selectorCollection>
-      <entry>
-         <key>XPATH</key>
-         <value>//button[@id='search-button']</value>
-      </entry>
       <entry>
          <key>BASIC</key>
          <value></value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='input-programName']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
