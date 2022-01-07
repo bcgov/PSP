@@ -49,12 +49,12 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.SecurityDeposits, src => src.PimsSecurityDeposits)
                 .Map(dest => dest.SecurityDepositReturns, src => src.PimsSecurityDepositReturns)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
-                .Map(dest => dest.ReturnNotes, src => src.ReturnNotes);
+                .Map(dest => dest.ReturnNotes, src => src.ReturnNotes)
                 .Map(dest => dest.IsExpired, src => src.IsExpired)
                 .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
-                .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
+                .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense);
 
             config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
