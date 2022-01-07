@@ -2,6 +2,7 @@ import { AsyncTypeahead, Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { Stack } from 'components/common/Stack/Stack';
+import { CountryCodes } from 'constants/countryCodes';
 import { Address, ContactEmailList, ContactPhoneList } from 'features/contacts/contact/create';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
 import { Formik, getIn, validateYupSchema, yupToFormErrors } from 'formik';
@@ -9,12 +10,13 @@ import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import useAddressHelpers from '../address/useAddressHelpers';
 import { PadBox } from '../styles';
 import CommentNotes from './comments/CommentNotes';
 import * as Styled from './styles';
@@ -48,9 +50,16 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     }
   };
 
+  // validation needs to be adjusted when country == OTHER
+  const { countries } = useAddressHelpers();
+  const otherCountryId = useMemo(
+    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
+    [countries],
+  );
+
   const handleValidate = (values: ICreatePersonForm) => {
     try {
-      validateYupSchema(values, validationSchema, true);
+      validateYupSchema(values, validationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
       const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {

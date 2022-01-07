@@ -34,8 +34,10 @@ export const validationSchema = Yup.object().shape({
       is: (streetAddress1: string) => !!streetAddress1,
       then: Yup.string().required('Country is required'),
     }),
-    provinceId: Yup.string().when('streetAddress1', {
-      is: (streetAddress1: string) => !!streetAddress1,
+    // $otherCountry - you can prefix properties with $ to specify a property that is dependent on context passed in by validate()
+    provinceId: Yup.string().when(['streetAddress1', 'countryId', '$otherCountry'], {
+      is: (streetAddress1: string, countryId: string, otherCountry: string) =>
+        !!streetAddress1 && countryId !== otherCountry,
       then: Yup.string().required('Province/State is required'),
     }),
   }),
