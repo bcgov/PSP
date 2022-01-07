@@ -4,7 +4,7 @@ import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPromp
 import { Stack } from 'components/common/Stack/Stack';
 import { Address, ContactEmailList, ContactPhoneList } from 'features/contacts/contact/create';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
-import { Formik, validateYupSchema, yupToFormErrors } from 'formik';
+import { Formik, getIn, validateYupSchema, yupToFormErrors } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
@@ -81,7 +81,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
         }
       }}
     >
-      {({ values, errors }) => (
+      {({ values, errors, touched }) => (
         <>
           {/* Show confirmation dialog when user tries to navigate away and form has unsaved changes */}
           <UnsavedChangesPrompt />
@@ -127,9 +127,17 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
 
                 <FormSection>
                   <Styled.H2>Contact info</Styled.H2>
-                  <Styled.SummaryText>
-                    Contacts must have a minimum of one method of contact to be saved. <br />
-                    <em>(ex: email,phone or address)</em>
+                  <Styled.SummaryText
+                    $direction="row"
+                    alignItems="flex-start"
+                    variant={getIn(errors, 'needsEmailOrPhoneOrAddress') ? 'error' : 'text'}
+                    gap="0.5rem"
+                  >
+                    <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
+                    <p>
+                      Contacts must have a minimum of one method of contact to be saved. <br />
+                      <em>(ex: email,phone or address)</em>
+                    </p>
                   </Styled.SummaryText>
                   <ContactEmailList
                     field="emailContactMethods"
@@ -162,15 +170,14 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
                   <CommentNotes />
                 </FormSection>
 
-                {(errors as any).needsEmailOrPhoneOrAddress && (
-                  <div className="invalid-feedback font-weight-bold">
-                    <AiOutlineExclamationCircle size="2rem" />
-                    <span className="ml-2">{(errors as any).needsEmailOrPhoneOrAddress}</span>
-                  </div>
-                )}
-
                 <PadBox className="w-100">
                   <Stack $direction="row" justifyContent="flex-end" gap={2}>
+                    {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
+                      <div className="mr-3 invalid-feedback w-auto" style={{ fontSize: '100%' }}>
+                        <AiOutlineExclamationCircle size="2rem" className="mr-2" />
+                        Please complete required fields
+                      </div>
+                    ) : null}
                     <Button variant="secondary">Cancel</Button>
                     <Button type="submit">Save</Button>
                   </Stack>

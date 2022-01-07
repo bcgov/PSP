@@ -1,4 +1,5 @@
 import { Button } from 'components/common/form/Button';
+import { Stack } from 'components/common/Stack/Stack';
 import styled from 'styled-components';
 
 // common ui styling
@@ -10,15 +11,14 @@ export const CreatePersonLayout = styled.div`
   width: 100%;
 `;
 
-export const SummaryText = styled.p`
-  color: #494949;
+interface ISummaryText {
+  variant?: string;
+}
+
+export const SummaryText = styled(Stack)<ISummaryText>`
+  color: ${props => (props.variant === 'error' ? '#d8292f' : '#494949')};
   font-size: 1.6rem;
   text-decoration: none;
-  &:before {
-    content: '* ';
-    color: #606060;
-    font-weight: 700;
-  }
 `;
 
 export const RemoveButton = styled(Button).attrs({ variant: 'link' })`

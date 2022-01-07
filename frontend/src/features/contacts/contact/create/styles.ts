@@ -24,6 +24,16 @@ export const H3 = styled.h3`
 // TODO: This is common form look-and-feel. Should be abstracted for all forms
 export const Form = styled(FormikForm)`
   &#createForm {
+    .form-control {
+      &.is-invalid {
+        border: 2px solid #d8292f;
+      }
+    }
+
+    .invalid-feedback {
+      color: #d8292f;
+    }
+
     .form-group {
       label {
         font-size: 1.6rem;
