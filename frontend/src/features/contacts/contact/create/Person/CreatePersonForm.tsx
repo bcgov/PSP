@@ -1,11 +1,19 @@
 import { AsyncTypeahead, Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
+import GenericModal from 'components/common/GenericModal';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
 import { Address, ContactEmailList, ContactPhoneList } from 'features/contacts/contact/create';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
-import { Formik, getIn, validateYupSchema, yupToFormErrors } from 'formik';
+import {
+  Formik,
+  FormikHelpers,
+  FormikProps,
+  getIn,
+  validateYupSchema,
+  yupToFormErrors,
+} from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
@@ -24,9 +32,77 @@ import { hasAddress, hasEmail, hasPhoneNumber, validationSchema } from './valida
 
 export interface ICreatePersonFormProps {}
 
+/**
+ * Formik-connected form to Create Individual Contacts
+ */
 export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
-  const { postPerson } = useApiContacts();
   const history = useHistory();
+  const { postPerson } = useApiContacts();
+
+  // validation needs to be adjusted when country == OTHER
+  const { countries } = useAddressHelpers();
+  const otherCountryId = useMemo(
+    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
+    [countries],
+  );
+
+  const onValidate = (values: ICreatePersonForm) => {
+    try {
+      validateYupSchema(values, validationSchema, true, { otherCountry: otherCountryId });
+      // combine yup schema validation with custom rules
+      const errors = {} as any;
+      if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
+        errors.needsContactMethod =
+          'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
+      }
+      return errors;
+    } catch (err) {
+      return yupToFormErrors(err);
+    }
+  };
+
+  const onSubmit = async (
+    values: ICreatePersonForm,
+    { resetForm, setSubmitting }: FormikHelpers<ICreatePersonForm>,
+  ) => {
+    try {
+      await postPerson(personCreateFormToApiPerson(values));
+      setSubmitting(false);
+      resetForm({ values });
+      toast.info('Contact added successfully');
+      history.push('/contact/list');
+    } catch (error) {
+      toast.error('Failed to add contact', { autoClose: 7000 });
+      history.push('/contact/list');
+    }
+  };
+
+  return (
+    <Formik
+      component={CreatePersonComponent}
+      initialValues={defaultCreatePerson}
+      enableReinitialize
+      validate={onValidate}
+      onSubmit={onSubmit}
+    />
+  );
+};
+
+export default CreatePersonForm;
+
+/**
+ * Sub-component that is wrapped by Formik
+ */
+const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
+  values,
+  errors,
+  touched,
+  dirty,
+  resetForm,
+  initialValues,
+}) => {
+  const history = useHistory();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
@@ -50,154 +126,136 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     }
   };
 
-  // validation needs to be adjusted when country == OTHER
-  const { countries } = useAddressHelpers();
-  const otherCountryId = useMemo(
-    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
-    [countries],
-  );
-
-  const handleValidate = (values: ICreatePersonForm) => {
-    try {
-      validateYupSchema(values, validationSchema, true, { otherCountry: otherCountryId });
-      // combine yup schema validation with custom rules
-      const errors = {} as any;
-      if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
-        errors.needsContactMethod =
-          'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
-      }
-      return errors;
-    } catch (err) {
-      return yupToFormErrors(err);
+  const onCancel = () => {
+    if (dirty) {
+      setShowConfirmation(true);
+    } else {
+      history.push('/contact/list');
     }
   };
 
   return (
-    <Formik
-      initialValues={defaultCreatePerson}
-      enableReinitialize
-      validate={handleValidate}
-      onSubmit={async (values, { resetForm, setSubmitting }) => {
-        try {
-          await postPerson(personCreateFormToApiPerson(values));
-          setSubmitting(false);
-          resetForm({ values });
-          toast.info('Contact added successfully');
-          history.push(`/contact/list`);
-        } catch (error) {
-          toast.error('Failed to add contact', { autoClose: 7000 });
-          history.push(`/contact/list`);
-        }
-      }}
-    >
-      {({ values, errors, touched }) => (
-        <>
-          {/* Show confirmation dialog when user tries to navigate away and form has unsaved changes */}
-          <UnsavedChangesPrompt />
+    <>
+      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
+      <UnsavedChangesPrompt />
 
-          <Styled.Form id="createForm">
-            <Styled.CreatePersonLayout>
-              <Stack gap={1.6}>
-                <FormSection>
-                  <Row>
-                    <Col md={4}>
-                      <Input field="firstName" label="First Name" required />
-                    </Col>
-                    <Col md={3}>
-                      <Input field="middleNames" label="Middle" />
-                    </Col>
-                    <Col>
-                      <Input field="surname" label="Last Name" required />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={7}>
-                      <Input field="preferredName" label="Preferred Name" />
-                    </Col>
-                    <Col></Col>
-                  </Row>
-                </FormSection>
+      {/* Confirmation popup when Cancel button is clicked */}
+      <GenericModal
+        title="Unsaved Changes"
+        message="Confirm cancel adding this contact? Changes will not be saved."
+        cancelButtonText="No"
+        okButtonText="Confirm"
+        display={showConfirmation}
+        handleOk={() => {
+          resetForm({ values: initialValues });
+          // need a timeout here to give the form time to reset before navigating away
+          // or else the router guard prompt will also be shown
+          setTimeout(() => history.push('/contact/list'), 100);
+        }}
+        handleCancel={() => setShowConfirmation(false)}
+      />
 
-                <FormSection>
-                  <Styled.H2>Organization</Styled.H2>
-                  <Row>
-                    <Col md={7}>
-                      <AsyncTypeahead
-                        field="organizationId"
-                        label="Link to an existing organization"
-                        labelKey="text"
-                        isLoading={isTypeaheadLoading}
-                        options={matchedOrgs}
-                        onSearch={handleTypeaheadSearch}
-                      />
-                    </Col>
-                  </Row>
-                </FormSection>
+      <Styled.CreatePersonLayout>
+        <Styled.Form id="createForm">
+          <Stack gap={1.6}>
+            <FormSection>
+              <Row>
+                <Col md={4}>
+                  <Input field="firstName" label="First Name" required />
+                </Col>
+                <Col md={3}>
+                  <Input field="middleNames" label="Middle" />
+                </Col>
+                <Col>
+                  <Input field="surname" label="Last Name" required />
+                </Col>
+              </Row>
+              <Row>
+                <Col md={7}>
+                  <Input field="preferredName" label="Preferred Name" />
+                </Col>
+                <Col></Col>
+              </Row>
+            </FormSection>
 
-                <FormSection>
-                  <Styled.H2>Contact info</Styled.H2>
-                  <Styled.SummaryText
-                    $direction="row"
-                    alignItems="flex-start"
-                    variant={getIn(errors, 'needsContactMethod') ? 'error' : 'text'}
-                    gap="0.5rem"
-                  >
-                    <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
-                    <p>
-                      Contacts must have a minimum of one method of contact to be saved. <br />
-                      <em>(ex: email,phone or address)</em>
-                    </p>
-                  </Styled.SummaryText>
-                  <ContactEmailList
-                    field="emailContactMethods"
-                    contactEmails={values.emailContactMethods}
+            <FormSection>
+              <Styled.H2>Organization</Styled.H2>
+              <Row>
+                <Col md={7}>
+                  <AsyncTypeahead
+                    field="organizationId"
+                    label="Link to an existing organization"
+                    labelKey="text"
+                    isLoading={isTypeaheadLoading}
+                    options={matchedOrgs}
+                    onSearch={handleTypeaheadSearch}
                   />
-                  <br />
-                  <ContactPhoneList
-                    field="phoneContactMethods"
-                    contactPhones={values.phoneContactMethods}
-                  />
-                </FormSection>
+                </Col>
+              </Row>
+            </FormSection>
 
-                <FormSection>
-                  <Styled.H2>Address</Styled.H2>
-                  <Styled.H3>Mailing Address</Styled.H3>
-                  <Address namespace="mailingAddress" />
-                </FormSection>
+            <FormSection>
+              <Styled.H2>Contact info</Styled.H2>
+              <Styled.SummaryText
+                $direction="row"
+                alignItems="flex-start"
+                variant={getIn(errors, 'needsContactMethod') ? 'error' : 'text'}
+                gap="0.5rem"
+              >
+                <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
+                <p>
+                  Contacts must have a minimum of one method of contact to be saved. <br />
+                  <em>(ex: email,phone or address)</em>
+                </p>
+              </Styled.SummaryText>
+              <ContactEmailList
+                field="emailContactMethods"
+                contactEmails={values.emailContactMethods}
+              />
+              <br />
+              <ContactPhoneList
+                field="phoneContactMethods"
+                contactPhones={values.phoneContactMethods}
+              />
+            </FormSection>
 
-                <FormSection>
-                  <Styled.H3>Property Address</Styled.H3>
-                  <Address namespace="propertyAddress" />
-                </FormSection>
+            <FormSection>
+              <Styled.H2>Address</Styled.H2>
+              <Styled.H3>Mailing Address</Styled.H3>
+              <Address namespace="mailingAddress" />
+            </FormSection>
 
-                <FormSection>
-                  <Styled.H3>Billing Address</Styled.H3>
-                  <Address namespace="billingAddress" />
-                </FormSection>
+            <FormSection>
+              <Styled.H3>Property Address</Styled.H3>
+              <Address namespace="propertyAddress" />
+            </FormSection>
 
-                <FormSection>
-                  <CommentNotes />
-                </FormSection>
+            <FormSection>
+              <Styled.H3>Billing Address</Styled.H3>
+              <Address namespace="billingAddress" />
+            </FormSection>
 
-                <PadBox className="w-100">
-                  <Stack $direction="row" justifyContent="flex-end" alignItems="stretch" gap={2}>
-                    {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
-                      <Styled.ErrorMessage gap="0.5rem" className="mr-3" alignItems="center">
-                        <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
-                        <span>Please complete required fields</span>
-                      </Styled.ErrorMessage>
-                    ) : null}
-                    <Button variant="secondary">Cancel</Button>
-                    <Button type="submit">Save</Button>
-                  </Stack>
-                </PadBox>
-              </Stack>
-            </Styled.CreatePersonLayout>
-          </Styled.Form>
-        </>
-      )}
-    </Formik>
+            <FormSection>
+              <CommentNotes />
+            </FormSection>
+          </Stack>
+        </Styled.Form>
+      </Styled.CreatePersonLayout>
+
+      <PadBox className="w-100">
+        <Stack $direction="row" justifyContent="flex-end" alignItems="stretch" gap={2}>
+          {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
+            <Styled.ErrorMessage gap="0.5rem" className="mr-3" alignItems="center">
+              <AiOutlineExclamationCircle size="1.8rem" className="mt-1" />
+              <span>Please complete required fields</span>
+            </Styled.ErrorMessage>
+          ) : null}
+          <Button variant="secondary" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button type="submit">Save</Button>
+        </Stack>
+      </PadBox>
+    </>
   );
 };
-
-export default CreatePersonForm;
