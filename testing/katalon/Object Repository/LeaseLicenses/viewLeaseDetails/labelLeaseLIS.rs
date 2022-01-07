@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>ImprovementsHyperlink</name>
+   <name>labelLeaseLIS</name>
    <tag></tag>
-   <elementGuidId>0cdb268e-34fe-4e1e-9a5c-593630ee5206</elementGuidId>
+   <elementGuidId>06274d4c-4a3a-49f0-97c9-e6b8cf160204</elementGuidId>
    <selectorCollection>
-      <entry>
-         <key>XPATH</key>
-         <value>//a[contains(text(),'Improvements')]</value>
-      </entry>
       <entry>
          <key>BASIC</key>
          <value></value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='input-tfaFileNo']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
