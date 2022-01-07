@@ -64,7 +64,7 @@ namespace Pims.Api.Areas.Persons.Controllers
 
             var entity = _mapper.Map<Dal.Entities.PimsPerson>(model);
             var created = _pimsService.Person.Add(entity);
-            var response = _mapper.Map<Areas.Contact.Models.Contact.ContactModel>(created);
+            var response = _mapper.Map<Areas.Contact.Models.Contact.PersonModel>(created);
 
             return new JsonResult(response);
         }

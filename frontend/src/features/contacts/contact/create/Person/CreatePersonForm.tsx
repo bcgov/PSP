@@ -99,6 +99,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
   touched,
   dirty,
   resetForm,
+  submitForm,
   initialValues,
 }) => {
   const history = useHistory();
@@ -136,7 +137,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
 
   return (
     <>
-      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
+      {/* Router-based onfirmation popup when user tries to navigate away and form has unsaved changes */}
       <UnsavedChangesPrompt />
 
       {/* Confirmation popup when Cancel button is clicked */}
@@ -253,7 +254,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
           <Button variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit">Save</Button>
+          <Button onClick={submitForm}>Save</Button>
         </Stack>
       </PadBox>
     </>
