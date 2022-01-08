@@ -1,8 +1,8 @@
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { IoMdPersonAdd } from 'react-icons/io';
+import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { useSearch } from '../../../hooks/useSearch';
@@ -29,6 +29,7 @@ export const ContactListView = ({
   showSelectedRowCount,
   hideAddButton,
 }: IContactListViewProps) => {
+  const history = useHistory();
   const { getContacts } = useApiContacts();
   const {
     results,
@@ -72,7 +73,7 @@ export const ContactListView = ({
           <ContactFilter filter={filter as any} setFilter={changeFilter} />
           <Styled.Spacer />
           {!hideAddButton && (
-            <Styled.PrimaryButton>
+            <Styled.PrimaryButton onClick={() => history.push('/contact/new')}>
               <IoMdPersonAdd color="white" />
               Add new contact
             </Styled.PrimaryButton>

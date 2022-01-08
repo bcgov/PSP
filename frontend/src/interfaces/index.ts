@@ -3,6 +3,7 @@ export * from './IAccessRequestOrganization';
 export * from './IAccessRequestRole';
 export * from './IAccessRequestUserInfo';
 export * from './IAddress';
+export * from './IAutocomplete';
 export * from './IContactSearchResult';
 export * from './IInsurance';
 export * from './ILease';
