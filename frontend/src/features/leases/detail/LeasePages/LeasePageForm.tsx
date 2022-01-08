@@ -38,14 +38,7 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
       </StyledLeasePageHeader>
       {!edit ? (
         <Formik<IFormLease>
-          initialValues={
-            leasePage.title !== leasePages.get(LeasePageNames.DETAILS)?.title
-              ? ({
-                  ...defaultFormLease,
-                  ...apiLeaseToFormLease(lease),
-                } as IFormLease)
-              : { ...defaultFormLease, ...apiLeaseToFormLease(lease) }
-          }
+          initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease) }}
           enableReinitialize={true}
           validationSchema={leasePage?.validation}
           onSubmit={async (values, { setSubmitting }) => {
