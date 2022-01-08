@@ -7,7 +7,6 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { LeasePageNames, leasePages } from '../LeaseContainer';
 import * as Styled from '../styles';
 
 export interface ILeasePageFormProps {
