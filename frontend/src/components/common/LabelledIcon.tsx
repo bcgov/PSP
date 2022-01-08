@@ -32,5 +32,5 @@ const StyledLabelledIcon = styled.div`
 
 const StyledLabel = styled.label`
   font-size: 1.6rem;
-  font-family: 'BCSans=Bold';
+  font-family: 'BCSans-Bold';
 `;
