@@ -68,12 +68,10 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     try {
       await postPerson(personCreateFormToApiPerson(values));
       setSubmitting(false);
-      resetForm({ values });
       toast.info('Contact added successfully');
       history.push('/contact/list');
     } catch (error) {
       toast.error('Failed to add contact', { autoClose: 7000 });
-      history.push('/contact/list');
     }
   };
 
@@ -137,7 +135,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
 
   return (
     <>
-      {/* Router-based onfirmation popup when user tries to navigate away and form has unsaved changes */}
+      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
       <UnsavedChangesPrompt />
 
       {/* Confirmation popup when Cancel button is clicked */}

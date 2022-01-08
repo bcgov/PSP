@@ -33,7 +33,7 @@ export const validationSchema = Yup.object().shape({
     Yup.object().shape({
       contactMethodTypeCode: Yup.string().when('value', {
         is: (value: string) => !!value,
-        then: Yup.string().required('Email type is required'),
+        then: Yup.string().required('Phone type is required'),
       }),
     }),
   ),

@@ -11,7 +11,7 @@ export interface IContactPhoneList {
 }
 
 /**
- * Formik Field array wrapper around email contacts.
+ * Formik Field array wrapper around phone contacts.
  * @param {IContactPhoneList} param0
  */
 export const ContactPhoneList: React.FunctionComponent<IContactPhoneList> = ({
@@ -22,7 +22,7 @@ export const ContactPhoneList: React.FunctionComponent<IContactPhoneList> = ({
     <FieldArray name={field}>
       {({ push, remove }) => (
         <>
-          {contactPhones.map((email, index) => (
+          {contactPhones.map((phone, index) => (
             <ContactPhone
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}

@@ -17,7 +17,7 @@ export const UnsavedChangesPrompt: React.FC<IUnsavedChangesPrompt> = ({
   message = DEFAULT_PROMPT_MESSAGE,
   resetFormUponConfirmation = true,
 }) => {
-  const { dirty, resetForm } = useFormikContext();
+  const { dirty, submitCount, resetForm } = useFormikContext();
 
   // if we navigate away from this page successfully, reset the form.
   useEffect(() => {
@@ -28,5 +28,5 @@ export const UnsavedChangesPrompt: React.FC<IUnsavedChangesPrompt> = ({
     };
   }, [resetForm, resetFormUponConfirmation]);
 
-  return <Prompt when={dirty} message={message} />;
+  return <Prompt when={dirty && submitCount === 0} message={message} />;
 };
