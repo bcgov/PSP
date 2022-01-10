@@ -76,7 +76,7 @@ objects:
             tags: sonarqube
           from:
             kind: DockerImage
-            name: "bcgovimages/sonarqube:${SONARQUBE_VERSION}"
+            name: "sonarqube:${SONARQUBE_VERSION}"
           importPolicy: {}
           name: "${SONARQUBE_VERSION}"
   - apiVersion: v1
@@ -369,7 +369,7 @@ parameters:
   - displayName: SonarQube version
     name: SONARQUBE_VERSION
     required: true
-    value: "8.2"
+    value: "lts-community"
   - description: Password for SonarQube Server PostgreSQL backend
     displayName: SonarQube's PostgreSQL Password
     from: "[a-zA-Z0-9]{16}"

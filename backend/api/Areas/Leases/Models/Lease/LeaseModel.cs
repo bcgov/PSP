@@ -208,6 +208,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<OrganizationModel> Organizations { get; set; }
 
         /// <summary>
+        /// get/set - A list of organization tenants associated with this lease
+        /// </summary>
+        public IEnumerable<TenantModel> Tenants { get; set; }
+
+        /// <summary>
         /// get/set - A list of properties associated with this lease
         /// </summary>
         public IEnumerable<PropertyModel> Properties { get; set; }
@@ -251,6 +256,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - Whether this improvement is of type other.
         /// </summary>
         public bool IsOtherImprovement { get; set; }
+        public bool HasPhysicalFile { get; set; }
+        public bool HasDigitalFile { get; set; }
+        public bool HasPhysicalLicense { get; set; }
+        public bool HasDigitalLicense { get; set; }
+        public bool IsExpired { get; set; }
         #endregion
     }
 }

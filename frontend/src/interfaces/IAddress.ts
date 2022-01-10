@@ -13,6 +13,7 @@ export interface IAddress {
   district?: string;
   provinceId: number;
   province?: string;
+  provinceCode?: string;
   countryId?: number;
   country?: string;
   streetAddress1: string;

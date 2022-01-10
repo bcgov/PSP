@@ -45,19 +45,19 @@ WebUI.click(findTestObject('Navigation/ExpandButton'))
 WebUI.click(findTestObject('Navigation/ManagementExpandedButton'))
 
 // Click lease and licenses hyperlink
-WebUI.click(findTestObject('Object Repository/LeaseLicenses/LeaseLicenseHyperlink'))
+WebUI.click(findTestObject('LeaseLicenses/searchLease/LeaseLicenseHyperlink'))
 
 // Filter for lease with file number "111-111-111"
-WebUI.setText(findTestObject('Object Repository/LeaseLicenses/LLumberFilter'), "111-111-111")
+WebUI.setText(findTestObject('LeaseLicenses/searchLease/LLumberFilter'), "111-111-111")
 
 // Search
-WebUI.click(findTestObject('Object Repository/LeaseLicenses/FilterSearchButton'))
+WebUI.click(findTestObject('LeaseLicenses/searchLease/FilterSearchButton'))
 
 // Click the filtered result
-WebUI.click(findTestObject('Object Repository/LeaseLicenses/FilteredLease'))
+WebUI.click(findTestObject('LeaseLicenses/searchLease/FilteredLease'))
 
 // Navigate to improvements
-WebUI.click(findTestObject('Object Repository/LeaseLicenses/ImprovementsHyperlink'))
+WebUI.click(findTestObject('LeaseLicenses/searchLease/ImprovementsHyperlink'))
 
 // Ensure appropriate improvements are displayed
 WebUI.verifyTextPresent("Commercial", false)

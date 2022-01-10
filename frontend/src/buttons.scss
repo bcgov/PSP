@@ -38,7 +38,7 @@
 }
 
 .btn {
-  min-height: 4.4rem;
+  min-height: 3rem;
   display: flex;
   align-items: center;
 }
@@ -188,6 +188,7 @@
   cursor: pointer;
 }
 
+// FIXME: This css rule here is problematic. The use of !important takes precedence for ALL buttons in the app
 .btn:focus,
 .btn:active,
 .btn.active {

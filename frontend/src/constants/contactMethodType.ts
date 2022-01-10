@@ -1,9 +1,22 @@
 export enum ContactMethodTypes {
   Fax = 'FAX',
-  PerseEmail = 'PERSEMAIL',
-  PersPhone = 'PERSPHONE',
-  PerseMobil = 'PERSMOBIL',
+  PersonalEmail = 'PERSEMAIL',
+  PersonalPhone = 'PERSPHONE',
+  PersonalMobile = 'PERSMOBIL',
   WorkEmail = 'WORKEMAIL',
   WorkPhone = 'WORKPHONE',
-  WorkMobil = 'WORKMOBIL',
+  WorkMobile = 'WORKMOBIL',
 }
+
+export const phoneContactMethods: string[] = [
+  ContactMethodTypes.WorkPhone,
+  ContactMethodTypes.WorkMobile,
+  ContactMethodTypes.PersonalPhone,
+  ContactMethodTypes.PersonalMobile,
+  ContactMethodTypes.Fax,
+];
+
+export const emailContactMethods: string[] = [
+  ContactMethodTypes.WorkEmail,
+  ContactMethodTypes.PersonalEmail,
+];

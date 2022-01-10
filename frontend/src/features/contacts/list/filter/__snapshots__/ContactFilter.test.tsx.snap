@@ -35,6 +35,8 @@ exports[`Contact Filter matches snapshot 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   row-gap: 0.4rem;
+  -webkit-column-gap: unset;
+  column-gap: unset;
 }
 
 .c2.form-group .radio-group .form-check {
@@ -42,6 +44,14 @@ exports[`Contact Filter matches snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c2.form-group .radio-group .form-check .form-check-input {
@@ -50,6 +60,10 @@ exports[`Contact Filter matches snapshot 1`] = `
 
 .c2.form-group .radio-group .form-check-label {
   margin-left: 1rem;
+}
+
+.c2 .form-label {
+  margin-bottom: unset;
 }
 
 .c10 {
@@ -149,9 +163,8 @@ exports[`Contact Filter matches snapshot 1`] = `
   max-width: 20rem;
 }
 
-<form
+<div
     class="c0 c1"
-    novalidate=""
   >
     <div
       class="c2 form-group"
@@ -324,7 +337,7 @@ exports[`Contact Filter matches snapshot 1`] = `
       class="Button Button--icon-only c8 btn btn-primary"
       data-testid="search"
       id="search-button"
-      type="submit"
+      type="button"
     >
       <div
         class="Button__icon"
@@ -396,6 +409,6 @@ exports[`Contact Filter matches snapshot 1`] = `
     >
       Show Active contacts only
     </p>
-  </form>
+  </div>
 </DocumentFragment>
 `;

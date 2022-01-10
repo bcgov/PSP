@@ -9,9 +9,11 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Property class, provides an entity for the datamodel to manage properties.
     /// </summary>
-    public partial class PimsProperty : IBaseAppEntity
+    public partial class PimsProperty : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
+        [NotMapped]
+        public override long Id { get => this.PropertyId; set => this.PropertyId = value; }
         /// <summary>
         /// get - The friendly formated Parcel Id.
         /// </summary>

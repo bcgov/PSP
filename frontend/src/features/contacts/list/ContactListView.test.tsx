@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces';
+import { noop } from 'lodash';
 import { act, fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { ContactListView } from './ContactListView';
@@ -14,7 +15,9 @@ const getContacts = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<ContactListView />, { ...renderOptions });
+  const utils = render(<ContactListView selectedRows={[]} setSelectedRows={noop} />, {
+    ...renderOptions,
+  });
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
 };

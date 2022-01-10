@@ -1,5 +1,5 @@
 import { Check, SearchButton } from 'components/common/form';
-import { InlineForm, InlineInput } from 'components/common/form/styles';
+import { InlineFilterBox, InlineInput } from 'components/common/form/styles';
 import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
@@ -55,7 +55,7 @@ export const Spacer = styled.div`
   flex: 1 1 auto;
 `;
 
-export const FilterBox = styled(InlineForm)`
+export const FilterBox = styled(InlineFilterBox)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   flex: 1 1 auto;
   padding: 0.5rem 1.5rem;
@@ -104,22 +104,4 @@ export const FileIcon = styled(Button)`
   color: ${({ theme, disabled }) =>
     disabled ? theme.css.disabledColor : theme.css.primaryColor} !important;
   padding: 6px 0.5rem;
-`;
-
-export const IconButton = styled(Button)`
-  &.btn.btn-light {
-    background-color: unset;
-    border: 0;
-    :hover {
-      background-color: unset;
-    }
-    svg {
-      color: ${({ theme }) => theme.css.slideOutBlue};
-      transition: all 0.3s ease-out;
-    }
-    svg:hover {
-      transition: all 0.3s ease-in;
-      color: ${({ theme }) => theme.css.secondaryVariantColor};
-    }
-  }
 `;
