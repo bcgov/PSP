@@ -43,11 +43,9 @@ describe('PropertyInformationSubForm component', () => {
 
   it('unit type and area are disabled by default', async () => {
     const {
-      component: { getByLabelText, container },
+      component: { getByLabelText },
     } = await setup({});
-    const unit = container.querySelector(`select[name="properties.0.areaUnitType"]`);
     expect(getByLabelText('Area:')).toBeDisabled();
-    expect(unit).toBeDisabled();
   });
 
   it('unit type and area are enabled when pid entered', async () => {
@@ -55,9 +53,7 @@ describe('PropertyInformationSubForm component', () => {
       component: { getByLabelText, container },
     } = await setup({});
     await fillInput(container, 'properties.0.pid', '1');
-    const unit = container.querySelector(`select[name="properties.0.areaUnitType"]`);
     expect(getByLabelText('Area:')).not.toBeDisabled();
-    expect(unit).not.toBeDisabled();
   });
 
   it('pin is disabled when pid is valued', async () => {

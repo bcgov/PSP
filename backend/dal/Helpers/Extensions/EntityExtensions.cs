@@ -91,5 +91,49 @@ namespace Pims.Dal.Helpers.Extensions
         {
             context.SetOriginalConcurrencyControlNumber(source);
         }
+
+        /// <summary>
+        /// Update a single child navigation property on a parent entity specified by T and parentId.
+        /// Expects to be passed a complete list of child entities for the targeted navigation property.
+        /// This method will update the database such that the navigation property for the parent contains the exact list of children passed to this method.
+        /// </summary>
+        /// <typeparam name="T">The parent entity type</typeparam>
+        /// <typeparam name="I">The type of the id property</typeparam>
+        /// <typeparam name="C">The type of the child navigation property being targeted for updates.</typeparam>
+        /// <param name="context"></param>
+        /// <param name="childNavigation"></param>
+        /// <param name="parentId"></param>
+        /// <param name="children"></param>
+        public static void UpdateChild<T, I, C>(this PimsContext context, Expression<Func<T, object>> childNavigation, I parentId, C[] children) where T : IdentityBaseAppEntity<I> where C : IdentityBaseAppEntity<I>
+        {
+            var dbEntity = context.Find<T>(parentId);
+
+            var dbEntry = context.Entry(dbEntity);
+
+            var propertyName = childNavigation.GetPropertyAccess().Name;
+            var dbItemsEntry = dbEntry.Collection(propertyName);
+            var accessor = dbItemsEntry.Metadata.GetCollectionAccessor();
+
+            dbItemsEntry.Load();
+            var dbItemsMap = dbItemsEntry.CurrentValue.Cast<IdentityBaseAppEntity<I>>()
+                .ToDictionary(e => e.Id);
+
+            foreach (var item in children)
+            {
+                if (!dbItemsMap.TryGetValue(item.Id, out var oldItem))
+                    accessor.Add(dbEntity, item, false);
+                else
+                {
+                    context.Entry(oldItem).CurrentValues.SetValues(item);
+                    dbItemsMap.Remove(item.Id);
+                }
+            }
+
+            foreach (var oldItem in dbItemsMap.Values)
+            {
+                accessor.Remove(dbEntity, oldItem);
+                context.Remove(oldItem);
+            }
+        }
     }
 }

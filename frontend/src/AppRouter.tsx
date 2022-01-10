@@ -27,7 +27,7 @@ const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAcce
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
 const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
 const LeaseAndLicenseListView = lazy(() => import('features/leases/list/LeaseListView'));
-const LeaseContainer = lazy(() => import('features/leases/detail/LeaseContainer'));
+const LeaseContainerWrapper = lazy(() => import('features/leases/detail/LeaseContainerWrapper'));
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -147,7 +147,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/lease/:leaseId"
-          component={LeaseContainer}
+          component={LeaseContainerWrapper}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('Create/Edit Lease & Licenses')}

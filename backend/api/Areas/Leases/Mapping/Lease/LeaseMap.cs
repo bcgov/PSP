@@ -15,15 +15,17 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.Amount, src => src.LeaseAmount)
                 .Map(dest => dest.RenewalCount, src => src.PimsLeaseTerms.Count)
-                .Map(dest => dest.Properties, src => src.GetProperties())
+                .Map(dest => dest.Properties, src => src.PimsPropertyLeases)
                 .Map(dest => dest.Insurances, src => src.PimsInsurances)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.TfaFileNo, src => src.TfaFileNo)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
                 .Map(dest => dest.MotiName, src => src.GetMotiName())
+                .Map(dest => dest.MotiRegion, src => src.MotiRegion)
                 .Map(dest => dest.ExpiryDate, src => src.GetExpiryDate())
                 .Map(dest => dest.StartDate, src => src.OrigStartDate)
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
+                .Map(dest => dest.ProgramType, src => src.LeaseProgramTypeCodeNavigation)
                 .Map(dest => dest.PaymentReceivableType, src => src.LeasePayRvblTypeCodeNavigation)
                 .Map(dest => dest.PaymentFrequencyType, src => src.LeasePmtFreqTypeCodeNavigation)
                 .Map(dest => dest.CategoryType, src => src.LeaseCategoryTypeCodeNavigation)
@@ -34,6 +36,7 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.Terms, src => src.PimsLeaseTerms)
                 .Map(dest => dest.ResponsibilityType, src => src.LeaseResponsibilityTypeCodeNavigation)
                 .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate)
+                .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.Note, src => src.LeaseNotes)
                 .Map(dest => dest.Description, src => src.LeaseDescription)
                 .Map(dest => dest.IsResidential, src => src.IsSubjectToRta)
@@ -46,7 +49,12 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.SecurityDeposits, src => src.PimsSecurityDeposits)
                 .Map(dest => dest.SecurityDepositReturns, src => src.PimsSecurityDepositReturns)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
-                .Map(dest => dest.ReturnNotes, src => src.ReturnNotes);
+                .Map(dest => dest.ReturnNotes, src => src.ReturnNotes)
+                .Map(dest => dest.IsExpired, src => src.IsExpired)
+                .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
+                .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
+                .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
+                .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense);
 
             config.NewConfig<Model.LeaseModel, Entity.PimsLease>()
                 .Map(dest => dest.LeaseId, src => src.Id)
@@ -79,6 +87,11 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.LeaseNotes, src => src.Note)
                 .Map(dest => dest.LeaseDescription, src => src.Description)
                 .Map(dest => dest.PimsLeaseTenants, src => src.Tenants)
+                .Map(dest => dest.IsExpired, src => src.IsExpired)
+                .Map(dest => dest.HasPhysicalFile, src => src.HasPhysicalFile)
+                .Map(dest => dest.HasPhysicialLicense, src => src.HasPhysicalLicense)
+                .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
+                .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .IgnoreNullValues(true);
         }
     }
