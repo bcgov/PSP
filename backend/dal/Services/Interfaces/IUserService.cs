@@ -21,6 +21,7 @@ namespace Pims.Dal.Services
         PimsUser GetTracking(long id);
         void LoadOrganizations(PimsUser user);
         void LoadRoles(PimsUser user);
+        public PimsUser RemoveRole(PimsUser user, long roleId);
         IEnumerable<long> GetOrganizations(Guid keycloakUserId);
         IEnumerable<PimsUser> GetAdministrators(params long[] organizationIds);
         PimsUser Add(PimsUser add);
