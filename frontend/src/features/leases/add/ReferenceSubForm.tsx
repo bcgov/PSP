@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { LeaseH2 } from '../detail/styles';
+import { LeaseH3 } from '../detail/styles';
 import * as Styled from './styles';
 
 interface IReferenceSubFormProps {}
@@ -11,7 +11,7 @@ const ReferenceSubForm: React.FunctionComponent<IReferenceSubFormProps> = props 
     <>
       <Row>
         <Col>
-          <LeaseH2>Reference Information</LeaseH2>
+          <LeaseH3>Reference Information</LeaseH3>
         </Col>
       </Row>
 

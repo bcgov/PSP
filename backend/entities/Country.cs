@@ -21,12 +21,19 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a Country class.
         /// </summary>
         /// <param name="code"></param>
-        public PimsCountry(string code):this()
+        public PimsCountry(string code) : this()
         {
             if (String.IsNullOrWhiteSpace(code)) throw new ArgumentException($"Argument '{nameof(code)}' must have a valid value.", nameof(code));
 
             this.CountryCode = code;
         }
         #endregion
+    }
+
+    public static class CountryCodes
+    {
+        public const string Canada = "CA";
+        public const string US = "US";
+        public const string Other = "OTHER";
     }
 }

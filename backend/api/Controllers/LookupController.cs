@@ -110,6 +110,8 @@ namespace Pims.Api.Controllers
             var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseResponsibilityTypes());
             var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseInitiatorTypes());
             var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetInsuranceTypes());
+            var contactMethodTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetContactMethodTypes());
+            var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyImprovementTypes());
 
             var codes = new List<object>();
             codes.AddRange(roleCodes);
@@ -132,6 +134,9 @@ namespace Pims.Api.Controllers
             codes.AddRange(leaseResponsibilityTypes);
             codes.AddRange(leaseInitiatorTypes);
             codes.AddRange(insuranceTypes);
+            codes.AddRange(contactMethodTypes);
+            codes.AddRange(propertyImprovementTypes);
+
             return new JsonResult(codes);
         }
         #endregion

@@ -21,6 +21,14 @@ export const InlineFilterBox = styled.div`
 export const SaveTableWrapper = styled.div`
   margin-top: 3rem;
   font-size: 1.4rem;
+  .table .tr .td:first-of-type,
+  .table .tr .td:nth-of-type(2),
+  .table .tr .th:first-of-type,
+  .table .tr .th:nth-of-type(2) {
+    border-left: 0;
+    border-right: 0;
+    padding: 0;
+  }
 `;
 
 export const InlineFastCurrencyInput = styled(FastCurrencyInput)`

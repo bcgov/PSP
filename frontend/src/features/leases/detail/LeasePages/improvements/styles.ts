@@ -9,6 +9,10 @@ export const ImprovementsContainer = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 2.5rem;
+  .formgrid .textarea:not(.notes) {
+    grid-column: span 2;
+    border-left: 0;
+  }
 `;
 
 export const ImprovementsListHeader = styled(FormDescriptionLabel)`

@@ -6,6 +6,7 @@ import { IRole } from './IRole';
 export interface IUser {
   id?: number;
   businessIdentifierValue?: string;
+  businessIdentifier?: string;
   keycloakUserId?: string;
   email?: string;
   displayName?: string;

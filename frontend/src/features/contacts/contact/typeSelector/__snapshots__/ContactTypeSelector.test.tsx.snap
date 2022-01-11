@@ -21,6 +21,8 @@ exports[`ContactTypeSelector component renders as expected 1`] = `
 .c1 {
   gap: 5rem;
   padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+  margin-right: 2.5rem;
 }
 
 .c1 .form-check {

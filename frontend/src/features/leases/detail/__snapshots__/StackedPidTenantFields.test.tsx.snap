@@ -31,7 +31,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 }
 
 .c1 div {
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 <div
@@ -69,7 +69,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 }
 
 .c1 div {
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 <div
@@ -118,7 +118,7 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
 }
 
 .c1 div {
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 <div
@@ -154,7 +154,7 @@ exports[`StackedPidTenantFields component renders as expected when provided no d
 }
 
 .c1 div {
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 <div

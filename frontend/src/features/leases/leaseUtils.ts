@@ -23,6 +23,7 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
     amount: parseFloat(formLease.amount.toString()) || 0.0,
     expiryDate: stringToNull(formLease.expiryDate),
     renewalDate: stringToNull(formLease.renewalDate),
+    responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
     tenants: formLease.tenants.map(tenant => ({
       ...tenant,
       leaseId: formLease.id,
@@ -30,11 +31,11 @@ export const formLeaseToApiLease = (formLease: IFormLease) => {
   } as ILease;
 };
 
-export const apiLeaseToFormLease = (formLease?: ILease) => {
-  return !!formLease
+export const apiLeaseToFormLease = (lease?: ILease) => {
+  return !!lease
     ? ({
-        ...formLease,
-        tenants: formLease.tenants.map(tenant => ({
+        ...lease,
+        tenants: lease.tenants.map(tenant => ({
           summary: !!tenant.person
             ? `${tenant.person?.firstName} ${tenant.person?.middleNames} ${tenant.person?.surname}`
             : tenant.organization?.name,
@@ -75,6 +76,7 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     type: stringToTypeCode(formLease.type),
     programType: stringToTypeCode(formLease.programType),
     expiryDate: stringToNull(formLease.expiryDate),
+    psFileNo: stringToNull(formLease.psFileNo),
     renewalDate: stringToNull(formLease.renewalDate),
     responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
     properties: formLease.properties.map(formProperty => ({
@@ -84,4 +86,21 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
       areaUnitType: stringToTypeCode(formProperty.areaUnitType),
     })),
   } as ILease;
+};
+
+export const apiLeaseToAddFormLease = (lease?: ILease) => {
+  return !!lease
+    ? ({
+        ...lease,
+        paymentFrequencyType: lease.paymentFrequencyType?.id ?? '',
+        paymentReceivableType: lease.paymentReceivableType?.id ?? '',
+        categoryType: lease.categoryType?.id ?? '',
+        purposeType: lease.purposeType?.id ?? '',
+        responsibilityType: lease.responsibilityType?.id ?? '',
+        initiatorType: lease.initiatorType?.id ?? '',
+        statusType: lease.statusType?.id ?? '',
+        type: lease.type?.id ?? '',
+        programType: lease.programType?.id ?? '',
+      } as IAddFormLease)
+    : undefined;
 };

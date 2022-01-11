@@ -48,12 +48,11 @@ describe('useUpdateLease functions', () => {
     jest.restoreAllMocks();
   });
   describe('updateLease', () => {
-    const url = `/leases/1/tenants`;
     it('Request successful, dispatches success with correct response', async () => {
-      mockAxios.onPut(url).reply(200, defaultLeaseWithId);
+      mockAxios.onPut().reply(200, defaultLeaseWithId);
 
       const { updateLease } = setup();
-      const leaseResponse = await updateLease(defaultLeaseWithId, 'tenants');
+      const leaseResponse = await updateLease(defaultLeaseWithId, undefined, undefined, 'tenants');
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
@@ -62,10 +61,10 @@ describe('useUpdateLease functions', () => {
     });
 
     it('400 Request failure, dispatches error with correct response', async () => {
-      mockAxios.onPut(url).reply(400, MOCK.ERROR);
+      mockAxios.onPut().reply(400, MOCK.ERROR);
 
       const { updateLease } = setup();
-      await updateLease(defaultLeaseWithId, 'tenants');
+      await updateLease(defaultLeaseWithId, undefined, undefined, 'tenants');
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
       expect(toastErrorSpy).toHaveBeenCalled();

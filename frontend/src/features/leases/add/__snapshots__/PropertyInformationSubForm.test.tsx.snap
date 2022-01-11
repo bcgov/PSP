@@ -9,10 +9,11 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
     class="Toastify"
   />
   .c0 {
-  font-size: 3.2rem;
-  line-height: 4.2rem;
+  font-family: 'BcSans-Bold' font-size:2rem;
+  margin-bottom: 1rem;
   text-align: left;
-  border-bottom: solid 0.4rem;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
 }
 
 <div
@@ -21,11 +22,11 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
     <div
       class="col"
     >
-      <h2
+      <h3
         class="c0"
       >
         Property Information
-      </h2>
+      </h3>
     </div>
   </div>
   .c1 {
@@ -163,15 +164,15 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-properties.0.areaUnit"
+            for="input-properties.0.landArea"
           >
             Area: 
           </label>
           <input
             class="form-control"
             disabled=""
-            id="input-properties.0.areaUnit"
-            name="properties.0.areaUnit"
+            id="input-properties.0.landArea"
+            name="properties.0.landArea"
             value=""
           />
         </div>
@@ -181,8 +182,8 @@ exports[`PropertyInformationSubForm component renders as expected 1`] = `
           <select
             class="form-select form-control"
             disabled=""
-            id="input-properties.0.areaUnitType"
-            name="properties.0.areaUnitType"
+            id="input-properties.0.areaUnitId"
+            name="properties.0.areaUnitId"
           >
             <option
               value=""
