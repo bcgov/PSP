@@ -146,7 +146,7 @@ pipeline {
             }
 
           } else {
-            RELEASE_VERSION = 'latest' //dev will use latest as there's no release version for developement
+            RELEASE_VERSION = 'latest-dev' //dev will use latest as there's no release version for developement
           }
           
         }
@@ -219,14 +219,15 @@ pipeline {
         script {
           def img_backend = "${APP_NAME}-api"
           def img_frontend = "${APP_NAME}-app"
+          def img_tag = "latest-${DESTINATION}" // image tag on build config is based on environment, e.g. latest-dev, latest-test, latest-uat
 
           // tag release version (if found)
           if (RELEASE_VERSION != '') {
-            echo "Tagging images - ${img_backend}:latest, ${img_frontend}:latest..."
-            sh "oc tag ${img_backend}:latest ${img_backend}:${RELEASE_VERSION}"
-            sh "oc tag ${img_frontend}:latest ${img_frontend}:${RELEASE_VERSION}"
+            echo "Tagging images - ${img_backend}:latest-env, ${img_frontend}:latest-env"
+            sh "oc tag ${img_backend}:${img_tag} ${img_backend}:${RELEASE_VERSION}"
+            sh "oc tag ${img_frontend}:${img_tag} ${img_frontend}:${RELEASE_VERSION}"
           } else {
-            RELEASE_VERSION = 'latest'
+            RELEASE_VERSION="${img_tag}"
           }
 
           dir(DEVOPS_DIRECTORY) {
