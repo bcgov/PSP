@@ -64,9 +64,9 @@ parameters:
 
   - name: OUTPUT_IMAGE_TAG
     displayName: "Output Image Tag"
-    description: "The tag given to the built image."
+    description: "The tag given to the built image based on environment. Expected values are (latest-dev, latest-test or latest-uat)"
     required: true
-    value: "latest"
+    value: "latest-dev"
 
   - name: CPU_LIMIT
     displayName: "Resources CPU Limit"
