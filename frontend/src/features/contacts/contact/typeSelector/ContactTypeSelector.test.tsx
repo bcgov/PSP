@@ -1,7 +1,9 @@
 import userEvent from '@testing-library/user-event';
-import { ContactTypes, ContactTypeSelector } from 'features/contacts';
+import { ContactTypes } from 'features/contacts';
 import { createMemoryHistory } from 'history';
 import { render, RenderOptions } from 'utils/test-utils';
+
+import { ContactTypeSelector } from './ContactTypeSelector';
 
 const history = createMemoryHistory();
 const setContactTypeFn = jest.fn();

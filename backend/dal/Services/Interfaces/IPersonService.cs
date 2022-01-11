@@ -10,5 +10,6 @@ namespace Pims.Dal.Services
     {
         IEnumerable<PimsPerson> GetAll();
         PimsPerson Get(long id);
+        PimsPerson Add(PimsPerson add);
     }
 }

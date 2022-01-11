@@ -21,8 +21,11 @@ export const useApiLeases = () => {
       getLease: (id: number) => api.get<ILease>(`/leases/${id}`),
       postLease: (lease: ILease, userOverride: boolean = false) =>
         api.post<ILease>(`/leases?userOverride=${userOverride}`, lease),
-      putLease: (lease: ILease, subRoute?: string) =>
-        api.put<ILease>(`/leases/${lease.id}/${subRoute}`, lease),
+      putLease: (lease: ILease, subRoute?: string, userOverride?: boolean) =>
+        api.put<ILease>(
+          `/leases/${lease.id}/${subRoute ?? ''}?userOverride=${userOverride}`,
+          lease,
+        ),
       exportLeases: (filter: IPaginateLeases, outputFormat: 'csv' | 'excel' = 'excel') =>
         api.get(
           `/reports/leases?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,

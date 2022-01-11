@@ -28,5 +28,7 @@ namespace Pims.Dal.Services
         IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes();
         IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes();
         IEnumerable<PimsInsuranceType> GetInsuranceTypes();
+        IEnumerable<PimsContactMethodType> GetContactMethodTypes();
+        IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes();
     }
 }

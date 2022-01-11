@@ -7,8 +7,8 @@ import { getIn } from 'formik';
 import * as React from 'react';
 import { ReactNode } from 'react';
 import { useContext } from 'react';
-import { FaEdit } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import {
   BackToSearchButton,
@@ -20,10 +20,11 @@ import {
   LeaseRouter,
   useLeaseDetail,
 } from '..';
-import { useUpdateLease } from '../hooks/useUpdateLease';
+import { LeaseSchema } from '../add/AddLeaseYupSchema';
+import LeaseEditButton from './LeaseEditButton';
 import Deposits from './LeasePages/deposits/Deposits';
-import Details from './LeasePages/details/Details';
-import Improvements from './LeasePages/improvements/Improvements';
+import DetailContainer from './LeasePages/details/DetailContainer';
+import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
 import Surplus from './LeasePages/surplus/Surplus';
 import TenantContainer from './LeasePages/tenant/TenantContainer';
@@ -37,7 +38,7 @@ export interface ILeasePage {
   title: string;
   header?: ReactNode;
   description?: string;
-  subRoute?: string;
+  validation?: Yup.ObjectSchema<any>;
 }
 
 export enum LeasePageNames {
@@ -53,7 +54,20 @@ export enum LeasePageNames {
 }
 
 export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
-  [LeasePageNames.DETAILS, { component: Details, title: 'Details' }],
+  [
+    LeasePageNames.DETAILS,
+    {
+      component: DetailContainer,
+      title: 'Details',
+      header: (
+        <>
+          Details&nbsp;
+          <LeaseEditButton linkTo="?edit=true" />
+        </>
+      ),
+      validation: LeaseSchema,
+    },
+  ],
   [
     LeasePageNames.TENANT,
     {
@@ -61,20 +75,29 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       title: 'Tenant',
       header: (
         <>
-          Tenant&nbsp;
-          <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
-            <Link to="?edit=true" className="float-right">
-              <FaEdit />
-            </Link>
-          </ProtectedComponent>
+          Tenant
+          <LeaseEditButton linkTo="?edit=true" />
         </>
       ),
       description: 'The following is information related to the leasee or licensee',
-      subRoute: 'tenants',
     },
   ],
   [LeasePageNames.PAYMENTS, { component: undefined, title: 'Payments' }],
-  [LeasePageNames.IMPROVEMENTS, { component: Improvements, title: 'Improvements' }],
+  [
+    LeasePageNames.IMPROVEMENTS,
+    {
+      component: ImprovementsContainer,
+      title: 'Improvements',
+      header: (
+        <>
+          Improvements
+          <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
+            <LeaseEditButton linkTo="?edit=true" />
+          </ProtectedComponent>
+        </>
+      ),
+    },
+  ],
   [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: Deposits, title: 'Deposit' }],
   [LeasePageNames.SECURITY, { component: undefined, title: 'Physical Security' }],
@@ -97,7 +120,6 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
   if (!leasePage) {
     throw Error('The requested lease page does not exist');
   }
-  const { updateLease } = useUpdateLease();
   return (
     <>
       <LeaseLayout>
@@ -113,13 +135,12 @@ export const LeaseContainer: React.FunctionComponent<ILeaseAndLicenseContainerPr
           refreshLease={refresh}
           leasePage={leasePage}
           lease={lease}
-          onUpdate={updateLease}
           setLease={setLease}
         >
           <LeaseRouter />
         </LeasePageForm>
+        <LoadingBackdrop show={!!props?.match?.params?.leaseId && !lease} />
       </LeaseLayout>
-      <LoadingBackdrop show={!!props?.match?.params?.leaseId && !lease} />
     </>
   );
 };

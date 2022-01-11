@@ -24,6 +24,10 @@ export const LoginStyled = styled(Container)`
     display: inline-block;
   }
 
+  .btn.btn-primary {
+    display: inline-block;
+  }
+
   .unauth {
     font-size: 2.4rem;
     margin: 9.1rem auto;

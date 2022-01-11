@@ -16,16 +16,18 @@ interface IAddLeaseFormProps {
   onCancel: () => void;
   onSubmit: (lease: ILease) => void;
   formikRef: React.Ref<FormikProps<IAddFormLease>>;
+  initialValues?: IAddFormLease;
 }
 
 const AddLeaseForm: React.FunctionComponent<IAddLeaseFormProps> = ({
   onCancel,
   onSubmit,
   formikRef,
+  initialValues,
 }) => {
   return (
     <Formik<IAddFormLease>
-      initialValues={defaultAddFormLease}
+      initialValues={defaultAddFormLease ?? initialValues}
       onSubmit={async (values: IAddFormLease, formikHelpers) => {
         const apiLease = addFormLeaseToApiLease(values);
         formikHelpers.setSubmitting(false);

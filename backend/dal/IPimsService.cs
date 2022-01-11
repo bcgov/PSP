@@ -37,6 +37,10 @@ namespace Pims.Dal
         IInsuranceService Insurance { get; }
         #endregion
 
+        #region Autocomplete
+        IAutocompleteService Autocomplete { get; }
+        #endregion
+
         #region Configuration
         ITenantService Tenant { get; }
         #endregion

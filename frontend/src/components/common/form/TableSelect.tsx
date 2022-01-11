@@ -72,7 +72,7 @@ export const TableSelect = <T extends { id?: string | number }>({
             onClick={() => {
               setFieldValue(
                 field,
-                _.uniqWith(_.concat(selectedItems, existingItems), (p1, p2) => p1.id === p2.id),
+                _.uniqWith(_.concat(existingItems, selectedItems), (p1, p2) => p1.id === p2.id),
               );
             }}
           >

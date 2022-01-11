@@ -41,6 +41,16 @@ exports[`LeaseDatesSubForm component renders as expected 1`] = `
   flex-direction: column;
 }
 
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
 <div
     class="row"
   >
@@ -101,6 +111,60 @@ exports[`LeaseDatesSubForm component renders as expected 1`] = `
             />
           </div>
         </div>
+      </div>
+      <div
+        class="c3"
+      />
+      <div
+        class="form-group"
+      >
+        <label
+          class="form-label"
+          for="input-statusType"
+        >
+          Status: 
+        </label>
+        <select
+          class="form-select form-control"
+          id="input-statusType"
+          name="statusType"
+        >
+          <option
+            value=""
+          >
+            Select Status
+          </option>
+          <option
+            class="option"
+            value="ACTIVE"
+          >
+            Active
+          </option>
+          <option
+            class="option"
+            value="DISCARD"
+          >
+            Discarded
+          </option>
+          <option
+            class="option"
+            value="DRAFT"
+          >
+            Draft
+          </option>
+          <option
+            class="option"
+            value="EXPIRED"
+          >
+            Expired
+          </option>
+          <option
+            class="option"
+            value="TERMINATED"
+          >
+            Terminated
+          </option>
+        </select>
       </div>
     </div>
   </div>

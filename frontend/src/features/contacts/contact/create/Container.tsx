@@ -1,51 +1,51 @@
+import { ContactBreadcrumb, ContactTypes } from 'features/contacts';
+import { useQuery } from 'hooks/use-query';
 import * as React from 'react';
 import { useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ContactBreadcrumb, ContactTypes, ContactTypeSelector } from '../..';
 import * as Styled from '../../styles';
+import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
+import CreatePersonForm from './Person/CreatePersonForm';
 
-interface MatchParams {
-  id?: string;
-}
+export interface IContactCreateContainerProps {}
 
-export interface IContactCreateContainerProps extends RouteComponentProps<MatchParams> {
-  type: ContactTypes;
-}
+export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = () => {
+  // get default contact type from URL; e.g. contact/new?type=P
+  const { type } = useQuery();
+  const [contactType, setContactType] = useState(getContactType(type as string));
 
-export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = ({
-  match: {
-    params: { id },
-  },
-}) => {
-  const [contactType, setContactType] = useState(getContactTypeFromId(id));
   return (
     <ContactLayout>
       <ContactBreadcrumb />
       <Styled.H1>Add a Contact</Styled.H1>
 
-      {!id && (
-        <ContactTypeSelector
-          contactType={contactType}
-          setContactType={setContactType}
-        ></ContactTypeSelector>
-      )}
+      <ContactTypeSelector
+        contactType={contactType}
+        setContactType={setContactType}
+      ></ContactTypeSelector>
+
+      {/* TODO: Render Person Form or Organization Form depending on type query param */}
+      <CreatePersonForm />
     </ContactLayout>
   );
 };
 
 const ContactLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
   height: 100%;
   width: 50%;
   min-width: 30rem;
-  overflow: auto;
+  overflow: hidden;
   padding: 1rem;
+  gap: 1.6rem;
 `;
 
-const getContactTypeFromId = (id?: string) => {
-  if (id?.length !== undefined && id.length > 0) {
-    return id[0] as ContactTypes;
+const getContactType = (value?: string) => {
+  if (value !== undefined) {
+    return value as ContactTypes;
   }
   return ContactTypes.INDIVIDUAL;
 };
