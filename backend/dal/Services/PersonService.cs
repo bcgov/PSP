@@ -4,6 +4,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
@@ -66,17 +67,37 @@ namespace Pims.Dal.Services
         /// <summary>
         /// Add the specified person contact to the datasource.
         /// </summary>
-        /// <param name="add"></param>
+        /// <param name="person"></param>
+        /// <param name="userOverride"></param>
         /// <returns></returns>
-        public PimsPerson Add(PimsPerson add)
+        public PimsPerson Add(PimsPerson person, bool userOverride)
         {
-            add.ThrowIfNull(nameof(add));
-            this.Context.PimsPeople.Add(add);
+            person.ThrowIfNull(nameof(person));
+            if (!userOverride)
+            {
+
+                List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
+                    p => EF.Functions.Collate(p.FirstName, "SQL_Latin1_General_CP1_CI_AS") == person.FirstName &&
+                        EF.Functions.Collate(p.Surname, "SQL_Latin1_General_CP1_CI_AS") == person.Surname
+                ).Include(p => p.PimsContactMethods).ToList();
+
+                var isDuplicate = existingPersons.Any(
+                                p => p.PimsContactMethods.Any(
+                                    ec => person.PimsContactMethods.Any(
+                                        pc => pc.ContactMethodValue.ToLower() == ec.ContactMethodValue &&
+                                        pc.ContactMethodTypeCode == ec.ContactMethodTypeCode)));
+
+                if (isDuplicate)
+                {
+                    throw new DuplicateEntityException("Duplicate person found");
+                }
+            }
+
+            var createdPerson = this.Context.PimsPeople.Add(person);
             this.Context.CommitTransaction();
 
-            return Get(add.PersonId);
+            return createdPerson.Entity;
         }
-
         #endregion
     }
 }

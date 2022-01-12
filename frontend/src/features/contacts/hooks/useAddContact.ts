@@ -1,34 +1,34 @@
 import axios, { AxiosError } from 'axios';
-import { useApiLeases } from 'hooks/pims-api/useApiLeases';
-import { ILease } from 'interfaces';
+import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IApiError } from 'interfaces/IApiError';
+import { ICreatePerson } from 'interfaces/ICreateContact';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 import { logError } from 'store/slices/network/networkSlice';
 
 /**
- * hook that adds a lease.
+ * hook that adds a contact.
  */
-export const useAddLease = () => {
-  const { postLease } = useApiLeases();
+const useAddContact = () => {
+  const { postPerson } = useApiContacts();
   const dispatch = useDispatch();
 
-  const addLease = async (
-    lease: ILease,
-    setUserOverrideMessage?: (message?: string) => void,
+  const addPerson = async (
+    person: ICreatePerson,
+    needsUserAction: (needsAction: boolean) => void,
     userOverride: boolean = false,
   ) => {
     try {
       dispatch(showLoading());
-      const response = await postLease(lease, userOverride);
+      const response = await postPerson(person, userOverride);
       toast.success('Lease/License saved');
       return response?.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
-          setUserOverrideMessage && setUserOverrideMessage(axiosError?.response.data.error);
+          needsUserAction(true);
         } else {
           if (axiosError?.response?.status === 400) {
             toast.error(axiosError?.response.data.error);
@@ -37,7 +37,7 @@ export const useAddLease = () => {
           }
           dispatch(
             logError({
-              name: 'AddLease',
+              name: 'AddPerson',
               status: axiosError?.response?.status,
               error: axiosError,
             }),
@@ -49,5 +49,7 @@ export const useAddLease = () => {
     }
   };
 
-  return { addLease };
+  return { addPerson };
 };
+
+export default useAddContact;

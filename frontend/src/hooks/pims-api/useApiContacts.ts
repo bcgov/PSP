@@ -22,7 +22,8 @@ export const useApiContacts = () => {
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
-      postPerson: (person: ICreatePerson) => api.post<ICreatePerson>(`/persons`, person),
+      postPerson: (person: ICreatePerson, userOverride: boolean) =>
+        api.post<ICreatePerson>(`/persons?userOverride=${userOverride}`, person),
     }),
     [api],
   );
