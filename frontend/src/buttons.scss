@@ -188,6 +188,7 @@
   cursor: pointer;
 }
 
+// FIXME: This css rule here is problematic. The use of !important takes precedence for ALL buttons in the app
 .btn:focus,
 .btn:active,
 .btn.active {

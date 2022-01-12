@@ -29,14 +29,14 @@ export const PropertyRow: React.FunctionComponent<IPropertyRowProps> = ({
     <Row key={nameSpace}>
       <Styled.PropertyCol>
         <Styled.SmallInlineInput
-          disabled={!!pin}
+          disabled={!!pin && !pid}
           label="PID:"
           field={withNameSpace(nameSpace, 'pid')}
           type="number"
           displayErrorTooltips={true}
         />
         <Styled.SmallInlineInput
-          disabled={!!pid}
+          disabled={!!pid && !pin}
           label="PIN:"
           field={withNameSpace(nameSpace, 'pin')}
           type="number"
@@ -47,12 +47,12 @@ export const PropertyRow: React.FunctionComponent<IPropertyRowProps> = ({
           <Styled.SmallInlineInput
             disabled={!pid && !pin}
             label="Area:"
-            field={withNameSpace(nameSpace, 'areaUnit')}
+            field={withNameSpace(nameSpace, 'landArea')}
           />
           <Styled.SmallInlineSelect
             disabled={!pid && !pin}
             options={areaUnitTypes}
-            field={withNameSpace(nameSpace, 'areaUnitType')}
+            field={withNameSpace(nameSpace, 'areaUnitId')}
             placeholder=" "
           />
           <Styled.RemoveButton variant="link" onClick={onRemove}>

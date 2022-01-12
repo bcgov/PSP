@@ -126,27 +126,6 @@
     padding-right: 1.2rem;
   }
 
-  //by default highlight required fields in blue.
-  .form-group.required input:not(.is-invalid) {
-    border: 0.1rem solid $secondary-variant-color;
-  }
-
-  .form-group.required select:not(.is-invalid) {
-    border: 0.1rem solid $secondary-variant-color;
-  }
-
-  .input-group.required input:not(.is-invalid) {
-    border: 0.1rem solid $secondary-variant-color;
-  }
-
-  .form-check.required input:not(.is-invalid) {
-    border: 0.1rem solid $secondary-variant-color;
-  }
-
-  .form-group.required textarea:not(.is-invalid) {
-    border: 0.1rem solid $secondary-variant-color;
-  }
-
   .form-select:not(.is-invalid),
   .form-control:not(.is-invalid) {
     border: 0.1rem solid #606060;

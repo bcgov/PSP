@@ -12,7 +12,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { LeaseH2 } from '../detail/styles';
+import { LeaseH3 } from '../detail/styles';
 import * as Styled from './styles';
 
 export interface IAdministrationSubFormProps {
@@ -59,7 +59,7 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
     <>
       <Row>
         <Col>
-          <LeaseH2>Administration</LeaseH2>
+          <LeaseH3>Administration</LeaseH3>
         </Col>
       </Row>
       <Row>

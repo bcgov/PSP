@@ -1,11 +1,18 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// LeaseTenant class, provides the many-to-many relationship between leases and tenants.
     /// </summary>
-    public partial class PimsLeaseTenant : IBaseAppEntity
+    public partial class PimsLeaseTenant : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
+        #region Properties
+        [NotMapped]
+        public override long Id { get => this.LeaseTenantId; set => this.LeaseTenantId = value; }
+        #endregion
+
         #region Constructors
         public PimsLeaseTenant()
         {

@@ -16,7 +16,7 @@ exports[`Lease Deposits renders as expected 1`] = `
 
 .c2 {
   font-size: 1.6rem;
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 .c3 {

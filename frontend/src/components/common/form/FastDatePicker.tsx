@@ -73,11 +73,6 @@ const FormikDatePicker: FunctionComponent<FastDatePickerProps> = ({
     value = moment(value, 'YYYY-MM-DD').toDate();
   }
   useEffect(() => {
-    if (!!value) {
-      setFieldTouched(field);
-    }
-  }, [field, setFieldTouched, value]);
-  useEffect(() => {
     registerField(field, {});
     return () => {
       unregisterField(field);

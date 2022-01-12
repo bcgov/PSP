@@ -26,7 +26,7 @@ namespace Pims.Dal.Services
 
         #region Methods
         /// <summary>
-        /// Get all organizations sorted by DisplayOrder and Name
+        /// Get all organizations sorted by Name
         /// </summary>
         public IEnumerable<PimsOrganization> GetOrganizations()
         {
@@ -54,7 +54,7 @@ namespace Pims.Dal.Services
         /// </summary>
         public IEnumerable<PimsProvinceState> GetProvinces()
         {
-            return this.Context.PimsProvinceStates.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
+            return this.Context.PimsProvinceStates.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
         }
 
         /// <summary>
@@ -156,6 +156,16 @@ namespace Pims.Dal.Services
         public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
         {
             return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.InsuranceTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
+        {
+            return this.Context.PimsContactMethodTypes.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
+        {
+            return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.PropertyImprovementTypeCode).ToArray();
         }
         #endregion
     }
