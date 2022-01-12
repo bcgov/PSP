@@ -22,7 +22,7 @@ const useAddContact = () => {
     try {
       dispatch(showLoading());
       const response = await postPerson(person, userOverride);
-      toast.success('Lease/License saved');
+      toast.success('Contact/Person saved');
       return response?.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

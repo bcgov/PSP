@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Services
@@ -77,14 +78,14 @@ namespace Pims.Dal.Services
             {
 
                 List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
-                    p => EF.Functions.Collate(p.FirstName, "SQL_Latin1_General_CP1_CI_AS") == person.FirstName &&
-                        EF.Functions.Collate(p.Surname, "SQL_Latin1_General_CP1_CI_AS") == person.Surname
+                    p => EF.Functions.Collate(p.FirstName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.FirstName &&
+                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname
                 ).Include(p => p.PimsContactMethods).ToList();
 
                 var isDuplicate = existingPersons.Any(
                                 p => p.PimsContactMethods.Any(
                                     ec => person.PimsContactMethods.Any(
-                                        pc => pc.ContactMethodValue.ToLower() == ec.ContactMethodValue &&
+                                        pc => pc.ContactMethodValue.ToLower() == ec.ContactMethodValue.ToLower() &&
                                         pc.ContactMethodTypeCode == ec.ContactMethodTypeCode)));
 
                 if (isDuplicate)

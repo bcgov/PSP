@@ -75,13 +75,11 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
       let newPerson = personCreateFormToApiPerson(formPerson);
       const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
 
-      console.log(personResponse);
-
       if (!!personResponse?.id) {
         history.push('/contact/list');
       }
     } finally {
-      formikRef?.current?.setSubmitting(false);
+      setSubmitting(false);
     }
   };
 
@@ -105,7 +103,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
       <GenericModal
         title="Duplicate Contact"
         display={showDuplicateModal}
-        message="A contact matching this information already existts in the system."
+        message="A contact matching this information already exists in the system."
         okButtonText="Continue Save"
         cancelButtonText="Cancel Update"
         handleOk={() => saveDuplicate()}
