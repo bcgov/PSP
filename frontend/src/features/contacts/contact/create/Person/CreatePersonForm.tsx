@@ -15,15 +15,15 @@ import {
   yupToFormErrors,
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import useAddContact from '../../../hooks/useAddContact';
 import useAddressHelpers from '../address/useAddressHelpers';
 import { PadBox } from '../styles';
 import CommentNotes from './comments/CommentNotes';
@@ -37,7 +37,10 @@ export interface ICreatePersonFormProps {}
  */
 export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
   const history = useHistory();
-  const { postPerson } = useApiContacts();
+  const { addPerson } = useAddContact();
+
+  const [showDuplicateModal, setDuplicateModal] = useState(false);
+  const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   // validation needs to be adjusted when country == OTHER
   const { countries } = useAddressHelpers();
@@ -45,6 +48,8 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
     [countries],
   );
+
+  const formikRef = useRef<FormikProps<ICreatePersonForm>>(null);
 
   const onValidate = (values: ICreatePersonForm) => {
     try {
@@ -62,27 +67,51 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
   };
 
   const onSubmit = async (
-    values: ICreatePersonForm,
+    formPerson: ICreatePersonForm,
     { resetForm, setSubmitting }: FormikHelpers<ICreatePersonForm>,
   ) => {
     try {
-      await postPerson(personCreateFormToApiPerson(values));
-      setSubmitting(false);
-      toast.info('Contact added successfully');
-      history.push('/contact/list');
-    } catch (error) {
-      toast.error('Failed to add contact', { autoClose: 7000 });
+      setDuplicateModal(false);
+      let newPerson = personCreateFormToApiPerson(formPerson);
+      const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+
+      console.log(personResponse);
+
+      if (!!personResponse?.id) {
+        history.push('/contact/list');
+      }
+    } finally {
+      formikRef?.current?.setSubmitting(false);
+    }
+  };
+
+  const saveDuplicate = async () => {
+    setAllowDuplicate(true);
+    if (formikRef.current) {
+      formikRef.current.handleSubmit();
     }
   };
 
   return (
-    <Formik
-      component={CreatePersonComponent}
-      initialValues={defaultCreatePerson}
-      enableReinitialize
-      validate={onValidate}
-      onSubmit={onSubmit}
-    />
+    <>
+      <Formik
+        component={CreatePersonComponent}
+        initialValues={defaultCreatePerson}
+        enableReinitialize
+        validate={onValidate}
+        onSubmit={onSubmit}
+        innerRef={formikRef}
+      />
+      <GenericModal
+        title="Duplicate Contact"
+        display={showDuplicateModal}
+        message="A contact matching this information already existts in the system."
+        okButtonText="Continue Save"
+        cancelButtonText="Cancel Update"
+        handleOk={() => saveDuplicate()}
+        handleCancel={() => setAllowDuplicate(false)}
+      ></GenericModal>
+    </>
   );
 };
 
