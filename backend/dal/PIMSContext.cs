@@ -3172,7 +3172,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
-
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");

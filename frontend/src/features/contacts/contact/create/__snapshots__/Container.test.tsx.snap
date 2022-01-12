@@ -1289,6 +1289,9 @@ exports[`ContactContainer component renders as expected 1`] = `
         </button>
       </div>
     </div>
+    <div
+      class="container"
+    />
   </div>
 </DocumentFragment>
 `;

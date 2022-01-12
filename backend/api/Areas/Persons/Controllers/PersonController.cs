@@ -3,6 +3,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Policies;
+using Pims.Core.Exceptions;
 using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -50,7 +51,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult AddPerson([FromBody] Models.Person.PersonCreateModel model)
+        public IActionResult AddPerson([FromBody] Models.Person.PersonCreateModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
@@ -63,10 +64,18 @@ namespace Pims.Api.Areas.Persons.Controllers
             }
 
             var entity = _mapper.Map<Dal.Entities.PimsPerson>(model);
-            var created = _pimsService.Person.Add(entity);
-            var response = _mapper.Map<Areas.Contact.Models.Contact.PersonModel>(created);
 
-            return new JsonResult(response);
+            try
+            {
+                var created = _pimsService.Person.Add(entity, userOverride);
+                var response = _mapper.Map<Areas.Contact.Models.Contact.PersonModel>(created);
+
+                return new JsonResult(response);
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
         }
         #endregion
     }
