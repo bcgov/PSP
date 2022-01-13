@@ -23,7 +23,6 @@ export interface ILease {
   renewalDate?: string;
   startDate: string;
   responsibilityEffectiveDate?: string;
-  paymentFrequencyType: ITypeCode<string>;
   paymentReceivableType: ITypeCode<string>;
   categoryType: ITypeCode<string>;
   purposeType: ITypeCode<string>;
@@ -39,7 +38,6 @@ export interface ILease {
   note?: string;
   programName?: string;
   motiName?: string;
-  motiRegion?: string;
   amount?: number;
   renewalCount: number;
   description?: string;
@@ -71,7 +69,6 @@ export interface IFormLease
       amount: NumberFieldValue;
       renewalCount: NumberFieldValue;
       landArea: NumberFieldValue;
-      paymentFrequencyType?: ITypeCode<string>;
       paymentReceivableType?: ITypeCode<string>;
       categoryType?: ITypeCode<string>;
       purposeType?: ITypeCode<string>;
@@ -92,7 +89,6 @@ export interface IAddFormLease
       tfaFileNo: NumberFieldValue;
       securityDeposits?: ILeaseSecurityDeposit[];
       securityDepositReturn?: ILeaseSecurityDepositReturn[];
-      paymentFrequencyType?: string;
       paymentReceivableType?: string;
       categoryType?: string;
       purposeType?: string;
@@ -113,7 +109,6 @@ export const defaultLease: ILease = {
   statusType: { id: 'ACTIVE', description: 'Active', isDisabled: false },
   programType: { id: 'OTHER', description: 'Other', isDisabled: false },
   startDate: '2020-01-01',
-  paymentFrequencyType: { id: 'ANNUAL', description: 'Annually', isDisabled: false },
   paymentReceivableType: { id: 'RCVBL', description: 'Receivable', isDisabled: false },
   categoryType: { id: 'COMM', description: 'Commercial', isDisabled: false },
   purposeType: { id: 'BCFERRIES', description: 'BC Ferries', isDisabled: false },
@@ -171,7 +166,6 @@ export const defaultAddFormLease: IAddFormLease = {
   renewalDate: '',
   startDate: '',
   responsibilityEffectiveDate: '',
-  paymentFrequencyType: '',
   paymentReceivableType: '',
   categoryType: '',
   purposeType: '',
@@ -186,7 +180,6 @@ export const defaultAddFormLease: IAddFormLease = {
   otherPurposeType: '',
   note: '',
   motiName: '',
-  motiRegion: '',
   amount: '',
   renewalCount: '',
   description: '',

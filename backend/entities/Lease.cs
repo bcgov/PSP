@@ -40,14 +40,10 @@ namespace Pims.Dal.Entities
         /// Create a new instance of a Lease class.
         /// </summary>
         /// <param name="purposeType"></param>
-        /// <param name="statusType"></param>
-        /// <param name="paymentFrequencyType"></param>
-        public PimsLease(PimsLeasePurposeType purposeType, PimsLeasePmtFreqType paymentFrequencyType)
+        public PimsLease(PimsLeasePurposeType purposeType)
         {
             this.LeasePurposeTypeCode = purposeType?.LeasePurposeTypeCode ?? throw new ArgumentNullException(nameof(purposeType));
             this.LeasePurposeTypeCodeNavigation = purposeType;
-            this.LeasePmtFreqTypeCode = paymentFrequencyType?.LeasePmtFreqTypeCode ?? throw new ArgumentNullException(nameof(paymentFrequencyType));
-            this.LeasePmtFreqTypeCodeNavigation = paymentFrequencyType;
         }
         #endregion
     }

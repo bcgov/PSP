@@ -59,7 +59,6 @@ namespace Pims.Dal.Helpers.Extensions
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
-                .Include(l => l.LeasePmtFreqTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
                 .ThenInclude(t => t.Person)
                 .Include(l => l.PimsLeaseTenants)

@@ -23,8 +23,6 @@ namespace Pims.Dal.Entities
         public long LeasePaymentId { get; set; }
         [Column("LEASE_TERM_ID")]
         public long LeaseTermId { get; set; }
-        [Column("LEASE_PAYMENT_PERIOD_ID")]
-        public long LeasePaymentPeriodId { get; set; }
         [Required]
         [Column("LEASE_PAYMENT_METHOD_TYPE_CODE")]
         [StringLength(20)]
@@ -36,7 +34,7 @@ namespace Pims.Dal.Entities
         [Column("PAYMENT_AMOUNT_PST", TypeName = "money")]
         public decimal? PaymentAmountPst { get; set; }
         [Column("PAYMENT_AMOUNT_GST", TypeName = "money")]
-        public decimal PaymentAmountGst { get; set; }
+        public decimal? PaymentAmountGst { get; set; }
         [Column("PAYMENT_AMOUNT_TOTAL", TypeName = "money")]
         public decimal PaymentAmountTotal { get; set; }
         [Column("NOTE")]
@@ -80,5 +78,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("LEASE_PAYMENT_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string LeasePaymentStatusTypeCode { get; set; }
     }
 }
