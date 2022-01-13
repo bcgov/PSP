@@ -18,7 +18,7 @@ namespace Pims.Dal.Test.Services
     [Trait("area", "admin")]
     [Trait("group", "organization")]
     [ExcludeFromCodeCoverage]
-    public class OrganizationServiceTest
+    public class UserOrganizationServiceTest
     {
         #region Data
         public static IEnumerable<object[]> OrganizationFilterData =>
@@ -43,7 +43,7 @@ namespace Pims.Dal.Test.Services
             var organization1 = init.CreateOrganization(100, "AG1");
             init.AddAndSaveChanges(organization1);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
 
             // Act
             var result = service.Get(1, 1);
@@ -61,7 +61,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
 
             // Act
             // Assert
@@ -89,7 +89,7 @@ namespace Pims.Dal.Test.Services
 
             init.AddAndSaveChanges(organization1, organization2, organization3, organization4);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -110,7 +110,7 @@ namespace Pims.Dal.Test.Services
 
             using var init = helper.InitializeDatabase(user);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -134,7 +134,7 @@ namespace Pims.Dal.Test.Services
             var organization = init.CreateOrganization(19, "TST");
             init.AddAndSaveChanges(organization);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -151,7 +151,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -170,7 +170,7 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
 
             var init = helper.InitializeDatabase(user);
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
 
             var orgType = init.PimsOrganizationTypes.First();
             var organization = EntityHelper.CreateOrganization(19, "TST", orgType);
@@ -192,7 +192,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -210,7 +210,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -233,7 +233,7 @@ namespace Pims.Dal.Test.Services
             var updatedOrganization = init.CreateOrganization(19, newName);
             updatedOrganization.ConcurrencyControlNumber = organization.ConcurrencyControlNumber;
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
 
             // Act
             service.Update(updatedOrganization);
@@ -251,7 +251,7 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
             var organization = EntityHelper.CreateOrganization(22, "TST");
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -275,7 +275,7 @@ namespace Pims.Dal.Test.Services
             var organization = EntityHelper.CreateOrganization(1, "TST");
             helper.CreatePimsContext(user, true).AddAndSaveChanges(organization);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -293,7 +293,7 @@ namespace Pims.Dal.Test.Services
             var organization = EntityHelper.CreateOrganization(1, "TST");
             helper.CreatePimsContext(user, true);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act
@@ -311,7 +311,7 @@ namespace Pims.Dal.Test.Services
             var organization = EntityHelper.CreateOrganization(19, "TST");
             helper.CreatePimsContext(user, true).AddAndSaveChanges(organization);
 
-            var service = helper.CreateService<OrganizationService>(user);
+            var service = helper.CreateService<UserOrganizationService>(user);
             var context = helper.GetService<PimsContext>();
 
             // Act

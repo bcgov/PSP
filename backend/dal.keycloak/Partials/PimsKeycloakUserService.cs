@@ -133,13 +133,13 @@ namespace Pims.Dal.Keycloak
             {
                 user.PimsUserOrganizations.ForEach(a =>
                 {
-                    addOrganizationIds = addOrganizationIds.Concat(_pimsService.Organization.GetChildren(a.OrganizationId).Select(a => a.Id).ToArray()).ToArray();
+                    addOrganizationIds = addOrganizationIds.Concat(_pimsService.UserOrganization.GetChildren(a.OrganizationId).Select(a => a.Id).ToArray()).ToArray();
                 });
             }
             // Each parent organization should add children organizations.
             addOrganizationIds.ForEach(id =>
             {
-                var childOrganizations = _pimsService.Organization.GetChildren(id).Select(a => a.Id).ToArray();
+                var childOrganizations = _pimsService.UserOrganization.GetChildren(id).Select(a => a.Id).ToArray();
                 addOrganizationIds = addOrganizationIds.Concat(childOrganizations).Distinct().ToArray();
             });
             // Don't incorrectly remove child organizations.
@@ -162,14 +162,14 @@ namespace Pims.Dal.Keycloak
             // Update Organizations
             addOrganizationIds.ForEach(oId =>
             {
-                var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
+                var organization = _pimsService.UserOrganization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
                 var roleId = user.PimsUserOrganizations.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
                 var role = _pimsService.Role.Find(roleId);
                 euser.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { User = euser, Organization = organization, Role = role });
             });
             removeOrganizationIds.ForEach(oId =>
             {
-                var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot remove an organization from a user, when the organization does not exist.");
+                var organization = _pimsService.UserOrganization.Find(oId) ?? throw new KeyNotFoundException("Cannot remove an organization from a user, when the organization does not exist.");
                 var userOrganization = euser.PimsUserOrganizations.FirstOrDefault(r => r.OrganizationId == organization.Id);
                 euser.PimsUserOrganizations.Remove(userOrganization);
             });
@@ -194,7 +194,7 @@ namespace Pims.Dal.Keycloak
             // Each parent organization should add children organizations.
             addOrganizationIds.ForEach(id =>
             {
-                var childOrganizations = _pimsService.Organization.GetChildren(id).Select(a => a.Id).ToArray();
+                var childOrganizations = _pimsService.UserOrganization.GetChildren(id).Select(a => a.Id).ToArray();
                 addOrganizationIds = addOrganizationIds.Concat(childOrganizations).Distinct().ToArray();
             });
 
@@ -217,7 +217,7 @@ namespace Pims.Dal.Keycloak
             // Update Organizations
             addOrganizationIds.ForEach(oId =>
             {
-                var organization = _pimsService.Organization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
+                var organization = _pimsService.UserOrganization.Find(oId) ?? throw new KeyNotFoundException("Cannot assign an organization to a user, when the organization does not exist.");
                 var roleId = update.PimsUserOrganizations.FirstOrDefault(o => o.OrganizationId == oId).RoleId;
                 var role = _pimsService.Role.Find(roleId);
                 euser.PimsUserOrganizations.Add(new Entity.PimsUserOrganization() { UserId = update.UserId, Organization = organization, Role = role });
@@ -315,11 +315,11 @@ namespace Pims.Dal.Keycloak
                     }
                 });
                 await AppendToUserAsync(user);
-                
+
             }
             update.User = user;
             update.Role = _pimsService.Role.Find(update.RoleId);
-            
+
             return _pimsService.AccessRequest.Update(update);
         }
     }

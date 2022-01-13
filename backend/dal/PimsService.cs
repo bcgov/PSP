@@ -23,7 +23,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The organization service.
         /// </summary>
-        public IOrganizationService Organization { get { return _serviceProvider.GetService<IOrganizationService>(); } }
+        public IUserOrganizationService UserOrganization { get { return _serviceProvider.GetService<IUserOrganizationService>(); } }
 
         /// <summary>
         /// get - The user calling the service.

@@ -7,7 +7,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IOrganizationService interface, provides a service layer to administer organizations within the datasource.
     /// </summary>
-    public interface IOrganizationService : IService<PimsOrganization>
+    public interface IUserOrganizationService : IService<PimsOrganization>
     {
         IEnumerable<PimsOrganization> GetAll();
         PimsOrganization Get(long id);
