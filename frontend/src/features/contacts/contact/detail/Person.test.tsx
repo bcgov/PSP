@@ -185,7 +185,7 @@ describe('Contact PersonView component', () => {
     // Verify that the display is in the correct order
     expect(phoneValueElements[0].textContent).toBe(phoneFormatter(workMobile.value));
     expect(phoneValueElements[1].textContent).toBe(phoneFormatter(workPhone.value));
-    expect(phoneValueElements[2].textContent).toBe(phoneFormatter(personalPhone.value));
+    expect(phoneValueElements[2].textContent).toBe(phoneFormatter(personalMobile.value));
     expect(phoneValueElements[3].textContent).toBe(phoneFormatter(faxPhone.value));
   });
 
