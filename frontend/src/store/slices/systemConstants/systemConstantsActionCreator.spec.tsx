@@ -2,15 +2,14 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { ORGANIZATION_TYPES } from 'constants/API';
 import { find, values } from 'lodash';
 import * as MOCK from 'mocks/dataMocks';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { useSystemConstants } from '.';
 
 import { networkSlice } from '../network/networkSlice';
+import { useSystemConstants } from '.';
 
 const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
 const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
