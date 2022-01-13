@@ -38,7 +38,7 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   const phoneTypes: Dictionary<string> = {};
   phoneTypes[ContactMethodTypes.WorkMobile] = 'Mobile';
   phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
-  phoneTypes[ContactMethodTypes.PersonalPhone] = 'Home';
+  phoneTypes[ContactMethodTypes.PersonalMobile] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
