@@ -17,9 +17,8 @@ export function hasAddress(values: ICreatePersonForm): boolean {
   );
 }
 
-export const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First Name is required'),
-  surname: Yup.string().required('Last Name is required'),
+// validation schema common to Persons and Organizations
+const baseSchema = Yup.object().shape({
   emailContactMethods: Yup.array().of(
     Yup.object().shape({
       value: Yup.string().email('Invalid email address'),
@@ -97,4 +96,13 @@ export const validationSchema = Yup.object().shape({
       then: Yup.string().required('Province/State is required'),
     }),
   }),
+});
+
+export const PersonValidationSchema = baseSchema.shape({
+  firstName: Yup.string().required('First Name is required'),
+  surname: Yup.string().required('Last Name is required'),
+});
+
+export const OrganizationValidationSchema = baseSchema.shape({
+  orgName: Yup.string().required('Organization Name is required'),
 });

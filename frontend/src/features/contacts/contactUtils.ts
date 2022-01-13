@@ -2,6 +2,8 @@ import {
   ICreateContactAddress,
   ICreateContactAddressForm,
   ICreateContactMethodForm,
+  ICreateOrganization,
+  ICreateOrganizationForm,
   ICreatePerson,
   ICreatePersonForm,
 } from 'interfaces/ICreateContact';
@@ -38,6 +40,38 @@ export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICre
   } as ICreatePerson;
 
   return apiPerson;
+}
+
+export function organizationCreateFormToApiOrganization(
+  formValues: ICreateOrganizationForm,
+): ICreateOrganization {
+  const {
+    mailingAddress,
+    propertyAddress,
+    billingAddress,
+    emailContactMethods,
+    phoneContactMethods,
+  } = formValues;
+
+  const addresses = [mailingAddress, propertyAddress, billingAddress]
+    .filter(hasAddress)
+    .map(addressFormToApiAddress);
+
+  const contactMethods = [...emailContactMethods, ...phoneContactMethods]
+    .filter(hasContactMethod)
+    .map(formContactMethod => ({
+      ...formContactMethod,
+      value: stringToNull(formContactMethod.value),
+      contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
+    }));
+
+  const apiOrganization = {
+    ...formValues,
+    addresses,
+    contactMethods,
+  } as ICreateOrganization;
+
+  return apiOrganization;
 }
 
 function hasContactMethod(formContactMethod: ICreateContactMethodForm): boolean {
