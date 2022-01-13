@@ -66,7 +66,6 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     renewalCount: parseInt(formLease.renewalCount.toString()) || 0,
     tfaFileNo: parseInt(formLease?.tfaFileNo?.toString() || '') || 0,
     amount: parseFloat(formLease.amount.toString()) || 0.0,
-    paymentFrequencyType: stringToTypeCode(formLease.paymentFrequencyType),
     paymentReceivableType: stringToTypeCode(formLease.paymentReceivableType),
     categoryType: stringToTypeCode(formLease.categoryType),
     purposeType: stringToTypeCode(formLease.purposeType),
@@ -92,7 +91,6 @@ export const apiLeaseToAddFormLease = (lease?: ILease) => {
   return !!lease
     ? ({
         ...lease,
-        paymentFrequencyType: lease.paymentFrequencyType?.id ?? '',
         paymentReceivableType: lease.paymentReceivableType?.id ?? '',
         categoryType: lease.categoryType?.id ?? '',
         purposeType: lease.purposeType?.id ?? '',

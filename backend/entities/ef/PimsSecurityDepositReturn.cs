@@ -10,9 +10,15 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_SECURITY_DEPOSIT_RETURN")]
     [Index(nameof(LeaseId), Name = "SDRTRN_LEASE_ID_IDX")]
+    [Index(nameof(SecurityDepositId), Name = "SDRTRN_SECURITY_DEPOSIT_ID_IDX")]
     [Index(nameof(SecurityDepositTypeCode), Name = "SDRTRN_SECURITY_DEPOSIT_TYPE_CODE_IDX")]
     public partial class PimsSecurityDepositReturn
     {
+        public PimsSecurityDepositReturn()
+        {
+            PimsSecurityDepositReturnHolders = new HashSet<PimsSecurityDepositReturnHolder>();
+        }
+
         [Key]
         [Column("SECURITY_DEPOSIT_RETURN_ID")]
         public long SecurityDepositReturnId { get; set; }
@@ -24,18 +30,12 @@ namespace Pims.Dal.Entities
         public string SecurityDepositTypeCode { get; set; }
         [Column("TERMINATION_DATE", TypeName = "datetime")]
         public DateTime TerminationDate { get; set; }
-        [Column("DEPOSIT_TOTAL", TypeName = "money")]
-        public decimal DepositTotal { get; set; }
         [Column("CLAIMS_AGAINST", TypeName = "money")]
         public decimal? ClaimsAgainst { get; set; }
         [Column("RETURN_AMOUNT", TypeName = "money")]
         public decimal ReturnAmount { get; set; }
         [Column("RETURN_DATE", TypeName = "datetime")]
         public DateTime ReturnDate { get; set; }
-        [Required]
-        [Column("CHEQUE_NUMBER")]
-        [StringLength(50)]
-        public string ChequeNumber { get; set; }
         [Required]
         [Column("PAYEE_NAME")]
         [StringLength(100)]
@@ -81,12 +81,19 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("SECURITY_DEPOSIT_ID")]
+        public long? SecurityDepositId { get; set; }
 
         [ForeignKey(nameof(LeaseId))]
         [InverseProperty(nameof(PimsLease.PimsSecurityDepositReturns))]
         public virtual PimsLease Lease { get; set; }
+        [ForeignKey(nameof(SecurityDepositId))]
+        [InverseProperty(nameof(PimsSecurityDeposit.PimsSecurityDepositReturns))]
+        public virtual PimsSecurityDeposit SecurityDeposit { get; set; }
         [ForeignKey(nameof(SecurityDepositTypeCode))]
         [InverseProperty(nameof(PimsSecurityDepositType.PimsSecurityDepositReturns))]
         public virtual PimsSecurityDepositType SecurityDepositTypeCodeNavigation { get; set; }
+        [InverseProperty(nameof(PimsSecurityDepositReturnHolder.SecurityDepositReturn))]
+        public virtual ICollection<PimsSecurityDepositReturnHolder> PimsSecurityDepositReturnHolders { get; set; }
     }
 }

@@ -76,7 +76,6 @@ namespace Pims.Dal.Services
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
-                .Include(l => l.LeasePmtFreqTypeCodeNavigation)
                 .Include(l => l.LeasePayRvblTypeCodeNavigation)
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
                 .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
@@ -115,7 +114,6 @@ namespace Pims.Dal.Services
                     .ThenInclude(i => i.InsuranceTypeCodeNavigation)
 
                 .Include(l => l.PimsSecurityDeposits)
-                    .ThenInclude(s => s.SecDepHolderTypeCodeNavigation)
                 .Include(l => l.PimsSecurityDeposits)
                     .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
                 .Include(l => l.PimsSecurityDepositReturns)

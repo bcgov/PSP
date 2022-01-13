@@ -15,6 +15,7 @@ namespace Pims.Dal.Entities
         {
             PimsAddresses = new HashSet<PimsAddress>();
             PimsDistricts = new HashSet<PimsDistrict>();
+            PimsLeases = new HashSet<PimsLease>();
             PimsOrganizations = new HashSet<PimsOrganization>();
             PimsProperties = new HashSet<PimsProperty>();
         }
@@ -50,6 +51,8 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsAddress> PimsAddresses { get; set; }
         [InverseProperty(nameof(PimsDistrict.RegionCodeNavigation))]
         public virtual ICollection<PimsDistrict> PimsDistricts { get; set; }
+        [InverseProperty(nameof(PimsLease.RegionCodeNavigation))]
+        public virtual ICollection<PimsLease> PimsLeases { get; set; }
         [InverseProperty(nameof(PimsOrganization.RegionCodeNavigation))]
         public virtual ICollection<PimsOrganization> PimsOrganizations { get; set; }
         [InverseProperty(nameof(PimsProperty.RegionCodeNavigation))]
