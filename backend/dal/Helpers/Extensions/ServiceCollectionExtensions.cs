@@ -25,6 +25,7 @@ namespace Pims.Dal
             services.AddScoped<Services.IPropertyService, Services.PropertyService>();
             services.AddScoped<Services.IProvinceService, Services.ProvinceService>();
             services.AddScoped<Services.ILookupService, Services.LookupService>();
+            services.AddScoped<Services.ISystemConstantService, Services.SystemConstantService>();
             services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
             services.AddScoped<Services.IPersonService, Services.PersonService>();
             services.AddScoped<Services.IUserService, Services.UserService>();

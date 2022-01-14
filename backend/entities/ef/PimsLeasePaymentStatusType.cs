@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsLeasePaymentStatusType()
         {
-            PimsLeasePaymentForecasts = new HashSet<PimsLeasePaymentForecast>();
+            PimsLeasePayments = new HashSet<PimsLeasePayment>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsLeasePaymentForecast.LeasePaymentStatusTypeCodeNavigation))]
-        public virtual ICollection<PimsLeasePaymentForecast> PimsLeasePaymentForecasts { get; set; }
+        [InverseProperty(nameof(PimsLeasePayment.LeasePaymentStatusTypeCodeNavigation))]
+        public virtual ICollection<PimsLeasePayment> PimsLeasePayments { get; set; }
     }
 }

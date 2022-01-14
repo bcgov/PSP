@@ -8,23 +8,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_LEASE_PAYMENT_PERIOD")]
-    public partial class PimsLeasePaymentPeriod
+    [Table("PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_HIST")]
+    [Index(nameof(SecurityDepositReturnHolderHistId), nameof(EndDateHist), Name = "PIMS_SCDPRH_H_UK", IsUnique = true)]
+    public partial class PimsSecurityDepositReturnHolderHist
     {
-        public PimsLeasePaymentPeriod()
-        {
-            PimsLeasePaymentForecasts = new HashSet<PimsLeasePaymentForecast>();
-            PimsLeasePayments = new HashSet<PimsLeasePayment>();
-        }
-
         [Key]
-        [Column("LEASE_PAYMENT_PERIOD_ID")]
-        public long LeasePaymentPeriodId { get; set; }
-        [Column("PERIOD_START_DATE", TypeName = "date")]
-        public DateTime PeriodStartDate { get; set; }
-        [Required]
-        [Column("IS_PERIOD_CLOSED")]
-        public bool? IsPeriodClosed { get; set; }
+        [Column("_SECURITY_DEPOSIT_RETURN_HOLDER_HIST_ID")]
+        public long SecurityDepositReturnHolderHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Column("SECURITY_DEPOSIT_RETURN_HOLDER_ID")]
+        public long SecurityDepositReturnHolderId { get; set; }
+        [Column("SECURITY_DEPOSIT_RETURN_ID")]
+        public long SecurityDepositReturnId { get; set; }
+        [Column("PERSON_ID")]
+        public long? PersonId { get; set; }
+        [Column("ORGANIZATION_ID")]
+        public long? OrganizationId { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -39,14 +41,14 @@ namespace Pims.Dal.Entities
         [Column("APP_CREATE_USER_DIRECTORY")]
         [StringLength(30)]
         public string AppCreateUserDirectory { get; set; }
-        [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
-        public DateTime AppLastUpdateTimestamp { get; set; }
+        [Column("APP_LAST_UPDATE_USER_GUID")]
+        public Guid? AppLastUpdateUserGuid { get; set; }
         [Required]
         [Column("APP_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string AppLastUpdateUserid { get; set; }
-        [Column("APP_LAST_UPDATE_USER_GUID")]
-        public Guid? AppLastUpdateUserGuid { get; set; }
+        [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
+        public DateTime AppLastUpdateTimestamp { get; set; }
         [Required]
         [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
         [StringLength(30)]
@@ -63,10 +65,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-
-        [InverseProperty(nameof(PimsLeasePaymentForecast.LeasePaymentPeriod))]
-        public virtual ICollection<PimsLeasePaymentForecast> PimsLeasePaymentForecasts { get; set; }
-        [InverseProperty(nameof(PimsLeasePayment.LeasePaymentPeriod))]
-        public virtual ICollection<PimsLeasePayment> PimsLeasePayments { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.ProgramName = src?.LeaseProgramTypeCodeNavigation?.Description;
             dest.PurposeType = src?.LeasePurposeTypeCodeNavigation?.Description;
             dest.StatusType = src?.LeaseStatusTypeCodeNavigation?.Description;
-            dest.PaymentFrequency = src?.LeasePmtFreqTypeCodeNavigation?.Description;
             dest.PsFileNo = src.PsFileNo;
             dest.InspectionNotes = src.InspectionNotes;
             dest.InspectionDate = src.InspectionDate;

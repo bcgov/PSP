@@ -29,18 +29,12 @@ namespace Pims.Dal.Entities
         public string SecurityDepositTypeCode { get; set; }
         [Column("TERMINATION_DATE", TypeName = "datetime")]
         public DateTime TerminationDate { get; set; }
-        [Column("DEPOSIT_TOTAL", TypeName = "money")]
-        public decimal DepositTotal { get; set; }
         [Column("CLAIMS_AGAINST", TypeName = "money")]
         public decimal? ClaimsAgainst { get; set; }
         [Column("RETURN_AMOUNT", TypeName = "money")]
         public decimal ReturnAmount { get; set; }
         [Column("RETURN_DATE", TypeName = "datetime")]
         public DateTime ReturnDate { get; set; }
-        [Required]
-        [Column("CHEQUE_NUMBER")]
-        [StringLength(50)]
-        public string ChequeNumber { get; set; }
         [Required]
         [Column("PAYEE_NAME")]
         [StringLength(100)]
@@ -86,5 +80,7 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("SECURITY_DEPOSIT_ID")]
+        public long? SecurityDepositId { get; set; }
     }
 }

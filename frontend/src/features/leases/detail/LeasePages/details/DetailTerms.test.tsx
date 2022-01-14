@@ -35,12 +35,10 @@ describe('DetailTermInformation component', () => {
         ...defaultFormLease,
         amount: 1000,
         renewalCount: 31,
-        paymentFrequencyType: { id: 'ANNUAL', description: 'Annual', isDisabled: false },
       },
     });
     expect(getByDisplayValue('1000')).toBeVisible();
     expect(getByDisplayValue('31')).toBeVisible();
-    expect(getByDisplayValue('Annual')).toBeVisible();
   });
   it('renders with the expected columns', () => {
     const {
