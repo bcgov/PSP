@@ -121,7 +121,7 @@ export const SubtleText = styled.span`
 export const ButtonGroup = styled(FlexBox)`
   width: 100%;
   padding: 1rem 4rem;
-  gap: '2rem';
+  gap: 2rem;
   justify-content: flex-end;
   align-items: stretch;
 `;
