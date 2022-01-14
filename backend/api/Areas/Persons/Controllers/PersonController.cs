@@ -51,7 +51,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult AddPerson([FromBody] Models.Person.PersonCreateModel model, bool userOverride = false)
+        public IActionResult AddPerson([FromBody] Models.Person.PersonModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);

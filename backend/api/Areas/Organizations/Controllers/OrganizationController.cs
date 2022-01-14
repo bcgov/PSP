@@ -51,7 +51,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "organization" })]
-        public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationCreateModel model, bool userOverride = false)
+        public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
@@ -65,13 +65,14 @@ namespace Pims.Api.Areas.Organizations.Controllers
 
             var entity = _mapper.Map<Dal.Entities.PimsOrganization>(model);
 
+            // FIXME: Missed requirements lead to hardcoding these values here. This needs to be fixed next sprint!
+            entity.OrganizationTypeCode = "OTHER";
+            entity.OrgIdentifierTypeCode = "OTHINCORPNO";
+
             try
             {
-                // FIXME: fix this
-                // var created = _pimsService.Organization.Add(entity, userOverride);
-
-                var created = entity;
-                var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(created);
+                var createdOrganization = _pimsService.Organization.Add(entity, userOverride);
+                var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);
             }

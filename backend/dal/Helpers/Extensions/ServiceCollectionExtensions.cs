@@ -29,6 +29,7 @@ namespace Pims.Dal
             services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
             services.AddScoped<Services.IUserOrganizationService, Services.UserOrganizationService>();
             services.AddScoped<Services.IPersonService, Services.PersonService>();
+            services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
             services.AddScoped<Services.IUserService, Services.UserService>();
             services.AddScoped<Services.IRoleService, Services.RoleService>();
             services.AddScoped<Services.IClaimService, Services.ClaimService>();

@@ -14,6 +14,7 @@ namespace Pims.Dal
 
         #region Accounts
         IPersonService Person { get; }
+        IOrganizationService Organization { get; }
         IUserOrganizationService UserOrganization { get; }
         ClaimsPrincipal Principal { get; }
         IUserService User { get; }

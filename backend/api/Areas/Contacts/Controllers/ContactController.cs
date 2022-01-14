@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Contact.Controllers
 
             if (contactView.OrganizationId.HasValue)
             {
-                var organization = _pimsService.UserOrganization.GetComplete(contactView.OrganizationId.Value);
+                var organization = _pimsService.Organization.Get(contactView.OrganizationId.Value);
                 var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
                 mappedOrganization.Id = contactView.Id;
                 return new JsonResult(mappedOrganization);

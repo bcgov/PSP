@@ -102,31 +102,6 @@ namespace Pims.Dal.Services
         }
 
         /// <summary>
-        /// Get the organization for the specified 'id' with reference objects.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <exception cref="KeyNotFoundException">Organization does not exists for the specified 'id'.</exception>
-        /// <returns></returns>
-        public PimsOrganization GetComplete(long id)
-        {
-            return this.Context.PimsOrganizations
-               .Include(o => o.PimsOrganizationAddresses)
-                   .ThenInclude(pa => pa.Address)
-                   .ThenInclude(a => a.Country)
-               .Include(o => o.PimsOrganizationAddresses)
-                   .ThenInclude(pa => pa.Address)
-                   .ThenInclude(a => a.ProvinceState)
-               .Include(o => o.PimsOrganizationAddresses)
-                   .ThenInclude(pa => pa.AddressUsageTypeCodeNavigation)
-               .Include(o => o.PimsPersonOrganizations)
-                   .ThenInclude(po => po.Person)
-               .Include(o => o.PimsContactMethods)
-                   .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
-               .Where(o => o.OrganizationId == id)
-               .FirstOrDefault() ?? throw new KeyNotFoundException();
-        }
-
-        /// <summary>
         /// Get all the child organizations for the specified 'parentId'.
         /// </summary>
         /// <param name="parentId"></param>
