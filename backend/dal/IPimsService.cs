@@ -10,6 +10,7 @@ namespace Pims.Dal
     {
         #region Properties
         ILookupService Lookup { get; }
+        ISystemConstantService SystemConstant { get; }
 
         #region Accounts
         IPersonService Person { get; }
