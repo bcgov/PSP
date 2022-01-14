@@ -97,7 +97,7 @@ namespace Pims.Dal.Services
             var createdPerson = this.Context.PimsPeople.Add(person);
             this.Context.CommitTransaction();
 
-            return createdPerson.Entity;
+            return Get(createdPerson.Entity.Id);
         }
         #endregion
     }
