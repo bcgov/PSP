@@ -11,8 +11,9 @@ GO
 
 INSERT INTO PIMS_INSURANCE_TYPE (INSURANCE_TYPE_CODE, DESCRIPTION)
 VALUES
-  (N'GENERAL',  N'Commercial General Liability (CGL)'),
-  (N'VEHICLE',  N'Vehicle Liability Coverage'),
-  (N'AIRCRAFT', N'Aircraft Liability Coverage'),
-  (N'MARINE',   N'Marine Liability Coverage'),
-  (N'OTHER',    N'Other Insurance Coverage');
+  (N'GENERAL',  N'Commercial General Liability (CGL)', 2),
+  (N'VEHICLE',  N'Vehicle Liability Coverage',         4),
+  (N'AIRCRAFT', N'Aircraft Liability Coverage',        1),
+  (N'MARINE',   N'Marine Liability Coverage',          3),
+  (N'OTHER',    N'Other Insurance Coverage',          99);
+  
