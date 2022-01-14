@@ -55,7 +55,7 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
@@ -84,7 +84,7 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.GetPage(It.IsAny<LeaseFilter>())).Returns(new Paged<Entity.PimsLease>(leases));
@@ -112,7 +112,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var request = helper.GetService<Mock<HttpRequest>>();
             request.Setup(m => m.QueryString).Returns(new QueryString("?page=0"));
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             // Act
             // Assert
@@ -130,7 +130,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var helper = new TestHelper();
             var controller = helper.CreateController<SearchController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             // Act
             // Assert

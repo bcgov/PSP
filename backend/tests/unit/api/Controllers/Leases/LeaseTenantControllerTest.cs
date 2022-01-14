@@ -37,7 +37,7 @@ namespace Pims.Api.Test.Controllers.Lease
             lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, PersonId = person.PersonId });
             lease.PimsLeaseTenants.Add(new Dal.Entities.PimsLeaseTenant() { LeaseId = lease.LeaseId, OrganizationId = organization.OrganizationId });
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.UpdateLeaseTenants(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease);

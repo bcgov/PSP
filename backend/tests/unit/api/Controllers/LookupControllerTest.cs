@@ -40,7 +40,7 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organization = new Entity.PimsOrganization
             {
                 OrganizationName = "Ministry of Health",
@@ -65,7 +65,7 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var propertyClassification = new Entity.PimsPropertyClassificationType
             {
                 Id = "Surplus Active",
@@ -90,7 +90,7 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var role = new Entity.PimsRole
             {
                 Id = 1,
@@ -118,7 +118,7 @@ namespace Pims.Api.Test.Controllers
             var controller = helper.CreateController<LookupController>(Permissions.PropertyView);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             var organization = EntityHelper.CreateOrganization(1, "organization");
             service.Setup(m => m.Lookup.GetOrganizations()).Returns(new[] { organization });

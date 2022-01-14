@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
     public class InsuranceController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -33,7 +33,7 @@ namespace Pims.Api.Areas.Insurance.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public InsuranceController(IPimsService pimsService, IMapper mapper)
+        public InsuranceController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;
