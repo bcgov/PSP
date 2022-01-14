@@ -1,4 +1,5 @@
 @import 'colors.scss';
+@import 'fonts.scss';
 
 html {
   font-size: 62.5%; // This sets 10px to 1rem. https://www.sitepoint.com/understanding-and-using-rem-units-in-css/
@@ -7,7 +8,7 @@ html {
 body {
   font-size: 1.6rem;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+  font-family: -apple-system, BlinkMacSystemFont, 'BCSans', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

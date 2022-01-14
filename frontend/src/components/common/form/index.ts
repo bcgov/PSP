@@ -1,3 +1,4 @@
+export * from './AsyncTypeahead';
 export * from './Button';
 export * from './Check';
 export * from './DisplayError';

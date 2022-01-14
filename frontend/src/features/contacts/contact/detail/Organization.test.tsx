@@ -86,7 +86,7 @@ describe('Contact OrganizationView component', () => {
       id: 1,
       rowVersion: 0,
       contactMethodType: {
-        id: ContactMethodTypes.PerseEmail,
+        id: ContactMethodTypes.PersonalEmail,
         description: 'Personal Email',
         isDisabled: false,
       },
@@ -134,7 +134,7 @@ describe('Contact OrganizationView component', () => {
       id: 2,
       rowVersion: 0,
       contactMethodType: {
-        id: ContactMethodTypes.PersPhone,
+        id: ContactMethodTypes.PersonalPhone,
         description: 'Personal Phone',
         isDisabled: false,
       },
@@ -154,7 +154,7 @@ describe('Contact OrganizationView component', () => {
       id: 4,
       rowVersion: 0,
       contactMethodType: {
-        id: ContactMethodTypes.WorkMobil,
+        id: ContactMethodTypes.WorkMobile,
         description: 'Work mobil',
         isDisabled: false,
       },
@@ -164,7 +164,7 @@ describe('Contact OrganizationView component', () => {
       id: 5,
       rowVersion: 0,
       contactMethodType: {
-        id: ContactMethodTypes.PerseMobil,
+        id: ContactMethodTypes.PersonalMobile,
         description: 'Personal Mobile',
         isDisabled: false,
       },

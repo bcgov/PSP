@@ -10,6 +10,7 @@ namespace Pims.Dal
     {
         #region Properties
         ILookupService Lookup { get; }
+        ISystemConstantService SystemConstant { get; }
 
         #region Accounts
         IPersonService Person { get; }
@@ -35,6 +36,10 @@ namespace Pims.Dal
 
         #region Insurance
         IInsuranceService Insurance { get; }
+        #endregion
+
+        #region Autocomplete
+        IAutocompleteService Autocomplete { get; }
         #endregion
 
         #region Configuration

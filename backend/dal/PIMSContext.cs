@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Pims.Dal.Entities;
@@ -50,12 +50,8 @@ namespace Pims.Dal
         public virtual DbSet<PimsLeaseLicenseType> PimsLeaseLicenseTypes { get; set; }
         public virtual DbSet<PimsLeasePayRvblType> PimsLeasePayRvblTypes { get; set; }
         public virtual DbSet<PimsLeasePayment> PimsLeasePayments { get; set; }
-        public virtual DbSet<PimsLeasePaymentForecast> PimsLeasePaymentForecasts { get; set; }
-        public virtual DbSet<PimsLeasePaymentForecastHist> PimsLeasePaymentForecastHists { get; set; }
         public virtual DbSet<PimsLeasePaymentHist> PimsLeasePaymentHists { get; set; }
         public virtual DbSet<PimsLeasePaymentMethodType> PimsLeasePaymentMethodTypes { get; set; }
-        public virtual DbSet<PimsLeasePaymentPeriod> PimsLeasePaymentPeriods { get; set; }
-        public virtual DbSet<PimsLeasePaymentPeriodHist> PimsLeasePaymentPeriodHists { get; set; }
         public virtual DbSet<PimsLeasePaymentStatusType> PimsLeasePaymentStatusTypes { get; set; }
         public virtual DbSet<PimsLeasePmtFreqType> PimsLeasePmtFreqTypes { get; set; }
         public virtual DbSet<PimsLeaseProgramType> PimsLeaseProgramTypes { get; set; }
@@ -125,11 +121,14 @@ namespace Pims.Dal
         public virtual DbSet<PimsRoleClaim> PimsRoleClaims { get; set; }
         public virtual DbSet<PimsRoleClaimHist> PimsRoleClaimHists { get; set; }
         public virtual DbSet<PimsRoleHist> PimsRoleHists { get; set; }
-        public virtual DbSet<PimsSecDepHolderType> PimsSecDepHolderTypes { get; set; }
         public virtual DbSet<PimsSecurityDeposit> PimsSecurityDeposits { get; set; }
         public virtual DbSet<PimsSecurityDepositHist> PimsSecurityDepositHists { get; set; }
+        public virtual DbSet<PimsSecurityDepositHolder> PimsSecurityDepositHolders { get; set; }
+        public virtual DbSet<PimsSecurityDepositHolderHist> PimsSecurityDepositHolderHists { get; set; }
         public virtual DbSet<PimsSecurityDepositReturn> PimsSecurityDepositReturns { get; set; }
         public virtual DbSet<PimsSecurityDepositReturnHist> PimsSecurityDepositReturnHists { get; set; }
+        public virtual DbSet<PimsSecurityDepositReturnHolder> PimsSecurityDepositReturnHolders { get; set; }
+        public virtual DbSet<PimsSecurityDepositReturnHolderHist> PimsSecurityDepositReturnHolderHists { get; set; }
         public virtual DbSet<PimsSecurityDepositType> PimsSecurityDepositTypes { get; set; }
         public virtual DbSet<PimsStaticVariable> PimsStaticVariables { get; set; }
         public virtual DbSet<PimsSurplusDeclarationType> PimsSurplusDeclarationTypes { get; set; }
@@ -797,8 +796,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.MotiContact).HasComment("Contact of the MoTI person associated with the lease");
 
-                entity.Property(e => e.MotiRegion).HasComment("MoTI region associated with the lease");
-
                 entity.Property(e => e.OrigExpiryDate).HasComment("Original expiry date of the lease/license");
 
                 entity.Property(e => e.OrigStartDate).HasComment("Original start date of the lease/license");
@@ -810,6 +807,8 @@ namespace Pims.Dal
                 entity.Property(e => e.OtherLeasePurposeType).HasComment("Description of a non-standard lease purpose type");
 
                 entity.Property(e => e.PsFileNo).HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
+
+                entity.Property(e => e.RegionCode).HasComment("MoTI region associated with the lease");
 
                 entity.Property(e => e.ResponsibilityEffectiveDate).HasComment("Date current responsibility came into effect for this lease");
 
@@ -825,6 +824,7 @@ namespace Pims.Dal
                 entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
                     .HasForeignKey(d => d.LeaseInitiatorTypeCode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation)
@@ -838,11 +838,6 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.LeasePayRvblTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSPRTY_PIM_LEASE_FK");
-
-                entity.HasOne(d => d.LeasePmtFreqTypeCodeNavigation)
-                    .WithMany(p => p.PimsLeases)
-                    .HasForeignKey(d => d.LeasePmtFreqTypeCode)
-                    .HasConstraintName("PIM_LSPMTF_PIM_LEASE_FK");
 
                 entity.HasOne(d => d.LeaseProgramTypeCodeNavigation)
                     .WithMany(p => p.PimsLeases)
@@ -866,6 +861,11 @@ namespace Pims.Dal
                     .HasForeignKey(d => d.LeaseStatusTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSSTYP_PIM_LEASE_FK");
+
+                entity.HasOne(d => d.RegionCodeNavigation)
+                    .WithMany(p => p.PimsLeases)
+                    .HasForeignKey(d => d.RegionCode)
+                    .HasConstraintName("PIM_REGION_PIM_LEASE_FK");
             });
 
             modelBuilder.Entity<PimsLeaseCategoryType>(entity =>
@@ -985,81 +985,34 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.Note).HasComment("Notes regarding this payment");
+
+                entity.Property(e => e.PaymentAmountGst).HasComment("GST owing on payment if applicable");
+
+                entity.Property(e => e.PaymentAmountPreTax).HasComment("Principal amount of the payment before applicable taxes");
+
+                entity.Property(e => e.PaymentAmountPst).HasComment("PST owing on payment if applicable");
+
+                entity.Property(e => e.PaymentAmountTotal).HasComment("Total amount of payment including principal plus all applicable taxes");
+
+                entity.Property(e => e.PaymentReceivedDate).HasComment("Date the payment was received or sent");
+
                 entity.HasOne(d => d.LeasePaymentMethodTypeCodeNavigation)
                     .WithMany(p => p.PimsLeasePayments)
                     .HasForeignKey(d => d.LeasePaymentMethodTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSPMMT_PIM_LSPYMT_FK");
 
-                entity.HasOne(d => d.LeasePaymentPeriod)
+                entity.HasOne(d => d.LeasePaymentStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsLeasePayments)
-                    .HasForeignKey(d => d.LeasePaymentPeriodId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_LPYPER_PIM_LSPYMT_FK");
+                    .HasForeignKey(d => d.LeasePaymentStatusTypeCode)
+                    .HasConstraintName("PIM_LPSTST_PIM_LSPYMT_FK");
 
                 entity.HasOne(d => d.LeaseTerm)
                     .WithMany(p => p.PimsLeasePayments)
                     .HasForeignKey(d => d.LeaseTermId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LSTERM_PIM_LSPYMT_FK");
-            });
-
-            modelBuilder.Entity<PimsLeasePaymentForecast>(entity =>
-            {
-                entity.HasKey(e => e.LeasePaymentForecastId)
-                    .HasName("LPFCST_PK");
-
-                entity.Property(e => e.LeasePaymentForecastId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.HasOne(d => d.LeasePaymentPeriod)
-                    .WithMany(p => p.PimsLeasePaymentForecasts)
-                    .HasForeignKey(d => d.LeasePaymentPeriodId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_LPYPER_PIM_LPFCST_FK");
-
-                entity.HasOne(d => d.LeasePaymentStatusTypeCodeNavigation)
-                    .WithMany(p => p.PimsLeasePaymentForecasts)
-                    .HasForeignKey(d => d.LeasePaymentStatusTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_LPSTST_PIM_LPFCST_FK");
-
-                entity.HasOne(d => d.LeaseTerm)
-                    .WithMany(p => p.PimsLeasePaymentForecasts)
-                    .HasForeignKey(d => d.LeaseTermId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_LSTERM_PIM_LPFCST_FK");
-            });
-
-            modelBuilder.Entity<PimsLeasePaymentForecastHist>(entity =>
-            {
-                entity.HasKey(e => e.LeasePaymentForecastHistId)
-                    .HasName("PIMS_LPFCST_H_PK");
-
-                entity.Property(e => e.LeasePaymentForecastHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_FORECAST_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeasePaymentHist>(entity =>
@@ -1096,48 +1049,6 @@ namespace Pims.Dal
                 entity.Property(e => e.IsDisabled)
                     .HasDefaultValueSql("(CONVERT([bit],(0)))")
                     .HasComment("Is this code disabled?");
-            });
-
-            modelBuilder.Entity<PimsLeasePaymentPeriod>(entity =>
-            {
-                entity.HasKey(e => e.LeasePaymentPeriodId)
-                    .HasName("LPYPER_PK");
-
-                entity.Property(e => e.LeasePaymentPeriodId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_PERIOD_ID_SEQ])");
-
-                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsPeriodClosed).HasDefaultValueSql("(CONVERT([bit],(0)))");
-            });
-
-            modelBuilder.Entity<PimsLeasePaymentPeriodHist>(entity =>
-            {
-                entity.HasKey(e => e.LeasePaymentPeriodHistId)
-                    .HasName("PIMS_LPYPER_H_PK");
-
-                entity.Property(e => e.LeasePaymentPeriodHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_PERIOD_H_ID_SEQ])");
-
-                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsLeasePaymentStatusType>(entity =>
@@ -1361,6 +1272,18 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
+                entity.Property(e => e.IsGstEligible).HasComment("Is the lease subject to GST?");
+
+                entity.Property(e => e.IsTermExercised).HasComment("Has the lease term been exercised?");
+
+                entity.Property(e => e.LeasePmtFreqTypeCode).HasComment("Foreign key to payment frequency values");
+
+                entity.Property(e => e.PaymentAmount).HasComment("Agreed-to payment amount (exclusive of GST)");
+
+                entity.Property(e => e.PaymentDueDate).HasComment("Anecdotal description of payment due date (e.g. 1st of month, end of month)");
+
+                entity.Property(e => e.PaymentNote).HasComment("Notes regarding payment status for the lease term");
+
                 entity.Property(e => e.TermExpiryDate).HasComment("Expiry date of the current term of the lease/licence");
 
                 entity.Property(e => e.TermRenewalDate).HasComment("Renewal date of the current term of the lease/licence");
@@ -1373,10 +1296,14 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LEASE_PIM_LSTERM_FK");
 
+                entity.HasOne(d => d.LeasePmtFreqTypeCodeNavigation)
+                    .WithMany(p => p.PimsLeaseTerms)
+                    .HasForeignKey(d => d.LeasePmtFreqTypeCode)
+                    .HasConstraintName("PIM_LSPMTF_PIM_LSTERM_FK");
+
                 entity.HasOne(d => d.LeaseTermStatusTypeCodeNavigation)
                     .WithMany(p => p.PimsLeaseTerms)
                     .HasForeignKey(d => d.LeaseTermStatusTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LTRMST_PIM_LSTERM_FK");
             });
 
@@ -2798,24 +2725,6 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
-            modelBuilder.Entity<PimsSecDepHolderType>(entity =>
-            {
-                entity.HasKey(e => e.SecDepHolderTypeCode)
-                    .HasName("SCHLDT_PK");
-
-                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-
-                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
-            });
-
             modelBuilder.Entity<PimsSecurityDeposit>(entity =>
             {
                 entity.HasKey(e => e.SecurityDepositId)
@@ -2851,12 +2760,6 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LEASE_PIM_SECDEP_FK");
 
-                entity.HasOne(d => d.SecDepHolderTypeCodeNavigation)
-                    .WithMany(p => p.PimsSecurityDeposits)
-                    .HasForeignKey(d => d.SecDepHolderTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_SCHLDT_PIM_SECDEP_FK");
-
                 entity.HasOne(d => d.SecurityDepositTypeCodeNavigation)
                     .WithMany(p => p.PimsSecurityDeposits)
                     .HasForeignKey(d => d.SecurityDepositTypeCode)
@@ -2870,6 +2773,62 @@ namespace Pims.Dal
                     .HasName("PIMS_SECDEP_H_PK");
 
                 entity.Property(e => e.SecurityDepositHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsSecurityDepositHolder>(entity =>
+            {
+                entity.HasKey(e => e.SecurityDepositHolderId)
+                    .HasName("SCDPHL_PK");
+
+                entity.Property(e => e.SecurityDepositHolderId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_HOLDER_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsSecurityDepositHolders)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_SCDPHL_FK");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsSecurityDepositHolders)
+                    .HasForeignKey(d => d.PersonId)
+                    .HasConstraintName("PIM_PERSON_PIM_SCDPHL_FK");
+
+                entity.HasOne(d => d.SecurityDeposit)
+                    .WithMany(p => p.PimsSecurityDepositHolders)
+                    .HasForeignKey(d => d.SecurityDepositId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_SECDEP_PIM_SCDPHL_FK");
+            });
+
+            modelBuilder.Entity<PimsSecurityDepositHolderHist>(entity =>
+            {
+                entity.HasKey(e => e.SecurityDepositHolderHistId)
+                    .HasName("PIMS_SCDPHL_H_PK");
+
+                entity.Property(e => e.SecurityDepositHolderHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_HOLDER_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -2893,8 +2852,6 @@ namespace Pims.Dal
 
                 entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.ChequeNumber).HasComment("Cheque number of the deposit return");
-
                 entity.Property(e => e.ClaimsAgainst).HasComment("Amount of claims against the deposit");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
@@ -2906,8 +2863,6 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-
-                entity.Property(e => e.DepositTotal).HasComment("Total amount of the pet/security deposit (including interest)");
 
                 entity.Property(e => e.PayeeAddress).HasComment("Address of cheque recipient");
 
@@ -2925,6 +2880,11 @@ namespace Pims.Dal
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_LEASE_PIM_SDRTRN_FK");
 
+                entity.HasOne(d => d.SecurityDeposit)
+                    .WithMany(p => p.PimsSecurityDepositReturns)
+                    .HasForeignKey(d => d.SecurityDepositId)
+                    .HasConstraintName("PIM_SECDEP_PIM_SDRTRN_FK");
+
                 entity.HasOne(d => d.SecurityDepositTypeCodeNavigation)
                     .WithMany(p => p.PimsSecurityDepositReturns)
                     .HasForeignKey(d => d.SecurityDepositTypeCode)
@@ -2938,6 +2898,62 @@ namespace Pims.Dal
                     .HasName("PIMS_SDRTRN_H_PK");
 
                 entity.Property(e => e.SecurityDepositReturnHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            });
+
+            modelBuilder.Entity<PimsSecurityDepositReturnHolder>(entity =>
+            {
+                entity.HasKey(e => e.SecurityDepositReturnHolderId)
+                    .HasName("SCDPRH_PK");
+
+                entity.Property(e => e.SecurityDepositReturnHolderId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_ID_SEQ])");
+
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.PimsSecurityDepositReturnHolders)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("PIM_ORG_PIM_SCDPRH_FK");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.PimsSecurityDepositReturnHolders)
+                    .HasForeignKey(d => d.PersonId)
+                    .HasConstraintName("PIM_PERSON_PIM_SCDPRH_FK");
+
+                entity.HasOne(d => d.SecurityDepositReturn)
+                    .WithMany(p => p.PimsSecurityDepositReturnHolders)
+                    .HasForeignKey(d => d.SecurityDepositReturnId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("PIM_SDRTRN_PIM_SCDPRH_FK");
+            });
+
+            modelBuilder.Entity<PimsSecurityDepositReturnHolderHist>(entity =>
+            {
+                entity.HasKey(e => e.SecurityDepositReturnHolderHistId)
+                    .HasName("PIMS_SCDPRH_H_PK");
+
+                entity.Property(e => e.SecurityDepositReturnHolderHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_H_ID_SEQ])");
 
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
@@ -3171,7 +3187,6 @@ namespace Pims.Dal
                 entity.Property(e => e.Code).HasComment("Code value for entry");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3724,11 +3739,27 @@ namespace Pims.Dal
                 .HasMin(1)
                 .HasMax(2147483647);
 
+            modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_HOLDER_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_HOLDER_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
             modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_RETURN_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_H_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

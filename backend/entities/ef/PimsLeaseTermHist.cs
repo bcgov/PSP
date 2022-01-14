@@ -23,7 +23,6 @@ namespace Pims.Dal.Entities
         public long LeaseTermId { get; set; }
         [Column("LEASE_ID")]
         public long LeaseId { get; set; }
-        [Required]
         [Column("LEASE_TERM_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseTermStatusTypeCode { get; set; }
@@ -71,5 +70,20 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("LEASE_PMT_FREQ_TYPE_CODE")]
+        [StringLength(20)]
+        public string LeasePmtFreqTypeCode { get; set; }
+        [Column("PAYMENT AMOUNT", TypeName = "money")]
+        public decimal? PaymentAmount { get; set; }
+        [Column("PAYMENT_DUE_DATE")]
+        [StringLength(200)]
+        public string PaymentDueDate { get; set; }
+        [Column("PAYMENT_NOTE")]
+        [StringLength(2000)]
+        public string PaymentNote { get; set; }
+        [Column("IS_GST_ELIGIBLE")]
+        public bool? IsGstEligible { get; set; }
+        [Column("IS_TERM_EXERCISED")]
+        public bool? IsTermExercised { get; set; }
     }
 }

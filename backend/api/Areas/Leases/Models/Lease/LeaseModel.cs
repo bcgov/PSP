@@ -38,12 +38,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string MotiName { get; set; }
 
         /// <summary>
-        /// get/set - The string value of the moti region, user assigned.
-        /// </summary>
-        /// <value></value>
-        public string MotiRegion { get; set; }
-
-        /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
         /// <value></value>
@@ -141,11 +135,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// </summary>
         /// <value></value>
         public TypeModel<string> PaymentReceivableType { get; set; }
-
-        /// <summary>
-        /// get/set - The lease payment frequency type.
-        /// </summary>
-        public TypeModel<string> PaymentFrequencyType { get; set; }
 
         /// <summary>
         /// get/set - The entity that initiated this lease.
@@ -256,6 +245,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - Whether this improvement is of type other.
         /// </summary>
         public bool IsOtherImprovement { get; set; }
+        public bool HasPhysicalFile { get; set; }
+        public bool HasDigitalFile { get; set; }
+        public bool HasPhysicalLicense { get; set; }
+        public bool HasDigitalLicense { get; set; }
+        public bool IsExpired { get; set; }
         #endregion
     }
 }

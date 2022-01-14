@@ -28,6 +28,9 @@ export const DELETE_BUILDING = 'DELETE_BUILDING';
 export const STORE_LOOKUP_CODE_RESULTS = 'STORE_LOOKUP_CODE_RESULTS';
 export const GET_LOOKUP_CODES = 'lookupCodes';
 
+// System Constants
+export const GET_SYSTEM_CONSTANTS = 'systemConstants';
+
 // Organizations
 export const STORE_ORGANIZATION_RESULTS = 'STORE_ORGANIZATION_RESULTS';
 export const STORE_ORGANIZATION_DETAILS = 'STORE_ORGANIZATION_DETAILS';

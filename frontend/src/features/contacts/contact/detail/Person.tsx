@@ -36,16 +36,16 @@ interface AddressField {
 
 const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   const phoneTypes: Dictionary<string> = {};
-  phoneTypes[ContactMethodTypes.WorkMobil] = 'Mobile';
+  phoneTypes[ContactMethodTypes.WorkMobile] = 'Mobile';
   phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
-  phoneTypes[ContactMethodTypes.PersPhone] = 'Home';
+  phoneTypes[ContactMethodTypes.PersonalPhone] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
 
   const emailTypes: Dictionary<string> = {};
   emailTypes[ContactMethodTypes.WorkEmail] = 'Work';
-  emailTypes[ContactMethodTypes.PerseEmail] = 'Personal';
+  emailTypes[ContactMethodTypes.PersonalEmail] = 'Personal';
   const personEmails: ContactInfoField[] = getContactInfo(person, emailTypes);
 
   let personAddresses: AddressField[];
