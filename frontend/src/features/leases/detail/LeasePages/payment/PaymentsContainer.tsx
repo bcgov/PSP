@@ -4,8 +4,6 @@ import { noop } from 'lodash';
 import * as React from 'react';
 import { useContext, useState } from 'react';
 
-import { useLeaseTerms } from './hooks/useTerms';
-import AddUpdatePaymentModal from './modal/PaymentModal';
 import { PaymentsForm } from './table/PaymentsForm';
 
 interface IPaymentsContainerProps {}
