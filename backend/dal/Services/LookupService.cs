@@ -54,7 +54,7 @@ namespace Pims.Dal.Services
         /// </summary>
         public IEnumerable<PimsProvinceState> GetProvinces()
         {
-            return this.Context.PimsProvinceStates.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
+            return this.Context.PimsProvinceStates.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Pims.Dal.Services
 
         public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
         {
-            return this.Context.PimsContactMethodTypes.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
+            return this.Context.PimsContactMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
         }
 
         public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
