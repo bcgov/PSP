@@ -31,7 +31,6 @@ jobs:
   
   notify:
     name: Notify Teams Channel
-    needs: deploy
     if: always()
     runs-on: ubuntu-latest
     
