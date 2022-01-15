@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import * as Styled from '../../styles';
 import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
+import CreateOrganizationForm from './Organization/CreateOrganizationForm';
 import CreatePersonForm from './Person/CreatePersonForm';
 
 export interface IContactCreateContainerProps {}
@@ -25,8 +26,8 @@ export const ContactCreateContainer: React.FunctionComponent<IContactCreateConta
         setContactType={setContactType}
       ></ContactTypeSelector>
 
-      {/* TODO: Render Person Form or Organization Form depending on type query param */}
-      <CreatePersonForm />
+      {contactType === ContactTypes.INDIVIDUAL && <CreatePersonForm />}
+      {contactType === ContactTypes.ORGANIZATION && <CreateOrganizationForm />}
     </ContactLayout>
   );
 };

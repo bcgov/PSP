@@ -20,7 +20,7 @@ export interface ICreateOrganization {
   id?: number;
   name: string;
   alias?: string;
-  IncorporationNumber?: string;
+  incorporationNumber?: string;
   comment?: string;
   isDisabled: boolean;
   addresses?: ICreateContactAddress[];
@@ -143,7 +143,7 @@ export const defaultCreateOrganization: ICreateOrganizationForm = {
   isDisabled: false,
   name: '',
   alias: '',
-  IncorporationNumber: '',
+  incorporationNumber: '',
   comment: '',
   emailContactMethods: [
     {

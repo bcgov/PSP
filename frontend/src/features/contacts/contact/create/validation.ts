@@ -104,5 +104,5 @@ export const PersonValidationSchema = baseSchema.shape({
 });
 
 export const OrganizationValidationSchema = baseSchema.shape({
-  orgName: Yup.string().required('Organization Name is required'),
+  name: Yup.string().required('Organization Name is required'),
 });

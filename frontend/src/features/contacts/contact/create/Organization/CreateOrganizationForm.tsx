@@ -1,4 +1,4 @@
-import { AsyncTypeahead, Button, Input } from 'components/common/form';
+import { Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -13,6 +13,12 @@ import {
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
 import * as Styled from 'features/contacts/contact/create/styles';
+import {
+  hasAddress,
+  hasEmail,
+  hasPhoneNumber,
+  OrganizationValidationSchema,
+} from 'features/contacts/contact/create/validation';
 import { organizationCreateFormToApiOrganization } from 'features/contacts/contactUtils';
 import useAddContact from 'features/contacts/hooks/useAddContact';
 import {
@@ -23,16 +29,11 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
-import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/ICreateContact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
-
-import { hasAddress, hasEmail, hasPhoneNumber, PersonValidationSchema } from '../validation';
 
 export interface ICreateOrganizationFormProps {}
 
@@ -41,7 +42,7 @@ export interface ICreateOrganizationFormProps {}
  */
 export const CreateOrganizationForm: React.FunctionComponent<ICreateOrganizationFormProps> = props => {
   const history = useHistory();
-  const { addPerson } = useAddContact();
+  const { addOrganization } = useAddContact();
 
   const [showDuplicateModal, setDuplicateModal] = useState(false);
   const [allowDuplicate, setAllowDuplicate] = useState(false);
@@ -57,14 +58,15 @@ export const CreateOrganizationForm: React.FunctionComponent<ICreateOrganization
 
   const onValidate = (values: ICreateOrganizationForm) => {
     try {
-      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
+      validateYupSchema(values, OrganizationValidationSchema, true, {
+        otherCountry: otherCountryId,
+      });
       // combine yup schema validation with custom rules
       const errors = {} as any;
-      // FIXME:
-      // if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
-      //   errors.needsContactMethod =
-      //     'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
-      // }
+      if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
+        errors.needsContactMethod =
+          'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
+      }
       return errors;
     } catch (err) {
       return yupToFormErrors(err);
@@ -72,19 +74,22 @@ export const CreateOrganizationForm: React.FunctionComponent<ICreateOrganization
   };
 
   const onSubmit = async (
-    formOrg: ICreateOrganizationForm,
-    { resetForm, setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
+    formOrganization: ICreateOrganizationForm,
+    { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
   ) => {
     try {
       setDuplicateModal(false);
-      let newOrganization = organizationCreateFormToApiOrganization(formOrg);
+      let newOrganization = organizationCreateFormToApiOrganization(formOrganization);
 
-      // TODO: FIXME:
-      // const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+      const organizationResponse = await addOrganization(
+        newOrganization,
+        setDuplicateModal,
+        allowDuplicate,
+      );
 
-      // if (!!personResponse?.id) {
-      //   history.push('/contact/list');
-      // }
+      if (!!organizationResponse?.id) {
+        history.push('/contact/list');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -133,28 +138,6 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  // organization type-ahead state
-  const { getOrganizationPredictions } = useApiAutocomplete();
-  const [isTypeaheadLoading, setIsTypeaheadLoading] = useState(false);
-  const [matchedOrgs, setMatchedOrgs] = useState<IAutocompletePrediction[]>([]);
-
-  // fetch autocomplete suggestions from server
-  const handleTypeaheadSearch = async (query: string) => {
-    try {
-      setIsTypeaheadLoading(true);
-      const { data } = await getOrganizationPredictions(query);
-      setMatchedOrgs(data.predictions);
-      setIsTypeaheadLoading(false);
-    } catch (e) {
-      setMatchedOrgs([]);
-      toast.error('Failed to get autocomplete results for supplied organization', {
-        autoClose: 7000,
-      });
-    } finally {
-      setIsTypeaheadLoading(false);
-    }
-  };
-
   const onCancel = () => {
     if (dirty) {
       setShowConfirmation(true);
@@ -185,37 +168,20 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
           <FlexBox column gap="1.6rem">
             <FormSection>
               <Row>
-                <Col md={4}>
-                  <Input field="firstName" label="First Name" required />
-                </Col>
-                <Col md={3}>
-                  <Input field="middleNames" label="Middle" />
-                </Col>
                 <Col>
-                  <Input field="surname" label="Last Name" required />
+                  <Input field="name" label="Organization Name" required />
                 </Col>
               </Row>
               <Row>
-                <Col md={7}>
-                  <Input field="preferredName" label="Preferred Name" />
+                <Col>
+                  <Input field="alias" label="Alias" />
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>
+                  <Input field="incorporationNumber" label="Incorporation Number" />
                 </Col>
                 <Col></Col>
-              </Row>
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Organization</Styled.H2>
-              <Row>
-                <Col md={7}>
-                  <AsyncTypeahead
-                    field="organizationId"
-                    label="Link to an existing organization"
-                    labelKey="text"
-                    isLoading={isTypeaheadLoading}
-                    options={matchedOrgs}
-                    onSearch={handleTypeaheadSearch}
-                  />
-                </Col>
               </Row>
             </FormSection>
 
