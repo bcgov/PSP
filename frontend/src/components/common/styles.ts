@@ -55,12 +55,14 @@ export const IconButton = styled(Button)`
  * Styled component to help with basic flexbox layouts (rows or columns).
  * For more specific use cases, override it via styled(FlexBox)
  */
-export const FlexBox = styled.div<{
+export interface IFlexBoxProps {
   inline?: boolean;
   column?: boolean;
   center?: boolean;
   gap?: CSSProperties['gap'];
-}>`
+}
+
+export const FlexBox = styled.div<IFlexBoxProps>`
   display: ${props => (props.inline ? 'inline-flex' : 'flex')};
   flex-direction: ${props => (props.column ? 'column' : 'row')};
   ${props =>

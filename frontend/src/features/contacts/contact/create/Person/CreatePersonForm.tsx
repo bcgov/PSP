@@ -13,6 +13,12 @@ import {
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
 import * as Styled from 'features/contacts/contact/create/styles';
+import {
+  hasAddress,
+  hasEmail,
+  hasPhoneNumber,
+  PersonValidationSchema,
+} from 'features/contacts/contact/create/validation';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
 import useAddContact from 'features/contacts/hooks/useAddContact';
 import {
@@ -31,8 +37,6 @@ import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import { hasAddress, hasEmail, hasPhoneNumber, PersonValidationSchema } from '../validation';
 
 export interface ICreatePersonFormProps {}
 
@@ -72,7 +76,7 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
 
   const onSubmit = async (
     formPerson: ICreatePersonForm,
-    { resetForm, setSubmitting }: FormikHelpers<ICreatePersonForm>,
+    { setSubmitting }: FormikHelpers<ICreatePersonForm>,
   ) => {
     try {
       setDuplicateModal(false);
