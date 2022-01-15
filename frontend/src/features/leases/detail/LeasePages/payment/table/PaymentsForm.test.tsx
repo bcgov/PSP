@@ -1,17 +1,10 @@
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultFormLeaseTerm, defaultLease, IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
-import React from 'react';
-import {
-  getAllByRole as getAllByRoleBase,
-  renderAsync,
-  RenderOptions,
-  within,
-} from 'utils/test-utils';
+import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import PaymentsForm from './PaymentsForm';
 import { IPaymentFormProps } from './PaymentsForm';

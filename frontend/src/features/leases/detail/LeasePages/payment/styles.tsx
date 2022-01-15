@@ -1,5 +1,4 @@
 import { Table } from 'components/Table';
-import { ILeaseTerm } from 'interfaces/ILeaseTerm';
 import styled from 'styled-components';
 
 export const StyledFormBody = styled.div`

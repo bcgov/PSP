@@ -1,9 +1,8 @@
-import { Button } from 'components/common/form';
 import { TableProps } from 'components/Table/Table';
-import { getIn, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
-import { IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
-import { flatMap, orderBy } from 'lodash';
+import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
+import { orderBy } from 'lodash';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
 import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
