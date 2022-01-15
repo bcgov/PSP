@@ -1,0 +1,44 @@
+name: Teams Notification
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
+
+  ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
+  APP_PORT: 8080
+  DESTINATION: "dev"
+  OC_JOB_NAME: "dev"
+  GIT_URL: "${{github.server_url}}/${{github.repository}}"
+  GIT_BRANCH: "${{github.ref}}"
+  APP_NAME: "pims"
+  PROJ_PREFIX: "3cd915"
+  PROJ_TOOLS: "3cd915-tools"
+  PROJ_DEV: "dev"
+  PROJ_TEST: "test"
+  PROJ_PROD: "prod"
+  TAG_DEV: "dev"
+  TAG_TEST: "test"
+  TAG_PROD: "prod"
+
+on:
+  #pull_request:
+  #  branches: [dev]
+  push:
+    paths:
+      - ".github/workflows/notify.yml"
+
+jobs:
+  
+  notify:
+    name: Notify Teams Channel
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Notify Teams Channel
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          timezone: America/Los_Angeles
