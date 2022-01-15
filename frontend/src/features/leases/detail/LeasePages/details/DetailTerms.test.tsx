@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
+import { defaultFormLease, defaultFormLeaseTerm, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { render, RenderOptions } from 'utils/test-utils';
 
@@ -48,6 +48,7 @@ describe('DetailTermInformation component', () => {
         ...defaultFormLease,
         terms: [
           {
+            ...defaultFormLeaseTerm,
             id: 1,
             leaseId: 1,
             startDate: '2020-01-01',
@@ -76,6 +77,7 @@ describe('DetailTermInformation component', () => {
         renewalDate: undefined,
         terms: [
           {
+            ...defaultFormLeaseTerm,
             id: 1,
             leaseId: 1,
             startDate: '',

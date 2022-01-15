@@ -26,6 +26,7 @@ import Deposits from './LeasePages/deposits/Deposits';
 import DetailContainer from './LeasePages/details/DetailContainer';
 import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
+import PaymentsContainer from './LeasePages/payment/PaymentsContainer';
 import Surplus from './LeasePages/surplus/Surplus';
 import TenantContainer from './LeasePages/tenant/TenantContainer';
 
@@ -82,7 +83,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       description: 'The following is information related to the leasee or licensee',
     },
   ],
-  [LeasePageNames.PAYMENTS, { component: undefined, title: 'Payments' }],
+  [LeasePageNames.PAYMENTS, { component: PaymentsContainer, title: 'Payments' }],
   [
     LeasePageNames.IMPROVEMENTS,
     {

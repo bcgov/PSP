@@ -14,7 +14,15 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.RenewalDate, src => src.TermRenewalDate)
                 .Map(dest => dest.ExpiryDate, src => src.TermExpiryDate)
                 .Map(dest => dest.StartDate, src => src.TermStartDate)
-                .Map(dest => dest.StatusTypeCode, src => src.LeaseTermStatusTypeCodeNavigation);
+                .Map(dest => dest.StatusTypeCode, src => src.LeaseTermStatusTypeCodeNavigation)
+                .Map(dest => dest.LeasePmtFreqTypeCode, src => src.LeasePmtFreqTypeCodeNavigation)
+                .Map(dest => dest.IsGstEligible, src => src.IsGstEligible)
+                .Map(dest => dest.IsTermExercised, src => src.IsTermExercised)
+                .Map(dest => dest.PaymentAmount, src => src.PaymentAmount)
+                .Map(dest => dest.PaymentNote, src => src.PaymentNote)
+                .Map(dest => dest.PaymentDueDate, src => src.PaymentDueDate)
+                .Map(dest => dest.Payments, src => src.PimsLeasePayments)
+                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
         }
     }
 }
