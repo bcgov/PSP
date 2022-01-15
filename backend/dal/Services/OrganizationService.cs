@@ -78,7 +78,7 @@ namespace Pims.Dal.Services
             {
 
                 List<PimsOrganization> existingOrgs = this.Context.PimsOrganizations
-                    .Where(o => EF.Functions.Collate(o.Name, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == organization.Name)
+                    .Where(o => EF.Functions.Collate(o.OrganizationName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == organization.OrganizationName)
                     .Include(o => o.PimsContactMethods).ToList();
 
                 var isDuplicate = existingOrgs.Any(
