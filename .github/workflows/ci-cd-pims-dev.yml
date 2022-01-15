@@ -67,37 +67,36 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
   
-#  deploy:
-#    name: Deploy frontend and api to OpenShift
-#    needs: [build-frontend, build-api]
-#    runs-on: ubuntu-latest
+  deploy:
+    name: Deploy frontend and api to OpenShift
+    needs: [build-frontend, build-api]
+    runs-on: ubuntu-latest
     
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Login to OpenShift
-#        uses: redhat-actions/oc-login@v1
-#        with:
-#          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-#          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-#          insecure_skip_tls_verify: true
-#          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
 
-#      - name: call scripts to deploy api and frontend
-#        run: |
-#          RELEASE_TAG=latest
-#          ./openshift/4.0/player.sh deploy api $DESTINATION -apply
-#          ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+      - name: call scripts to deploy api and frontend
+        run: |
+          ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy app $DESTINATION -apply
   
-#  notify:
-#    name: Notify Teams Channel
-#    needs: deploy
-#    if: always()
-#    runs-on: ubuntu-latest
+  notify:
+    name: Notify Teams Channel
+    needs: deploy
+    if: always()
+    runs-on: ubuntu-latest
     
-#    steps:
-#      - name: Notify Teams Channel
-#        uses: toko-bifrost/ms-teams-deploy-card@master
-#        with:
-#          github-token: ${{ github.token }}
-#          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-#          timezone: America/Los_Angeles
+    steps:
+      - name: Notify Teams Channel
+        uses: toko-bifrost/ms-teams-deploy-card@master
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          timezone: America/Los_Angeles
