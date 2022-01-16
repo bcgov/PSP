@@ -16,6 +16,7 @@ import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';
+import componentLoader from 'utils/utils';
 
 import Login from './features/account/Login';
 import AccessDenied from './pages/401/AccessDenied';
