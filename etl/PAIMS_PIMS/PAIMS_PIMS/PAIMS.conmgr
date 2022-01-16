@@ -10,7 +10,7 @@
       DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/DEV03;User ID=APP_PAM_PROXY_PSP_ETL_READ;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
       <DTS:Password
         DTS:Name="Password"
-        Sensitive="1"></DTS:Password>
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAKsoY0GNXYkedX4Mhlo6mLwAAAAACAAAAAAAQZgAAAAEAACAAAAB9KNMaOTxeuoFnItA92+gEfu0KS8eD8+IpR8cY5Z6URgAAAAAOgAAAAAIAACAAAAA1dENO+xOq+JmWo6yS/lbug1MXpyfepcif+fAwYxQnPoAAAABi6fvtR5MKxiBwOQ185v41AwUhJuF6YwsSKIPZvyhc30oTfwk17T7gCU0SIOQlnJHJCzezp6/wTKmjVyn+gfuz6wJsgcuQs+VC8sGXmsEmFXbvT3wzEUAYdOyD11yV8KQQgwhxTLV2cwCWeVdGodQrYtV4PXeNM46m/feDbBK5XkAAAAApmIv96/49orVc30N4KNP5SyDM8NhlOo+eCYtQyYsS7mR7EwsQomYNuTUM2ddXkXPEpGk7GROs5V21QqMtGdu4</DTS:Password>
     </DTS:ConnectionManager>
   </DTS:ObjectData>
 </DTS:ConnectionManager>

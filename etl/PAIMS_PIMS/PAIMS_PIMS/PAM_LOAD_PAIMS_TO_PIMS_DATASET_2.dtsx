@@ -13,24 +13,10 @@
   DTS:ObjectName="Package2"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="403"
-  DTS:VersionGUID="{4132D18E-9A69-4396-89B1-DC47548018A4}">
+  DTS:VersionBuild="409"
+  DTS:VersionGUID="{3BD02B55-67B3-4D58-A266-7E1C82A7D04B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[sqltst2012.th.gov.bc.ca.LIS_Tst]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{79FC0536-CE49-4EC7-B934-C1D030CDD591}"
-      DTS:ObjectName="sqltst2012.th.gov.bc.ca.LIS_Tst">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqltst2012.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
@@ -1640,7 +1626,7 @@
                 <connection
                   refId="Package\Load Contact Method\ETL ERROR LOG.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1652,18 +1638,6 @@
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
-                    <inputColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
-                      cachedDataType="i4"
-                      cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
-                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
-                    <inputColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
-                      cachedDataType="i4"
-                      cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
-                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
                     <inputColumn
                       refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
                       cachedDataType="dbTimeStamp"
@@ -1718,13 +1692,13 @@
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
                       dataType="i4"
-                      name="ErrorCode" />
+                      name="ERROR_CODE" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
                       dataType="i4"
-                      name="ErrorColumn" />
+                      name="ERROR_COLUMN" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1813,7 +1787,7 @@
                 <connection
                   refId="Package\Load Contact Method\ETL ERROR LOG 2.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1825,18 +1799,6 @@
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
-                    <inputColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
-                      cachedDataType="i4"
-                      cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
-                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
-                    <inputColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
-                      cachedDataType="i4"
-                      cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
-                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
                     <inputColumn
                       refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
                       cachedDataType="dbTimeStamp"
@@ -1898,13 +1860,13 @@
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
                       dataType="i4"
-                      name="ErrorCode" />
+                      name="ERROR_CODE" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
                       dataType="i4"
-                      name="ErrorColumn" />
+                      name="ERROR_COLUMN" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2231,7 +2193,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\ORGANIZATION ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -4589,7 +4551,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\PERSON ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -4737,7 +4699,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4972,7 +4934,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6282,44 +6244,44 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
               startId="Package\Load Contact Method\Data Conversion 5.Outputs[Data Conversion Output]" />
             <path
               refId="Package\Load Contact Method.Paths[Derived Column Output6]"
-              endId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Contact Method\Derived Column.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output5]"
-              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 1]"
-              name="Derived Column Output"
-              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - PERSPHONE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output4]"
-              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 2]"
-              name="Derived Column Output"
-              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - WORKPHONE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output7]"
-              endId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Contact Method\Derived Column 1.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output2]"
-              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 4]"
-              name="Derived Column Output"
-              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - MOBLPHONE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output1]"
-              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 5]"
-              name="Derived Column Output"
-              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - WORKEMAIL.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output]"
               endId="Package\Load Contact Method\Data Conversion 5.Inputs[Data Conversion Input]"
               name="Derived Column Output"
               startId="Package\Load Contact Method\AUDIT TRAIL.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load Contact Method.Paths[Derived Column Output3]"
+              refId="Package\Load Contact Method.Paths[Derived Column Output5]"
+              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 5]"
+              name="Derived Column Output"
+              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - WORKEMAIL.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[Derived Column Output4]"
+              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 4]"
+              name="Derived Column Output"
+              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - MOBLPHONE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[Derived Column Output7]"
               endId="Package\Load Contact Method\Union All.Inputs[Union All Input 3]"
               name="Derived Column Output"
               startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - FAX.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[Derived Column Output2]"
+              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - WORKPHONE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[Derived Column Output1]"
+              endId="Package\Load Contact Method\Union All.Inputs[Union All Input 1]"
+              name="Derived Column Output"
+              startId="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - PERSPHONE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[Derived Column Output]"
+              endId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load Contact Method\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[Derived Column Output3]"
+              endId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load Contact Method\Derived Column 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Contact Method.Paths[Lookup Match Output]"
               endId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Inputs[OLE DB Destination Input]"
@@ -6342,14 +6304,14 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
               startId="Package\Load Contact Method\Multicast.Outputs[Multicast Output 2]" />
             <path
               refId="Package\Load Contact Method.Paths[OLE DB Destination Error Output1]"
-              endId="Package\Load Contact Method\Derived Column.Inputs[Derived Column Input]"
-              name="OLE DB Destination Error Output"
-              startId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Outputs[OLE DB Destination Error Output]" />
-            <path
-              refId="Package\Load Contact Method.Paths[OLE DB Destination Error Output]"
               endId="Package\Load Contact Method\Derived Column 1.Inputs[Derived Column Input]"
               name="OLE DB Destination Error Output"
               startId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Outputs[OLE DB Destination Error Output]" />
+            <path
+              refId="Package\Load Contact Method.Paths[OLE DB Destination Error Output]"
+              endId="Package\Load Contact Method\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Destination Error Output"
+              startId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Outputs[OLE DB Destination Error Output]" />
             <path
               refId="Package\Load Contact Method.Paths[OLE DB Source Output]"
               endId="Package\Load Contact Method\Data Conversion 2.Inputs[Data Conversion Input]"
@@ -6866,7 +6828,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Addresses\COUNTRY_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -7619,7 +7581,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PIMS_ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -7829,6 +7791,11 @@ where [refTable].[DESCRIPTION] = ?</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Interest Holder Addresses\PIMS_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[OTHER_COUNTRY]"
+                      dataType="wstr"
+                      length="200"
+                      name="OTHER_COUNTRY" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -7928,7 +7895,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -9700,7 +9667,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\COUNTRY_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -10854,7 +10821,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PIMS_ORGANIZATIION.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -11031,6 +10998,11 @@ where [refTable].[DESCRIPTION] = ?</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Interest Holder Persons and Organizations\PIMS_ORGANIZATIION.Inputs[OLE DB Destination Input].ExternalColumns[INCORPORATION_NUMBER]"
+                      dataType="wstr"
+                      length="50"
+                      name="INCORPORATION_NUMBER" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -11119,7 +11091,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -11283,6 +11255,11 @@ where [refTable].[DESCRIPTION] = ?</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_COMMENT]"
+                      dataType="wstr"
+                      length="2000"
+                      name="ADDRESS_COMMENT" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -11382,7 +11359,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -12904,14 +12881,14 @@ where [refTable].[DESCRIPTION] = ?</property>
               startId="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Load Interest Holder Persons and Organizations.Paths[Lookup No Match Output1]"
-              endId="Package\Load Interest Holder Persons and Organizations\Canada.Inputs[Derived Column Input]"
-              name="Lookup No Match Output"
-              startId="Package\Load Interest Holder Persons and Organizations\COUNTRY_ID.Outputs[Lookup No Match Output]" />
-            <path
-              refId="Package\Load Interest Holder Persons and Organizations.Paths[Lookup No Match Output]"
               endId="Package\Load Interest Holder Persons and Organizations\BC.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
               startId="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Load Interest Holder Persons and Organizations.Paths[Lookup No Match Output]"
+              endId="Package\Load Interest Holder Persons and Organizations\Canada.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\Load Interest Holder Persons and Organizations\COUNTRY_ID.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\Load Interest Holder Persons and Organizations.Paths[Multicast Output 2]"
               endId="Package\Load Interest Holder Persons and Organizations\IS_ORGANIZATION.Inputs[Conditional Split Input]"
@@ -13036,7 +13013,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -13209,7 +13186,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -13629,6 +13606,322 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
               </outputs>
             </component>
             <component
+              refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Deduplicate Organization Addresses"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[ORGANIZATION_ID]"
+                      cachedDataType="i8"
+                      cachedName="ORGANIZATION_ID"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="ORGANIZATION_APP_CREATE_USER_DIRECTORY"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[INCORPORATION_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="INCORPORATION_NUMBER"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[INCORPORATION_NUMBER]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[ADDRESS_ID]"
+                      cachedDataType="i8"
+                      cachedName="ADDRESS_ID"
+                      lineageId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">2</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[APP_CREATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="23"
+                      cachedName="APP_CREATE_USERID"
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[APP_CREATE_USER_DIRECTORY]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="APP_CREATE_USER_DIRECTORY"
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="23"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="APP_LAST_UPDATE_USER_DIRECTORY"
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="7"
+                      cachedName="ADDRESS_USAGE_TYPE_CODE"
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">3</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]"
+                      dataType="i8"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]"
+                      name="ORGANIZATION_ID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]"
+                      name="ORGANIZATION_APP_CREATE_USER_DIRECTORY">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[INCORPORATION_NUMBER]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[INCORPORATION_NUMBER]"
+                      name="INCORPORATION_NUMBER">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[INCORPORATION_NUMBER]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]"
+                      dataType="i8"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]"
+                      name="ADDRESS_ID"
+                      sortKeyPosition="2">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Address ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      length="23"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_CREATE_USERID]"
+                      name="APP_CREATE_USERID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_CREATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_CREATE_USER_DIRECTORY]"
+                      name="APP_CREATE_USER_DIRECTORY">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="23"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      name="APP_LAST_UPDATE_USER_DIRECTORY">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]"
+                      dataType="wstr"
+                      length="7"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]"
+                      name="ADDRESS_USAGE_TYPE_CODE"
+                      sortKeyPosition="3">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Load Person Address and Organization Address\Derived Column"
               componentClassID="Microsoft.DerivedColumn"
               contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
@@ -13975,6 +14268,192 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
               </outputs>
             </component>
             <component
+              refId="Package\Load Person Address and Organization Address\Derived Column 2"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 2"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input].Columns[ORGANIZATION_ID]"
+                      cachedDataType="i8"
+                      cachedName="ORGANIZATION_ID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]" />
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input].Columns[ADDRESS_ID]"
+                      cachedDataType="i8"
+                      cachedName="ADDRESS_ID"
+                      cachedSortKeyPosition="2"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]" />
+                    <inputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="7"
+                      cachedName="ADDRESS_USAGE_TYPE_CODE"
+                      cachedSortKeyPosition="3"
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                      name="ERROR_TIME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="25"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                      name="ERROR_OPERATION_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS ORGANIZATION_ADDRESS"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS ORGANIZATION_ADDRESS"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="44"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                      name="ERROR_TASK_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"Load Person Address and Organization Address"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"Load Person Address and Organization Address"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="32"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                      name="ERROR_ETL_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PAM_LOAD_PAIMS_TO_PIMS_DATASET_2"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PAM_LOAD_PAIMS_TO_PIMS_DATASET_2"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="84"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                      name="ERROR_ROW"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"ORGANIZATION_ID: " + (DT_WSTR,13)#{Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]} + " ADDRESS_ID: " + (DT_WSTR,13)#{Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]} + " ADDRESS_USAGE_TYPE: " + #{Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"ORGANIZATION_ID: " + (DT_WSTR,13)ORGANIZATION_ID + " ADDRESS_ID: " + (DT_WSTR,13)ADDRESS_ID + " ADDRESS_USAGE_TYPE: " + ADDRESS_USAGE_TYPE_CODE</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
@@ -14034,7 +14513,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -14107,13 +14586,13 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
                       dataType="i4"
-                      name="ErrorCode" />
+                      name="ERROR_CODE" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
                       dataType="i4"
-                      name="ErrorColumn" />
+                      name="ERROR_COLUMN" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -14202,7 +14681,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -14275,13 +14754,13 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
                       dataType="i4"
-                      name="ErrorCode" />
+                      name="ERROR_CODE" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
                       dataType="i4"
-                      name="ErrorColumn" />
+                      name="ERROR_COLUMN" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -14362,7 +14841,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS Organization.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -14389,6 +14868,16 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]"
                       name="ORGANIZATION_APP_CREATE_USER_DIRECTORY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[INCORPORATION_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].ExternalColumns[INCORPORATION_NUMBER]"
+                      length="50"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[INCORPORATION_NUMBER]"
+                      name="INCORPORATION_NUMBER"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -14506,6 +14995,11 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       dataType="wstr"
                       length="30"
                       name="DB_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].ExternalColumns[INCORPORATION_NUMBER]"
+                      dataType="wstr"
+                      length="50"
+                      name="INCORPORATION_NUMBER" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -14536,6 +15030,12 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Error Output].Columns[APP_CREATE_USER_DIRECTORY]"
                       name="APP_CREATE_USER_DIRECTORY" />
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Error Output].Columns[INCORPORATION_NUMBER]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Error Output].Columns[INCORPORATION_NUMBER]"
+                      name="INCORPORATION_NUMBER" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -14601,7 +15101,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -14609,7 +15109,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <input
                   refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
-                  errorRowDisposition="FailComponent"
+                  errorRowDisposition="RedirectRow"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
@@ -14617,49 +15117,52 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[ORGANIZATION_ID]"
                       cachedDataType="i8"
                       cachedName="ORGANIZATION_ID"
+                      cachedSortKeyPosition="1"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[ADDRESS_ID]"
                       cachedDataType="i8"
                       cachedName="ADDRESS_ID"
+                      cachedSortKeyPosition="2"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_ID]"
-                      lineageId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USERID]"
                       cachedDataType="wstr"
                       cachedLength="23"
                       cachedName="APP_CREATE_USERID"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_CREATE_USERID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USER_DIRECTORY]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="APP_CREATE_USER_DIRECTORY"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_CREATE_USER_DIRECTORY]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USERID]"
                       cachedDataType="wstr"
                       cachedLength="23"
                       cachedName="APP_LAST_UPDATE_USERID"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USERID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="APP_LAST_UPDATE_USER_DIRECTORY"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
                       cachedDataType="wstr"
                       cachedLength="7"
                       cachedName="ADDRESS_USAGE_TYPE_CODE"
+                      cachedSortKeyPosition="3"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_USAGE_TYPE_CODE]"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
+                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -14824,7 +15327,7 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS PERSON.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -14851,6 +15354,16 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]"
                       name="PIMS_PERSON_APP_CREATE_USER_DIRECTORY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[ADDRESS_COMMENT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].ExternalColumns[ADDRESS_COMMENT]"
+                      length="2000"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[ADDRESS_COMMENT]"
+                      name="ADDRESS_COMMENT"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -14955,6 +15468,11 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       dataType="wstr"
                       length="30"
                       name="DB_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].ExternalColumns[ADDRESS_COMMENT]"
+                      dataType="wstr"
+                      length="2000"
+                      name="ADDRESS_COMMENT" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -14985,6 +15503,12 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Error Output].Columns[APP_CREATE_USER_DIRECTORY]"
                       name="APP_CREATE_USER_DIRECTORY" />
+                    <outputColumn
+                      refId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Error Output].Columns[ADDRESS_COMMENT]"
+                      dataType="wstr"
+                      length="2000"
+                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Error Output].Columns[ADDRESS_COMMENT]"
+                      name="ADDRESS_COMMENT" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -15050,7 +15574,7 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -15233,14 +15757,14 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
               startId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output2]"
-              endId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
               endId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load Person Address and Organization Address\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
+              endId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Inputs[Sort Input]"
+              name="Derived Column Output"
+              startId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Person Address and Organization Address.Paths[Lookup Match Output]"
               endId="Package\Load Person Address and Organization Address\Audit Trail 1.Inputs[Derived Column Input]"
@@ -15262,6 +15786,11 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
               name="Lookup No Match Output"
               startId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup No Match Output]" />
             <path
+              refId="Package\Load Person Address and Organization Address.Paths[OLE DB Destination Error Output]"
+              endId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]"
+              name="OLE DB Destination Error Output"
+              startId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Outputs[OLE DB Destination Error Output]" />
+            <path
               refId="Package\Load Person Address and Organization Address.Paths[OLE DB Source Output]"
               endId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Inputs[Lookup Input]"
               name="OLE DB Source Output"
@@ -15271,6 +15800,11 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
               endId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Inputs[Lookup Input]"
               name="OLE DB Source Output"
               startId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Load Person Address and Organization Address.Paths[Sort Output]"
+              endId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input]"
+              name="Sort Output"
+              startId="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses.Outputs[Sort Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -15360,7 +15894,7 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[MUNICIPALITY_NAME] = ?</
                 <connection
                   refId="Package\Load Properties\Address Id, Region and District Code.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -16429,7 +16963,7 @@ where "refTable"."PROPERTY_ID" = ?</property>
                 <connection
                   refId="Package\Load Properties\Error Log.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -16502,13 +17036,13 @@ where "refTable"."PROPERTY_ID" = ?</property>
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
                       dataType="i4"
-                      name="ErrorCode" />
+                      name="ERROR_CODE" />
                     <externalMetadataColumn
-                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
                       dataType="i4"
-                      name="ErrorColumn" />
+                      name="ERROR_COLUMN" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -17160,7 +17694,7 @@ WHERE PID_NO IS NOT NULL</property>
                 <connection
                   refId="Package\Load Properties\PIMS_PROPERTY.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -18596,59 +19130,59 @@ WHERE PID_NO IS NOT NULL</property>
               startId="Package\Load Properties\Data Conversion.Outputs[Data Conversion Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output10]"
-              endId="Package\Load Properties\Audit Trail.Inputs[Derived Column Input]"
+              endId="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE.Inputs[Derived Column Input]"
               name="Derived Column Output"
-              startId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Outputs[Derived Column Output]" />
+              startId="Package\Load Properties\PROPERTY_STATUS_TYPE.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output9]"
-              endId="Package\Load Properties\Area and Area Unit Code.Inputs[Lookup Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output8]"
-              endId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\Derived Column 1.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output6]"
-              endId="Package\Load Properties\COREOPER as PROPERTY_CLASSIFICATION.Inputs[Derived Column Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\LAND as PROPERTY_TYPE_CODE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output5]"
-              endId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Inputs[Derived Column Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\Crude Null Correction for Region and District.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output7]"
-              endId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\Audit Trail.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output3]"
-              endId="Package\Load Properties\Union All.Inputs[Union All Input 1]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\Derived Column.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output2]"
-              endId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Inputs[Derived Column Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output1]"
-              endId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Inputs[Derived Column Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output]"
               endId="Package\Load Properties\Address Id, Region and District Code.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load Properties\COREOPER as PROPERTY_CLASSIFICATION.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load Properties.Paths[Derived Column Output4]"
-              endId="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE.Inputs[Derived Column Input]"
+              refId="Package\Load Properties.Paths[Derived Column Output8]"
+              endId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Inputs[Derived Column Input]"
               name="Derived Column Output"
-              startId="Package\Load Properties\PROPERTY_STATUS_TYPE.Outputs[Derived Column Output]" />
+              startId="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output6]"
+              endId="Package\Load Properties\Union All.Inputs[Union All Input 1]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output5]"
+              endId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\Audit Trail.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output7]"
+              endId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output3]"
+              endId="Package\Load Properties\COREOPER as PROPERTY_CLASSIFICATION.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\LAND as PROPERTY_TYPE_CODE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output2]"
+              endId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output1]"
+              endId="Package\Load Properties\Area and Area Unit Code.Inputs[Lookup Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output]"
+              endId="Package\Load Properties\Audit Trail.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output4]"
+              endId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\Crude Null Correction for Region and District.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Lookup Match Output]"
               endId="Package\Load Properties\Data Conversion.Inputs[Data Conversion Input]"
@@ -20287,7 +20821,7 @@ WHERE PID_NO IS NOT NULL</property>
                 <connection
                   refId="Package\Load Property Addresses\PIMS ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -20500,6 +21034,11 @@ WHERE PID_NO IS NOT NULL</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Property Addresses\PIMS ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[OTHER_COUNTRY]"
+                      dataType="wstr"
+                      length="200"
+                      name="OTHER_COUNTRY" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -21605,42 +22144,6 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Contact Method.Paths[OLE DB Destination Error Output1]"
-          TopLeft="2180.85714285714,680.142857142857">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-321.85714285714,-52.142857142857"
-              Start="0,0"
-              End="-321.85714285714,-44.642857142857">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-22.0714285714285" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-22.0714285714285"
-                    Point2="0,-26.0714285714285"
-                    Point3="-4,-26.0714285714285" />
-                  <mssgle:LineSegment
-                    End="-317.85714285714,-26.0714285714285" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-317.85714285714,-26.0714285714285"
-                    Point2="-321.85714285714,-26.0714285714285"
-                    Point3="-321.85714285714,-30.0714285714285" />
-                  <mssgle:LineSegment
-                    End="-321.85714285714,-44.642857142857" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-234.13747767857,-21.0714285714285,146.4178125,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Contact Method.Paths[OLE DB Destination Error Output]"
           TopLeft="2087.85714285714,857.142857142857">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -21672,6 +22175,42 @@ WHERE PID_NO IS NOT NULL</property>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="-128.38747767857,44.9285714285715,146.4178125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Contact Method.Paths[OLE DB Destination Error Output]"
+          TopLeft="2180.85714285714,680.142857142857">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-321.85714285714,-52.142857142857"
+              Start="0,0"
+              End="-321.85714285714,-44.642857142857">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-22.0714285714285" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-22.0714285714285"
+                    Point2="0,-26.0714285714285"
+                    Point3="-4,-26.0714285714285" />
+                  <mssgle:LineSegment
+                    End="-317.85714285714,-26.0714285714285" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-317.85714285714,-26.0714285714285"
+                    Point2="-321.85714285714,-26.0714285714285"
+                    Point3="-321.85714285714,-30.0714285714285" />
+                  <mssgle:LineSegment
+                    End="-321.85714285714,-44.642857142857" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-234.13747767857,-21.0714285714285,146.4178125,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -21797,138 +22336,6 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Contact Method.Paths[Derived Column Output7]"
-          TopLeft="1977.5,979">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-56,68"
-              Start="0,0"
-              End="-56,60.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,30" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,30"
-                    Point2="0,34"
-                    Point3="-4,34" />
-                  <mssgle:LineSegment
-                    End="-52,34" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-52,34"
-                    Point2="-56,34"
-                    Point3="-56,38" />
-                  <mssgle:LineSegment
-                    End="-56,60.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output6]"
-          TopLeft="1857,586">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,-57"
-              Start="0,0"
-              End="0,-49.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-49.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output5]"
-          TopLeft="466.833348797426,352.20000014464">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="646.333317869241,67.79999985536"
-              Start="0,0"
-              End="646.333317869241,60.29999985536">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,45.248425091787" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,45.248425091787"
-                    Point2="0,49.248425091787"
-                    Point3="4,49.248425091787" />
-                  <mssgle:LineSegment
-                    End="642.333317869241,49.248425091787" />
-                  <mssgle:CubicBezierSegment
-                    Point1="642.333317869241,49.248425091787"
-                    Point2="646.333317869241,49.248425091787"
-                    Point3="646.333317869241,53.248425091787" />
-                  <mssgle:LineSegment
-                    End="646.333317869241,60.29999985536" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output4]"
-          TopLeft="881.35715835435,347.666666818195">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="250.976174978983,72.333333181805"
-              Start="0,0"
-              End="250.976174978983,64.833333181805">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.842696539464" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,38.842696539464"
-                    Point2="0,42.842696539464"
-                    Point3="4,42.842696539464" />
-                  <mssgle:LineSegment
-                    End="246.976174978983,42.842696539464" />
-                  <mssgle:CubicBezierSegment
-                    Point1="246.976174978983,42.842696539464"
-                    Point2="250.976174978983,42.842696539464"
-                    Point3="250.976174978983,46.842696539464" />
-                  <mssgle:LineSegment
-                    End="250.976174978983,64.833333181805" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output3]"
           TopLeft="1276.30953943919,343.333333450423">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -21964,31 +22371,19 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output2]"
-          TopLeft="1697.83335048622,342.466666880184">
+          Id="Package\Load Contact Method.Paths[Derived Column Output6]"
+          TopLeft="1149,586">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-527.166683819553,77.533333119816"
+              EndConnector="0,41"
               Start="0,0"
-              End="-527.166683819553,70.033333119816">
+              End="0,33.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,41.9226322972907" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,41.9226322972907"
-                    Point2="0,45.9226322972907"
-                    Point3="-4,45.9226322972907" />
-                  <mssgle:LineSegment
-                    End="-523.166683819553,45.9226322972907" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-523.166683819553,45.9226322972907"
-                    Point2="-527.166683819553,45.9226322972907"
-                    Point3="-527.166683819553,49.9226322972907" />
-                  <mssgle:LineSegment
-                    End="-527.166683819553,70.033333119816" />
+                    End="0,33.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -22000,7 +22395,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output1]"
+          Id="Package\Load Contact Method.Paths[Derived Column Output5]"
           TopLeft="2095.1666241818,343.399999338786">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -22036,19 +22431,163 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Derived Column Output]"
-          TopLeft="1149,586">
+          Id="Package\Load Contact Method.Paths[Derived Column Output4]"
+          TopLeft="1697.83335048622,342.466666880184">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,41"
+              EndConnector="-527.166683819553,77.533333119816"
               Start="0,0"
-              End="0,33.5">
+              End="-527.166683819553,70.033333119816">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,33.5" />
+                    End="0,41.9226322972907" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41.9226322972907"
+                    Point2="0,45.9226322972907"
+                    Point3="-4,45.9226322972907" />
+                  <mssgle:LineSegment
+                    End="-523.166683819553,45.9226322972907" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-523.166683819553,45.9226322972907"
+                    Point2="-527.166683819553,45.9226322972907"
+                    Point3="-527.166683819553,49.9226322972907" />
+                  <mssgle:LineSegment
+                    End="-527.166683819553,70.033333119816" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Contact Method.Paths[Derived Column Output3]"
+          TopLeft="1977.5,979">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-56,68"
+              Start="0,0"
+              End="-56,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,30"
+                    Point2="0,34"
+                    Point3="-4,34" />
+                  <mssgle:LineSegment
+                    End="-52,34" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-52,34"
+                    Point2="-56,34"
+                    Point3="-56,38" />
+                  <mssgle:LineSegment
+                    End="-56,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Contact Method.Paths[Derived Column Output2]"
+          TopLeft="881.35715835435,347.666666818195">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="250.976174978983,72.333333181805"
+              Start="0,0"
+              End="250.976174978983,64.833333181805">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.842696539464" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.842696539464"
+                    Point2="0,42.842696539464"
+                    Point3="4,42.842696539464" />
+                  <mssgle:LineSegment
+                    End="246.976174978983,42.842696539464" />
+                  <mssgle:CubicBezierSegment
+                    Point1="246.976174978983,42.842696539464"
+                    Point2="250.976174978983,42.842696539464"
+                    Point3="250.976174978983,46.842696539464" />
+                  <mssgle:LineSegment
+                    End="250.976174978983,64.833333181805" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Contact Method.Paths[Derived Column Output1]"
+          TopLeft="466.833348797426,352.20000014464">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="646.333317869241,67.79999985536"
+              Start="0,0"
+              End="646.333317869241,60.29999985536">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45.248425091787" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45.248425091787"
+                    Point2="0,49.248425091787"
+                    Point3="4,49.248425091787" />
+                  <mssgle:LineSegment
+                    End="642.333317869241,49.248425091787" />
+                  <mssgle:CubicBezierSegment
+                    Point1="642.333317869241,49.248425091787"
+                    Point2="646.333317869241,49.248425091787"
+                    Point3="646.333317869241,53.248425091787" />
+                  <mssgle:LineSegment
+                    End="646.333317869241,60.29999985536" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Contact Method.Paths[Derived Column Output]"
+          TopLeft="1857,586">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-57"
+              Start="0,0"
+              End="0,-49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-49.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -22427,9 +22966,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22451,9 +22988,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22475,9 +23010,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22655,9 +23188,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22691,9 +23222,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22715,9 +23244,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22739,9 +23266,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22763,9 +23288,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -22943,9 +23466,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22979,9 +23500,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23015,9 +23534,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23087,9 +23604,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23123,9 +23638,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23147,37 +23660,11 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Interest Holder Persons and Organizations.Paths[Lookup No Match Output1]"
-          TopLeft="607,193.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="159,0"
-              Start="0,0"
-              End="151.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="151.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="19.94361328125,5,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Interest Holder Persons and Organizations.Paths[Lookup No Match Output]"
           TopLeft="565.666666666667,398">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -23209,6 +23696,30 @@ WHERE PID_NO IS NOT NULL</property>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="78.8602799479165,20.6229022704837,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Interest Holder Persons and Organizations.Paths[Lookup No Match Output]"
+          TopLeft="607,193.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="159,0"
+              Start="0,0"
+              End="151.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="151.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="19.94361328125,5,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -23315,9 +23826,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23351,9 +23860,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23375,9 +23882,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23399,9 +23904,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23423,9 +23926,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -23544,7 +24045,7 @@ WHERE PID_NO IS NOT NULL</property>
         <NodeLayout
           Size="252,42"
           Id="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS"
-          TopLeft="944,457" />
+          TopLeft="939,483" />
         <NodeLayout
           Size="129,42"
           Id="Package\Load Person Address and Organization Address\Audit Trail"
@@ -23642,7 +24143,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
+          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output2]"
           TopLeft="571,215.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -23660,33 +24161,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output2]"
-          TopLeft="1067,350">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,107"
-              Start="0,0"
-              End="0,99.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,99.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23708,9 +24183,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23732,9 +24205,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23756,9 +24227,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23780,9 +24249,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -23806,6 +24273,82 @@ WHERE PID_NO IS NOT NULL</property>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="5.94361328125,5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="258,42"
+          Id="Package\Load Person Address and Organization Address\Deduplicate Organization Addresses"
+          TopLeft="932,395" />
+        <EdgeLayout
+          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
+          TopLeft="1062.5,350">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45"
+              Start="0,0"
+              End="0,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Person Address and Organization Address.Paths[Sort Output]"
+          TopLeft="1063,437">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46"
+              Start="0,0"
+              End="0,38.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Load Person Address and Organization Address\Derived Column 2"
+          TopLeft="1391,478" />
+        <EdgeLayout
+          Id="Package\Load Person Address and Organization Address.Paths[OLE DB Destination Error Output]"
+          TopLeft="1191,501.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="200,0"
+              Start="0,0"
+              End="192.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="192.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="23.04109375,5,146.4178125,11.43359375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -24032,9 +24575,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -24056,9 +24597,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -24177,150 +24716,6 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output10]"
-          TopLeft="175.99998882413,546">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,46.266664586597"
-              Start="0,0"
-              End="0,38.766664586597">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,38.766664586597" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output9]"
-          TopLeft="1299.8333334989,289.666667117807">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-47.49999334415,0"
-              Start="0,0"
-              End="-39.99999334415,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-39.99999334415,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output8]"
-          TopLeft="911,604.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="198,0"
-              Start="0,0"
-              End="190.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="190.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output7]"
-          TopLeft="240.499977648259,611.700002500216">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="143.666652295326,0"
-              Start="0,0"
-              End="136.166652295326,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="136.166652295326,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output6]"
-          TopLeft="500.999987085661,172.716668605539">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="27.00000099341,0"
-              Start="0,0"
-              End="19.50000099341,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="19.50000099341,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output5]"
-          TopLeft="1450.41666044129,196.466670723491">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,70.799996383985"
-              Start="0,0"
-              End="0,63.299996383985">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,63.299996383985" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output4]"
           TopLeft="360.666638188894,290.466670981779">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -24338,13 +24733,77 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output3]"
+          Id="Package\Load Properties.Paths[Derived Column Output9]"
+          TopLeft="844.999988079071,173.016669494046">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="59.833331909445,0"
+              Start="0,0"
+              End="52.333331909445,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="52.333331909445,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output8]"
+          TopLeft="180.916647973989,313.333336942461">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,113.666663057539"
+              Start="0,0"
+              End="0,106.166663057539">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,106.166663057539" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output7]"
+          TopLeft="179.5,469">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output6]"
           TopLeft="897.333339956072,384.599999400774">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -24374,81 +24833,139 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output5]"
+          TopLeft="240.499977648259,611.700002500216">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="143.666652295326,0"
+              Start="0,0"
+              End="136.166652295326,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="136.166652295326,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output4]"
+          TopLeft="1450.41666044129,196.466670723491">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70.799996383985"
+              Start="0,0"
+              End="0,63.299996383985">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.299996383985" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output3]"
+          TopLeft="500.999987085661,172.716668605539">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="27.00000099341,0"
+              Start="0,0"
+              End="19.50000099341,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="19.50000099341,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output2]"
-          TopLeft="179.5,469">
+          TopLeft="911,604.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35"
+              EndConnector="198,0"
               Start="0,0"
-              End="0,27.5">
+              End="190.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.5" />
+                    End="190.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output1]"
-          TopLeft="180.916647973989,313.333336942461">
+          TopLeft="1299.8333334989,289.666667117807">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,113.666663057539"
+              EndConnector="-47.49999334415,0"
               Start="0,0"
-              End="0,106.166663057539">
+              End="-39.99999334415,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,106.166663057539" />
+                    End="-39.99999334415,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output]"
-          TopLeft="844.999988079071,173.016669494046">
+          TopLeft="175.99998882413,546">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="59.833331909445,0"
+              EndConnector="0,46.266664586597"
               Start="0,0"
-              End="52.333331909445,0">
+              End="0,38.766664586597">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="52.333331909445,0" />
+                    End="0,38.766664586597" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -24482,9 +24999,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -24579,7 +25094,7 @@ WHERE PID_NO IS NOT NULL</property>
     design-time-name="Package\Load Property Addresses">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="169,42"
           Id="Package\Load Property Addresses\PAM_PROPERTY"
@@ -24615,9 +25130,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -24639,9 +25152,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -24663,9 +25174,7 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
