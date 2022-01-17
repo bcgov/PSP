@@ -66,3 +66,5 @@ jobs:
           environment: development
           card-layout-start: compact
           show-on-failure: true
+          show-on-start: false
+          show-on-exit: false
