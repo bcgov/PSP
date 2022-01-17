@@ -35,12 +35,10 @@ import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
-export interface ICreateOrganizationFormProps {}
-
 /**
  * Formik-connected form to Create Organizational Contacts
  */
-export const CreateOrganizationForm: React.FunctionComponent<ICreateOrganizationFormProps> = props => {
+export const CreateOrganizationForm: React.FunctionComponent = () => {
   const history = useHistory();
   const { addOrganization } = useAddContact();
 

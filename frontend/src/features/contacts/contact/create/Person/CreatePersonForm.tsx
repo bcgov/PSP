@@ -38,12 +38,10 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-export interface ICreatePersonFormProps {}
-
 /**
  * Formik-connected form to Create Individual Contacts
  */
-export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
+export const CreatePersonForm: React.FunctionComponent = () => {
   const history = useHistory();
   const { addPerson } = useAddContact();
 

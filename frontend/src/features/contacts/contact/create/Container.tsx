@@ -1,20 +1,25 @@
 import { ContactBreadcrumb, ContactTypes } from 'features/contacts';
-import { useQuery } from 'hooks/use-query';
-import * as React from 'react';
-import { useState } from 'react';
+import { getIn } from 'formik';
+import React from 'react';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as Styled from '../../styles';
 import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
-import CreateOrganizationForm from './Organization/CreateOrganizationForm';
-import CreatePersonForm from './Person/CreatePersonForm';
+import ContactRouter from './ContactRouter';
 
 export interface IContactCreateContainerProps {}
 
 export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = () => {
-  // get default contact type from URL; e.g. contact/new?type=P
-  const { type } = useQuery();
-  const [contactType, setContactType] = useState(getContactType(type as string));
+  const history = useHistory();
+  const { path } = useRouteMatch();
+  const { pathname } = useLocation();
+
+  const contactType = getContactTypeFromPath(pathname);
+
+  const onSelectorChange = (newValue: ContactTypes) => {
+    history.push(`${path}/${newValue}`);
+  };
 
   return (
     <ContactLayout>
@@ -23,11 +28,10 @@ export const ContactCreateContainer: React.FunctionComponent<IContactCreateConta
 
       <ContactTypeSelector
         contactType={contactType}
-        setContactType={setContactType}
+        setContactType={onSelectorChange}
       ></ContactTypeSelector>
 
-      {contactType === ContactTypes.INDIVIDUAL && <CreatePersonForm />}
-      {contactType === ContactTypes.ORGANIZATION && <CreateOrganizationForm />}
+      <ContactRouter />
     </ContactLayout>
   );
 };
@@ -44,11 +48,12 @@ const ContactLayout = styled.div`
   gap: 1.6rem;
 `;
 
-const getContactType = (value?: string) => {
-  if (value !== undefined) {
-    return value as ContactTypes;
+const getContactTypeFromPath = (pathname: string) => {
+  const pageName = getIn(pathname.match(/\/contact\/new\/(.*)/), '1');
+  if (!pageName) {
+    return ContactTypes.INDIVIDUAL;
   }
-  return ContactTypes.INDIVIDUAL;
+  return pageName;
 };
 
 export default ContactCreateContainer;
