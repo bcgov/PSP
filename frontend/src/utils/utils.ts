@@ -255,3 +255,22 @@ export const getAdminAreaFromLayerData = (
     }
   }
 };
+
+/**
+ * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
+ * @param lazyComponent
+ * @param attemptsLeft
+ */
+export default function componentLoader(lazyComponent: Promise<any>, attemptsLeft: number) {
+  return new Promise<any>((resolve, reject) => {
+    lazyComponent.then(resolve).catch((error: any) => {
+      setTimeout(() => {
+        if (attemptsLeft === 0) {
+          reject(error);
+          return;
+        }
+        componentLoader(lazyComponent, attemptsLeft - 1).then(resolve, reject);
+      }, 500);
+    });
+  });
+}
