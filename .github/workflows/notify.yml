@@ -29,25 +29,34 @@ on:
 
 jobs:
   
-  notify:
-    name: Initial notification Teams Channel
+  notify1:
+    name: Notification 1 Teams Channel
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Notify Teams Channel
-        uses: toko-bifrost/ms-teams-deploy-card@master
+      - name: Start notification Teams Channel
+
+        uses: jdcargile/ms-teams-notification@v1.3
         with:
           github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          timezone: America/Los_Angeles
-          environment: development
-          card-layout-start: compact
-          show-on-failure: true
-          view-status-action-text: Start build/deploy
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: Start notification
+          notification-color: 17a2b8
+          timezone: America/Denver
+
+#        uses: toko-bifrost/ms-teams-deploy-card@master
+#        with:
+#          github-token: ${{ github.token }}
+#          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+#          timezone: America/Los_Angeles
+#          environment: development
+#          card-layout-start: compact
+#          show-on-failure: true
+#          view-status-action-text: Start build/deploy
           
   checkout:
     name: Build frontend
-    needs: [notify]
+    needs: [notify1]
     runs-on: ubuntu-latest
     
     steps:
@@ -55,20 +64,28 @@ jobs:
   
   notify2:
     name: Notify Teams Channel
-    needs: [notify, checkout]
+    needs: [notify1, checkout]
     if: always()
     runs-on: ubuntu-latest
     
     steps:
       - name: Notify Teams Channel
-        uses: toko-bifrost/ms-teams-deploy-card@master
+        uses: jdcargile/ms-teams-notification@v1.3
         with:
           github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: End notification
+          notification-color: 17a2b8
           timezone: America/Los_Angeles
-          environment: development
-          card-layout-start: compact
-          show-on-failure: true
-          show-on-start: false
-          show-on-exit: false
-          view-status-action-text: End build/deploy
+
+#        uses: toko-bifrost/ms-teams-deploy-card@master
+#        with:
+#          github-token: ${{ github.token }}
+#          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+#          timezone: America/Los_Angeles
+#          environment: development
+#          card-layout-start: compact
+#          show-on-failure: true
+#          show-on-start: false
+#          show-on-exit: false
+#          view-status-action-text: End build/deploy
