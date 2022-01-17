@@ -43,6 +43,7 @@ jobs:
           environment: development
           card-layout-start: compact
           show-on-failure: true
+          view-status-action-text: Start build/deploy
           
   checkout:
     name: Build frontend
@@ -70,3 +71,4 @@ jobs:
           show-on-failure: true
           show-on-start: false
           show-on-exit: false
+          view-status-action-text: End build/deploy
