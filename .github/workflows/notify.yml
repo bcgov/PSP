@@ -46,6 +46,7 @@ jobs:
           
   checkout:
     name: Build frontend
+    needs: [notify]
     runs-on: ubuntu-latest
     
     steps:
@@ -53,6 +54,7 @@ jobs:
   
   notify2:
     name: Notify Teams Channel
+    needs: [notify, checkout]
     if: always()
     runs-on: ubuntu-latest
     
