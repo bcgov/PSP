@@ -167,6 +167,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public TypeModel<string> StatusType { get; set; }
 
         /// <summary>
+        /// get/set - The region of this lease within PIMS.
+        /// </summary>
+        public RegionModel Region { get; set; }
+
+        /// <summary>
         /// get/set - The status of this lease within PIMS, Draft by default.
         /// </summary>
         public TypeModel<string> ProgramType { get; set; }

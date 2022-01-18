@@ -12,6 +12,7 @@ import {
   ITenant,
 } from '.';
 import { ILeaseTerm } from './ILeaseTerm';
+import { IRegion } from './IRegion';
 import ITypeCode from './ITypeCode';
 
 export interface ILease {
@@ -30,6 +31,7 @@ export interface ILease {
   initiatorType: ITypeCode<string>;
   type?: ITypeCode<string>;
   statusType: ITypeCode<string>;
+  region: IRegion;
   programType: ITypeCode<string>;
   otherType?: string;
   otherProgramType?: string;
@@ -75,6 +77,7 @@ export interface IFormLease
       responsibilityType?: ITypeCode<string>;
       initiatorType?: ITypeCode<string>;
       statusType?: ITypeCode<string>;
+      region?: IRegion;
       programType?: ITypeCode<string>;
     }
   > {}
@@ -96,6 +99,7 @@ export interface IAddFormLease
       initiatorType?: string;
       type?: string;
       statusType?: string;
+      region: NumberFieldValue;
       programType?: string;
       properties: IFormProperty[];
     }
@@ -107,6 +111,7 @@ export const defaultLease: ILease = {
   properties: [],
   improvements: [],
   statusType: { id: 'ACTIVE', description: 'Active', isDisabled: false },
+  region: { regionCode: 1, regionName: 'South Coast Region' },
   programType: { id: 'OTHER', description: 'Other', isDisabled: false },
   startDate: '2020-01-01',
   paymentReceivableType: { id: 'RCVBL', description: 'Receivable', isDisabled: false },
@@ -173,6 +178,7 @@ export const defaultAddFormLease: IAddFormLease = {
   initiatorType: '',
   type: '',
   statusType: 'DRAFT',
+  region: '',
   programType: '',
   otherType: '',
   otherProgramType: '',
