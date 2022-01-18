@@ -3,17 +3,17 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { render, RenderOptions } from 'utils/test-utils';
 
-import { ContactCreateContainer, IContactCreateContainerProps } from './';
+import { CreateContactContainer } from '.';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('ContactContainer component', () => {
-  const setup = (renderOptions?: RenderOptions & Partial<IContactCreateContainerProps>) => {
+describe('CreateContactContainer component', () => {
+  const setup = (renderOptions?: RenderOptions) => {
     // render component under test
-    const component = render(<ContactCreateContainer />, {
+    const component = render(<CreateContactContainer />, {
       ...renderOptions,
       store: storeState,
       history,

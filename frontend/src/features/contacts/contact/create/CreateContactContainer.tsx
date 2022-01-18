@@ -8,9 +8,7 @@ import * as Styled from '../../styles';
 import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
 import ContactRouter from './ContactRouter';
 
-export interface IContactCreateContainerProps {}
-
-export const ContactCreateContainer: React.FunctionComponent<IContactCreateContainerProps> = () => {
+export const CreateContactContainer: React.FunctionComponent = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
   const { pathname } = useLocation();
@@ -56,4 +54,4 @@ const getContactTypeFromPath = (pathname: string) => {
   return pageName;
 };
 
-export default ContactCreateContainer;
+export default CreateContactContainer;

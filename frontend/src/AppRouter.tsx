@@ -3,7 +3,7 @@ import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { ContactListView } from 'features/contacts';
-import ContactCreateContainer from 'features/contacts/contact/create/Container';
+import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import ContactEditContainer from 'features/contacts/contact/edit/Container';
 import { AddLeaseContainer } from 'features/leases';
@@ -163,7 +163,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/new"
-          component={ContactCreateContainer}
+          component={CreateContactContainer}
           layout={AuthLayout}
           claim={[Claims.CONTACT_ADD]}
           title={getTitle('Create Contact')}

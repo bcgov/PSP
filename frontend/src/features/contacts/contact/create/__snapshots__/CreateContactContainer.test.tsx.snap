@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContactContainer component renders as expected 1`] = `
+exports[`CreateContactContainer component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -8,13 +8,7 @@ exports[`ContactContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c8 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c3 {
+  .c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -42,159 +36,6 @@ exports[`ContactContainer component renders as expected 1`] = `
   background-color: white;
 }
 
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 1.6rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
-.c10 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  gap: 0.5rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
-.c13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  gap: 1.6rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
-.c17 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  gap: 2rem;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-}
-
-.c2 {
-  text-align: left;
-}
-
-.c9 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(0,51,102);
-  text-decoration: none solid rgb(0,51,102);
-  line-height: 2.9rem;
-}
-
-.c12 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c6#createForm .form-control.is-invalid {
-  border: 2px solid #d8292f;
-}
-
-.c6#createForm .invalid-feedback {
-  color: #d8292f;
-}
-
-.c6#createForm .form-group label {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c6#createForm .form-group input,
-.c6#createForm .form-group select,
-.c6#createForm .form-group textarea {
-  border: 2px solid #606060;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-size: 1.6rem;
-  color: #000000;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c6#createForm .form-group.required label:after {
-  content: ' *';
-  color: red;
-}
-
-.c14 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-}
-
-.c15 {
-  font-size: 1.6rem;
-  font-weight: 400;
-  -webkit-text-decoration: none solid rgb(170,170,170);
-  text-decoration: none solid rgb(170,170,170);
-  line-height: 2rem;
-}
-
-.c16 {
-  padding: 1rem 4rem;
-}
-
 .c5 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -203,16 +44,59 @@ exports[`ContactContainer component renders as expected 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  width: 100%;
-  overflow: auto;
-  padding-right: 1rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 
 .c11 {
-  color: #494949;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  gap: 1.6rem;
+}
+
+.c17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c2 {
+  text-align: left;
+}
+
+.c9 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
 }
 
 .c4 {
@@ -232,6 +116,98 @@ exports[`ContactContainer component renders as expected 1`] = `
   -ms-flex-align: center;
   align-items: center;
   padding-left: 2rem;
+}
+
+.c10 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(0,51,102);
+  text-decoration: none solid rgb(0,51,102);
+  line-height: 2.9rem;
+}
+
+.c13 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c6 {
+  width: 100%;
+  overflow: auto;
+  padding-right: 1rem;
+}
+
+.c7#createForm .form-control.is-invalid {
+  border: 2px solid #d8292f;
+}
+
+.c7#createForm .invalid-feedback {
+  color: #d8292f;
+}
+
+.c7#createForm .form-group label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c7#createForm .form-group input,
+.c7#createForm .form-group select,
+.c7#createForm .form-group textarea {
+  border: 2px solid #606060;
+  border-radius: 4px;
+  background-color: #ffffff;
+  font-size: 1.6rem;
+  color: #000000;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c7#createForm .form-group.required label:after {
+  content: ' *';
+  color: red;
+}
+
+.c15 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+}
+
+.c12 {
+  color: #494949;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c16 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  -webkit-text-decoration: none solid rgb(170,170,170);
+  text-decoration: none solid rgb(170,170,170);
+  line-height: 2rem;
+}
+
+.c18 {
+  width: 100%;
+  padding: 1rem 4rem;
+  gap: 2rem;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
 }
 
 .c0 {
@@ -324,18 +300,18 @@ exports[`ContactContainer component renders as expected 1`] = `
       class="container"
     />
     <div
-      class="c5"
+      class="c5 c6"
     >
       <form
         action="#"
-        class="c6"
+        class="c7"
         id="createForm"
       >
         <div
-          class="c7"
+          class="c8"
         >
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row"
@@ -430,10 +406,10 @@ exports[`ContactContainer component renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <h2
-              class="c9"
+              class="c10"
             >
               Organization
             </h2>
@@ -504,15 +480,15 @@ exports[`ContactContainer component renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <h2
-              class="c9"
+              class="c10"
             >
               Contact info
             </h2>
             <div
-              class="c10 c11"
+              class="c11 c12"
             >
               <svg
                 class="mt-2"
@@ -668,15 +644,15 @@ exports[`ContactContainer component renders as expected 1`] = `
             </button>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <h2
-              class="c9"
+              class="c10"
             >
               Address
             </h2>
             <h3
-              class="c12"
+              class="c13"
             >
               Mailing Address
             </h3>
@@ -859,10 +835,10 @@ exports[`ContactContainer component renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <h3
-              class="c12"
+              class="c13"
             >
               Property Address
             </h3>
@@ -1045,10 +1021,10 @@ exports[`ContactContainer component renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <h3
-              class="c12"
+              class="c13"
             >
               Billing Address
             </h3>
@@ -1231,18 +1207,18 @@ exports[`ContactContainer component renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
-              class="c13"
+              class="c14"
             >
               <label
-                class="c14 form-label"
+                class="c15 form-label"
               >
                 Comments
               </label>
               <span
-                class="c15"
+                class="c16"
               >
                 (Optional)
               </span>
@@ -1262,32 +1238,28 @@ exports[`ContactContainer component renders as expected 1`] = `
       </form>
     </div>
     <div
-      class="c16 w-100"
+      class="c17 c18"
     >
-      <div
-        class="c17"
+      <button
+        class="Button btn btn-secondary"
+        type="button"
       >
-        <button
-          class="Button btn btn-secondary"
-          type="button"
+        <div
+          class="Button__value"
         >
-          <div
-            class="Button__value"
-          >
-            Cancel
-          </div>
-        </button>
-        <button
-          class="Button btn btn-primary"
-          type="button"
+          Cancel
+        </div>
+      </button>
+      <button
+        class="Button btn btn-primary"
+        type="button"
+      >
+        <div
+          class="Button__value"
         >
-          <div
-            class="Button__value"
-          >
-            Save
-          </div>
-        </button>
-      </div>
+          Save
+        </div>
+      </button>
     </div>
     <div
       class="container"
