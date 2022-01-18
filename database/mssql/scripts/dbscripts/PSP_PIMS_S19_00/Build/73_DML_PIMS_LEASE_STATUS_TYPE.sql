@@ -15,4 +15,4 @@ VALUES
   (N'TERMINATED', N'Terminated'),
   (N'DRAFT',      N'Draft'),
   (N'DISCARD',    N'Discarded'),
-  (N'INACTIVE',    N'Inactive');
+  (N'INACTIVE',   N'Inactive');
