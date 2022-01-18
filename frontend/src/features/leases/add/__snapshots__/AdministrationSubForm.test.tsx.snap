@@ -167,20 +167,44 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
       class="col"
     >
       <div
-        class="c0 input form-group"
+        class="required c0 form-group"
       >
         <label
           class="form-label"
-          for="input-motiRegion"
+          for="input-region"
         >
           MOTI Region: 
         </label>
-        <input
-          class="form-control"
-          id="input-motiRegion"
-          name="motiRegion"
-          value=""
-        />
+        <select
+          class="form-select form-control"
+          id="input-region"
+          name="region"
+          required=""
+        >
+          <option
+            value=""
+          >
+            Select region
+          </option>
+          <option
+            class="option"
+            value="1"
+          >
+            South Coast Region
+          </option>
+          <option
+            class="option"
+            value="2"
+          >
+            Southern Interior Region
+          </option>
+          <option
+            class="option"
+            value="3"
+          >
+            Northern Region
+          </option>
+        </select>
       </div>
     </div>
   </div>

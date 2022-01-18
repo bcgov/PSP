@@ -26,6 +26,9 @@ export const DetailAdministration: React.FunctionComponent<IDetailAdministration
     <li>
       <Styled.LeaseH3>Administration</Styled.LeaseH3>
       <Styled.FormGrid>
+        <Form.Label>Region:</Form.Label>
+        <LargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'region.regionName')} />
+        <br />
         <Form.Label>Program:</Form.Label>
         <LargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'programName')} />
         <br />
