@@ -26,6 +26,24 @@
         "CI": "true"
       },
       "disableOptimisticBPs": true
+    }, //tsc && react-app-rewired test --ci --watchAll=false --runInBand"
+    {
+      "type": "node",
+      "name": "vscode-jest-tests",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-app-rewired",
+      "args": [
+        "test",
+        "--ci",
+        "react-scripts-ts",
+        "--watchAll=false",
+        "--env=jsdom",
+        "--runInBand"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }
