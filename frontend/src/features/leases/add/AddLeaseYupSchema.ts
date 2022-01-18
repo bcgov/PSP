@@ -6,6 +6,7 @@ export const LeaseSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
   paymentReceivableType: Yup.string().required('Payment Receivable Type is required'),
+  region: Yup.string().required('MOTI Region Type is required'),
   programType: Yup.string().required('Program Type is required'),
   otherProgramType: Yup.string().when('programType', {
     is: (programType: string) => programType && programType === 'OTHER',

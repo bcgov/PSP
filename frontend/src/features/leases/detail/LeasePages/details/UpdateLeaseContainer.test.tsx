@@ -7,7 +7,6 @@ import { createMemoryHistory } from 'history';
 import { defaultLease } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
-import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
@@ -61,6 +60,7 @@ describe('Update lease container component', () => {
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
@@ -79,6 +79,7 @@ describe('Update lease container component', () => {
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
@@ -95,6 +96,7 @@ describe('Update lease container component', () => {
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
@@ -109,4 +111,4 @@ describe('Update lease container component', () => {
 });
 
 const expectedFormData =
-  '{"lFileNo":"","tfaFileNo":0,"expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"responsibilityType":{"id":"HQ"},"initiatorType":{"id":"PROJECT"},"type":{"id":"LICONSTRC"},"statusType":{"id":"ACTIVE"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"description":"","landArea":"","areaUnit":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"id":1}';
+  '{"lFileNo":"","tfaFileNo":0,"expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"responsibilityType":{"id":"HQ"},"initiatorType":{"id":"PROJECT"},"type":{"id":"LICONSTRC"},"statusType":{"id":"ACTIVE"},"region":{"regionCode":"1"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"Moti, Name, Name","amount":0,"renewalCount":0,"description":"","landArea":"","areaUnit":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[],"id":1}';
