@@ -180,6 +180,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         Initiator: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg
@@ -213,6 +214,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         Responsibility: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg
@@ -497,6 +499,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         Initiator: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg
@@ -530,6 +533,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         Responsibility: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg

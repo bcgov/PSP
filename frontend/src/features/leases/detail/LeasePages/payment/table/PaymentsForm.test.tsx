@@ -250,9 +250,9 @@ describe('PaymentsForm component', () => {
       },
     });
     const rows = component.getAllByRole('row');
-    expect(rows).toHaveLength(2);
-    expect(findCell(rows[0], 0)?.textContent).toBe('Initial term');
-    expect(findCell(rows[1], 0)?.textContent).toBe('Renewal 1');
+    expect(rows).toHaveLength(3);
+    expect(findCell(rows[1], 0)?.textContent).toBe('Initial term');
+    expect(findCell(rows[2], 0)?.textContent).toBe('Renewal 1');
   });
 
   it('displays the last payment date correctly', async () => {
