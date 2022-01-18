@@ -73,6 +73,7 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     initiatorType: stringToTypeCode(formLease.initiatorType || LeaseInitiatorTypes.Hq),
     statusType: stringToTypeCode(formLease.statusType),
     type: stringToTypeCode(formLease.type),
+    region: { regionCode: formLease.region },
     programType: stringToTypeCode(formLease.programType),
     expiryDate: stringToNull(formLease.expiryDate),
     psFileNo: stringToNull(formLease.psFileNo),
@@ -98,6 +99,7 @@ export const apiLeaseToAddFormLease = (lease?: ILease) => {
         initiatorType: lease.initiatorType?.id ?? '',
         statusType: lease.statusType?.id ?? '',
         type: lease.type?.id ?? '',
+        region: lease.region.regionCode ?? '',
         programType: lease.programType?.id ?? '',
       } as IAddFormLease)
     : undefined;
