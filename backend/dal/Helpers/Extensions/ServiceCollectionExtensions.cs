@@ -25,6 +25,7 @@ namespace Pims.Dal
             services.AddScoped<Services.IPropertyService, Services.PropertyService>();
             services.AddScoped<Services.IProvinceService, Services.ProvinceService>();
             services.AddScoped<Services.ILookupService, Services.LookupService>();
+            services.AddScoped<Services.ISystemConstantService, Services.SystemConstantService>();
             services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
             services.AddScoped<Services.IPersonService, Services.PersonService>();
             services.AddScoped<Services.IUserService, Services.UserService>();
@@ -35,6 +36,7 @@ namespace Pims.Dal
             services.AddScoped<Services.ILeaseService, Services.LeaseService>();
             services.AddScoped<Services.IContactService, Services.ContactService>();
             services.AddScoped<Services.IInsuranceService, Services.InsuranceService>();
+            services.AddScoped<Services.IAutocompleteService, Services.AutocompleteService>();
             return services; // TODO: Use reflection to find all services.
         }
 

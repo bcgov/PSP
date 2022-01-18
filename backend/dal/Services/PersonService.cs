@@ -4,6 +4,9 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Services
@@ -60,6 +63,41 @@ namespace Pims.Dal.Services
                     .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                 .Where(p => p.PersonId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Add the specified person contact to the datasource.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <param name="userOverride"></param>
+        /// <returns></returns>
+        public PimsPerson Add(PimsPerson person, bool userOverride)
+        {
+            person.ThrowIfNull(nameof(person));
+            if (!userOverride)
+            {
+
+                List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
+                    p => EF.Functions.Collate(p.FirstName, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.FirstName &&
+                        EF.Functions.Collate(p.Surname, SqlCollation.LATIN_GENERAL_CASE_INSENSITIVE) == person.Surname
+                ).Include(p => p.PimsContactMethods).ToList();
+
+                var isDuplicate = existingPersons.Any(
+                                p => p.PimsContactMethods.Any(
+                                    ec => person.PimsContactMethods.Any(
+                                        pc => pc.ContactMethodValue.ToLower() == ec.ContactMethodValue.ToLower() &&
+                                        pc.ContactMethodTypeCode == ec.ContactMethodTypeCode)));
+
+                if (isDuplicate)
+                {
+                    throw new DuplicateEntityException("Duplicate person found");
+                }
+            }
+
+            var createdPerson = this.Context.PimsPeople.Add(person);
+            this.Context.CommitTransaction();
+
+            return createdPerson.Entity;
         }
         #endregion
     }

@@ -250,11 +250,11 @@ db-refresh: | server-run pause-30 db-seed keycloak-sync ## Refresh the database 
 
 db-clean: ## create a new, clean database using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) create a clean database with minimal required data for development"
-	TARGET_SPRINT=$(n) docker-compose up -d --force-recreate database
+	TARGET_SPRINT=$(n) docker-compose up -d --build database
 
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
-	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --force-recreate database;
+	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build database;
 
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."
@@ -264,8 +264,8 @@ db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
 	@cd database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
-db-upgrade: ## Script to upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01).
-	@echo "$(P) Upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01)"
+db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01).
+	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
 	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
 	
 db-scaffold: ## Requires local install of sqlcmd

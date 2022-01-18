@@ -85,7 +85,7 @@ export const LeaseListView: React.FunctionComponent = () => {
           <Styled.Spacer />
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
             <Styled.FileIcon>
-              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('csv')} />
+              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
             </Styled.FileIcon>
           </TooltipWrapper>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">

@@ -36,16 +36,16 @@ interface AddressField {
 
 const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
   const phoneTypes: Dictionary<string> = {};
-  phoneTypes[ContactMethodTypes.WorkMobil] = 'Mobile';
-  phoneTypes[ContactMethodTypes.WorkPhone] = 'Home';
-  phoneTypes[ContactMethodTypes.PersPhone] = 'Work';
+  phoneTypes[ContactMethodTypes.WorkMobile] = 'Mobile';
+  phoneTypes[ContactMethodTypes.WorkPhone] = 'Work';
+  phoneTypes[ContactMethodTypes.PersonalPhone] = 'Home';
   phoneTypes[ContactMethodTypes.Fax] = 'Fax';
 
   const personPhoneNumbers: ContactInfoField[] = getContactInfo(person, phoneTypes);
 
   const emailTypes: Dictionary<string> = {};
   emailTypes[ContactMethodTypes.WorkEmail] = 'Work';
-  emailTypes[ContactMethodTypes.PerseEmail] = 'Personal';
+  emailTypes[ContactMethodTypes.PersonalEmail] = 'Personal';
   const personEmails: ContactInfoField[] = getContactInfo(person, emailTypes);
 
   let personAddresses: AddressField[];
@@ -109,13 +109,16 @@ const PersonView: React.FunctionComponent<PersonViewProps> = ({ person }) => {
           <Col md="auto">
             {person.organizations &&
               person.organizations.map((organization: IContactOrganization, index: number) => (
-                <Link
-                  to={'/contact/O' + organization.id}
-                  data-testid="contact-person-organization"
-                  key={'person-org-' + index}
-                >
-                  {organization.name}
-                </Link>
+                <>
+                  <Link
+                    to={'/contact/O' + organization.id}
+                    data-testid="contact-person-organization"
+                    key={'person-org-' + index}
+                  >
+                    {organization.name}
+                  </Link>
+                  <br />
+                </>
               ))}
           </Col>
         </Styled.RowAligned>

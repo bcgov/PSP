@@ -9,10 +9,11 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
     class="Toastify"
   />
   .c0 {
-  font-size: 3.2rem;
-  line-height: 4.2rem;
+  font-family: 'BcSans-Bold' font-size:2rem;
+  margin-bottom: 1rem;
   text-align: left;
-  border-bottom: solid 0.4rem;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
 }
 
 <div
@@ -21,11 +22,11 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
     <div
       class="col"
     >
-      <h2
+      <h3
         class="c0"
       >
         Administration
-      </h2>
+      </h3>
     </div>
   </div>
   .c0 {

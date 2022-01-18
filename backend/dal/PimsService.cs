@@ -41,6 +41,11 @@ namespace Pims.Dal
         public ILookupService Lookup { get { return _serviceProvider.GetService<ILookupService>(); } }
 
         /// <summary>
+        /// get - The system constant service.
+        /// </summary>
+        public ISystemConstantService SystemConstant { get { return _serviceProvider.GetService<ISystemConstantService>(); } }
+
+        /// <summary>
         /// get - The user service.
         /// </summary>
         public IUserService User { get { return _serviceProvider.GetService<IUserService>(); } }
@@ -79,6 +84,11 @@ namespace Pims.Dal
         /// get - The insurance service.
         /// </summary>
         public IInsuranceService Insurance { get { return _serviceProvider.GetService<IInsuranceService>(); } }
+
+        /// <summary>
+        /// get - The autocomplete service.
+        /// </summary>
+        public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
         #endregion
 
         #region Constructors

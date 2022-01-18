@@ -1,3 +1,1 @@
-export interface Dictionary<T> {
-  [Key: string]: T;
-}
+export type Dictionary<T> = Record<string, T>;

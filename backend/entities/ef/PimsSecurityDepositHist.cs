@@ -24,16 +24,9 @@ namespace Pims.Dal.Entities
         [Column("LEASE_ID")]
         public long LeaseId { get; set; }
         [Required]
-        [Column("SEC_DEP_HOLDER_TYPE_CODE")]
-        [StringLength(20)]
-        public string SecDepHolderTypeCode { get; set; }
-        [Required]
         [Column("SECURITY_DEPOSIT_TYPE_CODE")]
         [StringLength(20)]
         public string SecurityDepositTypeCode { get; set; }
-        [Column("OTHER_DEP_HOLDER_TYPE_DESC")]
-        [StringLength(100)]
-        public string OtherDepHolderTypeDesc { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(2000)]
@@ -42,8 +35,6 @@ namespace Pims.Dal.Entities
         public decimal AmountPaid { get; set; }
         [Column("DEPOSIT_DATE", TypeName = "date")]
         public DateTime DepositDate { get; set; }
-        [Column("ANNUAL_INTEREST_RATE", TypeName = "numeric(18, 0)")]
-        public decimal? AnnualInterestRate { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -82,5 +73,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("OTHER_DEPOSIT_TYPE_DESC")]
+        [StringLength(200)]
+        public string OtherDepositTypeDesc { get; set; }
     }
 }

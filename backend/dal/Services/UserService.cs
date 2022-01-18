@@ -348,6 +348,14 @@ namespace Pims.Dal.Services
             return user;
         }
 
+        public PimsUser RemoveRole(PimsUser user, long roleId)
+        {
+            var userRole = user.PimsUserRoles.FirstOrDefault(r => r.RoleId == roleId);
+            user.PimsUserRoles.Remove(userRole);
+            this.Context.PimsUserRoles.Remove(userRole);
+            return user;
+        }
+
         /// <summary>
         /// Updates the specified user in the datasource.
         /// </summary>

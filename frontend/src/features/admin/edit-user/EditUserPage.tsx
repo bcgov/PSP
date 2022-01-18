@@ -96,7 +96,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
   };
 
   const initialValues = {
-    businessIdentifierValue: user.businessIdentifierValue ?? '',
+    businessIdentifierValue: user.businessIdentifier ?? '',
     firstName: user.firstName ?? '',
     surname: user.surname ?? '',
     email: user.email ?? '',
@@ -140,7 +140,7 @@ const EditUserPage = (props: IEditUserPageProps) => {
               await updateUser({
                 id: user.id,
                 keycloakUserId: user.keycloakUserId,
-                businessIdentifierValue: user.businessIdentifierValue,
+                businessIdentifier: user.businessIdentifier,
                 displayName: values.displayName,
                 firstName: values.firstName,
                 surname: values.surname,

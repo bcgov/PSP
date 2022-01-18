@@ -36,7 +36,7 @@ const Login = () => {
     if (activated?.status === NEW_PIMS_USER || !keyCloakWrapper?.roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
     }
-    return <Redirect to={redirect || '/mapview'} />;
+    return <Redirect to={{ pathname: (redirect as string) || '/mapview' }} />;
   }
   if (isIE) {
     return <Redirect to={{ pathname: '/ienotsupported' }} />;

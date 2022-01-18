@@ -9,7 +9,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
     {
         #region Properties
         /// <summary>
-        /// get/set - The primary key to identify the contact methodf.
+        /// get/set - The primary key to identify the contact method.
         /// </summary>
         public long Id { get; set; }
 

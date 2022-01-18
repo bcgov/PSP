@@ -15,4 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\core\Pims.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ef\" />
+  </ItemGroup>
 </Project>

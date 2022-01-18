@@ -13,13 +13,13 @@ namespace Pims.Dal.Entities
     [Index(nameof(LeaseInitiatorTypeCode), Name = "LEASE_LEASE_INITIATOR_TYPE_CODE_IDX")]
     [Index(nameof(LeaseLicenseTypeCode), Name = "LEASE_LEASE_LICENSE_TYPE_CODE_IDX")]
     [Index(nameof(LeasePayRvblTypeCode), Name = "LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX")]
-    [Index(nameof(LeasePmtFreqTypeCode), Name = "LEASE_LEASE_PMT_FREQ_TYPE_CODE_IDX")]
     [Index(nameof(LeaseProgramTypeCode), Name = "LEASE_LEASE_PROGRAM_TYPE_CODE_IDX")]
     [Index(nameof(LeasePurposeTypeCode), Name = "LEASE_LEASE_PURPOSE_TYPE_CODE_IDX")]
     [Index(nameof(LeaseResponsibilityTypeCode), Name = "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX")]
     [Index(nameof(LeaseStatusTypeCode), Name = "LEASE_LEASE_STATUS_TYPE_CODE_IDX")]
     [Index(nameof(LFileNo), Name = "LEASE_L_FILE_NO_IDX")]
     [Index(nameof(PsFileNo), Name = "LEASE_PS_FILE_NO_IDX")]
+    [Index(nameof(RegionCode), Name = "LEASE_REGION_CODE_IDX")]
     [Index(nameof(TfaFileNo), Name = "LEASE_TFA_FILE_NO_IDX")]
     public partial class PimsLease
     {
@@ -63,9 +63,6 @@ namespace Pims.Dal.Entities
         [Column("LEASE_RESPONSIBILITY_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseResponsibilityTypeCode { get; set; }
-        [Column("LEASE_PMT_FREQ_TYPE_CODE")]
-        [StringLength(20)]
-        public string LeasePmtFreqTypeCode { get; set; }
         [Required]
         [Column("LEASE_STATUS_TYPE_CODE")]
         [StringLength(20)]
@@ -91,9 +88,6 @@ namespace Pims.Dal.Entities
         [Column("MOTI_CONTACT")]
         [StringLength(200)]
         public string MotiContact { get; set; }
-        [Column("MOTI_REGION")]
-        [StringLength(200)]
-        public string MotiRegion { get; set; }
         [Column("DOCUMENTATION_REFERENCE")]
         [StringLength(500)]
         public string DocumentationReference { get; set; }
@@ -179,6 +173,8 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
+        [Column("REGION_CODE")]
+        public short? RegionCode { get; set; }
 
         [ForeignKey(nameof(LeaseCategoryTypeCode))]
         [InverseProperty(nameof(PimsLeaseCategoryType.PimsLeases))]
@@ -192,9 +188,6 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(LeasePayRvblTypeCode))]
         [InverseProperty(nameof(PimsLeasePayRvblType.PimsLeases))]
         public virtual PimsLeasePayRvblType LeasePayRvblTypeCodeNavigation { get; set; }
-        [ForeignKey(nameof(LeasePmtFreqTypeCode))]
-        [InverseProperty(nameof(PimsLeasePmtFreqType.PimsLeases))]
-        public virtual PimsLeasePmtFreqType LeasePmtFreqTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(LeaseProgramTypeCode))]
         [InverseProperty(nameof(PimsLeaseProgramType.PimsLeases))]
         public virtual PimsLeaseProgramType LeaseProgramTypeCodeNavigation { get; set; }
@@ -207,6 +200,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(LeaseStatusTypeCode))]
         [InverseProperty(nameof(PimsLeaseStatusType.PimsLeases))]
         public virtual PimsLeaseStatusType LeaseStatusTypeCodeNavigation { get; set; }
+        [ForeignKey(nameof(RegionCode))]
+        [InverseProperty(nameof(PimsRegion.PimsLeases))]
+        public virtual PimsRegion RegionCodeNavigation { get; set; }
         [InverseProperty(nameof(PimsInsurance.Lease))]
         public virtual ICollection<PimsInsurance> PimsInsurances { get; set; }
         [InverseProperty(nameof(PimsLeaseTenant.Lease))]

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { LeaseH2 } from '../detail/styles';
+import { LeaseH3 } from '../detail/styles';
 import { PropertyRows } from './PropertyRows';
 import * as Styled from './styles';
 
@@ -12,7 +12,7 @@ const PropertyInformationSubForm: React.FunctionComponent<IPropertyInformationSu
     <>
       <Row>
         <Col>
-          <LeaseH2>Property Information</LeaseH2>
+          <LeaseH3>Property Information</LeaseH3>
         </Col>
       </Row>
       <PropertyRows />

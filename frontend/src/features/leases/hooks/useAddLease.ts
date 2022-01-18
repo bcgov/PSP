@@ -16,7 +16,7 @@ export const useAddLease = () => {
 
   const addLease = async (
     lease: ILease,
-    setUserOverride?: (userOverride?: string) => void,
+    setUserOverrideMessage?: (message?: string) => void,
     userOverride: boolean = false,
   ) => {
     try {
@@ -28,7 +28,7 @@ export const useAddLease = () => {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
-          setUserOverride && setUserOverride(axiosError?.response.data.error);
+          setUserOverrideMessage && setUserOverrideMessage(axiosError?.response.data.error);
         } else {
           if (axiosError?.response?.status === 400) {
             toast.error(axiosError?.response.data.error);
