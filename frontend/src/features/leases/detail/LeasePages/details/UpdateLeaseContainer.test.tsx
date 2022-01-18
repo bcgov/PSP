@@ -58,18 +58,13 @@ describe('Update lease container component', () => {
     const {
       component: { getByText, container },
     } = await setup({});
-    //console.log(container.innerHTML);
-    await act(async () => {
-      await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
-      await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
-      await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
-      await fillInput(container, 'region', '1', 'select');
-      await fillInput(container, 'programType', 'BCFERRIES', 'select');
-      await fillInput(container, 'type', 'LICONSTRC', 'select');
-      await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
-    });
-    await new Promise(r => setTimeout(r, 1000));
-    console.log(container.innerHTML);
+    await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
+    await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
+    await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
+    await fillInput(container, 'programType', 'BCFERRIES', 'select');
+    await fillInput(container, 'type', 'LICONSTRC', 'select');
+    await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
 
     mockAxios.onPut().reply(200, {});
     userEvent.click(getByText('Save'));
