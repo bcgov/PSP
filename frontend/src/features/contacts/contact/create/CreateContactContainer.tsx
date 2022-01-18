@@ -1,11 +1,10 @@
-import { ContactBreadcrumb, ContactTypes } from 'features/contacts';
+import { ContactBreadcrumb, ContactTypes, ContactTypeSelector } from 'features/contacts';
+import * as Styled from 'features/contacts/styles';
 import { getIn } from 'formik';
 import React from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import * as Styled from '../../styles';
-import ContactTypeSelector from '../typeSelector/ContactTypeSelector';
 import ContactRouter from './ContactRouter';
 
 export const CreateContactContainer: React.FunctionComponent = () => {

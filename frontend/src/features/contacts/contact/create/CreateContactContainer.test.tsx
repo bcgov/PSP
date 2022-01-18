@@ -1,7 +1,8 @@
+import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
-import { render, RenderOptions } from 'utils/test-utils';
+import { render, RenderOptions, waitFor } from 'utils/test-utils';
 
 import { CreateContactContainer } from '.';
 
@@ -24,18 +25,34 @@ describe('CreateContactContainer component', () => {
     };
   };
 
-  it('renders as expected', () => {
+  it('renders as expected', async () => {
     const { asFragment } = setup();
-    expect(asFragment()).toMatchSnapshot();
+    await waitFor(() => expect(asFragment()).toMatchSnapshot());
   });
 
-  it('displays contact selector', () => {
+  it('displays contact selector', async () => {
     const { getByLabelText } = setup();
-    expect(getByLabelText('Individual')).toBeVisible();
+    await waitFor(() => expect(getByLabelText('Individual')).toBeVisible());
   });
 
-  it('renders Contact Person form by default', () => {
+  it('renders Create Person form by default', async () => {
     const { queryByLabelText } = setup();
-    expect(queryByLabelText('First Name')).not.toBeNull();
+    await waitFor(() => expect(queryByLabelText('First Name')).not.toBeNull());
+  });
+
+  describe('when contact selector is changed', () => {
+    it('renders the correct form', async () => {
+      const { getByLabelText, queryByLabelText } = setup();
+      userEvent.click(getByLabelText('Organization'));
+      await waitFor(() => expect(queryByLabelText('Organization Name')).not.toBeNull());
+    });
+  });
+
+  describe('when Cancel button is clicked', () => {
+    it('cancels the form and redirects to Contacts List view', async () => {
+      const { getByText } = setup();
+      userEvent.click(getByText('Cancel'));
+      await waitFor(() => expect(history.location.pathname).toBe('/contact/list'));
+    });
   });
 });
