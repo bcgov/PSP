@@ -11,13 +11,14 @@ import isPlainObject from 'lodash/isPlainObject';
 import { stringToNull, stringToTypeCode } from 'utils/formUtils';
 
 export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICreatePerson {
+  // exclude form-specific fields from API payload object
   const {
     mailingAddress,
     propertyAddress,
     billingAddress,
-    organizationId,
     emailContactMethods,
     phoneContactMethods,
+    ...restObject
   } = formValues;
 
   const addresses = [mailingAddress, propertyAddress, billingAddress]
@@ -33,8 +34,10 @@ export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICre
     }));
 
   const apiPerson = {
-    ...formValues,
-    organizationId: isPlainObject(organizationId) ? (organizationId as any).id : undefined,
+    ...restObject,
+    organizationId: isPlainObject(formValues.organizationId)
+      ? (formValues.organizationId as any).id
+      : undefined,
     addresses,
     contactMethods,
   } as ICreatePerson;
@@ -45,12 +48,14 @@ export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICre
 export function organizationCreateFormToApiOrganization(
   formValues: ICreateOrganizationForm,
 ): ICreateOrganization {
+  // exclude form-specific fields from API payload object
   const {
     mailingAddress,
     propertyAddress,
     billingAddress,
     emailContactMethods,
     phoneContactMethods,
+    ...restObject
   } = formValues;
 
   const addresses = [mailingAddress, propertyAddress, billingAddress]
@@ -66,7 +71,7 @@ export function organizationCreateFormToApiOrganization(
     }));
 
   const apiOrganization = {
-    ...formValues,
+    ...restObject,
     addresses,
     contactMethods,
   } as ICreateOrganization;

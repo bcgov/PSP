@@ -25,23 +25,23 @@ describe('CreateContactContainer component', () => {
     };
   };
 
-  it('renders as expected', async () => {
+  it('should render as expected', async () => {
     const { asFragment } = setup();
     await waitFor(() => expect(asFragment()).toMatchSnapshot());
   });
 
-  it('displays contact selector', async () => {
+  it('should display contact selector', async () => {
     const { getByLabelText } = setup();
     await waitFor(() => expect(getByLabelText('Individual')).toBeVisible());
   });
 
-  it('renders Create Person form by default', async () => {
+  it('should render Create Person form by default', async () => {
     const { queryByLabelText } = setup();
     await waitFor(() => expect(queryByLabelText('First Name')).not.toBeNull());
   });
 
   describe('when contact selector is changed', () => {
-    it('renders the correct form', async () => {
+    it('should render the correct form', async () => {
       const { getByLabelText, queryByLabelText } = setup();
       userEvent.click(getByLabelText('Organization'));
       await waitFor(() => expect(queryByLabelText('Organization Name')).not.toBeNull());
@@ -49,7 +49,7 @@ describe('CreateContactContainer component', () => {
   });
 
   describe('when Cancel button is clicked', () => {
-    it('cancels the form and redirects to Contacts List view', async () => {
+    it('should cancel the form and navigate to Contacts List view', async () => {
       const { getByText } = setup();
       userEvent.click(getByText('Cancel'));
       await waitFor(() => expect(history.location.pathname).toBe('/contact/list'));
