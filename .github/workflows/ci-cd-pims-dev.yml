@@ -28,13 +28,26 @@ on:
       - ".github/workflows/ci-cd-pims-dev.yml"
 
 jobs:
+
+  ci-cd-start-notification:
+    name: CI-CD Start Notification to Teams Channel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start notification to Teams Channel
+        uses: jdcargile/ms-teams-notification@v1.3
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: PIMS CI-CD GitHub Action STARTED in DEV
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
+          
   build-frontend:
     name: Build frontend
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v2
-    
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -42,7 +55,6 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-
       - name: Call script to build frontend (pims-app and pims-app-base)
         run: |
           ./openshift/4.0/player.sh build app-base -apply
@@ -51,10 +63,9 @@ jobs:
   build-api:
     name: Build api
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v2
-      
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -62,7 +73,6 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-
       - name: Call script to build backend (pims-api)
         run: |
           ./openshift/4.0/player.sh build api -apply
@@ -71,9 +81,9 @@ jobs:
     name: Deploy frontend and api to OpenShift
     needs: [build-frontend, build-api]
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -81,22 +91,25 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-
       - name: call scripts to deploy api and frontend
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
   
-  notify:
-    name: Notify Teams Channel
+  ci-cd-end-notification:
+    name: CI-CD End Notification to Teams Channel
+    runs-on: ubuntu-latest
     needs: deploy
     if: always()
-    runs-on: ubuntu-latest
-    
     steps:
-      - name: Notify Teams Channel
-        uses: toko-bifrost/ms-teams-deploy-card@master
+      - name: check workflow status
+        uses: martialonline/workflow-status@v2
+        id: check
+      - name: End notification to Teams Channel
+        uses: jdcargile/ms-teams-notification@v1.3
         with:
           github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: PIMS CI-CD GitHub Action COMPLETED in DEV with status ${{ steps.check.outputs.status }}
+          notification-color: 17a2b8
           timezone: America/Los_Angeles
