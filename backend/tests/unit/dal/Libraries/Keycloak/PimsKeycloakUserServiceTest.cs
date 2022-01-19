@@ -49,7 +49,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
-            var pimsServiceMock = helper.GetMock<IPimsService>();
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
@@ -143,7 +143,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
-            var pimsServiceMock = helper.GetMock<IPimsService>();
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.Role.Find(removeRole.RoleId)).Returns(removeRole);
@@ -193,7 +193,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                     Id = new Guid(g)
                 }).ToArray());
 
-            var pimsServiceMock = helper.GetMock<IPimsService>();
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
             pimsServiceMock.Setup(m => m.User.Get(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
@@ -241,7 +241,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 }).ToArray());
             keycloakServiceMock.Setup(m => m.UpdateUserAsync(It.IsAny<Pims.Keycloak.Models.UserModel>()));
 
-            var pimsServiceMock = helper.GetMock<IPimsService>();
+            var pimsServiceMock = helper.GetMock<IPimsRepository>();
             pimsServiceMock.Setup(m => m.User.GetTracking(It.IsAny<long>())).Returns(euser);
             pimsServiceMock.Setup(m => m.User.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(euser);
             pimsServiceMock.Setup(m => m.Role.Find(removeRole.RoleId)).Returns<Entity.PimsRole>(null);

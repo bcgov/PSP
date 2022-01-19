@@ -37,7 +37,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<OrganizationController>(Permissions.AdminOrganizations);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organizations = new Entity.PimsOrganization[] { EntityHelper.CreateOrganization(1, "organization1"), EntityHelper.CreateOrganization(2, "organization2") };
             service.Setup(m => m.UserOrganization.GetAll()).Returns(organizations);
 
@@ -60,7 +60,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<OrganizationController>(Permissions.AdminOrganizations);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organizations = new Entity.PimsOrganization[] { EntityHelper.CreateOrganization(1, "organization1"), EntityHelper.CreateOrganization(2, "organization2") };
             var paged = new Entity.Models.Paged<Entity.PimsOrganization>(organizations);
             service.Setup(m => m.UserOrganization.Get(It.IsAny<Entity.Models.OrganizationFilter>())).Returns(paged);
@@ -87,7 +87,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<OrganizationController>(Permissions.AdminOrganizations);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
             service.Setup(m => m.UserOrganization.Get(It.IsAny<long>())).Returns(organization);
 
@@ -112,7 +112,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<OrganizationController>(Permissions.AdminOrganizations);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
             service.Setup(m => m.UserOrganization.Add(It.IsAny<Entity.PimsOrganization>()));
             var model = mapper.Map<Model.OrganizationModel>(organization);
@@ -138,7 +138,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<OrganizationController>(Permissions.AdminOrganizations);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
             service.Setup(m => m.UserOrganization.Update(It.IsAny<Entity.PimsOrganization>()));
             var model = mapper.Map<Model.OrganizationModel>(organization);
@@ -164,7 +164,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<OrganizationController>(Permissions.AdminOrganizations);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
             service.Setup(m => m.UserOrganization.Delete(It.IsAny<Entity.PimsOrganization>()));
             var model = mapper.Map<Model.OrganizationModel>(organization);

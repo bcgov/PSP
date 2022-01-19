@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
     public class OrganizationController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -30,12 +30,12 @@ namespace Pims.Api.Areas.Organizations.Controllers
         /// <summary>
         /// Creates a new instance of a PersonController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="pimsRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public OrganizationController(IPimsService pimsService, IMapper mapper)
+        public OrganizationController(IPimsRepository pimsRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _pimsRepository = pimsRepository;
             _mapper = mapper;
         }
         #endregion
@@ -54,7 +54,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
-            var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
+            var otherCountry = _pimsRepository.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
             foreach (var address in model?.Addresses)
             {
                 if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
@@ -71,7 +71,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
 
             try
             {
-                var createdOrganization = _pimsService.Organization.Add(entity, userOverride);
+                var createdOrganization = _pimsRepository.Organization.Add(entity, userOverride);
                 var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);

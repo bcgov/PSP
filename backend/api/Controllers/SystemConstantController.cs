@@ -16,7 +16,7 @@ namespace Pims.Api.Controllers
     public class SystemConstantController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -24,11 +24,11 @@ namespace Pims.Api.Controllers
         /// <summary>
         /// Creates a new instances of a SystemConstantController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="pimsService"></param>
+        /// <param name="pimsRepository"></param>
         /// <param name="mapper"></param>
-        public SystemConstantController(IPimsService pimsService, IMapper mapper)
+        public SystemConstantController(IPimsRepository pimsRepository, IMapper mapper)
         {
-            _pimsService = pimsService;
+            _pimsRepository = pimsRepository;
             _mapper = mapper;
         }
         #endregion
@@ -44,7 +44,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "systemConstant" })]
         public IActionResult Environment()
         {
-            var systemConstants = _mapper.Map<SystemConstantModel[]>(_pimsService.SystemConstant.GetAll());
+            var systemConstants = _mapper.Map<SystemConstantModel[]>(_pimsRepository.SystemConstant.GetAll());
             return new JsonResult(systemConstants);
         }
         #endregion
