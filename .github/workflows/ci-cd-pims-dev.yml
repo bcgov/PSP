@@ -21,11 +21,10 @@ env:
   TAG_PROD: "prod"
 
 on:
-  #pull_request:
-  #  branches: [dev]
   push:
-    paths:
-      - ".github/workflows/ci-cd-pims-dev.yml"
+    branches: [dev]
+#    paths:
+#      - ".github/workflows/ci-cd-pims-dev.yml"
 
 jobs:
 
@@ -112,6 +111,6 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          notification-summary: PIMS CI-CD GitHub Action COMPLETED in DEV with status ${{ steps.check.outputs.status }}
+          notification-summary: PIMS CI-CD GitHub Action COMPLETED in DEV environment with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles
