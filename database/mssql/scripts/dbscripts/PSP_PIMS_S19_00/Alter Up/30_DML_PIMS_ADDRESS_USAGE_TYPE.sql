@@ -1,17 +1,14 @@
 /* -----------------------------------------------------------------------------
-Delete all data from the PIMS_STATIC_VARIABLE table and repopulate.
+Alter the usage type code description for the RESIDNT code value.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2021-Aug-24  Initial version
+Doug Filteau  2022-Jan-17  Initial version
 ----------------------------------------------------------------------------- */
 
-DELETE FROM PIMS_STATIC_VARIABLE
+-- Set all current address usage type codes to disabled.
+UPDATE PIMS_ADDRESS_USAGE_TYPE
+SET    DESCRIPTION = N'Property address'
+     , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+WHERE  ADDRESS_USAGE_TYPE_CODE = 'RESIDNT';
 GO
-
-INSERT INTO PIMS_STATIC_VARIABLE (STATIC_VARIABLE_NAME, STATIC_VARIABLE_VALUE)
-VALUES
-  (N'DBVERSION', N'17.00'),
-  (N'GST',       N'5.0'),
-  (N'FYSTART',   N'01/04/2020'),
-  (N'FYEND',     N'31/03/2021');
