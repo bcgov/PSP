@@ -153,6 +153,16 @@ namespace Pims.Dal.Services
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
         }
 
+        public IEnumerable<PimsLeaseTermStatusType> GetLeaseTermStatusTypes()
+        {
+            return this.Context.PimsLeaseTermStatusTypes.AsNoTracking().OrderBy(a => a.LeaseTermStatusTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsLeasePmtFreqType> GetLeasePmtFreqTypes()
+        {
+            return this.Context.PimsLeasePmtFreqTypes.AsNoTracking().OrderBy(a => a.LeasePmtFreqTypeCode).ToArray();
+        }
+
         public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
         {
             return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.InsuranceTypeCode).ToArray();
@@ -170,3 +180,4 @@ namespace Pims.Dal.Services
         #endregion
     }
 }
+

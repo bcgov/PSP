@@ -11,7 +11,7 @@ import {
   IProperty,
   ITenant,
 } from '.';
-import { ILeaseTerm } from './ILeaseTerm';
+import { IFormLeaseTerm, ILeaseTerm } from './ILeaseTerm';
 import { IRegion } from './IRegion';
 import ITypeCode from './ITypeCode';
 
@@ -79,6 +79,7 @@ export interface IFormLease
       statusType?: ITypeCode<string>;
       region?: IRegion;
       programType?: ITypeCode<string>;
+      terms: IFormLeaseTerm[];
     }
   > {}
 
