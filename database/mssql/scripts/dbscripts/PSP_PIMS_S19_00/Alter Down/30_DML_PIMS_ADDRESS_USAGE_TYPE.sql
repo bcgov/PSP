@@ -1,15 +1,14 @@
 /* -----------------------------------------------------------------------------
-Delete all data from the PIMS_SECURITY_DEPOSIT_TYPE table and repopulate.
+Alter the usage type code description for the RESIDNT code value.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2021-Aug-24  Initial version
+Doug Filteau  2022-Jan-17  Initial version
 ----------------------------------------------------------------------------- */
 
-DELETE FROM PIMS_SECURITY_DEPOSIT_TYPE
+-- Set all current address usage type codes to disabled.
+UPDATE PIMS_ADDRESS_USAGE_TYPE
+SET    DESCRIPTION = N'Residential address'
+     , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+WHERE  ADDRESS_USAGE_TYPE_CODE = 'RESIDNT';
 GO
-
-INSERT INTO PIMS_SECURITY_DEPOSIT_TYPE (SECURITY_DEPOSIT_TYPE_CODE, DESCRIPTION)
-VALUES
-  (N'SECURITY', N'Security deposit'),
-  (N'PET',      N'Pet deposit');
