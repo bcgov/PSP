@@ -12,8 +12,8 @@
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="239"
-  DTS:VersionGUID="{C35BA925-089F-4DCC-A7A3-90C75D101C0A}">
+  DTS:VersionBuild="242"
+  DTS:VersionGUID="{D879C322-F8A9-439D-9822-75A28F0923ED}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -686,7 +686,7 @@
                         <inputColumn
                           refId="Package\Main Flow 1\LOAD LEASES\Derived Column.Inputs[Derived Column Input].Columns[LEASE_STATUS_TYPE_CODE]"
                           cachedDataType="wstr"
-                          cachedLength="6"
+                          cachedLength="8"
                           cachedName="LEASE_STATUS_TYPE_CODE"
                           lineageId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]" />
                       </inputColumns>
@@ -2655,7 +2655,7 @@ where [refTable].[FIRST_NAME] = ?</property>
                         <inputColumn
                           refId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input].Columns[LEASE_STATUS_TYPE_CODE]"
                           cachedDataType="wstr"
-                          cachedLength="6"
+                          cachedLength="8"
                           cachedName="LEASE_STATUS_TYPE_CODE"
                           externalMetadataColumnId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_STATUS_TYPE_CODE]"
                           lineageId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]" />
@@ -3623,7 +3623,7 @@ where [refTable].[lease_id] = ?</property>
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          length="6"
+                          length="8"
                           lineageId="Package\Main Flow 1\LOAD LEASES\Replace Nulls.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]"
                           name="LEASE_STATUS_TYPE_CODE"
                           truncationRowDisposition="FailComponent">
@@ -3632,13 +3632,13 @@ where [refTable].[lease_id] = ?</property>
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">#{Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]} &gt;= [GETDATE]() || [ISNULL](#{Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]}) ? "ACTIVE" : "DRAFT"</property>
+                              name="Expression">#{Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]} &gt;= [GETDATE]() || [ISNULL](#{Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1].Columns[Expiry_Date]}) ? "ACTIVE" : "INACTIVE"</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">Expiry_Date &gt;= GETDATE() || ISNULL(Expiry_Date) ? "ACTIVE" : "DRAFT"</property>
+                              name="FriendlyExpression">Expiry_Date &gt;= GETDATE() || ISNULL(Expiry_Date) ? "ACTIVE" : "INACTIVE"</property>
                           </properties>
                         </outputColumn>
                       </outputColumns>
@@ -10123,9 +10123,9 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
                   endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
@@ -10133,14 +10133,14 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
@@ -10148,14 +10148,14 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup No Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Inputs[Derived Column Input]"
@@ -10198,19 +10198,19 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\t_leasing + PID.Outputs[OLE DB Source Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
-                  endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
-                  name="Union All Output 1"
-                  startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 2.Outputs[Union All Output 1]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+                  endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
+                  name="Union All Output 1"
+                  startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
                   endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
@@ -12951,9 +12951,17 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Lookup Category Code"
           TopLeft="1022,1046" />
         <NodeLayout
+          Size="192,42"
+          Id="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null"
+          TopLeft="752,363" />
+        <NodeLayout
           Size="177,42"
           Id="Package\Main Flow 1\LOAD LEASES\OLE DB Destination"
           TopLeft="2065,1535" />
+        <NodeLayout
+          Size="132,42"
+          Id="Package\Main Flow 1\LOAD LEASES\Union All 1"
+          TopLeft="629,706" />
         <NodeLayout
           Size="169,42"
           Id="Package\Main Flow 1\LOAD LEASES\TFA_File_Number"
@@ -12962,6 +12970,10 @@ where [refTable].[PID] = ?</property>
           Size="288,42"
           Id="Package\Main Flow 1\LOAD LEASES\LIS LEASE PURPOSE TYPE to UNICODE"
           TopLeft="629.285714285714,1043.14285714286" />
+        <NodeLayout
+          Size="266,42"
+          Id="Package\Main Flow 1\LOAD LEASES\PMT_FRQ_TP, PRGRM_TP, LS_NTS"
+          TopLeft="346,288" />
         <NodeLayout
           Size="216,42"
           Id="Package\Main Flow 1\LOAD LEASES\MOTI NAME LOOKUP TAG"
@@ -12975,13 +12987,13 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Derived Column"
           TopLeft="2072,1660" />
         <NodeLayout
-          Size="242,42"
-          Id="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE"
-          TopLeft="721,1222" />
+          Size="123,42"
+          Id="Package\Main Flow 1\LOAD LEASES\Union All"
+          TopLeft="418,481" />
         <NodeLayout
-          Size="266,42"
-          Id="Package\Main Flow 1\LOAD LEASES\PMT_FRQ_TP, PRGRM_TP, LS_NTS"
-          TopLeft="346,288" />
+          Size="132,42"
+          Id="Package\Main Flow 1\LOAD LEASES\PSFile_No"
+          TopLeft="419,612" />
         <NodeLayout
           Size="132,42"
           Id="Package\Main Flow 1\LOAD LEASES\Union All 2"
@@ -12999,13 +13011,17 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE"
           TopLeft="2075.27777777778,1790.5" />
         <NodeLayout
-          Size="147,42"
-          Id="Package\Main Flow 1\LOAD LEASES\Replace Nulls"
-          TopLeft="659,1598" />
+          Size="242,42"
+          Id="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE"
+          TopLeft="721,1222" />
         <NodeLayout
           Size="259,42"
           Id="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON"
           TopLeft="1205.42857142857,1789.57142857143" />
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Main Flow 1\LOAD LEASES\Replace Nulls"
+          TopLeft="659,1598" />
         <NodeLayout
           Size="217,42"
           Id="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode"
@@ -13019,9 +13035,9 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\PSFile_No_Null"
           TopLeft="742,613" />
         <NodeLayout
-          Size="132,42"
-          Id="Package\Main Flow 1\LOAD LEASES\Union All 3"
-          TopLeft="1288,1512" />
+          Size="154,42"
+          Id="Package\Main Flow 1\LOAD LEASES\t_leasing + PID"
+          TopLeft="397.5,176.5" />
         <NodeLayout
           Size="212,43"
           Id="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null"
@@ -13035,14 +13051,6 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Conditional Split"
           TopLeft="691.285714285714,940.142857142857" />
         <NodeLayout
-          Size="123,42"
-          Id="Package\Main Flow 1\LOAD LEASES\Union All"
-          TopLeft="418,481" />
-        <NodeLayout
-          Size="154,42"
-          Id="Package\Main Flow 1\LOAD LEASES\t_leasing + PID"
-          TopLeft="397.5,176.5" />
-        <NodeLayout
           Size="165,42"
           Id="Package\Main Flow 1\LOAD LEASES\Handle &quot;Nominal&quot;"
           TopLeft="1235,941" />
@@ -13051,13 +13059,9 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code"
           TopLeft="987.5,1359.25" />
         <NodeLayout
-          Size="192,42"
-          Id="Package\Main Flow 1\LOAD LEASES\TFA_File_Number_null"
-          TopLeft="752,363" />
-        <NodeLayout
           Size="132,42"
-          Id="Package\Main Flow 1\LOAD LEASES\PSFile_No"
-          TopLeft="419,612" />
+          Id="Package\Main Flow 1\LOAD LEASES\Union All 3"
+          TopLeft="1288,1512" />
         <NodeLayout
           Size="118,42"
           Id="Package\Main Flow 1\LOAD LEASES\Get PID"
@@ -13070,10 +13074,6 @@ where [refTable].[PID] = ?</property>
           Size="181,42"
           Id="Package\Main Flow 1\LOAD LEASES\OTHER for no match"
           TopLeft="1386.14285714286,807" />
-        <NodeLayout
-          Size="132,42"
-          Id="Package\Main Flow 1\LOAD LEASES\Union All 1"
-          TopLeft="629,706" />
         <NodeLayout
           Size="177,42"
           Id="Package\Main Flow 1\LOAD LEASES\Amount to Currency"
@@ -13114,50 +13114,6 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
-          TopLeft="482.25,523">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,89"
-              Start="0,0"
-              End="0,81.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,81.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
-          TopLeft="1356.25,1554">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41"
-              Start="0,0"
-              End="0,33.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
           TopLeft="1531,1149">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13182,6 +13138,50 @@ where [refTable].[PID] = ?</property>
                     Point3="-689,40.5" />
                   <mssgle:LineSegment
                     End="-689,65.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+          TopLeft="482.25,523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,89"
+              Start="0,0"
+              End="0,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,81.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+          TopLeft="1356.25,1554">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -13382,90 +13382,6 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-          TopLeft="770.642857142857,847">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,93.1428571428571"
-              Start="0,0"
-              End="0,85.6428571428571">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,85.6428571428571" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,37.0167410714285,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
-          TopLeft="842,1264">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-10.055555555556,91.6388888888901"
-              Start="0,0"
-              End="-10.055555555556,84.1388888888901">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,41.819444444445" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,41.819444444445"
-                    Point2="0,45.819444444445"
-                    Point3="-4,45.819444444445" />
-                  <mssgle:LineSegment
-                    End="-6.055555555556,45.819444444445" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-6.055555555556,45.819444444445"
-                    Point2="-10.055555555556,45.819444444445"
-                    Point3="-10.055555555556,49.819444444445" />
-                  <mssgle:LineSegment
-                    End="-10.055555555556,84.1388888888901" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-53.219164496528,50.819444444445,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
-          TopLeft="1464.42857142857,1809.60714285714">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="145.85714285715,0"
-              Start="0,0"
-              End="138.35714285715,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="138.35714285715,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="20.987184709825,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
           TopLeft="1111.5,1401.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13501,38 +13417,110 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
-          TopLeft="485,654">
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+          TopLeft="770.642857142857,847">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="189.333333333333,52"
+              EndConnector="0,93.1428571428571"
               Start="0,0"
-              End="189.333333333333,44.5">
+              End="0,85.6428571428571">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.8263473053892" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,26.8263473053892"
-                    Point2="0,30.8263473053892"
-                    Point3="4,30.8263473053892" />
-                  <mssgle:LineSegment
-                    End="185.333333333333,30.8263473053892" />
-                  <mssgle:CubicBezierSegment
-                    Point1="185.333333333333,30.8263473053892"
-                    Point2="189.333333333333,30.8263473053892"
-                    Point3="189.333333333333,34.8263473053892" />
-                  <mssgle:LineSegment
-                    End="189.333333333333,44.5" />
+                    End="0,85.6428571428571" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="46.4752799479165,35.8263473053892,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,37.0167410714285,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
+          TopLeft="1464.42857142857,1809.60714285714">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="145.85714285715,0"
+              Start="0,0"
+              End="138.35714285715,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="138.35714285715,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="20.987184709825,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+          TopLeft="482.5,412">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,69"
+              Start="0,0"
+              End="0,61.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,24.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+          TopLeft="842,1264">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10.055555555556,91.6388888888901"
+              Start="0,0"
+              End="-10.055555555556,84.1388888888901">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.819444444445" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,41.819444444445"
+                    Point2="0,45.819444444445"
+                    Point3="-4,45.819444444445" />
+                  <mssgle:LineSegment
+                    End="-6.055555555556,45.819444444445" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6.055555555556,45.819444444445"
+                    Point2="-10.055555555556,45.819444444445"
+                    Point3="-10.055555555556,49.819444444445" />
+                  <mssgle:LineSegment
+                    End="-10.055555555556,84.1388888888901" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-53.219164496528,50.819444444445,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -13574,25 +13562,37 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
-          TopLeft="482.5,412">
+          TopLeft="485,654">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,69"
+              EndConnector="189.333333333333,52"
               Start="0,0"
-              End="0,61.5">
+              End="189.333333333333,44.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,61.5" />
+                    End="0,26.8263473053892" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26.8263473053892"
+                    Point2="0,30.8263473053892"
+                    Point3="4,30.8263473053892" />
+                  <mssgle:LineSegment
+                    End="185.333333333333,30.8263473053892" />
+                  <mssgle:CubicBezierSegment
+                    Point1="185.333333333333,30.8263473053892"
+                    Point2="189.333333333333,30.8263473053892"
+                    Point3="189.333333333333,34.8263473053892" />
+                  <mssgle:LineSegment
+                    End="189.333333333333,44.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,24.9453125,96.3827734375,11.609375"
+              BoundingBox="46.4752799479165,35.8263473053892,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -14095,7 +14095,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -14105,7 +14105,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -14149,7 +14149,7 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE">
+    design-time-name="Package\Main Flow 1\LOAD LEASES\PSFile_No">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -14159,7 +14159,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[t_leasingsubpurpose]</Value>
+          type="q3:string"></Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -14208,12 +14208,35 @@ where [refTable].[PID] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[t_leasingsubpurpose]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -14223,7 +14246,7 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -14244,35 +14267,12 @@ where [refTable].[PID] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_LEASE_PURPOSE_TYPE]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Main Flow 1\LOAD LEASES\PSFile_No">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
           type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string"></Value>
+          type="q3:string">[dbo].[PIMS_LEASE_PURPOSE_TYPE]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -14294,13 +14294,13 @@ where [refTable].[PID] = ?</property>
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Convert PID back to int"
           TopLeft="283,340" />
         <NodeLayout
-          Size="214,42"
-          Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS_PROPERTY_LEASE"
-          TopLeft="274,530" />
-        <NodeLayout
           Size="167,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\Derived Column 1"
           TopLeft="607,337" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS_PROPERTY_LEASE"
+          TopLeft="274,530" />
         <NodeLayout
           Size="175,42"
           Id="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG"
@@ -14348,7 +14348,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14442,7 +14444,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14464,7 +14468,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14486,7 +14492,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -14508,7 +14516,9 @@ where [refTable].[PID] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
