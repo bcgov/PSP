@@ -1,12 +1,11 @@
 
-using Pims.Api.Models;
 
-namespace Pims.Api.Areas.Persons.Models.Person
+namespace Pims.Api.Models.Contact
 {
     /// <summary>
     /// Provides a contact-oriented contact method model.
     /// </summary>
-    public class ContactMethodCreateModel
+    public class ContactMethodModel
     {
         #region Properties
         /// <summary>

@@ -1,12 +1,10 @@
 
-using Pims.Api.Models;
-
-namespace Pims.Api.Areas.Persons.Models.Person
+namespace Pims.Api.Models.Contact
 {
     /// <summary>
     /// Provides a contact-oriented address model.
     /// </summary>
-    public class AddressCreateModel
+    public class AddressModel
     {
         #region Properties
         /// <summary>

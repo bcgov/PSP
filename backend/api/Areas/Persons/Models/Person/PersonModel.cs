@@ -1,11 +1,22 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Pims.Api.Models.Contact;
 
 namespace Pims.Api.Areas.Persons.Models.Person
 {
-    public class PersonCreateModel
+    public class PersonModel
     {
         #region Properties
+        /// <summary>
+        /// get/set - The person's id.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// get/set - The concurrency row version.
+        /// </summary>
+        /// <value></value>
+        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The person's disabled status flag.
@@ -42,12 +53,12 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - The person's addresses.
         /// </summary>
-        public IList<AddressCreateModel> Addresses { get; set; }
+        public IList<AddressModel> Addresses { get; set; }
 
         /// <summary>
         /// get/set - The person's contact methods.
         /// </summary>
-        public IList<ContactMethodCreateModel> ContactMethods { get; set; }
+        public IList<ContactMethodModel> ContactMethods { get; set; }
 
         /// <summary>
         /// get/set - The person's Comment.

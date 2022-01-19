@@ -16,6 +16,17 @@ export interface ICreatePerson {
   contactMethods?: ICreateContactMethod[];
 }
 
+export interface ICreateOrganization {
+  id?: number;
+  name: string;
+  alias?: string;
+  incorporationNumber?: string;
+  comment?: string;
+  isDisabled: boolean;
+  addresses?: ICreateContactAddress[];
+  contactMethods?: ICreateContactMethod[];
+}
+
 export interface ICreateContactAddress {
   id?: number;
   rowVersion?: number;
@@ -52,6 +63,18 @@ export interface ICreatePersonForm
     }
   > {}
 
+export interface ICreateOrganizationForm
+  extends ExtendOverride<
+    ICreateOrganization,
+    {
+      emailContactMethods: ICreateContactMethodForm[];
+      phoneContactMethods: ICreateContactMethodForm[];
+      mailingAddress: ICreateContactAddressForm;
+      propertyAddress: ICreateContactAddressForm;
+      billingAddress: ICreateContactAddressForm;
+    }
+  > {}
+
 export interface ICreateContactMethodForm
   extends ExtendOverride<ICreateContactMethod, { contactMethodTypeCode: string }> {}
 
@@ -69,6 +92,59 @@ export const defaultCreatePerson: ICreatePersonForm = {
   preferredName: '',
   comment: '',
   organizationId: '',
+  emailContactMethods: [
+    {
+      contactMethodTypeCode: '',
+      value: '',
+    },
+  ],
+  phoneContactMethods: [
+    {
+      contactMethodTypeCode: '',
+      value: '',
+    },
+  ],
+  mailingAddress: {
+    addressTypeId: AddressTypes.Mailing,
+    streetAddress1: '',
+    streetAddress2: '',
+    streetAddress3: '',
+    municipality: '',
+    countryOther: '',
+    postal: '',
+    countryId: '',
+    provinceId: '',
+  },
+  propertyAddress: {
+    addressTypeId: AddressTypes.Residential,
+    streetAddress1: '',
+    streetAddress2: '',
+    streetAddress3: '',
+    municipality: '',
+    countryOther: '',
+    postal: '',
+    countryId: '',
+    provinceId: '',
+  },
+  billingAddress: {
+    addressTypeId: AddressTypes.Billing,
+    streetAddress1: '',
+    streetAddress2: '',
+    streetAddress3: '',
+    municipality: '',
+    countryOther: '',
+    postal: '',
+    countryId: '',
+    provinceId: '',
+  },
+};
+
+export const defaultCreateOrganization: ICreateOrganizationForm = {
+  isDisabled: false,
+  name: '',
+  alias: '',
+  incorporationNumber: '',
+  comment: '',
   emailContactMethods: [
     {
       contactMethodTypeCode: '',
