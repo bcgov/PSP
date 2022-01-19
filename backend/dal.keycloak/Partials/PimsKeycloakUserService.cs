@@ -150,7 +150,7 @@ namespace Pims.Dal.Keycloak
             {
                 var role = _pimsRepository.Role.Find(r) ?? throw new KeyNotFoundException("Cannot remove a role from a user, when the role does not exist.");
                 if (role.KeycloakGroupId == null) throw new KeyNotFoundException("PIMS has not been synced with Keycloak.");
-                euser = _pimsService.User.RemoveRole(euser, role.RoleId);
+                euser = _pimsRepository.User.RemoveRole(euser, role.RoleId);
             });
             addRoleIds.ForEach(r =>
             {

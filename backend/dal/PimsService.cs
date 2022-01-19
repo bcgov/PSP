@@ -15,10 +15,6 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
-        /// <summary>
-        /// get - The user organization service (legacy).
-        /// </summary>
-        public IUserOrganizationService UserOrganization { get { return _serviceProvider.GetService<IUserOrganizationService>(); } }
 
         /// <summary>
         /// get - The user calling the service.

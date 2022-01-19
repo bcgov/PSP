@@ -27,7 +27,6 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IProvinceService, Repositories.ProvinceService>();
             repositories.AddScoped<Repositories.ILookupService, Repositories.LookupService>();
             repositories.AddScoped<Repositories.ISystemConstantService, Services.SystemConstantService>();
-            repositories.AddScoped<Repositories.IOrganizationService, Repositories.OrganizationService>();
             repositories.AddScoped<Repositories.IPersonService, Repositories.PersonService>();
             repositories.AddScoped<Repositories.IUserService, Repositories.UserService>();
             repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
@@ -38,6 +37,8 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IContactService, Repositories.ContactService>();
             repositories.AddScoped<Repositories.IInsuranceService, Repositories.InsuranceService>();
             repositories.AddScoped<Repositories.IAutocompleteService, Repositories.AutocompleteService>();
+            repositories.AddScoped<Repositories.IUserOrganizationService, Repositories.UserOrganizationService>();
+            repositories.AddScoped<Repositories.IOrganizationService, Repositories.OrganizationService>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 
@@ -49,9 +50,8 @@ namespace Pims.Dal
         public static IServiceCollection AddPimsServices(this IServiceCollection services)
         {
             services.AddScoped<IPimsService, PimsService>();
-            return services; // TODO: Use reflection to find all Repositories.
-            services.AddScoped<Services.IUserOrganizationService, Services.UserOrganizationService>();
-            services.AddScoped<Services.IOrganizationService, Services.OrganizationService>();
+            return services; // TODO: Use reflection to find all Services.
+
         }
 
         /// <summary>

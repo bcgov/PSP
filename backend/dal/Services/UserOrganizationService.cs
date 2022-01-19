@@ -10,12 +10,12 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 
-namespace Pims.Dal.Services
+namespace Pims.Dal.Repositories
 {
     /// <summary>
     /// OrganizationService class, provides a service layer to administrate organizations within the datasource.
     /// </summary>
-    public class UserOrganizationService : BaseService<PimsOrganization>, IUserOrganizationService
+    public class UserOrganizationService : BaseRepository<PimsOrganization>, IUserOrganizationService
     {
         #region Variables
         #endregion
@@ -28,7 +28,7 @@ namespace Pims.Dal.Services
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public UserOrganizationService(PimsContext dbContext, ClaimsPrincipal user, IPimsService service, ILogger<UserOrganizationService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public UserOrganizationService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<UserOrganizationService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
