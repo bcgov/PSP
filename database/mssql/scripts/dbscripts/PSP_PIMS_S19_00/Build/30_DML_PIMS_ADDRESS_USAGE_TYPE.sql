@@ -24,6 +24,6 @@ VALUES
   (N'PHYSADDR',   N'Physical address',              CONVERT([bit],(1))),
   (N'MAILING',    N'Mailing address',               CONVERT([bit],(0))),
   (N'BILLING',    N'Billing address',               CONVERT([bit],(0))),
-  (N'RESIDNT',    N'Residential address',           CONVERT([bit],(0))),
+  (N'RESIDNT',    N'Property address',              CONVERT([bit],(0))),
   (N'ETLUNKN ',   N'ETL unknown address',           CONVERT([bit],(0))),
   (N'UNKNOWN',    N'Unknown address type',          CONVERT([bit],(0)));
