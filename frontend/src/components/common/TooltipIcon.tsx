@@ -18,7 +18,7 @@ const TooltipIcon = (props: TooltipIconProps) => (
     placement={props.placement}
     overlay={<Tooltip id={props.toolTipId}>{props.toolTip}</Tooltip>}
   >
-    <span data-testid="tooltip-icon">
+    <span data-testid="tooltip-icon" className="tooltip-icon">
       <FaInfoCircle className={classNames('tooltip-icon', props.className)} />
     </span>
   </OverlayTrigger>

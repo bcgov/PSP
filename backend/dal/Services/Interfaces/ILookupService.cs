@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
@@ -26,9 +27,12 @@ namespace Pims.Dal.Services
         IEnumerable<PimsLeaseCategoryType> GetLeaseCategoryTypes();
         IEnumerable<PimsLeasePurposeType> GetLeasePurposeTypes();
         IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes();
+        IEnumerable<PimsLeaseTermStatusType> GetLeaseTermStatusTypes();
+        IEnumerable<PimsLeasePmtFreqType> GetLeasePmtFreqTypes();
         IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes();
         IEnumerable<PimsInsuranceType> GetInsuranceTypes();
         IEnumerable<PimsContactMethodType> GetContactMethodTypes();
         IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes();
     }
 }
+

@@ -992,6 +992,7 @@ exports[`Update lease container component renders as expected 1`] = `
           >
             Initiator: 
             <span
+              class="tooltip-icon"
               data-testid="tooltip-icon"
             >
               <svg
@@ -1057,6 +1058,7 @@ exports[`Update lease container component renders as expected 1`] = `
           >
             Responsibility: 
             <span
+              class="tooltip-icon"
               data-testid="tooltip-icon"
             >
               <svg
@@ -1162,6 +1164,7 @@ exports[`Update lease container component renders as expected 1`] = `
           >
             Location of documents: 
             <span
+              class="tooltip-icon"
               data-testid="tooltip-icon"
             >
               <svg

@@ -109,6 +109,8 @@ namespace Pims.Api.Controllers
             var leasePurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePurposeTypes());
             var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseResponsibilityTypes());
             var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseInitiatorTypes());
+            var leaseTermStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseTermStatusTypes());
+            var leasePaymentFrequencyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePmtFreqTypes());
             var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetInsuranceTypes());
             var contactMethodTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetContactMethodTypes());
             var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyImprovementTypes());
@@ -133,6 +135,8 @@ namespace Pims.Api.Controllers
             codes.AddRange(leasePurposeTypes);
             codes.AddRange(leaseResponsibilityTypes);
             codes.AddRange(leaseInitiatorTypes);
+            codes.AddRange(leaseTermStatusTypes);
+            codes.AddRange(leasePaymentFrequencyTypes);
             codes.AddRange(insuranceTypes);
             codes.AddRange(contactMethodTypes);
             codes.AddRange(propertyImprovementTypes);
