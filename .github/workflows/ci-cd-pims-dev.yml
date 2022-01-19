@@ -1,6 +1,7 @@
 name: CI-CD PIMS Development
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
