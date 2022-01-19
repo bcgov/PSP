@@ -1,11 +1,11 @@
 import { Input, Select } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
+import * as Styled from 'features/contacts/contact/create/styles';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
 import { withNameSpace } from 'utils/formUtils';
 
-import * as Styled from '../Person/styles';
 import useContactInfoHelpers from './useContactInfoHelpers';
 
 // re-export helper hooks

@@ -187,7 +187,7 @@ start-infra: ## Starts infrastructure containers (e.g. keycloak, database, geose
 
 start up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
-	@docker-compose up -d $(n)
+	@docker-compose up -d --no-recreate $(n)
 
 destroy: ## Stops the local containers and removes them (n=service name)
 	@echo "$(P) Removing docker containers..."
@@ -267,7 +267,7 @@ db-deploy:
 db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01).
 	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
 	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
-	
+
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
 	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f

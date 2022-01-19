@@ -1,15 +1,15 @@
-import { ICreatePersonForm } from 'interfaces/ICreateContact';
+import { ICreateOrganizationForm, ICreatePersonForm } from 'interfaces/ICreateContact';
 import * as Yup from 'yup';
 
-export function hasPhoneNumber(values: ICreatePersonForm): boolean {
+export function hasPhoneNumber(values: ICreatePersonForm | ICreateOrganizationForm): boolean {
   return values?.phoneContactMethods.some(obj => !!obj.value);
 }
 
-export function hasEmail(values: ICreatePersonForm): boolean {
+export function hasEmail(values: ICreatePersonForm | ICreateOrganizationForm): boolean {
   return values?.emailContactMethods.some(obj => !!obj.value);
 }
 
-export function hasAddress(values: ICreatePersonForm): boolean {
+export function hasAddress(values: ICreatePersonForm | ICreateOrganizationForm): boolean {
   return (
     !!values?.mailingAddress?.streetAddress1 ||
     !!values?.propertyAddress?.streetAddress1 ||
@@ -17,9 +17,8 @@ export function hasAddress(values: ICreatePersonForm): boolean {
   );
 }
 
-export const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First Name is required'),
-  surname: Yup.string().required('Last Name is required'),
+// validation schema common to Persons and Organizations
+const baseSchema = Yup.object().shape({
   emailContactMethods: Yup.array().of(
     Yup.object().shape({
       value: Yup.string().email('Invalid email address'),
@@ -97,4 +96,13 @@ export const validationSchema = Yup.object().shape({
       then: Yup.string().required('Province/State is required'),
     }),
   }),
+});
+
+export const PersonValidationSchema = baseSchema.shape({
+  firstName: Yup.string().required('First Name is required'),
+  surname: Yup.string().required('Last Name is required'),
+});
+
+export const OrganizationValidationSchema = baseSchema.shape({
+  name: Yup.string().required('Organization Name is required'),
 });

@@ -1,21 +1,21 @@
 import { TextArea } from 'components/common/form';
-import { Stack } from 'components/common/Stack/Stack';
+import { FlexBox } from 'components/common/styles';
 import * as Styled from 'features/contacts/contact/create/styles';
 import React from 'react';
 
 export interface ICommentNotesProps {}
 
 /**
- * Displays comments directly associated with this Contact Person.
+ * Displays comments directly associated with this Contact.
  * @param {ICommentNotesProps} param0
  */
 export const CommentNotes: React.FunctionComponent<ICommentNotesProps> = () => {
   return (
     <>
-      <Stack $direction="row" gap={1.6}>
+      <FlexBox gap="1.6rem">
         <Styled.FormLabel>Comments</Styled.FormLabel>
         <Styled.SubtleText>(Optional)</Styled.SubtleText>
-      </Stack>
+      </FlexBox>
       <TextArea rows={5} field="comment" />
     </>
   );

@@ -1,6 +1,7 @@
 import { Button, Input, Select, SelectOption } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
+import * as Styled from 'features/contacts/contact/create/styles';
 import { useFormikContext } from 'formik';
 import useCounter from 'hooks/useCounter';
 import { Dictionary } from 'interfaces/Dictionary';
@@ -10,7 +11,6 @@ import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
 import { withNameSpace } from 'utils/formUtils';
 
-import * as Styled from '../Person/styles';
 import useAddressHelpers from './useAddressHelpers';
 
 // re-export helper hooks

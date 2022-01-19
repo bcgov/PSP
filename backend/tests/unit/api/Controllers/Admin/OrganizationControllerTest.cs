@@ -39,7 +39,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var organizations = new Entity.PimsOrganization[] { EntityHelper.CreateOrganization(1, "organization1"), EntityHelper.CreateOrganization(2, "organization2") };
-            service.Setup(m => m.Organization.GetAll()).Returns(organizations);
+            service.Setup(m => m.UserOrganization.GetAll()).Returns(organizations);
 
             // Act
             var result = controller.GetOrganizations();
@@ -49,7 +49,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel[]>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.OrganizationModel[]>(organizations), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Organization.GetAll(), Times.Once());
+            service.Verify(m => m.UserOrganization.GetAll(), Times.Once());
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace PimsApi.Test.Admin.Controllers
             var service = helper.GetService<Mock<IPimsService>>();
             var organizations = new Entity.PimsOrganization[] { EntityHelper.CreateOrganization(1, "organization1"), EntityHelper.CreateOrganization(2, "organization2") };
             var paged = new Entity.Models.Paged<Entity.PimsOrganization>(organizations);
-            service.Setup(m => m.Organization.Get(It.IsAny<Entity.Models.OrganizationFilter>())).Returns(paged);
+            service.Setup(m => m.UserOrganization.Get(It.IsAny<Entity.Models.OrganizationFilter>())).Returns(paged);
             var filter = new Entity.Models.OrganizationFilter(1, 10);
 
             // Act
@@ -74,7 +74,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Pims.Api.Models.PageModel<Model.OrganizationModel>>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.OrganizationModel[]>(organizations), actualResult.Items, new DeepPropertyCompare());
-            service.Verify(m => m.Organization.Get(filter), Times.Once());
+            service.Verify(m => m.UserOrganization.Get(filter), Times.Once());
         }
         #endregion
 
@@ -89,7 +89,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
-            service.Setup(m => m.Organization.Get(It.IsAny<long>())).Returns(organization);
+            service.Setup(m => m.UserOrganization.Get(It.IsAny<long>())).Returns(organization);
 
             // Act
             var result = controller.GetOrganization(organization.Id);
@@ -99,7 +99,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Organization.Get(organization.Id), Times.Once());
+            service.Verify(m => m.UserOrganization.Get(organization.Id), Times.Once());
         }
         #endregion
 
@@ -114,7 +114,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
-            service.Setup(m => m.Organization.Add(It.IsAny<Entity.PimsOrganization>()));
+            service.Setup(m => m.UserOrganization.Add(It.IsAny<Entity.PimsOrganization>()));
             var model = mapper.Map<Model.OrganizationModel>(organization);
 
             // Act
@@ -125,7 +125,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Equal(201, actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Organization.Add(It.IsAny<Entity.PimsOrganization>()), Times.Once());
+            service.Verify(m => m.UserOrganization.Add(It.IsAny<Entity.PimsOrganization>()), Times.Once());
         }
         #endregion
 
@@ -140,7 +140,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
-            service.Setup(m => m.Organization.Update(It.IsAny<Entity.PimsOrganization>()));
+            service.Setup(m => m.UserOrganization.Update(It.IsAny<Entity.PimsOrganization>()));
             var model = mapper.Map<Model.OrganizationModel>(organization);
 
             // Act
@@ -151,7 +151,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Organization.Update(It.IsAny<Entity.PimsOrganization>()), Times.Once());
+            service.Verify(m => m.UserOrganization.Update(It.IsAny<Entity.PimsOrganization>()), Times.Once());
         }
         #endregion
 
@@ -166,7 +166,7 @@ namespace PimsApi.Test.Admin.Controllers
             var mapper = helper.GetService<IMapper>();
             var service = helper.GetService<Mock<IPimsService>>();
             var organization = EntityHelper.CreateOrganization(1, "organization1");
-            service.Setup(m => m.Organization.Delete(It.IsAny<Entity.PimsOrganization>()));
+            service.Setup(m => m.UserOrganization.Delete(It.IsAny<Entity.PimsOrganization>()));
             var model = mapper.Map<Model.OrganizationModel>(organization);
 
             // Act
@@ -177,7 +177,7 @@ namespace PimsApi.Test.Admin.Controllers
             Assert.Null(actionResult.StatusCode);
             var actualResult = Assert.IsType<Model.OrganizationModel>(actionResult.Value);
             Assert.Equal(mapper.Map<Model.OrganizationModel>(organization), actualResult, new DeepPropertyCompare());
-            service.Verify(m => m.Organization.Delete(It.IsAny<Entity.PimsOrganization>()), Times.Once());
+            service.Verify(m => m.UserOrganization.Delete(It.IsAny<Entity.PimsOrganization>()), Times.Once());
         }
         #endregion
         #endregion

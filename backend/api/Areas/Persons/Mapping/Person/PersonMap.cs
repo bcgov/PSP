@@ -8,7 +8,9 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Model.PersonCreateModel, Entity.PimsPerson>()
+            config.NewConfig<Model.PersonModel, Entity.PimsPerson>()
+                .Map(dest => dest.PersonId, src => src.Id)
+                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Surname, src => src.Surname)
                 .Map(dest => dest.FirstName, src => src.FirstName)

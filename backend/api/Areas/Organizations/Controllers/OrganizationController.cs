@@ -8,18 +8,18 @@ using Pims.Dal;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Pims.Api.Areas.Persons.Controllers
+namespace Pims.Api.Areas.Organizations.Controllers
 {
     /// <summary>
-    /// PersonController class, provides endpoints for interacting with person contacts (individuals).
+    /// OrganizationController class, provides endpoints for interacting with organization contacts.
     /// </summary>
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Area("persons")]
+    [Area("organizations")]
     [Route("v{version:apiVersion}/[area]")]
     [Route("[area]")]
-    public class PersonController : ControllerBase
+    public class OrganizationController : ControllerBase
     {
         #region Variables
         private readonly IPimsService _pimsService;
@@ -33,7 +33,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public PersonController(IPimsService pimsService, IMapper mapper)
+        public OrganizationController(IPimsService pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;
@@ -50,8 +50,8 @@ namespace Pims.Api.Areas.Persons.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult AddPerson([FromBody] Models.Person.PersonModel model, bool userOverride = false)
+        [SwaggerOperation(Tags = new[] { "organization" })]
+        public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _pimsService.Lookup.GetCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
@@ -63,12 +63,16 @@ namespace Pims.Api.Areas.Persons.Controllers
                 }
             }
 
-            var entity = _mapper.Map<Dal.Entities.PimsPerson>(model);
+            var entity = _mapper.Map<Dal.Entities.PimsOrganization>(model);
+
+            // FIXME: Missed requirements lead to hardcoding these values here. This needs to be fixed next sprint!
+            entity.OrganizationTypeCode = "OTHER";
+            entity.OrgIdentifierTypeCode = "OTHINCORPNO";
 
             try
             {
-                var created = _pimsService.Person.Add(entity, userOverride);
-                var response = _mapper.Map<Areas.Contact.Models.Contact.PersonModel>(created);
+                var createdOrganization = _pimsService.Organization.Add(entity, userOverride);
+                var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);
             }

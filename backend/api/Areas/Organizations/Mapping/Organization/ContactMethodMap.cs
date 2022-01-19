@@ -2,7 +2,7 @@ using Mapster;
 using Pims.Api.Helpers.Extensions;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Areas.Persons.Mapping.Person
+namespace Pims.Api.Areas.Organizations.Mapping.Organization
 {
     public class ContactMethodMap : IRegister
     {

@@ -1,4 +1,4 @@
-import { AsyncTypeahead, Button, Input } from 'components/common/form';
+import { Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -17,9 +17,9 @@ import {
   hasAddress,
   hasEmail,
   hasPhoneNumber,
-  PersonValidationSchema,
+  OrganizationValidationSchema,
 } from 'features/contacts/contact/create/validation';
-import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
+import { organizationCreateFormToApiOrganization } from 'features/contacts/contactUtils';
 import useAddContact from 'features/contacts/hooks/useAddContact';
 import {
   Formik,
@@ -29,21 +29,18 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
-import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
+import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/ICreateContact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 /**
- * Formik-connected form to Create Individual Contacts
+ * Formik-connected form to Create Organizational Contacts
  */
-export const CreatePersonForm: React.FunctionComponent = () => {
+export const CreateOrganizationForm: React.FunctionComponent = () => {
   const history = useHistory();
-  const { addPerson } = useAddContact();
+  const { addOrganization } = useAddContact();
 
   const [showDuplicateModal, setDuplicateModal] = useState(false);
   const [allowDuplicate, setAllowDuplicate] = useState(false);
@@ -55,11 +52,13 @@ export const CreatePersonForm: React.FunctionComponent = () => {
     [countries],
   );
 
-  const formikRef = useRef<FormikProps<ICreatePersonForm>>(null);
+  const formikRef = useRef<FormikProps<ICreateOrganizationForm>>(null);
 
-  const onValidate = (values: ICreatePersonForm) => {
+  const onValidate = (values: ICreateOrganizationForm) => {
     try {
-      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
+      validateYupSchema(values, OrganizationValidationSchema, true, {
+        otherCountry: otherCountryId,
+      });
       // combine yup schema validation with custom rules
       const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
@@ -73,15 +72,20 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   };
 
   const onSubmit = async (
-    formPerson: ICreatePersonForm,
-    { setSubmitting }: FormikHelpers<ICreatePersonForm>,
+    formOrganization: ICreateOrganizationForm,
+    { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
   ) => {
     try {
       setDuplicateModal(false);
-      let newPerson = personCreateFormToApiPerson(formPerson);
-      const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+      let newOrganization = organizationCreateFormToApiOrganization(formOrganization);
 
-      if (!!personResponse?.id) {
+      const organizationResponse = await addOrganization(
+        newOrganization,
+        setDuplicateModal,
+        allowDuplicate,
+      );
+
+      if (!!organizationResponse?.id) {
         history.push('/contact/list');
       }
     } finally {
@@ -99,8 +103,8 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   return (
     <>
       <Formik
-        component={CreatePersonComponent}
-        initialValues={defaultCreatePerson}
+        component={CreateOrganizationComponent}
+        initialValues={defaultCreateOrganization}
         enableReinitialize
         validate={onValidate}
         onSubmit={onSubmit}
@@ -115,12 +119,12 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   );
 };
 
-export default CreatePersonForm;
+export default CreateOrganizationForm;
 
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
+const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>> = ({
   values,
   errors,
   touched,
@@ -131,28 +135,6 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
 }) => {
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
-
-  // organization type-ahead state
-  const { getOrganizationPredictions } = useApiAutocomplete();
-  const [isTypeaheadLoading, setIsTypeaheadLoading] = useState(false);
-  const [matchedOrgs, setMatchedOrgs] = useState<IAutocompletePrediction[]>([]);
-
-  // fetch autocomplete suggestions from server
-  const handleTypeaheadSearch = async (query: string) => {
-    try {
-      setIsTypeaheadLoading(true);
-      const { data } = await getOrganizationPredictions(query);
-      setMatchedOrgs(data.predictions);
-      setIsTypeaheadLoading(false);
-    } catch (e) {
-      setMatchedOrgs([]);
-      toast.error('Failed to get autocomplete results for supplied organization', {
-        autoClose: 7000,
-      });
-    } finally {
-      setIsTypeaheadLoading(false);
-    }
-  };
 
   const onCancel = () => {
     if (dirty) {
@@ -184,37 +166,20 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
           <FlexBox column gap="1.6rem">
             <FormSection>
               <Row>
-                <Col md={4}>
-                  <Input field="firstName" label="First Name" required />
-                </Col>
-                <Col md={3}>
-                  <Input field="middleNames" label="Middle" />
-                </Col>
                 <Col>
-                  <Input field="surname" label="Last Name" required />
+                  <Input field="name" label="Organization Name" required />
                 </Col>
               </Row>
               <Row>
-                <Col md={7}>
-                  <Input field="preferredName" label="Preferred Name" />
+                <Col>
+                  <Input field="alias" label="Alias" />
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>
+                  <Input field="incorporationNumber" label="Incorporation Number" />
                 </Col>
                 <Col></Col>
-              </Row>
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Organization</Styled.H2>
-              <Row>
-                <Col md={7}>
-                  <AsyncTypeahead
-                    field="organizationId"
-                    label="Link to an existing organization"
-                    labelKey="text"
-                    isLoading={isTypeaheadLoading}
-                    options={matchedOrgs}
-                    onSearch={handleTypeaheadSearch}
-                  />
-                </Col>
               </Row>
             </FormSection>
 

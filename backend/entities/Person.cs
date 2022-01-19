@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 namespace Pims.Dal.Entities
 {
@@ -9,6 +10,12 @@ namespace Pims.Dal.Entities
     public partial class PimsPerson : IDisableBaseAppEntity
     {
         #region Properties
+        /// <summary>
+        /// get/set - Primary key to identify person.
+        /// </summary>
+        [NotMapped]
+        public long Id { get => PersonId; set => PersonId = value; }
+
         public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o => { o.PimsPersonOrganizations = null; return o; }).ToArray();
         public ICollection<PimsAddress> GetAddresses() => PimsPersonAddresses?.Select(pa => pa.Address).ToArray();
 
