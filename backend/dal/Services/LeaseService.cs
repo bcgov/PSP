@@ -75,6 +75,8 @@ namespace Pims.Dal.Services
                 .Include(l => l.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(l => l.RegionCodeNavigation)
+
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePayRvblTypeCodeNavigation)
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
