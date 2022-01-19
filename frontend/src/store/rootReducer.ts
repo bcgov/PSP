@@ -11,6 +11,7 @@ import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSl
 
 import { lookupCodesSlice } from './slices/lookupCodes/lookupCodesSlice';
 import { propertiesSlice } from './slices/properties/propertiesSlice';
+import { systemConstantsSlice } from './slices/systemConstants/systemConstantsSlice';
 import { tenantsSlice } from './slices/tenants';
 import { usersSlice } from './slices/users/usersSlice';
 
@@ -20,6 +21,7 @@ export const reducer = {
   [usersSlice.name]: usersSlice.reducer,
   [accessRequestsSlice.name]: accessRequestsSlice.reducer,
   [lookupCodesSlice.name]: lookupCodesSlice.reducer,
+  [systemConstantsSlice.name]: systemConstantsSlice.reducer,
   [networkSlice.name]: networkSlice.reducer,
   [leafletMouseSlice.name]: leafletMouseSlice.reducer,
   [parcelLayerDataSlice.name]: parcelLayerDataSlice.reducer,

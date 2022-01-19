@@ -121,6 +121,7 @@ exports[`LeaseContainer component renders as expected 1`] = `
   display: -ms-flexbox;
   display: flex;
   padding: 0 2rem;
+  white-space: nowrap;
 }
 
 .c3 {
