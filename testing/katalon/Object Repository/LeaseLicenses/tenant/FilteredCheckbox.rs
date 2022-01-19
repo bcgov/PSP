@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>FilteredLease</name>
+   <name>FilteredCheckbox</name>
    <tag></tag>
-   <elementGuidId>c8c028b1-4ed0-4bed-b368-8c4d38620f9f</elementGuidId>
+   <elementGuidId>6237d06b-925d-4bd9-945d-63c8d484f690</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//a[contains(text(),'L-000-362')]</value>
+         <value>//input[@title=&quot;Toggle Row Selected&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

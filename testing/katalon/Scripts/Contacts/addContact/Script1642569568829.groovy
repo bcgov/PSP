@@ -38,24 +38,27 @@ WebUI.setEncryptedText(findTestObject('Object Repository/SiteMinder/PasswordFiel
 // Click continue
 WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
 
-// Navigate to access request page 
-WebUI.navigateToUrl('https://tst-pims.th.gov.bc.ca/access/request')
+// Click the expand button on left navigation
+WebUI.click(findTestObject('Navigation/ExpandButton'))
 
-// Select role as required 
-WebUI.selectOptionByValue(findTestObject('Object Repository/AccessRequest/RoleSelect'), '5', false)
+// Click the contacts navigation button
+WebUI.click(findTestObject('Object Repository/Navigation/ContactsExpandedButton'))
 
-// Enter note 
-WebUI.setText(findTestObject('Object Repository/AccessRequest/Note'), 'This access request was generated from a FT test script, please ignore or decline.')
-
-// Click submit or update
-if(WebUI.verifyElementPresent(findTestObject('Object Repository/AccessRequest/Submit'), 2, FailureHandling.OPTIONAL)) {
-	WebUI.click(findTestObject('Object Repository/AccessRequest/Submit'))
-}else {
-	WebUI.click(findTestObject('Object Repository/AccessRequest/Update'))
-}
-
-// Wait for confirmation message
-WebUI.waitForElementPresent(findTestObject('Object Repository/AccessRequest/Confirmation'), 10)
-
-// Close browser
+// Add a new contact 
+WebUI.click(findTestObject('Object Repository/Contacts/AddNewContactButton'))
+WebUI.setText(findTestObject('Object Repository/Contacts/FirstName'), 'Chester')
+WebUI.setText(findTestObject('Object Repository/Contacts/LastName'), 'Tester')
+WebUI.setText(findTestObject('Object Repository/Contacts/ContactPreferredName'), 'Chuck')
+WebUI.setText(findTestObject('Object Repository/Contacts/ContactMiddleName'), 'Davis')
+WebUI.setText(findTestObject('Object Repository/Contacts/ContactEmail'), 'chuck@test.com')
+WebUI.selectOptionByValue(findTestObject('Object Repository/Contacts/ContactEmailType'), "WORKEMAIL", false)
+WebUI.setText(findTestObject('Object Repository/Contacts/ContactPhoneNumber'), '2501234567')
+WebUI.selectOptionByValue(findTestObject('Object Repository/Contacts/ContactPhoneType'), "WORKMOBIL", false)
+WebUI.setText(findTestObject('Object Repository/Contacts/Address'),"1234 Fake St.")
+WebUI.selectOptionByValue(findTestObject('Object Repository/Contacts/CountrySelect'), "1", false)
+WebUI.setText(findTestObject('Object Repository/Contacts/City'), "West Kelowna")
+WebUI.selectOptionByValue(findTestObject('Object Repository/Contacts/ProvinceSelect'), "1", false)
+WebUI.setText(findTestObject('Object Repository/Contacts/ContactPostalCode'), "V0S 1N0")
+WebUI.click(findTestObject('Object Repository/Contacts/SaveButton'))
 WebUI.closeBrowser()
+

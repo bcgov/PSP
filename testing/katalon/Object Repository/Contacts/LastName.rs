@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>FilteredLease</name>
+   <name>LastName</name>
    <tag></tag>
-   <elementGuidId>c8c028b1-4ed0-4bed-b368-8c4d38620f9f</elementGuidId>
+   <elementGuidId>258c9731-3558-4b22-8cb7-0ed05c9451be</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
+         <key>XPATH</key>
+         <value>//input[@name=&quot;surname&quot;]</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//a[contains(text(),'L-000-362')]</value>
+         <key>BASIC</key>
+         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

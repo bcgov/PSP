@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>FilteredLease</name>
+   <name>ContactPhoneNumber</name>
    <tag></tag>
-   <elementGuidId>c8c028b1-4ed0-4bed-b368-8c4d38620f9f</elementGuidId>
+   <elementGuidId>12aa22fd-4856-48cf-930f-958785d0fd67</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
+         <key>XPATH</key>
+         <value>//input[@name=&quot;phoneContactMethods.0.value&quot;]</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//a[contains(text(),'L-000-362')]</value>
+         <key>BASIC</key>
+         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

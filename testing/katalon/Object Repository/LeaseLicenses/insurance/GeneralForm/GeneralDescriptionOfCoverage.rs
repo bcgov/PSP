@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>FilteredLease</name>
+   <name>GeneralDescriptionOfCoverage</name>
    <tag></tag>
-   <elementGuidId>c8c028b1-4ed0-4bed-b368-8c4d38620f9f</elementGuidId>
+   <elementGuidId>94b0a0f2-05e0-4644-b72e-d956843551d0</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//a[contains(text(),'L-000-362')]</value>
+         <value>//textarea[@name=&quot;insurances.1.coverageDescription&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

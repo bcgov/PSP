@@ -10,7 +10,7 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//a[contains(text(),'Leases &amp; Licenses')]</value>
+         <value>//a[contains(text(),'Search for a Lease or License')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>

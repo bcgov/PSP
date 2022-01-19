@@ -51,7 +51,7 @@ WebUI.setText(findTestObject('Object Repository/Contacts/ContactFilterCity'), "K
 WebUI.click(findTestObject('Object Repository/Contacts/FilterSearchButton'))
 
 // Ensure corresponding cities appears after partial text search
-WebUI.verifyTextPresent("WEST KELOWNA", false)
+WebUI.verifyTextPresent("West Kelowna", false)
 
 WebUI.closeBrowser()
 

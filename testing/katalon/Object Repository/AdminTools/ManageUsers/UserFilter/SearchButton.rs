@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>FilteredLease</name>
+   <name>SearchButton</name>
    <tag></tag>
-   <elementGuidId>c8c028b1-4ed0-4bed-b368-8c4d38620f9f</elementGuidId>
+   <elementGuidId>e8102153-16d0-43ac-8b08-53de3eb1a020</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
+         <key>XPATH</key>
+         <value>//button[@id=&quot;search-button&quot;]</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//a[contains(text(),'L-000-362')]</value>
+         <key>BASIC</key>
+         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
