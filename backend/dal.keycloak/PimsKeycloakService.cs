@@ -12,7 +12,7 @@ namespace Pims.Dal.Keycloak
     {
         #region Variable
         private readonly IKeycloakService _keycloakService;
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsRepository;
         private readonly IMapper _mapper;
         private readonly ClaimsPrincipal _user;
         private readonly ILogger<IPimsKeycloakService> _logger;
@@ -27,10 +27,10 @@ namespace Pims.Dal.Keycloak
         /// <param name="user"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        public PimsKeycloakService(IKeycloakService keycloakService, IPimsService pimsService, ClaimsPrincipal user, IMapper mapper, ILogger<IPimsKeycloakService> logger)
+        public PimsKeycloakService(IKeycloakService keycloakService, IPimsRepository pimsRepository, ClaimsPrincipal user, IMapper mapper, ILogger<IPimsKeycloakService> logger)
         {
             _keycloakService = keycloakService;
-            _pimsService = pimsService;
+            _pimsRepository = pimsRepository;
             _mapper = mapper;
             _user = user;
             _logger = logger;

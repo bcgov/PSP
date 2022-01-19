@@ -2,6 +2,8 @@ import {
   ICreateContactAddress,
   ICreateContactAddressForm,
   ICreateContactMethodForm,
+  ICreateOrganization,
+  ICreateOrganizationForm,
   ICreatePerson,
   ICreatePersonForm,
 } from 'interfaces/ICreateContact';
@@ -9,13 +11,14 @@ import isPlainObject from 'lodash/isPlainObject';
 import { stringToNull, stringToTypeCode } from 'utils/formUtils';
 
 export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICreatePerson {
+  // exclude form-specific fields from API payload object
   const {
     mailingAddress,
     propertyAddress,
     billingAddress,
-    organizationId,
     emailContactMethods,
     phoneContactMethods,
+    ...restObject
   } = formValues;
 
   const addresses = [mailingAddress, propertyAddress, billingAddress]
@@ -31,13 +34,49 @@ export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICre
     }));
 
   const apiPerson = {
-    ...formValues,
-    organizationId: isPlainObject(organizationId) ? (organizationId as any).id : undefined,
+    ...restObject,
+    organizationId: isPlainObject(formValues.organizationId)
+      ? (formValues.organizationId as any).id
+      : undefined,
     addresses,
     contactMethods,
   } as ICreatePerson;
 
   return apiPerson;
+}
+
+export function organizationCreateFormToApiOrganization(
+  formValues: ICreateOrganizationForm,
+): ICreateOrganization {
+  // exclude form-specific fields from API payload object
+  const {
+    mailingAddress,
+    propertyAddress,
+    billingAddress,
+    emailContactMethods,
+    phoneContactMethods,
+    ...restObject
+  } = formValues;
+
+  const addresses = [mailingAddress, propertyAddress, billingAddress]
+    .filter(hasAddress)
+    .map(addressFormToApiAddress);
+
+  const contactMethods = [...emailContactMethods, ...phoneContactMethods]
+    .filter(hasContactMethod)
+    .map(formContactMethod => ({
+      ...formContactMethod,
+      value: stringToNull(formContactMethod.value),
+      contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
+    }));
+
+  const apiOrganization = {
+    ...restObject,
+    addresses,
+    contactMethods,
+  } as ICreateOrganization;
+
+  return apiOrganization;
 }
 
 function hasContactMethod(formContactMethod: ICreateContactMethodForm): boolean {

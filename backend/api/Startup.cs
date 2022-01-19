@@ -198,7 +198,8 @@ namespace Pims.Api
 
             services.AddHttpClient();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
-            services.AddPimsService();
+            services.AddPimsRepositories();
+            services.AddPimsServices();
             services.AddPimsKeycloakService();
             services.AddGeocoderService(this.Configuration.GetSection("Geocoder")); // TODO: Determine if a default value could be used instead.
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));

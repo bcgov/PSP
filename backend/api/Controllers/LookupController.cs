@@ -20,7 +20,7 @@ namespace Pims.Api.Controllers
     public class LookupController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -30,7 +30,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public LookupController(IPimsService pimsService, IMapper mapper)
+        public LookupController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;

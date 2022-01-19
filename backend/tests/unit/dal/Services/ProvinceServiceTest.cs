@@ -1,6 +1,6 @@
 using Pims.Core.Test;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
+using Pims.Dal.Repositories;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
