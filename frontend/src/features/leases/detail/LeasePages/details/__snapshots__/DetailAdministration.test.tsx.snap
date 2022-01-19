@@ -85,6 +85,22 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       <label
         class="form-label"
       >
+        Region:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-region.regionName"
+          name="region.regionName"
+          value=""
+        />
+      </div>
+      <br />
+      <label
+        class="form-label"
+      >
         Program:
       </label>
       <div
@@ -383,6 +399,22 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
     <div
       class="c1"
     >
+      <label
+        class="form-label"
+      >
+        Region:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-region.regionName"
+          name="region.regionName"
+          value=""
+        />
+      </div>
+      <br />
       <label
         class="form-label"
       >
