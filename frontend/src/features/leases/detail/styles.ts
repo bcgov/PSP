@@ -62,6 +62,7 @@ export const LeaseHeaderText = styled(InlineFlexDiv)`
   justify-content: center;
   display: flex;
   padding: 0 2rem;
+  white-space: nowrap;
 `;
 
 export const ExpiredWarning = styled(InlineFlexDiv)`
@@ -74,6 +75,8 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   align-items: center;
+  min-width: fit-content;
+  max-height: 2.5rem;
 `;
 
 export const LeaseHeader = styled(InlineFlexDiv)`

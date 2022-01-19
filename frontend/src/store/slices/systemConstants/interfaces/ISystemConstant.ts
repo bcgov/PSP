@@ -1,4 +1,4 @@
 export interface ISystemConstant {
-  name: number;
+  name: string;
   value: string;
 }

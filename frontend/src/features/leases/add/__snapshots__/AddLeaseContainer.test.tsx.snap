@@ -310,6 +310,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   display: -ms-flexbox;
   display: flex;
   padding: 0 2rem;
+  white-space: nowrap;
 }
 
 .c3 {
@@ -1338,6 +1339,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
             >
               Initiator: 
               <span
+                class="tooltip-icon"
                 data-testid="tooltip-icon"
               >
                 <svg
@@ -1403,6 +1405,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
             >
               Responsibility: 
               <span
+                class="tooltip-icon"
                 data-testid="tooltip-icon"
               >
                 <svg
@@ -1508,6 +1511,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
             >
               Location of documents: 
               <span
+                class="tooltip-icon"
                 data-testid="tooltip-icon"
               >
                 <svg
