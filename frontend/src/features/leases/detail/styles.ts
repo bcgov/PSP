@@ -45,6 +45,13 @@ export const LeaseH5 = styled.h5`
   font-family: BcSans-Bold;
 `;
 
+export const LeaseH6 = styled.h6`
+  font-size: 2rem;
+  color: ${props => props.theme.css.textColor};
+  text-align: left;
+  font-family: BcSans-Bold;
+`;
+
 export const LeaseHeaderRight = styled.div`
   white-space: nowrap;
   margin: 0 auto;

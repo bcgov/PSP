@@ -51,7 +51,7 @@ WebUI.click(findTestObject('Object Repository/Navigation/AdminNavigation/ManageU
 WebUI.setText(findTestObject('AdminTools/ManageUsers/UserFilter/UserFirstName'), 'Jonny')
 
 // Filter fire action
-WebUI.sendKeys(findTestObject('AdminTools/ManageUsers/UserFilter/UserFirstName'), Keys.chord(Keys.ENTER))
+WebUI.click(findTestObject('Object Repository/AdminTools/ManageUsers/UserFilter/SearchButton'))
 
 // Click the filtered username
 WebUI.click(findTestObject('AdminTools/ManageUsers/UserFilter/FilteredUserName'))

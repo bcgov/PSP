@@ -22,6 +22,9 @@ namespace Pims.Dal.Entities
         [Column("LEASE_PAYMENT_METHOD_TYPE_CODE")]
         [StringLength(20)]
         public string LeasePaymentMethodTypeCode { get; set; }
+        [Column("LEASE_PAYMENT_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string LeasePaymentStatusTypeCode { get; set; }
         [Column("PAYMENT_RECEIVED_DATE", TypeName = "datetime")]
         public DateTime PaymentReceivedDate { get; set; }
         [Column("PAYMENT_AMOUNT_PRE_TAX", TypeName = "money")]
@@ -73,9 +76,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("LEASE_PAYMENT_STATUS_TYPE_CODE")]
-        [StringLength(20)]
-        public string LeasePaymentStatusTypeCode { get; set; }
 
         [ForeignKey(nameof(LeasePaymentMethodTypeCode))]
         [InverseProperty(nameof(PimsLeasePaymentMethodType.PimsLeasePayments))]
