@@ -1,5 +1,6 @@
 import { Button } from 'components/common/form';
 import { TableProps } from 'components/Table/Table';
+import Claims from 'constants/claims';
 import { useFormikContext } from 'formik';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease } from 'interfaces';

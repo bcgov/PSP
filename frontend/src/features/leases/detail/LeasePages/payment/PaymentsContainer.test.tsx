@@ -54,7 +54,7 @@ describe('PaymentsContainer component', () => {
     mockAxios.resetHistory();
   });
   it('renders as expected', async () => {
-    const { component } = await setup({});
+    const { component } = await setup({ claims: [Claims.LEASE_EDIT] });
 
     expect(component.asFragment()).toMatchSnapshot();
   });
