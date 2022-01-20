@@ -5,7 +5,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IInsuranceService interface, provides functions to interact with contacts within the datasource.
     /// </summary>
-    public interface IInsuranceService : IService<PimsInsurance>
+    public interface IInsuranceService : IRepository<PimsInsurance>
     {
         PimsInsurance Add(PimsInsurance insurance, bool commit = true);
         PimsInsurance Update(PimsInsurance insurance, bool commit = true);

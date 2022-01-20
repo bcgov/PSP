@@ -891,14 +891,20 @@ export const mockLookups: Partial<ILookupCode>[] = [
     isDisabled: false,
     displayOrder: 99999,
     type: 'PimsProvinceState',
+  },
+  {
     id: '1',
     code: '1',
     name: 'South Coast Region',
     type: 'PimsRegion',
+  },
+  {
     id: '2',
     code: '2',
     name: 'Southern Interior Region',
     type: 'PimsRegion',
+  },
+  {
     id: '3',
     code: '3',
     name: 'Northern Region',

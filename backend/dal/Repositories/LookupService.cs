@@ -177,21 +177,6 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsLeasePmtFreqTypes.AsNoTracking().OrderBy(a => a.LeasePmtFreqTypeCode).ToArray();
         }
-
-        public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
-        {
-            return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
-        }
-
-        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
-        {
-            return this.Context.PimsContactMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
-        }
-
-        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
-        {
-            return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
-        }
         #endregion
     }
 }

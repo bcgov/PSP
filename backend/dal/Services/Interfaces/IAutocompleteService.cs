@@ -7,7 +7,7 @@ namespace Pims.Dal.Services
     /// <summary>
     /// IAutocompleteService interface, retrieves autocomplete predictions based on the supplied autocomplete request.
     /// </summary>
-    public interface IAutocompleteService : IService
+    public interface IAutocompleteService : IRepository
     {
         IEnumerable<PimsOrganization> GetOrganizationPredictions(AutocompletionRequestModel request);
     }
