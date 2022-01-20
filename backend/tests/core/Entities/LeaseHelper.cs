@@ -65,7 +65,6 @@ namespace Pims.Core.Test
             
             var lease = EntityHelper.CreateLease(pid, lFileNo, tenantFirstName, tenantLastName, motiFirstName, motiLastName, address, addTenant, addProperty, programType, leasePurposeType, leaseStatusType, leasePayRvblType, leaseCategoryType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
             context.PimsLeases.Add(lease);
-            context.PimsLeases.Add(lease);
             return lease;
         }
     }

@@ -6,14 +6,6 @@ namespace Pims.Dal.Services
         #region Leases
         ILeaseTermService LeaseTermService { get; }
         ILeaseService LeaseService { get; }
-        #region Insurance
-        IInsuranceService Insurance { get; }
-        #endregion
-
-        #region Autocomplete
-        IAutocompleteService Autocomplete { get; }
-        #endregion
-
         #endregion
     }
 }

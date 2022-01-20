@@ -24,19 +24,10 @@ namespace Pims.Dal
         /// get - The lease term service.
         /// </summary>
         public ILeaseTermService LeaseTermService { get { return _serviceProvider.GetService<ILeaseTermService>(); } }
+        /// <summary>
+        /// get - The lease service.
+        /// </summary>
         public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
-        /// get - The system constant service.
-        /// </summary>
-
-        /// <summary>
-        /// get - The insurance service.
-        /// </summary>
-        public IInsuranceService Insurance { get { return _serviceProvider.GetService<IInsuranceService>(); } }
-
-        /// <summary>
-        /// get - The autocomplete service.
-        /// </summary>
-        public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
         #endregion
 
         #region Constructors
