@@ -12,8 +12,8 @@
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="382"
-  DTS:VersionGUID="{3A66441A-AD25-4FB7-B36C-C1E25DCC6764}">
+  DTS:VersionBuild="385"
+  DTS:VersionGUID="{523DAEDF-B401-4698-A4CA-AE285218293B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -47128,6 +47128,28 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           Size="189,42"
           Id="Package\Insert Property Leases"
           TopLeft="41.5000000000001,923.5" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Sequence Container\Insert Leases"
+          TopLeft="26.5000000000001,3.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,101"
+          Size="205,144"
+          Id="Package\Sequence Container"
+          TopLeft="372,671" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Sequence Container 1\SET LFILENO"
+          TopLeft="14.5,92.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="232,216"
+          Size="232,259"
+          Id="Package\Sequence Container 1"
+          TopLeft="738,627" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="136,353.5">
@@ -47142,6 +47164,74 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="244.5,638.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="127.5,104.5"
+              Start="0,0"
+              End="120,104.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="59.7499999999999,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="59.7499999999999,0"
+                    Point2="63.7499999999999,0"
+                    Point3="63.7499999999999,4" />
+                  <mssgle:LineSegment
+                    End="63.7499999999999,100.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="63.7499999999999,100.5"
+                    Point2="63.7499999999999,104.5"
+                    Point3="67.7499999999999,104.5" />
+                  <mssgle:LineSegment
+                    End="120,104.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="372,765.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-105.5,76.8333333333334"
+              Start="0,0"
+              End="-97.9999999999999,76.8333333333334">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-38.8956043956044,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-38.8956043956044,0"
+                    Point2="-42.8956043956044,0"
+                    Point3="-42.8956043956044,4" />
+                  <mssgle:LineSegment
+                    End="-42.8956043956044,72.8333333333334" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-42.8956043956044,72.8333333333334"
+                    Point2="-42.8956043956044,76.8333333333334"
+                    Point3="-46.8956043956044,76.8333333333334" />
+                  <mssgle:LineSegment
+                    End="-97.9999999999999,76.8333333333334" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -47282,96 +47372,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="145,42"
-          Id="Package\Sequence Container\Insert Leases"
-          TopLeft="26.5000000000001,3.5" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="205,100"
-          Size="205,144"
-          Id="Package\Sequence Container"
-          TopLeft="372,671" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="244.5,638.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="127.5,104.5"
-              Start="0,0"
-              End="120,104.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="59.7499999999999,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="59.7499999999999,0"
-                    Point2="63.7499999999999,0"
-                    Point3="63.7499999999999,4" />
-                  <mssgle:LineSegment
-                    End="63.7499999999999,100.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="63.7499999999999,100.5"
-                    Point2="63.7499999999999,104.5"
-                    Point3="67.7499999999999,104.5" />
-                  <mssgle:LineSegment
-                    End="120,104.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="372,765.666666666667">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-105.5,76.8333333333334"
-              Start="0,0"
-              End="-97.9999999999999,76.8333333333334">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-38.8956043956044,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-38.8956043956044,0"
-                    Point2="-42.8956043956044,0"
-                    Point3="-42.8956043956044,4" />
-                  <mssgle:LineSegment
-                    End="-42.8956043956044,72.8333333333334" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-42.8956043956044,72.8333333333334"
-                    Point2="-42.8956043956044,76.8333333333334"
-                    Point3="-46.8956043956044,76.8333333333334" />
-                  <mssgle:LineSegment
-                    End="-97.9999999999999,76.8333333333334" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="149,42"
-          Id="Package\Sequence Container 1\SET LFILENO"
-          TopLeft="14.5,92.5" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="232,216"
-          Size="232,259"
-          Id="Package\Sequence Container 1"
-          TopLeft="738,627" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 9]"
           TopLeft="577,743">
@@ -48116,864 +48116,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <Name>UsedTableName</Name>
         <Value
           type="q3:string">[dbo].[PIMS_ORGANIZATION]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Sequence Container\Insert Leases">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="191,42"
-          Id="Package\Sequence Container\Insert Leases\Format output columns"
-          TopLeft="235.5,1535.5" />
-        <NodeLayout
-          Size="157,42"
-          Id="Package\Sequence Container\Insert Leases\OLE DB Source"
-          TopLeft="525.5,5.5" />
-        <NodeLayout
-          Size="192,42"
-          Id="Package\Sequence Container\Insert Leases\Default Lease Program"
-          TopLeft="78.0000000000001,923.5" />
-        <NodeLayout
-          Size="110,42"
-          Id="Package\Sequence Container\Insert Leases\Merge"
-          TopLeft="276,1025.5" />
-        <NodeLayout
-          Size="193,42"
-          Id="Package\Sequence Container\Insert Leases\Lease Program Lookup"
-          TopLeft="234.5,821.5" />
-        <NodeLayout
-          Size="216,42"
-          Id="Package\Sequence Container\Insert Leases\Payment Frequency Lookup"
-          TopLeft="223,1127.5" />
-        <NodeLayout
-          Size="161,42"
-          Id="Package\Sequence Container\Insert Leases\Data Conversion"
-          TopLeft="250.5,311.5" />
-        <NodeLayout
-          Size="239,42"
-          Id="Package\Sequence Container\Insert Leases\Filter leases with no TFA or PS #"
-          TopLeft="484.5,107.5" />
-        <NodeLayout
-          Size="226,42"
-          Id="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id"
-          TopLeft="218,1433.5" />
-        <NodeLayout
-          Size="205,42"
-          Id="Package\Sequence Container\Insert Leases\Store Data Casting Errors"
-          TopLeft="228.5,1739.5" />
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Sequence Container\Insert Leases\Derived Column"
-          TopLeft="252,617.5" />
-        <NodeLayout
-          Size="139,42"
-          Id="Package\Sequence Container\Insert Leases\Parse Dates"
-          TopLeft="261.5,515.5" />
-        <NodeLayout
-          Size="217,42"
-          Id="Package\Sequence Container\Insert Leases\Remove '-' from TFA File No"
-          TopLeft="222.5,209.5" />
-        <NodeLayout
-          Size="207,42"
-          Id="Package\Sequence Container\Insert Leases\Rows with no TFA or PS #"
-          TopLeft="500.5,209.5" />
-        <NodeLayout
-          Size="99,42"
-          Id="Package\Sequence Container\Insert Leases\Sort"
-          TopLeft="281.5,719.5" />
-        <NodeLayout
-          Size="236,42"
-          Id="Package\Sequence Container\Insert Leases\Store Rows with no TFA or PS #"
-          TopLeft="486,311.5" />
-        <NodeLayout
-          Size="215,42"
-          Id="Package\Sequence Container\Insert Leases\Default Payment Frequency"
-          TopLeft="54.5000000000001,1229.5" />
-        <NodeLayout
-          Size="119,42"
-          Id="Package\Sequence Container\Insert Leases\Merge 1"
-          TopLeft="271.5,1331.5" />
-        <NodeLayout
-          Size="175,42"
-          Id="Package\Sequence Container\Insert Leases\Data Casting Errors"
-          TopLeft="243.5,1637.5" />
-        <NodeLayout
-          Size="177,42"
-          Id="Package\Sequence Container\Insert Leases\OLE DB Destination"
-          TopLeft="5.50000000000017,1637.5" />
-        <NodeLayout
-          Size="261,42"
-          Id="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #"
-          TopLeft="200.5,413.5" />
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Error Output]"
-          TopLeft="361.5,1577.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-30.4999999999999,60"
-              Start="0,0"
-              End="-30.4999999999999,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2990654205607" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2990654205607"
-                    Point2="0,24.2990654205607"
-                    Point3="-4,24.2990654205607" />
-                  <mssgle:LineSegment
-                    End="-26.4999999999999,24.2990654205607" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-26.4999999999999,24.2990654205607"
-                    Point2="-30.4999999999999,24.2990654205607"
-                    Point3="-30.4999999999999,28.2990654205607" />
-                  <mssgle:LineSegment
-                    End="-30.4999999999999,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-80.2113867187499,29.2990654205607,129.9227734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Data Conversion Output]"
-          TopLeft="331,353.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Conditional Split Default Output]"
-          TopLeft="642.5,149.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-38.5,60"
-              Start="0,0"
-              End="-38.5,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2394014962594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2394014962594"
-                    Point2="0,24.2394014962594"
-                    Point3="-4,24.2394014962594" />
-                  <mssgle:LineSegment
-                    End="-34.5,24.2394014962594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-34.5,24.2394014962594"
-                    Point2="-38.5,24.2394014962594"
-                    Point3="-38.5,28.2394014962594" />
-                  <mssgle:LineSegment
-                    End="-38.5,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-89.86390625,29.2394014962594,141.2278125,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Sort Output]"
-          TopLeft="331,761.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Output 02]"
-          TopLeft="331,1679.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Output 01]"
-          TopLeft="604,251.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Output 0]"
-          TopLeft="331,557.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[OLE DB Source Output]"
-          TopLeft="604,47.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[New Leases Only]"
-          TopLeft="331,455.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Merge Output 11]"
-          TopLeft="331,1067.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Merge Output 1]"
-          TopLeft="331,1373.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output1]"
-          TopLeft="300.166666666667,863.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-126.166666666667,60"
-              Start="0,0"
-              End="-126.166666666667,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2959917780062" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2959917780062"
-                    Point2="0,24.2959917780062"
-                    Point3="-4,24.2959917780062" />
-                  <mssgle:LineSegment
-                    End="-122.166666666667,24.2959917780062" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-122.166666666667,24.2959917780062"
-                    Point2="-126.166666666667,24.2959917780062"
-                    Point3="-126.166666666667,28.2959917780062" />
-                  <mssgle:LineSegment
-                    End="-126.166666666667,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-118.889720052084,29.2959917780062,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output]"
-          TopLeft="296.333333333333,1169.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-134.333333333333,60"
-              Start="0,0"
-              End="-134.333333333333,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2647058823529" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2647058823529"
-                    Point2="0,24.2647058823529"
-                    Point3="-4,24.2647058823529" />
-                  <mssgle:LineSegment
-                    End="-130.333333333333,24.2647058823529" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-130.333333333333,24.2647058823529"
-                    Point2="-134.333333333333,24.2647058823529"
-                    Point3="-134.333333333333,28.2647058823529" />
-                  <mssgle:LineSegment
-                    End="-134.333333333333,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-122.973053385417,29.2647058823529,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
-          TopLeft="331,1475.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output1]"
-          TopLeft="365.666666666667,1169.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-16.1666666666666,162"
-              Start="0,0"
-              End="-16.1666666666666,154.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.4041859406992" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,76.4041859406992"
-                    Point2="0,80.4041859406992"
-                    Point3="-4,80.4041859406992" />
-                  <mssgle:LineSegment
-                    End="-12.1666666666666,80.4041859406992" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-12.1666666666666,80.4041859406992"
-                    Point2="-16.1666666666666,80.4041859406992"
-                    Point3="-16.1666666666666,84.4041859406992" />
-                  <mssgle:LineSegment
-                    End="-16.1666666666666,154.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-56.2747200520833,85.4041859406992,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
-          TopLeft="361.833333333333,863.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-13.8333333333333,162"
-              Start="0,0"
-              End="-13.8333333333333,154.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,76.3842278805642" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,76.3842278805642"
-                    Point2="0,80.3842278805642"
-                    Point3="-4,80.3842278805642" />
-                  <mssgle:LineSegment
-                    End="-9.83333333333331,80.3842278805642" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-9.83333333333331,80.3842278805642"
-                    Point2="-13.8333333333333,80.3842278805642"
-                    Point3="-13.8333333333333,84.3842278805642" />
-                  <mssgle:LineSegment
-                    End="-13.8333333333333,154.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.1080533854167,85.3842278805642,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Leases with identifiers]"
-          TopLeft="565.5,149.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-234.5,60"
-              Start="0,0"
-              End="-234.5,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2394014962594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2394014962594"
-                    Point2="0,24.2394014962594"
-                    Point3="-4,24.2394014962594" />
-                  <mssgle:LineSegment
-                    End="-230.5,24.2394014962594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-230.5,24.2394014962594"
-                    Point2="-234.5,24.2394014962594"
-                    Point3="-234.5,28.2394014962594" />
-                  <mssgle:LineSegment
-                    End="-234.5,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-166.607578125,29.2394014962594,98.71515625,9.7978515625"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output4]"
-          TopLeft="331,659.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output3]"
-          TopLeft="174,965.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="140,60"
-              Start="0,0"
-              End="140,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.4838709677419" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.4838709677419"
-                    Point2="0,35.4838709677419"
-                    Point3="4,35.4838709677419" />
-                  <mssgle:LineSegment
-                    End="136,35.4838709677419" />
-                  <mssgle:CubicBezierSegment
-                    Point1="136,35.4838709677419"
-                    Point2="140,35.4838709677419"
-                    Point3="140,39.4838709677419" />
-                  <mssgle:LineSegment
-                    End="140,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output2]"
-          TopLeft="162,1271.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="150.5,60"
-              Start="0,0"
-              End="150.5,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.5223880597015" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,31.5223880597015"
-                    Point2="0,35.5223880597015"
-                    Point3="4,35.5223880597015" />
-                  <mssgle:LineSegment
-                    End="146.5,35.5223880597015" />
-                  <mssgle:CubicBezierSegment
-                    Point1="146.5,35.5223880597015"
-                    Point2="150.5,35.5223880597015"
-                    Point3="150.5,39.5223880597015" />
-                  <mssgle:LineSegment
-                    End="150.5,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output1]"
-          TopLeft="331,251.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output]"
-          TopLeft="300.5,1577.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-206.5,60"
-              Start="0,0"
-              End="-206.5,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.2990654205607" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.2990654205607"
-                    Point2="0,24.2990654205607"
-                    Point3="-4,24.2990654205607" />
-                  <mssgle:LineSegment
-                    End="-202.5,24.2990654205607" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-202.5,24.2990654205607"
-                    Point2="-206.5,24.2990654205607"
-                    Point3="-206.5,28.2990654205607" />
-                  <mssgle:LineSegment
-                    End="-206.5,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\Lease Program Lookup">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\Payment Frequency Lookup">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_PERSON]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\Store Data Casting Errors">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\Store Rows with no TFA or PS #">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_LEASE]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -50155,6 +49297,10 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="247,42"
+          Id="Package\Insert New Persons\Store Rows with no Contact Name"
+          TopLeft="293.5,311.5" />
+        <NodeLayout
           Size="227,42"
           Id="Package\Insert New Persons\Filter any pre-existing Persons"
           TopLeft="5.50000000000006,311.5" />
@@ -50167,29 +49313,25 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           Id="Package\Insert New Persons\Filter Contact Name"
           TopLeft="328.5,107.5" />
         <NodeLayout
-          Size="99,42"
-          Id="Package\Insert New Persons\Sort"
-          TopLeft="69.5000000000001,413.5" />
-        <NodeLayout
           Size="157,42"
           Id="Package\Insert New Persons\OLE DB Source"
           TopLeft="338.5,5.5" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\Insert New Persons\Rows with no Contact Name"
+          TopLeft="308.5,209.5" />
         <NodeLayout
           Size="191,42"
           Id="Package\Insert New Persons\Format output columns"
           TopLeft="23.5000000000001,515.5" />
         <NodeLayout
-          Size="247,42"
-          Id="Package\Insert New Persons\Store Rows with no Contact Name"
-          TopLeft="293.5,311.5" />
-        <NodeLayout
           Size="184,42"
           Id="Package\Insert New Persons\Format Person Name"
           TopLeft="64.0000000000001,209.5" />
         <NodeLayout
-          Size="217,42"
-          Id="Package\Insert New Persons\Rows with no Contact Name"
-          TopLeft="308.5,209.5" />
+          Size="99,42"
+          Id="Package\Insert New Persons\Sort"
+          TopLeft="69.5000000000001,413.5" />
         <EdgeLayout
           Id="Package\Insert New Persons.Paths[Sort Output]"
           TopLeft="119,455.5">
@@ -50209,7 +49351,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50231,7 +49375,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50253,7 +49399,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50335,7 +49483,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50369,7 +49519,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50411,6 +49563,19 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert New Persons\Store Rows with no Contact Name">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Insert New Persons\Filter any pre-existing Persons">
     <Properties>
@@ -50460,64 +49625,47 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert New Persons\Store Rows with no Contact Name">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Insert Property Leases">
     <LayoutInfo>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="157,42"
-          Id="Package\Insert Property Leases\OLE DB Source"
-          TopLeft="403,5.5" />
-        <NodeLayout
-          Size="219,42"
-          Id="Package\Insert Property Leases\Find Matching Leases Errors"
-          TopLeft="53.0000000000001,617.5" />
+          Size="177,42"
+          Id="Package\Insert Property Leases\OLE DB Destination"
+          TopLeft="41.0000000000002,1127.5" />
         <NodeLayout
           Size="136,42"
           Id="Package\Insert Property Leases\Lookup PID"
           TopLeft="353.5,821.5" />
         <NodeLayout
+          Size="219,42"
+          Id="Package\Insert Property Leases\Find Matching Leases Errors"
+          TopLeft="53.0000000000001,617.5" />
+        <NodeLayout
           Size="161,42"
           Id="Package\Insert Property Leases\Data Conversion"
           TopLeft="341,719.5" />
         <NodeLayout
-          Size="177,42"
-          Id="Package\Insert Property Leases\OLE DB Destination"
-          TopLeft="41.0000000000002,1127.5" />
+          Size="156,42"
+          Id="Package\Insert Property Leases\Split PIDs by &quot;,&quot;"
+          TopLeft="343.5,515.5" />
         <NodeLayout
           Size="231,42"
           Id="Package\Insert Property Leases\Find Matching Leases to JSON"
           TopLeft="52.0000000000001,515.5" />
         <NodeLayout
+          Size="169,42"
+          Id="Package\Insert Property Leases\Lookup PID Errors"
+          TopLeft="337,1025.5" />
+        <NodeLayout
           Size="217,42"
           Id="Package\Insert Property Leases\Remove '-' from TFA File No"
           TopLeft="373,107.5" />
         <NodeLayout
-          Size="269,42"
-          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors to JSON"
-          TopLeft="347,311.5" />
-        <NodeLayout
           Size="248,42"
           Id="Package\Insert Property Leases\Filter Pre-existing Property Leases"
           TopLeft="5.50000000000011,923.5" />
-        <NodeLayout
-          Size="156,42"
-          Id="Package\Insert Property Leases\Split PIDs by &quot;,&quot;"
-          TopLeft="343.5,515.5" />
         <NodeLayout
           Size="191,42"
           Id="Package\Insert Property Leases\Format output columns"
@@ -50527,9 +49675,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           Id="Package\Insert Property Leases\Lookup PID Errors to JSON"
           TopLeft="314.5,923.5" />
         <NodeLayout
-          Size="169,42"
-          Id="Package\Insert Property Leases\Lookup PID Errors"
-          TopLeft="337,1025.5" />
+          Size="225,42"
+          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors"
+          TopLeft="369,413.5" />
         <NodeLayout
           Size="177,42"
           Id="Package\Insert Property Leases\Remove '-' from PID"
@@ -50543,13 +49691,293 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           Id="Package\Insert Property Leases\Filter out rows with no pid values"
           TopLeft="48.5000000000001,311.5" />
         <NodeLayout
+          Size="269,42"
+          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors to JSON"
+          TopLeft="347,311.5" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Insert Property Leases\OLE DB Source"
+          TopLeft="403,5.5" />
+        <NodeLayout
           Size="193,42"
           Id="Package\Insert Property Leases\Convert TFA_FILE_NO"
           TopLeft="385,209.5" />
-        <NodeLayout
-          Size="225,42"
-          Id="Package\Insert Property Leases\Convert TFA_FILE_NO errors"
-          TopLeft="369,413.5" />
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Rows with PID values]"
+          TopLeft="167.5,353.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.227578125,21.37548828125,96.45515625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Output 03]"
+          TopLeft="421.5,965.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Output 02]"
+          TopLeft="165,557.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Output 01]"
+          TopLeft="421.5,557.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Output 0]"
+          TopLeft="481.5,353.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[OLE DB Source Output]"
+          TopLeft="481.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup No Match Output]"
+          TopLeft="129.5,965.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
+          TopLeft="197.166666666667,455.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="224.333333333333,60"
+              Start="0,0"
+              End="224.333333333333,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3070362473348" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.3070362473348"
+                    Point2="0,24.3070362473348"
+                    Point3="4,24.3070362473348" />
+                  <mssgle:LineSegment
+                    End="220.333333333333,24.3070362473348" />
+                  <mssgle:CubicBezierSegment
+                    Point1="220.333333333333,24.3070362473348"
+                    Point2="224.333333333333,24.3070362473348"
+                    Point3="224.333333333333,28.3070362473348" />
+                  <mssgle:LineSegment
+                    End="224.333333333333,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="63.9752799479165,29.3070362473348,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
+          TopLeft="400.166666666667,863.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-270.666666666667,60"
+              Start="0,0"
+              End="-270.666666666667,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.4186046511628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.4186046511628"
+                    Point2="0,24.4186046511628"
+                    Point3="-4,24.4186046511628" />
+                  <mssgle:LineSegment
+                    End="-266.666666666667,24.4186046511628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-266.666666666667,24.4186046511628"
+                    Point2="-270.666666666667,24.4186046511628"
+                    Point3="-270.666666666667,28.4186046511628" />
+                  <mssgle:LineSegment
+                    End="-270.666666666667,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-183.524720052084,29.4186046511628,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup Error Output1]"
+          TopLeft="442.833333333333,863.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-21.3333333333333,60"
+              Start="0,0"
+              End="-21.3333333333333,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.4186046511628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.4186046511628"
+                    Point2="0,24.4186046511628"
+                    Point3="-4,24.4186046511628" />
+                  <mssgle:LineSegment
+                    End="-17.3333333333333,24.4186046511628" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-17.3333333333333,24.4186046511628"
+                    Point2="-21.3333333333333,24.4186046511628"
+                    Point3="-21.3333333333333,28.4186046511628" />
+                  <mssgle:LineSegment
+                    End="-21.3333333333333,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-56.5330533854167,29.4186046511628,91.7327734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert Property Leases.Paths[Lookup Error Output]"
           TopLeft="137.833333333333,455.5">
@@ -50605,7 +50033,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50627,7 +50057,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50649,7 +50081,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50671,7 +50105,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50705,7 +50141,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50744,290 +50182,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Rows with PID values]"
-          TopLeft="167.5,353.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.227578125,21.37548828125,96.45515625,9.7490234375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Output 03]"
-          TopLeft="421.5,965.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Output 02]"
-          TopLeft="165,557.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Output 01]"
-          TopLeft="421.5,557.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Output 0]"
-          TopLeft="481.5,353.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[OLE DB Source Output]"
-          TopLeft="481.5,47.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup No Match Output]"
-          TopLeft="129.5,965.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
-          TopLeft="400.166666666667,863.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-270.666666666667,60"
-              Start="0,0"
-              End="-270.666666666667,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.4186046511628" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.4186046511628"
-                    Point2="0,24.4186046511628"
-                    Point3="-4,24.4186046511628" />
-                  <mssgle:LineSegment
-                    End="-266.666666666667,24.4186046511628" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-266.666666666667,24.4186046511628"
-                    Point2="-270.666666666667,24.4186046511628"
-                    Point3="-270.666666666667,28.4186046511628" />
-                  <mssgle:LineSegment
-                    End="-270.666666666667,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-183.524720052084,29.4186046511628,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
-          TopLeft="197.166666666667,455.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="224.333333333333,60"
-              Start="0,0"
-              End="224.333333333333,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.3070362473348" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.3070362473348"
-                    Point2="0,24.3070362473348"
-                    Point3="4,24.3070362473348" />
-                  <mssgle:LineSegment
-                    End="220.333333333333,24.3070362473348" />
-                  <mssgle:CubicBezierSegment
-                    Point1="220.333333333333,24.3070362473348"
-                    Point2="224.333333333333,24.3070362473348"
-                    Point3="224.333333333333,28.3070362473348" />
-                  <mssgle:LineSegment
-                    End="224.333333333333,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="63.9752799479165,29.3070362473348,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Error Output1]"
-          TopLeft="442.833333333333,863.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-21.3333333333333,60"
-              Start="0,0"
-              End="-21.3333333333333,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.4186046511628" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.4186046511628"
-                    Point2="0,24.4186046511628"
-                    Point3="-4,24.4186046511628" />
-                  <mssgle:LineSegment
-                    End="-17.3333333333333,24.4186046511628" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-17.3333333333333,24.4186046511628"
-                    Point2="-21.3333333333333,24.4186046511628"
-                    Point3="-21.3333333333333,28.4186046511628" />
-                  <mssgle:LineSegment
-                    End="-21.3333333333333,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-56.5330533854167,29.4186046511628,91.7327734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Find Matching Leases Errors">
+    design-time-name="Package\Insert Property Leases\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -51063,7 +50222,20 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\OLE DB Destination">
+    design-time-name="Package\Insert Property Leases\Find Matching Leases Errors">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Insert Property Leases\Lookup PID Errors">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -51099,7 +50271,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Lookup PID Errors">
+    design-time-name="Package\Insert Property Leases\Convert TFA_FILE_NO errors">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -51135,7 +50307,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Insert Property Leases\Convert TFA_FILE_NO errors">
+    design-time-name="Package\Insert Property Leases\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -51144,6 +50316,890 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Sequence Container\Insert Leases">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="191,42"
+          Id="Package\Sequence Container\Insert Leases\Format output columns"
+          TopLeft="235.5,1535.5" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Sequence Container\Insert Leases\OLE DB Source"
+          TopLeft="525.5,5.5" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\Sequence Container\Insert Leases\Default Lease Program"
+          TopLeft="78.0000000000001,923.5" />
+        <NodeLayout
+          Size="110,42"
+          Id="Package\Sequence Container\Insert Leases\Merge"
+          TopLeft="276,1025.5" />
+        <NodeLayout
+          Size="193,42"
+          Id="Package\Sequence Container\Insert Leases\Lease Program Lookup"
+          TopLeft="234.5,821.5" />
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Sequence Container\Insert Leases\Payment Frequency Lookup"
+          TopLeft="223,1127.5" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Sequence Container\Insert Leases\Data Conversion"
+          TopLeft="250.5,311.5" />
+        <NodeLayout
+          Size="239,42"
+          Id="Package\Sequence Container\Insert Leases\Filter leases with no TFA or PS #"
+          TopLeft="484.5,107.5" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id"
+          TopLeft="218,1433.5" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Sequence Container\Insert Leases\Store Data Casting Errors"
+          TopLeft="228.5,1739.5" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Sequence Container\Insert Leases\Derived Column"
+          TopLeft="252,617.5" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Sequence Container\Insert Leases\Parse Dates"
+          TopLeft="261.5,515.5" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\Sequence Container\Insert Leases\Remove '-' from TFA File No"
+          TopLeft="222.5,209.5" />
+        <NodeLayout
+          Size="207,42"
+          Id="Package\Sequence Container\Insert Leases\Rows with no TFA or PS #"
+          TopLeft="500.5,209.5" />
+        <NodeLayout
+          Size="236,42"
+          Id="Package\Sequence Container\Insert Leases\Store Rows with no TFA or PS #"
+          TopLeft="486,311.5" />
+        <NodeLayout
+          Size="99,42"
+          Id="Package\Sequence Container\Insert Leases\Sort"
+          TopLeft="281.5,719.5" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\Sequence Container\Insert Leases\Default Payment Frequency"
+          TopLeft="54.5000000000001,1229.5" />
+        <NodeLayout
+          Size="119,42"
+          Id="Package\Sequence Container\Insert Leases\Merge 1"
+          TopLeft="271.5,1331.5" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Sequence Container\Insert Leases\Data Casting Errors"
+          TopLeft="243.5,1637.5" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Sequence Container\Insert Leases\OLE DB Destination"
+          TopLeft="5.50000000000017,1637.5" />
+        <NodeLayout
+          Size="261,42"
+          Id="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #"
+          TopLeft="200.5,413.5" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Sort Output]"
+          TopLeft="331,761.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Output 02]"
+          TopLeft="331,1679.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Output 01]"
+          TopLeft="604,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Output 0]"
+          TopLeft="331,557.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[OLE DB Source Output]"
+          TopLeft="604,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[New Leases Only]"
+          TopLeft="331,455.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,20.4453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Merge Output 11]"
+          TopLeft="331,1067.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Merge Output 1]"
+          TopLeft="331,1373.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output1]"
+          TopLeft="300.166666666667,863.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-126.166666666667,60"
+              Start="0,0"
+              End="-126.166666666667,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2959917780062" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2959917780062"
+                    Point2="0,24.2959917780062"
+                    Point3="-4,24.2959917780062" />
+                  <mssgle:LineSegment
+                    End="-122.166666666667,24.2959917780062" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-122.166666666667,24.2959917780062"
+                    Point2="-126.166666666667,24.2959917780062"
+                    Point3="-126.166666666667,28.2959917780062" />
+                  <mssgle:LineSegment
+                    End="-126.166666666667,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-118.889720052084,29.2959917780062,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output]"
+          TopLeft="296.333333333333,1169.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-134.333333333333,60"
+              Start="0,0"
+              End="-134.333333333333,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2647058823529" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2647058823529"
+                    Point2="0,24.2647058823529"
+                    Point3="-4,24.2647058823529" />
+                  <mssgle:LineSegment
+                    End="-130.333333333333,24.2647058823529" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-130.333333333333,24.2647058823529"
+                    Point2="-134.333333333333,24.2647058823529"
+                    Point3="-134.333333333333,28.2647058823529" />
+                  <mssgle:LineSegment
+                    End="-134.333333333333,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-122.973053385417,29.2647058823529,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
+          TopLeft="361.833333333333,863.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13.8333333333333,162"
+              Start="0,0"
+              End="-13.8333333333333,154.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,76.3842278805642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,76.3842278805642"
+                    Point2="0,80.3842278805642"
+                    Point3="-4,80.3842278805642" />
+                  <mssgle:LineSegment
+                    End="-9.83333333333331,80.3842278805642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.83333333333331,80.3842278805642"
+                    Point2="-13.8333333333333,80.3842278805642"
+                    Point3="-13.8333333333333,84.3842278805642" />
+                  <mssgle:LineSegment
+                    End="-13.8333333333333,154.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.1080533854167,85.3842278805642,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output1]"
+          TopLeft="365.666666666667,1169.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-16.1666666666666,162"
+              Start="0,0"
+              End="-16.1666666666666,154.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,76.4041859406992" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,76.4041859406992"
+                    Point2="0,80.4041859406992"
+                    Point3="-4,80.4041859406992" />
+                  <mssgle:LineSegment
+                    End="-12.1666666666666,80.4041859406992" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.1666666666666,80.4041859406992"
+                    Point2="-16.1666666666666,80.4041859406992"
+                    Point3="-16.1666666666666,84.4041859406992" />
+                  <mssgle:LineSegment
+                    End="-16.1666666666666,154.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-56.2747200520833,85.4041859406992,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
+          TopLeft="331,1475.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Leases with identifiers]"
+          TopLeft="565.5,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-234.5,60"
+              Start="0,0"
+              End="-234.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2394014962594" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2394014962594"
+                    Point2="0,24.2394014962594"
+                    Point3="-4,24.2394014962594" />
+                  <mssgle:LineSegment
+                    End="-230.5,24.2394014962594" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-230.5,24.2394014962594"
+                    Point2="-234.5,24.2394014962594"
+                    Point3="-234.5,28.2394014962594" />
+                  <mssgle:LineSegment
+                    End="-234.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-166.607578125,29.2394014962594,98.71515625,9.7978515625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output4]"
+          TopLeft="331,659.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output3]"
+          TopLeft="174,965.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="140,60"
+              Start="0,0"
+              End="140,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.4838709677419" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.4838709677419"
+                    Point2="0,35.4838709677419"
+                    Point3="4,35.4838709677419" />
+                  <mssgle:LineSegment
+                    End="136,35.4838709677419" />
+                  <mssgle:CubicBezierSegment
+                    Point1="136,35.4838709677419"
+                    Point2="140,35.4838709677419"
+                    Point3="140,39.4838709677419" />
+                  <mssgle:LineSegment
+                    End="140,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output2]"
+          TopLeft="162,1271.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="150.5,60"
+              Start="0,0"
+              End="150.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5223880597015" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.5223880597015"
+                    Point2="0,35.5223880597015"
+                    Point3="4,35.5223880597015" />
+                  <mssgle:LineSegment
+                    End="146.5,35.5223880597015" />
+                  <mssgle:CubicBezierSegment
+                    Point1="146.5,35.5223880597015"
+                    Point2="150.5,35.5223880597015"
+                    Point3="150.5,39.5223880597015" />
+                  <mssgle:LineSegment
+                    End="150.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output1]"
+          TopLeft="331,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output]"
+          TopLeft="300.5,1577.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-206.5,60"
+              Start="0,0"
+              End="-206.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2990654205607" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2990654205607"
+                    Point2="0,24.2990654205607"
+                    Point3="-4,24.2990654205607" />
+                  <mssgle:LineSegment
+                    End="-202.5,24.2990654205607" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-202.5,24.2990654205607"
+                    Point2="-206.5,24.2990654205607"
+                    Point3="-206.5,28.2990654205607" />
+                  <mssgle:LineSegment
+                    End="-206.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Error Output]"
+          TopLeft="361.5,1577.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-30.4999999999999,60"
+              Start="0,0"
+              End="-30.4999999999999,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2990654205607" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2990654205607"
+                    Point2="0,24.2990654205607"
+                    Point3="-4,24.2990654205607" />
+                  <mssgle:LineSegment
+                    End="-26.4999999999999,24.2990654205607" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-26.4999999999999,24.2990654205607"
+                    Point2="-30.4999999999999,24.2990654205607"
+                    Point3="-30.4999999999999,28.2990654205607" />
+                  <mssgle:LineSegment
+                    End="-30.4999999999999,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-80.2113867187499,29.2990654205607,129.9227734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Data Conversion Output]"
+          TopLeft="331,353.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Conditional Split Default Output]"
+          TopLeft="642.5,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-38.5,60"
+              Start="0,0"
+              End="-38.5,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.2394014962594" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.2394014962594"
+                    Point2="0,24.2394014962594"
+                    Point3="-4,24.2394014962594" />
+                  <mssgle:LineSegment
+                    End="-34.5,24.2394014962594" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34.5,24.2394014962594"
+                    Point2="-38.5,24.2394014962594"
+                    Point3="-38.5,28.2394014962594" />
+                  <mssgle:LineSegment
+                    End="-38.5,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-89.86390625,29.2394014962594,141.2278125,11.658203125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\Lease Program Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\Payment Frequency Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_PERSON]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\Store Data Casting Errors">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\Store Rows with no TFA or PS #">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_LEASE]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

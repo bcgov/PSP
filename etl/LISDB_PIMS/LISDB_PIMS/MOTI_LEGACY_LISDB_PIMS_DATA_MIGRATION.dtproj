@@ -12,7 +12,7 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{892dfe5a-72df-4b14-9e95-d9d64e507ba5}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">MOTI_LEGACY_LISDB_PIMS_DATA_MIGRATION</SSIS:Property>
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">XERCES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAKsoY0GNXYkedX4Mhlo6mLwAAAAACAAAAAAAQZgAAAAEAACAAAACpaKUYl/TRHkj2pFsJHOppfUWBcmarGS/6lUguNPJZwgAAAAAOgAAAAAIAACAAAADVPfrEljYWJTEsyTLWupZ1W96Mjcag1JNKw8ikM+3/xZAAAAA6OL0FCjVEyNG3sXHqDQN842bnk1hk50TIFXEbv7M6nKpaYOr+L3VbWgei5ByQNgM1og6VmqIGL7Llr+v/t2x6Jp6gsOUKZBTH0oodlMMEJS54VNY39Xcf/UCV4/69pPB6vaKAnTv6zYQtyg97iWp5lwpyDGjBZJDrQpFty81Bc0/vYvdbePkKbd4J/W9fzIFAAAAAKm2Af5Qwh5kJbMOBrDT32faiekEf52+ISucr3gluqVw7rrGwsVb1VfCIiHv7b0mJOd7rPSK7RGrRMHZSJfC1Yg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,14 +41,14 @@
                 <SSIS:Property SSIS:Name="Name">Package1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">244</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">247</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{D3C5E878-49D1-4AFE-807D-31FA1EB730DE}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{A2E1AE80-C265-46BE-8594-BB5B0E946AD4}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="CM.IS19.ConnectByProxy">
