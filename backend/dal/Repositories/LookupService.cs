@@ -153,21 +153,6 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
-        {
-            return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.InsuranceTypeCode).ToArray();
-        }
-
-        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
-        {
-            return this.Context.PimsContactMethodTypes.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
-        }
-
-        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
-        {
-            return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.PropertyImprovementTypeCode).ToArray();
-        }
-
         public IEnumerable<PimsLeaseTermStatusType> GetLeaseTermStatusTypes()
         {
             return this.Context.PimsLeaseTermStatusTypes.AsNoTracking().OrderBy(a => a.LeaseTermStatusTypeCode).ToArray();
@@ -176,6 +161,21 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsLeasePmtFreqType> GetLeasePmtFreqTypes()
         {
             return this.Context.PimsLeasePmtFreqTypes.AsNoTracking().OrderBy(a => a.LeasePmtFreqTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
+        {
+            return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
+        {
+            return this.Context.PimsContactMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
+        {
+            return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
         #endregion
     }
