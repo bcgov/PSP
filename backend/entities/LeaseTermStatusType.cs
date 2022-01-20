@@ -25,5 +25,11 @@ namespace Pims.Dal.Entities
             Id = id;
         }
         #endregion
+
+        public static class LeaseTermStatusTypes
+        {
+            public const string EXER = "EXER";
+            public const string NEXER = "NEXER";
+        }
     }
 }

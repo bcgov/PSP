@@ -11,6 +11,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
         IEnumerable<PimsLease> Get(LeaseFilter filter);
+        long GetRowVersion(long id);
         PimsLease Get(long id);
         Paged<PimsLease> GetPage(LeaseFilter filter);
         PimsLease Add(PimsLease lease, bool userOverride = false);

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 
-namespace Pims.Dal.Services
+namespace Pims.Dal.Repositories
 {
     /// <summary>
     /// Provides a service layer to administrate static variables within the datasource.
@@ -20,9 +20,9 @@ namespace Pims.Dal.Services
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
-        /// <param name="service"></param>
+        /// <param name="repository"></param>
         /// <param name="logger"></param>
-        public SystemConstantService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<SystemConstantService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public SystemConstantService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository repository, ILogger<SystemConstantService> logger, IMapper mapper) : base(dbContext, user, repository, logger, mapper) { }
         #endregion
 
         #region Methods

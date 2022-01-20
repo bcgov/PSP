@@ -18,7 +18,7 @@ export const defaultMaskOptions = {
   thousandsSeparatorSymbol: ',',
   allowDecimal: true,
   decimalSymbol: '.',
-  decimalLimit: 0, // how many digits allowed after the decimal
+  decimalLimit: 2, // how many digits allowed after the decimal
   integerLimit: undefined, // limit length of integer numbers
   allowNegative: false,
   allowLeadingZeroes: false,

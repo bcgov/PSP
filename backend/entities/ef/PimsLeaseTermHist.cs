@@ -26,12 +26,29 @@ namespace Pims.Dal.Entities
         [Column("LEASE_TERM_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseTermStatusTypeCode { get; set; }
+        [Column("LEASE_PMT_FREQ_TYPE_CODE")]
+        [StringLength(20)]
+        public string LeasePmtFreqTypeCode { get; set; }
         [Column("TERM_START_DATE", TypeName = "datetime")]
         public DateTime TermStartDate { get; set; }
         [Column("TERM_EXPIRY_DATE", TypeName = "datetime")]
         public DateTime? TermExpiryDate { get; set; }
         [Column("TERM_RENEWAL_DATE", TypeName = "datetime")]
         public DateTime? TermRenewalDate { get; set; }
+        [Column("PAYMENT AMOUNT", TypeName = "money")]
+        public decimal? PaymentAmount { get; set; }
+        [Column("PAYMENT_DUE_DATE")]
+        [StringLength(200)]
+        public string PaymentDueDate { get; set; }
+        [Column("PAYMENT_NOTE")]
+        [StringLength(2000)]
+        public string PaymentNote { get; set; }
+        [Column("IS_GST_ELIGIBLE")]
+        public bool? IsGstEligible { get; set; }
+        [Column("GST_AMOUNT", TypeName = "money")]
+        public decimal? GstAmount { get; set; }
+        [Column("IS_TERM_EXERCISED")]
+        public bool? IsTermExercised { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -70,20 +87,5 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("LEASE_PMT_FREQ_TYPE_CODE")]
-        [StringLength(20)]
-        public string LeasePmtFreqTypeCode { get; set; }
-        [Column("PAYMENT AMOUNT", TypeName = "money")]
-        public decimal? PaymentAmount { get; set; }
-        [Column("PAYMENT_DUE_DATE")]
-        [StringLength(200)]
-        public string PaymentDueDate { get; set; }
-        [Column("PAYMENT_NOTE")]
-        [StringLength(2000)]
-        public string PaymentNote { get; set; }
-        [Column("IS_GST_ELIGIBLE")]
-        public bool? IsGstEligible { get; set; }
-        [Column("IS_TERM_EXERCISED")]
-        public bool? IsTermExercised { get; set; }
     }
 }
