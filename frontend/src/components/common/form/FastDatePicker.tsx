@@ -107,7 +107,7 @@ const FormikDatePicker: FunctionComponent<FastDatePickerProps> = ({
           setFieldTouched(field);
         }}
         onChange={(val: any) => {
-          setFieldValue(field, val ? moment(val).format('YYYY-MM-DD') : '');
+          setFieldValue(field, val ? moment.utc(val).format('YYYY-MM-DD') : '');
         }}
       />
       <ErrorMessage component="div" className="invalid-feedback" name={field}></ErrorMessage>

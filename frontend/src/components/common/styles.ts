@@ -2,6 +2,8 @@ import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb, Button } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
+import GenericModal from './GenericModal';
+
 export const LeftAlignDiv = styled.div`
   text-align: left;
 `;
@@ -46,7 +48,19 @@ export const IconButton = styled(Button)`
     }
     svg:hover {
       transition: all 0.3s ease-in;
-      color: ${({ theme }) => theme.css.secondaryVariantColor};
+      color: ${({ theme }) => theme.css.dangerColor};
+    }
+  }
+`;
+
+export const PrimaryGenericModal = styled(GenericModal)`
+  .modal-header {
+    background-color: ${({ theme }) => theme.css.primaryColor};
+    .h4 {
+      color: white;
+      font-family: BcSans-Bold;
+      font-size: 2.2rem;
+      height: 2.75rem;
     }
   }
 `;

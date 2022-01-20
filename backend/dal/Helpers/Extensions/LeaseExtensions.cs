@@ -171,50 +171,6 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Get the initial term of this lease.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static PimsLeaseTerm GetInitialTerm(this Pims.Dal.Entities.PimsLease lease)
-        {
-            return lease.PimsLeaseTerms.OrderByDescending(term => term.TermStartDate).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Replace any lease terms attached to this lease with the passed term.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static PimsLease ReplaceLeaseTerms(this Pims.Dal.Entities.PimsLease lease, PimsLeaseTerm term)
-        {
-            lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term };
-            return lease;
-        }
-
-        /// <summary>
-        /// Replace any lease properties attached to this lease with the passed term.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static PimsLease ReplaceLeaseProperties(this Pims.Dal.Entities.PimsLease lease, PimsPropertyLease property)
-        {
-            
-            lease.PimsPropertyLeases = new List<PimsPropertyLease>() { property };
-            return lease;
-        }
-
-        /// <summary>
-        /// Replace any lease tenants attached to this lease with the passed term.
-        /// </summary>
-        /// <param name="lease"></param>
-        /// <returns></returns>
-        public static PimsLease ReplaceLeaseTenants(this Pims.Dal.Entities.PimsLease lease, PimsLeaseTenant tenant)
-        {
-            lease.PimsLeaseTenants = new List<PimsLeaseTenant>() { tenant };
-            return lease;
-        }
-
-        /// <summary>
         /// Get the tenant name from either the person or the organization
         /// </summary>
         /// <param name="lease"></param>

@@ -19,8 +19,8 @@ const InsuranceDetailsView: React.FunctionComponent<InsuranceDetailsViewProps> =
       {insuranceList
         .sort((a, b) => {
           return (
-            insuranceTypes.findIndex(i => i.id === a.insuranceType.id) -
-            insuranceTypes.findIndex(i => i.id === b.insuranceType.id)
+            insuranceTypes.findIndex(i => i.id === a.insuranceType.displayOrder) -
+            insuranceTypes.findIndex(i => i.id === b.insuranceType.displayOrder)
           );
         })
         .map((insurance: IInsurance, index: number) => (

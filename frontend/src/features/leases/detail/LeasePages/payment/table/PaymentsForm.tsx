@@ -1,27 +1,33 @@
+import { Button } from 'components/common/form';
 import { TableProps } from 'components/Table/Table';
+import Claims from 'constants/claims';
 import { useFormikContext } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease } from 'interfaces';
 import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import { orderBy } from 'lodash';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 import { prettyFormatDate } from 'utils';
 
 import * as Styled from '../../../styles';
-import { StyledFormBody, StyledTable } from '../styles';
+import * as PaymentStyles from '../styles';
 import { getColumns } from './columns';
 
-export interface IPaymentFormProps {
+export interface IPaymentsFormProps {
   onEdit: (values: IFormLeaseTerm) => void;
   onDelete: (values: IFormLeaseTerm) => void;
+  setDisplayModal: (displayModal: boolean) => void;
 }
 
-export const PaymentsForm: React.FunctionComponent<IPaymentFormProps> = ({ onEdit, onDelete }) => {
+export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
+  onEdit,
+  onDelete,
+  setDisplayModal,
+}) => {
   const formikProps = useFormikContext<IFormLease>();
-  const { getSystemConstant } = useSystemConstants();
-  const gstConstant = getSystemConstant(SystemConstants.GST);
-  const columns = getColumns({ onEdit, onDelete: onDelete, gstConstant });
+  const columns = getColumns({ onEdit, onDelete: onDelete });
+  const { hasClaim } = useKeycloakWrapper();
 
   //Get the most recent payment for display, if one exists.
   const allPayments = orderBy(
@@ -33,24 +39,30 @@ export const PaymentsForm: React.FunctionComponent<IPaymentFormProps> = ({ onEdi
 
   return (
     <>
-      <>
-        <Prompt
-          when={formikProps.dirty}
-          message="You have made changes on this form. Do you wish to leave without saving?"
+      <Prompt
+        when={formikProps.dirty}
+        message="You have made changes on this form. Do you wish to leave without saving?"
+      />
+      <PaymentStyles.StyledFormBody>
+        <Styled.LeaseH6>Payments by Term</Styled.LeaseH6>
+
+        <PaymentStyles.FullWidthInlineFlexDiv>
+          {hasClaim(Claims.LEASE_EDIT) && (
+            <Button variant="secondary" onClick={() => setDisplayModal(true)}>
+              Add a Term
+            </Button>
+          )}
+          {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
+        </PaymentStyles.FullWidthInlineFlexDiv>
+        <PaymentStyles.StyledTable<React.FC<TableProps<IFormLeaseTerm>>>
+          name="securityDepositsTable"
+          columns={columns}
+          data={formikProps.values.terms ?? []}
+          manualPagination={false}
+          hideToolbar={true}
+          noRowsMessage="There is no corresponding data"
         />
-        <StyledFormBody>
-          <Styled.LeaseH5>Payments by Term</Styled.LeaseH5>
-          <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>
-          <StyledTable<React.FC<TableProps<IFormLeaseTerm>>>
-            name="securityDepositsTable"
-            columns={columns}
-            data={formikProps.values.terms ?? []}
-            manualPagination={false}
-            hideToolbar={true}
-            noRowsMessage="There is no corresponding data"
-          />
-        </StyledFormBody>
-      </>
+      </PaymentStyles.StyledFormBody>
     </>
   );
 };
