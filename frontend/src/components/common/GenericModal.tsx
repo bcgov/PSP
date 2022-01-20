@@ -79,33 +79,28 @@ export interface ModalProps {
  */
 const GenericModal = (props: ModalProps) => {
   const [show, setShow] = useState(true);
-  useEffect(() => {
-    if (props.display !== undefined) {
-      setShow(props.display);
-    }
-  }, [props.display]);
 
   const handleCancel = props.handleCancel ?? noop;
 
   const close = () => {
-    props.setDisplay ? props.setDisplay(false) : setShow(false);
+    props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
     handleCancel();
   };
 
   const handleOk =
     props.handleOk ??
     (() => {
-      props.setDisplay ? props.setDisplay(false) : setShow(false);
+      props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
     });
   const ok = () => {
-    props.setDisplay ? props.setDisplay(false) : setShow(false);
+    props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
     handleOk();
   };
 
   return (
     <Container>
       <Modal
-        show={props.setDisplay ? props.display : show}
+        show={props.display !== undefined ? props.display : show}
         onHide={close}
         dialogClassName={classNames(props.size, props.className)}
       >

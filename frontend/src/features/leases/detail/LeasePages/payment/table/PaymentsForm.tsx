@@ -1,6 +1,7 @@
 import { Button } from 'components/common/form';
 import { TableProps } from 'components/Table/Table';
 import { useFormikContext } from 'formik';
+import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease } from 'interfaces';
 import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import { orderBy } from 'lodash';
@@ -28,6 +29,7 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const columns = getColumns({ onEdit, onDelete: onDelete, gstConstant });
+  const { hasClaim } = useKeycloakWrapper();
 
   //Get the most recent payment for display, if one exists.
   const allPayments = orderBy(
@@ -39,30 +41,30 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
 
   return (
     <>
-      <>
-        <Prompt
-          when={formikProps.dirty}
-          message="You have made changes on this form. Do you wish to leave without saving?"
-        />
-        <PaymentStyles.StyledFormBody>
-          <Styled.LeaseH6>Payments by Term</Styled.LeaseH6>
+      <Prompt
+        when={formikProps.dirty}
+        message="You have made changes on this form. Do you wish to leave without saving?"
+      />
+      <PaymentStyles.StyledFormBody>
+        <Styled.LeaseH6>Payments by Term</Styled.LeaseH6>
 
-          <PaymentStyles.FullWidthInlineFlexDiv>
+        <PaymentStyles.FullWidthInlineFlexDiv>
+          {hasClaim(Claims.LEASE_EDIT) && (
             <Button variant="secondary" onClick={() => setDisplayModal(true)}>
               Add a Term
             </Button>
-            {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
-          </PaymentStyles.FullWidthInlineFlexDiv>
-          <PaymentStyles.StyledTable<React.FC<TableProps<IFormLeaseTerm>>>
-            name="securityDepositsTable"
-            columns={columns}
-            data={formikProps.values.terms ?? []}
-            manualPagination={false}
-            hideToolbar={true}
-            noRowsMessage="There is no corresponding data"
-          />
-        </PaymentStyles.StyledFormBody>
-      </>
+          )}
+          {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
+        </PaymentStyles.FullWidthInlineFlexDiv>
+        <PaymentStyles.StyledTable<React.FC<TableProps<IFormLeaseTerm>>>
+          name="securityDepositsTable"
+          columns={columns}
+          data={formikProps.values.terms ?? []}
+          manualPagination={false}
+          hideToolbar={true}
+          noRowsMessage="There is no corresponding data"
+        />
+      </PaymentStyles.StyledFormBody>
     </>
   );
 };

@@ -50,7 +50,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddTerm(long leaseId, Models.Lease.TermModel termModel)
+        public IActionResult AddTerm(long leaseId, [FromBody] Models.Lease.TermModel termModel)
         {
             var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
             var updatedLease = _pimsService.LeaseTermService.AddTerm(leaseId, termModel.LeaseRowVersion, termEntity);
@@ -67,7 +67,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateTerm(long leaseId, long termId, Models.Lease.TermModel termModel)
+        public IActionResult UpdateTerm(long leaseId, long termId, [FromBody] Models.Lease.TermModel termModel)
         {
             var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
             var updatedLease = _pimsService.LeaseTermService.UpdateTerm(leaseId, termId, termModel.LeaseRowVersion, termEntity);
