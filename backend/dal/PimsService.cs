@@ -24,9 +24,10 @@ namespace Pims.Dal
         /// get - The lease term service.
         /// </summary>
         public ILeaseTermService LeaseTermService { get { return _serviceProvider.GetService<ILeaseTermService>(); } }
-        public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
-        /// get - The system constant service.
+        /// <summary>
+        /// get - The lease service.
         /// </summary>
+        public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
         #endregion
 
         #region Constructors
