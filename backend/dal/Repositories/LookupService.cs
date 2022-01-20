@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         public IEnumerable<PimsProvinceState> GetProvinces()
         {
-            return this.Context.PimsProvinceStates.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
+            return this.Context.PimsProvinceStates.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
         }
 
         /// <summary>
