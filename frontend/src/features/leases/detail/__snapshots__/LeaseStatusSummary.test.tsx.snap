@@ -11,6 +11,7 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
   .c0 {
   max-width: 11rem;
   max-height: 100%;
+  min-width: 10rem;
   white-space: nowrap;
   border-radius: 1rem;
   background-color: white;
@@ -23,6 +24,7 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
   flex-direction: column;
   border: 1px solid;
   padding: 0.2rem 1rem;
+  height: 90%;
 }
 
 .c0 b {
@@ -31,6 +33,18 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
 }
 
 .c0.active {
+  border: 1px solid;
+}
+
+.c0.terminated {
+  border: 1px solid;
+}
+
+.c0.discard {
+  border: 1px solid;
+}
+
+.c0.draft {
   border: 1px solid;
 }
 
@@ -56,6 +70,7 @@ exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
   .c0 {
   max-width: 11rem;
   max-height: 100%;
+  min-width: 10rem;
   white-space: nowrap;
   border-radius: 1rem;
   background-color: white;
@@ -68,6 +83,7 @@ exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
   flex-direction: column;
   border: 1px solid;
   padding: 0.2rem 1rem;
+  height: 90%;
 }
 
 .c0 b {
@@ -79,11 +95,23 @@ exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
   border: 1px solid;
 }
 
+.c0.terminated {
+  border: 1px solid;
+}
+
+.c0.discard {
+  border: 1px solid;
+}
+
+.c0.draft {
+  border: 1px solid;
+}
+
 <div
-    class="c0 inactive"
+    class="c0 active"
   >
     <b>
-      Inactive
+      Active
     </b>
     <b />
   </div>

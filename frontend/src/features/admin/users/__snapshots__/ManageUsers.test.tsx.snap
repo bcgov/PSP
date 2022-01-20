@@ -246,7 +246,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               class="Button Button--icon-only bg-warning btn btn-primary"
               data-testid="search"
               id="search-button"
-              type="submit"
+              type="button"
             >
               <div
                 class="Button__icon"
@@ -330,6 +330,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
     >
       <div
         class="table"
+        data-testid="usersTable"
         role="table"
       >
         <div

@@ -1,4 +1,6 @@
 import { IPagedItems } from 'interfaces';
+import { IContact } from 'interfaces/IContact';
+import { ICreateOrganization, ICreatePerson } from 'interfaces/ICreateContact';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -19,6 +21,11 @@ export const useApiContacts = () => {
         api.get<IPagedItems<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
+      getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
+      postPerson: (person: ICreatePerson, userOverride: boolean) =>
+        api.post<ICreatePerson>(`/persons?userOverride=${userOverride}`, person),
+      postOrganization: (organization: ICreateOrganization, userOverride: boolean) =>
+        api.post<ICreateOrganization>(`/organizations?userOverride=${userOverride}`, organization),
     }),
     [api],
   );

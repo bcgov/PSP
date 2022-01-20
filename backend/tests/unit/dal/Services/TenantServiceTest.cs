@@ -2,7 +2,7 @@ using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
+using Pims.Dal.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

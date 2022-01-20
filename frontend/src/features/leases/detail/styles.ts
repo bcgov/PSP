@@ -8,9 +8,11 @@ import styled from 'styled-components';
 
 export const LeaseH1 = styled.h1`
   padding: 2rem;
+  font-family: 'BCSans-Bold';
 `;
 
 export const LeaseH2 = styled.h2`
+  font-family: 'BCSans-Bold';
   font-size: 3.2rem;
   line-height: 4.2rem;
   text-align: left;
@@ -19,6 +21,7 @@ export const LeaseH2 = styled.h2`
 `;
 
 export const LeaseH3 = styled.h3`
+  font-family: 'BcSans-Bold'
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
@@ -32,6 +35,14 @@ export const LeaseH4 = styled.h4`
   color: white;
   text-align: center;
   padding-bottom: 1rem;
+`;
+
+export const LeaseH5 = styled.h5`
+  font-size: 1.6rem;
+  color: black;
+  text-align: left;
+  padding-top: 1.5rem;
+  font-family: BcSans-Bold;
 `;
 
 export const LeaseHeaderRight = styled.div`
@@ -49,7 +60,23 @@ export const LeaseHeaderRight = styled.div`
 
 export const LeaseHeaderText = styled(InlineFlexDiv)`
   justify-content: center;
+  display: flex;
   padding: 0 2rem;
+  white-space: nowrap;
+`;
+
+export const ExpiredWarning = styled(InlineFlexDiv)`
+  color: ${props => props.theme.css.dangerColor};
+  background-color: ${props => props.theme.css.dangerBackgroundColor};
+  border-radius: 0.4rem;
+  letter-spacing: 0.1rem;
+  padding: 0.2rem;
+  margin-right: 0.5rem;
+  font-family: 'BCSans-Bold';
+  font-size: 1.4rem;
+  align-items: center;
+  min-width: fit-content;
+  max-height: 2.5rem;
 `;
 
 export const LeaseHeader = styled(InlineFlexDiv)`
@@ -67,15 +94,11 @@ export const LeaseHeader = styled(InlineFlexDiv)`
 
 export const FormDescriptionLabel = styled(Form.Label)`
   font-size: 1.6rem;
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 `;
 
 export const FormDescriptionBody = styled(TextArea)`
-  font-weight: 400;
-`;
-
-export const TenantNotes = styled(TextArea)`
-  margin-left: 9.5rem;
+  font-family: 'BCSans';
 `;
 
 export const FormControl = styled(Form.Control)`
@@ -94,14 +117,15 @@ export const FormGrid = styled.div`
     margin: 0 0.5rem 0 0;
   }
 
-  & > .input {
+  & > .input,
+  & > .notes {
     grid-column: controls;
     grid-row: auto;
     border-left: 1px solid #666666;
   }
 
-  & .form-control:not(.description) {
-    font-weight: 700;
+  & .form-control:not(.description, .notes) {
+    font-family: 'BCSans-Bold';
   }
 
   & > label,
@@ -110,8 +134,9 @@ export const FormGrid = styled.div`
     grid-row: auto;
   }
 
-  & > .textarea,
-  & > h3 {
+  & > .textarea :not(.notes),
+  & > h3,
+  & > h5 {
     grid-column: span 2;
     border-left: none;
   }
@@ -139,7 +164,7 @@ export const TermsTable = styled(Table)`
   background-color: white;
   padding-left: 8rem;
   &.table .thead .th {
-    font-weight: 700;
+    font-family: 'BCSans-Bold';
     border-top: none;
     padding: 1rem 0.5rem;
     background-color: white;
@@ -154,7 +179,7 @@ export const TermsTable = styled(Table)`
   }
   &.table .tbody .tr-wrapper .tr.selected {
     background-color: ${props => props.theme.css.accentColor};
-    font-weight: 700;
+    font-family: 'BCSans-Bold';
     margin-left: -8rem;
     &:before {
       content: 'current';

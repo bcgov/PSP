@@ -1,6 +1,7 @@
+export * from './add/AddLeaseContainer';
+export * from './add/AddLeaseContainer';
 export * from './add/AddLeaseLayout';
-export * from './add/DetailContainer';
-export * from './add/DetailContainer';
+export * from './add/PropertyRow';
 export * from './detail/BackToSearchButton';
 export * from './detail/LeaseBreadCrumb';
 export * from './detail/LeaseContainer';
@@ -17,6 +18,7 @@ export * from './detail/LeasePages/details/DetailTerms';
 export * from './detail/LeasePages/details/PropertiesInformation';
 export * from './detail/LeasePages/details/PropertyInformation';
 export * from './detail/LeasePages/LeasePageForm';
+export * from './detail/LeaseRouter';
 export * from './detail/LeaseStatusSummary';
 export * from './detail/StackedPidTenantFields';
 export * from './hooks/useLeaseDetail';

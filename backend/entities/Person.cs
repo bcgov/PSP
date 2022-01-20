@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 namespace Pims.Dal.Entities
 {
@@ -9,7 +10,15 @@ namespace Pims.Dal.Entities
     public partial class PimsPerson : IDisableBaseAppEntity
     {
         #region Properties
-        public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).ToArray();
+        /// <summary>
+        /// get/set - Primary key to identify person.
+        /// </summary>
+        [NotMapped]
+        public long Id { get => PersonId; set => PersonId = value; }
+
+        public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o => { o.PimsPersonOrganizations = null; return o; }).ToArray();
+        public ICollection<PimsAddress> GetAddresses() => PimsPersonAddresses?.Select(pa => pa.Address).ToArray();
+
         #endregion
 
         #region Constructors
@@ -18,7 +27,7 @@ namespace Pims.Dal.Entities
         /// </summary>
         /// <param name="surname"></param>
         /// <param name="firstname"></param>
-        public PimsPerson(string surname, string firstname, PimsAddress address):this()
+        public PimsPerson(string surname, string firstname, PimsAddress address) : this()
         {
             if (String.IsNullOrWhiteSpace(surname)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(surname));
             if (String.IsNullOrWhiteSpace(firstname)) throw new ArgumentException("Argument cannot be null, whitespace or empty.", nameof(firstname));

@@ -3,8 +3,10 @@ import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { ContactListView } from 'features/contacts';
-import ContactContainer from 'features/contacts/contact/ContactContainer/ContactContainer';
-import { DetailContainer } from 'features/leases';
+import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
+import ContactViewContainer from 'features/contacts/contact/detail/Container';
+import ContactEditContainer from 'features/contacts/contact/edit/Container';
+import { AddLeaseContainer } from 'features/leases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
 import PublicLayout from 'layouts/PublicLayout';
@@ -25,7 +27,7 @@ const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAcce
 const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
 const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
 const LeaseAndLicenseListView = lazy(() => import('features/leases/list/LeaseListView'));
-const LeaseContainer = lazy(() => import('features/leases/detail/LeaseContainer'));
+const LeaseContainerWrapper = lazy(() => import('features/leases/detail/LeaseContainerWrapper'));
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -137,15 +139,15 @@ const AppRouter: React.FC = () => {
           protected
           path="/lease/new"
           exact
-          component={DetailContainer}
+          component={AddLeaseContainer}
           layout={AuthLayout}
-          claim={Claims.PROPERTY_VIEW}
+          claim={Claims.LEASE_ADD}
           title={getTitle('Create/Edit Lease & Licenses')}
         />
         <AppRoute
           protected
           path="/lease/:leaseId"
-          component={LeaseContainer}
+          component={LeaseContainerWrapper}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('Create/Edit Lease & Licenses')}
@@ -160,11 +162,27 @@ const AppRouter: React.FC = () => {
         />
         <AppRoute
           protected
-          path="/contact/:id?"
-          component={ContactContainer}
+          path="/contact/new"
+          component={CreateContactContainer}
           layout={AuthLayout}
-          claim={[Claims.CONTACT_CREATE, Claims.CONTACT_EDIT]}
-          title={getTitle('View Contacts')}
+          claim={[Claims.CONTACT_ADD]}
+          title={getTitle('Create Contact')}
+        />
+        <AppRoute
+          protected
+          path="/contact/:id?/edit"
+          component={ContactEditContainer}
+          layout={AuthLayout}
+          claim={[Claims.CONTACT_EDIT]}
+          title={getTitle('Edit Contact')}
+        />
+        <AppRoute
+          protected
+          path="/contact/:id?"
+          component={ContactViewContainer}
+          layout={AuthLayout}
+          claim={[Claims.CONTACT_VIEW]}
+          title={getTitle('View Contact')}
         />
         <AppRoute
           protected

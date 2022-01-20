@@ -24,7 +24,6 @@ type OptionalAttributes = {
   /** Adds a custom class to the input element of the <Input> component */
   className?: string;
   /** Whether the field is required. Makes the field border blue. */
-
   required?: boolean;
   /** Specifies that the HTML element should be disabled */
   disabled?: boolean;
@@ -129,7 +128,7 @@ export const Input: React.FC<InputProps> = ({
           onChange={pattern ? handleRestrictedChange : handleChange}
         />
       </TooltipWrapper>
-      <DisplayError field={field} />
+      {!displayErrorTooltips && <DisplayError field={field} />}
     </Form.Group>
   );
 };

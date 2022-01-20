@@ -1,11 +1,11 @@
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Pims.Dal.Repositories;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -48,7 +48,7 @@ namespace Pims.Dal.Test.Services
             // Act
             // Assert
             Assert.Throws<NotAuthorizedException>(() =>
-                service.Get(null));
+                service.Get("123"));
         }
         #endregion
     }

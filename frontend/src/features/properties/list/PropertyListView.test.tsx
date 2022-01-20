@@ -27,8 +27,8 @@ const history = createMemoryHistory();
 // we need these lookup codes for the property list view to function
 const setupReduxStore = () => {
   const lookupCodes = [
-    { id: 1, name: 'Victoria', isDisabled: false, type: API.ADMINISTRATIVE_AREA_CODE_SET_NAME },
-    { id: 2, name: 'Kamloops', isDisabled: false, type: API.ADMINISTRATIVE_AREA_CODE_SET_NAME },
+    { id: 1, name: 'Victoria', isDisabled: false, type: API.ADMINISTRATIVE_AREA_TYPES },
+    { id: 2, name: 'Kamloops', isDisabled: false, type: API.ADMINISTRATIVE_AREA_TYPES },
   ] as ILookupCode[];
 
   return { [lookupCodesSlice.name]: { lookupCodes } };

@@ -1,8 +1,10 @@
 import { ILeasePage } from 'features/leases';
+import { apiLeaseToFormLease } from 'features/leases/leaseUtils';
 import { Form, Formik } from 'formik';
-import { defaultFormLease, ILease } from 'interfaces';
-import { noop } from 'lodash';
+import { defaultFormLease, IFormLease, ILease } from 'interfaces';
+import queryString from 'query-string';
 import * as React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as Styled from '../styles';
@@ -10,6 +12,8 @@ import * as Styled from '../styles';
 export interface ILeasePageFormProps {
   leasePage: ILeasePage;
   lease?: ILease;
+  refreshLease: () => void;
+  setLease: (lease: ILease) => void;
 }
 
 /**
@@ -19,23 +23,40 @@ export interface ILeasePageFormProps {
 export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
   leasePage,
   lease,
+  refreshLease,
+  setLease,
+  children,
 }) => {
+  const location = useLocation();
+  const { edit } = queryString.parse(location.search);
   return (
     <StyledLeasePage>
       <StyledLeasePageHeader>
-        <Styled.LeaseH2>{leasePage.title}</Styled.LeaseH2>
+        <Styled.LeaseH2>{leasePage.header ?? leasePage.title}</Styled.LeaseH2>
         {leasePage.description && <p>{leasePage.description}</p>}
       </StyledLeasePageHeader>
-      <Formik
-        initialValues={{
-          ...defaultFormLease,
-          ...lease,
-        }}
-        enableReinitialize={true}
-        onSubmit={noop}
-      >
-        <ViewEditToggleForm id="leaseForm">{leasePage.component}</ViewEditToggleForm>
-      </Formik>
+      {!edit ? (
+        <Formik<IFormLease>
+          initialValues={{ ...defaultFormLease, ...apiLeaseToFormLease(lease) }}
+          enableReinitialize={true}
+          validationSchema={leasePage?.validation}
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              refreshLease();
+            } finally {
+              setSubmitting(false);
+            }
+          }}
+        >
+          {formikProps => (
+            <>
+              <ViewEditToggleForm id="leaseForm">{children}</ViewEditToggleForm>
+            </>
+          )}
+        </Formik>
+      ) : (
+        <>{children}</>
+      )}
     </StyledLeasePage>
   );
 };
@@ -73,7 +94,7 @@ const StyledLeasePageHeader = styled.div`
     height: 1rem;
     text-align: left;
   }
-  z-index: 1;
+  z-index: 10;
 `;
 
 const StyledLeasePage = styled.div`
@@ -81,6 +102,9 @@ const StyledLeasePage = styled.div`
   height: 100%;
   overflow-y: auto;
   grid-area: leasecontent;
+  flex-direction: column;
+  display: flex;
+  text-align: left;
 `;
 
 export default LeasePageForm;

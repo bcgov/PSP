@@ -69,7 +69,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
             service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
@@ -99,7 +99,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
             service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
@@ -129,7 +129,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
             service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
@@ -160,7 +160,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
             service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
@@ -191,7 +191,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
             service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
@@ -222,7 +222,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreateProperty(1) };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var page = new Paged<Entity.PimsProperty>(properties);
             service.Setup(m => m.Property.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
@@ -248,7 +248,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             // Act
             // Assert
@@ -266,7 +266,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
 
             // Act
             // Assert
@@ -284,7 +284,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var filter = new PropertyFilterModel() { };
 
             // Act
@@ -303,7 +303,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             var controller = helper.CreateController<PropertyController>(Permissions.PropertyView);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var headers = helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns("invalid");
             var filter = new PropertyFilterModel() { };

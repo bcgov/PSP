@@ -46,13 +46,27 @@ export interface IGeoSearchParams {
 }
 
 // Lookup Codes
-export const ORGANIZATION_CODE_SET_NAME = 'PimsOrganization';
-export const ROLE_CODE_SET_NAME = 'PimsRole';
-export const PROVINCE_CODE_SET_NAME = 'PimsProvinceState';
-export const ADMINISTRATIVE_AREA_CODE_SET_NAME = 'PimsAdministrativeArea';
-export const PROPERTY_CLASSIFICATION_CODE_SET_NAME = 'PimsPropertyClassification';
-export const PAYMENT_RECEIVABLE_CODE_SET_NAME = 'PimsLeasePaymentReceivableType';
+export const ORGANIZATION_TYPES = 'PimsOrganization';
+export const ROLE_TYPES = 'PimsRole';
+export const PROVINCE_TYPES = 'PimsProvinceState';
+export const COUNTRY_TYPES = 'PimsCountry';
+export const ADMINISTRATIVE_AREA_TYPES = 'PimsAdministrativeArea';
+export const PROPERTY_CLASSIFICATION_TYPES = 'PimsPropertyClassification';
+export const AREA_UNIT_TYPES = 'PimsAreaUnitType';
 export const LEASE_PROGRAM_TYPES = 'PimsLeaseProgramType';
+export const LEASE_PAYMENT_RECEIVABLE_TYPES = 'PimsLeasePayRvblType';
+export const LEASE_PAYMENT_FREQUENCY_TYPES = 'PimsLeasePmtFreqType';
+export const LEASE_STATUS_TYPES = 'PimsLeaseStatusType';
+export const LEASE_TYPES = 'PimsLeaseLicenseType';
+export const LEASE_CATEGORY_TYPES = 'PimsLeaseCategoryType';
+export const LEASE_PURPOSE_TYPES = 'PimsLeasePurposeType';
+export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';
+export const LEASE_RESPONSIBILITY_TYPES = 'PimsLeaseResponsibilityType';
+export const LEASE_TERM_STATUS_TYPES = 'PimsLeaseTermStatusType';
+export const INSURANCE_TYPES = 'PimsInsuranceType';
+export const CONTACT_METHOD_TYPES = 'PimsContactMethodType';
+export const REGION_TYPES = 'PimsRegion';
+export const PROPERTY_IMPROVEMENT_TYPES = 'PimsPropertyImprovementType';
 
 // TODO: This should all be removed from this and moved to the useApi* hooks.
 // Organizations

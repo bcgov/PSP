@@ -5,6 +5,7 @@ import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { ILeaseSearchResult } from 'interfaces';
+import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
@@ -12,7 +13,10 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { generateMultiSortCriteria } from 'utils';
+import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 
+import { useLeaseExport } from '../hooks/useLeaseExport';
 import { ILeaseFilter } from '../interfaces';
 import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
 import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
@@ -39,6 +43,24 @@ export const LeaseListView: React.FunctionComponent = () => {
     setPageSize,
   } = useSearch<ILeaseSearchResult, ILeaseFilter>(defaultFilter, getLeases);
 
+  const { exportLeases } = useLeaseExport();
+
+  /**
+   * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
+   * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
+   */
+  const fetch = (accept: 'csv' | 'excel') => {
+    // Call API with appropriate search parameters
+    const query = toFilteredApiPaginateParams<ILeaseFilter>(
+      currentPage,
+      pageSize,
+      sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
+      filter,
+    );
+
+    exportLeases(query, accept);
+  };
+
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
     (filter: ILeaseFilter) => {
@@ -62,13 +84,13 @@ export const LeaseListView: React.FunctionComponent = () => {
           <LeaseFilter filter={filter} setFilter={changeFilter} />
           <Styled.Spacer />
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-            <Styled.FileIcon disabled>
-              <FaFileExcel data-testid="excel-icon" size={36} />
+            <Styled.FileIcon>
+              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
             </Styled.FileIcon>
           </TooltipWrapper>
           <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
-            <Styled.FileIcon disabled>
-              <FaFileAlt data-testid="csv-icon" size={36} />
+            <Styled.FileIcon>
+              <FaFileAlt data-testid="csv-icon" size={36} onClick={() => fetch('csv')} />
             </Styled.FileIcon>
           </TooltipWrapper>
           <Styled.Spacer />

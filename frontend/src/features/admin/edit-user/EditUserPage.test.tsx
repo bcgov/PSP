@@ -31,10 +31,10 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_CODE_SET_NAME },
-    { name: 'disabledOrganization', id: 2, isDisabled: true, type: API.ORGANIZATION_CODE_SET_NAME },
-    { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_CODE_SET_NAME },
-    { name: 'disabledRole', id: 2, isDisabled: true, type: API.ROLE_CODE_SET_NAME },
+    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_TYPES },
+    { name: 'disabledOrganization', id: 2, isDisabled: true, type: API.ORGANIZATION_TYPES },
+    { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_TYPES },
+    { name: 'disabledRole', id: 2, isDisabled: true, type: API.ROLE_TYPES },
   ] as ILookupCode[],
 };
 
@@ -48,7 +48,7 @@ const selectedUser = {
   surname: 'User',
   position: '',
   rowVersion: 1,
-  businessIdentifierValue: 'admin',
+  businessIdentifier: 'admin',
   lastLogin: '2020-10-14T17:45:39.7381599',
 };
 

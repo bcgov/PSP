@@ -63,7 +63,7 @@ export const UserProfile: React.FC = () => {
       : 'default');
   const configuration = useConfiguration();
   const lookupCodes = useLookupCodeHelpers();
-  const organizationOptions = lookupCodes.getByType(API.ORGANIZATION_CODE_SET_NAME);
+  const organizationOptions = lookupCodes.getByType(API.ORGANIZATION_TYPES);
   const roles = keycloak.roles.join(', ');
 
   return (

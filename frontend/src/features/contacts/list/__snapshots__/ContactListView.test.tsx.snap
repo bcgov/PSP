@@ -8,7 +8,17 @@ exports[`Contact List View matches snapshot 1`] = `
   <div
     class="Toastify"
   />
-  .c17 {
+  .c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,14 +47,52 @@ exports[`Contact List View matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c8 {
+.c7.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+  margin-bottom: 0;
+}
+
+.c7.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  row-gap: 0.4rem;
+  -webkit-column-gap: unset;
+  column-gap: unset;
+}
+
+.c7.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c7.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c7.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c7 .form-label {
+  margin-bottom: unset;
 }
 
 .c15 {
@@ -223,40 +271,6 @@ exports[`Contact List View matches snapshot 1`] = `
   max-width: 20rem;
 }
 
-.c7.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-bottom: 0;
-}
-
-.c7.form-group .radio-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  row-gap: 0.4rem;
-}
-
-.c7.form-group .radio-group .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c7.form-group .radio-group .form-check .form-check-input {
-  margin-left: 0;
-}
-
-.c7.form-group .radio-group .form-check-label {
-  margin-left: 1rem;
-}
-
 <div
     class="c0"
   >
@@ -271,9 +285,8 @@ exports[`Contact List View matches snapshot 1`] = `
       <div
         class="c4"
       >
-        <form
+        <div
           class="c5 c6"
-          novalidate=""
         >
           <div
             class="c7 form-group"
@@ -446,7 +459,7 @@ exports[`Contact List View matches snapshot 1`] = `
             class="Button Button--icon-only c13 btn btn-primary"
             data-testid="search"
             id="search-button"
-            type="submit"
+            type="button"
           >
             <div
               class="Button__icon"
@@ -518,7 +531,7 @@ exports[`Contact List View matches snapshot 1`] = `
           >
             Show Active contacts only
           </p>
-        </form>
+        </div>
         <div
           class="c9"
         />
@@ -549,6 +562,7 @@ exports[`Contact List View matches snapshot 1`] = `
       </div>
       <div
         class="table"
+        data-testid="contactsTable"
         role="table"
       >
         <div
@@ -557,13 +571,13 @@ exports[`Contact List View matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 450px;"
+            style="display: flex; flex: 1 0 auto; min-width: 430px;"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -573,7 +587,7 @@ exports[`Contact List View matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"

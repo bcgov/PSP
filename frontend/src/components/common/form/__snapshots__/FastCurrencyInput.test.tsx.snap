@@ -18,6 +18,7 @@ exports[`FastCurrencyInput fast currency input renders correctly 1`] = `
           value=""
         />
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg

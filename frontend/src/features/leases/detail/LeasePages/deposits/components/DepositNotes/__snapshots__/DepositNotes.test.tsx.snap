@@ -10,7 +10,7 @@ exports[`DepositNotes component renders as expected 1`] = `
   />
   .c0 {
   font-size: 1.6rem;
-  font-weight: 700;
+  font-family: 'BCSans-Bold';
 }
 
 <label

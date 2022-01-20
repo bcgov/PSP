@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Contact.Controllers
     public class SearchController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -38,7 +38,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public SearchController(IPimsService pimsService, IMapper mapper)
+        public SearchController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;
@@ -54,7 +54,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         [HttpGet]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<ContactModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ContactSummaryModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "contact" })]
         public IActionResult GetContacts()
@@ -72,7 +72,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<ContactModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ContactSummaryModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "contact" })]
         public IActionResult GetContacts([FromBody] ContactFilterModel filter)
@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Contact.Controllers
             if (!filter.IsValid()) throw new BadRequestException("Contact filter must contain valid values.");
 
             Paged<Dal.Entities.PimsContactMgrVw> contacts = _pimsService.Contact.GetPage((ContactFilter)filter);
-            return new JsonResult(_mapper.Map<Api.Models.PageModel<ContactModel>>(contacts));
+            return new JsonResult(_mapper.Map<Api.Models.PageModel<ContactSummaryModel>>(contacts));
         }
         #endregion
         #endregion

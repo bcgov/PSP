@@ -11,7 +11,7 @@ export enum ModalSize {
   SMALL = 'modal-s',
 }
 
-interface ModalProps {
+export interface ModalProps {
   /** Optional function to control behaviour of cancel button. Default is to close the modal. */
   handleCancel?: Function;
   /** Optional function to control behaviour of ok button. Default is to reload the app. */

@@ -49,7 +49,7 @@ exports[`Tenant component renders as expected 1`] = `
 }
 
 .c4 {
-  font-size: 2rem;
+  font-family: 'BcSans-Bold' font-size:2rem;
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
@@ -67,14 +67,15 @@ exports[`Tenant component renders as expected 1`] = `
   margin: 0 0.5rem 0 0;
 }
 
-.c3 > .input {
+.c3 > .input,
+.c3 > .notes {
   grid-column: controls;
   grid-row: auto;
   border-left: 1px solid #666666;
 }
 
-.c3 .form-control:not(.description) {
-  font-weight: 700;
+.c3 .form-control:not(.description,.notes) {
+  font-family: 'BCSans-Bold';
 }
 
 .c3 > label,
@@ -83,8 +84,9 @@ exports[`Tenant component renders as expected 1`] = `
   grid-row: auto;
 }
 
-.c3 > .textarea,
-.c3 > h3 {
+.c3 > .textarea :not(.notes),
+.c3 > h3,
+.c3 > h5 {
   grid-column: span 2;
   border-left: none;
 }

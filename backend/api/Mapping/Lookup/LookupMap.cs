@@ -9,15 +9,18 @@ namespace Pims.Api.Mapping.Lookup
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsProvinceState, Model.LookupModel>()
-                 .Map(dest => dest.Id, src => src.CountryId)
-                 .Map(dest => dest.Name, src => src.Code)
+                 .Map(dest => dest.Id, src => src.Id)
+                 .Map(dest => dest.ParentId, src => src.CountryId)
+                 .Map(dest => dest.Code, src => src.Code)
+                 .Map(dest => dest.Name, src => src.Description)
                  .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                  .Map(dest => dest.Type, src => src.GetType().Name);
 
             config.NewConfig<Entity.PimsCountry, Model.LookupModel>()
                  .Map(dest => dest.Id, src => src.CountryId)
-                 .Map(dest => dest.Name, src => src.Code)
+                 .Map(dest => dest.Code, src => src.Code)
+                 .Map(dest => dest.Name, src => src.Description)
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                  .Map(dest => dest.Type, src => src.GetType().Name);
 
@@ -39,6 +42,13 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Code, src => src.OrganizationIdentifier)
                 .Map(dest => dest.Name, src => src.OrganizationName)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.Type, src => src.GetType().Name);
+
+            config.NewConfig<Entity.PimsRegion, Model.LookupModel>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Code, src => src.RegionCode)
+                .Map(dest => dest.Name, src => src.RegionName)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Type, src => src.GetType().Name);
         }

@@ -1,0 +1,296 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PropertyInformationSubForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c0 {
+  font-family: 'BcSans-Bold' font-size:2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: solid 0.3rem;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <h3
+        class="c0"
+      >
+        Property Information
+      </h3>
+    </div>
+  </div>
+  .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c5 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 3rem;
+}
+
+.c0 div {
+  -webkit-align-items: baseline !important;
+  -webkit-box-align: baseline !important;
+  -ms-flex-align: baseline !important;
+  align-items: baseline !important;
+}
+
+.c0 .form-label {
+  min-width: 0 !important;
+}
+
+.c7 {
+  padding: 0;
+}
+
+.c7:hover {
+  color: red;
+}
+
+.c2 input.form-control {
+  min-width: 12rem;
+  max-width: 12rem;
+}
+
+.c6 select.form-control {
+  min-width: 12rem;
+  max-width: 12rem;
+}
+
+.c4 {
+  gap: 1rem;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="c0 col"
+    >
+      <div
+        class="c1 c2 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-properties.0.pid"
+        >
+          PID: 
+        </label>
+        <input
+          class="form-control"
+          id="input-properties.0.pid"
+          name="properties.0.pid"
+          type="number"
+          value=""
+        />
+      </div>
+      <div
+        class="c1 c2 input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-properties.0.pin"
+        >
+          PIN: 
+        </label>
+        <input
+          class="form-control"
+          id="input-properties.0.pin"
+          name="properties.0.pin"
+          type="number"
+          value=""
+        />
+      </div>
+      <div
+        class="c3 c4"
+      >
+        <div
+          class="c1 c2 input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-properties.0.landArea"
+          >
+            Area: 
+          </label>
+          <input
+            class="form-control"
+            disabled=""
+            id="input-properties.0.landArea"
+            name="properties.0.landArea"
+            value=""
+          />
+        </div>
+        <div
+          class="c5 c6 form-group"
+        >
+          <select
+            class="form-select form-control"
+            disabled=""
+            id="input-properties.0.areaUnitId"
+            name="properties.0.areaUnitId"
+          >
+            <option
+              value=""
+            >
+               
+            </option>
+            <option
+              class="option"
+              value="HA"
+            >
+              Hectare
+            </option>
+            <option
+              class="option"
+              value="M2"
+            >
+              Meters sq
+            </option>
+          </select>
+        </div>
+        <button
+          class="c7 btn btn-link"
+          type="button"
+        >
+          <svg
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+  <button
+    class="btn btn-link"
+    type="button"
+  >
+    + Add another property
+  </button>
+  .c0 textarea.form-control {
+  min-width: 80rem;
+  height: 18rem;
+  width: 80rem;
+  resize: none;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 textarea input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-description"
+        >
+          Description 
+        </label>
+        <textarea
+          class="form-control"
+          id="input-description"
+          name="description"
+        />
+      </div>
+    </div>
+  </div>
+  .c0 textarea.form-control {
+  min-width: 80rem;
+  height: 18rem;
+  width: 80rem;
+  resize: none;
+}
+
+<div
+    class="row"
+  >
+    <div
+      class="col"
+    >
+      <div
+        class="c0 textarea input form-group"
+      >
+        <label
+          class="form-label"
+          for="input-note"
+        >
+          Notes 
+        </label>
+        <textarea
+          class="form-control"
+          id="input-note"
+          name="note"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

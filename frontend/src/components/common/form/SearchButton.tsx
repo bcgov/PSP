@@ -13,7 +13,7 @@ export const SearchButton: React.FC<ButtonProps> = ({ ...props }) => {
     <TooltipWrapper toolTipId="map-filter-search-tooltip" toolTip="Search">
       <Button
         id="search-button"
-        type="submit"
+        type={props.type ?? 'submit'}
         data-testid="search"
         className={props.className ?? 'primary'}
         {...props}

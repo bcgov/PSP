@@ -49,7 +49,7 @@ describe('DetailAdministration component', () => {
         areaUnit: 'Hectares',
         programName: 'A program',
         lFileNo: '222',
-        tfaFileNo: '333',
+        tfaFileNo: 333,
         psFileNo: '444',
         motiName: 'test moti name',
         note: 'a test note',

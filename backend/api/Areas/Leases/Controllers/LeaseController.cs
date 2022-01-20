@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class LeaseController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,7 +32,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeaseController(IPimsService pimsService, IMapper mapper)
+        public LeaseController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;
@@ -44,7 +44,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Get the lease for the specified primary key 'id'.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
@@ -52,6 +52,41 @@ namespace Pims.Api.Areas.Lease.Controllers
         public IActionResult GetLease(int id)
         {
             var lease = _pimsService.Lease.Get(id);
+
+            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+        }
+
+        /// <summary>
+        /// Add the specified lease. Allows the user to override the normal restriction on adding properties already associated to a lease.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
+        [HasPermission(Permissions.LeaseAdd)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult AddLease(Models.Lease.LeaseModel leaseModel, bool userOverride = false)
+        {
+            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            var lease = _pimsService.Lease.Add(leaseEntity, userOverride);
+
+            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+        }
+
+        /// <summary>
+        /// Update the specified lease, and attached properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.LeaseEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        public IActionResult UpdateLease(Models.Lease.LeaseModel leaseModel, bool userOverride = false)
+        {
+            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            _pimsService.Lease.Update(leaseEntity, false);
+            var lease = _pimsService.Lease.UpdatePropertyLeases(leaseModel.Id, leaseModel.RowVersion, leaseEntity.PimsPropertyLeases, userOverride);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
         }
