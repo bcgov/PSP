@@ -43,7 +43,6 @@ namespace Pims.Core.Test
             lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new Entity.PimsLeaseLicenseType() { Id = "testType" };
             if(addTenant)
             {
-            {
                 lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
             }
             return lease;
