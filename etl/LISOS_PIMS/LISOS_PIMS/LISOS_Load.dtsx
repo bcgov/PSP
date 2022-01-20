@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="381"
-  DTS:VersionGUID="{6CA8E2B9-08FC-466B-A2B6-FCAF25F12657}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="382"
+  DTS:VersionGUID="{3A66441A-AD25-4FB7-B36C-C1E25DCC6764}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -28,8 +29,7 @@
           DTS:ConnectionString="Data Source=127.0.0.1,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAKsoY0GNXYkedX4Mhlo6mLwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADdmp1fsqW9GBS+BKnkoxbQBTXEff5BaX+GjayYtb/C3AAAAAAOgAAAAAIAACAAAAAHPtDxAbwzZRnJwcl6hB01b5r4iwUqUsVahuBx5Vz8RVAAAABAzH0fW7fjKMjz0gPVvBFhMZ8ybQCZ/O6aGKzgM0obrsP+M39opzv11MIggAcjov/yJGlLiNSP3QiKNiXI0Hm55qBlKnzAKejxqBZBDEFVOUAAAABmbZQdo7on4p3IdTCuVA8WKygprlU+7ZzSLbCVUBuncFgo7XDu1CDcoi0spSpdB0t/rF14SqaVOY55mxcF5cby</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
