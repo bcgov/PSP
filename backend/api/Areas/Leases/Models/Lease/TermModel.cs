@@ -26,6 +26,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public long LeaseRowVersion { get; set; }
 
         /// <summary>
+        /// get/set - The stored calculated gst amount based on the total payment and the system gst constant.
+        /// </summary>
+        public decimal? GstAmount { get; set; }
+
+        /// <summary>
         /// get/set - The expected payment amount of the term, less GST.
         /// </summary>
         public decimal? PaymentAmount { get; set; }

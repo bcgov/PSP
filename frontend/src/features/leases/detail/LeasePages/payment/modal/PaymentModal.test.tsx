@@ -75,6 +75,7 @@ describe('PaymentModal component', () => {
       effectiveDateHist: '',
       endDateHist: '',
       expiryDate: '2020-01-01',
+      gstAmount: '',
       isGstEligible: false,
       isTermExercised: false,
       leaseId: undefined,

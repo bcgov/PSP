@@ -6,6 +6,13 @@ export const StyledFormBody = styled.div`
   width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
+  .check-field {
+    label {
+      width: 100%;
+    }
+    display: flex;
+    flex-wrap: wrap;
+  }
   .form-group {
     display: flex;
     flex-direction: column;

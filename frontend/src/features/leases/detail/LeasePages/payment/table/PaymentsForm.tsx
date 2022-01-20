@@ -8,7 +8,6 @@ import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import { orderBy } from 'lodash';
 import * as React from 'react';
 import { Prompt } from 'react-router-dom';
-import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 import { prettyFormatDate } from 'utils';
 
 import * as Styled from '../../../styles';
@@ -27,9 +26,7 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   setDisplayModal,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
-  const { getSystemConstant } = useSystemConstants();
-  const gstConstant = getSystemConstant(SystemConstants.GST);
-  const columns = getColumns({ onEdit, onDelete: onDelete, gstConstant });
+  const columns = getColumns({ onEdit, onDelete: onDelete });
   const { hasClaim } = useKeycloakWrapper();
 
   //Get the most recent payment for display, if one exists.

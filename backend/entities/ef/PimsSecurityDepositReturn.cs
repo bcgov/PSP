@@ -28,6 +28,8 @@ namespace Pims.Dal.Entities
         [Column("SECURITY_DEPOSIT_TYPE_CODE")]
         [StringLength(20)]
         public string SecurityDepositTypeCode { get; set; }
+        [Column("SECURITY_DEPOSIT_ID")]
+        public long? SecurityDepositId { get; set; }
         [Column("TERMINATION_DATE", TypeName = "datetime")]
         public DateTime TerminationDate { get; set; }
         [Column("CLAIMS_AGAINST", TypeName = "money")]
@@ -81,8 +83,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("SECURITY_DEPOSIT_ID")]
-        public long? SecurityDepositId { get; set; }
 
         [ForeignKey(nameof(LeaseId))]
         [InverseProperty(nameof(PimsLease.PimsSecurityDepositReturns))]

@@ -35,6 +35,20 @@ exports[`PaymentForm component renders as expected 1`] = `
   grid-template-columns: [controls] 1fr;
 }
 
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
+}
+
 .c0 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -275,12 +289,38 @@ exports[`PaymentForm component renders as expected 1`] = `
           class="form-check"
         >
           <input
-            class="form-check-input position-static"
+            class="form-check-input"
             id="input-isGstEligible"
             name="isGstEligible"
-            type="checkbox"
+            type="radio"
             value="false"
           />
+          <label
+            class="form-check-label"
+            for="input-isGstEligible"
+            title=""
+          >
+            Y
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            checked=""
+            class="form-check-input"
+            id="input-isGstEligible-2"
+            name="isGstEligible"
+            type="radio"
+            value="false"
+          />
+          <label
+            class="form-check-label"
+            for="input-isGstEligible-2"
+            title=""
+          >
+            N
+          </label>
         </div>
       </div>
     </div>
@@ -351,6 +391,20 @@ exports[`PaymentForm component renders with data as expected 1`] = `
   grid-template-columns: [controls] 1fr;
 }
 
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
+}
+
 .c0 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -591,12 +645,38 @@ exports[`PaymentForm component renders with data as expected 1`] = `
           class="form-check"
         >
           <input
-            class="form-check-input position-static"
+            class="form-check-input"
             id="input-isGstEligible"
             name="isGstEligible"
-            type="checkbox"
+            type="radio"
             value="false"
           />
+          <label
+            class="form-check-label"
+            for="input-isGstEligible"
+            title=""
+          >
+            Y
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            checked=""
+            class="form-check-input"
+            id="input-isGstEligible-2"
+            name="isGstEligible"
+            type="radio"
+            value="false"
+          />
+          <label
+            class="form-check-label"
+            for="input-isGstEligible-2"
+            title=""
+          >
+            N
+          </label>
         </div>
       </div>
     </div>

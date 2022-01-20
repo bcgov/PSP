@@ -13,6 +13,7 @@ export interface ILeaseTerm {
   endDateHist?: string;
   leasePmtFreqTypeCode?: ITypeCode<string>;
   paymentAmount?: number;
+  gstAmount?: number;
   paymentDueDate?: string;
   paymentNote?: string;
   isGstEligible?: boolean;
@@ -30,6 +31,7 @@ export interface IFormLeaseTerm
       renewalDate: string;
       endDateHist: string;
       paymentAmount: NumberFieldValue;
+      gstAmount: NumberFieldValue;
       paymentDueDate: string;
       paymentNote: string;
       isGstEligible: boolean;
@@ -44,6 +46,7 @@ export const defaultFormLeaseTerm: IFormLeaseTerm = {
   renewalDate: '',
   endDateHist: '',
   paymentAmount: '',
+  gstAmount: '',
   paymentDueDate: '',
   paymentNote: '',
   isGstEligible: false,
@@ -54,12 +57,21 @@ export const defaultFormLeaseTerm: IFormLeaseTerm = {
   payments: [],
 };
 
-export const formLeaseTermToApiLeaseTerm = (formLeaseTerm: IFormLeaseTerm): ILeaseTerm => {
+export const formLeaseTermToApiLeaseTerm = (
+  formLeaseTerm: IFormLeaseTerm,
+  gstConstant?: number,
+): ILeaseTerm => {
+  console.log(formLeaseTerm.isGstEligible, gstConstant !== undefined);
   return {
     ...formLeaseTerm,
     renewalDate: undefined,
     expiryDate: stringToNull(formLeaseTerm.expiryDate),
     paymentAmount: stringToNull(formLeaseTerm.paymentAmount),
+    gstAmount: stringToNull(
+      formLeaseTerm.isGstEligible && gstConstant !== undefined
+        ? (formLeaseTerm.paymentAmount as number) * (gstConstant / 100)
+        : undefined,
+    ),
     leasePmtFreqTypeCode: formLeaseTerm.leasePmtFreqTypeCode?.id
       ? formLeaseTerm.leasePmtFreqTypeCode
       : undefined,

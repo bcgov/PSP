@@ -6,7 +6,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Repositories;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -44,7 +43,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var service = helper.CreateService<ContactService>(user);
+            var service = helper.CreateRepository<ContactService>(user);
 
             // Act
             // Assert

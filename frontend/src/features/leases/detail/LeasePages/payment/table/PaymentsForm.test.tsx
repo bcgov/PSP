@@ -71,6 +71,7 @@ describe('PaymentsForm component', () => {
             ...defaultTestFormLeaseTerm,
             leasePmtFreqTypeCode: { id: frequency, description: frequency },
             isGstEligible: true,
+            gstAmount: 50,
           },
         ],
       },

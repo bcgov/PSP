@@ -3,6 +3,7 @@ import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { formLeaseTermToApiLeaseTerm, IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import * as React from 'react';
 import { useContext, useState } from 'react';
+import { SystemConstants, useSystemConstants } from 'store/slices/systemConstants';
 
 import { useLeaseTerms } from './hooks/useTerms';
 import PaymentModal from './modal/PaymentModal';
@@ -28,6 +29,9 @@ export const PaymentsContainer: React.FunctionComponent<IPaymentsContainerProps>
   const [deleteModalWarning, setDeleteModalWarning] = useState<string | undefined>(undefined);
   const [editModalValues, setEditModalValues] = useState<IFormLeaseTerm | undefined>(undefined);
   const { updateLeaseTerm, removeLeaseTerm } = useLeaseTerms();
+  const { getSystemConstant } = useSystemConstants();
+  const gstConstant = getSystemConstant(SystemConstants.GST);
+  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
   /**
    * If a lease is deleted, trigger the confirmation modal.
@@ -45,7 +49,7 @@ export const PaymentsContainer: React.FunctionComponent<IPaymentsContainerProps>
    */
   const onDeleteTermConfirmed = async (leaseTerm: IFormLeaseTerm) => {
     const updatedLease = await removeLeaseTerm({
-      ...formLeaseTermToApiLeaseTerm(leaseTerm),
+      ...formLeaseTermToApiLeaseTerm(leaseTerm, gstDecimal),
       leaseId: lease?.id,
       leaseRowVersion: lease?.rowVersion,
     });
@@ -78,7 +82,7 @@ export const PaymentsContainer: React.FunctionComponent<IPaymentsContainerProps>
    * @param values
    */
   const onSaveTerm = async (values: IFormLeaseTerm) => {
-    const updatedLease = await updateLeaseTerm(formLeaseTermToApiLeaseTerm(values));
+    const updatedLease = await updateLeaseTerm(formLeaseTermToApiLeaseTerm(values, gstDecimal));
     if (!!updatedLease?.id) {
       setLease(updatedLease);
       setEditModalValues(undefined);

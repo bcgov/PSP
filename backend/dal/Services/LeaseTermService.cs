@@ -12,13 +12,15 @@ namespace Pims.Dal.Services
 {
     public class LeaseTermService : ILeaseTermService
     {
-        readonly IPimsRepository _pimsRepository;
-        readonly IPimsService _pimsService;
+        readonly Repositories.ILeaseTermRepository _leaseTermRepository;
+        readonly Repositories.ILeaseService _leaseRepository;
+        readonly ILeaseService _leaseService;
         readonly ClaimsPrincipal _user;
-        public LeaseTermService(IPimsRepository pimsRepository, IPimsService pimsService, ClaimsPrincipal user)
+        public LeaseTermService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeaseService leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
-            _pimsRepository = pimsRepository;
-            _pimsService = pimsService;
+            _leaseTermRepository = leaseTermRepository;
+            _leaseRepository = leaseRepository;
+            _leaseService = leaseService;
             _user = user;
         }
 
@@ -27,10 +29,10 @@ namespace Pims.Dal.Services
             ValidateTermServiceCall(leaseId, leaseRowVersion);
             ValidateDeletionRules(term);
 
-            _pimsRepository.LeaseTerm.Delete(term.Id);
-            _pimsRepository.LeaseTerm.CommitTransaction();
+            _leaseTermRepository.Delete(term.Id);
+            _leaseTermRepository.CommitTransaction();
 
-            return _pimsRepository.Lease.Get(leaseId);
+            return _leaseRepository.Get(leaseId);
         }
 
         public PimsLease UpdateTerm(long leaseId, long termId, long leaseRowVersion, PimsLeaseTerm term)
@@ -38,10 +40,10 @@ namespace Pims.Dal.Services
             ValidateTermServiceCall(leaseId, leaseRowVersion);
             ValidateUpdateRules(term, termId);
 
-            _pimsRepository.LeaseTerm.Update(term);
-            _pimsRepository.LeaseTerm.CommitTransaction();
+            _leaseTermRepository.Update(term);
+            _leaseTermRepository.CommitTransaction();
 
-            return _pimsRepository.Lease.Get(leaseId);
+            return _leaseRepository.Get(leaseId);
         }
 
         public PimsLease AddTerm(long leaseId, long leaseRowVersion, PimsLeaseTerm term)
@@ -49,10 +51,10 @@ namespace Pims.Dal.Services
             ValidateTermServiceCall(leaseId, leaseRowVersion);
             ValidateAddRules(term);
 
-            _pimsRepository.LeaseTerm.Add(term);
-            _pimsRepository.LeaseTerm.CommitTransaction();
+            _leaseTermRepository.Add(term);
+            _leaseTermRepository.CommitTransaction();
 
-            return _pimsRepository.Lease.Get(leaseId);
+            return _leaseRepository.Get(leaseId);
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace Pims.Dal.Services
         private void ValidateTermServiceCall(long leaseId, long leaseRowVersion)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            if(!_pimsService.LeaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
+            if(!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this lease, please refresh the application and retry.");
             }
@@ -71,7 +73,7 @@ namespace Pims.Dal.Services
 
         private void ValidateDeletionRules(PimsLeaseTerm term)
         {
-            PimsLeaseTerm leaseTermToDelete = _pimsRepository.LeaseTerm.GetById(term.Id, true);
+            PimsLeaseTerm leaseTermToDelete = _leaseTermRepository.GetById(term.Id, true);
             if (leaseTermToDelete.PimsLeasePayments.Count > 0)
             {
                 throw new InvalidOperationException("A term with payments attached can not be deleted. If you intend to delete this term, you must delete each of the corresponding payments first.");
@@ -80,7 +82,7 @@ namespace Pims.Dal.Services
             {
                 throw new InvalidOperationException("Exercised terms cannot be deleted. Remove all payments from this term and set this term to 'Not Exercised' to delete this term.");
             }
-            IEnumerable<PimsLeaseTerm> termsForLease = _pimsRepository.LeaseTerm.GetByLeaseId(term.LeaseId).OrderBy(t => t.TermStartDate);
+            IEnumerable<PimsLeaseTerm> termsForLease = _leaseTermRepository.GetByLeaseId(term.LeaseId).OrderBy(t => t.TermStartDate);
             if (term.Id == termsForLease.FirstOrDefault()?.Id && termsForLease.Count() > 1)
             {
                 throw new InvalidOperationException("You must delete all renewals before deleting the initial term.");
@@ -96,10 +98,10 @@ namespace Pims.Dal.Services
         {
             ValidateOverlappingTerm(term);
 
-            PimsLeaseTerm leaseTermToUpdate = _pimsRepository.LeaseTerm.GetById(termId, true);
+            PimsLeaseTerm leaseTermToUpdate = _leaseTermRepository.GetById(termId, true);
             if (leaseTermToUpdate.PimsLeasePayments.Count > 0 && term.LeaseTermStatusTypeCode != LeaseTermStatusTypes.EXER)
             {
-                throw new InvalidOperationException("Term must be 'exercised' if payments have been made");
+                throw new InvalidOperationException("Term must be 'exercised' if payments have been made.");
             }
         }
 
@@ -113,7 +115,7 @@ namespace Pims.Dal.Services
 
             if (term.PimsLeasePayments.Count > 0 && term.LeaseTermStatusTypeCode != LeaseTermStatusTypes.EXER)
             {
-                throw new InvalidOperationException("Term must be 'exercised' if payments have been made");
+                throw new InvalidOperationException("Term must be 'exercised' if payments have been made.");
             }
         }
 
@@ -132,7 +134,7 @@ namespace Pims.Dal.Services
         /// <returns></returns>
         private bool IsTermOverlapping(PimsLeaseTerm term)
         {
-            IEnumerable<PimsLeaseTerm> terms = _pimsRepository.LeaseTerm.GetByLeaseId(term.LeaseId);
+            IEnumerable<PimsLeaseTerm> terms = _leaseTermRepository.GetByLeaseId(term.LeaseId);
 
             return terms.Any(t => t.Id != term.Id && (t.TermExpiryDate > term.TermStartDate && t.TermStartDate < term.TermStartDate
                 || (t.TermExpiryDate == null && t.TermStartDate <= term.TermStartDate )

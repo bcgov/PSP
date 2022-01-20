@@ -27,21 +27,16 @@ function startAndEndDate({ row: { original, index } }: CellProps<ILeaseTerm, str
   return `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`;
 }
 
-const renderGst = (gstDecimal?: number) =>
+const renderExpectedTotal = () =>
   function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    gstDecimal = original.isGstEligible ? gstDecimal : undefined;
-    return gstDecimal !== undefined && original.paymentAmount !== undefined
-      ? formatMoney(calculateExpectedGst(original.paymentAmount, gstDecimal))
+    return original.paymentAmount !== undefined
+      ? formatMoney(original.paymentAmount + (original?.gstAmount ?? 0))
       : '-';
   };
 
-const renderExpectedTotal = (gstDecimal?: number) =>
-  function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    gstDecimal = original.isGstEligible ? gstDecimal : 0;
-    return gstDecimal !== undefined && original.paymentAmount !== undefined
-      ? formatMoney(calculateExpectedTotal(original.paymentAmount, gstDecimal))
-      : '-';
-  };
+function renderGstAmount({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
+  return original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-';
+}
 
 function renderActualTotal({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
   const total = formatMoney(
@@ -50,9 +45,8 @@ function renderActualTotal({ row: { original, index } }: CellProps<ILeaseTerm, s
   return original.isTermExercised ? total : '-';
 }
 
-const renderExpectedTerm = (gstDecimal?: number) =>
+const renderExpectedTerm = () =>
   function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    gstDecimal = original.isGstEligible ? gstDecimal : undefined;
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
       return '-';
     }
@@ -61,18 +55,10 @@ const renderExpectedTerm = (gstDecimal?: number) =>
       original.startDate,
       original.expiryDate,
       original.paymentAmount,
-      gstDecimal ?? 0,
+      original.gstAmount ?? 0,
     );
     return expectedTerm !== undefined ? formatMoney(expectedTerm) : '-';
   };
-
-function calculateExpectedGst(amount: number, gst: number) {
-  return amount * (gst / 100);
-}
-
-function calculateExpectedTotal(amount: number, gst: number) {
-  return amount + calculateExpectedGst(amount, gst);
-}
 
 function getNumberOfIntervals(frequency: string, startDate: string, endDate: string) {
   const duration = moment.duration(moment(endDate).diff(moment(startDate)));
@@ -106,10 +92,10 @@ function calculateExpectedTermAmount(
   startDate: string,
   endDate: string,
   expectedAmount: number,
-  gstDecimal: number,
+  gstAmount: number,
 ) {
   const numberOfIntervals = getNumberOfIntervals(frequency, startDate, endDate);
-  const expectedPayment = calculateExpectedTotal(expectedAmount, gstDecimal);
+  const expectedPayment = expectedAmount + gstAmount;
   return !!numberOfIntervals ? numberOfIntervals * expectedPayment : undefined;
 }
 
@@ -146,9 +132,7 @@ export interface IPaymentColumnProps {
 export const getColumns = ({
   onEdit,
   onDelete,
-  gstConstant,
 }: IPaymentColumnProps): ColumnWithProps<IFormLeaseTerm>[] => {
-  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
   return [
     {
       Header: '',
@@ -207,10 +191,10 @@ export const getColumns = ({
           />
         </>
       ),
-      id: 'gstAmount',
+      accessor: 'gstAmount',
       align: 'right',
       maxWidth: 29,
-      Cell: renderGst(gstDecimal),
+      Cell: renderGstAmount,
     },
     {
       Header: () => (
@@ -225,7 +209,7 @@ export const getColumns = ({
       id: 'expectedTotal',
       align: 'right',
       maxWidth: 55,
-      Cell: renderExpectedTotal(gstDecimal),
+      Cell: renderExpectedTotal(),
     },
     {
       Header: () => (
@@ -240,7 +224,7 @@ export const getColumns = ({
       id: 'expectedTerm',
       align: 'right',
       maxWidth: 55,
-      Cell: renderExpectedTerm(gstDecimal),
+      Cell: renderExpectedTerm(),
     },
     {
       Header: () => (

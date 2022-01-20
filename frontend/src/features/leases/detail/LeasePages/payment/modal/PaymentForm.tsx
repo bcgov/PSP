@@ -75,7 +75,13 @@ export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
             field="paymentDueDate"
             tooltip={`Arrangement for payments, such as "1st of each month" or "1st & 15th" etc`}
           />
-          <Check label="Subject to GST?" field="isGstEligible" />
+          <Check
+            label="Subject to GST?"
+            field="isGstEligible"
+            radioLabelOne="Y"
+            radioLabelTwo="N"
+            type="radio"
+          />
           <Select label="Term Status" field="statusTypeCode.id" options={leaseTermStatusOptions} />
         </StyledFormBody>
       )}

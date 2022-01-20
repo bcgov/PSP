@@ -33,6 +33,20 @@ exports[`PaymentsForm component renders as expected 1`] = `
   grid-template-columns: [controls] 1fr;
 }
 
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
+}
+
 .c0 .form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -416,6 +430,20 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
   margin-left: 1rem;
   font-size: 1.4rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
 }
 
 .c0 .form-group {
