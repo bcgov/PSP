@@ -1,10 +1,12 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
+import { stringToNull } from 'utils/formUtils';
 
 import { ILeasePayment } from './ILeasePayment';
 import ITypeCode, { defaultTypeCode } from './ITypeCode';
 export interface ILeaseTerm {
   id?: number;
   leaseId?: number;
+  leaseRowVersion?: number;
   statusTypeCode?: ITypeCode<string>;
   expiryDate?: string;
   renewalDate?: string;
@@ -50,4 +52,16 @@ export const defaultFormLeaseTerm: IFormLeaseTerm = {
   statusTypeCode: defaultTypeCode,
   leasePmtFreqTypeCode: defaultTypeCode,
   payments: [],
+};
+
+export const formLeaseTermToApiLeaseTerm = (formLeaseTerm: IFormLeaseTerm): ILeaseTerm => {
+  return {
+    ...formLeaseTerm,
+    renewalDate: undefined,
+    expiryDate: stringToNull(formLeaseTerm.expiryDate),
+    paymentAmount: stringToNull(formLeaseTerm.paymentAmount),
+    leasePmtFreqTypeCode: formLeaseTerm.leasePmtFreqTypeCode?.id
+      ? formLeaseTerm.leasePmtFreqTypeCode
+      : undefined,
+  };
 };

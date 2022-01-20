@@ -53,9 +53,16 @@ namespace Pims.Dal.Repositories
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
             var query = this.Context.GenerateLeaseQuery(filter);
+
             var leases = query.ToArray();
 
             return leases;
+        }
+
+        public long GetRowVersion(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+            return this.Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         public PimsLease Get(long id)
@@ -130,6 +137,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
+            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(i => i.TermStartDate).ToArray();
             return lease;
         }
 
@@ -181,7 +189,7 @@ namespace Pims.Dal.Repositories
                 if (property?.PimsPropertyLeases.Any(p => p.LeaseId != lease.Id) == true && !userOverride && newLeaseProperties)
                 {
                     var genericOverrideErrorMsg = $"is attached to L-File # {property.PimsPropertyLeases.FirstOrDefault().Lease.LFileNo}";
-                    if (propertyLease?.Property?.Pin != null)
+                    if(propertyLease?.Property?.Pin != null)
                     {
                         throw new UserOverrideException($"PIN {propertyLease?.Property?.Pin.ToString() ?? ""} {genericOverrideErrorMsg}");
                     }
@@ -190,7 +198,7 @@ namespace Pims.Dal.Repositories
                 propertyLease.PropertyId = property.PropertyId;
                 propertyLease.Property = null; //Do not attempt to update the associated property, just refer to it by id.
             });
-            if (lease.LeaseId == 0)
+            if(lease.LeaseId == 0)
             {
                 return this.Context.GenerateLFileNo(lease);
             }
@@ -227,7 +235,7 @@ namespace Pims.Dal.Repositories
             var existingLease = this.Context.PimsLeases.Where(l => l.LeaseId == lease.LeaseId).FirstOrDefault()
                  ?? throw new KeyNotFoundException();
             Context.Entry(existingLease).CurrentValues.SetValues(lease);
-            if (commitTransaction)
+            if(commitTransaction)
             {
                 this.Context.CommitTransaction();
             }
@@ -245,7 +253,7 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseTenants).Where(l => l.LeaseId == leaseId).AsNoTracking().FirstOrDefault()
                  ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            if(existingLease.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
 
             this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
             this.Context.CommitTransaction();
@@ -296,4 +304,3 @@ namespace Pims.Dal.Repositories
         #endregion
     }
 }
-

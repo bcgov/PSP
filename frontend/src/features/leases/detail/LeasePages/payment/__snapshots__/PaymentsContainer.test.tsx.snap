@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PaymentsForm component renders as expected 1`] = `
+exports[`PaymentsContainer component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -16,12 +16,6 @@ exports[`PaymentsForm component renders as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.c1 {
-  font-size: 2rem;
-  text-align: left;
-  font-family: BcSans-Bold;
 }
 
 .c0 {
@@ -99,6 +93,12 @@ exports[`PaymentsForm component renders as expected 1`] = `
 
 .c3 .btn {
   margin: 1rem 0;
+}
+
+.c1 {
+  font-size: 2rem;
+  text-align: left;
+  font-family: BcSans-Bold;
 }
 
 <div
@@ -382,10 +382,19 @@ exports[`PaymentsForm component renders as expected 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="container"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="container"
+  />
 </DocumentFragment>
 `;
 
-exports[`PaymentsForm component renders with data as expected 1`] = `
+exports[`PaymentsContainer component renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -401,12 +410,6 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.c1 {
-  font-size: 2rem;
-  text-align: left;
-  font-family: BcSans-Bold;
 }
 
 .c0 {
@@ -484,6 +487,12 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
 
 .c3 .btn {
   margin: 1rem 0;
+}
+
+.c1 {
+  font-size: 2rem;
+  text-align: left;
+  font-family: BcSans-Bold;
 }
 
 .c5 .btn.btn-primary {
@@ -931,5 +940,14 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="container"
+  />
+  <div
+    class="container"
+  />
+  <div
+    class="container"
+  />
 </DocumentFragment>
 `;

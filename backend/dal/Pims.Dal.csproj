@@ -42,7 +42,4 @@
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />
     <ProjectReference Include="..\core\Pims.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
 </Project>

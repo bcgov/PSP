@@ -1,7 +1,9 @@
+import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
 import styled from 'styled-components';
 
 export const StyledFormBody = styled.div`
+  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
   .form-group {
@@ -11,7 +13,6 @@ export const StyledFormBody = styled.div`
       width: 70%;
     }
   }
-  row-gap: 0.5rem;
   grid-template-columns: [controls] 1fr;
   & > .form-label {
     grid-column: controls;
@@ -50,5 +51,13 @@ export const StyledTable = styled(Table)`
         }
       }
     }
+  }
+`;
+
+export const FullWidthInlineFlexDiv = styled(InlineFlexDiv)`
+  justify-content: space-between;
+  align-items: end;
+  .btn {
+    margin: 1rem 0;
   }
 `;

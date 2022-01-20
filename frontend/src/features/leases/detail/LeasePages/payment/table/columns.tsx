@@ -7,6 +7,8 @@ import {
   renderMoney,
   renderTypeCode,
 } from 'components/Table';
+import { Claims } from 'constants/claims';
+import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { ILeasePayment } from 'interfaces';
 import { IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
 import moment from 'moment';
@@ -116,18 +118,22 @@ const termActions = (
   onDelete: (values: IFormLeaseTerm) => void,
 ) => {
   return function({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
-    return (
+    const { hasClaim } = useKeycloakWrapper();
+    return hasClaim(Claims.LEASE_EDIT) ? (
       <StyledIcons>
         <Button
+          title="edit term"
           icon={<MdEdit size={24} id={`edit-term-${index}`} title="edit term" />}
           onClick={() => onEdit(original)}
         ></Button>
         <Button
+          title="delete term"
           icon={<FaTrash size={24} id={`delete-term-${index}`} title="delete term" />}
           onClick={() => original.id && onDelete(original)}
+          disabled={original.payments.length > 0 || original.statusTypeCode?.id === 'EXER'}
         ></Button>
       </StyledIcons>
-    );
+    ) : null;
   };
 };
 
@@ -152,6 +158,7 @@ export const getColumns = ({
     },
     {
       Header: 'Start date - End date',
+      align: 'left',
       minWidth: 80,
       Cell: startAndEndDate,
     },
@@ -165,7 +172,7 @@ export const getColumns = ({
     {
       Header: 'Payment due',
       accessor: 'paymentDueDate',
-      align: 'right',
+      align: 'left',
       maxWidth: 50,
     },
     {
@@ -185,7 +192,7 @@ export const getColumns = ({
     },
     {
       Header: 'GST?',
-      align: 'right',
+      align: 'left',
       accessor: 'isGstEligible',
       maxWidth: 25,
       Cell: renderBooleanAsYesNo,
@@ -249,7 +256,7 @@ export const getColumns = ({
     },
     {
       Header: 'Exercised?',
-      align: 'right',
+      align: 'left',
       accessor: 'isTermExercised',
       maxWidth: 40,
       Cell: renderBooleanAsYesNo,
@@ -269,8 +276,11 @@ const StyledIcons = styled(InlineFlexDiv)`
   }
   [id^='delete-term'] {
     color: ${props => props.theme.css.discardedColor};
+    :hover {
+      color: ${({ theme }) => theme.css.dangerColor};
+    }
   }
-  .btn {
+  .btn.btn-primary {
     background-color: transparent;
     padding: 0;
   }

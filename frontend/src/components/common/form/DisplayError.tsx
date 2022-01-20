@@ -18,6 +18,7 @@ export const DisplayError: React.FC<DisplayErrorProps> = ({ field, errorPrompt, 
   const { errors, touched } = useFormikContext();
   const error = !!field ? getIn(errors, field) : null;
   const touch = !!field ? getIn(touched, field) : null;
+
   return !!error && (!!touch || errorPrompt) && typeof error === 'string' ? (
     <Form.Control.Feedback type="invalid" className={className}>
       {error}

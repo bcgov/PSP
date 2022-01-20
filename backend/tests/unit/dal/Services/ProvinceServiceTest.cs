@@ -1,4 +1,5 @@
 using Pims.Core.Test;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Repositories;
 using System.Diagnostics.CodeAnalysis;

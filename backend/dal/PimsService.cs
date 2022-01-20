@@ -15,11 +15,18 @@ namespace Pims.Dal
         #endregion
 
         #region Properties
-
         /// <summary>
         /// get - The user calling the service.
         /// </summary>
         public ClaimsPrincipal Principal { get; }
+
+        /// <summary>
+        /// get - The lease term service.
+        /// </summary>
+        public ILeaseTermService LeaseTermService { get { return _serviceProvider.GetService<ILeaseTermService>(); } }
+        public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
+        /// get - The system constant service.
+        /// </summary>
         #endregion
 
         #region Constructors

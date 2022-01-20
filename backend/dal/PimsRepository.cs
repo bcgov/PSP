@@ -12,6 +12,7 @@ namespace Pims.Dal
     {
         #region Variables
         private readonly IServiceProvider _serviceProvider;
+        private readonly PimsContext _pimsContext;
         #endregion
 
         #region Properties
@@ -81,6 +82,11 @@ namespace Pims.Dal
         public ILeaseService Lease { get { return _serviceProvider.GetService<ILeaseService>(); } }
 
         /// <summary>
+        /// get - The lease term service.
+        /// </summary>
+        public ILeaseTermRepository LeaseTerm { get { return _serviceProvider.GetService<ILeaseTermRepository>(); } }
+
+        /// <summary>
         /// get - The contact service.
         /// </summary>
         public IContactService Contact { get { return _serviceProvider.GetService<IContactService>(); } }
@@ -102,9 +108,10 @@ namespace Pims.Dal
         /// </summary>
         /// <param name="user"></param>
         /// <param name="serviceProvider"></param>
-        public PimsRepository(ClaimsPrincipal user, IServiceProvider serviceProvider)
+        public PimsRepository(PimsContext dbContext, ClaimsPrincipal user, IServiceProvider serviceProvider)
         {
             this.Principal = user;
+            _pimsContext = dbContext;
             _serviceProvider = serviceProvider;
         }
 
@@ -125,7 +132,7 @@ namespace Pims.Dal
         /// </summary>
         public void CommitTransaction()
         {
-            this.User.CommitTransaction();
+            _pimsContext.CommitTransaction();
         }
         #endregion
     }

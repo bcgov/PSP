@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -69,6 +70,7 @@ export interface ModalProps {
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   size?: ModalSize;
+  className?: string;
 }
 
 /**
@@ -83,30 +85,30 @@ const GenericModal = (props: ModalProps) => {
     }
   }, [props.display]);
 
-  const emptyFunction = () => {};
-  const handleCancel = props.handleCancel ?? emptyFunction;
+  const handleCancel = props.handleCancel ?? noop;
 
   const close = () => {
-    setShow(false);
-    props.setDisplay && props.setDisplay(false);
+    props.setDisplay ? props.setDisplay(false) : setShow(false);
     handleCancel();
   };
 
   const handleOk =
     props.handleOk ??
     (() => {
-      props.setDisplay && props.setDisplay(false);
-      setShow(false);
+      props.setDisplay ? props.setDisplay(false) : setShow(false);
     });
   const ok = () => {
-    props.setDisplay && props.setDisplay(false);
-    setShow(false);
+    props.setDisplay ? props.setDisplay(false) : setShow(false);
     handleOk();
   };
 
   return (
     <Container>
-      <Modal show={show} onHide={close} dialogClassName={classNames(props.size)}>
+      <Modal
+        show={props.setDisplay ? props.display : show}
+        onHide={close}
+        dialogClassName={classNames(props.size, props.className)}
+      >
         <Modal.Header closeButton={props.closeButton}>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>

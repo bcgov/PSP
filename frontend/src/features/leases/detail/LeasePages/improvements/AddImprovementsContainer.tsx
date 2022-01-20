@@ -63,6 +63,7 @@ const addEmptyImprovements = (
   improvementTypes: ILookupCode[],
 ): IFormLease | undefined => {
   const allImprovements: ILeaseImprovement[] = [];
+
   improvementTypes.forEach(improvementType => {
     let improvementForType: ILeaseImprovement | undefined = lease?.improvements.find(
       existingImprovement => existingImprovement.propertyImprovementTypeId === improvementType.id,

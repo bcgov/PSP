@@ -4,6 +4,7 @@ using System.Linq;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Dal.Repositories;
 using Xunit;
