@@ -13,8 +13,8 @@
   DTS:ObjectName="Package2"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="412"
-  DTS:VersionGUID="{829AD0F6-5B61-45EE-BE1A-19A09EF0DB22}">
+  DTS:VersionBuild="403"
+  DTS:VersionGUID="{4132D18E-9A69-4396-89B1-DC47548018A4}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1640,7 +1640,7 @@
                 <connection
                   refId="Package\Load Contact Method\ETL ERROR LOG.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1652,6 +1652,18 @@
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
                     <inputColumn
                       refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
                       cachedDataType="dbTimeStamp"
@@ -1706,13 +1718,13 @@
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       dataType="i4"
-                      name="ERROR_CODE" />
+                      name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
                       dataType="i4"
-                      name="ERROR_COLUMN" />
+                      name="ErrorColumn" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1801,7 +1813,7 @@
                 <connection
                   refId="Package\Load Contact Method\ETL ERROR LOG 2.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1813,6 +1825,18 @@
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
+                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
+                      lineageId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
                     <inputColumn
                       refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
                       cachedDataType="dbTimeStamp"
@@ -1874,13 +1898,13 @@
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       dataType="i4"
-                      name="ERROR_CODE" />
+                      name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      refId="Package\Load Contact Method\ETL ERROR LOG 2.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
                       dataType="i4"
-                      name="ERROR_COLUMN" />
+                      name="ErrorColumn" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2207,7 +2231,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\ORGANIZATION ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -4565,7 +4589,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\PERSON ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -4713,7 +4737,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -4948,7 +4972,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -6842,7 +6866,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Addresses\COUNTRY_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -7595,7 +7619,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PIMS_ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -7805,11 +7829,6 @@ where [refTable].[DESCRIPTION] = ?</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
-                    <externalMetadataColumn
-                      refId="Package\Load Interest Holder Addresses\PIMS_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[OTHER_COUNTRY]"
-                      dataType="wstr"
-                      length="200"
-                      name="OTHER_COUNTRY" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -7909,7 +7928,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -9681,7 +9700,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\COUNTRY_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -10835,7 +10854,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PIMS_ORGANIZATIION.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -11012,11 +11031,6 @@ where [refTable].[DESCRIPTION] = ?</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
-                    <externalMetadataColumn
-                      refId="Package\Load Interest Holder Persons and Organizations\PIMS_ORGANIZATIION.Inputs[OLE DB Destination Input].ExternalColumns[INCORPORATION_NUMBER]"
-                      dataType="wstr"
-                      length="50"
-                      name="INCORPORATION_NUMBER" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -11105,7 +11119,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -11269,11 +11283,6 @@ where [refTable].[DESCRIPTION] = ?</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
-                    <externalMetadataColumn
-                      refId="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_COMMENT]"
-                      dataType="wstr"
-                      length="2000"
-                      name="ADDRESS_COMMENT" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -11373,7 +11382,7 @@ where [refTable].[DESCRIPTION] = ?</property>
                 <connection
                   refId="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -13027,7 +13036,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -13200,7 +13209,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -13620,607 +13629,6 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses"
-              componentClassID="Microsoft.Sort"
-              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
-              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
-              name="Deduplicate Org Addresses"
-              version="1">
-              <properties>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
-                  name="EliminateDuplicates">true</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the maximum number of threads to use for sorting."
-                  expressionType="Notify"
-                  name="MaximumThreads">-1</property>
-              </properties>
-              <inputs>
-                <input
-                  refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input]"
-                  name="Sort Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[ORGANIZATION_ID]"
-                      cachedDataType="i8"
-                      cachedName="ORGANIZATION_ID"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">2</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[ADDRESS_ID]"
-                      cachedDataType="i8"
-                      cachedName="ADDRESS_ID"
-                      lineageId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">1</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      cachedDataType="wstr"
-                      cachedLength="7"
-                      cachedName="ADDRESS_USAGE_TYPE_CODE"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">3</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[APP_CREATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="23"
-                      cachedName="APP_CREATE_USERID"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[APP_CREATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="12"
-                      cachedName="APP_CREATE_USER_DIRECTORY"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[APP_LAST_UPDATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="23"
-                      cachedName="APP_LAST_UPDATE_USERID"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="12"
-                      cachedName="APP_LAST_UPDATE_USER_DIRECTORY"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output]"
-                  isSorted="true"
-                  name="Sort Output">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]"
-                      dataType="i8"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]"
-                      name="ORGANIZATION_ID"
-                      sortKeyPosition="2">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]"
-                      dataType="i8"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]"
-                      name="ADDRESS_ID"
-                      sortKeyPosition="1">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Address ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      dataType="wstr"
-                      length="7"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      name="ADDRESS_USAGE_TYPE_CODE"
-                      sortKeyPosition="3">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_CREATE_USERID]"
-                      dataType="wstr"
-                      length="23"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_CREATE_USERID]"
-                      name="APP_CREATE_USERID">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_CREATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="12"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_CREATE_USER_DIRECTORY]"
-                      name="APP_CREATE_USER_DIRECTORY">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USERID]"
-                      dataType="wstr"
-                      length="23"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USERID]"
-                      name="APP_LAST_UPDATE_USERID">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="12"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      name="APP_LAST_UPDATE_USER_DIRECTORY">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]}</property>
-                      </properties>
-                    </outputColumn>
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses"
-              componentClassID="Microsoft.Sort"
-              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
-              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
-              name="Deduplicate Person Addresses"
-              version="1">
-              <properties>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
-                  name="EliminateDuplicates">true</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the maximum number of threads to use for sorting."
-                  expressionType="Notify"
-                  name="MaximumThreads">-1</property>
-              </properties>
-              <inputs>
-                <input
-                  refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input]"
-                  name="Sort Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[PERSON_ID]"
-                      cachedDataType="i8"
-                      cachedName="PERSON_ID"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PERSON_ID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">1</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="30"
-                      cachedName="PIMS_PERSON_APP_CREATE_USER_DIRECTORY"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[ADDRESS_COMMENT]"
-                      cachedDataType="wstr"
-                      cachedLength="2000"
-                      cachedName="ADDRESS_COMMENT"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[ADDRESS_COMMENT]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[ADDRESS_ID]"
-                      cachedDataType="i8"
-                      cachedName="ADDRESS_ID"
-                      lineageId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">2</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[ADDRESS_APP_CREATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="30"
-                      cachedName="ADDRESS_APP_CREATE_USER_DIRECTORY"
-                      lineageId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_APP_CREATE_USER_DIRECTORY]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[AUDIT_TRAIL_APP_CREATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="23"
-                      cachedName="AUDIT_TRAIL_APP_CREATE_USERID"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_CREATE_USERID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="12"
-                      cachedName="AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]"
-                      cachedDataType="wstr"
-                      cachedLength="23"
-                      cachedName="AUDIT_TRAIL_APP_LAST_UPDATE_USERID"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]"
-                      cachedDataType="wstr"
-                      cachedLength="12"
-                      cachedName="AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">0</property>
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      cachedDataType="wstr"
-                      cachedLength="7"
-                      cachedName="ADDRESS_USAGE_TYPE_CODE"
-                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]">
-                      <properties>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the comparison options for character data."
-                          name="NewComparisonFlags">0</property>
-                        <property
-                          dataType="System.Int32"
-                          description="Specifies the sort order of the column."
-                          name="NewSortKeyPosition">3</property>
-                      </properties>
-                    </inputColumn>
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output]"
-                  isSorted="true"
-                  name="Sort Output">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[PERSON_ID]"
-                      dataType="i8"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[PERSON_ID]"
-                      name="PERSON_ID"
-                      sortKeyPosition="1">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PERSON_ID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="30"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]"
-                      name="PIMS_PERSON_APP_CREATE_USER_DIRECTORY">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_COMMENT]"
-                      dataType="wstr"
-                      length="2000"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_COMMENT]"
-                      name="ADDRESS_COMMENT">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[ADDRESS_COMMENT]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]"
-                      dataType="i8"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]"
-                      name="ADDRESS_ID"
-                      sortKeyPosition="2">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_APP_CREATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="30"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_APP_CREATE_USER_DIRECTORY]"
-                      name="ADDRESS_APP_CREATE_USER_DIRECTORY">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_APP_CREATE_USER_DIRECTORY]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_CREATE_USERID]"
-                      dataType="wstr"
-                      length="23"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_CREATE_USERID]"
-                      name="AUDIT_TRAIL_APP_CREATE_USERID">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_CREATE_USERID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="12"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]"
-                      name="AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]"
-                      dataType="wstr"
-                      length="23"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]"
-                      name="AUDIT_TRAIL_APP_LAST_UPDATE_USERID">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="12"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]"
-                      name="AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]}</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      dataType="wstr"
-                      length="7"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      name="ADDRESS_USAGE_TYPE_CODE"
-                      sortKeyPosition="3">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]}</property>
-                      </properties>
-                    </outputColumn>
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
               refId="Package\Load Person Address and Organization Address\Derived Column"
               componentClassID="Microsoft.DerivedColumn"
               contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
@@ -14567,372 +13975,6 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\Load Person Address and Organization Address\Derived Column 2"
-              componentClassID="Microsoft.DerivedColumn"
-              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
-              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
-              name="Derived Column 2"
-              usesDispositions="true">
-              <inputs>
-                <input
-                  refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]"
-                  description="Input to the Derived Column Transformation"
-                  name="Derived Column Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input].Columns[ORGANIZATION_ID]"
-                      cachedDataType="i8"
-                      cachedName="ORGANIZATION_ID"
-                      cachedSortKeyPosition="2"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input].Columns[ADDRESS_ID]"
-                      cachedDataType="i8"
-                      cachedName="ADDRESS_ID"
-                      cachedSortKeyPosition="1"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
-                      cachedDataType="wstr"
-                      cachedLength="7"
-                      cachedName="ADDRESS_USAGE_TYPE_CODE"
-                      cachedSortKeyPosition="3"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
-                  </inputColumns>
-                  <externalMetadataColumns />
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output]"
-                  description="Default Output of the Derived Column Transformation"
-                  exclusionGroup="1"
-                  name="Derived Column Output"
-                  synchronousInputId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TIME]"
-                      dataType="dbTimeStamp"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TIME]"
-                      name="ERROR_TIME"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">[GETDATE]()</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">GETDATE()</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      length="25"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
-                      name="ERROR_OPERATION_NAME"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">"PIMS ORGANIZATION_ADDRESS"</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">"PIMS ORGANIZATION_ADDRESS"</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      length="45"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
-                      name="ERROR_TASK_NAME"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">"Load Person Adderess and Organization Address"</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">"Load Person Adderess and Organization Address"</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      length="19"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
-                      name="ERROR_ETL_NAME"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">"PAIMS2PIMS Dataset2"</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">"PAIMS2PIMS Dataset2"</property>
-                      </properties>
-                    </outputColumn>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ROW]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Computation"
-                      errorRowDisposition="FailComponent"
-                      length="74"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ROW]"
-                      name="ERROR_ROW"
-                      truncationRowDisposition="FailComponent">
-                      <properties>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Expression"
-                          name="Expression">"ORGID: " + (DT_WSTR,13)#{Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]} + " ADDRESS_ID: " + (DT_WSTR,13)#{Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]} + " ADDRESS_USAGE_TYPE: " + #{Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]}</property>
-                        <property
-                          containsID="true"
-                          dataType="System.String"
-                          description="Derived Column Friendly Expression"
-                          expressionType="Notify"
-                          name="FriendlyExpression">"ORGID: " + (DT_WSTR,13)ORGANIZATION_ID + " ADDRESS_ID: " + (DT_WSTR,13)ADDRESS_ID + " ADDRESS_USAGE_TYPE: " + ADDRESS_USAGE_TYPE_CODE</property>
-                      </properties>
-                    </outputColumn>
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output]"
-                  description="Error Output of the Derived Column Transformation"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="Derived Column Error Output"
-                  synchronousInputId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
-              refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2"
-              componentClassID="Microsoft.OLEDBDestination"
-              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
-              description="OLE DB Destination"
-              name="ELT_ERROR_LOG2"
-              usesDispositions="true"
-              version="4">
-              <properties>
-                <property
-                  dataType="System.Int32"
-                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
-                  name="CommandTimeout">0</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[etl].[ETL_ERROR_LOG]</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies the variable that contains the name of the database object used to open a rowset."
-                  name="OpenRowsetVariable"></property>
-                <property
-                  dataType="System.String"
-                  description="The SQL command to be executed."
-                  name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the column code page to use when code page information is unavailable from the data source."
-                  name="DefaultCodePage">1252</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Forces the use of the DefaultCodePage property value when describing character data."
-                  name="AlwaysUseDefaultCodePage">false</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies the mode used to access the database."
-                  name="AccessMode"
-                  typeConverter="AccessMode">3</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepIdentity">false</property>
-                <property
-                  dataType="System.Boolean"
-                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
-                <property
-                  dataType="System.String"
-                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
-                <property
-                  dataType="System.Int32"
-                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
-                  name="FastLoadMaxInsertCommitSize">2147483647</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Connections[OleDbConnection]"
-                  connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
-                  description="The OLE DB runtime connection used to access the database."
-                  name="OleDbConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input]"
-                  errorOrTruncationOperation="Insert"
-                  errorRowDisposition="FailComponent"
-                  hasSideEffects="true"
-                  name="OLE DB Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="ERROR_TIME"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TIME]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ERROR_OPERATION_NAME]"
-                      cachedDataType="wstr"
-                      cachedLength="25"
-                      cachedName="ERROR_OPERATION_NAME"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ERROR_TASK_NAME]"
-                      cachedDataType="wstr"
-                      cachedLength="45"
-                      cachedName="ERROR_TASK_NAME"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ERROR_ETL_NAME]"
-                      cachedDataType="wstr"
-                      cachedLength="19"
-                      cachedName="ERROR_ETL_NAME"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ERROR_ROW]"
-                      cachedDataType="wstr"
-                      cachedLength="74"
-                      cachedName="ERROR_ROW"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
-                      lineageId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output].Columns[ERROR_ROW]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
-                      cachedDataType="i4"
-                      cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
-                    <inputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
-                      cachedDataType="i4"
-                      cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
-                      dataType="dbTimeStamp"
-                      name="ERROR_TIME" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
-                      dataType="wstr"
-                      length="100"
-                      name="ERROR_OPERATION_NAME" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
-                      dataType="wstr"
-                      length="100"
-                      name="ERROR_TASK_NAME" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
-                      dataType="wstr"
-                      length="100"
-                      name="ERROR_ETL_NAME" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
-                      dataType="nText"
-                      name="ERROR_ROW" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
-                      dataType="i4"
-                      name="ERROR_CODE" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
-                      dataType="i4"
-                      name="ERROR_COLUMN" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-              <outputs>
-                <output
-                  refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Outputs[OLE DB Destination Error Output]"
-                  exclusionGroup="1"
-                  isErrorOut="true"
-                  name="OLE DB Destination Error Output"
-                  synchronousInputId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input]">
-                  <outputColumns>
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      dataType="i4"
-                      lineageId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
-                      name="ErrorCode"
-                      specialFlags="1" />
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      dataType="i4"
-                      lineageId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
-                      name="ErrorColumn"
-                      specialFlags="2" />
-                  </outputColumns>
-                  <externalMetadataColumns />
-                </output>
-              </outputs>
-            </component>
-            <component
               refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
@@ -14992,7 +14034,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -15065,13 +14107,13 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       dataType="i4"
-                      name="ERROR_CODE" />
+                      name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
                       dataType="i4"
-                      name="ERROR_COLUMN" />
+                      name="ErrorColumn" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -15160,7 +14202,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -15233,13 +14275,13 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       dataType="i4"
-                      name="ERROR_CODE" />
+                      name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      refId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
                       dataType="i4"
-                      name="ERROR_COLUMN" />
+                      name="ErrorColumn" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -15320,7 +14362,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS Organization.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -15347,16 +14389,6 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_APP_CREATE_USER_DIRECTORY]"
                       name="ORGANIZATION_APP_CREATE_USER_DIRECTORY"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[INCORPORATION_NUMBER]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].ExternalColumns[INCORPORATION_NUMBER]"
-                      length="50"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[INCORPORATION_NUMBER]"
-                      name="INCORPORATION_NUMBER"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -15474,11 +14506,6 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       dataType="wstr"
                       length="30"
                       name="DB_LAST_UPDATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].ExternalColumns[INCORPORATION_NUMBER]"
-                      dataType="wstr"
-                      length="50"
-                      name="INCORPORATION_NUMBER" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -15509,12 +14536,6 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Error Output].Columns[APP_CREATE_USER_DIRECTORY]"
                       name="APP_CREATE_USER_DIRECTORY" />
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Error Output].Columns[INCORPORATION_NUMBER]"
-                      dataType="wstr"
-                      length="50"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Error Output].Columns[INCORPORATION_NUMBER]"
-                      name="INCORPORATION_NUMBER" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -15580,7 +14601,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -15588,7 +14609,7 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                 <input
                   refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input]"
                   errorOrTruncationOperation="Insert"
-                  errorRowDisposition="RedirectRow"
+                  errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
                   <inputColumns>
@@ -15596,52 +14617,49 @@ where [refTable].[APP_CREATE_USER_DIRECTORY] = ?</property>
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[ORGANIZATION_ID]"
                       cachedDataType="i8"
                       cachedName="ORGANIZATION_ID"
-                      cachedSortKeyPosition="2"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ORGANIZATION_ID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ORGANIZATION_ID]" />
+                      lineageId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output].Columns[ORGANIZATION_ID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[ADDRESS_ID]"
                       cachedDataType="i8"
                       cachedName="ADDRESS_ID"
-                      cachedSortKeyPosition="1"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_ID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USERID]"
                       cachedDataType="wstr"
                       cachedLength="23"
                       cachedName="APP_CREATE_USERID"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_CREATE_USERID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USER_DIRECTORY]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="APP_CREATE_USER_DIRECTORY"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_CREATE_USER_DIRECTORY]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_CREATE_USER_DIRECTORY]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USERID]"
                       cachedDataType="wstr"
                       cachedLength="23"
                       cachedName="APP_LAST_UPDATE_USERID"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USERID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USER_DIRECTORY]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="APP_LAST_UPDATE_USER_DIRECTORY"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USER_DIRECTORY]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
                       cachedDataType="wstr"
                       cachedLength="7"
                       cachedName="ADDRESS_USAGE_TYPE_CODE"
-                      cachedSortKeyPosition="3"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_USAGE_TYPE_CODE]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -15806,7 +14824,7 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS PERSON.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -15833,16 +14851,6 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PIMS_PERSON_APP_CREATE_USER_DIRECTORY]"
                       name="PIMS_PERSON_APP_CREATE_USER_DIRECTORY"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[ADDRESS_COMMENT]"
-                      dataType="wstr"
-                      errorOrTruncationOperation="Conversion"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].ExternalColumns[ADDRESS_COMMENT]"
-                      length="2000"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[ADDRESS_COMMENT]"
-                      name="ADDRESS_COMMENT"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
@@ -15947,11 +14955,6 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       dataType="wstr"
                       length="30"
                       name="DB_LAST_UPDATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].ExternalColumns[ADDRESS_COMMENT]"
-                      dataType="wstr"
-                      length="2000"
-                      name="ADDRESS_COMMENT" />
                   </externalMetadataColumns>
                 </output>
                 <output
@@ -15982,12 +14985,6 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       length="30"
                       lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Error Output].Columns[APP_CREATE_USER_DIRECTORY]"
                       name="APP_CREATE_USER_DIRECTORY" />
-                    <outputColumn
-                      refId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Error Output].Columns[ADDRESS_COMMENT]"
-                      dataType="wstr"
-                      length="2000"
-                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Error Output].Columns[ADDRESS_COMMENT]"
-                      name="ADDRESS_COMMENT" />
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
@@ -16053,7 +15050,7 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                 <connection
                   refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -16069,52 +15066,49 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[PERSON_ID]"
                       cachedDataType="i8"
                       cachedName="PERSON_ID"
-                      cachedSortKeyPosition="1"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[PERSON_ID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[PERSON_ID]" />
+                      lineageId="Package\Load Person Address and Organization Address\PIMS PERSON.Outputs[OLE DB Source Output].Columns[PERSON_ID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[ADDRESS_ID]"
                       cachedDataType="i8"
                       cachedName="ADDRESS_ID"
-                      cachedSortKeyPosition="2"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_ID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_ID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup Match Output].Columns[ADDRESS_ID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[AUDIT_TRAIL_APP_CREATE_USERID]"
                       cachedDataType="wstr"
                       cachedLength="23"
                       cachedName="AUDIT_TRAIL_APP_CREATE_USERID"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_CREATE_USERID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_CREATE_USERID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]"
                       cachedDataType="wstr"
                       cachedLength="23"
                       cachedName="AUDIT_TRAIL_APP_LAST_UPDATE_USERID"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USERID]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_LAST_UPDATE_USER_DIRECTORY]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[ADDRESS_USAGE_TYPE_CODE]"
                       cachedDataType="wstr"
                       cachedLength="7"
                       cachedName="ADDRESS_USAGE_TYPE_CODE"
-                      cachedSortKeyPosition="3"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[ADDRESS_USAGE_TYPE_CODE]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[ADDRESS_USAGE_TYPE_CODE]" />
                     <inputColumn
                       refId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]"
                       cachedDataType="wstr"
                       cachedLength="12"
                       cachedName="AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY"
                       externalMetadataColumnId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
-                      lineageId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]" />
+                      lineageId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output].Columns[AUDIT_TRAIL_APP_CREATE_USER_DIRECTORY]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -16234,24 +15228,19 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
               startId="Package\Load Person Address and Organization Address\Derived Column.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output1]"
-              endId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input]"
+              endId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
-              startId="Package\Load Person Address and Organization Address\Derived Column 1.Outputs[Derived Column Output]" />
+              startId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output2]"
-              endId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Inputs[Sort Input]"
+              endId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Load Person Address and Organization Address\Audit Trail 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
-              endId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Inputs[Sort Input]"
+              endId="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
-              startId="Package\Load Person Address and Organization Address\Audit Trail.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Person Address and Organization Address.Paths[Derived Column Output4]"
-              endId="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Person Address and Organization Address\Derived Column 2.Outputs[Derived Column Output]" />
+              startId="Package\Load Person Address and Organization Address\Derived Column 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Person Address and Organization Address.Paths[Lookup Match Output]"
               endId="Package\Load Person Address and Organization Address\Audit Trail 1.Inputs[Derived Column Input]"
@@ -16273,11 +15262,6 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
               name="Lookup No Match Output"
               startId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Outputs[Lookup No Match Output]" />
             <path
-              refId="Package\Load Person Address and Organization Address.Paths[OLE DB Destination Error Output]"
-              endId="Package\Load Person Address and Organization Address\Derived Column 2.Inputs[Derived Column Input]"
-              name="OLE DB Destination Error Output"
-              startId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Outputs[OLE DB Destination Error Output]" />
-            <path
               refId="Package\Load Person Address and Organization Address.Paths[OLE DB Source Output]"
               endId="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address.Inputs[Lookup Input]"
               name="OLE DB Source Output"
@@ -16287,16 +15271,6 @@ WHERE APP_CREATE_USERID='APP_PIMS_PROXY_ETL_EDIT';</property>
               endId="Package\Load Person Address and Organization Address\Address ID in PIMS Address.Inputs[Lookup Input]"
               name="OLE DB Source Output"
               startId="Package\Load Person Address and Organization Address\PIMS Organization.Outputs[OLE DB Source Output]" />
-            <path
-              refId="Package\Load Person Address and Organization Address.Paths[Sort Output]"
-              endId="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS.Inputs[OLE DB Destination Input]"
-              name="Sort Output"
-              startId="Package\Load Person Address and Organization Address\Deduplicate Org Addresses.Outputs[Sort Output]" />
-            <path
-              refId="Package\Load Person Address and Organization Address.Paths[Sort Output1]"
-              endId="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS.Inputs[OLE DB Destination Input]"
-              name="Sort Output"
-              startId="Package\Load Person Address and Organization Address\Deduplicate Person Addresses.Outputs[Sort Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -16386,7 +15360,7 @@ where [refTable].[STREET_ADDRESS_1] = ? and [refTable].[MUNICIPALITY_NAME] = ?</
                 <connection
                   refId="Package\Load Properties\Address Id, Region and District Code.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -17455,7 +16429,7 @@ where "refTable"."PROPERTY_ID" = ?</property>
                 <connection
                   refId="Package\Load Properties\Error Log.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -17501,18 +16475,6 @@ where "refTable"."PROPERTY_ID" = ?</property>
                       cachedName="ERROR_ROW"
                       externalMetadataColumnId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
                       lineageId="Package\Load Properties\Derived Column 1.Outputs[Derived Column Output].Columns[ERROR_ROW]" />
-                    <inputColumn
-                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
-                      cachedDataType="i4"
-                      cachedName="ErrorCode"
-                      externalMetadataColumnId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
-                      lineageId="Package\Load Properties\PIMS_PROPERTY.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]" />
-                    <inputColumn
-                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
-                      cachedDataType="i4"
-                      cachedName="ErrorColumn"
-                      externalMetadataColumnId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
-                      lineageId="Package\Load Properties\PIMS_PROPERTY.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -17540,13 +16502,13 @@ where "refTable"."PROPERTY_ID" = ?</property>
                       dataType="nText"
                       name="ERROR_ROW" />
                     <externalMetadataColumn
-                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCode]"
                       dataType="i4"
-                      name="ERROR_CODE" />
+                      name="ErrorCode" />
                     <externalMetadataColumn
-                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      refId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input].ExternalColumns[ErrorColumn]"
                       dataType="i4"
-                      name="ERROR_COLUMN" />
+                      name="ErrorColumn" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -18198,7 +17160,7 @@ WHERE PID_NO IS NOT NULL</property>
                 <connection
                   refId="Package\Load Properties\PIMS_PROPERTY.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -19634,19 +18596,19 @@ WHERE PID_NO IS NOT NULL</property>
               startId="Package\Load Properties\Data Conversion.Outputs[Data Conversion Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output10]"
-              endId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Inputs[Derived Column Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\Crude Null Correction for Region and District.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output9]"
               endId="Package\Load Properties\Audit Trail.Inputs[Derived Column Input]"
               name="Derived Column Output"
               startId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load Properties.Paths[Derived Column Output8]"
+              refId="Package\Load Properties.Paths[Derived Column Output9]"
               endId="Package\Load Properties\Area and Area Unit Code.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output8]"
+              endId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\Derived Column 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output6]"
               endId="Package\Load Properties\COREOPER as PROPERTY_CLASSIFICATION.Inputs[Derived Column Input]"
@@ -19654,14 +18616,14 @@ WHERE PID_NO IS NOT NULL</property>
               startId="Package\Load Properties\LAND as PROPERTY_TYPE_CODE.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output5]"
-              endId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Inputs[Derived Column Input]"
+              endId="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE.Inputs[Derived Column Input]"
               name="Derived Column Output"
-              startId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Outputs[Derived Column Output]" />
+              startId="Package\Load Properties\Crude Null Correction for Region and District.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output7]"
-              endId="Package\Load Properties\Error Log.Inputs[OLE DB Destination Input]"
+              endId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
-              startId="Package\Load Properties\Derived Column 1.Outputs[Derived Column Output]" />
+              startId="Package\Load Properties\Audit Trail.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output3]"
               endId="Package\Load Properties\Union All.Inputs[Union All Input 1]"
@@ -19669,24 +18631,24 @@ WHERE PID_NO IS NOT NULL</property>
               startId="Package\Load Properties\Derived Column.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Derived Column Output2]"
+              endId="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Load Properties.Paths[Derived Column Output1]"
               endId="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE.Inputs[Derived Column Input]"
               name="Derived Column Output"
               startId="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load Properties.Paths[Derived Column Output1]"
+              refId="Package\Load Properties.Paths[Derived Column Output]"
               endId="Package\Load Properties\Address Id, Region and District Code.Inputs[Lookup Input]"
               name="Derived Column Output"
               startId="Package\Load Properties\COREOPER as PROPERTY_CLASSIFICATION.Outputs[Derived Column Output]" />
             <path
-              refId="Package\Load Properties.Paths[Derived Column Output]"
+              refId="Package\Load Properties.Paths[Derived Column Output4]"
               endId="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE.Inputs[Derived Column Input]"
               name="Derived Column Output"
               startId="Package\Load Properties\PROPERTY_STATUS_TYPE.Outputs[Derived Column Output]" />
-            <path
-              refId="Package\Load Properties.Paths[Derived Column Output4]"
-              endId="Package\Load Properties\PIMS_PROPERTY.Inputs[OLE DB Destination Input]"
-              name="Derived Column Output"
-              startId="Package\Load Properties\Audit Trail.Outputs[Derived Column Output]" />
             <path
               refId="Package\Load Properties.Paths[Lookup Match Output]"
               endId="Package\Load Properties\Data Conversion.Inputs[Data Conversion Input]"
@@ -21325,7 +20287,7 @@ WHERE PID_NO IS NOT NULL</property>
                 <connection
                   refId="Package\Load Property Addresses\PIMS ADDRESS.Connections[OleDbConnection]"
                   connectionManagerID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Project.ConnectionManagers[IS15]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -21538,11 +20500,6 @@ WHERE PID_NO IS NOT NULL</property>
                       dataType="wstr"
                       length="2000"
                       name="COMMENT" />
-                    <externalMetadataColumn
-                      refId="Package\Load Property Addresses\PIMS ADDRESS.Inputs[OLE DB Destination Input].ExternalColumns[OTHER_COUNTRY]"
-                      dataType="wstr"
-                      length="200"
-                      name="OTHER_COUNTRY" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -22038,14 +20995,14 @@ WHERE PID_NO IS NOT NULL</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,57.066667748028"
+              EndConnector="0,57.0666677480281"
               Start="0,0"
-              End="0,49.566667748028">
+              End="0,49.5666677480281">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,49.566667748028" />
+                    End="0,49.5666677480281" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -22266,7 +21223,7 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="512,572.200000402928">
+          TopLeft="512,572.200000402927">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -22343,25 +21300,29 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Contact Method\Data Conversion 2"
           TopLeft="1194.95239658204,232" />
         <NodeLayout
-          Size="285,42"
-          Id="Package\Load Contact Method\PAM_INTEREST_HOLDER - FAX_NO"
-          TopLeft="1138.52382515347,165.304762021852" />
+          Size="123,42"
+          Id="Package\Load Contact Method\Union All"
+          TopLeft="1090,420" />
         <NodeLayout
           Size="176,42"
           Id="Package\Load Contact Method\IS ORGANIZATION"
           TopLeft="1328.28571428571,825.714285714286" />
         <NodeLayout
+          Size="267,42"
+          Id="Package\Load Contact Method\PAM_INTEREST_HOLDER - EMAIL"
+          TopLeft="1960.76662656599,159.485715773446" />
+        <NodeLayout
           Size="170,42"
           Id="Package\Load Contact Method\Data Conversion 1"
           TopLeft="800,232" />
         <NodeLayout
+          Size="380,42"
+          Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - WORKEMAIL"
+          TopLeft="1905.1666241818,301.399999338786" />
+        <NodeLayout
           Size="167,42"
           Id="Package\Load Contact Method\Derived Column 1"
           TopLeft="1894,937" />
-        <NodeLayout
-          Size="294,42"
-          Id="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON"
-          TopLeft="2033.85714285714,680.142857142857" />
         <NodeLayout
           Size="161,42"
           Id="Package\Load Contact Method\Data Conversion"
@@ -22383,17 +21344,9 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Contact Method\ETL ERROR LOG 2"
           TopLeft="1833,1047" />
         <NodeLayout
-          Size="380,42"
-          Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - WORKEMAIL"
-          TopLeft="1905.1666241818,301.399999338786" />
-        <NodeLayout
           Size="351,42"
           Id="Package\Load Contact Method\PAM_INTEREST_HOLDER - CELL_PHONE_NUMBER"
           TopLeft="1520,163" />
-        <NodeLayout
-          Size="299,42"
-          Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - FAX"
-          TopLeft="1126.80953943919,301.333333450423" />
         <NodeLayout
           Size="342,42"
           Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - PERSPHONE"
@@ -22403,81 +21356,61 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Contact Method\PAM_INTEREST_HOLDER - WORK_PHONE_NO"
           TopLeft="685.238110867757,167.190476307566" />
         <NodeLayout
-          Size="353,42"
-          Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - MOBLPHONE"
-          TopLeft="1521.33335048622,300.466666880184" />
-        <NodeLayout
           Size="332,42"
           Id="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR ORGANIZATION"
           TopLeft="1921.85714285714,815.142857142857" />
+        <NodeLayout
+          Size="299,42"
+          Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - FAX"
+          TopLeft="1126.80953943919,301.333333450423" />
+        <NodeLayout
+          Size="353,42"
+          Id="Package\Load Contact Method\CONTACT_METHOD_TYPE_CODE - MOBLPHONE"
+          TopLeft="1521.33335048622,300.466666880184" />
         <NodeLayout
           Size="170,42"
           Id="Package\Load Contact Method\Data Conversion 5"
           TopLeft="1061,627" />
         <NodeLayout
-          Size="123,42"
-          Id="Package\Load Contact Method\Union All"
-          TopLeft="1090,420" />
-        <NodeLayout
-          Size="267,42"
-          Id="Package\Load Contact Method\PAM_INTEREST_HOLDER - EMAIL"
-          TopLeft="1960.76662656599,159.485715773446" />
+          Size="189,43"
+          Id="Package\Load Contact Method\ORGANIZATION ID"
+          TopLeft="1617.57141327291,820.907943308344" />
         <NodeLayout
           Size="168,42"
           Id="Package\Load Contact Method\ETL ERROR LOG"
           TopLeft="1771,487" />
         <NodeLayout
-          Size="189,43"
-          Id="Package\Load Contact Method\ORGANIZATION ID"
-          TopLeft="1617.57141327291,820.907943308344" />
+          Size="123,42"
+          Id="Package\Load Contact Method\Multicast"
+          TopLeft="1099,751" />
         <NodeLayout
           Size="170,42"
           Id="Package\Load Contact Method\Data Conversion 4"
           TopLeft="2012.42857142857,230" />
         <NodeLayout
-          Size="123,42"
-          Id="Package\Load Contact Method\Multicast"
-          TopLeft="1099,751" />
+          Size="294,42"
+          Id="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON"
+          TopLeft="2033.85714285714,680.142857142857" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Load Contact Method\PERSON ID"
+          TopLeft="1639.15074935571,675.8579433445" />
         <NodeLayout
           Size="174,42"
           Id="Package\Load Contact Method\Data Conversion 3"
           TopLeft="1603.95239658204,232" />
         <NodeLayout
           Size="139,42"
-          Id="Package\Load Contact Method\PERSON ID"
-          TopLeft="1639.15074935571,675.8579433445" />
+          Id="Package\Load Contact Method\IS PERSON"
+          TopLeft="1327,675" />
         <NodeLayout
           Size="146,42"
           Id="Package\Load Contact Method\AUDIT TRAIL"
           TopLeft="1079,544" />
         <NodeLayout
-          Size="139,42"
-          Id="Package\Load Contact Method\IS PERSON"
-          TopLeft="1327,675" />
-        <EdgeLayout
-          Id="Package\Load Contact Method.Paths[Data Conversion Output]"
-          TopLeft="883.178579177175,274">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,31.666666818195"
-              Start="0,0"
-              End="0,24.166666818195">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,24.166666818195" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="285,42"
+          Id="Package\Load Contact Method\PAM_INTEREST_HOLDER - FAX_NO"
+          TopLeft="1138.52382515347,165.304762021852" />
         <EdgeLayout
           Id="Package\Load Contact Method.Paths[Union All Output 1]"
           TopLeft="1151.75,462">
@@ -23246,32 +22179,38 @@ WHERE PID_NO IS NOT NULL</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Contact Method.Paths[Data Conversion Output]"
+          TopLeft="883.178579177175,274">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31.666666818195"
+              Start="0,0"
+              End="0,24.166666818195">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.166666818195" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Contact Method\PAM_INTEREST_HOLDER - FAX_NO">
+    design-time-name="Package\Load Contact Method\PAM_INTEREST_HOLDER - EMAIL">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -23336,27 +22275,6 @@ WHERE PID_NO IS NOT NULL</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Contact Method\PAM_INTEREST_HOLDER - EMAIL">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Contact Method\ETL ERROR LOG">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Load Contact Method\ORGANIZATION ID">
     <Properties>
       <Property>
@@ -23376,6 +22294,32 @@ WHERE PID_NO IS NOT NULL</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Contact Method\ETL ERROR LOG">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Contact Method\PIMS_CONTACT_METHOD FOR PERSON">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -23402,6 +22346,19 @@ WHERE PID_NO IS NOT NULL</property>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Contact Method\PAM_INTEREST_HOLDER - FAX_NO">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Load Interest Holder Addresses">
     <LayoutInfo>
@@ -23412,6 +22369,10 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Interest Holder Addresses\Data Conversion"
           TopLeft="441,100" />
         <NodeLayout
+          Size="195,42"
+          Id="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID"
+          TopLeft="421.25,455.75" />
+        <NodeLayout
           Size="150,42"
           Id="Package\Load Interest Holder Addresses\COUNTRY_ID"
           TopLeft="449,213" />
@@ -23420,9 +22381,9 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Interest Holder Addresses\BC"
           TopLeft="689.25,521.75" />
         <NodeLayout
-          Size="195,42"
-          Id="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID"
-          TopLeft="421.25,455.75" />
+          Size="132,42"
+          Id="Package\Load Interest Holder Addresses\Union All 1"
+          TopLeft="450,573" />
         <NodeLayout
           Size="281,42"
           Id="Package\Load Interest Holder Addresses\Audit Trail (and capture interest holder id)"
@@ -23447,10 +22408,6 @@ WHERE PID_NO IS NOT NULL</property>
           Size="256,42"
           Id="Package\Load Interest Holder Addresses\ADDRESS_USAGE_TYPE_CODE"
           TopLeft="381.749999900659,671.483333347109" />
-        <NodeLayout
-          Size="132,42"
-          Id="Package\Load Interest Holder Addresses\Union All 1"
-          TopLeft="450,573" />
         <EdgeLayout
           Id="Package\Load Interest Holder Addresses.Paths[Union All Output 11]"
           TopLeft="512.87499995033,615">
@@ -23815,7 +22772,7 @@ WHERE PID_NO IS NOT NULL</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Interest Holder Addresses\COUNTRY_ID">
+    design-time-name="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -23825,7 +22782,7 @@ WHERE PID_NO IS NOT NULL</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[PIMS_COUNTRY]</Value>
+          type="q3:string">[dbo].[PIMS_PROVINCE_STATE]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -23838,7 +22795,7 @@ WHERE PID_NO IS NOT NULL</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Interest Holder Addresses\PROVINCE_STATE_ID">
+    design-time-name="Package\Load Interest Holder Addresses\COUNTRY_ID">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -23848,7 +22805,7 @@ WHERE PID_NO IS NOT NULL</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[PIMS_PROVINCE_STATE]</Value>
+          type="q3:string">[dbo].[PIMS_COUNTRY]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -23892,10 +22849,6 @@ WHERE PID_NO IS NOT NULL</property>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="174,42"
-          Id="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON"
-          TopLeft="955.464285714286,969.964285714286" />
-        <NodeLayout
           Size="142,42"
           Id="Package\Load Interest Holder Persons and Organizations\IS_PERSON"
           TopLeft="649,967" />
@@ -23908,13 +22861,17 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Interest Holder Persons and Organizations\Canada"
           TopLeft="766,171" />
         <NodeLayout
-          Size="123,42"
-          Id="Package\Load Interest Holder Persons and Organizations\Union All"
-          TopLeft="463,272" />
+          Size="174,42"
+          Id="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON"
+          TopLeft="955.464285714286,969.964285714286" />
         <NodeLayout
           Size="161,42"
           Id="Package\Load Interest Holder Persons and Organizations\Data Conversion"
           TopLeft="452,83" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\Load Interest Holder Persons and Organizations\Union All"
+          TopLeft="463,272" />
         <NodeLayout
           Size="235,42"
           Id="Package\Load Interest Holder Persons and Organizations\ORGANIZATION_TYPE_CODE"
@@ -23948,13 +22905,49 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Interest Holder Persons and Organizations\Multicast"
           TopLeft="440.75,853.25" />
         <NodeLayout
-          Size="201,42"
-          Id="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID"
-          TopLeft="433,356" />
-        <NodeLayout
           Size="281,42"
           Id="Package\Load Interest Holder Persons and Organizations\Audit Trail (and capture interest holder id)"
           TopLeft="366.75,742.25" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\Load Interest Holder Persons and Organizations\PROVINCE_STATE_ID"
+          TopLeft="433,356" />
+        <EdgeLayout
+          Id="Package\Load Interest Holder Persons and Organizations.Paths[Data Conversion Output]"
+          TopLeft="532.5,125">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11.5,49"
+              Start="0,0"
+              End="-11.5,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.5"
+                    Point2="0,24.5"
+                    Point3="-4,24.5" />
+                  <mssgle:LineSegment
+                    End="-7.5,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7.5,24.5"
+                    Point2="-11.5,24.5"
+                    Point3="-11.5,28.5" />
+                  <mssgle:LineSegment
+                    End="-11.5,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Interest Holder Persons and Organizations.Paths[Union All Output 11]"
           TopLeft="517,585">
@@ -24435,47 +23428,11 @@ WHERE PID_NO IS NOT NULL</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Interest Holder Persons and Organizations.Paths[Data Conversion Output]"
-          TopLeft="532.5,125">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-11.5,49"
-              Start="0,0"
-              End="-11.5,41.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.5"
-                    Point2="0,24.5"
-                    Point3="-4,24.5" />
-                  <mssgle:LineSegment
-                    End="-7.5,24.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-7.5,24.5"
-                    Point2="-11.5,24.5"
-                    Point3="-11.5,28.5" />
-                  <mssgle:LineSegment
-                    End="-11.5,41.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON">
+    design-time-name="Package\Load Interest Holder Persons and Organizations\PAM_INTEREST_HOLDER">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -24488,7 +23445,7 @@ WHERE PID_NO IS NOT NULL</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Interest Holder Persons and Organizations\PAM_INTEREST_HOLDER">
+    design-time-name="Package\Load Interest Holder Persons and Organizations\PIMS_PERSON">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -24565,9 +23522,9 @@ WHERE PID_NO IS NOT NULL</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="215,42"
-          Id="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS"
-          TopLeft="54,463" />
+          Size="158,42"
+          Id="Package\Load Person Address and Organization Address\Derived Column"
+          TopLeft="1314,197" />
         <NodeLayout
           Size="174,42"
           Id="Package\Load Person Address and Organization Address\ETL_ERROR_LOG"
@@ -24577,25 +23534,17 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Person Address and Organization Address\PIMS PERSON"
           TopLeft="91,49" />
         <NodeLayout
-          Size="218,42"
-          Id="Package\Load Person Address and Organization Address\Address ID in PIMS Address"
-          TopLeft="951,196" />
-        <NodeLayout
-          Size="252,46"
-          Id="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS"
-          TopLeft="943,504" />
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Load Person Address and Organization Address\Derived Column"
-          TopLeft="1314,197" />
+          Size="215,42"
+          Id="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS"
+          TopLeft="54,463" />
         <NodeLayout
           Size="183,42"
           Id="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1"
           TopLeft="649,195" />
         <NodeLayout
-          Size="213,42"
-          Id="Package\Load Person Address and Organization Address\Deduplicate Org Addresses"
-          TopLeft="963,384" />
+          Size="252,42"
+          Id="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS"
+          TopLeft="944,457" />
         <NodeLayout
           Size="129,42"
           Id="Package\Load Person Address and Organization Address\Audit Trail"
@@ -24610,102 +23559,16 @@ WHERE PID_NO IS NOT NULL</property>
           TopLeft="404,194" />
         <NodeLayout
           Size="218,42"
+          Id="Package\Load Person Address and Organization Address\Address ID in PIMS Address"
+          TopLeft="951,196" />
+        <NodeLayout
+          Size="218,42"
           Id="Package\Load Person Address and Organization Address\Adderss ID in PIMS Address"
           TopLeft="55,188" />
         <NodeLayout
           Size="138,42"
           Id="Package\Load Person Address and Organization Address\Audit Trail 1"
           TopLeft="995,308" />
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Sort Output]"
-          TopLeft="1069.25,426">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,78"
-              Start="0,0"
-              End="0,70.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,70.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[OLE DB Source Output1]"
-          TopLeft="1061.25,105">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,91"
-              Start="0,0"
-              End="0,83.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,83.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[OLE DB Source Output]"
-          TopLeft="166.25,91">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,97"
-              Start="0,0"
-              End="0,89.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,89.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Lookup No Match Output1]"
-          TopLeft="273,212">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="131,0"
-              Start="0,0"
-              End="123.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="123.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="5.94361328125,5,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Person Address and Organization Address.Paths[Lookup No Match Output]"
           TopLeft="1169,217.5">
@@ -24779,29 +23642,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output2]"
-          TopLeft="1066.75,350">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,34"
-              Start="0,0"
-              End="0,26.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,26.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output1]"
+          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
           TopLeft="571,215.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -24819,7 +23660,57 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output2]"
+          TopLeft="1067,350">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,107"
+              Start="0,0"
+              End="0,99.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,99.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output1]"
+          TopLeft="165,343">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,120"
+              Start="0,0"
+              End="0,112.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,112.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -24841,116 +23732,88 @@ WHERE PID_NO IS NOT NULL</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="230,42"
-          Id="Package\Load Person Address and Organization Address\Deduplicate Person Addresses"
-          TopLeft="47,380" />
         <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output3]"
-          TopLeft="165.25,343">
+          Id="Package\Load Person Address and Organization Address.Paths[OLE DB Source Output1]"
+          TopLeft="1061.25,105">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,37"
+              EndConnector="0,91"
               Start="0,0"
-              End="0,29.5">
+              End="0,83.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Sort Output1]"
-          TopLeft="161.75,422">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41"
-              Start="0,0"
-              End="0,33.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="180,42"
-          Id="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2"
-          TopLeft="1612,507" />
-        <NodeLayout
-          Size="167,42"
-          Id="Package\Load Person Address and Organization Address\Derived Column 2"
-          TopLeft="1364,508" />
-        <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[OLE DB Destination Error Output]"
-          TopLeft="1195,528">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="169,0"
-              Start="0,0"
-              End="161.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="161.5,0" />
+                    End="0,83.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="7.54109375,5,146.4178125,11.43359375"
+              BoundingBox="0,0,0,0"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Person Address and Organization Address.Paths[Derived Column Output4]"
-          TopLeft="1531,528.5">
+          Id="Package\Load Person Address and Organization Address.Paths[OLE DB Source Output]"
+          TopLeft="166.25,91">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="81,0"
+              EndConnector="0,97"
               Start="0,0"
-              End="73.5,0">
+              End="0,89.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="73.5,0" />
+                    End="0,89.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Person Address and Organization Address.Paths[Lookup No Match Output1]"
+          TopLeft="273,212">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="131,0"
+              Start="0,0"
+              End="123.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="123.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="5.94361328125,5,111.6127734375,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS">
+    design-time-name="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -24963,20 +23826,7 @@ WHERE PID_NO IS NOT NULL</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Person Address and Organization Address\ETL_ERROR_LOG">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Person Address and Organization Address\PIMS PERSON">
+    design-time-name="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -25012,33 +23862,46 @@ WHERE PID_NO IS NOT NULL</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Person Address and Organization Address\PIMS ORGANIZATION_ADDRESS">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Person Address and Organization Address\ETL_ERROR_LOG 1">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Load Person Address and Organization Address\PIMS Organization">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Person Address and Organization Address\PIMS PERSON">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Person Address and Organization Address\PIMS PERSON_ADDRESS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Person Address and Organization Address\ETL_ERROR_LOG">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -25079,21 +23942,25 @@ WHERE PID_NO IS NOT NULL</property>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="272,42"
-          Id="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE"
-          TopLeft="42.8332959479781,271.333336942461" />
-        <NodeLayout
-          Size="259,42"
-          Id="Package\Load Properties\LAND as PROPERTY_TYPE_CODE"
-          TopLeft="241.999987085661,151.666668181949" />
+          Size="123,42"
+          Id="Package\Load Properties\Union All"
+          TopLeft="703,267" />
         <NodeLayout
           Size="161,42"
           Id="Package\Load Properties\Data Conversion"
           TopLeft="874,217" />
         <NodeLayout
-          Size="194,44"
-          Id="Package\Load Properties\Derived Column"
-          TopLeft="831.333339956072,384.599999400774" />
+          Size="259,42"
+          Id="Package\Load Properties\LAND as PROPERTY_TYPE_CODE"
+          TopLeft="241.999987085661,151.666668181949" />
+        <NodeLayout
+          Size="129,42"
+          Id="Package\Load Properties\Audit Trail"
+          TopLeft="111.499977648259,592.266664586597" />
+        <NodeLayout
+          Size="259,42"
+          Id="Package\Load Properties\Address Id, Region and District Code"
+          TopLeft="904.833319988516,152.266669958963" />
         <NodeLayout
           Size="307,42"
           Id="Package\Load Properties\TM as PROPERTY_TENURE_TYPE_CODE"
@@ -25103,6 +23970,10 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Properties\PROPERTY_DATA_SOURCE_EFFECTIVE_DATE"
           TopLeft="11,504" />
         <NodeLayout
+          Size="272,42"
+          Id="Package\Load Properties\PROPERTY_DATA_SOURCE_TYPE"
+          TopLeft="42.8332959479781,271.333336942461" />
+        <NodeLayout
           Size="320,42"
           Id="Package\Load Properties\Crude Null Correction for Region and District"
           TopLeft="1287.49998738368,154.466670723491" />
@@ -25111,17 +23982,13 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Properties\Derived Column 1"
           TopLeft="744,587" />
         <NodeLayout
-          Size="189,42"
-          Id="Package\Load Properties\PIMS_PROPERTY"
-          TopLeft="384.166629943585,589.133340413836" />
-        <NodeLayout
           Size="288,42"
           Id="Package\Load Properties\SURPLUS_DECLARATION_TYPE_CODE"
           TopLeft="39,427" />
         <NodeLayout
-          Size="123,42"
-          Id="Package\Load Properties\Union All"
-          TopLeft="703,267" />
+          Size="189,42"
+          Id="Package\Load Properties\PIMS_PROPERTY"
+          TopLeft="384.166629943585,589.133340413836" />
         <NodeLayout
           Size="317,47"
           Id="Package\Load Properties\COREOPER as PROPERTY_CLASSIFICATION"
@@ -25131,21 +23998,17 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Properties\PROPERTY_STATUS_TYPE"
           TopLeft="360.666638188894,267.600005021096" />
         <NodeLayout
-          Size="129,42"
-          Id="Package\Load Properties\Audit Trail"
-          TopLeft="111.499977648259,592.266664586597" />
-        <NodeLayout
-          Size="163,42"
-          Id="Package\Load Properties\PAM Property"
-          TopLeft="45.499984800816,149.733333863682" />
+          Size="194,44"
+          Id="Package\Load Properties\Derived Column"
+          TopLeft="831.333339956072,384.599999400774" />
         <NodeLayout
           Size="125,42"
           Id="Package\Load Properties\Error Log"
           TopLeft="1109,580" />
         <NodeLayout
-          Size="259,42"
-          Id="Package\Load Properties\Address Id, Region and District Code"
-          TopLeft="904.833319988516,152.266669958963" />
+          Size="163,42"
+          Id="Package\Load Properties\PAM Property"
+          TopLeft="45.499984800816,149.733333863682" />
         <NodeLayout
           Size="201,42"
           Id="Package\Load Properties\Area and Area Unit Code"
@@ -25314,30 +24177,6 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output10]"
-          TopLeft="1450.41666044129,196.466670723491">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,70.799996383985"
-              Start="0,0"
-              End="0,63.299996383985">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,63.299996383985" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output9]"
           TopLeft="175.99998882413,546">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -25361,7 +24200,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output8]"
+          Id="Package\Load Properties.Paths[Derived Column Output9]"
           TopLeft="1299.8333334989,289.666667117807">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -25385,7 +24224,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output7]"
+          Id="Package\Load Properties.Paths[Derived Column Output8]"
           TopLeft="911,604.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -25398,6 +24237,30 @@ WHERE PID_NO IS NOT NULL</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="190.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output7]"
+          TopLeft="240.499977648259,611.700002500216">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="143.666652295326,0"
+              Start="0,0"
+              End="136.166652295326,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="136.166652295326,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -25434,18 +24297,18 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output5]"
-          TopLeft="179.5,469">
+          TopLeft="1450.41666044129,196.466670723491">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35"
+              EndConnector="0,70.799996383985"
               Start="0,0"
-              End="0,27.5">
+              End="0,63.299996383985">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.5" />
+                    End="0,63.299996383985" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -25458,18 +24321,18 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output4]"
-          TopLeft="240.499977648259,611.700002500216">
+          TopLeft="360.666638188894,290.466670981779">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="143.666652295326,0"
+              EndConnector="-45.833342240916,0"
               Start="0,0"
-              End="136.166652295326,0">
+              End="-38.333342240916,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="136.166652295326,0" />
+                    End="-38.333342240916,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -25518,6 +24381,30 @@ WHERE PID_NO IS NOT NULL</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Properties.Paths[Derived Column Output2]"
+          TopLeft="179.5,469">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Properties.Paths[Derived Column Output1]"
           TopLeft="180.916647973989,313.333336942461">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -25541,7 +24428,7 @@ WHERE PID_NO IS NOT NULL</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output1]"
+          Id="Package\Load Properties.Paths[Derived Column Output]"
           TopLeft="844.999988079071,173.016669494046">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -25554,30 +24441,6 @@ WHERE PID_NO IS NOT NULL</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="52.333331909445,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Properties.Paths[Derived Column Output]"
-          TopLeft="360.666638188894,290.466670981779">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-45.833342240916,0"
-              Start="0,0"
-              End="-38.333342240916,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-38.333342240916,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -25628,20 +24491,30 @@ WHERE PID_NO IS NOT NULL</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Properties\PIMS_PROPERTY">
+    design-time-name="Package\Load Properties\Address Id, Region and District Code">
     <Properties>
       <Property>
-        <Name>DataSourceViewID</Name>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_ADDRESS]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q2:string">Table</Value>
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Properties\PAM Property">
+    design-time-name="Package\Load Properties\PIMS_PROPERTY">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -25667,25 +24540,15 @@ WHERE PID_NO IS NOT NULL</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Properties\Address Id, Region and District Code">
+    design-time-name="Package\Load Properties\PAM Property">
     <Properties>
       <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:string">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[PIMS_ADDRESS]</Value>
+        <Name>DataSourceViewID</Name>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -25734,6 +24597,30 @@ WHERE PID_NO IS NOT NULL</property>
           Id="Package\Load Property Addresses\Deduplicate"
           TopLeft="469,262" />
         <EdgeLayout
+          Id="Package\Load Property Addresses.Paths[Derived Column Output]"
+          TopLeft="538.416652941042,219.466668140623">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.533331859377"
+              Start="0,0"
+              End="0,35.033331859377">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.033331859377" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\Load Property Addresses.Paths[Sort Output]"
           TopLeft="535.5,304">
           <EdgeLayout.Curve>
@@ -25781,30 +24668,6 @@ WHERE PID_NO IS NOT NULL</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load Property Addresses.Paths[Derived Column Output]"
-          TopLeft="538.416652941042,219.466668140623">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,42.533331859377"
-              Start="0,0"
-              End="0,35.033331859377">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35.033331859377" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -25823,19 +24686,6 @@ WHERE PID_NO IS NOT NULL</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Load Property Addresses\PIMS ADDRESS">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Person Address and Organization Address\ELT_ERROR_LOG2">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
