@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         public IEnumerable<PimsProvinceState> GetProvinces()
         {
-            return this.Context.PimsProvinceStates.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
+            return this.Context.PimsProvinceStates.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ProvinceStateCode).ToArray();
         }
 
         /// <summary>
@@ -151,6 +151,21 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes()
         {
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsInsuranceType> GetInsuranceTypes()
+        {
+            return this.Context.PimsInsuranceTypes.AsNoTracking().OrderBy(a => a.InsuranceTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsContactMethodType> GetContactMethodTypes()
+        {
+            return this.Context.PimsContactMethodTypes.AsNoTracking().Where(c => c.IsDisabled != true).OrderBy(a => a.DisplayOrder).ThenBy(a => a.ContactMethodTypeCode).ToArray();
+        }
+
+        public IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes()
+        {
+            return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.PropertyImprovementTypeCode).ToArray();
         }
 
         public IEnumerable<PimsLeaseTermStatusType> GetLeaseTermStatusTypes()

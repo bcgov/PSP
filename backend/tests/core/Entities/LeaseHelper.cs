@@ -43,6 +43,7 @@ namespace Pims.Core.Test
             lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new Entity.PimsLeaseLicenseType() { Id = "testType" };
             if(addTenant)
             {
+            {
                 lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst")));
             }
             return lease;
@@ -64,6 +65,7 @@ namespace Pims.Core.Test
             var leaseLicenseType = context.PimsLeaseLicenseTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease license type.");
             
             var lease = EntityHelper.CreateLease(pid, lFileNo, tenantFirstName, tenantLastName, motiFirstName, motiLastName, address, addTenant, addProperty, programType, leasePurposeType, leaseStatusType, leasePayRvblType, leaseCategoryType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
+            context.PimsLeases.Add(lease);
             context.PimsLeases.Add(lease);
             return lease;
         }

@@ -86,6 +86,18 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
   max-height: 2.5rem;
 `;
 
+export const ExpiredWarning = styled(InlineFlexDiv)`
+  color: ${props => props.theme.css.dangerColor};
+  background-color: ${props => props.theme.css.dangerBackgroundColor};
+  border-radius: 0.4rem;
+  letter-spacing: 0.1rem;
+  padding: 0.2rem;
+  margin-right: 0.5rem;
+  font-family: 'BCSans-Bold';
+  font-size: 1.4rem;
+  align-items: center;
+`;
+
 export const LeaseHeader = styled(InlineFlexDiv)`
   border-radius: 1rem 1rem 0 0;
   grid-area: leaseheader;

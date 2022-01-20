@@ -36,8 +36,9 @@ export const apiLeaseToFormLease = (lease?: ILease) => {
     ? ({
         ...lease,
         tenants: lease.tenants.map(tenant => ({
-          summary: !!tenant.person
-            ? `${tenant.person?.firstName} ${tenant.person?.middleNames} ${tenant.person?.surname}`
+          summary: ${tenant.person?.firstName} ${
+                !!tenant.person?.middleNames ? tenant.person?.middleNames : ''
+              } ${tenant.person?.surname}`
             : tenant.organization?.name,
           firstName: tenant.person?.firstName,
           surname: tenant.person?.surname,
@@ -58,6 +59,8 @@ export const apiLeaseToFormLease = (lease?: ILease) => {
         })),
       } as IFormLease)
     : undefined;
+};
+
 };
 
 export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
