@@ -23,6 +23,7 @@ export const RemoveButton = styled(Button)`
 `;
 
 export const FormButtons = styled.div`
+  z-index: 100;
   width: 100%;
   padding: 0.5rem 0;
   display: flex;

@@ -39,6 +39,8 @@ type OptionalAttributes = {
   toolTip?: string;
   /** id for tooltip */
   toolTipId?: string;
+  /** Flex direction for the group */
+  flexDirection?: 'column' | 'row';
 };
 
 // only "field" is required for <RadioGroup>, the rest are optional
@@ -62,6 +64,7 @@ export const RadioGroup = ({
   custom,
   toolTip,
   toolTipId,
+  flexDirection,
   ...rest
 }: RadioGroupProps) => {
   const { values, errors, touched, handleBlur, handleChange } = useFormikContext();
@@ -72,6 +75,7 @@ export const RadioGroup = ({
     <StyledRadioGroup
       controlId={`input-${field}`}
       className={classNames(!!required ? 'required' : '', className)}
+      $flexDirection={flexDirection ?? 'column'}
     >
       {!!label && (
         <Form.Label>
@@ -115,10 +119,13 @@ export const StyledRadioGroup = styled(Form.Group)`
     margin-bottom: 0;
     .radio-group {
       display: flex;
-      flex-direction: column;
-      row-gap: 0.4rem;
+      flex-direction: ${props => props.$flexDirection};
+      row-gap: ${props => (props.$flexDirection === 'column' ? '0.4rem' : 'unset')};
+      column-gap: ${props => (props.$flexDirection === 'column' ? 'unset' : '0.4rem')};
       .form-check {
         display: flex;
+        align-items: center;
+        justify-content: center;
         .form-check-input {
           margin-left: 0;
         }
@@ -127,5 +134,9 @@ export const StyledRadioGroup = styled(Form.Group)`
         margin-left: 1rem;
       }
     }
+  }
+
+  .form-label {
+    margin-bottom: unset;
   }
 `;

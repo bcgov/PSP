@@ -38,8 +38,8 @@ const PropertyListView = lazy(() =>
 const LeaseAndLicenseListView = lazy(() =>
   componentLoader(import('features/leases/list/LeaseListView'), 2),
 );
-const LeaseContainer = lazy(() =>
-  componentLoader(import('features/leases/detail/LeaseContainer'), 2),
+const LeaseContainerWrapper = lazy(() =>
+  componentLoader(import('features/leases/detail/LeaseContainerWrapper'), 2),
 );
 
 const AppRouter: React.FC = () => {
@@ -160,7 +160,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/lease/:leaseId"
-          component={LeaseContainer}
+          component={LeaseContainerWrapper}
           layout={AuthLayout}
           claim={Claims.PROPERTY_VIEW}
           title={getTitle('Create/Edit Lease & Licenses')}
@@ -178,8 +178,8 @@ const AppRouter: React.FC = () => {
           path="/contact/new"
           component={ContactCreateContainer}
           layout={AuthLayout}
-          claim={[Claims.CONTACT_CREATE]}
-          title={getTitle('Create Contactj')}
+          claim={[Claims.CONTACT_ADD]}
+          title={getTitle('Create Contact')}
         />
         <AppRoute
           protected

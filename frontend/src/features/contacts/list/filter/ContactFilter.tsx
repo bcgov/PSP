@@ -36,7 +36,7 @@ export const ContactFilter: React.FunctionComponent<IContactFilterProps> = ({
       }}
       validateOnChange={true}
     >
-      {({ resetForm, isSubmitting, values }) => (
+      {({ resetForm, isSubmitting, values, submitForm }) => (
         <>
           <Styled.FilterBox>
             <RadioGroup
@@ -75,7 +75,13 @@ export const ContactFilter: React.FunctionComponent<IContactFilterProps> = ({
             <Styled.Spacer />
             <Styled.LongInlineInput field="summary" placeholder="Name of person or organization" />
             <Styled.ShortInlineInput field="municipality" label="City" />
-            <Styled.SmallSearchButton disabled={isSubmitting} />
+            <Styled.SmallSearchButton
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => {
+                submitForm();
+              }}
+            />
             <ResetButton
               type=""
               disabled={isSubmitting}

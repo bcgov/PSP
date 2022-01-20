@@ -9,9 +9,8 @@ import { logError } from 'store/slices/network/networkSlice';
 
 /**
  * hook that adds a lease.
- * @param leaseId
  */
-export const useAddLease = (leaseId?: number) => {
+export const useAddLease = () => {
   const { postLease } = useApiLeases();
   const dispatch = useDispatch();
 

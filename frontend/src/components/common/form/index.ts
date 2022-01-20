@@ -1,3 +1,4 @@
+export * from './AsyncTypeahead';
 export * from './Button';
 export * from './Check';
 export * from './DisplayError';
@@ -13,4 +14,5 @@ export * from './ResetButton';
 export * from './SearchButton';
 export * from './SearchToggle';
 export * from './Select';
+export * from './TableSelect';
 export * from './TextArea';

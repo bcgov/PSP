@@ -43,6 +43,9 @@ namespace Pims.Dal.Entities
         [Column("COMMENT")]
         [StringLength(2000)]
         public string Comment { get; set; }
+        [Column("ADDRESS_COMMENT")]
+        [StringLength(2000)]
+        public string AddressComment { get; set; }
         [Column("IS_DISABLED")]
         public bool IsDisabled { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]

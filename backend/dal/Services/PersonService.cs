@@ -4,6 +4,7 @@ using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Services
@@ -61,6 +62,21 @@ namespace Pims.Dal.Services
                 .Where(p => p.PersonId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
+
+        /// <summary>
+        /// Add the specified person contact to the datasource.
+        /// </summary>
+        /// <param name="add"></param>
+        /// <returns></returns>
+        public PimsPerson Add(PimsPerson add)
+        {
+            add.ThrowIfNull(nameof(add));
+            this.Context.PimsPeople.Add(add);
+            this.Context.CommitTransaction();
+
+            return Get(add.PersonId);
+        }
+
         #endregion
     }
 }

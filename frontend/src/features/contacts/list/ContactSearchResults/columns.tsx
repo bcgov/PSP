@@ -1,6 +1,6 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { InlineFlexDiv } from 'components/common/styles';
+import { IconButton, InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import { IContactSearchResult } from 'interfaces';
 import React from 'react';
@@ -10,15 +10,14 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import * as Styled from '../styles';
-
 const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: '',
     accessor: 'isDisabled',
     align: 'right',
-    width: 20,
-    maxWidth: 20,
+    width: 10,
+    maxWidth: 10,
+    minWidth: 10,
     Cell: (props: CellProps<IContactSearchResult>) =>
       props.row.original.isDisabled ? <Inactive /> : <Active />,
   },
@@ -26,8 +25,8 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Header: '',
     accessor: 'id',
     align: 'right',
-    width: 10,
-    maxWidth: 10,
+    width: 20,
+    maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
       props.row.original.personId !== undefined ? (
         <FaRegUser size={20} />
@@ -107,12 +106,12 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 40,
     Cell: (props: CellProps<IContactSearchResult>) => (
       <StyledDiv>
-        <Styled.IconButton variant="light">
+        <IconButton variant="light">
           <MdEdit size={22} />
-        </Styled.IconButton>
-        <Styled.IconButton variant="light">
+        </IconButton>
+        <IconButton variant="light">
           <MdContactMail size={22} />
-        </Styled.IconButton>
+        </IconButton>
       </StyledDiv>
     ),
   },

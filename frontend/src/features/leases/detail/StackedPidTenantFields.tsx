@@ -37,7 +37,7 @@ const StyledStackedDivs = styled(InlineFlexDiv)`
   width: 100%;
   text-align: left;
   div {
-    font-weight: 700;
+    font-family: 'BCSans-Bold';
   }
 `;
 

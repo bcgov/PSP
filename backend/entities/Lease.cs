@@ -1,14 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Lease class, provides an entity for the datamodel to manage leases.
     /// </summary>
-    public partial class PimsLease : IBaseAppEntity
+    public partial class PimsLease : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
+        [NotMapped]
+        public override long Id { get => this.LeaseId; set => this.LeaseId = value; }
+
         /// <summary>
         /// get/set - A collection of properties.
         /// </summary>

@@ -34,6 +34,8 @@ namespace Pims.Dal
             services.AddScoped<Services.ITenantService, Services.TenantService>();
             services.AddScoped<Services.ILeaseService, Services.LeaseService>();
             services.AddScoped<Services.IContactService, Services.ContactService>();
+            services.AddScoped<Services.IInsuranceService, Services.InsuranceService>();
+            services.AddScoped<Services.IAutocompleteService, Services.AutocompleteService>();
             return services; // TODO: Use reflection to find all services.
         }
 

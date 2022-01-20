@@ -28,6 +28,7 @@ jest.mock('hooks/pims-api/useApiLeases');
 ((useApiLeases as unknown) as jest.Mock<Partial<typeof useApiLeases>>).mockReturnValue({
   getLease,
 });
+jest.mock('@react-keycloak/web');
 
 describe('LeaseContainer component', () => {
   const setup = (renderOptions?: RenderOptions & ILeaseAndLicenseContainerProps) => {
@@ -36,6 +37,7 @@ describe('LeaseContainer component', () => {
       <LeaseContainer match={renderOptions?.match ?? { params: { leaseId: 1 } }} />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
         history,
       },
     );
@@ -60,17 +62,6 @@ describe('LeaseContainer component', () => {
     await waitFor(async () => {
       expect(getLease).toHaveBeenCalled();
     });
-  });
-
-  it('throws an error if no lease id is provided', async () => {
-    const {
-      component: { findByText },
-    } = setup({ match: {}, store: storeState });
-    expect(
-      await findByText(
-        'No valid lease id provided, go back to the lease and license list and select a valid lease.',
-      ),
-    ).toBeVisible();
   });
 
   it('throws an error if the lease fails to load', async () => {

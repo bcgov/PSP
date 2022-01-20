@@ -1,5 +1,5 @@
-using Pims.Dal.Entities;
 using System.Collections.Generic;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Services
 {
@@ -27,5 +27,8 @@ namespace Pims.Dal.Services
         IEnumerable<PimsLeasePurposeType> GetLeasePurposeTypes();
         IEnumerable<PimsLeaseInitiatorType> GetLeaseInitiatorTypes();
         IEnumerable<PimsLeaseResponsibilityType> GetLeaseResponsibilityTypes();
+        IEnumerable<PimsInsuranceType> GetInsuranceTypes();
+        IEnumerable<PimsContactMethodType> GetContactMethodTypes();
+        IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes();
     }
 }

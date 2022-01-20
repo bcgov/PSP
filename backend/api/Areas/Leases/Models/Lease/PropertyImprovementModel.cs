@@ -12,6 +12,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public long Id { get; set; }
 
         /// <summary>
+        /// get/set - The id of the parent lease.
+        /// </summary>
+        public long LeaseId { get; set; }
+
+        /// <summary>
         /// get/set - The concurrency row version.
         /// </summary>
         /// <value></value>
@@ -38,9 +43,9 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string StructureSize { get; set; }
 
         /// <summary>
-        /// get/set - Notes related to any units within the improvement
+        /// get/set - Notes related to any address within the improvement
         /// </summary>
-        public string Unit { get; set; }
+        public string Address { get; set; }
         #endregion
     }
 }
