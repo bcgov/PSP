@@ -82,7 +82,7 @@ jobs:
           head TestResults/coverage.opencover.xml
 
       - name: Codecov
-        uses: codecov/codecov-action@v1.5.2
+        uses: codecov/codecov-action@v2.1.0
         with:
           # User defined upload name. Visible in Codecov UI
           name: PIMS
