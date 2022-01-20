@@ -99,7 +99,7 @@ export const apiLeaseToAddFormLease = (lease?: ILease) => {
         initiatorType: lease.initiatorType?.id ?? '',
         statusType: lease.statusType?.id ?? '',
         type: lease.type?.id ?? '',
-        region: lease.region.regionCode ?? '',
+        region: lease?.region?.regionCode ?? '',
         programType: lease.programType?.id ?? '',
       } as IAddFormLease)
     : undefined;

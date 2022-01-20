@@ -83,7 +83,13 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       description: 'The following is information related to the leasee or licensee',
     },
   ],
-  [LeasePageNames.PAYMENTS, { component: PaymentsContainer, title: 'Payments' }],
+  [
+    LeasePageNames.PAYMENTS,
+    {
+      component: PaymentsContainer,
+      title: 'Payments',
+    },
+  ],
   [
     LeasePageNames.IMPROVEMENTS,
     {
