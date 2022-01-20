@@ -53,9 +53,16 @@ namespace Pims.Dal.Repositories
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
             var query = this.Context.GenerateLeaseQuery(filter);
-            var leases = query.ToArray();
+
+            var leases = query.OrderBy(l => l.LeaseId).ToArray();
 
             return leases;
+        }
+
+        public long GetRowVersion(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+            return this.Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         public PimsLease Get(long id)
@@ -130,6 +137,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
+            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(i => i.TermStartDate).ToArray();
             return lease;
         }
 
@@ -148,9 +156,11 @@ namespace Pims.Dal.Repositories
             var skip = (filter.Page - 1) * filter.Quantity;
             var query = this.Context.GenerateLeaseQuery(filter);
             var items = query
+                .OrderBy(l => l.LeaseId)
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();
+                
 
             return new Paged<PimsLease>(items, filter.Page, filter.Quantity, query.Count());
         }
@@ -167,7 +177,8 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         private PimsLease AssociatePropertyLeases(PimsLease lease, bool userOverride = false, bool newLeaseProperties = true)
         {
-            lease.PimsPropertyLeases.ForEach(propertyLease => {
+            lease.PimsPropertyLeases.ForEach(propertyLease =>
+            {
                 PimsProperty property = this.Context.PimsProperties
                     .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(l => l.Lease)
@@ -296,4 +307,3 @@ namespace Pims.Dal.Repositories
         #endregion
     }
 }
-

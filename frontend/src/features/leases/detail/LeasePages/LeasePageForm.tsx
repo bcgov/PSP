@@ -29,6 +29,7 @@ export const LeasePageForm: React.FunctionComponent<ILeasePageFormProps> = ({
 }) => {
   const location = useLocation();
   const { edit } = queryString.parse(location.search);
+
   return (
     <StyledLeasePage>
       <StyledLeasePageHeader>

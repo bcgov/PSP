@@ -161,8 +161,8 @@ namespace Pims.Dal.Repositories
                 if (filter.Quantity > 50) filter.Quantity = 50;
                 if (filter.Sort == null) filter.Sort = Array.Empty<string>();
 
-                if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifier))
-                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifier}%"));
+                if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifierValue))
+                    query = query.Where(u => EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifierValue}%"));
                 if (!string.IsNullOrWhiteSpace(filter.FirstName))
                     query = query.Where(u => EF.Functions.Like(u.Person.FirstName, $"%{filter.FirstName}%"));
                 if (!string.IsNullOrWhiteSpace(filter.Surname))
