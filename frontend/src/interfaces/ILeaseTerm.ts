@@ -61,7 +61,6 @@ export const formLeaseTermToApiLeaseTerm = (
   formLeaseTerm: IFormLeaseTerm,
   gstConstant?: number,
 ): ILeaseTerm => {
-  console.log(formLeaseTerm.isGstEligible, gstConstant !== undefined);
   return {
     ...formLeaseTerm,
     renewalDate: undefined,

@@ -37,7 +37,9 @@ export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
       innerRef={formikRef}
       enableReinitialize
       validationSchema={LeaseTermSchema}
-      onSubmit={values => onSave(values)}
+      onSubmit={values => {
+        onSave(values);
+      }}
       initialValues={{
         ...defaultFormLeaseTerm,
         statusTypeCode: defaultLeaseTermStatus

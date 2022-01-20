@@ -74,7 +74,7 @@ describe('PaymentModal component', () => {
     expect(onSave).toHaveBeenCalledWith({
       effectiveDateHist: '',
       endDateHist: '',
-      expiryDate: '2020-01-01',
+      expiryDate: '2020-01-02',
       gstAmount: '',
       isGstEligible: false,
       isTermExercised: false,
@@ -90,7 +90,7 @@ describe('PaymentModal component', () => {
       paymentNote: '',
       payments: [],
       renewalDate: '',
-      startDate: '2019-12-31',
+      startDate: '2020-01-01',
       statusTypeCode: {
         id: 'NEXER',
       },

@@ -81,7 +81,7 @@ const addEmptyImprovements = (
   });
   return {
     ...lease,
-    improvements: sortBy(allImprovements, 'propertyImprovementTypeId'),
+    improvements: sortBy(allImprovements, 'displayOrder'),
   } as IFormLease;
 };
 

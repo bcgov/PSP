@@ -26,7 +26,7 @@ export const UsersFilterBar: React.FC<IProps> = ({
   const roleOptions = rolesLookups.map(rl => ({ label: rl.name, value: rl.name } as SelectOption));
 
   return (
-    <FilterBar<IUsersFilter> initialValues={value} onChange={onChange}>
+    <FilterBar<IUsersFilter> initialValues={value} onChange={onChange} searchButtonType="submit">
       <Col className="bar-item">
         <Input field="businessIdentifierValue" placeholder="IDIR/BCeID" />
       </Col>
