@@ -35,7 +35,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<AccessRequestController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
@@ -62,7 +62,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<AccessRequestController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };
@@ -89,7 +89,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<AccessRequestController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var accessRequest1 = EntityHelper.CreateAccessRequest(1);
             var accessRequest2 = EntityHelper.CreateAccessRequest(2);
             var accessRequests = new[] { accessRequest1, accessRequest2 };

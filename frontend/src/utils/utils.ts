@@ -124,7 +124,7 @@ export const handleAxiosResponse = (
     .then((response: any) => {
       dispatch(logSuccess({ name: actionType }));
       dispatch(hideLoading());
-      return response.data ?? response.payload;
+      return response.data ?? response;
     })
     .catch((axiosError: AxiosError) => {
       dispatch(

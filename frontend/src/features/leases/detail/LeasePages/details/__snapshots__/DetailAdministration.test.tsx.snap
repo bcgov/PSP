@@ -9,7 +9,8 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
     class="Toastify"
   />
   .c0 {
-  font-family: 'BcSans-Bold' font-size:2rem;
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
@@ -82,6 +83,22 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
     <div
       class="c1"
     >
+      <label
+        class="form-label"
+      >
+        Region:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-region.regionName"
+          name="region.regionName"
+          value=""
+        />
+      </div>
+      <br />
       <label
         class="form-label"
       >
@@ -164,6 +181,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         Initiator: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg
@@ -197,6 +215,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
       >
         Responsibility: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg
@@ -310,7 +329,8 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
     class="Toastify"
   />
   .c0 {
-  font-family: 'BcSans-Bold' font-size:2rem;
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
@@ -383,6 +403,22 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
     <div
       class="c1"
     >
+      <label
+        class="form-label"
+      >
+        Region:
+      </label>
+      <div
+        class="c2 input form-group"
+      >
+        <input
+          class="form-control"
+          id="input-region.regionName"
+          name="region.regionName"
+          value=""
+        />
+      </div>
+      <br />
       <label
         class="form-label"
       >
@@ -465,6 +501,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         Initiator: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg
@@ -498,6 +535,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
       >
         Responsibility: 
         <span
+          class="tooltip-icon"
           data-testid="tooltip-icon"
         >
           <svg

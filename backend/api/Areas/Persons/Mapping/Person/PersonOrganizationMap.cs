@@ -8,7 +8,7 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Model.PersonCreateModel, Entity.PimsPersonOrganization>()
+            config.NewConfig<Model.PersonModel, Entity.PimsPersonOrganization>()
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .IgnoreNullValues(true);
         }

@@ -22,7 +22,7 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly Keycloak.Configuration.KeycloakOptions _optionsKeycloak;
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         #endregion
 
         #region Constructors
@@ -31,7 +31,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         /// <param name="optionsKeycloak"></param>
         /// <param name="pimsService"></param>
-        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IPimsService pimsService)
+        public AuthController(IOptionsMonitor<Keycloak.Configuration.KeycloakOptions> optionsKeycloak, IPimsRepository pimsService)
         {
             _optionsKeycloak = optionsKeycloak.CurrentValue;
             _pimsService = pimsService;

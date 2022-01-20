@@ -28,7 +28,9 @@ source "$(dirname ${0})/common.sh"
 #
 SHORTNAME=${1:-}
 ENVIRONMENT_NAME="${2:-dev}"
-RELEASE_TAG=${RELEASE_TAG:-latest}
+# Image tag on build config is based on environment, e.g. latest-dev, latest-test, latest-uat
+IMG_TAG="latest-${ENVIRONMENT_NAME}"
+RELEASE_TAG=${RELEASE_TAG:-$IMG_TAG}
 
 # These two parameters allow the deployment of multiple "instances" to a single namespace
 # E.g. to deploy a "test" instance to the DEV namespace in OpenShift:

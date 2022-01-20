@@ -48,10 +48,10 @@ WebUI.verifyElementAttributeValue(findTestObject('Object Repository/AccessReques
 WebUI.verifyElementAttributeValue(findTestObject('Object Repository/AccessRequest/LastName'), 'value', GlobalVariable.lastName, 0)
 
 // Verify IDIR populataed
-WebUI.verifyElementAttributeValue(findTestObject('Object Repository/AccessRequest/LastName'), 'value', GlobalVariable.idir, 0)
+WebUI.verifyElementAttributeValue(findTestObject('Object Repository/AccessRequest/Idir'), 'value', GlobalVariable.idir, 0)
 
 // Verify email populated
-WebUI.verifyElementAttributeValue(findTestObject('Object Repository/AccessRequest/LastName'), 'value', GlobalVariable.email, 0)
+WebUI.verifyElementAttributeValue(findTestObject('Object Repository/AccessRequest/Email'), 'value', GlobalVariable.email, 0)
 
 // Close browser
 WebUI.closeBrowser()

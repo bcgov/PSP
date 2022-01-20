@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities
     {
         public PimsLeasePmtFreqType()
         {
-            PimsLeases = new HashSet<PimsLease>();
+            PimsLeaseTerms = new HashSet<PimsLeaseTerm>();
         }
 
         [Key]
@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsLease.LeasePmtFreqTypeCodeNavigation))]
-        public virtual ICollection<PimsLease> PimsLeases { get; set; }
+        [InverseProperty(nameof(PimsLeaseTerm.LeasePmtFreqTypeCodeNavigation))]
+        public virtual ICollection<PimsLeaseTerm> PimsLeaseTerms { get; set; }
     }
 }

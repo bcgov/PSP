@@ -51,6 +51,7 @@ describe('AddLeaseContainer component', () => {
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
@@ -70,6 +71,7 @@ describe('AddLeaseContainer component', () => {
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
@@ -87,6 +89,7 @@ describe('AddLeaseContainer component', () => {
     await fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     await fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     await fillInput(container, 'paymentReceivableType', 'RCVBL', 'select');
+    await fillInput(container, 'region', '1', 'select');
     await fillInput(container, 'programType', 'BCFERRIES', 'select');
     await fillInput(container, 'type', 'LICONSTRC', 'select');
     await fillInput(container, 'purposeType', 'BCFERRIES', 'select');
@@ -102,4 +105,4 @@ describe('AddLeaseContainer component', () => {
 });
 
 const expectedFormData =
-  '{"lFileNo":"","tfaFileNo":0,"expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"initiatorType":{"id":"HQ"},"type":{"id":"LICONSTRC"},"statusType":{"id":"DRAFT"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"","motiRegion":"","amount":0,"renewalCount":0,"description":"","landArea":"","areaUnit":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[]}';
+  '{"lFileNo":"","tfaFileNo":0,"expiryDate":"2020-01-02","startDate":"2020-01-01","paymentReceivableType":{"id":"RCVBL"},"purposeType":{"id":"BCFERRIES"},"initiatorType":{"id":"HQ"},"type":{"id":"LICONSTRC"},"statusType":{"id":"DRAFT"},"region":{"regionCode":"1"},"programType":{"id":"BCFERRIES"},"otherType":"","otherProgramType":"","otherCategoryType":"","otherPurposeType":"","note":"","motiName":"","amount":0,"renewalCount":0,"description":"","landArea":"","areaUnit":"","isResidential":false,"isCommercialBuilding":false,"isOtherImprovement":false,"returnNotes":"","documentationReference":"","tenantNotes":[],"insurances":[],"terms":[],"tenants":[],"properties":[],"persons":[],"organizations":[],"improvements":[],"securityDeposits":[],"securityDepositReturns":[]}';
