@@ -99,21 +99,6 @@ namespace Pims.Dal.Repositories
 
             return Get(createdPerson.Entity.Id);
         }
-
-        /// <summary>
-        /// Add the specified person contact to the datasource.
-        /// </summary>
-        /// <param name="add"></param>
-        /// <returns></returns>
-        public PimsPerson Add(PimsPerson add)
-        {
-            add.ThrowIfNull(nameof(add));
-            this.Context.PimsPeople.Add(add);
-            this.Context.CommitTransaction();
-
-            return Get(add.PersonId);
-        }
-
         #endregion
     }
 }
