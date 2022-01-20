@@ -12,7 +12,7 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{086499e9-2000-4f37-aa59-5c5551153c4f}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">LISOS_PIMS</SSIS:Property>
@@ -26,6 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">XERCES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAKsoY0GNXYkedX4Mhlo6mLwAAAAACAAAAAAAQZgAAAAEAACAAAADjdbCn7Wf3BTTJJ4QRzU2PEIe20Pw/Jd+TTJPE/LzVRwAAAAAOgAAAAAIAACAAAAC2nqNDDBPHuPPIuR4oRrKuMyPMkpMv3ouNG2unFAnHp5AAAAC8ew58iTWOymlaI4qH7u17jPW02/57reBszxrN+UDRqJQ+HamHyQb1dtzvyKp2G84uUsKzGa9paoL4w8lKKODmHlCFowGAbK8qcZwTT3oRD3u9re1RtrncO2S3GmSRczSy6hP7tHv/gIeDES/o/kjj4aMaBOUFkdBch3JzdsRO7lUmefI6g6tTnZQRAlBgTc9AAAAADtww8lI1JeuLek+DznJ1rOsy7tHQ2nt/JRWhO7m2lnIdfmw/cM+VNfhkdDw9bDMxjDn82oNHru+VqaaBLbxYXg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -41,14 +42,14 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">376</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">378</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{303718AF-99EC-44AC-BBEE-73DC95920C2D}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{19CF9507-0460-4144-8360-FA1A110416CE}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectByProxy">
