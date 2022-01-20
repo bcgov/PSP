@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { noop } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
