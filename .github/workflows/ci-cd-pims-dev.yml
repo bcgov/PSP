@@ -24,9 +24,9 @@ env:
 
 on:
   push:
-#    branches: [dev]
-    paths:
-      - ".github/workflows/ci-cd-pims-dev.yml"
+    branches: [dev]
+#    paths:
+#      - ".github/workflows/ci-cd-pims-dev.yml"
 
 jobs:
 
