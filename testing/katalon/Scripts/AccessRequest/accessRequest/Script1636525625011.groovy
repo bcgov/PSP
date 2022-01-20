@@ -42,7 +42,7 @@ WebUI.click(findTestObject('Object Repository/SiteMinder/ContinueButton'))
 WebUI.navigateToUrl('https://tst-pims.th.gov.bc.ca/access/request')
 
 // Select role as required 
-WebUI.selectOptionByValue(findTestObject('Object Repository/AccessRequest/RoleSelect'), '3', false)
+WebUI.selectOptionByValue(findTestObject('Object Repository/AccessRequest/RoleSelect'), '5', false)
 
 // Enter note 
 WebUI.setText(findTestObject('Object Repository/AccessRequest/Note'), 'This access request was generated from a FT test script, please ignore or decline.')

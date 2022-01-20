@@ -8,19 +8,43 @@ exports[`PaymentsForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c1 {
-  font-size: 1.6rem;
-  color: black;
+  .c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  font-size: 2rem;
   text-align: left;
-  padding-top: 1.5rem;
   font-family: BcSans-Bold;
 }
 
 .c0 {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
-  row-gap: 0.5rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
 }
 
 .c0 .form-group {
@@ -50,18 +74,18 @@ exports[`PaymentsForm component renders as expected 1`] = `
   content: ' *';
 }
 
-.c2.table {
+.c4.table {
   min-width: 155rem;
 }
 
-.c2.table .thead .tr .th {
+.c4.table .thead .tr .th {
   padding: 0.5rem 0.5rem;
   font-size: 1.4rem;
   position: relative;
   color: white;
 }
 
-.c2.table .thead .tr .th .tooltip-icon {
+.c4.table .thead .tr .th .tooltip-icon {
   color: white;
   float: right;
   -webkit-align-self: baseline;
@@ -72,23 +96,49 @@ exports[`PaymentsForm component renders as expected 1`] = `
   width: 1.1rem;
 }
 
-.c2.table .thead .tr .th .sortable-column {
+.c4.table .thead .tr .th .sortable-column {
   width: 100%;
+}
+
+.c3 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c3 .btn {
+  margin: 1rem 0;
 }
 
 <div
     class="c0"
   >
-    <h5
+    <h6
       class="c1"
     >
       Payments by Term
-    </h5>
-    <b>
-      last payment received: 
-    </b>
+    </h6>
     <div
-      class="table c2"
+      class="c2 c3"
+    >
+      <button
+        class="Button btn btn-secondary"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Add a Term
+        </div>
+      </button>
+    </div>
+    <div
+      class="table c4"
       data-testid="securityDepositsTable"
       role="table"
     >
@@ -138,7 +188,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -181,7 +231,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -317,7 +367,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -357,7 +407,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c3 {
+  .c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -368,18 +418,32 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
 }
 
 .c1 {
-  font-size: 1.6rem;
-  color: black;
+  font-size: 2rem;
   text-align: left;
-  padding-top: 1.5rem;
   font-family: BcSans-Bold;
 }
 
 .c0 {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
-  row-gap: 0.5rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
 }
 
 .c0 .form-group {
@@ -409,18 +473,18 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
   content: ' *';
 }
 
-.c2.table {
+.c4.table {
   min-width: 155rem;
 }
 
-.c2.table .thead .tr .th {
+.c4.table .thead .tr .th {
   padding: 0.5rem 0.5rem;
   font-size: 1.4rem;
   position: relative;
   color: white;
 }
 
-.c2.table .thead .tr .th .tooltip-icon {
+.c4.table .thead .tr .th .tooltip-icon {
   color: white;
   float: right;
   -webkit-align-self: baseline;
@@ -431,11 +495,26 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
   width: 1.1rem;
 }
 
-.c2.table .thead .tr .th .sortable-column {
+.c4.table .thead .tr .th .sortable-column {
   width: 100%;
 }
 
-.c4 .btn {
+.c3 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c3 .btn {
+  margin: 1rem 0;
+}
+
+.c5 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
 }
@@ -443,16 +522,27 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
 <div
     class="c0"
   >
-    <h5
+    <h6
       class="c1"
     >
       Payments by Term
-    </h5>
-    <b>
-      last payment received: 
-    </b>
+    </h6>
     <div
-      class="table c2"
+      class="c2 c3"
+    >
+      <button
+        class="Button btn btn-secondary"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          Add a Term
+        </div>
+      </button>
+    </div>
+    <div
+      class="table c4"
       data-testid="securityDepositsTable"
       role="table"
     >
@@ -502,7 +592,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -545,7 +635,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -681,7 +771,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -740,7 +830,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             />
             <div
@@ -754,7 +844,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               N
@@ -794,7 +884,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               N
@@ -806,10 +896,11 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
               title=""
             >
               <div
-                class="c3 c4"
+                class="c2 c5"
               >
                 <button
                   class="Button Button--icon-only btn btn-primary"
+                  title="edit term"
                   type="button"
                 >
                   <div
@@ -836,6 +927,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
                 </button>
                 <button
                   class="Button Button--icon-only btn btn-primary"
+                  title="delete term"
                   type="button"
                 >
                   <div

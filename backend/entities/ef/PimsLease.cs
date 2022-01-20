@@ -67,6 +67,8 @@ namespace Pims.Dal.Entities
         [Column("LEASE_STATUS_TYPE_CODE")]
         [StringLength(20)]
         public string LeaseStatusTypeCode { get; set; }
+        [Column("REGION_CODE")]
+        public short? RegionCode { get; set; }
         [Column("L_FILE_NO")]
         [StringLength(50)]
         public string LFileNo { get; set; }
@@ -173,8 +175,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("REGION_CODE")]
-        public short? RegionCode { get; set; }
 
         [ForeignKey(nameof(LeaseCategoryTypeCode))]
         [InverseProperty(nameof(PimsLeaseCategoryType.PimsLeases))]

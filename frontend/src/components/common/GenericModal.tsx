@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { noop } from 'lodash';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
@@ -69,6 +70,7 @@ export interface ModalProps {
   closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   size?: ModalSize;
+  className?: string;
 }
 
 /**
@@ -77,36 +79,31 @@ export interface ModalProps {
  */
 const GenericModal = (props: ModalProps) => {
   const [show, setShow] = useState(true);
-  useEffect(() => {
-    if (props.display !== undefined) {
-      setShow(props.display);
-    }
-  }, [props.display]);
 
-  const emptyFunction = () => {};
-  const handleCancel = props.handleCancel ?? emptyFunction;
+  const handleCancel = props.handleCancel ?? noop;
 
   const close = () => {
-    setShow(false);
-    props.setDisplay && props.setDisplay(false);
+    props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
     handleCancel();
   };
 
   const handleOk =
     props.handleOk ??
     (() => {
-      props.setDisplay && props.setDisplay(false);
-      setShow(false);
+      props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
     });
   const ok = () => {
-    props.setDisplay && props.setDisplay(false);
-    setShow(false);
+    props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
     handleOk();
   };
 
   return (
     <Container>
-      <Modal show={show} onHide={close} dialogClassName={classNames(props.size)}>
+      <Modal
+        show={props.display !== undefined ? props.display : show}
+        onHide={close}
+        dialogClassName={classNames(props.size, props.className)}
+      >
         <Modal.Header closeButton={props.closeButton}>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>

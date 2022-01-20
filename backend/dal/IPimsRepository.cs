@@ -29,6 +29,7 @@ namespace Pims.Dal
 
         #region Leases
         ILeaseService Lease { get; }
+        ILeaseTermRepository LeaseTerm { get; }
         #endregion
 
         #region Contacts

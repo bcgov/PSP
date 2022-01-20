@@ -45,7 +45,7 @@ WebUI.click(findTestObject('Navigation/ExpandButton'))
 WebUI.click(findTestObject('Navigation/ManagementExpandedButton'))
 
 // Ensure Leases & Licenses are present in the list
-WebUI.verifyTextPresent("Leases & Licenses", false)
+WebUI.verifyTextPresent("Search for a Lease or License", false)
 
 // Close browser
 WebUI.closeBrowser()
