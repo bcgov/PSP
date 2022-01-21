@@ -268,10 +268,6 @@ db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or
 	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
 	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
 
-db-upgrade: ## Script to upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01).
-	@echo "$(P) Upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed), n=TARGET_VERSION (16.01)"
-	@cd database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
-	
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
 	@cd backend/dal; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsContext --context-namespace Pims.Dal --context-dir . --startup-project ../api --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f
