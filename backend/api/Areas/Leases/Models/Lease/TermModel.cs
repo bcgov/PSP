@@ -83,7 +83,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - An (optional) list of payments associated to this term. Should only be set if the term is excercised.
         /// </summary>
-        public ICollection<PaymentModel> Payments { get; set; } 
+        public ICollection<PaymentModel> Payments { get; set; }
         #endregion
     }
 }

@@ -21,7 +21,7 @@ export const LeaseH2 = styled.h2`
 `;
 
 export const LeaseH3 = styled.h3`
-  font-family: 'BcSans-Bold'
+  font-family: 'BcSans-Bold';
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
@@ -82,8 +82,6 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   align-items: center;
-  min-width: fit-content;
-  max-height: 2.5rem;
 `;
 
 export const LeaseHeader = styled(InlineFlexDiv)`
