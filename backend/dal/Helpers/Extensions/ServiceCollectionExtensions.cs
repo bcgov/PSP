@@ -27,7 +27,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IProvinceService, Repositories.ProvinceService>();
             repositories.AddScoped<Repositories.ILookupService, Repositories.LookupService>();
             repositories.AddScoped<Repositories.ISystemConstantService, Repositories.SystemConstantService>();
-            repositories.AddScoped<Repositories.IPersonService, Repositories.PersonService>();
+            repositories.AddScoped<Repositories.IPersonRepository, Repositories.PersonRepository>();
             repositories.AddScoped<Repositories.IUserService, Repositories.UserService>();
             repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
             repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();

@@ -77,6 +77,24 @@ namespace Pims.Api.Areas.Persons.Controllers
                 return Conflict(e.Message);
             }
         }
+
+        /// <summary>
+        /// Update the specified contact, and attached properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.ContactEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Models.Person.PersonModel), 200)]
+        [SwaggerOperation(Tags = new[] { "person" })]
+        public IActionResult UpdateLease([FromBody] Models.Person.PersonModel personModel)
+        {
+            var personEntity = _mapper.Map<Pims.Dal.Entities.PimsPerson>(personModel);
+            _pimsService.Person.Update(personEntity);
+            var lease = _pimsService.Lease.UpdatePropertyLeases(leaseModel.Id, leaseModel.RowVersion, personEntity.PimsPropertyLeases, userOverride);
+
+            return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(lease));
+        }
         #endregion
     }
 }

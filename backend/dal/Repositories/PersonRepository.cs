@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -8,13 +9,15 @@ using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
     /// <summary>
     /// Provides a service layer to administrate persons within the datasource.
     /// </summary>
-    public class PersonService : BaseRepository<PimsPerson>, IPersonService
+    public class PersonRepository : BaseRepository<PimsPerson>, IPersonRepository
     {
         #region Constructors
         /// <summary>
@@ -24,7 +27,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public PersonService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PersonService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PersonRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -98,6 +101,31 @@ namespace Pims.Dal.Repositories
             this.Context.CommitTransaction();
 
             return Get(createdPerson.Entity.Id);
+        }
+
+        /// <summary>
+        /// Update the passed person/contact in the database assuming the user has the require claims.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public PimsPerson Update(PimsPerson person, long rowVersion)
+        {
+            if (person == null) throw new ArgumentNullException(nameof(person), "person cannot be null.");
+            this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
+            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == person.PersonId).FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+            if (existingPerson.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+
+            // update main entity - PimsPerson
+            Context.Entry(existingPerson).CurrentValues.SetValues(person);
+
+            // update sub-entities - addresses, contact_methods
+            this.Context.UpdateChild<PimsPerson, long, PimsPersonAddress>(p => p.PimsPersonAddresses, existingPerson.PersonId, person.add);
+
+            this.Context.CommitTransaction();
+
+
+            return Get(existingPerson.PersonId);
         }
         #endregion
     }

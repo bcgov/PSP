@@ -19,7 +19,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The person repository.
         /// </summary>
-        public IPersonService Person { get { return _serviceProvider.GetService<IPersonService>(); } }
+        public IPersonRepository Person { get { return _serviceProvider.GetService<IPersonRepository>(); } }
 
         /// <summary>
         /// get - The organization repository.
