@@ -132,6 +132,12 @@ namespace Pims.Dal.Repositories
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
                 .Include(t => t.PimsLeaseTerms)
                      .ThenInclude(t => t.LeaseTermStatusTypeCodeNavigation)
+                .Include(t => t.PimsLeaseTerms)
+                    .ThenInclude(t => t.PimsLeasePayments)
+                    .ThenInclude(t => t.LeasePaymentMethodTypeCodeNavigation)
+                .Include(t => t.PimsLeaseTerms)
+                    .ThenInclude(t => t.PimsLeasePayments)
+                    .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
 
                 .Where(l => l.LeaseId == id)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();

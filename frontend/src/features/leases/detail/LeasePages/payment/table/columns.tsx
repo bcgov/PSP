@@ -136,14 +136,15 @@ export const getColumns = ({
   return [
     {
       Header: '',
-      accessor: 'id',
-      maxWidth: 30,
+      id: 'initialOrRenewal',
+      align: 'left',
+      maxWidth: 50,
       Cell: initialOrRenewalTerm,
     },
     {
       Header: 'Start date - End date',
       align: 'left',
-      minWidth: 80,
+      minWidth: 60,
       Cell: startAndEndDate,
     },
     {
@@ -171,7 +172,7 @@ export const getColumns = ({
       ),
       align: 'right',
       accessor: 'paymentAmount',
-      maxWidth: 65,
+      maxWidth: 70,
       Cell: renderMoney,
     },
     {
@@ -193,7 +194,7 @@ export const getColumns = ({
       ),
       accessor: 'gstAmount',
       align: 'right',
-      maxWidth: 29,
+      maxWidth: 35,
       Cell: renderGstAmount,
     },
     {
@@ -208,7 +209,7 @@ export const getColumns = ({
       ),
       id: 'expectedTotal',
       align: 'right',
-      maxWidth: 55,
+      maxWidth: 60,
       Cell: renderExpectedTotal(),
     },
     {
@@ -223,7 +224,7 @@ export const getColumns = ({
       ),
       id: 'expectedTerm',
       align: 'right',
-      maxWidth: 55,
+      maxWidth: 60,
       Cell: renderExpectedTerm(),
     },
     {

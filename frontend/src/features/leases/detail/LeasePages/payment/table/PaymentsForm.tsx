@@ -2,16 +2,19 @@ import { Button } from 'components/common/form';
 import { TableProps } from 'components/Table/Table';
 import Claims from 'constants/claims';
 import { useFormikContext } from 'formik';
+import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease } from 'interfaces';
 import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
-import { orderBy } from 'lodash';
+import _, { noop, orderBy } from 'lodash';
 import * as React from 'react';
-import { Prompt } from 'react-router-dom';
+import { useMemo } from 'react';
+import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 import { prettyFormatDate } from 'utils';
 
 import * as Styled from '../../../styles';
 import * as PaymentStyles from '../styles';
+import { ActualsForm } from './ActualsForm';
 import { getColumns } from './columns';
 
 export interface IPaymentsFormProps {
@@ -26,7 +29,7 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   setDisplayModal,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
-  const columns = getColumns({ onEdit, onDelete: onDelete });
+  const columns = useMemo(() => getColumns({ onEdit, onDelete: onDelete }), [onEdit, onDelete]);
   const { hasClaim } = useKeycloakWrapper();
 
   //Get the most recent payment for display, if one exists.
@@ -37,12 +40,23 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   );
   const lastPaymentDate = allPayments.length ? prettyFormatDate(allPayments[0]?.receivedDate) : '';
 
+  const renderPayments = useDeepCompareMemo(
+    () => (row: IFormLeaseTerm) => {
+      return (
+        <ActualsForm
+          onEdit={noop}
+          onDelete={noop}
+          setDisplayModal={noop}
+          nameSpace={`terms.${formikProps.values.terms.indexOf(row)}`}
+          isExercised={row.isTermExercised}
+        />
+      );
+    },
+    [formikProps.values.terms],
+  );
+
   return (
     <>
-      <Prompt
-        when={formikProps.dirty}
-        message="You have made changes on this form. Do you wish to leave without saving?"
-      />
       <PaymentStyles.StyledFormBody>
         <Styled.LeaseH6>Payments by Term</Styled.LeaseH6>
 
@@ -55,12 +69,21 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
           {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
         </PaymentStyles.FullWidthInlineFlexDiv>
         <PaymentStyles.StyledTable<React.FC<TableProps<IFormLeaseTerm>>>
-          name="securityDepositsTable"
+          name="leasePaymentsTable"
           columns={columns}
           data={formikProps.values.terms ?? []}
           manualPagination={false}
           hideToolbar={true}
           noRowsMessage="There is no corresponding data"
+          canRowExpand={() => true}
+          detailsPanel={{
+            render: renderPayments,
+            onExpand: noop,
+            checkExpanded: (row: IFormLeaseTerm, state: IFormLeaseTerm[]) =>
+              !!_.find(state, term => term.id === row.id),
+            getRowId: (row: IFormLeaseTerm) => row.id,
+            icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
+          }}
         />
       </PaymentStyles.StyledFormBody>
     </>

@@ -88,8 +88,13 @@ const getStyles = <T extends object>(
     props,
     {
       style: {
-        justifyContent: column?.align === 'right' ? 'flex-end' : 'flex-start',
-        textAlign: column?.align === 'right' ? 'right' : 'left',
+        justifyContent:
+          column?.align === 'center'
+            ? 'center'
+            : column?.align === 'right'
+            ? 'flex-end'
+            : 'flex-start',
+        textAlign: column?.align ?? 'left',
         flexWrap: 'wrap',
         alignItems: 'center',
         display: isHeader && hideHeaders ? 'none' : 'flex',
