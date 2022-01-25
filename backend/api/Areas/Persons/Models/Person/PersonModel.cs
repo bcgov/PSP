@@ -51,9 +51,20 @@ namespace Pims.Api.Areas.Persons.Models.Person
         public long? OrganizationId { get; set; }
 
         /// <summary>
+        /// get/set - The primary key to identify the person-organization link (optional).
+        /// </summary>
+        public long? PersonOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The concurrency row version for the person-organization link (optional).
+        /// </summary>
+        /// <value></value>
+        public long? PersonOrganizationRowVersion { get; set; }
+
+        /// <summary>
         /// get/set - The person's addresses.
         /// </summary>
-        public IList<AddressModel> Addresses { get; set; }
+        public IList<PersonAddressModel> Addresses { get; set; }
 
         /// <summary>
         /// get/set - The person's contact methods.
