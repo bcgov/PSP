@@ -7,14 +7,14 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Person class, provides an entity for the datamodel to manage persons.
     /// </summary>
-    public partial class PimsPerson : IDisableBaseAppEntity
+    public partial class PimsPerson : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
         #region Properties
         /// <summary>
         /// get/set - Primary key to identify person.
         /// </summary>
         [NotMapped]
-        public long Id { get => PersonId; set => PersonId = value; }
+        public override long Id { get => PersonId; set => PersonId = value; }
 
         public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o => { o.PimsPersonOrganizations = null; return o; }).ToArray();
         public ICollection<PimsAddress> GetAddresses() => PimsPersonAddresses?.Select(pa => pa.Address).ToArray();
