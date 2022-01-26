@@ -163,7 +163,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -173,7 +173,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -185,7 +185,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -197,7 +197,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -209,7 +209,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -240,7 +240,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -252,7 +252,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -283,7 +283,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -314,7 +314,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -345,7 +345,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -376,7 +376,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -388,7 +388,7 @@ exports[`PaymentsForm component renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -593,7 +593,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -603,7 +603,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -615,7 +615,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -627,7 +627,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -639,7 +639,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -670,7 +670,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -682,7 +682,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -713,7 +713,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -744,7 +744,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -775,7 +775,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -806,7 +806,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -818,7 +818,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -864,7 +864,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               Initial term
@@ -872,7 +872,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
                - 
@@ -880,19 +880,19 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             />
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             />
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               $0
@@ -900,7 +900,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               N
@@ -908,7 +908,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               -
@@ -916,7 +916,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               $0
@@ -924,7 +924,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               -
@@ -932,7 +932,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               -
@@ -940,7 +940,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: flex-start; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               N
@@ -948,7 +948,7 @@ exports[`PaymentsForm component renders with data as expected 1`] = `
             <div
               class="td"
               role="cell"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: flex-end; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
             >
               <div

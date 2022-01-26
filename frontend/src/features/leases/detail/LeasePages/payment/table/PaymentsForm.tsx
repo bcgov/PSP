@@ -6,7 +6,7 @@ import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { IFormLease } from 'interfaces';
 import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
-import _, { noop, orderBy } from 'lodash';
+import { find, noop, orderBy } from 'lodash';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
@@ -80,7 +80,7 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
             render: renderPayments,
             onExpand: noop,
             checkExpanded: (row: IFormLeaseTerm, state: IFormLeaseTerm[]) =>
-              !!_.find(state, term => term.id === row.id),
+              !!find(state, term => term.id === row.id),
             getRowId: (row: IFormLeaseTerm) => row.id,
             icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
           }}

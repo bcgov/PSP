@@ -99,7 +99,7 @@ const getStyles = <T extends object>(
     props,
     {
       style: {
-        justifyContent: getJustify(column.align),
+        justifyContent: getJustify(column?.align),
         textAlign: column?.align ?? 'left',
         flexWrap: 'wrap',
         alignItems: 'center',

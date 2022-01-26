@@ -29,7 +29,7 @@ namespace Pims.Dal.Repositories
 
         public PimsLeaseTerm Update(PimsLeaseTerm pimsLeaseTerm)
         {
-            pimsLeaseTerm.PimsLeasePayments = null; //Do not edit lease payments.
+            this.Context.Entry(pimsLeaseTerm).Collection(t => t.PimsLeasePayments).IsModified = false;
             this.Context.Update(pimsLeaseTerm);
             return pimsLeaseTerm;
         }

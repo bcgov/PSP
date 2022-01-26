@@ -13,6 +13,7 @@ export interface INotesModalProps {
   title: string;
   nameSpace?: string;
   onSave?: (values: any) => void;
+  field?: string;
 }
 
 export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
@@ -20,12 +21,13 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
   onSave,
   notesLabel,
   title,
+  field,
 }) => {
   const { values, setFieldValue } = useFormikContext();
   const [showNotes, setShowNotes] = useState(false);
   const [currentNote, setCurrentNote] = useState();
-  const field = withNameSpace(nameSpace, 'note');
-  const noteValue = getIn(values, field);
+  const fieldWithNameSpace = withNameSpace(nameSpace, field ?? 'note');
+  const noteValue = getIn(values, fieldWithNameSpace);
 
   useEffect(() => {
     if (showNotes === false) {
@@ -44,7 +46,7 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
         message={
           <>
             {notesLabel}
-            <TextArea field={field} data-testid="note-field"></TextArea>
+            <TextArea field={fieldWithNameSpace} data-testid="note-field"></TextArea>
           </>
         }
         closeButton
@@ -52,7 +54,7 @@ export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
         cancelButtonText="Cancel"
         handleOk={() => onSave && onSave(values)}
         handleCancel={() => {
-          setFieldValue(field, currentNote);
+          setFieldValue(fieldWithNameSpace, currentNote);
         }}
       ></GenericModal>
     </>
