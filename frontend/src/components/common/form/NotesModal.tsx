@@ -8,19 +8,26 @@ import { useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 import { withNameSpace } from 'utils/formUtils';
 
-export interface IAddLeaseTenantNoteProps {
+export interface INotesModalProps {
+  notesLabel: React.ReactNode;
+  title: string;
   nameSpace?: string;
+  onSave?: (values: any) => void;
+  field?: string;
 }
 
-export const AddLeaseTenantNote: React.FunctionComponent<IAddLeaseTenantNoteProps> = ({
+export const NotesModal: React.FunctionComponent<INotesModalProps> = ({
   nameSpace,
+  onSave,
+  notesLabel,
+  title,
+  field,
 }) => {
   const { values, setFieldValue } = useFormikContext();
   const [showNotes, setShowNotes] = useState(false);
   const [currentNote, setCurrentNote] = useState();
-  const field = withNameSpace(nameSpace, 'note');
-  const noteValue = getIn(values, field);
-  const summaryValue = getIn(values, withNameSpace(nameSpace, 'summary'));
+  const fieldWithNameSpace = withNameSpace(nameSpace, field ?? 'note');
+  const noteValue = getIn(values, fieldWithNameSpace);
 
   useEffect(() => {
     if (showNotes === false) {
@@ -35,24 +42,23 @@ export const AddLeaseTenantNote: React.FunctionComponent<IAddLeaseTenantNoteProp
       <GenericModal
         display={showNotes}
         setDisplay={setShowNotes}
-        title="Tenant Notes"
+        title={title}
         message={
           <>
-            <p>
-              Notes pertaining to <b>{summaryValue}</b>
-            </p>
-            <TextArea field={field} data-testid="note-field"></TextArea>
+            {notesLabel}
+            <TextArea field={fieldWithNameSpace} data-testid="note-field"></TextArea>
           </>
         }
         closeButton
         okButtonText="Save"
         cancelButtonText="Cancel"
+        handleOk={() => onSave && onSave(values)}
         handleCancel={() => {
-          setFieldValue(field, currentNote);
+          setFieldValue(fieldWithNameSpace, currentNote);
         }}
       ></GenericModal>
     </>
   );
 };
 
-export default AddLeaseTenantNote;
+export default NotesModal;

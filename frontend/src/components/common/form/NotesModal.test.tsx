@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import NotesModal, { INotesModalProps } from 'components/common/form/NotesModal';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -9,23 +10,21 @@ import React from 'react';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
-import AddLeaseTenantNote, { IAddLeaseTenantNoteProps } from './AddLeaseTenantNote';
-
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const mockAxios = new MockAdapter(axios);
 
-describe('AddLeaseTenantNote component', () => {
+describe('NotesModal component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IAddLeaseTenantNoteProps> & { initialValues?: { note: string } } = {},
+      Partial<INotesModalProps> & { initialValues?: { note: string } } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <AddLeaseTenantNote />
+        <NotesModal notesLabel="test label" title="test title" />
       </Formik>,
       {
         ...renderOptions,
