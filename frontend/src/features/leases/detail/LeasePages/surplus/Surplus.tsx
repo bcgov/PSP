@@ -3,9 +3,10 @@ import { ColumnWithProps, Table } from 'components/Table';
 import { getIn, useFormikContext } from 'formik';
 import { ILease, IProperty } from 'interfaces';
 import { prettyFormatDate } from 'utils';
+import { stringToNull } from 'utils/formUtils';
 
 interface IDeclaration {
-  id: number;
+  id?: number;
   identifier: string;
   declarationType: string;
   date: string;
@@ -55,7 +56,7 @@ const Surplus: React.FunctionComponent = () => {
 
   let declarations: IDeclaration[] = properties.map<IDeclaration>(x => {
     return {
-      id: x.id || Math.random(),
+      id: x.id,
       identifier: x.pid,
       comments: x.surplusDeclaration?.comment || '',
       declarationType: x.surplusDeclaration?.type?.description || 'Unknown',
