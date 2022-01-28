@@ -63,6 +63,23 @@ describe('AdministrationSubForm component', () => {
     expect(otherText).toBeVisible();
     expect(otherText).toHaveAttribute('name', 'otherCategoryType');
   });
+  it('resets other category type text if type is changed', async () => {
+    const {
+      component: { container, findByLabelText },
+    } = await setup({});
+    await fillInput(container, 'type', 'LSREG', 'select');
+    await fillInput(container, 'categoryType', 'OTHER', 'select');
+    await fillInput(container, 'otherCategory', 'other category');
+    await findByLabelText('Describe other:');
+    await fillInput(container, 'type', 'OTHER', 'select');
+    await findByLabelText('Describe other:');
+    await fillInput(container, 'type', 'LSREG', 'select');
+    await fillInput(container, 'categoryType', 'OTHER', 'select');
+    const otherText = await findByLabelText('Describe other:');
+
+    expect(otherText).toBeVisible();
+    expect(otherText).toHaveValue('');
+  });
   it('displays other type text if "Other" is selected', async () => {
     const {
       component: { container, findByLabelText },
