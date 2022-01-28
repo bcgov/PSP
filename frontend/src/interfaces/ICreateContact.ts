@@ -5,6 +5,7 @@ import ITypeCode from './ITypeCode';
 
 export interface ICreatePerson {
   id?: number;
+  rowVersion?: number;
   surname: string;
   firstName: string;
   middleNames?: string;
@@ -12,6 +13,8 @@ export interface ICreatePerson {
   comment?: string;
   isDisabled: boolean;
   organizationId?: number;
+  personOrganizationId?: number;
+  personOrganizationRowVersion?: number;
   addresses?: ICreateContactAddress[];
   contactMethods?: ICreateContactMethod[];
 }
@@ -29,7 +32,9 @@ export interface ICreateOrganization {
 
 export interface ICreateContactAddress {
   id?: number;
+  personAddressId?: number;
   rowVersion?: number;
+  personAddressRowVersion?: number;
   addressTypeId: ITypeCode<string>;
   streetAddress1: string;
   streetAddress2?: string;
