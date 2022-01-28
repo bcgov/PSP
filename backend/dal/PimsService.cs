@@ -40,6 +40,10 @@ namespace Pims.Dal
         /// get - The security deposit return service.
         /// </summary>
         public ISecurityDepositReturnService SecurityDepositReturnService { get { return _serviceProvider.GetService<ISecurityDepositReturnService>(); } }
+        /// <summary>
+        /// get - The person service.
+        /// </summary>
+        public IPersonService PersonService { get { return _serviceProvider.GetService<IPersonService>(); } }
         #endregion
 
         #region Constructors

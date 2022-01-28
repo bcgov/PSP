@@ -59,7 +59,8 @@ namespace Pims.Dal
             services.AddScoped<Services.ILeasePaymentService, Services.LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();
             services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
-            return services; // TODO: Use reflection to find all services.
+            services.AddScoped<Services.IPersonService, Services.PersonService>();
+            return services; // TODO: Use reflection to find all Repositories.
         }
 
         /// <summary>
