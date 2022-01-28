@@ -108,7 +108,7 @@ const GenericModal = (props: ModalProps) => {
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body style={{ maxHeight: '50.0rem' }}>{props.message}</Modal.Body>
+        <Modal.Body>{props.message}</Modal.Body>
 
         <Modal.Footer>
           <Button variant={props.okButtonVariant ?? 'primary'} onClick={ok}>

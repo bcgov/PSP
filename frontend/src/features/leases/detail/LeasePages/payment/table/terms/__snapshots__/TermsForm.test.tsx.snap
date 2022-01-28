@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PaymentsContainer component renders as expected 1`] = `
+exports[`TermsForm component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -18,13 +18,20 @@ exports[`PaymentsContainer component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
+.c1 {
+  font-size: 2rem;
+  text-align: left;
+  font-family: BcSans-Bold;
+}
+
 .c0 {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 label {
+  font-family: 'BCSans-Bold';
 }
 
 .c0 .check-field {
@@ -51,7 +58,8 @@ exports[`PaymentsContainer component renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input {
+.c0 .form-group input,
+.c0 .form-group select {
   width: 70%;
 }
 
@@ -94,7 +102,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
   width: 100%;
 }
 
-.c4.table > .tbody > .tr-wrapper > tr > .td:nth-of-type(2) {
+.c4.table > .tbody > .tr-wrapper > .tr > .td:nth-of-type(2) {
   margin-right: -5rem;
   padding-left: 0;
 }
@@ -118,12 +126,6 @@ exports[`PaymentsContainer component renders as expected 1`] = `
   margin: 1rem 0;
 }
 
-.c1 {
-  font-size: 2rem;
-  text-align: left;
-  font-family: BcSans-Bold;
-}
-
 <div
     class="c0"
   >
@@ -134,18 +136,7 @@ exports[`PaymentsContainer component renders as expected 1`] = `
     </h6>
     <div
       class="c2 c3"
-    >
-      <button
-        class="Button btn btn-secondary"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          Add a Term
-        </div>
-      </button>
-    </div>
+    />
     <div
       class="table c4"
       data-testid="leasePaymentsTable"
@@ -405,19 +396,10 @@ exports[`PaymentsContainer component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;
 
-exports[`PaymentsContainer component renders with data as expected 1`] = `
+exports[`TermsForm component renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -435,13 +417,20 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
   flex-wrap: nowrap;
 }
 
+.c1 {
+  font-size: 2rem;
+  text-align: left;
+  font-family: BcSans-Bold;
+}
+
 .c0 {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 label {
+  font-family: 'BCSans-Bold';
 }
 
 .c0 .check-field {
@@ -468,7 +457,8 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input {
+.c0 .form-group input,
+.c0 .form-group select {
   width: 70%;
 }
 
@@ -511,7 +501,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
   width: 100%;
 }
 
-.c4.table > .tbody > .tr-wrapper > tr > .td:nth-of-type(2) {
+.c4.table > .tbody > .tr-wrapper > .tr > .td:nth-of-type(2) {
   margin-right: -5rem;
   padding-left: 0;
 }
@@ -547,15 +537,20 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c8 {
   gap: 3rem;
   background-color: white;
   min-height: 6rem;
-}
-
-.c1 {
-  font-size: 2rem;
-  text-align: left;
-  font-family: BcSans-Bold;
 }
 
 .c5 .btn.btn-primary {
@@ -573,18 +568,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
     </h6>
     <div
       class="c2 c3"
-    >
-      <button
-        class="Button btn btn-secondary"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          Add a Term
-        </div>
-      </button>
-    </div>
+    />
     <div
       class="table c4"
       data-testid="leasePaymentsTable"
@@ -994,33 +978,6 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
                     </svg>
                   </div>
                 </button>
-                <button
-                  class="Button Button--icon-only btn btn-primary"
-                  title="delete term"
-                  type="button"
-                >
-                  <div
-                    class="Button__icon"
-                  >
-                    <svg
-                      fill="currentColor"
-                      height="24"
-                      id="delete-term-0"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 448 512"
-                      width="24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <title>
-                        delete term
-                      </title>
-                      <path
-                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                      />
-                    </svg>
-                  </div>
-                </button>
               </div>
             </div>
           </div>
@@ -1052,7 +1009,9 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
                     d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
                   />
                 </svg>
-                <div>
+                <div
+                  class="c7"
+                >
                   <b>
                     Payments Sent
                   </b>
@@ -1062,7 +1021,7 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
                 class="col-md-10"
               >
                 <div
-                  class="c2 c7"
+                  class="c2 c8"
                 >
                   <p>
                     There are no recorded payments for this term.
@@ -1078,14 +1037,5 @@ exports[`PaymentsContainer component renders with data as expected 1`] = `
       </div>
     </div>
   </div>
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
-  <div
-    class="container"
-  />
 </DocumentFragment>
 `;

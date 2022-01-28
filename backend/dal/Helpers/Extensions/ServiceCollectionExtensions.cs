@@ -41,6 +41,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IOrganizationService, Repositories.OrganizationService>();
             repositories.AddScoped<Repositories.ILeaseTermRepository, Repositories.LeaseTermRepository>();
             repositories.AddScoped<Repositories.ISecurityDepositRepository, Repositories.SecurityDepositRepository>();
+            repositories.AddScoped<Repositories.ILeasePaymentRepository, Repositories.LeasePaymentRepository>();
             repositories.AddScoped<Repositories.ISecurityDepositReturnRepository, Repositories.SecurityDepositReturnRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
@@ -55,6 +56,7 @@ namespace Pims.Dal
             services.AddScoped<IPimsService, PimsService>();
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseTermService, LeaseTermService>();
+            services.AddScoped<Services.ILeasePaymentService, Services.LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();
             services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
             return services; // TODO: Use reflection to find all services.

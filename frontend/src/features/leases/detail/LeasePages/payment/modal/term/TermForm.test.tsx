@@ -8,7 +8,7 @@ import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
-import { IPaymentFormProps, PaymentForm } from './PaymentForm';
+import { ITermFormProps, TermForm } from './TermForm';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -18,17 +18,17 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('PaymentForm component', () => {
+describe('TermForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IPaymentFormProps> & {
+      Partial<ITermFormProps> & {
         initialValues?: any;
       } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <PaymentForm onSave={onSave} formikRef={{ current: { submitForm } } as any} />
+        <TermForm onSave={onSave} formikRef={{ current: { submitForm } } as any} />
       </Formik>,
       {
         ...renderOptions,

@@ -1,4 +1,5 @@
 using Pims.Dal.Repositories;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Services
 {
@@ -13,6 +14,11 @@ namespace Pims.Dal.Services
         {
             long currentRowVersion = _leaseRepository.GetRowVersion(leaseId);
             return currentRowVersion == rowVersion;
+        }
+
+        public PimsLease GetById(long leaseId)
+        {
+            return _leaseRepository.Get(leaseId);
         }
     }
 }

@@ -4,29 +4,35 @@ import Claims from 'constants/claims';
 import { useFormikContext } from 'formik';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { IFormLease } from 'interfaces';
-import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
+import { IFormLease, IFormLeasePayment } from 'interfaces';
+import { defaultFormLeaseTerm, IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import { find, noop, orderBy } from 'lodash';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 import { prettyFormatDate } from 'utils';
 
-import * as Styled from '../../../styles';
-import * as PaymentStyles from '../styles';
-import { ActualsForm } from './ActualsForm';
+import * as Styled from '../../../../styles';
+import * as PaymentStyles from '../../styles';
+import { PaymentsForm } from '../payments/PaymentsForm';
 import { getColumns } from './columns';
 
-export interface IPaymentsFormProps {
+export interface ITermsFormProps {
   onEdit: (values: IFormLeaseTerm) => void;
+  onEditPayment: (values: IFormLeasePayment) => void;
   onDelete: (values: IFormLeaseTerm) => void;
-  setDisplayModal: (displayModal: boolean) => void;
+  onDeletePayment: (values: IFormLeasePayment) => void;
+  onSavePayment: (values: IFormLeasePayment) => void;
+  isReceivable?: boolean;
 }
 
-export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
+export const TermsForm: React.FunctionComponent<ITermsFormProps> = ({
   onEdit,
+  onEditPayment,
   onDelete,
-  setDisplayModal,
+  onDeletePayment,
+  onSavePayment,
+  isReceivable,
 }) => {
   const formikProps = useFormikContext<IFormLease>();
   const columns = useMemo(() => getColumns({ onEdit, onDelete: onDelete }), [onEdit, onDelete]);
@@ -40,15 +46,19 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   );
   const lastPaymentDate = allPayments.length ? prettyFormatDate(allPayments[0]?.receivedDate) : '';
 
+  /** This is the payments subtable displayed for each term row. */
   const renderPayments = useDeepCompareMemo(
     () => (row: IFormLeaseTerm) => {
       return (
-        <ActualsForm
-          onEdit={noop}
-          onDelete={noop}
-          setDisplayModal={noop}
+        <PaymentsForm
+          onSave={onSavePayment}
+          onEdit={onEditPayment}
+          onDelete={onDeletePayment}
           nameSpace={`terms.${formikProps.values.terms.indexOf(row)}`}
-          isExercised={row.isTermExercised}
+          isExercised={row?.statusTypeCode?.id === 'EXER'}
+          isGstEligible={row.isGstEligible}
+          isReceivable={isReceivable}
+          termId={row.id}
         />
       );
     },
@@ -61,8 +71,8 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
         <Styled.LeaseH6>Payments by Term</Styled.LeaseH6>
 
         <PaymentStyles.FullWidthInlineFlexDiv>
-          {hasClaim(Claims.LEASE_EDIT) && (
-            <Button variant="secondary" onClick={() => setDisplayModal(true)}>
+          {hasClaim(Claims.LEASE_ADD) && (
+            <Button variant="secondary" onClick={() => onEdit(defaultFormLeaseTerm)}>
               Add a Term
             </Button>
           )}
@@ -90,4 +100,4 @@ export const PaymentsForm: React.FunctionComponent<IPaymentsFormProps> = ({
   );
 };
 
-export default PaymentsForm;
+export default TermsForm;

@@ -105,21 +105,26 @@ const termActions = (
 ) => {
   return function({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
     const { hasClaim } = useKeycloakWrapper();
-    return hasClaim(Claims.LEASE_EDIT) ? (
+    return (
       <StyledIcons>
-        <Button
-          title="edit term"
-          icon={<MdEdit size={24} id={`edit-term-${index}`} title="edit term" />}
-          onClick={() => onEdit(original)}
-        ></Button>
-        <Button
-          title="delete term"
-          icon={<FaTrash size={24} id={`delete-term-${index}`} title="delete term" />}
-          onClick={() => original.id && onDelete(original)}
-          disabled={original.payments.length > 0 || original.statusTypeCode?.id === 'EXER'}
-        ></Button>
+        {hasClaim(Claims.LEASE_EDIT) && (
+          <Button
+            title="edit term"
+            icon={<MdEdit size={24} id={`edit-term-${index}`} title="edit term" />}
+            onClick={() => onEdit(original)}
+          ></Button>
+        )}
+        {hasClaim(Claims.LEASE_DELETE) &&
+          original.payments.length <= 0 &&
+          original.statusTypeCode?.id !== 'EXER' && (
+            <Button
+              title="delete term"
+              icon={<FaTrash size={24} id={`delete-term-${index}`} title="delete term" />}
+              onClick={() => original.id && onDelete(original)}
+            ></Button>
+          )}
       </StyledIcons>
-    ) : null;
+    );
   };
 };
 

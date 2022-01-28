@@ -4,9 +4,9 @@ import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import * as React from 'react';
 import { useRef } from 'react';
 
-import PaymentForm from './PaymentForm';
+import PaymentForm from './TermForm';
 
-export interface IPaymentModalProps {
+export interface ITermModalProps {
   initialValues?: IFormLeaseTerm;
   displayModal?: boolean;
   onCancel: () => void;
@@ -15,9 +15,9 @@ export interface IPaymentModalProps {
 
 /**
  * Modal displaying form allowing add/update lease terms. Save button triggers internal formik validation and submit.
- * @param {IPaymentModalProps} props
+ * @param {ITermModalProps} props
  */
-export const PaymentModal: React.FunctionComponent<IPaymentModalProps> = ({
+export const TermModal: React.FunctionComponent<ITermModalProps> = ({
   initialValues,
   displayModal,
   onCancel,
@@ -37,4 +37,4 @@ export const PaymentModal: React.FunctionComponent<IPaymentModalProps> = ({
   );
 };
 
-export default PaymentModal;
+export default TermModal;

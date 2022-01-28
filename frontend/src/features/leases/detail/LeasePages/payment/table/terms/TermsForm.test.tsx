@@ -12,8 +12,7 @@ import {
 import { noop } from 'lodash';
 import { getAllByRole as getAllByRoleBase, renderAsync, RenderOptions } from 'utils/test-utils';
 
-import { IPaymentsFormProps } from './PaymentsForm';
-import { PaymentsForm } from './PaymentsForm';
+import { ITermsFormProps, TermsForm } from './TermsForm';
 
 jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
@@ -26,10 +25,10 @@ const defaultTestFormLeaseTerm = {
   paymentAmount: 1000,
 };
 
-describe('PaymentsForm component', () => {
+describe('TermsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IPaymentsFormProps> & {
+      Partial<ITermsFormProps> & {
         initialValues?: any;
         selectedTenants?: IContactSearchResult[];
         onCancel?: () => void;
@@ -39,7 +38,13 @@ describe('PaymentsForm component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <PaymentsForm onEdit={noop} onDelete={noop} setDisplayModal={noop} />
+        <TermsForm
+          onEdit={noop}
+          onDelete={noop}
+          onEditPayment={noop}
+          onDeletePayment={noop}
+          onSavePayment={noop}
+        />
       </Formik>,
       {
         ...renderOptions,

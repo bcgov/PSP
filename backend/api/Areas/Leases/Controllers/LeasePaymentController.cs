@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Pims.Api.Areas.Lease.Controllers
 {
     /// <summary>
-    /// LeaseTermController class, provides endpoints for interacting with lease property terms.
+    /// LeasePaymentController class, provides endpoints for interacting with lease payment improvements.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -19,7 +19,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     [Area("leases")]
     [Route("v{version:apiVersion}/[area]")]
     [Route("[area]")]
-    public class LeaseTermController : ControllerBase
+    public class LeasePaymentController : ControllerBase
     {
         #region Variables
         private readonly IPimsService _pimsService;
@@ -28,12 +28,12 @@ namespace Pims.Api.Areas.Lease.Controllers
 
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a LeaseTermController class, initializes it with the specified arguments.
+        /// Creates a new instance of a LeasePaymentController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeaseTermController(IPimsService pimsService, IMapper mapper)
+        public LeasePaymentController(IPimsService pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;
@@ -42,52 +42,52 @@ namespace Pims.Api.Areas.Lease.Controllers
 
         #region Endpoints
         /// <summary>
-        /// Update the specified term on the passed lease.
+        /// Update the specified payment on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPost("{leaseId:long}/term")]
+        [HttpPost("{leaseId:long}/payment")]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult AddTerm(long leaseId, [FromBody] Models.Lease.TermModel termModel)
+        public IActionResult AddPayment(long leaseId, [FromBody] Models.Lease.PaymentModel paymentModel)
         {
-            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _pimsService.LeaseTermService.AddTerm(leaseId, termModel.LeaseRowVersion, termEntity);
+            var paymentEntity = _mapper.Map<PimsLeasePayment>(paymentModel);
+            var updatedLease = _pimsService.LeasePaymentService.AddPayment(leaseId, paymentModel.LeaseRowVersion, paymentEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
 
         /// <summary>
-        /// Update the specified term on the passed lease.
+        /// Update the specified payment on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPut("{leaseId:long}/term/{termId:long}")]
+        [HttpPut("{leaseId:long}/payment/{paymentId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult UpdateTerm(long leaseId, long termId, [FromBody] Models.Lease.TermModel termModel)
+        public IActionResult UpdatePayment(long leaseId, long paymentId, [FromBody] Models.Lease.PaymentModel paymentModel)
         {
-            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _pimsService.LeaseTermService.UpdateTerm(leaseId, termId, termModel.LeaseRowVersion, termEntity);
+            var paymentEntity = _mapper.Map<PimsLeasePayment>(paymentModel);
+            var updatedLease = _pimsService.LeasePaymentService.UpdatePayment(leaseId, paymentId, paymentModel.LeaseRowVersion, paymentEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }
 
         /// <summary>
-        /// Delete the specified term on the passed lease.
+        /// Delete the specified payment on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("{leaseId:long}/term")]
+        [HttpDelete("{leaseId:long}/payment")]
         [HasPermission(Permissions.LeaseDelete)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
-        public IActionResult DeleteTerm(long leaseId, Models.Lease.TermModel termModel)
+        public IActionResult DeletePayment(long leaseId, Models.Lease.PaymentModel paymentModel)
         {
-            var termEntity = _mapper.Map<PimsLeaseTerm>(termModel);
-            var updatedLease = _pimsService.LeaseTermService.DeleteTerm(leaseId, termModel.LeaseRowVersion, termEntity);
+            var paymentEntity = _mapper.Map<PimsLeasePayment>(paymentModel);
+            var updatedLease = _pimsService.LeasePaymentService.DeletePayment(leaseId, paymentModel.LeaseRowVersion, paymentEntity);
 
             return new JsonResult(_mapper.Map<Models.Lease.LeaseModel>(updatedLease));
         }

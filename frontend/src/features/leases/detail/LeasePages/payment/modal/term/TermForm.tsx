@@ -1,5 +1,4 @@
 import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from 'components/common/form';
-import * as CommonStyled from 'components/common/styles';
 import * as API from 'constants/API';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik, FormikProps } from 'formik';
@@ -8,10 +7,11 @@ import { defaultFormLeaseTerm, IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import * as React from 'react';
 import { useContext } from 'react';
 
-import { StyledFormBody } from '../styles';
-import { LeaseTermSchema } from './PaymentsYupSchema';
+import * as Styled from '../../styles';
+import { StyledFormBody } from '../../styles';
+import { LeaseTermSchema } from './TermsYupSchema';
 
-export interface IPaymentFormProps {
+export interface ITermFormProps {
   formikRef: React.Ref<FormikProps<IFormLeaseTerm>>;
   onSave: (values: IFormLeaseTerm) => void;
   initialValues?: IFormLeaseTerm;
@@ -20,9 +20,9 @@ export interface IPaymentFormProps {
 /**
  * Internal Form intended to be displayed within a modal window. will be initialized with default values (including NEXER status)
  * if not initialValues provided. Otherwise will display the passed lease term. Save/Cancel triggered externally via passed formikRef.
- * @param {IPaymentFormProps} props
+ * @param {ITermFormProps} props
  */
-export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
+export const TermForm: React.FunctionComponent<ITermFormProps> = ({
   initialValues,
   formikRef,
   onSave,
@@ -52,7 +52,7 @@ export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
     >
       {formikProps => (
         <StyledFormBody>
-          <CommonStyled.InlineFlexDiv>
+          <Styled.FlexRowDiv>
             <FastDatePicker
               required
               label="Start date:"
@@ -60,10 +60,10 @@ export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
               formikProps={formikProps}
             />
             <FastDatePicker label="End date:" field="expiryDate" formikProps={formikProps} />
-          </CommonStyled.InlineFlexDiv>
+          </Styled.FlexRowDiv>
           <Select
             placeholder="Select"
-            label="Payment Frequency:"
+            label="Payment frequency:"
             field="leasePmtFreqTypeCode.id"
             options={paymentFrequencyOptions}
           />
@@ -91,4 +91,4 @@ export const PaymentForm: React.FunctionComponent<IPaymentFormProps> = ({
   );
 };
 
-export default PaymentForm;
+export default TermForm;
