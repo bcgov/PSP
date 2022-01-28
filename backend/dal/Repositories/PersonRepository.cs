@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -41,6 +40,12 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsPerson> GetAll()
         {
             return this.Context.PimsPeople.AsNoTracking().ToArray();
+        }
+
+        public long GetRowVersion(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.ContactView);
+            return this.Context.PimsPeople.AsNoTracking().Where(p => p.Id == id)?.Select(p => p.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -97,10 +102,8 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            var createdPerson = this.Context.PimsPeople.Add(person);
-            this.Context.CommitTransaction();
-
-            return Get(createdPerson.Entity.Id);
+            this.Context.PimsPeople.Add(person);
+            return person;
         }
 
         /// <summary>
@@ -108,24 +111,26 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="person"></param>
         /// <returns></returns>
-        public PimsPerson Update(PimsPerson person, long rowVersion)
+        public PimsPerson Update(PimsPerson person)
         {
-            if (person == null) throw new ArgumentNullException(nameof(person), "person cannot be null.");
+            person.ThrowIfNull(nameof(person));
             this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
-            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == person.PersonId).FirstOrDefault()
+
+            var personId = person.Id;
+            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == personId).FirstOrDefault()
                  ?? throw new KeyNotFoundException();
-            if (existingPerson.ConcurrencyControlNumber != rowVersion) throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
 
             // update main entity - PimsPerson
             Context.Entry(existingPerson).CurrentValues.SetValues(person);
 
-            // update sub-entities - addresses, contact_methods
-            this.Context.UpdateChild<PimsPerson, long, PimsPersonAddress>(p => p.PimsPersonAddresses, existingPerson.PersonId, person.add);
+            // update direct relationships - contact_methods, organizations
+            this.Context.UpdateChild<PimsPerson, long, PimsContactMethod>(p => p.PimsContactMethods, personId, person.PimsContactMethods.ToArray());
+            this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
 
-            this.Context.CommitTransaction();
+            // update addresses via UpdateGrandchild method
+            this.Context.UpdateGrandchild<PimsPerson, long, PimsPersonAddress>(p => p.PimsPersonAddresses, pa => pa.Address, personId, person.PimsPersonAddresses.ToArray());
 
-
-            return Get(existingPerson.PersonId);
+            return existingPerson;
         }
         #endregion
     }
