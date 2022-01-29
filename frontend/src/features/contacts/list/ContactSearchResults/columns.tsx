@@ -6,7 +6,7 @@ import { IContactSearchResult } from 'interfaces';
 import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { MdContactMail, MdEdit } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
@@ -104,16 +104,26 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     accessor: 'controls' as any, // this column is not part of the data model
     width: 40,
     maxWidth: 40,
-    Cell: (props: CellProps<IContactSearchResult>) => (
-      <StyledDiv>
-        <IconButton variant="light">
-          <MdEdit size={22} />
-        </IconButton>
-        <IconButton variant="light">
-          <MdContactMail size={22} />
-        </IconButton>
-      </StyledDiv>
-    ),
+    Cell: (props: CellProps<IContactSearchResult>) => {
+      const history = useHistory();
+
+      return (
+        <StyledDiv>
+          <IconButton
+            variant="light"
+            onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
+          >
+            <MdEdit size={22} />
+          </IconButton>
+          <IconButton
+            variant="light"
+            onClick={() => history.push(`/contact/${props.row.original.id}`)}
+          >
+            <MdContactMail size={22} />
+          </IconButton>
+        </StyledDiv>
+      );
+    },
   },
 ];
 const StyledDiv = styled(InlineFlexDiv)`

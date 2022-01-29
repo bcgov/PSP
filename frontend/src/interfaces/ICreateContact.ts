@@ -59,7 +59,7 @@ export interface ICreatePersonForm
   extends ExtendOverride<
     ICreatePerson,
     {
-      organizationId: NumberFieldValue;
+      organizationId: { id: number } | '';
       emailContactMethods: ICreateContactMethodForm[];
       phoneContactMethods: ICreateContactMethodForm[];
       mailingAddress: ICreateContactAddressForm;

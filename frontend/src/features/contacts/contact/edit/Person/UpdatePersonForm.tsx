@@ -9,7 +9,6 @@ import {
   CommentNotes,
   ContactEmailList,
   ContactPhoneList,
-  DuplicateContactModal,
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
 import * as Styled from 'features/contacts/contact/create/styles';
@@ -19,8 +18,9 @@ import {
   hasPhoneNumber,
   PersonValidationSchema,
 } from 'features/contacts/contact/create/validation';
-import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
-import useAddContact from 'features/contacts/hooks/useAddContact';
+import { apiPersonToFormPerson, formPersonToApiPerson } from 'features/contacts/contactUtils';
+import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
+import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import {
   Formik,
   FormikHelpers,
@@ -32,7 +32,7 @@ import {
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
@@ -41,12 +41,13 @@ import { toast } from 'react-toastify';
 /**
  * Formik-connected form to Update Individual Contacts
  */
-export const UpdatePersonForm: React.FunctionComponent = () => {
+export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
-  const { addPerson } = useAddContact();
+  const { updatePerson } = useUpdateContact();
 
-  const [showDuplicateModal, setDuplicateModal] = useState(false);
-  const [allowDuplicate, setAllowDuplicate] = useState(false);
+  // fetch person details from API for the supplied person's Id
+  const { person } = usePersonDetail(id);
+  const formPerson = useMemo(() => apiPersonToFormPerson(person), [person]);
 
   // validation needs to be adjusted when country == OTHER
   const { countries } = useAddressHelpers();
@@ -54,8 +55,6 @@ export const UpdatePersonForm: React.FunctionComponent = () => {
     () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
     [countries],
   );
-
-  const formikRef = useRef<FormikProps<ICreatePersonForm>>(null);
 
   const onValidate = (values: ICreatePersonForm) => {
     try {
@@ -77,9 +76,8 @@ export const UpdatePersonForm: React.FunctionComponent = () => {
     { setSubmitting }: FormikHelpers<ICreatePersonForm>,
   ) => {
     try {
-      setDuplicateModal(false);
-      let newPerson = personCreateFormToApiPerson(formPerson);
-      const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+      let apiPerson = formPersonToApiPerson(formPerson);
+      const personResponse = await updatePerson(apiPerson);
 
       if (!!personResponse?.id) {
         history.push('/contact/list');
@@ -89,29 +87,14 @@ export const UpdatePersonForm: React.FunctionComponent = () => {
     }
   };
 
-  const saveDuplicate = async () => {
-    setAllowDuplicate(true);
-    if (formikRef.current) {
-      formikRef.current.handleSubmit();
-    }
-  };
-
   return (
-    <>
-      <Formik
-        component={UpdatePersonComponent}
-        initialValues={defaultCreatePerson}
-        enableReinitialize
-        validate={onValidate}
-        onSubmit={onSubmit}
-        innerRef={formikRef}
-      />
-      <DuplicateContactModal
-        display={showDuplicateModal}
-        handleOk={() => saveDuplicate()}
-        handleCancel={() => setAllowDuplicate(false)}
-      ></DuplicateContactModal>
-    </>
+    <Formik
+      component={UpdatePersonComponent}
+      initialValues={!!formPerson ? { ...defaultCreatePerson, ...formPerson } : defaultCreatePerson}
+      enableReinitialize
+      validate={onValidate}
+      onSubmit={onSubmit}
+    />
   );
 };
 
@@ -206,14 +189,14 @@ const UpdatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
               <Styled.H2>Organization</Styled.H2>
               <Row>
                 <Col md={7}>
-                  <AsyncTypeahead
+                  {/* <AsyncTypeahead
                     field="organizationId"
                     label="Link to an existing organization"
                     labelKey="text"
                     isLoading={isTypeaheadLoading}
                     options={matchedOrgs}
                     onSearch={handleTypeaheadSearch}
-                  />
+                  /> */}
                 </Col>
               </Row>
             </FormSection>

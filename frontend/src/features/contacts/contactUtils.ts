@@ -10,6 +10,7 @@ import {
   ICreatePerson,
   ICreatePersonForm,
 } from 'interfaces/ICreateContact';
+import ITypeCode from 'interfaces/ITypeCode';
 import isPlainObject from 'lodash/isPlainObject';
 import { stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
 
@@ -35,7 +36,7 @@ export function formPersonToApiPerson(formValues: ICreatePersonForm): ICreatePer
   const apiPerson = {
     ...restObject,
     organizationId: isPlainObject(formValues.organizationId)
-      ? (formValues.organizationId as any).id
+      ? typeCodeToString<number>(formValues.organizationId as ITypeCode<number>)
       : undefined,
     addresses,
     contactMethods,
@@ -59,6 +60,7 @@ export function apiPersonToFormPerson(person?: ICreatePerson) {
 
   const formPerson = {
     ...restObject,
+    organizationId: stringToTypeCode(person.organizationId),
     mailingAddress: addressDictionary[AddressTypes.Mailing],
     propertyAddress: addressDictionary[AddressTypes.Residential],
     billingAddress: addressDictionary[AddressTypes.Billing],

@@ -41,10 +41,10 @@ export function emptyStringToNull(value: any, originalValue: any) {
   return value;
 }
 
-export function stringToTypeCode(value?: string) {
+export function stringToTypeCode<T = string>(value?: T) {
   return !!value ? { id: value } : undefined;
 }
 
-export function typeCodeToString<T = any>(value?: ITypeCode<T>) {
+export function typeCodeToString<T = string>(value?: ITypeCode<T>) {
   return value?.id;
 }
