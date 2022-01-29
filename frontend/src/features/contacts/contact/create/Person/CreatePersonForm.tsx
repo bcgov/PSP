@@ -19,7 +19,7 @@ import {
   hasPhoneNumber,
   PersonValidationSchema,
 } from 'features/contacts/contact/create/validation';
-import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
+import { formPersonToApiPerson } from 'features/contacts/contactUtils';
 import useAddContact from 'features/contacts/hooks/useAddContact';
 import {
   Formik,
@@ -78,7 +78,7 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   ) => {
     try {
       setDuplicateModal(false);
-      let newPerson = personCreateFormToApiPerson(formPerson);
+      let newPerson = formPersonToApiPerson(formPerson);
       const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
 
       if (!!personResponse?.id) {

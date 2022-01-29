@@ -22,7 +22,7 @@ const useAddContact = () => {
     try {
       dispatch(showLoading());
       const response = await postPerson(person, userOverride);
-      toast.success('Contact/Person saved');
+      toast.success('Contact saved');
       return response?.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -33,7 +33,7 @@ const useAddContact = () => {
           if (axiosError?.response?.status === 400) {
             toast.error(axiosError?.response.data.error);
           } else {
-            toast.error('Save error. Check responses and try again.');
+            toast.error('Unable to save. Please try again.');
           }
           dispatch(
             logError({

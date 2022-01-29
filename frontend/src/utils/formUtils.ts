@@ -1,3 +1,5 @@
+import ITypeCode from 'interfaces/ITypeCode';
+
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.
  * @param nameSpace the namespace of the current formik form.
@@ -41,4 +43,8 @@ export function emptyStringToNull(value: any, originalValue: any) {
 
 export function stringToTypeCode(value?: string) {
   return !!value ? { id: value } : undefined;
+}
+
+export function typeCodeToString<T = any>(value?: ITypeCode<T>) {
+  return value?.id;
 }

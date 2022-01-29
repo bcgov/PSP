@@ -26,6 +26,7 @@ export const useApiContacts = () => {
         api.post<ICreatePerson>(`/persons?userOverride=${userOverride}`, person),
       postOrganization: (organization: ICreateOrganization, userOverride: boolean) =>
         api.post<ICreateOrganization>(`/organizations?userOverride=${userOverride}`, organization),
+      putPerson: (person: ICreatePerson) => api.put<ICreatePerson>(`/persons/${person.id}`, person),
     }),
     [api],
   );

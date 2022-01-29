@@ -1,6 +1,9 @@
+import { emailContactMethods, phoneContactMethods } from 'constants/contactMethodType';
+import { AddressTypes } from 'constants/index';
 import {
   ICreateContactAddress,
   ICreateContactAddressForm,
+  ICreateContactMethod,
   ICreateContactMethodForm,
   ICreateOrganization,
   ICreateOrganizationForm,
@@ -8,9 +11,9 @@ import {
   ICreatePersonForm,
 } from 'interfaces/ICreateContact';
 import isPlainObject from 'lodash/isPlainObject';
-import { stringToNull, stringToTypeCode } from 'utils/formUtils';
+import { stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
 
-export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICreatePerson {
+export function formPersonToApiPerson(formValues: ICreatePersonForm): ICreatePerson {
   // exclude form-specific fields from API payload object
   const {
     mailingAddress,
@@ -23,15 +26,11 @@ export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICre
 
   const addresses = [mailingAddress, propertyAddress, billingAddress]
     .filter(hasAddress)
-    .map(addressFormToApiAddress);
+    .map(formAddressToApiAddress);
 
   const contactMethods = [...emailContactMethods, ...phoneContactMethods]
     .filter(hasContactMethod)
-    .map(formContactMethod => ({
-      ...formContactMethod,
-      value: stringToNull(formContactMethod.value),
-      contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
-    }));
+    .map(formContactMethodToApiContactMethod);
 
   const apiPerson = {
     ...restObject,
@@ -43,6 +42,31 @@ export function personCreateFormToApiPerson(formValues: ICreatePersonForm): ICre
   } as ICreatePerson;
 
   return apiPerson;
+}
+
+export function apiPersonToFormPerson(person?: ICreatePerson) {
+  if (!person) return undefined;
+
+  // exclude api-specific fields from form values
+  const { addresses, contactMethods, ...restObject } = person;
+
+  // split address array into sub-types: MAILING, RESIDENTIAL, BILLING
+  const formAddresses = addresses?.map(apiAddressToFormAddress) || [];
+  const addressDictionary = toDictionary(formAddresses, 'addressTypeId');
+
+  // split contact methods array into phone and email values
+  const formContactMethods = contactMethods?.map(apiContactMethodToFormContactMethod) || [];
+
+  const formPerson = {
+    ...restObject,
+    mailingAddress: addressDictionary[AddressTypes.Mailing],
+    propertyAddress: addressDictionary[AddressTypes.Residential],
+    billingAddress: addressDictionary[AddressTypes.Billing],
+    emailContactMethods: formContactMethods.filter(isEmail),
+    phoneContactMethods: formContactMethods.filter(isPhone),
+  } as ICreatePersonForm;
+
+  return formPerson;
 }
 
 export function organizationCreateFormToApiOrganization(
@@ -60,15 +84,11 @@ export function organizationCreateFormToApiOrganization(
 
   const addresses = [mailingAddress, propertyAddress, billingAddress]
     .filter(hasAddress)
-    .map(addressFormToApiAddress);
+    .map(formAddressToApiAddress);
 
   const contactMethods = [...emailContactMethods, ...phoneContactMethods]
     .filter(hasContactMethod)
-    .map(formContactMethod => ({
-      ...formContactMethod,
-      value: stringToNull(formContactMethod.value),
-      contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
-    }));
+    .map(formContactMethodToApiContactMethod);
 
   const apiOrganization = {
     ...restObject,
@@ -99,11 +119,51 @@ function hasAddress(formAddress: ICreateContactAddressForm): boolean {
   );
 }
 
-function addressFormToApiAddress(formAddress: ICreateContactAddressForm): ICreateContactAddress {
+function formAddressToApiAddress(formAddress: ICreateContactAddressForm): ICreateContactAddress {
   return {
     ...formAddress,
     countryId: parseInt(formAddress.countryId.toString()) || 0,
     provinceId: parseInt(formAddress.provinceId.toString()) || 0,
     addressTypeId: stringToTypeCode(formAddress.addressTypeId),
   } as ICreateContactAddress;
+}
+
+function apiAddressToFormAddress(address?: ICreateContactAddress) {
+  if (!address) return undefined;
+
+  return {
+    ...address,
+    addressTypeId: typeCodeToString(address.addressTypeId),
+  } as ICreateContactAddressForm;
+}
+
+function formContactMethodToApiContactMethod(formContactMethod: ICreateContactMethodForm) {
+  return {
+    ...formContactMethod,
+    value: stringToNull(formContactMethod.value),
+    contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
+  } as ICreateContactMethod;
+}
+
+function apiContactMethodToFormContactMethod(contactMethod?: ICreateContactMethod) {
+  if (!contactMethod) return undefined;
+
+  return {
+    ...contactMethod,
+    contactMethodTypeCode: typeCodeToString(contactMethod.contactMethodTypeCode),
+  } as ICreateContactMethodForm;
+}
+
+// utility function to map an array to a object dictionary based on a given key
+// used to convert the array of addresses into 3 separate fields: mailingAddress, propertyAddress and billingAddress
+function toDictionary(array: any[], key: string) {
+  return Object.assign({}, ...array.map(obj => ({ [obj[key]]: obj })));
+}
+
+function isEmail(contactMethod?: ICreateContactMethodForm): boolean {
+  return !!contactMethod && emailContactMethods.includes(contactMethod.contactMethodTypeCode);
+}
+
+function isPhone(contactMethod?: ICreateContactMethodForm): boolean {
+  return !!contactMethod && phoneContactMethods.includes(contactMethod.contactMethodTypeCode);
 }
