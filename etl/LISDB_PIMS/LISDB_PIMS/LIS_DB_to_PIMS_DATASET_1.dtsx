@@ -12,16 +12,16 @@
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="247"
-  DTS:VersionGUID="{A2E1AE80-C265-46BE-8594-BB5B0E946AD4}">
+  DTS:VersionBuild="253"
+  DTS:VersionGUID="{61B81593-73E3-4934-906F-0DE19910A5C3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[IS19]"
+      DTS:refId="Package.ConnectionManagers[PIMS]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}"
-      DTS:ObjectName="IS19">
+      DTS:ObjectName="PIMS">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -1561,8 +1561,8 @@ where [refTable].[DESCRIPTION] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -1721,8 +1721,8 @@ where [refTable].[DESCRIPTION] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -1880,8 +1880,8 @@ where [refTable].[FIRST_NAME] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -2102,8 +2102,8 @@ where [refTable].[FIRST_NAME] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\OLE DB Destination.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -2505,8 +2505,8 @@ where [refTable].[FIRST_NAME] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -10123,9 +10123,9 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Derived Column.Outputs[Derived Column Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output4]"
                   endId="Package\Main Flow 1\LOAD LEASES\Handle Remaining Not Null.Inputs[Derived Column Input]"
@@ -10133,14 +10133,14 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
-                  name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 3.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Union All 2.Inputs[Union All Input 1]"
@@ -10148,14 +10148,14 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Convert Purpose to Unicode.Inputs[Data Conversion Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\TFA_File_Number.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
-                  endId="Package\Main Flow 1\LOAD LEASES\Conditional Split.Inputs[Conditional Split Input]"
+                  endId="Package\Main Flow 1\LOAD LEASES\Union All 1.Inputs[Union All Input 1]"
                   name="Lookup Match Output"
-                  startId="Package\Main Flow 1\LOAD LEASES\LEASE_CATEGORY_TYPE.Outputs[Lookup Match Output]" />
+                  startId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Lookup No Match Output]"
                   endId="Package\Main Flow 1\LOAD LEASES\OTHER for PURPOSE CODE.Inputs[Derived Column Input]"
@@ -10978,8 +10978,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\Lookup PROPERTY_ID in PIMS_PROPERTY.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -11124,8 +11124,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -11292,8 +11292,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG 1.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -11452,8 +11452,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS LEASE.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -12520,8 +12520,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS_PROPERTY_LEASE.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -13472,7 +13472,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
           TopLeft="482.5,412">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13496,7 +13496,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
           TopLeft="1111.5,1401.25">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13556,7 +13556,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output3]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
           TopLeft="485,654">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13592,7 +13592,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output2]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output6]"
           TopLeft="770.642857142857,847">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13652,7 +13652,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Lookup Match Output5]"
           TopLeft="842,1264">
           <EdgeLayout.Curve>
             <mssgle:Curve
