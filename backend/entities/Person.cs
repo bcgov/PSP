@@ -16,7 +16,6 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public override long Id { get => PersonId; set => PersonId = value; }
 
-        public long? GetLinkedOrganizationId() => PimsPersonOrganizations?.FirstOrDefault(t => t != null)?.OrganizationId;
         public long? GetPersonOrganizationId() => PimsPersonOrganizations?.FirstOrDefault(t => t != null)?.PersonOrganizationId;
         public long? GetPersonOrganizationRowVersion() => PimsPersonOrganizations?.FirstOrDefault(t => t != null)?.ConcurrencyControlNumber;
         public ICollection<PimsOrganization> GetOrganizations() => PimsPersonOrganizations?.Select(p => p.Organization).Select(o => { o.PimsPersonOrganizations = null; return o; }).ToArray();

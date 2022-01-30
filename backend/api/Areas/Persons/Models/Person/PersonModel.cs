@@ -48,7 +48,7 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// <summary>
         /// get/set - The person's linked organization (optional).
         /// </summary>
-        public long? OrganizationId { get; set; }
+        public OrganizationLinkModel Organization { get; set; }
 
         /// <summary>
         /// get/set - The primary key to identify the person-organization link (optional).
