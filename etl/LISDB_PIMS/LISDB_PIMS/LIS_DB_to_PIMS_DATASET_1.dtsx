@@ -12,16 +12,16 @@
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="247"
-  DTS:VersionGUID="{A2E1AE80-C265-46BE-8594-BB5B0E946AD4}">
+  DTS:VersionBuild="258"
+  DTS:VersionGUID="{14BFB3E0-59F3-49F7-B752-19682FC8FDE2}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[IS19]"
+      DTS:refId="Package.ConnectionManagers[PIMS]"
       DTS:CreationName="OLEDB"
       DTS:DTSID="{E45C9F0D-5D5D-4D90-A42B-71954AB14980}"
-      DTS:ObjectName="IS19">
+      DTS:ObjectName="PIMS">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
@@ -1561,8 +1561,8 @@ where [refTable].[DESCRIPTION] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\Lookup Category Code.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -1721,8 +1721,8 @@ where [refTable].[DESCRIPTION] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\Lookup Purpose Code.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -1880,8 +1880,8 @@ where [refTable].[FIRST_NAME] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\MOTI NAME ID from PIMS PERSON.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -2102,8 +2102,8 @@ where [refTable].[FIRST_NAME] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\OLE DB Destination.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -2505,8 +2505,8 @@ where [refTable].[FIRST_NAME] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -10198,19 +10198,19 @@ FROM t_leasing l JOIN t_fileSubLookup fsl ON l.FileSubLookup_Id=fsl.FileSubLooku
                   startId="Package\Main Flow 1\LOAD LEASES\t_leasing + PID.Outputs[OLE DB Source Output]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+                  endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
+                  name="Union All Output 1"
+                  startId="Package\Main Flow 1\LOAD LEASES\Union All 2.Outputs[Union All Output 1]" />
+                <path
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
                   endId="Package\Main Flow 1\LOAD LEASES\Audit Trail.Inputs[Derived Column Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All 3.Outputs[Union All Output 1]" />
                 <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
                   endId="Package\Main Flow 1\LOAD LEASES\PSFile_No.Inputs[Lookup Input]"
                   name="Union All Output 1"
                   startId="Package\Main Flow 1\LOAD LEASES\Union All.Outputs[Union All Output 1]" />
-                <path
-                  refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
-                  endId="Package\Main Flow 1\LOAD LEASES\PIMS_LEASE_PURPOSE_TYPE.Inputs[Lookup Input]"
-                  name="Union All Output 1"
-                  startId="Package\Main Flow 1\LOAD LEASES\Union All 2.Outputs[Union All Output 1]" />
                 <path
                   refId="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 13]"
                   endId="Package\Main Flow 1\LOAD LEASES\Data Conversion.Inputs[Data Conversion Input]"
@@ -10978,8 +10978,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\Lookup PROPERTY_ID in PIMS_PROPERTY.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="Connection manager used to access lookup data."
                       name="OleDbConnection" />
                   </connections>
@@ -11124,8 +11124,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -11292,8 +11292,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS ERROR LOG 1.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -11452,8 +11452,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS LEASE.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -12520,8 +12520,8 @@ where [refTable].[PID] = ?</property>
                   <connections>
                     <connection
                       refId="Package\Main Flow 2\LOAD PROPERTY_LEASE\PIMS_PROPERTY_LEASE.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[IS19]"
-                      connectionManagerRefId="Package.ConnectionManagers[IS19]"
+                      connectionManagerID="Package.ConnectionManagers[PIMS]"
+                      connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -12814,19 +12814,19 @@ where [refTable].[PID] = ?</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="205,119"
-          Size="205,162"
+          PanelSize="257,83"
+          Size="257,126"
           Id="Package\Establish Preconditions\Sequence Container"
-          TopLeft="47,320" />
+          TopLeft="22,264" />
         <NodeLayout
           Size="215,46"
           Id="Package\Establish Preconditions\Sequence Container 1\Clear Property Lease"
-          TopLeft="30,25" />
+          TopLeft="22,15" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="280,126"
-          Size="280,169"
+          PanelSize="271,79"
+          Size="271,122"
           Id="Package\Establish Preconditions\Sequence Container 1"
           TopLeft="22,117" />
         <EdgeLayout
@@ -12835,9 +12835,9 @@ where [refTable].[PID] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="25,61"
+              EndConnector="20.5,61"
               Start="0,0"
-              End="25,53.5">
+              End="20.5,53.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -12848,13 +12848,13 @@ where [refTable].[PID] = ?</property>
                     Point2="0,30.5"
                     Point3="4,30.5" />
                   <mssgle:LineSegment
-                    End="21,30.5" />
+                    End="16.5,30.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="21,30.5"
-                    Point2="25,30.5"
-                    Point3="25,34.5" />
+                    Point1="16.5,30.5"
+                    Point2="20.5,30.5"
+                    Point3="20.5,34.5" />
                   <mssgle:LineSegment
-                    End="25,53.5" />
+                    End="20.5,53.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -12865,30 +12865,18 @@ where [refTable].[PID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Establish Preconditions.PrecedenceConstraints[Constraint 1]"
-          TopLeft="162,286">
+          TopLeft="154,239">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-12.5,34"
+              EndConnector="0,25"
               Start="0,0"
-              End="-12.5,26.5">
+              End="0,17.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,13" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,13"
-                    Point2="0,17"
-                    Point3="-4,17" />
-                  <mssgle:LineSegment
-                    End="-8.5,17" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-8.5,17"
-                    Point2="-12.5,17"
-                    Point3="-12.5,21" />
-                  <mssgle:LineSegment
-                    End="-12.5,26.5" />
+                    End="0,17.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -13196,7 +13184,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
           TopLeft="1356.25,1554">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13220,7 +13208,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 12]"
           TopLeft="1531,1149">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -13256,7 +13244,7 @@ where [refTable].[PID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 1]"
+          Id="Package\Main Flow 1\LOAD LEASES.Paths[Union All Output 11]"
           TopLeft="482.25,523">
           <EdgeLayout.Curve>
             <mssgle:Curve
