@@ -588,12 +588,6 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
         class="c11 disabled"
         href="/"
       >
-        Physical Security
-      </a>
-      <a
-        class="c11 disabled"
-        href="/"
-      >
         Surplus Declaration
       </a>
     </div>
