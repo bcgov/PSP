@@ -152,11 +152,6 @@ exports[`PaymentForm component renders as expected 1`] = `
         name="leasePaymentMethodType.id"
       >
         <option
-          value=""
-        >
-          Select
-        </option>
-        <option
           class="option"
           value="CASH"
         >
@@ -449,11 +444,6 @@ exports[`PaymentForm component renders with data as expected 1`] = `
         id="input-leasePaymentMethodType.id"
         name="leasePaymentMethodType.id"
       >
-        <option
-          value=""
-        >
-          Select
-        </option>
         <option
           class="option"
           value="CASH"

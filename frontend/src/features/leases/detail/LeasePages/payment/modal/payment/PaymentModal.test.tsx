@@ -79,11 +79,7 @@ describe('PaymentModal component', () => {
       amountGst: 50,
       leasePaymentMethodType: {
         id: 'CHEQ',
-        description: '',
-        isDisabled: false,
       },
-      leaseId: undefined,
-      leaseRowVersion: undefined,
     });
   });
 
