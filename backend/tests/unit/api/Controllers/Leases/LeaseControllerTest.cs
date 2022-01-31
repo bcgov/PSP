@@ -33,7 +33,7 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.Get(It.IsAny<long>())).Returns(lease);
@@ -62,7 +62,7 @@ namespace Pims.Api.Test.Controllers.Lease
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.Update(It.IsAny<Pims.Dal.Entities.PimsLease>(), It.IsAny<bool>())).Returns(lease);
@@ -93,7 +93,7 @@ namespace Pims.Api.Test.Controllers.Lease
             var lease = EntityHelper.CreateLease(1);
             lease.PimsPropertyImprovements = new List<Pims.Dal.Entities.PimsPropertyImprovement>() { new Dal.Entities.PimsPropertyImprovement() { Id = 1 } };
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.Lease.UpdateLeaseImprovements(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsPropertyImprovement>>())).Returns(lease);

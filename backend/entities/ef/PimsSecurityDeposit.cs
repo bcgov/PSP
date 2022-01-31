@@ -28,6 +28,9 @@ namespace Pims.Dal.Entities
         [Column("SECURITY_DEPOSIT_TYPE_CODE")]
         [StringLength(20)]
         public string SecurityDepositTypeCode { get; set; }
+        [Column("OTHER_DEPOSIT_TYPE_DESC")]
+        [StringLength(200)]
+        public string OtherDepositTypeDesc { get; set; }
         [Required]
         [Column("DESCRIPTION")]
         [StringLength(2000)]
@@ -74,9 +77,6 @@ namespace Pims.Dal.Entities
         [Column("DB_LAST_UPDATE_USERID")]
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
-        [Column("OTHER_DEPOSIT_TYPE_DESC")]
-        [StringLength(200)]
-        public string OtherDepositTypeDesc { get; set; }
 
         [ForeignKey(nameof(LeaseId))]
         [InverseProperty(nameof(PimsLease.PimsSecurityDeposits))]

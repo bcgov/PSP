@@ -1,3 +1,4 @@
+import ITypeCode from 'interfaces/ITypeCode';
 import { CellProps } from 'react-table';
 import { formatMoney, formatNumber, prettyFormatDate } from 'utils';
 
@@ -16,3 +17,11 @@ export const renderMoney = <T extends object>({ cell: { value } }: CellProps<T, 
 
 export const renderPercentage = <T extends object>({ cell: { value } }: CellProps<T, string>) =>
   `${formatNumber(value as any, 0, 2)}%`;
+
+export function renderBooleanAsYesNo({ value }: CellProps<any, boolean>) {
+  return value ? 'Y' : 'N';
+}
+
+export function renderTypeCode({ value }: CellProps<any, ITypeCode<any>>) {
+  return value?.description ?? '';
+}

@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The username.
         /// </summary>
         /// <value></value>
-        public string BusinessIdentifier { get; set; }
+        public string BusinessIdentifierValue { get; set; }
 
         /// <summary>
         /// get/set - The user last name.
@@ -88,11 +88,11 @@ namespace Pims.Dal.Entities.Models
         /// <param name="role"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public UserFilter(int page, int quantity, string organization, string businessIdentifier, string surname,
+        public UserFilter(int page, int quantity, string organization, string businessIdentifierValue, string surname,
             string firstName, string email, bool? isDisabled, string role, string[] sort, string position) : base(page, quantity, sort)
         {
             this.Organization = organization;
-            this.BusinessIdentifier = businessIdentifier;
+            this.BusinessIdentifierValue = businessIdentifierValue;
             this.Surname = surname;
             this.FirstName = firstName;
             this.Email = email;
@@ -112,7 +112,7 @@ namespace Pims.Dal.Entities.Models
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
             this.Page = filter.GetIntValue(nameof(this.Page), 1);
             this.Quantity = filter.GetIntValue(nameof(this.Quantity), 10);
-            this.BusinessIdentifier = filter.GetStringValue(nameof(this.BusinessIdentifier));
+            this.BusinessIdentifierValue = filter.GetStringValue(nameof(this.BusinessIdentifierValue));
             this.Surname = filter.GetStringValue(nameof(this.Surname));
             this.FirstName = filter.GetStringValue(nameof(this.FirstName));
             this.Email = filter.GetStringValue(nameof(this.Email));

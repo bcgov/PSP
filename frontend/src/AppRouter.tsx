@@ -3,7 +3,7 @@ import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
 import { ContactListView } from 'features/contacts';
-import ContactCreateContainer from 'features/contacts/contact/create/Container';
+import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import ContactEditContainer from 'features/contacts/contact/edit/Container';
 import { AddLeaseContainer } from 'features/leases';
@@ -16,18 +16,31 @@ import React, { lazy, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';
+import componentLoader from 'utils/utils';
 
 import Login from './features/account/Login';
 import AccessDenied from './pages/401/AccessDenied';
 
-const MapView = lazy(() => import('./features/properties/map/MapView'));
-const AccessRequestPage = lazy(() => import('./features/admin/access-request/AccessRequestPage'));
-const EditUserPage = lazy(() => import('./features/admin/edit-user/EditUserPage'));
-const ManageAccessRequests = lazy(() => import('features/admin/access/ManageAccessRequests'));
-const ManageUsers = lazy(() => import('features/admin/users/ManageUsers'));
-const PropertyListView = lazy(() => import('features/properties/list/PropertyListView'));
-const LeaseAndLicenseListView = lazy(() => import('features/leases/list/LeaseListView'));
-const LeaseContainerWrapper = lazy(() => import('features/leases/detail/LeaseContainerWrapper'));
+const MapView = lazy(() => componentLoader(import('./features/properties/map/MapView'), 2));
+const AccessRequestPage = lazy(() =>
+  componentLoader(import('./features/admin/access-request/AccessRequestPage'), 2),
+);
+const EditUserPage = lazy(() =>
+  componentLoader(import('./features/admin/edit-user/EditUserPage'), 2),
+);
+const ManageAccessRequests = lazy(() =>
+  componentLoader(import('features/admin/access/ManageAccessRequests'), 2),
+);
+const ManageUsers = lazy(() => componentLoader(import('features/admin/users/ManageUsers'), 2));
+const PropertyListView = lazy(() =>
+  componentLoader(import('features/properties/list/PropertyListView'), 2),
+);
+const LeaseAndLicenseListView = lazy(() =>
+  componentLoader(import('features/leases/list/LeaseListView'), 2),
+);
+const LeaseContainerWrapper = lazy(() =>
+  componentLoader(import('features/leases/detail/LeaseContainerWrapper'), 2),
+);
 
 const AppRouter: React.FC = () => {
   const location = useLocation();
@@ -163,7 +176,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/new"
-          component={ContactCreateContainer}
+          component={CreateContactContainer}
           layout={AuthLayout}
           claim={[Claims.CONTACT_ADD]}
           title={getTitle('Create Contact')}

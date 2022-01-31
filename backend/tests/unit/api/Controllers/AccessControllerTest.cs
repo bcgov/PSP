@@ -29,7 +29,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(11);
@@ -57,7 +57,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             service.Setup(m => m.AccessRequest.Get());
@@ -78,7 +78,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
@@ -108,7 +108,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
@@ -136,7 +136,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -154,7 +154,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -179,7 +179,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -204,7 +204,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -229,7 +229,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Add(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -256,7 +256,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
 
             var accessRequest = EntityHelper.CreateAccessRequest(1);
@@ -284,7 +284,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -302,7 +302,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -327,7 +327,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -352,7 +352,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()));
 
@@ -377,7 +377,7 @@ namespace PimsApi.Test.Controllers
             var helper = new TestHelper();
             var controller = helper.CreateController<AccessRequestController>(user);
 
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             service.Setup(m => m.AccessRequest.Update(It.IsAny<Entity.PimsAccessRequest>()));
 

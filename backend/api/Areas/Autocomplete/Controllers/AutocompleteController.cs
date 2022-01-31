@@ -26,7 +26,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
     public class AutocompleteController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -37,7 +37,7 @@ namespace Pims.Api.Areas.Autocomplete.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public AutocompleteController(IPimsService pimsService, IMapper mapper)
+        public AutocompleteController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;

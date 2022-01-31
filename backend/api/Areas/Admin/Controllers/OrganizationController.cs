@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class OrganizationController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IPimsKeycloakService _pimsKeycloakService;
         private readonly IMapper _mapper;
         #endregion
@@ -37,7 +37,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <param name="pimsService"></param>
         /// <param name="keycloakService"></param>
         /// <param name="mapper"></param>
-        public OrganizationController(IPimsService pimsService, IPimsKeycloakService keycloakService, IMapper mapper)
+        public OrganizationController(IPimsRepository pimsService, IPimsKeycloakService keycloakService, IMapper mapper)
         {
             _pimsService = pimsService;
             _pimsKeycloakService = keycloakService;
@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-organization" })]
         public IActionResult GetOrganizations()
         {
-            var organizations = _pimsService.Organization.GetAll();
+            var organizations = _pimsService.UserOrganization.GetAll();
             return new JsonResult(_mapper.Map<Model.OrganizationModel[]>(organizations));
         }
 
@@ -73,7 +73,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-organization" })]
         public IActionResult GetOrganizations(EModel.OrganizationFilter filter)
         {
-            var page = _pimsService.Organization.Get(filter);
+            var page = _pimsService.UserOrganization.Get(filter);
             var result = _mapper.Map<Api.Models.PageModel<Model.OrganizationModel>>(page);
             return new JsonResult(result);
         }
@@ -90,7 +90,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [SwaggerOperation(Tags = new[] { "admin-organization" })]
         public IActionResult GetOrganization(long id)
         {
-            var organization = _pimsService.Organization.Get(id);
+            var organization = _pimsService.UserOrganization.Get(id);
             return new JsonResult(_mapper.Map<Model.OrganizationModel>(organization));
         }
 
@@ -107,7 +107,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public async Task<IActionResult> AddOrganizationAsync([FromBody] Model.OrganizationModel model)
         {
             var entity = _mapper.Map<Entity.PimsOrganization>(model);
-            _pimsService.Organization.Add(entity);
+            _pimsService.UserOrganization.Add(entity);
 
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.PimsUserOrganizations.ForEachAsync(async u =>
@@ -134,7 +134,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateOrganizationAsync([FromBody] Model.OrganizationModel model)
         {
             var entity = _mapper.Map<Entity.PimsOrganization>(model);
-            _pimsService.Organization.Update(entity);
+            _pimsService.UserOrganization.Update(entity);
 
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.PimsUserOrganizations.ForEachAsync(async u =>
@@ -160,7 +160,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteOrganizationAsync([FromBody] Model.OrganizationModel model)
         {
             var entity = _mapper.Map<Entity.PimsOrganization>(model);
-            _pimsService.Organization.Delete(entity);
+            _pimsService.UserOrganization.Delete(entity);
 
             // TODO: This isn't ideal as the db update may be successful but this request may not.
             await entity.PimsUserOrganizations.ForEachAsync(async u =>

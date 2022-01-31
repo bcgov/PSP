@@ -1,6 +1,7 @@
 using Pims.Core.Test;
+using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
+using Pims.Dal.Repositories;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
@@ -24,7 +25,7 @@ namespace Pims.Dal.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.SystemAdmin);
             using var init = helper.InitializeDatabase(user);
 
-            var service = helper.CreateService<ProvinceService>(user);
+            var service = helper.CreateRepository<ProvinceService>(user);
 
             // Act
             var result = service.Get();

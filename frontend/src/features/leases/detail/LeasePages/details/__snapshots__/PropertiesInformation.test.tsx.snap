@@ -9,7 +9,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
     class="Toastify"
   />
   .c0 {
-  font-family: 'BcSans-Bold' font-size:2rem;
+  font-family: 'BcSans-Bold';
+  font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;

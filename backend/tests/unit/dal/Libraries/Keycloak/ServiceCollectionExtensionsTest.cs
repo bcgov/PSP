@@ -74,7 +74,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             // Arrange
             var services = new ServiceCollection();
 
-            var mockPimsService = new Mock<IPimsService>();
+            var mockPimsService = new Mock<IPimsRepository>();
             services.AddScoped((s) => mockPimsService.Object);
             var mockMapper = new Mock<IMapper>();
             services.AddScoped((s) => mockMapper.Object);

@@ -21,7 +21,7 @@ namespace Pims.Api.Controllers
     {
         #region Variables
         private readonly PimsOptions _pimsOptions;
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,7 +32,7 @@ namespace Pims.Api.Controllers
         /// <param name="pimsOptions"></param>
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
-        public TenantController(IOptionsMonitor<PimsOptions> pimsOptions, IPimsService pimsService, IMapper mapper)
+        public TenantController(IOptionsMonitor<PimsOptions> pimsOptions, IPimsRepository pimsService, IMapper mapper)
         {
             _pimsOptions = pimsOptions.CurrentValue;
             _pimsService = pimsService;
