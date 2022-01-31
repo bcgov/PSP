@@ -18,7 +18,6 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.AmountPst, src => src.PaymentAmountPst)
                 .Map(dest => dest.AmountTotal, src => src.PaymentAmountTotal)
                 .Map(dest => dest.ReceivedDate, src => src.PaymentReceivedDate)
-                .Map(dest => dest.ReceivedDate, src => src.PaymentReceivedDate)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
         }
     }

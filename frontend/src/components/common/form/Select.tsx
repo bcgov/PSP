@@ -80,7 +80,6 @@ export const Select: React.FC<SelectProps> = ({
   const error = getIn(errors, field);
   const touch = getIn(touched, field);
   const asElement: any = is || 'select';
-
   const handleMultipleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = e.target.selectedOptions;
     setFieldValue(

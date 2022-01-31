@@ -1,4 +1,5 @@
 using Mapster;
+using static Pims.Dal.Entities.PimsLeaseTermStatusType;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Lease.Models.Lease;
 
@@ -17,12 +18,30 @@ namespace Pims.Api.Areas.Lease.Mapping.Lease
                 .Map(dest => dest.StatusTypeCode, src => src.LeaseTermStatusTypeCodeNavigation)
                 .Map(dest => dest.LeasePmtFreqTypeCode, src => src.LeasePmtFreqTypeCodeNavigation)
                 .Map(dest => dest.IsGstEligible, src => src.IsGstEligible)
-                .Map(dest => dest.IsTermExercised, src => src.IsTermExercised)
+                .Map(dest => dest.IsTermExercised, src => src.LeaseTermStatusTypeCode == LeaseTermStatusTypes.EXER)
+                .Map(dest => dest.GstAmount, src => src.IsGstEligible.HasValue && src.IsGstEligible.Value ? src.GstAmount : null)
                 .Map(dest => dest.PaymentAmount, src => src.PaymentAmount)
                 .Map(dest => dest.PaymentNote, src => src.PaymentNote)
                 .Map(dest => dest.PaymentDueDate, src => src.PaymentDueDate)
                 .Map(dest => dest.Payments, src => src.PimsLeasePayments)
                 .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+
+            config.NewConfig<Model.TermModel, Entity.PimsLeaseTerm>()
+                .Map(dest => dest.LeaseTermId, src => src.Id)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.TermRenewalDate, src => src.RenewalDate)
+                .Map(dest => dest.TermExpiryDate, src => src.ExpiryDate)
+                .Map(dest => dest.TermStartDate, src => src.StartDate)
+                .Map(dest => dest.LeaseTermStatusTypeCode, src => src.StatusTypeCode.Id)
+                .Map(dest => dest.LeasePmtFreqTypeCode, src => src.LeasePmtFreqTypeCode.Id)
+                .Map(dest => dest.IsGstEligible, src => src.IsGstEligible ? src.GstAmount : null)
+                .Map(dest => dest.IsTermExercised, src => src.StatusTypeCode.Id == LeaseTermStatusTypes.EXER)
+                .Map(dest => dest.GstAmount, src => src.GstAmount)
+                .Map(dest => dest.PaymentAmount, src => src.PaymentAmount)
+                .Map(dest => dest.PaymentNote, src => src.PaymentNote)
+                .Map(dest => dest.PaymentDueDate, src => src.PaymentDueDate)
+                .Map(dest => dest.PimsLeasePayments, src => src.Payments)
+                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }
 }

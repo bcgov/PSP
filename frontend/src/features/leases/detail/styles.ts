@@ -21,7 +21,7 @@ export const LeaseH2 = styled.h2`
 `;
 
 export const LeaseH3 = styled.h3`
-  font-family: 'BcSans-Bold'
+  font-family: 'BcSans-Bold';
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
@@ -42,6 +42,13 @@ export const LeaseH5 = styled.h5`
   color: black;
   text-align: left;
   padding-top: 1.5rem;
+  font-family: BcSans-Bold;
+`;
+
+export const LeaseH6 = styled.h6`
+  font-size: 2rem;
+  color: ${props => props.theme.css.textColor};
+  text-align: left;
   font-family: BcSans-Bold;
 `;
 
@@ -75,8 +82,6 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   align-items: center;
-  min-width: fit-content;
-  max-height: 2.5rem;
 `;
 
 export const LeaseHeader = styled(InlineFlexDiv)`

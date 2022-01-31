@@ -7,6 +7,8 @@ import {
   renderMoney,
   renderTypeCode,
 } from 'components/Table';
+import { Claims } from 'constants/claims';
+import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { ILeasePayment } from 'interfaces';
 import { IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
 import moment from 'moment';
@@ -25,21 +27,16 @@ function startAndEndDate({ row: { original, index } }: CellProps<ILeaseTerm, str
   return `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`;
 }
 
-const renderGst = (gstDecimal?: number) =>
+const renderExpectedTotal = () =>
   function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    gstDecimal = original.isGstEligible ? gstDecimal : undefined;
-    return gstDecimal !== undefined && original.paymentAmount !== undefined
-      ? formatMoney(calculateExpectedGst(original.paymentAmount, gstDecimal))
+    return original.paymentAmount !== undefined
+      ? formatMoney(original.paymentAmount + (original?.gstAmount ?? 0))
       : '-';
   };
 
-const renderExpectedTotal = (gstDecimal?: number) =>
-  function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    gstDecimal = original.isGstEligible ? gstDecimal : 0;
-    return gstDecimal !== undefined && original.paymentAmount !== undefined
-      ? formatMoney(calculateExpectedTotal(original.paymentAmount, gstDecimal))
-      : '-';
-  };
+function renderGstAmount({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
+  return original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-';
+}
 
 function renderActualTotal({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
   const total = formatMoney(
@@ -48,9 +45,8 @@ function renderActualTotal({ row: { original, index } }: CellProps<ILeaseTerm, s
   return original.isTermExercised ? total : '-';
 }
 
-const renderExpectedTerm = (gstDecimal?: number) =>
+const renderExpectedTerm = () =>
   function({ row: { original, index } }: CellProps<ILeaseTerm, string>) {
-    gstDecimal = original.isGstEligible ? gstDecimal : undefined;
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
       return '-';
     }
@@ -59,18 +55,10 @@ const renderExpectedTerm = (gstDecimal?: number) =>
       original.startDate,
       original.expiryDate,
       original.paymentAmount,
-      gstDecimal ?? 0,
+      original.gstAmount ?? 0,
     );
     return expectedTerm !== undefined ? formatMoney(expectedTerm) : '-';
   };
-
-function calculateExpectedGst(amount: number, gst: number) {
-  return amount * (gst / 100);
-}
-
-function calculateExpectedTotal(amount: number, gst: number) {
-  return amount + calculateExpectedGst(amount, gst);
-}
 
 function getNumberOfIntervals(frequency: string, startDate: string, endDate: string) {
   const duration = moment.duration(moment(endDate).diff(moment(startDate)));
@@ -104,10 +92,10 @@ function calculateExpectedTermAmount(
   startDate: string,
   endDate: string,
   expectedAmount: number,
-  gstDecimal: number,
+  gstAmount: number,
 ) {
   const numberOfIntervals = getNumberOfIntervals(frequency, startDate, endDate);
-  const expectedPayment = calculateExpectedTotal(expectedAmount, gstDecimal);
+  const expectedPayment = expectedAmount + gstAmount;
   return !!numberOfIntervals ? numberOfIntervals * expectedPayment : undefined;
 }
 
@@ -116,18 +104,22 @@ const termActions = (
   onDelete: (values: IFormLeaseTerm) => void,
 ) => {
   return function({ row: { original, index } }: CellProps<IFormLeaseTerm, string>) {
-    return (
+    const { hasClaim } = useKeycloakWrapper();
+    return hasClaim(Claims.LEASE_EDIT) ? (
       <StyledIcons>
         <Button
+          title="edit term"
           icon={<MdEdit size={24} id={`edit-term-${index}`} title="edit term" />}
           onClick={() => onEdit(original)}
         ></Button>
         <Button
+          title="delete term"
           icon={<FaTrash size={24} id={`delete-term-${index}`} title="delete term" />}
           onClick={() => original.id && onDelete(original)}
+          disabled={original.payments.length > 0 || original.statusTypeCode?.id === 'EXER'}
         ></Button>
       </StyledIcons>
-    );
+    ) : null;
   };
 };
 
@@ -140,19 +132,19 @@ export interface IPaymentColumnProps {
 export const getColumns = ({
   onEdit,
   onDelete,
-  gstConstant,
 }: IPaymentColumnProps): ColumnWithProps<IFormLeaseTerm>[] => {
-  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
   return [
     {
       Header: '',
-      accessor: 'id',
-      maxWidth: 30,
+      id: 'initialOrRenewal',
+      align: 'left',
+      maxWidth: 50,
       Cell: initialOrRenewalTerm,
     },
     {
       Header: 'Start date - End date',
-      minWidth: 80,
+      align: 'left',
+      minWidth: 60,
       Cell: startAndEndDate,
     },
     {
@@ -165,7 +157,7 @@ export const getColumns = ({
     {
       Header: 'Payment due',
       accessor: 'paymentDueDate',
-      align: 'right',
+      align: 'left',
       maxWidth: 50,
     },
     {
@@ -180,12 +172,12 @@ export const getColumns = ({
       ),
       align: 'right',
       accessor: 'paymentAmount',
-      maxWidth: 65,
+      maxWidth: 70,
       Cell: renderMoney,
     },
     {
       Header: 'GST?',
-      align: 'right',
+      align: 'left',
       accessor: 'isGstEligible',
       maxWidth: 25,
       Cell: renderBooleanAsYesNo,
@@ -200,10 +192,10 @@ export const getColumns = ({
           />
         </>
       ),
-      id: 'gstAmount',
+      accessor: 'gstAmount',
       align: 'right',
-      maxWidth: 29,
-      Cell: renderGst(gstDecimal),
+      maxWidth: 35,
+      Cell: renderGstAmount,
     },
     {
       Header: () => (
@@ -217,8 +209,8 @@ export const getColumns = ({
       ),
       id: 'expectedTotal',
       align: 'right',
-      maxWidth: 55,
-      Cell: renderExpectedTotal(gstDecimal),
+      maxWidth: 60,
+      Cell: renderExpectedTotal(),
     },
     {
       Header: () => (
@@ -232,8 +224,8 @@ export const getColumns = ({
       ),
       id: 'expectedTerm',
       align: 'right',
-      maxWidth: 55,
-      Cell: renderExpectedTerm(gstDecimal),
+      maxWidth: 60,
+      Cell: renderExpectedTerm(),
     },
     {
       Header: () => (
@@ -249,7 +241,7 @@ export const getColumns = ({
     },
     {
       Header: 'Exercised?',
-      align: 'right',
+      align: 'left',
       accessor: 'isTermExercised',
       maxWidth: 40,
       Cell: renderBooleanAsYesNo,
@@ -269,8 +261,11 @@ const StyledIcons = styled(InlineFlexDiv)`
   }
   [id^='delete-term'] {
     color: ${props => props.theme.css.discardedColor};
+    :hover {
+      color: ${({ theme }) => theme.css.dangerColor};
+    }
   }
-  .btn {
+  .btn.btn-primary {
     background-color: transparent;
     padding: 0;
   }

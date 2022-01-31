@@ -26,9 +26,14 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public long LeaseRowVersion { get; set; }
 
         /// <summary>
+        /// get/set - The stored calculated gst amount based on the total payment and the system gst constant.
+        /// </summary>
+        public decimal? GstAmount { get; set; }
+
+        /// <summary>
         /// get/set - The expected payment amount of the term, less GST.
         /// </summary>
-        public decimal PaymentAmount { get; set; }
+        public decimal? PaymentAmount { get; set; }
 
         /// <summary>
         /// get/set - The status of this term, generally indicating if the term has been exercised.
@@ -78,7 +83,7 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// <summary>
         /// get/set - An (optional) list of payments associated to this term. Should only be set if the term is excercised.
         /// </summary>
-        public ICollection<PaymentModel> Payments { get; set; } 
+        public ICollection<PaymentModel> Payments { get; set; }
         #endregion
     }
 }

@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     public class OrganizationController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IPimsKeycloakService _pimsKeycloakService;
         private readonly IMapper _mapper;
         #endregion
@@ -37,7 +37,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         /// <param name="pimsService"></param>
         /// <param name="keycloakService"></param>
         /// <param name="mapper"></param>
-        public OrganizationController(IPimsService pimsService, IPimsKeycloakService keycloakService, IMapper mapper)
+        public OrganizationController(IPimsRepository pimsService, IPimsKeycloakService keycloakService, IMapper mapper)
         {
             _pimsService = pimsService;
             _pimsKeycloakService = keycloakService;

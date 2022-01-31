@@ -71,6 +71,17 @@ const cellPropsGetter = <T extends object>(props: any, { cell }: { cell: Cell<T>
   return getStyles(props, false, cell.column);
 };
 
+const getJustify = (align?: string) => {
+  switch (align) {
+    case 'center':
+      return 'center';
+    case 'right':
+      return 'right';
+    default:
+      return 'left';
+  }
+};
+
 const getStyles = <T extends object>(
   props: any,
   isHeader: boolean,
@@ -88,8 +99,8 @@ const getStyles = <T extends object>(
     props,
     {
       style: {
-        justifyContent: column?.align === 'right' ? 'flex-end' : 'flex-start',
-        textAlign: column?.align === 'right' ? 'right' : 'left',
+        justifyContent: getJustify(column?.align),
+        textAlign: column?.align ?? 'left',
         flexWrap: 'wrap',
         alignItems: 'center',
         display: isHeader && hideHeaders ? 'none' : 'flex',
