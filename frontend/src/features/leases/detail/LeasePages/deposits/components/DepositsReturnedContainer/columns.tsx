@@ -36,7 +36,7 @@ export class ReturnListEntry {
       this.depositTypeDescription = baseDeposit.depositType.description || '';
     }
 
-    this.terminationDate = baseDeposit.terminationDate;
+    this.terminationDate = baseDeposit.terminationDate || '';
     this.depositAmount = parentDeposit.amountPaid;
     this.claimsAgainst = baseDeposit.claimsAgainst || 0;
     this.returnAmount = baseDeposit.returnAmount;

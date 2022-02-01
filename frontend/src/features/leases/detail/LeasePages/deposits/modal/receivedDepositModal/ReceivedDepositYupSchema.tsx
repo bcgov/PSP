@@ -8,4 +8,5 @@ export const ReceivedDepositYupSchema = Yup.object().shape({
     otherwise: Yup.string().nullable(),
   }),
   amountPaid: Yup.string().required('Deposit amount is required'),
+  depositDate: Yup.string().required('Deposit Date is required'),
 });

@@ -7,6 +7,8 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { formatMoney } from 'utils';
 
+import { ReturnDepositYupSchema } from './ReturnDepositYupSchema';
+
 export interface IReturnDepositFormProps {
   formikRef: React.Ref<FormikProps<FormLeaseDepositReturn>>;
   onSave: (values: FormLeaseDepositReturn) => void;
@@ -31,6 +33,7 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
     <Formik
       innerRef={formikRef}
       enableReinitialize
+      validationSchema={ReturnDepositYupSchema}
       onSubmit={values => {
         onSave(values);
       }}
@@ -69,7 +72,6 @@ export const ReturnDepositForm: React.FunctionComponent<IReturnDepositFormProps>
                   formikProps={formikProps}
                   label="Claims against deposit ($):"
                   field="claimsAgainst"
-                  required
                 />
               </Col>
               <Col>
