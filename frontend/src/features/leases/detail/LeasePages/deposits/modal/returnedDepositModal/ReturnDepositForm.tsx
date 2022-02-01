@@ -6,7 +6,6 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { formatMoney } from 'utils';
-
 import { ReturnDepositYupSchema } from './ReturnDepositYupSchema';
 
 export interface IReturnDepositFormProps {
