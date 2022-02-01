@@ -50,7 +50,6 @@ export enum LeasePageNames {
   IMPROVEMENTS = 'improvements',
   INSURANCE = 'insurance',
   DEPOSIT = 'deposit',
-  SECURITY = 'security',
   SURPLUS = 'surplus',
 }
 
@@ -107,7 +106,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   ],
   [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
   [LeasePageNames.DEPOSIT, { component: Deposits, title: 'Deposit' }],
-  [LeasePageNames.SECURITY, { component: undefined, title: 'Physical Security' }],
   [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
 ]);
 
