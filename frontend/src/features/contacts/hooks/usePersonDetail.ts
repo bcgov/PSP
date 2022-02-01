@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { IEditablePerson } from 'interfaces/editable-contact';
 import { IApiError } from 'interfaces/IApiError';
-import { ICreatePerson } from 'interfaces/ICreateContact';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -13,7 +13,7 @@ import { logError } from 'store/slices/network/networkSlice';
  * @param personId
  */
 export const usePersonDetail = (personId?: number) => {
-  const [person, setPerson] = useState<ICreatePerson>();
+  const [person, setPerson] = useState<IEditablePerson>();
   const { getPerson } = useApiContacts();
   const dispatch = useDispatch();
 

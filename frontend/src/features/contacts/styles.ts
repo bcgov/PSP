@@ -1,4 +1,3 @@
-import { FlexBox } from 'components/common/styles';
 import { Row } from 'react-bootstrap';
 import styled from 'styled-components';
 

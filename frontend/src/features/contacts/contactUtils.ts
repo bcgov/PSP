@@ -1,20 +1,19 @@
 import { emailContactMethods, phoneContactMethods } from 'constants/contactMethodType';
 import { AddressTypes } from 'constants/index';
 import {
-  ICreateContactAddress,
-  ICreateContactAddressForm,
-  ICreateContactMethod,
-  ICreateContactMethodForm,
+  getDefaultAddress,
   ICreateOrganization,
   ICreateOrganizationForm,
-  ICreatePerson,
-  ICreatePersonForm,
-} from 'interfaces/ICreateContact';
-import ITypeCode from 'interfaces/ITypeCode';
-import isPlainObject from 'lodash/isPlainObject';
+  IEditableContactMethod,
+  IEditableContactMethodForm,
+  IEditablePerson,
+  IEditablePersonAddress,
+  IEditablePersonAddressForm,
+  IEditablePersonForm,
+} from 'interfaces/editable-contact';
 import { stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
 
-export function formPersonToApiPerson(formValues: ICreatePersonForm): ICreatePerson {
+export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditablePerson {
   // exclude form-specific fields from API payload object
   const {
     mailingAddress,
@@ -35,17 +34,14 @@ export function formPersonToApiPerson(formValues: ICreatePersonForm): ICreatePer
 
   const apiPerson = {
     ...restObject,
-    organizationId: isPlainObject(formValues.organizationId)
-      ? typeCodeToString<number>(formValues.organizationId as ITypeCode<number>)
-      : undefined,
     addresses,
     contactMethods,
-  } as ICreatePerson;
+  } as IEditablePerson;
 
   return apiPerson;
 }
 
-export function apiPersonToFormPerson(person?: ICreatePerson) {
+export function apiPersonToFormPerson(person?: IEditablePerson) {
   if (!person) return undefined;
 
   // exclude api-specific fields from form values
@@ -60,13 +56,15 @@ export function apiPersonToFormPerson(person?: ICreatePerson) {
 
   const formPerson = {
     ...restObject,
-    organizationId: stringToTypeCode(person.organizationId),
-    mailingAddress: addressDictionary[AddressTypes.Mailing],
-    propertyAddress: addressDictionary[AddressTypes.Residential],
-    billingAddress: addressDictionary[AddressTypes.Billing],
+    mailingAddress:
+      addressDictionary[AddressTypes.Mailing] ?? getDefaultAddress(AddressTypes.Mailing),
+    propertyAddress:
+      addressDictionary[AddressTypes.Residential] ?? getDefaultAddress(AddressTypes.Residential),
+    billingAddress:
+      addressDictionary[AddressTypes.Billing] ?? getDefaultAddress(AddressTypes.Billing),
     emailContactMethods: formContactMethods.filter(isEmail),
     phoneContactMethods: formContactMethods.filter(isPhone),
-  } as ICreatePersonForm;
+  } as IEditablePersonForm;
 
   return formPerson;
 }
@@ -101,12 +99,16 @@ export function organizationCreateFormToApiOrganization(
   return apiOrganization;
 }
 
-function hasContactMethod(formContactMethod: ICreateContactMethodForm): boolean {
+function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boolean {
+  if (!formContactMethod) return false;
+
   const { value, contactMethodTypeCode } = formContactMethod;
   return value !== '' && contactMethodTypeCode !== '';
 }
 
-function hasAddress(formAddress: ICreateContactAddressForm): boolean {
+function hasAddress(formAddress?: IEditablePersonAddressForm): boolean {
+  if (!formAddress) return false;
+
   let { streetAddress1, addressTypeId, countryId, provinceId, municipality, postal } = formAddress;
   countryId = parseInt(countryId.toString()) || 0;
   provinceId = parseInt(provinceId.toString()) || 0;
@@ -121,39 +123,39 @@ function hasAddress(formAddress: ICreateContactAddressForm): boolean {
   );
 }
 
-function formAddressToApiAddress(formAddress: ICreateContactAddressForm): ICreateContactAddress {
+function formAddressToApiAddress(formAddress: IEditablePersonAddressForm): IEditablePersonAddress {
   return {
     ...formAddress,
     countryId: parseInt(formAddress.countryId.toString()) || 0,
     provinceId: parseInt(formAddress.provinceId.toString()) || 0,
     addressTypeId: stringToTypeCode(formAddress.addressTypeId),
-  } as ICreateContactAddress;
+  } as IEditablePersonAddress;
 }
 
-function apiAddressToFormAddress(address?: ICreateContactAddress) {
+function apiAddressToFormAddress(address?: IEditablePersonAddress) {
   if (!address) return undefined;
 
   return {
     ...address,
     addressTypeId: typeCodeToString(address.addressTypeId),
-  } as ICreateContactAddressForm;
+  } as IEditablePersonAddressForm;
 }
 
-function formContactMethodToApiContactMethod(formContactMethod: ICreateContactMethodForm) {
+function formContactMethodToApiContactMethod(formContactMethod: IEditableContactMethodForm) {
   return {
     ...formContactMethod,
     value: stringToNull(formContactMethod.value),
     contactMethodTypeCode: stringToTypeCode(formContactMethod.contactMethodTypeCode),
-  } as ICreateContactMethod;
+  } as IEditableContactMethod;
 }
 
-function apiContactMethodToFormContactMethod(contactMethod?: ICreateContactMethod) {
+function apiContactMethodToFormContactMethod(contactMethod?: IEditableContactMethod) {
   if (!contactMethod) return undefined;
 
   return {
     ...contactMethod,
     contactMethodTypeCode: typeCodeToString(contactMethod.contactMethodTypeCode),
-  } as ICreateContactMethodForm;
+  } as IEditableContactMethodForm;
 }
 
 // utility function to map an array to a object dictionary based on a given key
@@ -162,10 +164,10 @@ function toDictionary(array: any[], key: string) {
   return Object.assign({}, ...array.map(obj => ({ [obj[key]]: obj })));
 }
 
-function isEmail(contactMethod?: ICreateContactMethodForm): boolean {
+function isEmail(contactMethod?: IEditableContactMethodForm): boolean {
   return !!contactMethod && emailContactMethods.includes(contactMethod.contactMethodTypeCode);
 }
 
-function isPhone(contactMethod?: ICreateContactMethodForm): boolean {
+function isPhone(contactMethod?: IEditableContactMethodForm): boolean {
   return !!contactMethod && phoneContactMethods.includes(contactMethod.contactMethodTypeCode);
 }

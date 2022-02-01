@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { IEditablePerson } from 'interfaces/editable-contact';
 import { IApiError } from 'interfaces/IApiError';
-import { ICreatePerson } from 'interfaces/ICreateContact';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
@@ -14,7 +14,7 @@ export const useUpdateContact = () => {
   const { putPerson } = useApiContacts();
   const dispatch = useDispatch();
 
-  const updatePerson = async (person: ICreatePerson) => {
+  const updatePerson = async (person: IEditablePerson) => {
     try {
       dispatch(showLoading());
       const response = await putPerson(person);

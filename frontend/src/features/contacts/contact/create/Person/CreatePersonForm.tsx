@@ -31,7 +31,7 @@ import {
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
+import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -55,9 +55,9 @@ export const CreatePersonForm: React.FunctionComponent = () => {
     [countries],
   );
 
-  const formikRef = useRef<FormikProps<ICreatePersonForm>>(null);
+  const formikRef = useRef<FormikProps<IEditablePersonForm>>(null);
 
-  const onValidate = (values: ICreatePersonForm) => {
+  const onValidate = (values: IEditablePersonForm) => {
     try {
       validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
@@ -73,8 +73,8 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   };
 
   const onSubmit = async (
-    formPerson: ICreatePersonForm,
-    { setSubmitting }: FormikHelpers<ICreatePersonForm>,
+    formPerson: IEditablePersonForm,
+    { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
       setDuplicateModal(false);
@@ -120,7 +120,7 @@ export default CreatePersonForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
+const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   values,
   errors,
   touched,
@@ -207,7 +207,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
               <Row>
                 <Col md={7}>
                   <AsyncTypeahead
-                    field="organizationId"
+                    field="organization"
                     label="Link to an existing organization"
                     labelKey="text"
                     isLoading={isTypeaheadLoading}

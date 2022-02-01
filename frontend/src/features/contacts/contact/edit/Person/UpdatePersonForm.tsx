@@ -31,7 +31,7 @@ import {
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
+import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
 import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -56,7 +56,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
     [countries],
   );
 
-  const onValidate = (values: ICreatePersonForm) => {
+  const onValidate = (values: IEditablePersonForm) => {
     try {
       validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
@@ -72,8 +72,8 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   };
 
   const onSubmit = async (
-    formPerson: ICreatePersonForm,
-    { setSubmitting }: FormikHelpers<ICreatePersonForm>,
+    formPerson: IEditablePersonForm,
+    { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
       let apiPerson = formPersonToApiPerson(formPerson);
@@ -103,7 +103,7 @@ export default UpdatePersonForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const UpdatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
+const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   values,
   errors,
   touched,
@@ -189,14 +189,14 @@ const UpdatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
               <Styled.H2>Organization</Styled.H2>
               <Row>
                 <Col md={7}>
-                  {/* <AsyncTypeahead
-                    field="organizationId"
+                  <AsyncTypeahead
+                    field="organization"
                     label="Link to an existing organization"
                     labelKey="text"
                     isLoading={isTypeaheadLoading}
                     options={matchedOrgs}
                     onSearch={handleTypeaheadSearch}
-                  /> */}
+                  />
                 </Col>
               </Row>
             </FormSection>
