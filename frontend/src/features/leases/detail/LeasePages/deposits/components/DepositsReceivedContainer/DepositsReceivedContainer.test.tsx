@@ -1,7 +1,9 @@
 import { ILeaseSecurityDeposit } from 'interfaces';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
 
-import DepositsReceivedTable, { IDepositsReceivedTableProps } from './DepositsReceivedTable';
+import DepositsReceivedContainer, {
+  IDepositsReceivedContainerProps,
+} from './DepositsReceivedContainer';
 
 const mockDeposits: ILeaseSecurityDeposit[] = [
   {
@@ -30,8 +32,8 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
 ];
 
 // render component under test
-const setup = (renderOptions: RenderOptions & IDepositsReceivedTableProps = {}) => {
-  const result = render(<DepositsReceivedTable dataSource={renderOptions.dataSource} />, {
+const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps = {}) => {
+  const result = render(<DepositsReceivedContainer dataSource={renderOptions.dataSource} />, {
     ...renderOptions,
   });
 
