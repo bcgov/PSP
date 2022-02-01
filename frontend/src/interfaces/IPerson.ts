@@ -1,6 +1,7 @@
 import { IAddress } from 'interfaces';
 
 export interface IPerson {
+  id?: string;
   fullName?: string;
   surname?: string;
   firstName?: string;

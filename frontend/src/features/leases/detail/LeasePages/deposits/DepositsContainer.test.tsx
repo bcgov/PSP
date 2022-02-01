@@ -8,31 +8,25 @@ import {
 import { noop } from 'lodash';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
-import Deposits from './Deposits';
+import DepositsContainer from './DepositsContainer';
 
 const mockDeposits: ILeaseSecurityDeposit[] = [
   {
     id: 1,
-    securityDepositHolderTypeId: 'MINISTRY',
-    securityDepositHolderType: 'Ministry',
-    securityDepositTypeId: 'PET',
-    securityDepositType: 'Pet deposit',
+    depositType: { id: 'PET' },
     description: 'Pet deposit collected for one cat and one medium size dog.',
     amountPaid: 500.0,
     depositDate: '2021-09-15T00:00:00',
-    annualInterestRate: 2.1,
+    rowVersion: 0,
   },
   {
     id: 2,
-    securityDepositHolderTypeId: 'MINISTRY',
-    securityDepositHolderType: 'Ministry',
-    securityDepositTypeId: 'SECURITY',
-    securityDepositType: 'Security deposit',
+    depositType: { id: 'SECURITY' },
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
     amountPaid: 2000.0,
     depositDate: '2019-03-01T00:00:00',
-    annualInterestRate: 2.1,
+    rowVersion: 0,
   },
 ];
 
@@ -56,7 +50,7 @@ const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): Rend
   // render component under test
   const result = render(
     <Formik onSubmit={noop} initialValues={renderOptions.lease ?? defaultFormLease}>
-      <Deposits />
+      <DepositsContainer />
     </Formik>,
     {
       ...renderOptions,

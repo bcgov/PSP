@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 using static Pims.Dal.Entities.PimsLeaseTermStatusType;
 
 namespace Pims.Dal.Services
@@ -13,10 +13,10 @@ namespace Pims.Dal.Services
     public class LeaseTermService : ILeaseTermService
     {
         readonly Repositories.ILeaseTermRepository _leaseTermRepository;
-        readonly Repositories.ILeaseService _leaseRepository;
+        readonly Repositories.ILeaseRepository _leaseRepository;
         readonly ILeaseService _leaseService;
         readonly ClaimsPrincipal _user;
-        public LeaseTermService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeaseService leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
+        public LeaseTermService(Repositories.ILeaseTermRepository leaseTermRepository, Repositories.ILeaseRepository leaseRepository, ILeaseService leaseService, ClaimsPrincipal user)
         {
             _leaseTermRepository = leaseTermRepository;
             _leaseRepository = leaseRepository;
@@ -65,7 +65,7 @@ namespace Pims.Dal.Services
         private void ValidateTermServiceCall(long leaseId, long leaseRowVersion)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            if(!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
+            if (!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this lease, please refresh the application and retry.");
             }
@@ -137,7 +137,7 @@ namespace Pims.Dal.Services
             IEnumerable<PimsLeaseTerm> terms = _leaseTermRepository.GetByLeaseId(term.LeaseId);
 
             return terms.Any(t => t.Id != term.Id && (t.TermExpiryDate > term.TermStartDate && t.TermStartDate < term.TermStartDate
-                || (t.TermExpiryDate == null && t.TermStartDate <= term.TermStartDate )
+                || (t.TermExpiryDate == null && t.TermStartDate <= term.TermStartDate)
                 || (term.TermExpiryDate == null && t.TermStartDate >= term.TermStartDate)));
         }
     }

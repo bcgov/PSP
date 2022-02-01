@@ -1965,4 +1965,28 @@ export const mockLookups: Partial<ILookupCode>[] = [
     type: 'PimsLeasePmtFreqType',
     rowVersion: 0,
   },
+  {
+    id: 'OTHER',
+    name: 'Other deposit',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsSecurityDepositType',
+    rowVersion: 0,
+  },
+  {
+    id: 'PET',
+    name: 'Pet deposit',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsSecurityDepositType',
+    rowVersion: 0,
+  },
+  {
+    id: 'SECURITY',
+    name: 'Security deposit',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsSecurityDepositType',
+    rowVersion: 0,
+  },
 ];

@@ -1,8 +1,9 @@
 using System;
+using Pims.Api.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
 {
-    public class SecurityDepositReturnModel
+    public class SecurityDepositReturnModel : BaseModel
     {
         /// <summary>
         /// get/set - Primary key to identify Security Deposit Return.
@@ -10,30 +11,19 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The concurrency row version.
+        /// get/set - Foreign key to identify the parent Security Deposit.
         /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
-
-        /// <summary>
-        /// get/set - Foreign key to the security deposit type.
-        /// </summary>
-        public string SecurityDepositTypeId { get; set; }
+        public long ParentDepositId { get; set; }
 
         /// <summary>
         /// get/set - Security deposit type.
         /// </summary>
-        public string SecurityDepositType { get; set; }
+        public TypeModel<string> DepositType { get; set; }
 
         /// <summary>
         /// get/set - The termination date of the deposit.
         /// </summary>
         public DateTime TerminationDate { get; set; }
-
-        /// <summary>
-        /// get/set - The actual amount paid for this deposit.
-        /// </summary>
-        public decimal DepositTotal { get; set; }
 
         /// <summary>
         /// get/set - any claims made against the deposit total, reducing the returned amount.
@@ -51,11 +41,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public DateTime ReturnDate { get; set; }
 
         /// <summary>
-        /// get/set - The cheque number.
-        /// </summary>
-        public string ChequeNumber { get; set; }
-
-        /// <summary>
         /// get/set - The payee name.
         /// </summary>
         public string PayeeName { get; set; }
@@ -66,8 +51,23 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string PayeeAddress { get; set; }
 
         /// <summary>
-        /// get/set - The termination note.
+        /// get/set - Person deposit holder return holder.
         /// </summary>
-        public string TerminationNote { get; set; }
+        public PersonModel PersonDepositReturnHolder { get; set; }
+
+        /// <summary>
+        /// get/set - Person deposit holder return id.
+        /// </summary>
+        public long? PersonDepositReturnHolderId { get; set; }
+
+        /// <summary>
+        /// get/set - Organization deposit return holder.
+        /// </summary>
+        public OrganizationModel OrganizationDepositReturnHolder { get; set; }
+
+        /// <summary>
+        /// get/set - Organization deposit return holder id.
+        /// </summary>
+        public long? OrganizationDepositReturnHolderId { get; set; }
     }
 }
