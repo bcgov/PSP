@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export const PaymentsYupSchema = Yup.object().shape({
-  startDate: Yup.date(),
+  receivedDate: Yup.date().required('Required'),
   amountPreTax: Yup.number().transform((value, originalValue) =>
     String(originalValue).trim() === '' ? null : value,
   ),

@@ -7,7 +7,7 @@ import {
   renderMoney,
   renderTypeCode,
 } from 'components/Table';
-import { Claims } from 'constants/claims';
+import { Claims, LeaseTermStatusTypes } from 'constants/index';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { ILeasePayment } from 'interfaces';
 import { IFormLeaseTerm, ILeaseTerm } from 'interfaces/ILeaseTerm';
@@ -116,7 +116,7 @@ const termActions = (
         )}
         {hasClaim(Claims.LEASE_DELETE) &&
           original.payments.length <= 0 &&
-          original.statusTypeCode?.id !== 'EXER' && (
+          original.statusTypeCode?.id !== LeaseTermStatusTypes.EXERCISED && (
             <Button
               title="delete term"
               icon={<FaTrash size={24} id={`delete-term-${index}`} title="delete term" />}

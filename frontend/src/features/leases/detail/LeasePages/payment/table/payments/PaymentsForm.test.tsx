@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import Claims from 'constants/claims';
+import { Claims, LeaseStatusTypes } from 'constants/index';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import {
@@ -42,7 +42,7 @@ const defaultLeaseWithTermsPayments: IFormLease = {
   terms: [
     {
       ...defaultFormLeaseTerm,
-      statusTypeCode: { id: 'EXER' },
+      statusTypeCode: { id: LeaseStatusTypes.EXERCISED },
       payments: [{ ...defaultTestFormLeasePayment }],
     },
   ],

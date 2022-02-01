@@ -4,7 +4,7 @@ import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
 import * as React from 'react';
 import { useRef } from 'react';
 
-import PaymentForm from './TermForm';
+import { TermForm } from './TermForm';
 
 export interface ITermModalProps {
   initialValues?: IFormLeaseTerm;
@@ -24,6 +24,7 @@ export const TermModal: React.FunctionComponent<ITermModalProps> = ({
   onSave,
 }) => {
   const formikRef = useRef<FormikProps<IFormLeaseTerm>>(null);
+  console.log(initialValues);
   return (
     <CommonStyled.PrimaryGenericModal
       title="Add a Term"
@@ -32,7 +33,7 @@ export const TermModal: React.FunctionComponent<ITermModalProps> = ({
       cancelButtonText="Cancel"
       handleCancel={onCancel}
       handleOk={() => formikRef?.current?.submitForm()}
-      message={<PaymentForm formikRef={formikRef} initialValues={initialValues} onSave={onSave} />}
+      message={<TermForm formikRef={formikRef} initialValues={initialValues} onSave={onSave} />}
     />
   );
 };

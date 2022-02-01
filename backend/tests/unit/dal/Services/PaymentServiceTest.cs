@@ -76,6 +76,39 @@ namespace Pims.Dal.Test.Services
         }
 
         [Fact]
+        public void AddPayment_StatusPaymentType()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), GstAmount = 1, PaymentAmount = 1 };
+
+            MockCommonServices();
+            leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
+            leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
+            leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+
+            // Act
+            var unpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 0,  };
+            var overpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 3 };
+            var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2 };
+            var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1 };
+
+            paymentService.AddPayment(lease.Id, 1, unpaidPayment);
+            paymentService.AddPayment(lease.Id, 1, overpaidPayment);
+            paymentService.AddPayment(lease.Id, 1, paidPayment);
+            paymentService.AddPayment(lease.Id, 1, partialPayment);
+
+            // Assert
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.UNPAID && x.PaymentAmountTotal == 0)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.OVERPAID && x.PaymentAmountTotal == 3)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.PAID && x.PaymentAmountTotal == 2)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.PARTIAL && x.PaymentAmountTotal == 1)));
+        }
+
+        [Fact]
         public void AddPayment_NotAuthorized()
         {
             // Arrange

@@ -78,6 +78,31 @@ namespace Pims.Dal.Services
             {
                 throw new InvalidOperationException("Payment received date must be within the start and expiry date of the term");
             }
+
+            payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leaseTerm);
+        }
+
+        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
+        {
+            decimal? expectedTotal = parent.PaymentAmount + parent.GstAmount;
+            if(payment.PaymentAmountTotal == 0)
+            {
+                return PimsLeaseStatusTypes.UNPAID;
+            } else if(payment.PaymentAmountTotal < expectedTotal)
+            {
+                return PimsLeaseStatusTypes.PARTIAL;
+            }
+            else if (payment.PaymentAmountTotal == expectedTotal)
+            {
+                return PimsLeaseStatusTypes.PAID;
+            }
+            else if (payment.PaymentAmountTotal > expectedTotal)
+            {
+                return PimsLeaseStatusTypes.OVERPAID;
+            } else
+            {
+                throw new InvalidOperationException("Invalid payment value provided");
+            }
         }
     }
 }

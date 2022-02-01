@@ -1,6 +1,6 @@
 import { Button } from 'components/common/form';
 import { TableProps } from 'components/Table/Table';
-import Claims from 'constants/claims';
+import { Claims, LeaseTermStatusTypes } from 'constants/index';
 import { useFormikContext } from 'formik';
 import useDeepCompareMemo from 'hooks/useDeepCompareMemo';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -55,7 +55,7 @@ export const TermsForm: React.FunctionComponent<ITermsFormProps> = ({
           onEdit={onEditPayment}
           onDelete={onDeletePayment}
           nameSpace={`terms.${formikProps.values.terms.indexOf(row)}`}
-          isExercised={row?.statusTypeCode?.id === 'EXER'}
+          isExercised={row?.statusTypeCode?.id === LeaseTermStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}
           termId={row.id}

@@ -1,3 +1,4 @@
+import { LeaseTermStatusTypes } from 'constants/index';
 import * as Yup from 'yup';
 
 export const LeaseTermSchema = Yup.object().shape({
@@ -7,7 +8,7 @@ export const LeaseTermSchema = Yup.object().shape({
     .test({
       name: 'statusTypeTest',
       test: function(value, context) {
-        if (value?.id === 'NEXER' && !!this.parent.payments.length) {
+        if (value?.id === LeaseTermStatusTypes.NOT_EXERCISED && !!this.parent.payments.length) {
           return context.createError({
             path: 'statusTypeCode.id',
             message: 'Terms with one or more payment must be exercised',

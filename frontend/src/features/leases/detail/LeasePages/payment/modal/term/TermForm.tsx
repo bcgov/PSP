@@ -1,5 +1,6 @@
 import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from 'components/common/form';
 import * as API from 'constants/API';
+import { LeaseTermStatusTypes } from 'constants/index';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik, FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
@@ -31,7 +32,6 @@ export const TermForm: React.FunctionComponent<ITermFormProps> = ({
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
   const leaseTermStatusOptions = lookups.getOptionsByType(API.LEASE_TERM_STATUS_TYPES);
-  const defaultLeaseTermStatus = leaseTermStatusOptions.find(status => status.value === 'NEXER');
   return (
     <Formik
       innerRef={formikRef}
@@ -42,11 +42,11 @@ export const TermForm: React.FunctionComponent<ITermFormProps> = ({
       }}
       initialValues={{
         ...defaultFormLeaseTerm,
-        statusTypeCode: defaultLeaseTermStatus
-          ? { id: defaultLeaseTermStatus.value.toString() }
-          : undefined,
         ...initialValues,
         leaseId: lease?.id,
+        statusTypeCode: initialValues?.statusTypeCode?.id
+          ? initialValues?.statusTypeCode
+          : { id: LeaseTermStatusTypes.NOT_EXERCISED },
         leaseRowVersion: lease?.rowVersion,
       }}
     >
