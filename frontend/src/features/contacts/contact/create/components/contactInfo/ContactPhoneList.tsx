@@ -5,6 +5,8 @@ import React from 'react';
 
 import { ContactPhone } from './ContactPhone';
 
+const emptyContactMethod: IEditableContactMethodForm = { value: '', contactMethodTypeCode: '' };
+
 export interface IContactPhoneList {
   field: string;
   contactPhones: IEditableContactMethodForm[];
@@ -20,16 +22,18 @@ export const ContactPhoneList: React.FunctionComponent<IContactPhoneList> = ({
 }) => {
   return (
     <FieldArray name={field}>
-      {({ push, remove }) => (
+      {({ push, remove, replace }) => (
         <>
           {contactPhones.map((phone, index) => (
             <ContactPhone
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
-              onRemove={index > 0 ? () => remove(index) : undefined}
+              onRemove={
+                index >= 0 ? () => remove(index) : () => replace(index, { ...emptyContactMethod })
+              }
             />
           ))}
-          <Button variant="link" onClick={() => push({ value: '', contactMethodTypeCode: '' })}>
+          <Button variant="link" onClick={() => push({ ...emptyContactMethod })}>
             + Add another phone number
           </Button>
         </>

@@ -5,6 +5,8 @@ import React from 'react';
 
 import { ContactEmail } from './ContactEmail';
 
+const emptyContactMethod: IEditableContactMethodForm = { value: '', contactMethodTypeCode: '' };
+
 export interface IContactEmailList {
   field: string;
   contactEmails: IEditableContactMethodForm[];
@@ -20,16 +22,18 @@ export const ContactEmailList: React.FunctionComponent<IContactEmailList> = ({
 }) => {
   return (
     <FieldArray name={field}>
-      {({ push, remove }) => (
+      {({ push, remove, replace }) => (
         <>
           {contactEmails.map((email, index) => (
             <ContactEmail
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
-              onRemove={index > 0 ? () => remove(index) : undefined}
+              onRemove={
+                index >= 0 ? () => remove(index) : () => replace(index, { ...emptyContactMethod })
+              }
             />
           ))}
-          <Button variant="link" onClick={() => push({ value: '', contactMethodTypeCode: '' })}>
+          <Button variant="link" onClick={() => push({ ...emptyContactMethod })}>
             + Add another email address
           </Button>
         </>
