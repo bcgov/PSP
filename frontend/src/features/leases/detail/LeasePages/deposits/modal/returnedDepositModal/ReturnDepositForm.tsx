@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import { formatMoney } from 'utils';
 import { ReturnDepositYupSchema } from './ReturnDepositYupSchema';
 
+import { ReturnDepositYupSchema } from './ReturnDepositYupSchema';
+
 export interface IReturnDepositFormProps {
   formikRef: React.Ref<FormikProps<FormLeaseDepositReturn>>;
   onSave: (values: FormLeaseDepositReturn) => void;
