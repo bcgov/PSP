@@ -80,6 +80,7 @@ export const ReceivedDepositForm: React.FunctionComponent<IReceivedDepositFormPr
                 formikProps={formikProps}
                 label="Paid date:"
                 field="depositDate"
+                required
               />
             </Col>
           </Row>
