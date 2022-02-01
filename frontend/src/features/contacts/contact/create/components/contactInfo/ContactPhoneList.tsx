@@ -29,7 +29,7 @@ export const ContactPhoneList: React.FunctionComponent<IContactPhoneList> = ({
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
               onRemove={
-                index >= 0 ? () => remove(index) : () => replace(index, { ...emptyContactMethod })
+                index > 0 ? () => remove(index) : () => replace(index, { ...emptyContactMethod })
               }
             />
           ))}

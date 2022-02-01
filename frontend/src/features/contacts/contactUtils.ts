@@ -11,7 +11,7 @@ import {
   IEditablePersonAddressForm,
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
-import { stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
+import { stringToBoolean, stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
 
 export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditablePerson {
   // exclude form-specific fields from API payload object
@@ -34,6 +34,7 @@ export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditabl
 
   const apiPerson = {
     ...restObject,
+    isDisabled: stringToBoolean(formValues.isDisabled),
     addresses,
     contactMethods,
   } as IEditablePerson;

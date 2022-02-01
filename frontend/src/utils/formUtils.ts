@@ -48,3 +48,10 @@ export function stringToTypeCode<T = string>(value?: T) {
 export function typeCodeToString<T = string>(value?: ITypeCode<T>) {
   return value?.id;
 }
+
+export function stringToBoolean(value: string | boolean): boolean {
+  if (typeof value === 'string') {
+    return value === 'true';
+  }
+  return value;
+}

@@ -1,4 +1,4 @@
-import { AsyncTypeahead, Button, Input } from 'components/common/form';
+import { AsyncTypeahead, Button, Input, Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -11,13 +11,13 @@ import {
   ContactPhoneList,
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/create/styles';
 import {
   hasAddress,
   hasEmail,
   hasPhoneNumber,
   PersonValidationSchema,
 } from 'features/contacts/contact/create/validation';
+import * as Styled from 'features/contacts/contact/edit/styles';
 import { apiPersonToFormPerson, formPersonToApiPerson } from 'features/contacts/contactUtils';
 import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
 import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
@@ -162,9 +162,27 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
         }}
       />
 
-      <Styled.CreateFormLayout>
-        <Styled.Form id="createForm">
+      <Styled.ScrollingFormLayout>
+        <Styled.Form id="updateForm">
           <FlexBox column gap="1.6rem">
+            <FormSection className="py-2">
+              <Styled.RowAligned className="align-items-center">
+                <Col className="d-flex">
+                  <span>Individual</span>
+                </Col>
+                <Col md="auto" className="d-flex ml-auto">
+                  <Select
+                    className="mb-0"
+                    field="isDisabled"
+                    options={[
+                      { label: 'Inactive', value: 'true' },
+                      { label: 'Active', value: 'false' },
+                    ]}
+                  ></Select>
+                </Col>
+              </Styled.RowAligned>
+            </FormSection>
+
             <FormSection>
               <Row>
                 <Col md={4}>
@@ -245,7 +263,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
             </FormSection>
           </FlexBox>
         </Styled.Form>
-      </Styled.CreateFormLayout>
+      </Styled.ScrollingFormLayout>
 
       <Styled.ButtonGroup>
         {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (

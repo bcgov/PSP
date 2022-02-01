@@ -29,7 +29,7 @@ export const ContactEmailList: React.FunctionComponent<IContactEmailList> = ({
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
               onRemove={
-                index >= 0 ? () => remove(index) : () => replace(index, { ...emptyContactMethod })
+                index > 0 ? () => remove(index) : () => replace(index, { ...emptyContactMethod })
               }
             />
           ))}

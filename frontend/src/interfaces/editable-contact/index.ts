@@ -77,6 +77,7 @@ export interface IEditablePersonForm
   extends ExtendOverride<
     IEditablePerson,
     {
+      isDisabled: string | boolean;
       emailContactMethods: IEditableContactMethodForm[];
       phoneContactMethods: IEditableContactMethodForm[];
       mailingAddress: IEditablePersonAddressForm;
