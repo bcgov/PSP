@@ -60,6 +60,44 @@ describe('DetailAdministration component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
 
+  it('renders all other fields', () => {
+    const {
+      component: { getByDisplayValue },
+    } = setup({
+      lease: {
+        categoryType: { id: 'OTHER' },
+        otherCategoryType: 'other category text',
+        purposeType: { id: 'OTHER' },
+        otherPurposeType: 'other purpose type',
+        programType: { id: 'OTHER' },
+        otherProgramType: 'other program type',
+        type: { id: 'OTHER' },
+        otherType: 'other type',
+      } as any,
+    });
+    expect(getByDisplayValue('other category text')).toBeVisible();
+    expect(getByDisplayValue('other purpose type')).toBeVisible();
+    expect(getByDisplayValue('other program type')).toBeVisible();
+    expect(getByDisplayValue('other type')).toBeVisible();
+  });
+
+  it('does not render other fields if values not set to other', () => {
+    const {
+      component: { queryByDisplayValue },
+    } = setup({
+      lease: {
+        otherCategoryType: 'other category text',
+        otherPurposeType: 'other purpose type',
+        otherProgramType: 'other program type',
+        otherType: 'other type',
+      } as any,
+    });
+    expect(queryByDisplayValue('other category text')).toBeNull();
+    expect(queryByDisplayValue('other purpose type')).toBeNull();
+    expect(queryByDisplayValue('other program type')).toBeNull();
+    expect(queryByDisplayValue('other type')).toBeNull();
+  });
+
   it('renders the program name', () => {
     const {
       component: { getByDisplayValue },
