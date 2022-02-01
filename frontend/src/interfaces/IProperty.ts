@@ -23,7 +23,7 @@ import IPropertySurplus from './IPropertySurplus';
  * A property entity represents a land, building, subdivision, or other type of property.
  */
 export interface IProperty {
-  id?: number | '';
+  id?: number;
   pid: string;
   pin?: number | '';
   propertyTypeId: PropertyTypes;
