@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Test;
@@ -6,10 +10,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -46,7 +46,7 @@ namespace Pims.Dal.Test.Services
             var elease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var result = service.Count();
@@ -67,7 +67,7 @@ namespace Pims.Dal.Test.Services
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var result = service.Get(filter);
@@ -85,7 +85,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -104,7 +104,7 @@ namespace Pims.Dal.Test.Services
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var result = service.GetPage(filter);
@@ -127,7 +127,7 @@ namespace Pims.Dal.Test.Services
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
@@ -160,7 +160,7 @@ namespace Pims.Dal.Test.Services
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var updateTenant = lease.PimsLeaseTenants.FirstOrDefault();
@@ -185,7 +185,7 @@ namespace Pims.Dal.Test.Services
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
@@ -212,7 +212,7 @@ namespace Pims.Dal.Test.Services
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var deleteTenant = lease.PimsLeaseTenants.FirstOrDefault();
@@ -237,7 +237,7 @@ namespace Pims.Dal.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -252,7 +252,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -270,7 +270,7 @@ namespace Pims.Dal.Test.Services
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
@@ -292,7 +292,7 @@ namespace Pims.Dal.Test.Services
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             var propertyOne = EntityHelper.CreateProperty(1);
             helper.CreatePimsContext(user, true).AddRange(propertyOne, lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -316,7 +316,7 @@ namespace Pims.Dal.Test.Services
             var propertyOne = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(propertyOne, lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
             var leaseTwo = context.CreateLease(2, addProperty: false);
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, Lease = leaseTwo, PropertyId = propertyOne.PropertyId } };
@@ -342,7 +342,7 @@ namespace Pims.Dal.Test.Services
             var propertyOne = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(propertyOne, lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
             var leaseTwo = context.CreateLease(2, addProperty: false);
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
@@ -366,7 +366,7 @@ namespace Pims.Dal.Test.Services
 
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             helper.CreatePimsContext(user, true).AddRange(lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -392,7 +392,7 @@ namespace Pims.Dal.Test.Services
             lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease, propertyOne);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -421,7 +421,7 @@ namespace Pims.Dal.Test.Services
             lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease, propertyOne);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -447,7 +447,7 @@ namespace Pims.Dal.Test.Services
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var deleteProperty = lease.PimsPropertyLeases.FirstOrDefault();
@@ -469,7 +469,7 @@ namespace Pims.Dal.Test.Services
             var property = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(property, lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -498,7 +498,7 @@ namespace Pims.Dal.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -513,7 +513,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -531,7 +531,7 @@ namespace Pims.Dal.Test.Services
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;
@@ -552,7 +552,7 @@ namespace Pims.Dal.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddRange(lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -576,7 +576,7 @@ namespace Pims.Dal.Test.Services
             lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, Id = 1 });
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -601,7 +601,7 @@ namespace Pims.Dal.Test.Services
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var deleteImprovement = lease.PimsPropertyImprovements.FirstOrDefault();
@@ -622,7 +622,7 @@ namespace Pims.Dal.Test.Services
             var lease = EntityHelper.CreateLease(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(lease);
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
             helper.SaveChanges();
 
             // Act
@@ -648,7 +648,7 @@ namespace Pims.Dal.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -663,7 +663,7 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             // Assert
@@ -681,7 +681,7 @@ namespace Pims.Dal.Test.Services
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
-            var service = helper.CreateRepository<LeaseService>(user);
+            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             lease.ConcurrencyControlNumber = lease.ConcurrencyControlNumber - 1;

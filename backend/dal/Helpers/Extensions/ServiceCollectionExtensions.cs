@@ -18,7 +18,7 @@ namespace Pims.Dal
         /// <summary>
         /// Add PimsRepository objects to the dependency injection service collection.
         /// </summary>
-        /// <param name="Repositories"></param>
+        /// <param name="repositories"></param>
         /// <returns></returns>
         public static IServiceCollection AddPimsRepositories(this IServiceCollection repositories)
         {
@@ -33,27 +33,31 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();
             repositories.AddScoped<Repositories.IAccessRequestService, Repositories.AccessRequestService>();
             repositories.AddScoped<Repositories.ITenantService, Repositories.TenantService>();
-            repositories.AddScoped<Repositories.ILeaseService, Repositories.LeaseService>();
+            repositories.AddScoped<Repositories.ILeaseRepository, Repositories.LeaseRepository>();
             repositories.AddScoped<Repositories.IContactService, Repositories.ContactService>();
             repositories.AddScoped<Repositories.IInsuranceService, Repositories.InsuranceService>();
             repositories.AddScoped<Repositories.IAutocompleteService, Repositories.AutocompleteService>();
             repositories.AddScoped<Repositories.IUserOrganizationService, Repositories.UserOrganizationService>();
             repositories.AddScoped<Repositories.IOrganizationService, Repositories.OrganizationService>();
             repositories.AddScoped<Repositories.ILeaseTermRepository, Repositories.LeaseTermRepository>();
+            repositories.AddScoped<Repositories.ISecurityDepositRepository, Repositories.SecurityDepositRepository>();
+            repositories.AddScoped<Repositories.ISecurityDepositReturnRepository, Repositories.SecurityDepositReturnRepository>();
             return repositories; // TODO: Use reflection to find all Repositories.
         }
 
         /// <summary>
         /// Add PimsService objects to the dependency injection service collection.
         /// </summary>
-        /// <param name="Repositories"></param>
+        /// <param name="services"></param>
         /// <returns></returns>
         public static IServiceCollection AddPimsServices(this IServiceCollection services)
         {
             services.AddScoped<IPimsService, PimsService>();
-            services.AddScoped<Services.ILeaseService, Services.LeaseService>();
-            services.AddScoped<Services.ILeaseTermService, Services.LeaseTermService>();
-            return services; // TODO: Use reflection to find all Repositories.
+            services.AddScoped<ILeaseService, LeaseService>();
+            services.AddScoped<ILeaseTermService, LeaseTermService>();
+            services.AddScoped<ISecurityDepositService, SecurityDepositService>();
+            services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
+            return services; // TODO: Use reflection to find all services.
         }
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace Pims.Dal
         /// <returns></returns>
         public static IServiceCollection AddPimsContext(this IServiceCollection repositories, IHostEnvironment env, string connectionString)
         {
-            if (String.IsNullOrWhiteSpace(connectionString)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(connectionString));
+            if (string.IsNullOrWhiteSpace(connectionString)) throw new ArgumentException("Argument is required and cannot be null, empty or whitespace.", nameof(connectionString));
 
             repositories.AddDbContext<PimsContext>(options =>
             {

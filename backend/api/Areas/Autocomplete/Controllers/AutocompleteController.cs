@@ -1,3 +1,4 @@
+using System;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -10,7 +11,6 @@ using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 
 namespace Pims.Api.Areas.Autocomplete.Controllers
 {

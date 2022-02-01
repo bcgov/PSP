@@ -17,12 +17,12 @@ namespace Pims.Dal
 
         #region Properties
         /// <summary>
-        /// get - The person service.
+        /// get - The person repository.
         /// </summary>
         public IPersonService Person { get { return _serviceProvider.GetService<IPersonService>(); } }
 
         /// <summary>
-        /// get - The organization service.
+        /// get - The organization repository.
         /// </summary>
         public IOrganizationService Organization { get { return _serviceProvider.GetService<IOrganizationService>(); } }
 
@@ -32,72 +32,77 @@ namespace Pims.Dal
         public IUserOrganizationService UserOrganization { get { return _serviceProvider.GetService<IUserOrganizationService>(); } }
 
         /// <summary>
-        /// get - The user calling the service.
+        /// get - The user calling the repository.
         /// </summary>
         public ClaimsPrincipal Principal { get; }
 
         /// <summary>
-        /// get - The property service.
+        /// get - The property repository.
         /// </summary>
         public IPropertyService Property { get { return _serviceProvider.GetService<IPropertyService>(); } }
 
         /// <summary>
-        /// get - The lookup service.
+        /// get - The lookup repository.
         /// </summary>
         public ILookupService Lookup { get { return _serviceProvider.GetService<ILookupService>(); } }
 
         /// <summary>
-        /// get - The system constant service.
+        /// get - The system constant repository.
         /// </summary>
         public ISystemConstantService SystemConstant { get { return _serviceProvider.GetService<ISystemConstantService>(); } }
 
         /// <summary>
-        /// get - The user service.
+        /// get - The user repository.
         /// </summary>
         public IUserService User { get { return _serviceProvider.GetService<IUserService>(); } }
 
         /// <summary>
-        /// get - The role service.
+        /// get - The role repository.
         /// </summary>
         public IRoleService Role { get { return _serviceProvider.GetService<IRoleService>(); } }
 
         /// <summary>
-        /// get - The claim service.
+        /// get - The claim repository.
         /// </summary>
         public IClaimService Claim { get { return _serviceProvider.GetService<IClaimService>(); } }
 
         /// <summary>
-        /// get - The access request service.
+        /// get - The access request repository.
         /// </summary>
         public IAccessRequestService AccessRequest { get { return _serviceProvider.GetService<IAccessRequestService>(); } }
 
         /// <summary>
-        /// get - The tenant service.
+        /// get - The tenant repository.
         /// </summary>
         public ITenantService Tenant { get { return _serviceProvider.GetService<ITenantService>(); } }
 
         /// <summary>
-        /// get - The lease service.
+        /// get - The lease repository.
         /// </summary>
-        public ILeaseService Lease { get { return _serviceProvider.GetService<ILeaseService>(); } }
+        public ILeaseRepository Lease { get { return _serviceProvider.GetService<ILeaseRepository>(); } }
 
         /// <summary>
-        /// get - The lease term service.
+        /// get - The lease term repository.
         /// </summary>
         public ILeaseTermRepository LeaseTerm { get { return _serviceProvider.GetService<ILeaseTermRepository>(); } }
 
         /// <summary>
-        /// get - The contact service.
+        /// get - The security deposit repository.
+        /// </summary>
+        public ISecurityDepositRepository SecurityDeposit { get { return _serviceProvider.GetService<ISecurityDepositRepository>(); } }
+
+        /// <summary>
+        /// get - The contact repository.
         /// </summary>
         public IContactService Contact { get { return _serviceProvider.GetService<IContactService>(); } }
 
         /// <summary>
-        /// get - The insurance service.
+        /// get - The insurance repository.
         /// </summary>
         public IInsuranceService Insurance { get { return _serviceProvider.GetService<IInsuranceService>(); } }
 
         /// <summary>
-        /// get - The autocomplete service.
+        /// get - The autocomplete repository.
         /// </summary>
         public IAutocompleteService Autocomplete { get { return _serviceProvider.GetService<IAutocompleteService>(); } }
         #endregion
