@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LeaseStatusTypes } from 'constants/index';
+import { LeaseTermStatusTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { defaultFormLeaseTerm } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
@@ -93,7 +93,7 @@ describe('TermModal component', () => {
       renewalDate: '',
       startDate: '2020-01-01',
       statusTypeCode: {
-        id: LeaseStatusTypes.NOT_EXERCISED,
+        id: LeaseTermStatusTypes.NOT_EXERCISED,
       },
     });
   });

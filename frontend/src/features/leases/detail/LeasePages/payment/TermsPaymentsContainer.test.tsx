@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Claims, LeaseStatusTypes } from 'constants/index';
+import { Claims, LeaseTermStatusTypes } from 'constants/index';
 import { LeaseStateContext } from 'features/leases/context/LeaseContext';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
@@ -28,7 +28,7 @@ const defaultLeaseWithTermsPayments: IFormLease = {
   terms: [
     {
       ...defaultFormLeaseTerm,
-      statusTypeCode: { id: LeaseStatusTypes.EXERCISED },
+      statusTypeCode: { id: LeaseTermStatusTypes.EXERCISED },
       payments: [{ ...defaultTestFormLeasePayment }],
     },
   ],
