@@ -172,10 +172,13 @@ namespace Pims.Dal.Helpers.Extensions
                     var dbChildEntry = context.Entry(existingChild);
                     dbChildEntry.CurrentValues.SetValues(child);
 
+                    // load grandchild navigation property
+                    var grandchildReference = dbChildEntry.Reference(grandchildPropertyName);
+                    grandchildReference.Load();
+
                     // Update grandchild navigation with values passed in the array
-                    var grandchild = grandchildFunc(child);
-                    var dbGrandchildEntry = dbChildEntry.Reference(grandchildPropertyName).TargetEntry;
-                    dbGrandchildEntry.CurrentValues.SetValues(grandchild);
+                    var grandchildValue = grandchildFunc(child);
+                    grandchildReference.TargetEntry.CurrentValues.SetValues(grandchildValue);
 
                     existingChildren.Remove(child.Id);
                 }

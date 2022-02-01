@@ -17,6 +17,11 @@ namespace Pims.Api.Areas.Persons.Models.Person
         /// </summary>
         /// <value></value>
         public long PersonAddressRowVersion { get; set; }
+
+        /// <summary>
+        /// get/set - The primary key to identify the person that owns the target address.
+        /// </summary>
+        public long PersonId { get; set; }
         #endregion
     }
 }

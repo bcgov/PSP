@@ -42,7 +42,19 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
                 .Map(dest => dest.PimsPersonAddresses, src => src.Addresses)
                 .Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
                 .Map(dest => dest.PimsPersonOrganizations, src => src.Organization != null ? new[] { src } : null)
-                .IgnoreNullValues(true);
+                .IgnoreNullValues(true)
+                .AfterMapping((src, dest) =>
+                {
+                    // ensure many-to-many PersonAddress entities have set the proper FK to owning Person
+                    foreach (var pa in dest.PimsPersonAddresses)
+                    {
+                        pa.PersonId = dest.PersonId;
+                    }
+                    foreach (var cm in dest.PimsContactMethods)
+                    {
+                        cm.PersonId = dest.PersonId;
+                    }
+                });
         }
     }
 }

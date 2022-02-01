@@ -45,7 +45,7 @@ namespace Pims.Dal.Repositories
         public long GetRowVersion(long id)
         {
             this.User.ThrowIfNotAuthorized(Permissions.ContactView);
-            return this.Context.PimsPeople.AsNoTracking().Where(p => p.Id == id)?.Select(p => p.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
+            return this.Context.PimsPeople.AsNoTracking().Where(p => p.PersonId == id)?.Select(p => p.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
