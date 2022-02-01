@@ -95,12 +95,6 @@ exports[`LeaseIndex component renders as expected 1`] = `
       class="c1 disabled"
       href="/"
     >
-      Physical Security
-    </a>
-    <a
-      class="c1 disabled"
-      href="/"
-    >
       Surplus Declaration
     </a>
   </div>
