@@ -42,6 +42,10 @@ const AdministrationSubForm: React.FunctionComponent<IAdministrationSubFormProps
     if (!!type && type !== 'OTHER') {
       setFieldValue('otherType', '');
     }
+    if (!!type && !isLeaseCategoryVisible(type)) {
+      setFieldValue('otherCategoryType', '');
+      setFieldValue('categoryType', '');
+    }
     if (!!purposeType && purposeType !== 'OTHER') {
       setFieldValue('otherPurposeType', '');
     }
