@@ -47,5 +47,8 @@ namespace Pims.Dal.Entities
         [Column("PROVINCE_STATE")]
         [StringLength(20)]
         public string ProvinceState { get; set; }
+        [Column("EMAIL_ADDRESS")]
+        [StringLength(200)]
+        public string EmailAddress { get; set; }
     }
 }
