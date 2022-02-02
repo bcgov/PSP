@@ -2,6 +2,8 @@ import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
 import { IconButton, InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
+import { Claims } from 'constants/claims';
+import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { IContactSearchResult } from 'interfaces';
 import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
@@ -106,21 +108,27 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 40,
     Cell: (props: CellProps<IContactSearchResult>) => {
       const history = useHistory();
+      const { hasClaim } = useKeycloakWrapper();
 
       return (
         <StyledDiv>
-          <IconButton
-            variant="light"
-            onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
-          >
-            <MdEdit size={22} />
-          </IconButton>
-          <IconButton
-            variant="light"
-            onClick={() => history.push(`/contact/${props.row.original.id}`)}
-          >
-            <MdContactMail size={22} />
-          </IconButton>
+          {hasClaim(Claims.CONTACT_EDIT) && (
+            <IconButton
+              variant="light"
+              onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
+            >
+              <MdEdit size={22} />
+            </IconButton>
+          )}
+
+          {hasClaim(Claims.CONTACT_VIEW) && (
+            <IconButton
+              variant="light"
+              onClick={() => history.push(`/contact/${props.row.original.id}`)}
+            >
+              <MdContactMail size={22} />
+            </IconButton>
+          )}
         </StyledDiv>
       );
     },

@@ -99,8 +99,6 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   );
 };
 
-export default UpdatePersonForm;
-
 /**
  * Sub-component that is wrapped by Formik
  */
@@ -115,6 +113,8 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
 }) => {
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const personId = values.id;
 
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
@@ -142,7 +142,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
     if (dirty) {
       setShowConfirmation(true);
     } else {
-      history.push('/contact/list');
+      history.push(`/contact/P${personId}`);
     }
   };
 
@@ -159,7 +159,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
           resetForm({ values: initialValues });
           // need a timeout here to give the form time to reset before navigating away
           // or else the router guard prompt will also be shown
-          setTimeout(() => history.push('/contact/list'), 100);
+          setTimeout(() => history.push(`/contact/P${personId}`), 100);
         }}
       />
 
@@ -281,3 +281,5 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
     </>
   );
 };
+
+export default UpdatePersonForm;
