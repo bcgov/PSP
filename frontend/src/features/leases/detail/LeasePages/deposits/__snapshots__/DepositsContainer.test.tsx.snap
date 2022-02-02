@@ -8,7 +8,17 @@ exports[`DepositsContainer renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c1 {
+  .c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
@@ -34,6 +44,16 @@ exports[`DepositsContainer renders as expected 1`] = `
   flex-direction: column;
   width: 100%;
   gap: 2.5rem;
+}
+
+.c5 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
+}
+
+.c6 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
 }
 
 <div
@@ -193,7 +213,11 @@ exports[`DepositsContainer renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                <div
+                  class="c4 c5"
+                />
+              </div>
             </div>
           </div>
           <div
@@ -247,7 +271,11 @@ Integer nec odio.
                 role="cell"
                 style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                <div
+                  class="c4 c5"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -443,7 +471,11 @@ Integer nec odio.
                 role="cell"
                 style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                <div
+                  class="c4 c6"
+                />
+              </div>
             </div>
           </div>
         </div>

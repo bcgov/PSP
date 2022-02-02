@@ -53,22 +53,32 @@ function renderPerson({ row: { original } }: CellProps<ReturnListEntry, string>)
 function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => void) {
   return function({ row: { original, index } }: CellProps<ReturnListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
-    return hasClaim(Claims.LEASE_EDIT) ? (
+    return (
       <StyledIcons>
-        <Button
-          title="delete deposit return"
-          icon={
-            <FaTrash size={24} id={`delete-depositreturn-${index}`} title="delete depositreturn" />
-          }
-          onClick={() => original.id && onDelete(original.id)}
-        ></Button>
-        <Button
-          title="edit deposit return"
-          icon={<MdEdit size={24} id={`edit-depositreturn-${index}`} title="edit depositreturn" />}
-          onClick={() => onEdit(original.id)}
-        ></Button>
+        {hasClaim(Claims.LEASE_DELETE) && (
+          <Button
+            title="delete deposit return"
+            icon={
+              <FaTrash
+                size={24}
+                id={`delete-depositreturn-${index}`}
+                title="delete depositreturn"
+              />
+            }
+            onClick={() => original.id && onDelete(original.id)}
+          ></Button>
+        )}
+        {hasClaim(Claims.LEASE_EDIT) && (
+          <Button
+            title="edit deposit return"
+            icon={
+              <MdEdit size={24} id={`edit-depositreturn-${index}`} title="edit depositreturn" />
+            }
+            onClick={() => onEdit(original.id)}
+          ></Button>
+        )}
       </StyledIcons>
-    ) : null;
+    );
   };
 }
 

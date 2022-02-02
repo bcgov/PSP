@@ -8,7 +8,17 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c0 {
+  .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
@@ -22,6 +32,11 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
 .c2 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
+}
+
+.c4 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
 }
 
 <div
@@ -214,7 +229,11 @@ exports[`DepositsReturnedContainer component renders as expected 1`] = `
               role="cell"
               style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
               title=""
-            />
+            >
+              <div
+                class="c3 c4"
+              />
+            </div>
           </div>
         </div>
       </div>

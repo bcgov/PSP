@@ -42,7 +42,6 @@ namespace Pims.Dal.Services
             ValidateServiceCall(leaseId, leaseRowVersion);
             _securityDepositRepository.Update(deposit);
             _securityDepositRepository.CommitTransaction();
-
             return _leaseRepository.Get(leaseId);
         }
 

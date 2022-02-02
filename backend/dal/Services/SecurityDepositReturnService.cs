@@ -23,6 +23,7 @@ namespace Pims.Dal.Services
 
         public PimsLease AddLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit)
         {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
             ValidateServiceCall(leaseId, leaseRowVersion);
             _securityDepositReturnRepository.Add(deposit);
             _securityDepositReturnRepository.CommitTransaction();
@@ -32,6 +33,7 @@ namespace Pims.Dal.Services
 
         public PimsLease UpdateLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit)
         {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateServiceCall(leaseId, leaseRowVersion);
             _securityDepositReturnRepository.Update(deposit);
             _securityDepositReturnRepository.CommitTransaction();
@@ -41,8 +43,8 @@ namespace Pims.Dal.Services
 
         public PimsLease DeleteLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit)
         {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseDelete);
             ValidateServiceCall(leaseId, leaseRowVersion);
-
             _securityDepositReturnRepository.Delete(deposit.SecurityDepositReturnId);
             _securityDepositReturnRepository.CommitTransaction();
 
@@ -56,7 +58,6 @@ namespace Pims.Dal.Services
         /// <param name="leaseRowVersion"></param>
         private void ValidateServiceCall(long leaseId, long leaseRowVersion)
         {
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             if (!_leaseService.IsRowVersionEqual(leaseId, leaseRowVersion))
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this lease, please refresh the application and retry.");

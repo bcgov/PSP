@@ -46,27 +46,31 @@ function depositActions(
 ) {
   return function({ row: { original, index } }: CellProps<DepositListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
-    return hasClaim(Claims.LEASE_EDIT) ? (
+    return (
       <StyledIcons>
-        {original.depositReturnCount === 0 && (
+        {hasClaim(Claims.LEASE_DELETE) && original.depositReturnCount === 0 && (
           <Button
             title="delete deposit"
             icon={<FaTrash size={24} id={`delete-deposit-${index}`} title="delete deposit" />}
             onClick={() => original.id && onDelete(original.id)}
           ></Button>
         )}
-        <Button
-          title="edit deposit"
-          icon={<MdEdit size={24} id={`edit-deposit-${index}`} title="edit deposit" />}
-          onClick={() => onEdit(original.id)}
-        ></Button>
-        <Button
-          title="return deposit"
-          icon={<MdUndo size={24} id={`edit-deposit-${index}`} title="edit deposit" />}
-          onClick={() => onReturn(original.id)}
-        ></Button>
+        {hasClaim(Claims.LEASE_EDIT) && (
+          <Button
+            title="edit deposit"
+            icon={<MdEdit size={24} id={`edit-deposit-${index}`} title="edit deposit" />}
+            onClick={() => onEdit(original.id)}
+          ></Button>
+        )}
+        {hasClaim(Claims.LEASE_ADD) && (
+          <Button
+            title="return deposit"
+            icon={<MdUndo size={24} id={`edit-deposit-${index}`} title="edit deposit" />}
+            onClick={() => onReturn(original.id)}
+          ></Button>
+        )}
       </StyledIcons>
-    ) : null;
+    );
   };
 }
 
