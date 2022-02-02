@@ -113,17 +113,15 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
       <FormSection key={'contact-org-' + organization.id + '-contacts'} className="mb-4">
         <Styled.H2Primary>Contact info</Styled.H2Primary>
         <Styled.RowAligned className="pb-4">
-          <Col md={2}>
+          <Col md="2">
             <strong>Email:</strong>
           </Col>
-          <Col>
+          <Col md="10">
             {personEmails.length === 0 && <span>N.A</span>}
             {personEmails.map((field: ContactInfoField, index: number) => (
               <Styled.RowAligned key={'org-email-' + index}>
-                <Col md="4" data-testid="email-value">
-                  {field.info}
-                </Col>
-                <Col md="auto">
+                <Col data-testid="email-value">{field.info}</Col>
+                <Col>
                   <em>{field.label}</em>
                 </Col>
               </Styled.RowAligned>
@@ -131,17 +129,15 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           </Col>
         </Styled.RowAligned>
         <Styled.RowAligned>
-          <Col md={2}>
+          <Col md="2">
             <strong>Phone:</strong>
           </Col>
-          <Col>
+          <Col md="10">
             {personPhoneNumbers.length === 0 && <span>N.A</span>}
             {personPhoneNumbers.map((field: ContactInfoField, index: number) => (
               <Styled.RowAligned key={'org-phone-' + index}>
-                <Col md="4" data-testid="phone-value">
-                  {phoneFormatter(field.info)}
-                </Col>
-                <Col md="auto">
+                <Col data-testid="phone-value">{phoneFormatter(field.info)}</Col>
+                <Col>
                   <em>{field.label}</em>
                 </Col>
               </Styled.RowAligned>
