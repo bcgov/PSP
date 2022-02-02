@@ -73,6 +73,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsPerson> PimsPeople { get; set; }
         public virtual DbSet<PimsPersonAddress> PimsPersonAddresses { get; set; }
         public virtual DbSet<PimsPersonAddressHist> PimsPersonAddressHists { get; set; }
+        public virtual DbSet<PimsPersonContactVw> PimsPersonContactVws { get; set; }
         public virtual DbSet<PimsPersonHist> PimsPersonHists { get; set; }
         public virtual DbSet<PimsPersonOrganization> PimsPersonOrganizations { get; set; }
         public virtual DbSet<PimsPersonOrganizationHist> PimsPersonOrganizationHists { get; set; }
@@ -131,6 +132,7 @@ namespace Pims.Dal
         public virtual DbSet<PimsSecurityDepositReturnHolderHist> PimsSecurityDepositReturnHolderHists { get; set; }
         public virtual DbSet<PimsSecurityDepositType> PimsSecurityDepositTypes { get; set; }
         public virtual DbSet<PimsStaticVariable> PimsStaticVariables { get; set; }
+        public virtual DbSet<PimsStaticVariableHist> PimsStaticVariableHists { get; set; }
         public virtual DbSet<PimsSurplusDeclarationType> PimsSurplusDeclarationTypes { get; set; }
         public virtual DbSet<PimsTask> PimsTasks { get; set; }
         public virtual DbSet<PimsTaskHist> PimsTaskHists { get; set; }
@@ -1594,6 +1596,11 @@ namespace Pims.Dal
                 entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
+            modelBuilder.Entity<PimsPersonContactVw>(entity =>
+            {
+                entity.ToView("PIMS_PERSON_CONTACT_VW");
+            });
+
             modelBuilder.Entity<PimsPersonHist>(entity =>
             {
                 entity.HasKey(e => e.PersonHistId)
@@ -2983,6 +2990,18 @@ namespace Pims.Dal
                 entity.HasKey(e => e.StaticVariableName)
                     .HasName("STAVBL_PK");
 
+                entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
+
+                entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
@@ -2992,6 +3011,16 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            });
+
+            modelBuilder.Entity<PimsStaticVariableHist>(entity =>
+            {
+                entity.HasKey(e => e.StaticVariableHistId)
+                    .HasName("PIMS_STAVBL_H_PK");
+
+                entity.Property(e => e.StaticVariableHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_STATIC_VARIABLE_H_ID_SEQ])");
+
+                entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
             });
 
             modelBuilder.Entity<PimsSurplusDeclarationType>(entity =>
@@ -3189,7 +3218,6 @@ namespace Pims.Dal
                 entity.Property(e => e.Code).HasComment("Code value for entry");
 
                 entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValueSql("((1))");
-
 
                 entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
 
@@ -3767,6 +3795,10 @@ namespace Pims.Dal
                 .HasMax(2147483647);
 
             modelBuilder.HasSequence("PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ")
+                .HasMin(1)
+                .HasMax(2147483647);
+
+            modelBuilder.HasSequence("PIMS_STATIC_VARIABLE_H_ID_SEQ")
                 .HasMin(1)
                 .HasMax(2147483647);
 

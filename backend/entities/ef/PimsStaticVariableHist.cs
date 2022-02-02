@@ -8,10 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities
 {
-    [Table("PIMS_STATIC_VARIABLE")]
-    public partial class PimsStaticVariable
+    [Table("PIMS_STATIC_VARIABLE_HIST")]
+    [Index(nameof(StaticVariableHistId), nameof(EndDateHist), Name = "PIMS_STAVBL_H_UK", IsUnique = true)]
+    public partial class PimsStaticVariableHist
     {
         [Key]
+        [Column("_STATIC_VARIABLE_HIST_ID")]
+        public long StaticVariableHistId { get; set; }
+        [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+        public DateTime EffectiveDateHist { get; set; }
+        [Column("END_DATE_HIST", TypeName = "datetime")]
+        public DateTime? EndDateHist { get; set; }
+        [Required]
         [Column("STATIC_VARIABLE_NAME")]
         [StringLength(100)]
         public string StaticVariableName { get; set; }
