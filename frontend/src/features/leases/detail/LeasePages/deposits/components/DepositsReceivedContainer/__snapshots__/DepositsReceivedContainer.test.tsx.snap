@@ -49,6 +49,7 @@ exports[`DepositsReceivedContainer component renders as expected 1`] = `
     </label>
     <button
       class="mb-4 px-5 btn btn-secondary"
+      disabled=""
       type="button"
     >
       Add a deposit
