@@ -2,6 +2,7 @@ import { emailContactMethods, phoneContactMethods } from 'constants/contactMetho
 import { AddressTypes } from 'constants/index';
 import {
   getDefaultAddress,
+  getDefaultContactMethod,
   ICreateOrganization,
   ICreateOrganizationForm,
   IEditableContactMethod,
@@ -54,6 +55,8 @@ export function apiPersonToFormPerson(person?: IEditablePerson) {
 
   // split contact methods array into phone and email values
   const formContactMethods = contactMethods?.map(apiContactMethodToFormContactMethod) || [];
+  const emailContactMethods = formContactMethods.filter(isEmail);
+  const phoneContactMethods = formContactMethods.filter(isPhone);
 
   const formPerson = {
     ...restObject,
@@ -63,8 +66,10 @@ export function apiPersonToFormPerson(person?: IEditablePerson) {
       addressDictionary[AddressTypes.Residential] ?? getDefaultAddress(AddressTypes.Residential),
     billingAddress:
       addressDictionary[AddressTypes.Billing] ?? getDefaultAddress(AddressTypes.Billing),
-    emailContactMethods: formContactMethods.filter(isEmail),
-    phoneContactMethods: formContactMethods.filter(isPhone),
+    emailContactMethods:
+      emailContactMethods.length > 0 ? emailContactMethods : [getDefaultContactMethod()],
+    phoneContactMethods:
+      phoneContactMethods.length > 0 ? phoneContactMethods : [getDefaultContactMethod()],
   } as IEditablePersonForm;
 
   return formPerson;

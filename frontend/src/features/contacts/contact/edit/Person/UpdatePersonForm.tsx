@@ -78,9 +78,10 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
     try {
       let apiPerson = formPersonToApiPerson(formPerson);
       const personResponse = await updatePerson(apiPerson);
+      const personId = personResponse?.id;
 
-      if (!!personResponse?.id) {
-        history.push('/contact/list');
+      if (!!personId) {
+        history.push(`/contact/P${personId}`);
       }
     } finally {
       setSubmitting(false);
