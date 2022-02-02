@@ -205,16 +205,20 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       <GenericModal
         display={deleteModalWarning}
         title="Delete Deposit"
-        message={`Are you sure you want to remove the deposit? ${depositToDelete?.id}`}
+        message={`Are you sure you want to remove the deposit?`}
         handleOk={() => onDeleteDepositConfirmed()}
         okButtonText="OK"
+        closeButton
+        setDisplay={setDeleteModalWarning}
       />
       <GenericModal
         display={deleteReturnModalWarning}
         title="Delete Deposit Return"
-        message={`Are you sure you want to remove this deposit return? ${depositReturnToDelete?.id}`}
+        message={`Are you sure you want to remove this deposit return?`}
         handleOk={() => onDeleteDepositReturnConfirmed()}
         okButtonText="OK"
+        closeButton
+        setDisplay={setDeleteReturnModalWarning}
       />
 
       <ReceivedDepositModal
