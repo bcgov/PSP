@@ -26,7 +26,7 @@ import DepositsContainer from './LeasePages/deposits/DepositsContainer';
 import DetailContainer from './LeasePages/details/DetailContainer';
 import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
-import PaymentsContainer from './LeasePages/payment/PaymentsContainer';
+import PaymentsContainer from './LeasePages/payment/TermPaymentsContainer';
 import Surplus from './LeasePages/surplus/Surplus';
 import TenantContainer from './LeasePages/tenant/TenantContainer';
 

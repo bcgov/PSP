@@ -8,11 +8,11 @@ exports[`LeaseDatesSubForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c2.form-control.is-valid {
+  .c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c2.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 

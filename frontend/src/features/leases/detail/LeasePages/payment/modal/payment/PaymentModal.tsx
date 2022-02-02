@@ -1,16 +1,16 @@
 import * as CommonStyled from 'components/common/styles';
 import { FormikProps } from 'formik';
-import { IFormLeaseTerm } from 'interfaces/ILeaseTerm';
+import { IFormLeasePayment } from 'interfaces';
 import * as React from 'react';
 import { useRef } from 'react';
 
-import PaymentForm from './PaymentForm';
+import { PaymentForm } from './PaymentForm';
 
 export interface IPaymentModalProps {
-  initialValues?: IFormLeaseTerm;
+  initialValues?: IFormLeasePayment;
   displayModal?: boolean;
   onCancel: () => void;
-  onSave: (values: IFormLeaseTerm) => void;
+  onSave: (values: IFormLeasePayment) => void;
 }
 
 /**
@@ -23,12 +23,12 @@ export const PaymentModal: React.FunctionComponent<IPaymentModalProps> = ({
   onCancel,
   onSave,
 }) => {
-  const formikRef = useRef<FormikProps<IFormLeaseTerm>>(null);
+  const formikRef = useRef<FormikProps<IFormLeasePayment>>(null);
   return (
     <CommonStyled.PrimaryGenericModal
-      title="Add a Term"
+      title="Payment details"
       display={displayModal}
-      okButtonText="Save term"
+      okButtonText="Save payment"
       cancelButtonText="Cancel"
       handleCancel={onCancel}
       handleOk={() => formikRef?.current?.submitForm()}

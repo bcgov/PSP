@@ -4,47 +4,59 @@ import { InlineFlexDiv } from 'components/common/styles';
 import TooltipIcon from 'components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from 'components/Table';
 import { Claims } from 'constants/claims';
+import { getIn } from 'formik';
 import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
-import { ILeasePayment } from 'interfaces';
+import { IFormLease, IFormLeasePayment, ILeasePayment } from 'interfaces';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdReceipt } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
+import { withNameSpace } from 'utils/formUtils';
 import { formatMoney } from 'utils/numberFormatUtils';
 
 const actualsActions = (
-  onEdit: (values: ILeasePayment) => void,
-  onDelete: (values: ILeasePayment) => void,
+  onEdit: (values: IFormLeasePayment) => void,
+  onDelete: (values: IFormLeasePayment) => void,
 ) => {
-  return function({ row: { original, index } }: CellProps<ILeasePayment, string>) {
+  return function({ row: { original, index } }: CellProps<IFormLeasePayment, string>) {
     const { hasClaim } = useKeycloakWrapper();
-    return hasClaim(Claims.LEASE_EDIT) ? (
+    return (
       <StyledIcons>
-        <Button
-          title="edit actual"
-          icon={<MdEdit size={24} id={`edit-actual-${index}`} title="edit actual" />}
-          onClick={() => onEdit(original)}
-        ></Button>
-        <Button
-          title="delete actual"
-          icon={<FaTrash size={24} id={`delete-actual-${index}`} title="delete actual" />}
-          onClick={() => original.id && onDelete(original)}
-        ></Button>
+        {hasClaim(Claims.LEASE_EDIT) && (
+          <Button
+            title="edit actual"
+            icon={<MdEdit size={24} id={`edit-actual-${index}`} title="edit actual" />}
+            onClick={() => onEdit(original)}
+          ></Button>
+        )}
+        {hasClaim(Claims.LEASE_DELETE) && (
+          <Button
+            title="delete actual"
+            icon={<FaTrash size={24} id={`delete-actual-${index}`} title="delete actual" />}
+            onClick={() => original.id && onDelete(original)}
+          ></Button>
+        )}
       </StyledIcons>
-    ) : null;
+    );
   };
 };
 
 export interface IPaymentColumnProps {
-  onEdit: (values: ILeasePayment) => void;
-  onDelete: (values: ILeasePayment) => void;
-  isReceivable: boolean;
+  onEdit: (values: IFormLeasePayment) => void;
+  onSave: (values: IFormLeasePayment) => void;
+  onDelete: (values: IFormLeasePayment) => void;
+  isReceivable?: boolean;
+  isGstEligible?: boolean;
+  nameSpace?: string;
 }
 
 export const getActualsColumns = ({
   onEdit,
   onDelete,
+  onSave,
   isReceivable,
+  isGstEligible,
+  nameSpace,
 }: IPaymentColumnProps): ColumnWithProps<ILeasePayment>[] => {
   return [
     {
@@ -98,9 +110,13 @@ export const getActualsColumns = ({
       align: 'right',
       accessor: 'amountGst',
       maxWidth: 35,
-      Cell: renderMoney,
+      Cell: ({ value, row }: CellProps<ILeasePayment, number>) => {
+        return isGstEligible ? formatMoney(value) : '-';
+      },
       Footer: ({ properties }: { properties: ILeasePayment[] }) =>
-        formatMoney(properties.reduce((total, current) => total + (current?.amountGst ?? 0), 0)),
+        isGstEligible
+          ? formatMoney(properties.reduce((total, current) => total + (current?.amountGst ?? 0), 0))
+          : '-',
     },
     {
       Header: () => (
@@ -138,8 +154,18 @@ export const getActualsColumns = ({
       maxWidth: 40,
       accessor: 'note',
       align: 'center',
-      Cell: ({ value }: CellProps<ILeasePayment, boolean>) => {
-        return <NotesModal title="Payment Notes" notesLabel="Notes:" />;
+      Cell: ({ value, row }: CellProps<ILeasePayment, boolean>) => {
+        return (
+          <NotesModal
+            title="Payment Notes"
+            notesLabel="Notes:"
+            onSave={(values: IFormLease) => {
+              const valuesToSave = getIn(values, withNameSpace(nameSpace, `${row.index}`));
+              onSave(valuesToSave);
+            }}
+            nameSpace={withNameSpace(nameSpace, `${row.index}`)}
+          />
+        );
       },
     },
     {

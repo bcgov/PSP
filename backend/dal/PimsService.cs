@@ -25,6 +25,10 @@ namespace Pims.Dal
         /// </summary>
         public ILeaseTermService LeaseTermService { get { return _serviceProvider.GetService<ILeaseTermService>(); } }
         /// <summary>
+        /// get - The lease payment service.
+        /// </summary>
+        public ILeasePaymentService LeasePaymentService { get { return _serviceProvider.GetService<ILeasePaymentService>(); } }
+        /// <summary>
         /// get - The lease service.
         /// </summary>
         public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }

@@ -65,7 +65,7 @@ function depositActions(
         {hasClaim(Claims.LEASE_ADD) && (
           <Button
             title="return deposit"
-            icon={<MdUndo size={24} id={`edit-deposit-${index}`} title="edit deposit" />}
+            icon={<MdUndo size={24} id={`return-deposit-${index}`} title="return deposit" />}
             onClick={() => onReturn(original.id)}
           ></Button>
         )}
@@ -127,6 +127,9 @@ export const getColumns = ({
 
 const StyledIcons = styled(InlineFlexDiv)`
   [id^='edit-deposit'] {
+    color: ${props => props.theme.css.slideOutBlue};
+  }
+  [id^='return-deposit'] {
     color: ${props => props.theme.css.slideOutBlue};
   }
   [id^='delete-deposit'] {

@@ -2,6 +2,7 @@ export * from './accessStatus';
 export * from './addressTypes';
 export * from './claims';
 export * from './environment';
+export * from './leaseStatusTypes';
 export * from './organizationIdentifierTypes';
 export * from './organizationTypes';
 export * from './projectRiskTypes';

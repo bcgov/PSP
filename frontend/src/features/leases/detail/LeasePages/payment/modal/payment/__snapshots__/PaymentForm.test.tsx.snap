@@ -1,0 +1,587 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1.c1.form-control.is-valid {
+  background-image: none;
+}
+
+.c1.c1.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c0 label {
+  font-family: 'BCSans-Bold';
+}
+
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
+}
+
+.c0 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group input,
+.c0 .form-group select {
+  width: 70%;
+}
+
+.c0 > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c0 .form-control {
+  font-family: 'BcSans';
+}
+
+.c0 .required .form-label:after {
+  content: ' *';
+}
+
+.c3 {
+  margin-left: -1rem;
+  padding-left: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+}
+
+.c3 input {
+  width: 100%;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="required form-group"
+    >
+      <label
+        class="form-label"
+        for="datepicker-receivedDate"
+      >
+        Sent date:
+      </label>
+      <div
+        class="react-datepicker-wrapper"
+      >
+        <div
+          class="react-datepicker__input-container"
+        >
+          <input
+            autocomplete="off"
+            class="c1 form-control date-picker"
+            id="datepicker-receivedDate"
+            name="receivedDate"
+            placeholder="--/--/----"
+            required=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="form-label"
+        for="input-leasePaymentMethodType.id"
+      >
+        Method: 
+      </label>
+      <select
+        class="form-select form-control"
+        id="input-leasePaymentMethodType.id"
+        name="leasePaymentMethodType.id"
+      >
+        <option
+          class="option"
+          value="CASH"
+        >
+          Cash
+        </option>
+        <option
+          class="option"
+          value="CHEQ"
+        >
+          Cheque
+        </option>
+        <option
+          class="option"
+          value="CRDR"
+        >
+          Credit / Debit
+        </option>
+        <option
+          class="option"
+          value="EFT"
+        >
+          EFT
+        </option>
+        <option
+          class="option"
+          value="H120"
+        >
+          H120
+        </option>
+        <option
+          class="option"
+          value="OTHR"
+        >
+          Other
+        </option>
+        <option
+          class="option"
+          value="POST"
+        >
+          Post-dated cheque
+        </option>
+      </select>
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="form-label"
+        for="input-amountTotal"
+      >
+        Total received ($) 
+      </label>
+      <div
+        class="input-tooltip-wrapper"
+      >
+        <input
+          class="form-control input-number"
+          id="input-amountTotal"
+          name="amountTotal"
+          placeholder=""
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="c2 c3"
+    >
+      <div
+        class="c4"
+      >
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </div>
+      <div
+        class="c2"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountPreTax"
+          >
+            Expected payment ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountPreTax"
+              name="amountPreTax"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountGst"
+          >
+            GST ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountGst"
+              name="amountGst"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`PaymentForm component renders with data as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c1.c1.form-control.is-valid {
+  background-image: none;
+}
+
+.c1.c1.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  grid-template-columns: [controls] 1fr;
+}
+
+.c0 label {
+  font-family: 'BCSans-Bold';
+}
+
+.c0 .check-field {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 .check-field label {
+  width: 100%;
+}
+
+.c0 .form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group input,
+.c0 .form-group select {
+  width: 70%;
+}
+
+.c0 > .form-label {
+  grid-column: controls;
+  font-family: 'BcSans-Bold';
+}
+
+.c0 .form-control {
+  font-family: 'BcSans';
+}
+
+.c0 .required .form-label:after {
+  content: ' *';
+}
+
+.c3 {
+  margin-left: -1rem;
+  padding-left: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+}
+
+.c3 input {
+  width: 100%;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="required form-group"
+    >
+      <label
+        class="form-label"
+        for="datepicker-receivedDate"
+      >
+        Sent date:
+      </label>
+      <div
+        class="react-datepicker-wrapper"
+      >
+        <div
+          class="react-datepicker__input-container"
+        >
+          <input
+            autocomplete="off"
+            class="c1 form-control date-picker"
+            id="datepicker-receivedDate"
+            name="receivedDate"
+            placeholder="--/--/----"
+            required=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="form-label"
+        for="input-leasePaymentMethodType.id"
+      >
+        Method: 
+      </label>
+      <select
+        class="form-select form-control"
+        id="input-leasePaymentMethodType.id"
+        name="leasePaymentMethodType.id"
+      >
+        <option
+          class="option"
+          value="CASH"
+        >
+          Cash
+        </option>
+        <option
+          class="option"
+          value="CHEQ"
+        >
+          Cheque
+        </option>
+        <option
+          class="option"
+          value="CRDR"
+        >
+          Credit / Debit
+        </option>
+        <option
+          class="option"
+          value="EFT"
+        >
+          EFT
+        </option>
+        <option
+          class="option"
+          value="H120"
+        >
+          H120
+        </option>
+        <option
+          class="option"
+          value="OTHR"
+        >
+          Other
+        </option>
+        <option
+          class="option"
+          value="POST"
+        >
+          Post-dated cheque
+        </option>
+      </select>
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class="form-label"
+        for="input-amountTotal"
+      >
+        Total received ($) 
+      </label>
+      <div
+        class="input-tooltip-wrapper"
+      >
+        <input
+          class="form-control input-number"
+          id="input-amountTotal"
+          name="amountTotal"
+          placeholder=""
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="c2 c3"
+    >
+      <div
+        class="c4"
+      >
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </div>
+      <div
+        class="c2"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountPreTax"
+          >
+            Expected payment ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountPreTax"
+              name="amountPreTax"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountGst"
+          >
+            GST ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountGst"
+              name="amountGst"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

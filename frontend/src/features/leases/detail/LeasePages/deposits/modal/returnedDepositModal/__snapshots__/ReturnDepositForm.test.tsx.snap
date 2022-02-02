@@ -44,11 +44,11 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2.form-control.is-valid {
+  .c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c2.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -134,6 +134,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         >
           <label
             class="form-label"
+            for="input-claimsAgainst"
           >
             Claims against deposit ($): 
           </label>
@@ -142,6 +143,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
           >
             <input
               class="form-control input-number"
+              id="input-claimsAgainst"
               name="claimsAgainst"
               placeholder=""
               value=""
@@ -157,6 +159,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
         >
           <label
             class="form-label"
+            for="input-returnAmount"
           >
             Returned amount ($): 
           </label>
@@ -165,6 +168,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
           >
             <input
               class="form-control input-number"
+              id="input-returnAmount"
               name="returnAmount"
               placeholder=""
               required=""
@@ -258,11 +262,11 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
       </div>
     </div>
   </div>
-  .c2.form-control.is-valid {
+  .c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c2.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -348,6 +352,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         >
           <label
             class="form-label"
+            for="input-claimsAgainst"
           >
             Claims against deposit ($): 
           </label>
@@ -356,6 +361,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
           >
             <input
               class="form-control input-number"
+              id="input-claimsAgainst"
               name="claimsAgainst"
               placeholder=""
               value=""
@@ -371,6 +377,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
         >
           <label
             class="form-label"
+            for="input-returnAmount"
           >
             Returned amount ($): 
           </label>
@@ -379,6 +386,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
           >
             <input
               class="form-control input-number"
+              id="input-returnAmount"
               name="returnAmount"
               placeholder=""
               required=""

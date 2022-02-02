@@ -46,7 +46,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("{leaseId:long}/term")]
-        [HasPermission(Permissions.LeaseEdit)]
+        [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
@@ -80,7 +80,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{leaseId:long}/term")]
-        [HasPermission(Permissions.LeaseEdit)]
+        [HasPermission(Permissions.LeaseDelete)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Models.Lease.LeaseModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
