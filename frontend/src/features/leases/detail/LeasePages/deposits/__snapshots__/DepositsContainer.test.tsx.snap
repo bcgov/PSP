@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Lease Deposits renders as expected 1`] = `
+exports[`DepositsContainer renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -47,6 +47,12 @@ exports[`Lease Deposits renders as expected 1`] = `
       >
         Deposits Received
       </label>
+      <button
+        class="mb-4 px-5 btn btn-secondary"
+        type="button"
+      >
+        Add a deposit
+      </button>
       <div
         class="table"
         data-testid="securityDepositsTable"
@@ -58,7 +64,7 @@ exports[`Lease Deposits renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 360px;"
+            style="display: flex; flex: 1 0 auto; min-width: 300px;"
           >
             <div
               class="th"
@@ -124,36 +130,12 @@ exports[`Lease Deposits renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Annual Interest %
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Interest (approx)
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Total (with interest)
+                Actions
               </div>
             </div>
           </div>
@@ -168,16 +150,14 @@ exports[`Lease Deposits renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 360px;"
+              style="display: flex; flex: 1 0 auto; min-width: 300px;"
             >
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Pet deposit
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -207,33 +187,13 @@ exports[`Lease Deposits renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Ministry
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                2.1%
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                -$8.75
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                $491.25
-              </div>
+              />
             </div>
           </div>
           <div
@@ -242,16 +202,14 @@ exports[`Lease Deposits renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 360px;"
+              style="display: flex; flex: 1 0 auto; min-width: 300px;"
             >
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Security deposit
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -283,33 +241,13 @@ Integer nec odio.
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Ministry
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                2.1%
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                $66.5
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                $2,066.5
-              </div>
+              />
             </div>
           </div>
         </div>
@@ -369,7 +307,7 @@ Integer nec odio.
               <div
                 class="sortable-column"
               >
-                Total (with interest)
+                Deposit amount
               </div>
             </div>
             <div
@@ -412,24 +350,24 @@ Integer nec odio.
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
-                Cheque Number
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
               style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Payee Name
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
               </div>
             </div>
           </div>
@@ -452,7 +390,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Pet deposit
+                Security deposit
               </div>
               <div
                 class="td"
@@ -460,7 +398,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Nov 15, 2020
+                Feb 1, 2022
               </div>
               <div
                 class="td"
@@ -468,7 +406,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $2,084
+                $2,000
               </div>
               <div
                 class="td"
@@ -476,7 +414,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $200
+                $1,234
               </div>
               <div
                 class="td"
@@ -484,7 +422,7 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                $200
+                $123
               </div>
               <div
                 class="td"
@@ -492,24 +430,20 @@ Integer nec odio.
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Mar 25, 2021
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                20-12780
+                Feb 16, 2022
               </div>
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                John Smith
-              </div>
+              />
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
             </div>
           </div>
         </div>
@@ -537,6 +471,18 @@ Integer nec odio.
         </textarea>
       </div>
     </div>
+    <div
+      class="container"
+    />
+    <div
+      class="container"
+    />
+    <div
+      class="container"
+    />
+    <div
+      class="container"
+    />
   </div>
 </DocumentFragment>
 `;

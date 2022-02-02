@@ -1,41 +1,69 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { ILeaseSecurityDeposit } from 'interfaces';
+import { formatMoney, prettyFormatDate } from 'utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from 'utils/test-utils';
 
 import DepositsReceivedContainer, {
   IDepositsReceivedContainerProps,
 } from './DepositsReceivedContainer';
 
+const mockVoidCallback = (): void => {};
+const mockCallback = (id: number): void => {};
+
 const mockDeposits: ILeaseSecurityDeposit[] = [
   {
     id: 1,
-    securityDepositHolderTypeId: 'MINISTRY',
-    securityDepositHolderType: 'Ministry',
-    securityDepositTypeId: 'PET',
-    securityDepositType: 'Pet deposit',
-    description: 'Pet deposit collected for one cat and one medium size dog.',
-    amountPaid: 500.0,
-    depositDate: '2021-09-15T00:00:00',
-    annualInterestRate: 2.1,
+    description: 'Test deposit 1',
+    amountPaid: 1234.0,
+    depositDate: '2022-02-09',
+    depositType: {
+      id: 'PET',
+      description: 'Pet deposit',
+      isDisabled: false,
+    },
+    rowVersion: 1,
   },
   {
     id: 2,
-    securityDepositHolderTypeId: 'MINISTRY',
-    securityDepositHolderType: 'Ministry',
-    securityDepositTypeId: 'SECURITY',
-    securityDepositType: 'Security deposit',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
-    amountPaid: 2000.0,
-    depositDate: '2019-03-01T00:00:00',
-    annualInterestRate: 2.1,
+    description: 'Test deposit 2',
+    amountPaid: 444.0,
+    depositDate: '2022-02-09',
+    depositType: {
+      id: 'OTHER',
+      description: 'Other deposit',
+      isDisabled: false,
+    },
+    otherTypeDescription: 'TestCustomDeposit',
+    rowVersion: 1,
   },
 ];
 
+jest.mock('@react-keycloak/web');
+(useKeycloak as jest.Mock).mockReturnValue({
+  keycloak: {
+    userInfo: {
+      organizations: [1],
+      roles: [],
+    },
+    subject: 'test',
+  },
+});
+
 // render component under test
-const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps = {}) => {
-  const result = render(<DepositsReceivedContainer dataSource={renderOptions.dataSource} />, {
-    ...renderOptions,
-  });
+const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) => {
+  const result = render(
+    <DepositsReceivedContainer
+      securityDeposits={renderOptions.securityDeposits}
+      depositReturns={renderOptions.depositReturns}
+      onAdd={mockVoidCallback}
+      onEdit={mockCallback}
+      onDelete={mockCallback}
+      onReturn={mockCallback}
+    />,
+    {
+      ...renderOptions,
+    },
+  );
 
   return {
     ...result,
@@ -50,7 +78,7 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps = 
   };
 };
 
-describe('DepositsReceivedTable component', () => {
+describe('DepositsReceivedContainer component', () => {
   beforeEach(() => {
     Date.now = jest.fn().mockReturnValue(new Date('2020-11-30T18:33:37.000Z'));
   });
@@ -58,27 +86,46 @@ describe('DepositsReceivedTable component', () => {
     jest.restoreAllMocks();
   });
   it('renders as expected', () => {
-    const { asFragment } = setup({ dataSource: [...mockDeposits] });
+    const { asFragment } = setup({
+      securityDeposits: [...mockDeposits],
+      depositReturns: [],
+      onAdd: mockVoidCallback,
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      onReturn: mockCallback,
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders one row for each security deposit', () => {
-    const { getAllByRole } = setup({ dataSource: [...mockDeposits] });
+    const { getAllByRole } = setup({
+      securityDeposits: [...mockDeposits],
+      depositReturns: [],
+      onAdd: mockVoidCallback,
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      onReturn: mockCallback,
+    });
     const rows = getAllByRole('row');
     expect(rows.length).toBe(mockDeposits.length + 1);
   });
 
   it('renders security deposit information as expected', () => {
     const deposit = mockDeposits[0];
-    const { findFirstRow, findCell } = setup({ dataSource: [deposit] });
+    const { findFirstRow, findCell } = setup({
+      securityDeposits: [deposit],
+      depositReturns: [],
+      onAdd: mockVoidCallback,
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      onReturn: mockCallback,
+    });
     const dataRow = findFirstRow() as HTMLElement;
 
     expect(dataRow).not.toBeNull();
-    expect(findCell(dataRow, 0)?.textContent).toBe(deposit.securityDepositType);
+    expect(findCell(dataRow, 0)?.textContent).toBe(deposit.depositType.description);
     expect(findCell(dataRow, 1)?.textContent).toBe(deposit.description);
-    expect(findCell(dataRow, 2)?.textContent).toBe('$500');
-    expect(findCell(dataRow, 3)?.textContent).toBe('Sep 15, 2021');
-    expect(findCell(dataRow, 4)?.textContent).toBe(deposit.securityDepositHolderType);
-    expect(findCell(dataRow, 5)?.textContent).toBe('2.1%');
+    expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(deposit.amountPaid));
+    expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDate));
   });
 });

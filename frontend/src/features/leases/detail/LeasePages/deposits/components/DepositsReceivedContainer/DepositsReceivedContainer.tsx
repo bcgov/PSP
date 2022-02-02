@@ -29,9 +29,9 @@ const DepositsReceivedContainer: React.FC<IDepositsReceivedContainerProps> = ({
   });
   return (
     <FormSection>
-      <Styled.SectiontHeader>Deposits Received</Styled.SectiontHeader>
+      <Styled.SectionHeader>Deposits Received</Styled.SectionHeader>
       <Button variant={'secondary'} onClick={() => onAdd()} className="mb-4 px-5">
-        {'Add a deposit'}
+        Add a deposit
       </Button>
       <Table<DepositListEntry>
         name="securityDepositsTable"

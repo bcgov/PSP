@@ -9,7 +9,7 @@ import {
   PropertyTenureTypes,
   PropertyTypes,
 } from 'constants/index';
-import { IAccessRequest, IAddress, IOrganization, IProperty, IUser } from 'interfaces';
+import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty, IUser } from 'interfaces';
 import { ILookupCode } from 'store/slices/lookupCodes';
 import { IPropertyDetail } from 'store/slices/properties';
 
@@ -107,6 +107,11 @@ export const mockUser: IUser = {
   rowVersion: 1,
   landline: '2223334444',
   mobile: '5556667777',
+};
+
+export const mockPerson: IPerson = {
+  landline: '222-333-4444',
+  mobile: '555-666-7777',
 };
 
 export const mockProperties = [

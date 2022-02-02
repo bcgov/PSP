@@ -2,12 +2,25 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { FormLeaseDepositReturn } from 'interfaces';
+import { FormLeaseDepositReturn, ILeaseSecurityDeposit } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
 import ReturnedDepositModal, { IReturnedDepositModalProps } from './ReturnedDepositModal';
+
+const mockDeposit: ILeaseSecurityDeposit = {
+  id: 7,
+  description: 'Test deposit 1',
+  amountPaid: 1234.0,
+  depositDate: '2022-02-09',
+  depositType: {
+    id: 'PET',
+    description: 'Pet deposit',
+    isDisabled: false,
+  },
+  rowVersion: 1,
+};
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -30,7 +43,7 @@ describe('ReturnedDepositModal component', () => {
         onSave={onSave}
         onCancel={onCancel}
         display={true}
-        initialValues={FormLeaseDepositReturn.createEmpty()}
+        initialValues={FormLeaseDepositReturn.createEmpty(mockDeposit)}
       />,
       {
         ...renderOptions,
@@ -56,7 +69,7 @@ describe('ReturnedDepositModal component', () => {
   });
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: FormLeaseDepositReturn.createEmpty(),
+      initialValues: FormLeaseDepositReturn.createEmpty(mockDeposit),
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -67,38 +80,29 @@ describe('ReturnedDepositModal component', () => {
       component: { getByText },
     } = await setup({});
 
-    await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
-    await fillInput(document.body, 'expiryDate', '2020-01-02', 'datepicker');
-    await fillInput(document.body, 'leasePmyFreqTypeCode.id', 'ANNUAL', 'select');
-    await fillInput(document.body, 'paymentAmount', '1,000.00');
-    await fillInput(document.body, 'paymentDueDate', 'A due date');
-    await fillInput(document.body, 'statusTypeCode.id', 'NEXER', 'select');
-    const saveButton = getByText('Save term');
+    await fillInput(document.body, 'terminationDate', '2020-01-01', 'datepicker');
+    await fillInput(document.body, 'returnDate', '2020-01-02', 'datepicker');
+    await fillInput(document.body, 'claimsAgainst', '1,000.00');
+    await fillInput(document.body, 'returnAmount', '2,000.00');
+    const saveButton = getByText('Save');
     userEvent.click(saveButton);
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
-      effectiveDateHist: '',
-      endDateHist: '',
-      expiryDate: '2020-01-02',
-      gstAmount: '',
-      isGstEligible: false,
-      isTermExercised: false,
-      leaseId: undefined,
-      leasePmtFreqTypeCode: {
-        description: '',
-        id: '',
-        isDisabled: false,
-      },
-      leaseRowVersion: undefined,
-      paymentAmount: 1000,
-      paymentDueDate: 'A due date',
-      paymentNote: '',
-      payments: [],
-      renewalDate: '',
-      startDate: '2020-01-01',
-      statusTypeCode: {
-        id: 'NEXER',
-      },
+      claimsAgainst: 1000,
+      depositTypeCode: 'PET',
+      depositTypeDescription: 'Pet deposit',
+      id: undefined,
+      organizationDepositReturnHolderId: '',
+      parentDepositAmount: 1234,
+      parentDepositId: 7,
+      parentDepositOtherDescription: '',
+      payeeAddress: '',
+      payeeName: '',
+      personDepositReturnHolderId: '',
+      returnAmount: 2000,
+      returnDate: '2020-01-02',
+      rowVersion: 0,
+      terminationDate: '2020-01-01',
     });
   });
 

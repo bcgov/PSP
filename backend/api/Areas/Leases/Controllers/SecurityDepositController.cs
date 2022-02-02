@@ -14,7 +14,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Areas.Lease.Controllers
 {
     /// <summary>
-    /// SecurityDepositController class, provides endpoints for interacting with lease property improvements.
+    /// SecurityDepositController class, provides endpoints for interacting with lease security deposits.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -60,6 +60,8 @@ namespace Pims.Api.Areas.Lease.Controllers
                 throw new BadRequestException($"Concurrency parent id mismatch.");
             }
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(addRequest.Payload);
+            depositEntity.LeaseId = leaseId;
+
             var updatedLease = _pimsService.SecurityDepositService.AddLeaseDeposit(addRequest.ParentId, addRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
@@ -87,6 +89,8 @@ namespace Pims.Api.Areas.Lease.Controllers
             }
 
             var depositEntity = _mapper.Map<PimsSecurityDeposit>(updateRequest.Payload);
+            depositEntity.LeaseId = leaseId;
+
             var updatedLease = _pimsService.SecurityDepositService.UpdateLeaseDeposit(updateRequest.ParentId, updateRequest.ParentRowVersion, depositEntity);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));

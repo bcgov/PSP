@@ -17,9 +17,7 @@ export const Improvements: React.FunctionComponent<IImprovementsProps> = props =
   return (
     <Styled.ImprovementsContainer className="improvements">
       <FormSection>
-        {props.disabled && (
-          <Styled.SectiontHeader>Description of Improvements</Styled.SectiontHeader>
-        )}
+        {props.disabled && <Styled.SectionHeader>Description of Improvements</Styled.SectionHeader>}
         <FieldArray
           name="improvements"
           render={renderProps =>

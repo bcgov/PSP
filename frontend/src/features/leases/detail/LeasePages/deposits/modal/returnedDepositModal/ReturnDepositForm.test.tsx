@@ -2,13 +2,26 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { FormLeaseDepositReturn } from 'interfaces';
+import { FormLeaseDepositReturn, ILeaseSecurityDeposit } from 'interfaces';
 import { noop } from 'lodash';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions } from 'utils/test-utils';
 
 import ReturnDepositForm, { IReturnDepositFormProps } from './ReturnDepositForm';
+
+const mockDeposit: ILeaseSecurityDeposit = {
+  id: 7,
+  description: 'Test deposit 1',
+  amountPaid: 1234.0,
+  depositDate: '2022-02-09',
+  depositType: {
+    id: 'PET',
+    description: 'Pet deposit',
+    isDisabled: false,
+  },
+  rowVersion: 1,
+};
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -18,7 +31,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('PaymentForm component', () => {
+describe('ReturnDepositForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<IReturnDepositFormProps> & {
@@ -31,7 +44,7 @@ describe('PaymentForm component', () => {
         <ReturnDepositForm
           onSave={onSave}
           formikRef={{ current: { submitForm } } as any}
-          initialValues={FormLeaseDepositReturn.createEmpty()}
+          initialValues={FormLeaseDepositReturn.createEmpty(mockDeposit)}
         />
       </Formik>,
       {
@@ -56,38 +69,19 @@ describe('PaymentForm component', () => {
   });
   it('renders with data as expected', async () => {
     const { component } = await setup({
-      initialValues: FormLeaseDepositReturn.createEmpty(),
+      initialValues: FormLeaseDepositReturn.createEmpty(mockDeposit),
     });
 
     expect(component.asFragment()).toMatchSnapshot();
   });
-  it('The end date must be after the start date', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
 
-    await fillInput(container, 'startDate', '2020-01-02', 'datepicker');
-    await fillInput(container, 'expiryDate', '2020-01-01', 'datepicker');
-    const error = await findByText('Expiry Date must be after Start Date');
-    expect(error).toBeVisible();
-  });
-
-  it('The start date is required', async () => {
+  it('The return date date is required', async () => {
     const {
       component: { container, findByDisplayValue },
     } = await setup({});
 
-    const { input } = await fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
+    const { input } = await fillInput(container, 'returnDate', '2020-01-02', 'datepicker');
     await findByDisplayValue('01/02/2020');
     expect(input).toHaveProperty('required');
-  });
-
-  it('The default term status is NEXER', async () => {
-    const {
-      component: { findByDisplayValue },
-    } = await setup({});
-
-    const termStatus = await findByDisplayValue('Not Exercised');
-    expect(termStatus).toBeVisible();
   });
 });

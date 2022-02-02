@@ -31,7 +31,7 @@ const DepositsReturnedContainer: React.FC<IDepositsReturnedContainerProps> = ({
   );
   return (
     <FormSection>
-      <Styled.SectiontHeader>Deposits Returned</Styled.SectiontHeader>
+      <Styled.SectionHeader>Deposits Returned</Styled.SectionHeader>
 
       <Table<ReturnListEntry>
         name="securityDepositReturnsTable"

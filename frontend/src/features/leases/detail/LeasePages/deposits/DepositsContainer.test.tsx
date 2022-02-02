@@ -1,3 +1,4 @@
+import { useKeycloak } from '@react-keycloak/web';
 import { Formik } from 'formik';
 import {
   defaultFormLease,
@@ -20,7 +21,7 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     rowVersion: 0,
   },
   {
-    id: 2,
+    id: 7,
     depositType: { id: 'SECURITY' },
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \r\n\r\nInteger nec odio.',
@@ -33,18 +34,32 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
 const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
   {
     id: 1,
-    securityDepositTypeId: 'PET',
-    securityDepositType: 'Pet deposit',
-    terminationDate: '2020-11-15T00:00:00',
-    depositTotal: 2084.0,
-    claimsAgainst: 200.0,
-    returnAmount: 200.0,
-    returnDate: '2021-03-25T00:00:00',
-    chequeNumber: '20-12780',
-    payeeName: 'John Smith',
-    payeeAddress: '1020 Skid Row',
+    parentDepositId: 7,
+    depositType: {
+      id: 'SECURITY',
+      description: 'Security deposit',
+      isDisabled: false,
+    },
+    terminationDate: '2022-02-01',
+    claimsAgainst: 1234.0,
+    returnAmount: 123.0,
+    returnDate: '2022-02-16',
+    payeeName: '',
+    payeeAddress: '',
+    rowVersion: 1,
   },
 ];
+
+jest.mock('@react-keycloak/web');
+(useKeycloak as jest.Mock).mockReturnValue({
+  keycloak: {
+    userInfo: {
+      organizations: [1],
+      roles: [],
+    },
+    subject: 'test',
+  },
+});
 
 const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): RenderResult => {
   // render component under test
@@ -59,7 +74,7 @@ const setup = (renderOptions: RenderOptions & { lease?: IFormLease } = {}): Rend
   return { ...result };
 };
 
-describe('Lease Deposits', () => {
+describe('DepositsContainer', () => {
   beforeEach(() => {
     Date.now = jest.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
   });
