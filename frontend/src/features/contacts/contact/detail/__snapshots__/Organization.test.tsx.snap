@@ -160,7 +160,7 @@ exports[`Contact OrganizationView component renders as expected 1`] = `
         </strong>
       </div>
       <div
-        class="col"
+        class="col-md-10"
       >
         <span>
           N.A
@@ -178,7 +178,7 @@ exports[`Contact OrganizationView component renders as expected 1`] = `
         </strong>
       </div>
       <div
-        class="col"
+        class="col-md-10"
       >
         <span>
           N.A
