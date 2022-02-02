@@ -115,7 +115,6 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
    * @param depositForm
    */
   const onSaveDeposit = async (depositForm: FormLeaseDeposit) => {
-    console.log('saving deposit!', depositForm);
     if (lease && lease.id && lease.rowVersion) {
       let request: IParentConcurrencyGuard<ILeaseSecurityDeposit> = {
         parentId: lease.id,
@@ -129,7 +128,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
         setShowEditModal(false);
       }
     } else {
-      console.log('Lease information incomplete');
+      console.error('Lease information incomplete');
     }
   };
 
@@ -141,7 +140,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
         setEditReturnValue(FormLeaseDepositReturn.createFromModel(deposit, parentDeposit));
         setShowReturnEditModal(true);
       } else {
-        console.log('Parent deposit incomplete');
+        console.error('Parent deposit incomplete');
       }
     }
   };
@@ -154,7 +153,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
         setDepositReturnToDelete(FormLeaseDepositReturn.createFromModel(deposit, parentDeposit));
         setDeleteReturnModalWarning(true);
       } else {
-        console.log('Parent deposit incomplete');
+        console.error('Parent deposit incomplete');
       }
     }
   };
@@ -164,7 +163,6 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
    * @param returnDepositForm
    */
   const onSaveReturnDeposit = async (returnDepositForm: FormLeaseDepositReturn) => {
-    console.log('saving return deposit!', returnDepositForm);
     if (lease && lease.id && lease.rowVersion) {
       let request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn> = {
         parentId: lease.id,
@@ -178,7 +176,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
         setShowReturnEditModal(false);
       }
     } else {
-      console.log('Lease information incomplete');
+      console.error('Lease information incomplete');
     }
   };
 
