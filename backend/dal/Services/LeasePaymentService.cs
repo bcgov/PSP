@@ -88,7 +88,7 @@ namespace Pims.Dal.Services
 
         private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
         {
-            decimal? expectedTotal = parent.PaymentAmount + parent.GstAmount;
+            decimal? expectedTotal = parent.PaymentAmount ?? 0 + parent.GstAmount ?? 0;
             if (payment.PaymentAmountTotal == 0)
             {
                 return PimsLeaseStatusTypes.UNPAID;
