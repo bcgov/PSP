@@ -28,6 +28,14 @@ namespace Pims.Dal
         /// get - The lease service.
         /// </summary>
         public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
+        /// <summary>
+        /// get - The security deposit service.
+        /// </summary>
+        public ISecurityDepositService SecurityDepositService { get { return _serviceProvider.GetService<ISecurityDepositService>(); } }
+        /// <summary>
+        /// get - The security deposit return service.
+        /// </summary>
+        public ISecurityDepositReturnService SecurityDepositReturnService { get { return _serviceProvider.GetService<ISecurityDepositReturnService>(); } }
         #endregion
 
         #region Constructors

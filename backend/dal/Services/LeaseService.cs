@@ -1,9 +1,11 @@
+using Pims.Dal.Repositories;
+
 namespace Pims.Dal.Services
 {
     public class LeaseService : ILeaseService
     {
-        readonly Repositories.ILeaseService _leaseRepository;
-        public LeaseService(Repositories.ILeaseService leaseRepository)
+        readonly ILeaseRepository _leaseRepository;
+        public LeaseService(ILeaseRepository leaseRepository)
         {
             _leaseRepository = leaseRepository;
         }

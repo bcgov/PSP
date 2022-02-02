@@ -22,7 +22,7 @@ import {
 } from '..';
 import { LeaseSchema } from '../add/AddLeaseYupSchema';
 import LeaseEditButton from './LeaseEditButton';
-import Deposits from './LeasePages/deposits/Deposits';
+import DepositsContainer from './LeasePages/deposits/DepositsContainer';
 import DetailContainer from './LeasePages/details/DetailContainer';
 import ImprovementsContainer from './LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from './LeasePages/insurance/InsuranceContainer';
@@ -105,7 +105,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     },
   ],
   [LeasePageNames.INSURANCE, { component: InsuranceContainer, title: 'Insurance' }],
-  [LeasePageNames.DEPOSIT, { component: Deposits, title: 'Deposit' }],
+  [LeasePageNames.DEPOSIT, { component: DepositsContainer, title: 'Deposit' }],
   [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
 ]);
 

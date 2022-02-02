@@ -215,7 +215,7 @@ export const NestedInlineField = styled(InlineInput)`
   }
 `;
 
-export const SectiontHeader = styled(FormDescriptionLabel)`
+export const SectionHeader = styled(FormDescriptionLabel)`
   color: ${props => props.theme.css.primaryColor};
   font-size: 1.8rem;
   margin-bottom: 2rem;

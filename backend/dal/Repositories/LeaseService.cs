@@ -15,19 +15,19 @@ using Pims.Dal.Security;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// LeaseService class, provides a service layer to interact with leases within the datasource.
+    /// LeaseRepository class, provides a service layer to interact with leases within the datasource.
     /// </summary>
-    public class LeaseService : BaseRepository<PimsLease>, ILeaseService
+    public class LeaseRepository : BaseRepository<PimsLease>, ILeaseRepository
     {
         #region Constructors
         /// <summary>
-        /// Creates a new instance of a LeaseService, and initializes it with the specified arguments.
+        /// Creates a new instance of a LeaseRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LeaseService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -166,7 +166,7 @@ namespace Pims.Dal.Repositories
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();
-                
+
 
             return new Paged<PimsLease>(items, filter.Page, filter.Quantity, query.Count());
         }
