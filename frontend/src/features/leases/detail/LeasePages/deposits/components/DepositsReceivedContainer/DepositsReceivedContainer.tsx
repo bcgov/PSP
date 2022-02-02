@@ -37,7 +37,7 @@ const DepositsReceivedContainer: React.FC<IDepositsReceivedContainerProps> = ({
         variant={'secondary'}
         onClick={() => onAdd()}
         className="mb-4 px-5"
-        disabled={hasClaim(Claims.LEASE_ADD)}
+        disabled={!hasClaim(Claims.LEASE_ADD)}
       >
         Add a deposit
       </Button>
