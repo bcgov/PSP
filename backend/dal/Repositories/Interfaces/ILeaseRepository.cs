@@ -1,10 +1,23 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
-    public interface ILeaseRepository : IRepository<PimsLeaseTerm>
+    /// <summary>
+    /// ILeaseRepository interface, provides functions to interact with leases within the datasource.
+    /// </summary>
+    public interface ILeaseRepository : IRepository<PimsLease>
     {
-        PimsLeaseTerm UpdateTerm(PimsLeaseTerm term);
-        PimsLeaseTerm DeleteTerm(long leaseTermId);
+        int Count();
+        IEnumerable<PimsLease> Get(LeaseFilter filter);
+        long GetRowVersion(long id);
+        PimsLease Get(long id);
+        Paged<PimsLease> GetPage(LeaseFilter filter);
+        PimsLease Add(PimsLease lease, bool userOverride = false);
+        PimsLease Update(PimsLease lease, bool commitTransaction = true);
+        PimsLease UpdateLeaseTenants(long leaseId, long rowVersion, ICollection<PimsLeaseTenant> pimsLeaseTenants);
+        PimsLease UpdateLeaseImprovements(long leaseId, long rowVersion, ICollection<PimsPropertyImprovement> pimsPropertyImprovements);
+        PimsLease UpdatePropertyLeases(long leaseId, long rowVersion, ICollection<PimsPropertyLease> pimsPropertyLeases, bool userOverride = false);
     }
 }

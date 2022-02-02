@@ -1,9 +1,8 @@
-import { ILeaseFilter } from 'features/leases';
 import { ILease } from 'interfaces';
 import React from 'react';
 
 import { ILeaseTerm } from './../../interfaces/ILeaseTerm';
-import { IPaginateRequest, useAxiosApi } from '.';
+import { useAxiosApi } from '.';
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the lease term endpoints.
@@ -23,5 +22,3 @@ export const useApiLeaseTerms = () => {
     [api],
   );
 };
-
-export type IPaginateLeases = IPaginateRequest<ILeaseFilter>;

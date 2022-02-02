@@ -5,6 +5,7 @@ export enum Claims {
   LEASE_VIEW = 'lease-view',
   LEASE_ADD = 'lease-add',
   LEASE_EDIT = 'lease-edit',
+  LEASE_DELETE = 'lease-delete',
   CONTACT_EDIT = 'contact-edit',
   CONTACT_VIEW = 'contact-view',
   CONTACT_ADD = 'contact-add',

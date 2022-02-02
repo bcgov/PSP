@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
-import { mockOrganization, mockUser } from 'mocks/filterDataMock';
+import { mockOrganization, mockPerson } from 'mocks/filterDataMock';
 import { render, RenderOptions } from 'utils/test-utils';
 
 import Tenant, { ITenantProps } from './Tenant';
@@ -28,13 +28,13 @@ describe('Tenant component', () => {
   };
   it('renders as expected', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [mockUser], organizations: [mockOrganization] },
+      lease: { ...defaultFormLease, persons: [mockPerson], organizations: [mockOrganization] },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
   it('renders one Person Tenant section per person', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [mockUser, mockUser] },
+      lease: { ...defaultFormLease, persons: [mockPerson, mockPerson] },
     });
     const { getAllByText } = component;
     const personTenant = getAllByText('Tenant Name:');
@@ -96,7 +96,7 @@ describe('Tenant component', () => {
 
   it('renders person phone numbers as expected', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, persons: [mockUser] },
+      lease: { ...defaultFormLease, persons: [mockPerson] },
     });
     const { getByLabelText } = component;
     const landline = getByLabelText('Landline:');

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Pims.Api.Areas.Lease.Controllers
 {
     /// <summary>
-    /// LeaseTermController class, provides endpoints for interacting with lease property improvements.
+    /// LeaseTermController class, provides endpoints for interacting with lease property terms.
     /// </summary>
     [Authorize]
     [ApiController]
