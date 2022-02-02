@@ -74,9 +74,13 @@ namespace Pims.Dal.Services
         private void ValidatePaymentRules(PimsLeasePayment payment)
         {
             PimsLeaseTerm leaseTerm = _leaseTermRepository.GetById(payment.LeaseTermId, true);
+            if (leaseTerm == null)
+            {
+                throw new InvalidOperationException("Payment must be made against a parent term.");
+            }
             if (payment.PaymentReceivedDate < leaseTerm.TermStartDate || (leaseTerm.TermExpiryDate != null && payment.PaymentReceivedDate > leaseTerm.TermExpiryDate))
             {
-                throw new InvalidOperationException("Payment received date must be within the start and expiry date of the term");
+                throw new InvalidOperationException("Payment received date must be within the start and expiry date of the term.");
             }
 
             payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leaseTerm);
@@ -85,10 +89,10 @@ namespace Pims.Dal.Services
         private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
         {
             decimal? expectedTotal = parent.PaymentAmount + parent.GstAmount;
-            if(payment.PaymentAmountTotal == 0)
+            if (payment.PaymentAmountTotal == 0)
             {
                 return PimsLeaseStatusTypes.UNPAID;
-            } else if(payment.PaymentAmountTotal < expectedTotal)
+            } else if (payment.PaymentAmountTotal < expectedTotal)
             {
                 return PimsLeaseStatusTypes.PARTIAL;
             }
