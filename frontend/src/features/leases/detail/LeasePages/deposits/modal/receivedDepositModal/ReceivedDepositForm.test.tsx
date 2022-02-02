@@ -18,7 +18,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('PaymentForm component', () => {
+describe('ReceivedDepositForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<IReceivedDepositFormProps> & {
@@ -61,33 +61,14 @@ describe('PaymentForm component', () => {
 
     expect(component.asFragment()).toMatchSnapshot();
   });
-  it('The end date must be after the start date', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
 
-    await fillInput(container, 'startDate', '2020-01-02', 'datepicker');
-    await fillInput(container, 'expiryDate', '2020-01-01', 'datepicker');
-    const error = await findByText('Expiry Date must be after Start Date');
-    expect(error).toBeVisible();
-  });
-
-  it('The start date is required', async () => {
+  it('The deposit date is required', async () => {
     const {
       component: { container, findByDisplayValue },
     } = await setup({});
 
-    const { input } = await fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
+    const { input } = await fillInput(container, 'depositDate', '2020-01-02', 'datepicker');
     await findByDisplayValue('01/02/2020');
     expect(input).toHaveProperty('required');
-  });
-
-  it('The default term status is NEXER', async () => {
-    const {
-      component: { findByDisplayValue },
-    } = await setup({});
-
-    const termStatus = await findByDisplayValue('Not Exercised');
-    expect(termStatus).toBeVisible();
   });
 });

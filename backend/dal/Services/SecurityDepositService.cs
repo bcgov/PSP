@@ -30,7 +30,6 @@ namespace Pims.Dal.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
             ValidateServiceCall(leaseId, leaseRowVersion);
-            deposit.LeaseId = leaseId;
             _securityDepositRepository.Add(deposit);
             _securityDepositRepository.CommitTransaction();
 
@@ -41,7 +40,6 @@ namespace Pims.Dal.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateServiceCall(leaseId, leaseRowVersion);
-            deposit.LeaseId = leaseId;
             _securityDepositRepository.Update(deposit);
             _securityDepositRepository.CommitTransaction();
 

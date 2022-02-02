@@ -85,7 +85,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       const updatedLease = await removeLeaseDeposit({
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
-        payload: FormLeaseDeposit.toInterfaceModel(depositToDelete),
+        payload: depositToDelete.toInterfaceModel(),
       });
       if (!!updatedLease?.id) {
         setDepositToDelete(undefined);
@@ -100,7 +100,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       const updatedLease = await removeLeaseDepositReturn({
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
-        payload: FormLeaseDepositReturn.toInterfaceModel(depositReturnToDelete),
+        payload: depositReturnToDelete.toInterfaceModel(),
       });
       if (!!updatedLease?.id) {
         setDepositReturnToDelete(undefined);
@@ -120,7 +120,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       let request: IParentConcurrencyGuard<ILeaseSecurityDeposit> = {
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
-        payload: FormLeaseDeposit.toInterfaceModel(depositForm),
+        payload: depositForm.toInterfaceModel(),
       };
       const updatedLease = await updateLeaseDeposit(request);
       if (!!updatedLease?.id) {
@@ -169,7 +169,7 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       let request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn> = {
         parentId: lease.id,
         parentRowVersion: lease.rowVersion,
-        payload: FormLeaseDepositReturn.toInterfaceModel(returnDepositForm),
+        payload: returnDepositForm.toInterfaceModel(),
       };
       const updatedLease = await updateLeaseDepositReturn(request);
       if (!!updatedLease?.id) {
@@ -187,29 +187,17 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
       <DepositsReceivedContainer
         securityDeposits={securityDeposits}
         depositReturns={depositReturns}
-        onAdd={() => {
-          onAddDeposit();
-        }}
-        onEdit={(id: number) => {
-          onEditDeposit(id);
-        }}
-        onDelete={(id: number) => {
-          onDeleteDeposit(id);
-        }}
-        onReturn={(id: number) => {
-          onReturnDeposit(id);
-        }}
+        onAdd={onAddDeposit}
+        onEdit={onEditDeposit}
+        onDelete={onDeleteDeposit}
+        onReturn={onReturnDeposit}
       />
 
       <DepositsReturnedContainer
         securityDeposits={securityDeposits}
         depositReturns={depositReturns}
-        onEdit={(id: number) => {
-          onEditReturnDeposit(id);
-        }}
-        onDelete={(id: number) => {
-          onDeleteDepositReturn(id);
-        }}
+        onEdit={onEditReturnDeposit}
+        onDelete={onDeleteDepositReturn}
       />
 
       <FormSection>

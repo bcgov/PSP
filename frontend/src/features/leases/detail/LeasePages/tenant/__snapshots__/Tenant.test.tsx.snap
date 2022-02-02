@@ -219,7 +219,7 @@ exports[`Tenant component renders as expected 1`] = `
               disabled=""
               id="input-persons.0.email"
               name="persons.0.email"
-              value="admin@pims.gov.bc.ca"
+              value=""
             />
           </div>
           <label
@@ -241,7 +241,7 @@ exports[`Tenant component renders as expected 1`] = `
               disabled=""
               id="input-persons.0.landline"
               name="persons.0.landline"
-              value="1 222-333-4444"
+              value="222-333-4444"
             />
           </div>
           <div
@@ -258,7 +258,7 @@ exports[`Tenant component renders as expected 1`] = `
               disabled=""
               id="input-persons.0.mobile"
               name="persons.0.mobile"
-              value="1 555-666-7777"
+              value="555-666-7777"
             />
           </div>
         </div>

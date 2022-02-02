@@ -24,7 +24,6 @@ namespace Pims.Dal.Services
         public PimsLease AddLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit)
         {
             ValidateServiceCall(leaseId, leaseRowVersion);
-            deposit.LeaseId = leaseId;
             _securityDepositReturnRepository.Add(deposit);
             _securityDepositReturnRepository.CommitTransaction();
 
@@ -34,7 +33,6 @@ namespace Pims.Dal.Services
         public PimsLease UpdateLeaseDepositReturn(long leaseId, long leaseRowVersion, PimsSecurityDepositReturn deposit)
         {
             ValidateServiceCall(leaseId, leaseRowVersion);
-            deposit.LeaseId = leaseId;
             _securityDepositReturnRepository.Update(deposit);
             _securityDepositReturnRepository.CommitTransaction();
 

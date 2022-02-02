@@ -92,24 +92,24 @@ export class FormLeaseDepositReturn {
     return model;
   }
 
-  public static toInterfaceModel(model: FormLeaseDepositReturn): ILeaseSecurityDepositReturn {
+  public toInterfaceModel(): ILeaseSecurityDepositReturn {
     return {
-      id: model.id,
-      parentDepositId: model.parentDepositId,
-      depositType: { id: model.depositTypeCode },
-      terminationDate: model.terminationDate === '' ? undefined : model.terminationDate,
-      claimsAgainst: model.claimsAgainst === '' ? undefined : model.claimsAgainst,
-      returnAmount: model.returnAmount === '' ? 0 : model.returnAmount,
-      returnDate: model.returnDate === '' ? undefined : model.returnDate,
-      payeeName: model.payeeName,
-      payeeAddress: model.payeeAddress,
+      id: this.id,
+      parentDepositId: this.parentDepositId,
+      depositType: { id: this.depositTypeCode },
+      terminationDate: this.terminationDate === '' ? undefined : this.terminationDate,
+      claimsAgainst: this.claimsAgainst === '' ? undefined : this.claimsAgainst,
+      returnAmount: this.returnAmount === '' ? 0 : this.returnAmount,
+      returnDate: this.returnDate === '' ? undefined : this.returnDate,
+      payeeName: this.payeeName,
+      payeeAddress: this.payeeAddress,
       personDepositReturnHolderId:
-        model.personDepositReturnHolderId === '' ? undefined : model.personDepositReturnHolderId,
+        this.personDepositReturnHolderId === '' ? undefined : this.personDepositReturnHolderId,
       organizationDepositReturnHolderId:
-        model.organizationDepositReturnHolderId === ''
+        this.organizationDepositReturnHolderId === ''
           ? undefined
-          : model.organizationDepositReturnHolderId,
-      rowVersion: model.rowVersion,
+          : this.organizationDepositReturnHolderId,
+      rowVersion: this.rowVersion,
     };
   }
 }

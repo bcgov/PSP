@@ -58,20 +58,20 @@ export class FormLeaseDeposit implements IBaseModel {
     return model;
   }
 
-  public static toInterfaceModel(model: FormLeaseDeposit): ILeaseSecurityDeposit {
+  public toInterfaceModel(): ILeaseSecurityDeposit {
     return {
-      id: model.id,
-      description: model.description,
-      amountPaid: model.amountPaid === '' ? 0 : model.amountPaid,
-      depositDate: model.depositDate === '' ? undefined : model.depositDate,
-      depositType: { id: model.depositTypeCode },
+      id: this.id,
+      description: this.description,
+      amountPaid: this.amountPaid === '' ? 0 : this.amountPaid,
+      depositDate: this.depositDate === '' ? undefined : this.depositDate,
+      depositType: { id: this.depositTypeCode },
       otherTypeDescription:
-        model.otherTypeDescription === '' ? undefined : model.otherTypeDescription,
+        this.otherTypeDescription === '' ? undefined : this.otherTypeDescription,
       personDepositHolderId:
-        model.personDepositHolderId === '' ? undefined : model.personDepositHolderId,
+        this.personDepositHolderId === '' ? undefined : this.personDepositHolderId,
       organizationDepositHolderId:
-        model.organizationDepositHolderId === '' ? undefined : model.organizationDepositHolderId,
-      rowVersion: model.rowVersion,
+        this.organizationDepositHolderId === '' ? undefined : this.organizationDepositHolderId,
+      rowVersion: this.rowVersion,
     };
   }
 }

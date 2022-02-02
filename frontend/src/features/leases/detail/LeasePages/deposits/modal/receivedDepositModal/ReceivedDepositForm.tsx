@@ -58,12 +58,7 @@ export const ReceivedDepositForm: React.FunctionComponent<IReceivedDepositFormPr
           </Row>
           <Row>
             <Col>
-              <TextArea
-                label="Description:"
-                rows={4}
-                field="description"
-                data-testid="insurance-form-description"
-              />
+              <TextArea label="Description:" rows={4} field="description" />
             </Col>
           </Row>
           <Row>
