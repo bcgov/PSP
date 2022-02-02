@@ -1,15 +1,19 @@
+import { Button } from 'components/common/form';
 import { InlineFlexDiv } from 'components/common/styles';
 import { Table } from 'components/Table';
 import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export const StyledFormBody = styled.div`
-  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
+  label {
+    font-family: 'BCSans-Bold';
+  }
   .check-field {
     label {
       width: 100%;
+      color: ${props => props.theme.css.textColor};
     }
     display: flex;
     flex-wrap: wrap;
@@ -17,7 +21,8 @@ export const StyledFormBody = styled.div`
   .form-group {
     display: flex;
     flex-direction: column;
-    input {
+    input,
+    select {
       width: 70%;
     }
   }
@@ -59,7 +64,7 @@ export const StyledTable = styled(Table)`
         }
       }
     }
-    > .tbody > .tr-wrapper > tr > .td:nth-of-type(2) {
+    > .tbody > .tr-wrapper > .tr > .td:nth-of-type(2) {
       margin-right: -5rem; /** TODO: prevent expander from pushing tds to the right */
       padding-left: 0;
     }
@@ -131,8 +136,48 @@ export const InlineCol = styled(Col)`
   flex-direction: row;
 `;
 
+export const ActualPaymentBox = styled(InlineFlexDiv)`
+  margin-left: -1rem;
+  padding-left: 1rem;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+  input {
+    width: 100%;
+  }
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+`;
+
+export const FlexRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+`;
+
+export const FlexRowDiv = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+`;
+
+export const FlexColDiv = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+`;
+
 export const WarningTextBox = styled(InlineFlexDiv)`
   gap: 3rem;
   background-color: white;
   min-height: 6rem;
+`;
+
+export const AddActualButton = styled(Button)`
+  && {
+    background-color: ${props => props.theme.css.completedColor};
+    color: white;
+    &:hover {
+      background-color: #3aba53;
+    }
+  }
 `;

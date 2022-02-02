@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PaymentForm component renders as expected 1`] = `
+exports[`TermForm component renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -8,31 +8,22 @@ exports[`PaymentForm component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c2.form-control.is-valid {
+  .c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c2.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c0 {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 label {
+  font-family: 'BCSans-Bold';
 }
 
 .c0 .check-field {
@@ -59,7 +50,8 @@ exports[`PaymentForm component renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input {
+.c0 .form-group input,
+.c0 .form-group select {
   width: 70%;
 }
 
@@ -74,6 +66,17 @@ exports[`PaymentForm component renders as expected 1`] = `
 
 .c0 .required .form-label:after {
   content: ' *';
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 <div
@@ -145,7 +148,7 @@ exports[`PaymentForm component renders as expected 1`] = `
         class="form-label"
         for="input-leasePmtFreqTypeCode.id"
       >
-        Payment Frequency: 
+        Payment frequency: 
       </label>
       <select
         class="form-select form-control"
@@ -224,6 +227,7 @@ exports[`PaymentForm component renders as expected 1`] = `
     >
       <label
         class="form-label"
+        for="input-paymentAmount"
       >
         Agreed payment ($) 
       </label>
@@ -232,6 +236,7 @@ exports[`PaymentForm component renders as expected 1`] = `
       >
         <input
           class="form-control input-number"
+          id="input-paymentAmount"
           name="paymentAmount"
           placeholder=""
           value=""
@@ -356,7 +361,7 @@ exports[`PaymentForm component renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`PaymentForm component renders with data as expected 1`] = `
+exports[`TermForm component renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -364,31 +369,22 @@ exports[`PaymentForm component renders with data as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c2.form-control.is-valid {
+  .c2.c2.form-control.is-valid {
   background-image: none;
 }
 
-.c2.form-control.is-invalid {
+.c2.c2.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c0 {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
   margin-left: 1rem;
   font-size: 1.4rem;
   grid-template-columns: [controls] 1fr;
+}
+
+.c0 label {
+  font-family: 'BCSans-Bold';
 }
 
 .c0 .check-field {
@@ -415,7 +411,8 @@ exports[`PaymentForm component renders with data as expected 1`] = `
   flex-direction: column;
 }
 
-.c0 .form-group input {
+.c0 .form-group input,
+.c0 .form-group select {
   width: 70%;
 }
 
@@ -430,6 +427,17 @@ exports[`PaymentForm component renders with data as expected 1`] = `
 
 .c0 .required .form-label:after {
   content: ' *';
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
 }
 
 <div
@@ -501,7 +509,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
         class="form-label"
         for="input-leasePmtFreqTypeCode.id"
       >
-        Payment Frequency: 
+        Payment frequency: 
       </label>
       <select
         class="form-select form-control"
@@ -580,6 +588,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
     >
       <label
         class="form-label"
+        for="input-paymentAmount"
       >
         Agreed payment ($) 
       </label>
@@ -588,6 +597,7 @@ exports[`PaymentForm component renders with data as expected 1`] = `
       >
         <input
           class="form-control input-number"
+          id="input-paymentAmount"
           name="paymentAmount"
           placeholder=""
           value=""

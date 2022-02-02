@@ -1,13 +1,14 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { LeaseTermStatusTypes } from 'constants/index';
 import { createMemoryHistory } from 'history';
 import { defaultFormLeaseTerm } from 'interfaces';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, renderAsync, RenderOptions, waitFor } from 'utils/test-utils';
 
-import PaymentModal, { IPaymentModalProps } from './PaymentModal';
+import TermModal, { ITermModalProps } from './TermModal';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -17,16 +18,16 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('PaymentModal component', () => {
+describe('TermModal component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IPaymentModalProps> & {
+      Partial<ITermModalProps> & {
         initialValues?: any;
       } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
-      <PaymentModal onSave={onSave} onCancel={onCancel} displayModal={true} />,
+      <TermModal onSave={onSave} onCancel={onCancel} displayModal={true} />,
       {
         ...renderOptions,
         history,
@@ -92,7 +93,7 @@ describe('PaymentModal component', () => {
       renewalDate: '',
       startDate: '2020-01-01',
       statusTypeCode: {
-        id: 'NEXER',
+        id: LeaseTermStatusTypes.NOT_EXERCISED,
       },
     });
   });

@@ -13,6 +13,7 @@ exports[`FastCurrencyInput fast currency input renders correctly 1`] = `
       >
         <input
           class="form-control input-number"
+          id="input-assessedLand"
           name="assessedLand"
           placeholder=""
           value=""

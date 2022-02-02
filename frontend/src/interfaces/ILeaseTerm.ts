@@ -75,6 +75,7 @@ export const formLeaseTermToApiLeaseTerm = (
     leasePmtFreqTypeCode: formLeaseTerm.leasePmtFreqTypeCode?.id
       ? formLeaseTerm.leasePmtFreqTypeCode
       : undefined,
+    statusTypeCode: formLeaseTerm.statusTypeCode?.id ? formLeaseTerm.statusTypeCode : undefined,
     payments: formLeaseTerm.payments.map(payment => formLeasePaymentToApiPayment(payment)),
   };
 };
