@@ -191,8 +191,12 @@ namespace Pims.Dal.Helpers.Extensions
                 childAccessor.Remove(dbEntity, existingChild);
                 context.Remove(existingChild);
 
+                // load grandchild navigation property
+                var grandchildReference = dbChildEntry.Reference(grandchildPropertyName);
+                grandchildReference.Load();
+
                 // Also remove the grandchild referenced by the child being removed
-                var dbGrandchild = dbChildEntry.Reference(grandchildPropertyName).TargetEntry.Entity;
+                var dbGrandchild = grandchildReference.TargetEntry?.Entity;
                 context.Remove(dbGrandchild);
             }
         }
