@@ -58,17 +58,18 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   const formikRef = useRef<FormikProps<IEditablePersonForm>>(null);
 
   const onValidate = (values: IEditablePersonForm) => {
+    const errors = {} as any;
     try {
-      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
-      const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
         errors.needsContactMethod =
           'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
       }
+      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
+
       return errors;
     } catch (err) {
-      return yupToFormErrors(err);
+      return { ...errors, ...yupToFormErrors(err) };
     }
   };
 
@@ -162,6 +163,17 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
     }
   };
 
+  const isContactMethodInvalid = useMemo(() => {
+    return (
+      !!touched.phoneContactMethods &&
+      !!touched.emailContactMethods &&
+      (!!touched.mailingAddress?.streetAddress1 ||
+        !!touched.propertyAddress?.streetAddress1 ||
+        !!touched.billingAddress?.streetAddress1) &&
+      getIn(errors, 'needsContactMethod')
+    );
+  }, [touched, errors]);
+
   return (
     <>
       {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
@@ -221,7 +233,11 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
             <FormSection>
               <Styled.H2>Contact info</Styled.H2>
               <Styled.SectionMessage
-                appearance={getIn(errors, 'needsContactMethod') ? 'error' : 'information'}
+                appearance={
+                  isContactMethodInvalid && getIn(errors, 'needsContactMethod')
+                    ? 'error'
+                    : 'information'
+                }
                 gap="0.5rem"
               >
                 <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
