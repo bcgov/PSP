@@ -26,6 +26,8 @@ namespace Pims.Dal.Entities
             PimsPersonOrganizations = new HashSet<PimsPersonOrganization>();
             PimsProperties = new HashSet<PimsProperty>();
             PimsPropertyOrganizations = new HashSet<PimsPropertyOrganization>();
+            PimsSecurityDepositHolders = new HashSet<PimsSecurityDepositHolder>();
+            PimsSecurityDepositReturnHolders = new HashSet<PimsSecurityDepositReturnHolder>();
             PimsUserOrganizations = new HashSet<PimsUserOrganization>();
         }
 
@@ -138,6 +140,10 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsProperty> PimsProperties { get; set; }
         [InverseProperty(nameof(PimsPropertyOrganization.Organization))]
         public virtual ICollection<PimsPropertyOrganization> PimsPropertyOrganizations { get; set; }
+        [InverseProperty(nameof(PimsSecurityDepositHolder.Organization))]
+        public virtual ICollection<PimsSecurityDepositHolder> PimsSecurityDepositHolders { get; set; }
+        [InverseProperty(nameof(PimsSecurityDepositReturnHolder.Organization))]
+        public virtual ICollection<PimsSecurityDepositReturnHolder> PimsSecurityDepositReturnHolders { get; set; }
         [InverseProperty(nameof(PimsUserOrganization.Organization))]
         public virtual ICollection<PimsUserOrganization> PimsUserOrganizations { get; set; }
     }

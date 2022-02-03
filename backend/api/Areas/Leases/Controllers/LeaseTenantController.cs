@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     public class LeaseTenantController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,7 +32,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public LeaseTenantController(IPimsService pimsService, IMapper mapper)
+        public LeaseTenantController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;

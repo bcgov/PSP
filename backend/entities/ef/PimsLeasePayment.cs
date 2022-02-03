@@ -10,7 +10,6 @@ namespace Pims.Dal.Entities
 {
     [Table("PIMS_LEASE_PAYMENT")]
     [Index(nameof(LeasePaymentMethodTypeCode), Name = "LSPYMT_LEASE_PAYMENT_METHOD_TYPE_CODE_IDX")]
-    [Index(nameof(LeasePaymentPeriodId), Name = "LSPYMT_LEASE_PAYMENT_PERIOD_ID_IDX")]
     [Index(nameof(LeaseTermId), Name = "LSPYMT_LEASE_TERM_ID_IDX")]
     public partial class PimsLeasePayment
     {
@@ -19,12 +18,13 @@ namespace Pims.Dal.Entities
         public long LeasePaymentId { get; set; }
         [Column("LEASE_TERM_ID")]
         public long LeaseTermId { get; set; }
-        [Column("LEASE_PAYMENT_PERIOD_ID")]
-        public long LeasePaymentPeriodId { get; set; }
         [Required]
         [Column("LEASE_PAYMENT_METHOD_TYPE_CODE")]
         [StringLength(20)]
         public string LeasePaymentMethodTypeCode { get; set; }
+        [Column("LEASE_PAYMENT_STATUS_TYPE_CODE")]
+        [StringLength(20)]
+        public string LeasePaymentStatusTypeCode { get; set; }
         [Column("PAYMENT_RECEIVED_DATE", TypeName = "datetime")]
         public DateTime PaymentReceivedDate { get; set; }
         [Column("PAYMENT_AMOUNT_PRE_TAX", TypeName = "money")]
@@ -32,7 +32,7 @@ namespace Pims.Dal.Entities
         [Column("PAYMENT_AMOUNT_PST", TypeName = "money")]
         public decimal? PaymentAmountPst { get; set; }
         [Column("PAYMENT_AMOUNT_GST", TypeName = "money")]
-        public decimal PaymentAmountGst { get; set; }
+        public decimal? PaymentAmountGst { get; set; }
         [Column("PAYMENT_AMOUNT_TOTAL", TypeName = "money")]
         public decimal PaymentAmountTotal { get; set; }
         [Column("NOTE")]
@@ -80,9 +80,9 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(LeasePaymentMethodTypeCode))]
         [InverseProperty(nameof(PimsLeasePaymentMethodType.PimsLeasePayments))]
         public virtual PimsLeasePaymentMethodType LeasePaymentMethodTypeCodeNavigation { get; set; }
-        [ForeignKey(nameof(LeasePaymentPeriodId))]
-        [InverseProperty(nameof(PimsLeasePaymentPeriod.PimsLeasePayments))]
-        public virtual PimsLeasePaymentPeriod LeasePaymentPeriod { get; set; }
+        [ForeignKey(nameof(LeasePaymentStatusTypeCode))]
+        [InverseProperty(nameof(PimsLeasePaymentStatusType.PimsLeasePayments))]
+        public virtual PimsLeasePaymentStatusType LeasePaymentStatusTypeCodeNavigation { get; set; }
         [ForeignKey(nameof(LeaseTermId))]
         [InverseProperty(nameof(PimsLeaseTerm.PimsLeasePayments))]
         public virtual PimsLeaseTerm LeaseTerm { get; set; }

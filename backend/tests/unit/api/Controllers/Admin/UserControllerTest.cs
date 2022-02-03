@@ -39,7 +39,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             service.Setup(m => m.User.Get(It.IsAny<Entity.Models.UserFilter>())).Returns(paged);
@@ -63,7 +63,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             var filter = new Entity.Models.UserFilter(1, 1, "organization", "username", "lastname", "firstname", "email", false, "role", null, "position");
@@ -90,7 +90,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var users = new Entity.PimsUser[] { EntityHelper.CreateUser("user1"), EntityHelper.CreateUser("user2") };
             var paged = new Entity.Models.Paged<Entity.PimsUser>(users);
             var filter = new Entity.Models.UserFilter(1, 1, "organization", "username", "lastname", "firstname", "email", false, "role", null, "position");
@@ -117,7 +117,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Get(It.IsAny<Guid>())).Returns(user);
 
@@ -142,7 +142,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var user = EntityHelper.CreateUser("user1");
             var organization = user.GetOrganizations().First();
             service.Setup(m => m.User.Add(It.IsAny<Entity.PimsUser>())).Callback<Entity.PimsUser>(u => { });
@@ -174,7 +174,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Update(It.IsAny<Entity.PimsUser>()));
             var model = mapper.Map<Model.UserModel>(user);
@@ -205,7 +205,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<UserController>(Permissions.AdminUsers);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var user = EntityHelper.CreateUser("user1");
             service.Setup(m => m.User.Delete(It.IsAny<Entity.PimsUser>()));
             var model = mapper.Map<Model.UserModel>(user);

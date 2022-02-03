@@ -57,10 +57,6 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         [CsvHelper.Configuration.Attributes.Name("Lease Status Type")]
         public string StatusType { get; set; }
 
-        [DisplayName("Lease Payment Frequency")]
-        [CsvHelper.Configuration.Attributes.Name("Lease Payment Frequency")]
-        public string PaymentFrequency { get; set; }
-
         [DisplayName("PS File Number")]
         [CsvHelper.Configuration.Attributes.Name("PS File Number")]
         public string PsFileNo { get; set; }

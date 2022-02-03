@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Contact.Controllers
     public class ContactController : ControllerBase
     {
         #region Variables
-        private readonly IPimsService _pimsService;
+        private readonly IPimsRepository _pimsService;
         private readonly IMapper _mapper;
         #endregion
 
@@ -32,7 +32,7 @@ namespace Pims.Api.Areas.Contact.Controllers
         /// <param name="pimsService"></param>
         /// <param name="mapper"></param>
         ///
-        public ContactController(IPimsService pimsService, IMapper mapper)
+        public ContactController(IPimsRepository pimsService, IMapper mapper)
         {
             _pimsService = pimsService;
             _mapper = mapper;
@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.Contact.Controllers
 
             if (contactView.OrganizationId.HasValue)
             {
-                var organization = _pimsService.Organization.GetComplete(contactView.OrganizationId.Value);
+                var organization = _pimsService.Organization.Get(contactView.OrganizationId.Value);
                 var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
                 mappedOrganization.Id = contactView.Id;
                 return new JsonResult(mappedOrganization);
