@@ -70,11 +70,11 @@ exports[`Lease Insurance renders as expected 1`] = `
   <h2>
     Coverage details
   </h2>
-  .c4.form-control.is-valid {
+  .c4.c4.form-control.is-valid {
   background-image: none;
 }
 
-.c4.form-control.is-invalid {
+.c4.c4.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 

@@ -116,11 +116,13 @@ const FormikDatePicker: FunctionComponent<FastDatePickerProps> = ({
 };
 
 const StyledDatePicker = styled(DatePicker)`
-  &.form-control.is-valid {
-    background-image: none;
-  }
-  &.form-control.is-invalid {
-    border-color: #d8292f !important;
+  && {
+    &.form-control.is-valid {
+      background-image: none;
+    }
+    &.form-control.is-invalid {
+      border-color: #d8292f !important;
+    }
   }
 `;
 

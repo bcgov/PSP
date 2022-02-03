@@ -99,7 +99,9 @@ namespace Pims.Api.Controllers
             var leaseCategoryTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseCategoryTypes());
             var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseInitiatorTypes());
             var leasePaymentFrequencyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePmtFreqTypes());
+            var leasePaymentMethodTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePaymentMethodTypes());
             var leasePaymentReceivableTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPaymentReceivableTypes());
+            var leasePaymentStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePaymentStatusTypes());
             var leaseProgramTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseProgramTypes());
             var leasePurposeTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeasePurposeTypes());
             var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseResponsibilityTypes());
@@ -126,7 +128,9 @@ namespace Pims.Api.Controllers
             codes.AddRange(leaseCategoryTypes);
             codes.AddRange(leaseInitiatorTypes);
             codes.AddRange(leasePaymentFrequencyTypes);
+            codes.AddRange(leasePaymentMethodTypes);
             codes.AddRange(leasePaymentReceivableTypes);
+            codes.AddRange(leasePaymentStatusTypes);
             codes.AddRange(leaseProgramTypes);
             codes.AddRange(leasePurposeTypes);
             codes.AddRange(leaseResponsibilityTypes);

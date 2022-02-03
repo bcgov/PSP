@@ -24,11 +24,11 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 <div
     class="Toastify"
   />
-  .c15.form-control.is-valid {
+  .c15.c15.form-control.is-valid {
   background-image: none;
 }
 
-.c15.form-control.is-invalid {
+.c15.c15.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 

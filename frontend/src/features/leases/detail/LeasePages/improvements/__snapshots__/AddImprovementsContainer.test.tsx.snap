@@ -229,7 +229,7 @@ exports[`Add lease container component renders as expected 1`] = `
         <h3
           class="c3"
         >
-          Other Improvements
+          Residential
         </h3>
         <div
           class="c4 formgrid"
@@ -283,7 +283,7 @@ exports[`Add lease container component renders as expected 1`] = `
         <h3
           class="c3"
         >
-          Residential
+          Other Improvements
         </h3>
         <div
           class="c4 formgrid"
