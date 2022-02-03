@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { Claims } from 'constants/claims';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { IContactSearchResult } from 'interfaces';
@@ -8,12 +9,16 @@ import { noop } from 'lodash';
 import React from 'react';
 import {
   getAllByRole as getAllByRoleBase,
+  mockKeycloak,
   renderAsync,
   RenderOptions,
   within,
 } from 'utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
+
+// mock auth library
+jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -64,6 +69,7 @@ describe('AddLeaseTenantForm component', () => {
 
   beforeEach(() => {
     mockAxios.resetHistory();
+    mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
   it('renders as expected', async () => {
     mockAxios.onGet().reply(200, []);

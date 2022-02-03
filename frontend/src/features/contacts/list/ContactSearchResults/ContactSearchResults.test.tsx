@@ -1,10 +1,14 @@
 import userEvent from '@testing-library/user-event';
+import { Claims } from 'constants/claims';
 import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
 import React from 'react';
-import { act, render, RenderOptions } from 'utils/test-utils';
+import { act, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { ContactSearchResults, IContactSearchResultsProps } from './ContactSearchResults';
+
+// mock auth library
+jest.mock('@react-keycloak/web');
 
 const setSort = jest.fn();
 
@@ -70,6 +74,7 @@ const mockResults: IContactSearchResult[] = [
 describe('Contact Search Results Table', () => {
   beforeEach(() => {
     setSort.mockClear();
+    mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
 
   it('matches snapshot', async () => {
