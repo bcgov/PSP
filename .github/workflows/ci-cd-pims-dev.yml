@@ -23,14 +23,13 @@ env:
   TAG_PROD: "prod"
 
 on:
-  push:
+  pull_request:
     branches: [dev]
-#    paths:
-#      - ".github/workflows/ci-cd-pims-dev.yml"
+    types: [closed]
 
 jobs:
-
   ci-cd-start-notification:
+    if: github.event.pull_request.merged == true
     name: CI-CD Start Notification to Teams Channel
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +41,7 @@ jobs:
           notification-summary: PIMS CI-CD GitHub Action STARTED in DEV
           notification-color: 17a2b8
           timezone: America/Los_Angeles
-          
+
   build-frontend:
     name: Build frontend
     needs: ci-cd-start-notification
@@ -79,7 +78,7 @@ jobs:
       - name: Call script to build backend (pims-api)
         run: |
           ./openshift/4.0/player.sh build api -apply
-  
+
   deploy:
     name: Deploy frontend and api to OpenShift
     needs: [build-frontend, build-api]
@@ -98,12 +97,12 @@ jobs:
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
-  
+
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
     needs: deploy
-    if: always()
+    if: ${{ always() && github.event.pull_request.merged == true }}
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v2
