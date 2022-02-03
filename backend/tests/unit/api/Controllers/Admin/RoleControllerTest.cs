@@ -37,7 +37,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
             service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
@@ -61,7 +61,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var roles = new Entity.PimsRole[] { EntityHelper.CreateRole("role1"), EntityHelper.CreateRole("role2") };
             var paged = new Entity.Models.Paged<Entity.PimsRole>(roles);
             service.Setup(m => m.Role.Get(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>())).Returns(paged);
@@ -87,7 +87,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Get(It.IsAny<Guid>())).Returns(role);
 
@@ -112,7 +112,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Add(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
@@ -138,7 +138,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Update(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);
@@ -164,7 +164,7 @@ namespace PimsApi.Test.Admin.Controllers
             var controller = helper.CreateController<RoleController>(Permissions.AdminRoles);
 
             var mapper = helper.GetService<IMapper>();
-            var service = helper.GetService<Mock<IPimsService>>();
+            var service = helper.GetService<Mock<IPimsRepository>>();
             var role = EntityHelper.CreateRole("role1");
             service.Setup(m => m.Role.Delete(It.IsAny<Entity.PimsRole>()));
             var model = mapper.Map<Model.RoleModel>(role);

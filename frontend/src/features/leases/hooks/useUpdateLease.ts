@@ -17,7 +17,7 @@ export const useUpdateLease = () => {
 
   const updateLease = async (
     lease: ILease,
-    setUserOverride?: (userOverride?: string) => void,
+    setUserOverrideMessage?: (message?: string) => void,
     userOverride: boolean = false,
     subRoute?: string,
   ) => {
@@ -33,7 +33,7 @@ export const useUpdateLease = () => {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
-          setUserOverride && setUserOverride(axiosError?.response.data.error);
+          setUserOverrideMessage && setUserOverrideMessage(axiosError?.response.data.error);
           return;
         } else if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);

@@ -68,7 +68,6 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     renewalCount: parseInt(formLease.renewalCount.toString()) || 0,
     tfaFileNo: parseInt(formLease?.tfaFileNo?.toString() || '') || 0,
     amount: parseFloat(formLease.amount.toString()) || 0.0,
-    paymentFrequencyType: stringToTypeCode(formLease.paymentFrequencyType),
     paymentReceivableType: stringToTypeCode(formLease.paymentReceivableType),
     categoryType: stringToTypeCode(formLease.categoryType),
     purposeType: stringToTypeCode(formLease.purposeType),
@@ -76,6 +75,7 @@ export const addFormLeaseToApiLease = (formLease: IAddFormLease) => {
     initiatorType: stringToTypeCode(formLease.initiatorType || LeaseInitiatorTypes.Hq),
     statusType: stringToTypeCode(formLease.statusType),
     type: stringToTypeCode(formLease.type),
+    region: { regionCode: formLease.region },
     programType: stringToTypeCode(formLease.programType),
     expiryDate: stringToNull(formLease.expiryDate),
     psFileNo: stringToNull(formLease.psFileNo),
@@ -94,7 +94,6 @@ export const apiLeaseToAddFormLease = (lease?: ILease) => {
   return !!lease
     ? ({
         ...lease,
-        paymentFrequencyType: lease.paymentFrequencyType?.id ?? '',
         paymentReceivableType: lease.paymentReceivableType?.id ?? '',
         categoryType: lease.categoryType?.id ?? '',
         purposeType: lease.purposeType?.id ?? '',
@@ -102,6 +101,7 @@ export const apiLeaseToAddFormLease = (lease?: ILease) => {
         initiatorType: lease.initiatorType?.id ?? '',
         statusType: lease.statusType?.id ?? '',
         type: lease.type?.id ?? '',
+        region: lease?.region?.regionCode ?? '',
         programType: lease.programType?.id ?? '',
       } as IAddFormLease)
     : undefined;

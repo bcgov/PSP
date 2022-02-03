@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { defaultFormLease, IFormLease } from 'interfaces';
+import { defaultFormLease, defaultFormLeaseTerm, IFormLease } from 'interfaces';
 import { noop } from 'lodash';
 import { render, RenderOptions } from 'utils/test-utils';
 
@@ -35,12 +35,10 @@ describe('DetailTermInformation component', () => {
         ...defaultFormLease,
         amount: 1000,
         renewalCount: 31,
-        paymentFrequencyType: { id: 'ANNUAL', description: 'Annual', isDisabled: false },
       },
     });
     expect(getByDisplayValue('1000')).toBeVisible();
     expect(getByDisplayValue('31')).toBeVisible();
-    expect(getByDisplayValue('Annual')).toBeVisible();
   });
   it('renders with the expected columns', () => {
     const {
@@ -50,6 +48,7 @@ describe('DetailTermInformation component', () => {
         ...defaultFormLease,
         terms: [
           {
+            ...defaultFormLeaseTerm,
             id: 1,
             leaseId: 1,
             startDate: '2020-01-01',
@@ -78,6 +77,7 @@ describe('DetailTermInformation component', () => {
         renewalDate: undefined,
         terms: [
           {
+            ...defaultFormLeaseTerm,
             id: 1,
             leaseId: 1,
             startDate: '',

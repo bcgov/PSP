@@ -1,11 +1,26 @@
 import { AsyncTypeahead, Button, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
-import GenericModal from 'components/common/GenericModal';
-import { Stack } from 'components/common/Stack/Stack';
+import { FlexBox } from 'components/common/styles';
 import { CountryCodes } from 'constants/countryCodes';
-import { Address, ContactEmailList, ContactPhoneList } from 'features/contacts/contact/create';
+import {
+  Address,
+  CancelConfirmationModal,
+  CommentNotes,
+  ContactEmailList,
+  ContactPhoneList,
+  DuplicateContactModal,
+  useAddressHelpers,
+} from 'features/contacts/contact/create/components';
+import * as Styled from 'features/contacts/contact/create/styles';
+import {
+  hasAddress,
+  hasEmail,
+  hasPhoneNumber,
+  PersonValidationSchema,
+} from 'features/contacts/contact/create/validation';
 import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
+import useAddContact from 'features/contacts/hooks/useAddContact';
 import {
   Formik,
   FormikHelpers,
@@ -15,29 +30,23 @@ import {
   yupToFormErrors,
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import useAddressHelpers from '../address/useAddressHelpers';
-import { PadBox } from '../styles';
-import CommentNotes from './comments/CommentNotes';
-import * as Styled from './styles';
-import { hasAddress, hasEmail, hasPhoneNumber, validationSchema } from './validation';
-
-export interface ICreatePersonFormProps {}
-
 /**
  * Formik-connected form to Create Individual Contacts
  */
-export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> = props => {
+export const CreatePersonForm: React.FunctionComponent = () => {
   const history = useHistory();
-  const { postPerson } = useApiContacts();
+  const { addPerson } = useAddContact();
+
+  const [showDuplicateModal, setDuplicateModal] = useState(false);
+  const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   // validation needs to be adjusted when country == OTHER
   const { countries } = useAddressHelpers();
@@ -46,9 +55,11 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
     [countries],
   );
 
+  const formikRef = useRef<FormikProps<ICreatePersonForm>>(null);
+
   const onValidate = (values: ICreatePersonForm) => {
     try {
-      validateYupSchema(values, validationSchema, true, { otherCountry: otherCountryId });
+      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
       const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
@@ -62,27 +73,45 @@ export const CreatePersonForm: React.FunctionComponent<ICreatePersonFormProps> =
   };
 
   const onSubmit = async (
-    values: ICreatePersonForm,
-    { resetForm, setSubmitting }: FormikHelpers<ICreatePersonForm>,
+    formPerson: ICreatePersonForm,
+    { setSubmitting }: FormikHelpers<ICreatePersonForm>,
   ) => {
     try {
-      await postPerson(personCreateFormToApiPerson(values));
+      setDuplicateModal(false);
+      let newPerson = personCreateFormToApiPerson(formPerson);
+      const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+
+      if (!!personResponse?.id) {
+        history.push('/contact/list');
+      }
+    } finally {
       setSubmitting(false);
-      toast.info('Contact added successfully');
-      history.push('/contact/list');
-    } catch (error) {
-      toast.error('Failed to add contact', { autoClose: 7000 });
+    }
+  };
+
+  const saveDuplicate = async () => {
+    setAllowDuplicate(true);
+    if (formikRef.current) {
+      formikRef.current.handleSubmit();
     }
   };
 
   return (
-    <Formik
-      component={CreatePersonComponent}
-      initialValues={defaultCreatePerson}
-      enableReinitialize
-      validate={onValidate}
-      onSubmit={onSubmit}
-    />
+    <>
+      <Formik
+        component={CreatePersonComponent}
+        initialValues={defaultCreatePerson}
+        enableReinitialize
+        validate={onValidate}
+        onSubmit={onSubmit}
+        innerRef={formikRef}
+      />
+      <DuplicateContactModal
+        display={showDuplicateModal}
+        handleOk={() => saveDuplicate()}
+        handleCancel={() => setAllowDuplicate(false)}
+      ></DuplicateContactModal>
+    </>
   );
 };
 
@@ -139,24 +168,20 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
       <UnsavedChangesPrompt />
 
       {/* Confirmation popup when Cancel button is clicked */}
-      <GenericModal
-        title="Unsaved Changes"
-        message="Confirm cancel adding this contact? Changes will not be saved."
-        cancelButtonText="No"
-        okButtonText="Confirm"
+      <CancelConfirmationModal
         display={showConfirmation}
+        setDisplay={setShowConfirmation}
         handleOk={() => {
           resetForm({ values: initialValues });
           // need a timeout here to give the form time to reset before navigating away
           // or else the router guard prompt will also be shown
           setTimeout(() => history.push('/contact/list'), 100);
         }}
-        handleCancel={() => setShowConfirmation(false)}
       />
 
-      <Styled.CreatePersonLayout>
+      <Styled.CreateFormLayout>
         <Styled.Form id="createForm">
-          <Stack gap={1.6}>
+          <FlexBox column gap="1.6rem">
             <FormSection>
               <Row>
                 <Col md={4}>
@@ -195,10 +220,8 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
 
             <FormSection>
               <Styled.H2>Contact info</Styled.H2>
-              <Styled.SummaryText
-                $direction="row"
-                alignItems="flex-start"
-                variant={getIn(errors, 'needsContactMethod') ? 'error' : 'text'}
+              <Styled.SectionMessage
+                appearance={getIn(errors, 'needsContactMethod') ? 'error' : 'information'}
                 gap="0.5rem"
               >
                 <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />
@@ -206,7 +229,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
                   Contacts must have a minimum of one method of contact to be saved. <br />
                   <em>(ex: email,phone or address)</em>
                 </p>
-              </Styled.SummaryText>
+              </Styled.SectionMessage>
               <ContactEmailList
                 field="emailContactMethods"
                 contactEmails={values.emailContactMethods}
@@ -237,24 +260,22 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
             <FormSection>
               <CommentNotes />
             </FormSection>
-          </Stack>
+          </FlexBox>
         </Styled.Form>
-      </Styled.CreatePersonLayout>
+      </Styled.CreateFormLayout>
 
-      <PadBox className="w-100">
-        <Stack $direction="row" justifyContent="flex-end" alignItems="stretch" gap={2}>
-          {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
-            <Styled.ErrorMessage gap="0.5rem" className="mr-3" alignItems="center">
-              <AiOutlineExclamationCircle size="1.8rem" className="mt-1" />
-              <span>Please complete required fields</span>
-            </Styled.ErrorMessage>
-          ) : null}
-          <Button variant="secondary" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button onClick={submitForm}>Save</Button>
-        </Stack>
-      </PadBox>
+      <Styled.ButtonGroup>
+        {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
+          <Styled.ErrorMessage gap="0.5rem" className="mr-3">
+            <AiOutlineExclamationCircle size="1.8rem" className="mt-1" />
+            <span>Please complete required fields</span>
+          </Styled.ErrorMessage>
+        ) : null}
+        <Button variant="secondary" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button onClick={submitForm}>Save</Button>
+      </Styled.ButtonGroup>
     </>
   );
 };

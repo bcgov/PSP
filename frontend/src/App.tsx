@@ -8,17 +8,18 @@ import { AuthStateContext, IAuthState } from 'contexts/authStateContext';
 import { useFavicon } from 'hooks/useFavicon';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import PublicLayout from 'layouts/PublicLayout';
-import OnLoadActions from 'OnLoadActions';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
 import { useLookupCodes } from 'store/slices/lookupCodes';
+import { useSystemConstants } from 'store/slices/systemConstants';
 import { useUsers } from 'store/slices/users';
 
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
   const { fetchLookupCodes } = useLookupCodes();
+  const { fetchSystemConstants } = useSystemConstants();
   const { activateUser } = useUsers();
   useFavicon();
 
@@ -26,8 +27,9 @@ const App = () => {
     if (keycloak?.authenticated) {
       activateUser();
       fetchLookupCodes();
+      fetchSystemConstants();
     }
-  }, [keycloak, fetchLookupCodes, activateUser]);
+  }, [keycloak, fetchLookupCodes, fetchSystemConstants, activateUser]);
 
   return (
     <AuthStateContext.Consumer>
@@ -45,7 +47,6 @@ const App = () => {
         return (
           <>
             <AppRouter />
-            <OnLoadActions />
             <ToastContainer
               position="top-right"
               autoClose={5000}

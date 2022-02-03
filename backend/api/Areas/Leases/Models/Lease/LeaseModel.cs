@@ -38,12 +38,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public string MotiName { get; set; }
 
         /// <summary>
-        /// get/set - The string value of the moti region, user assigned.
-        /// </summary>
-        /// <value></value>
-        public string MotiRegion { get; set; }
-
-        /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
         /// <value></value>
@@ -143,11 +137,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public TypeModel<string> PaymentReceivableType { get; set; }
 
         /// <summary>
-        /// get/set - The lease payment frequency type.
-        /// </summary>
-        public TypeModel<string> PaymentFrequencyType { get; set; }
-
-        /// <summary>
         /// get/set - The entity that initiated this lease.
         /// </summary>
         public TypeModel<string> Type { get; set; }
@@ -176,6 +165,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - The status of this lease within PIMS, Draft by default.
         /// </summary>
         public TypeModel<string> StatusType { get; set; }
+
+        /// <summary>
+        /// get/set - The region of this lease within PIMS.
+        /// </summary>
+        public RegionModel Region { get; set; }
 
         /// <summary>
         /// get/set - The status of this lease within PIMS, Draft by default.

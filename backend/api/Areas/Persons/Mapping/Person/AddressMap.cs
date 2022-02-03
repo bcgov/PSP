@@ -8,13 +8,13 @@ namespace Pims.Api.Areas.Persons.Mapping.Person
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Areas.Persons.Models.Person.AddressCreateModel, Entity.PimsPersonAddress>()
+            config.NewConfig<Pims.Api.Models.Contact.AddressModel, Entity.PimsPersonAddress>()
                 .Map(dest => dest.AddressId, src => src.Id)
                 .Map(dest => dest.AddressUsageTypeCode, src => src.AddressTypeId.GetTypeId())
                 .Map(dest => dest.Address, src => src)
                 .IgnoreNullValues(true);
 
-            config.NewConfig<Areas.Persons.Models.Person.AddressCreateModel, Entity.PimsAddress>()
+            config.NewConfig<Pims.Api.Models.Contact.AddressModel, Entity.PimsAddress>()
                 .Map(dest => dest.AddressId, src => src.Id)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.StreetAddress1, src => src.StreetAddress1)

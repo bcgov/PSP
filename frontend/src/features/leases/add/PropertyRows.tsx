@@ -26,6 +26,7 @@ export const PropertyRows: React.FunctionComponent<IPropertyRowsProps> = ({ name
             <PropertyRow
               nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
               onRemove={() => remove(index)}
+              key={`property-row-${index}`}
             />
           ))}
           <Button
