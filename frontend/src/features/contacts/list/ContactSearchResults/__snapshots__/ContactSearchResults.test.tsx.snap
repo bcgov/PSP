@@ -519,28 +519,6 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
                     fill="none"
                   />
                   <path
-                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                  />
-                </svg>
-              </button>
-              <button
-                class="c5 btn btn-light"
-                type="button"
-              >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
                     d="M0 0h24v24H0z"
                     fill="none"
                   />
@@ -686,28 +664,6 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
                     fill="none"
                   />
                   <path
-                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                  />
-                </svg>
-              </button>
-              <button
-                class="c5 btn btn-light"
-                type="button"
-              >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
                     d="M0 0h24v24H0z"
                     fill="none"
                   />
@@ -835,28 +791,6 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             <div
               class="c3 c4"
             >
-              <button
-                class="c5 btn btn-light"
-                type="button"
-              >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                  />
-                </svg>
-              </button>
               <button
                 class="c5 btn btn-light"
                 type="button"

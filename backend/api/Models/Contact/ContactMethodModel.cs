@@ -20,6 +20,16 @@ namespace Pims.Api.Models.Contact
         public long RowVersion { get; set; }
 
         /// <summary>
+        /// get/set - The optional key to the parent person of this contact method.
+        /// </summary>
+        public long? PersonId { get; set; }
+
+        /// <summary>
+        /// get/set - The optional key to the parent organization of this contact method.
+        /// </summary>
+        public long? OrganizationId { get; set; }
+
+        /// <summary>
         /// get/set - Foreign key to the contact method type.
         /// </summary>
         public TypeModel<string> ContactMethodTypeCode { get; set; }

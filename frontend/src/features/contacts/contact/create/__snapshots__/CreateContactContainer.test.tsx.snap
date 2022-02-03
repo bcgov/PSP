@@ -68,7 +68,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   gap: 0.5rem;
 }
 
-.c14 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -79,7 +79,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   gap: 1.6rem;
 }
 
-.c17 {
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -118,6 +118,26 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   padding-left: 2rem;
 }
 
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
 .c10 {
   font-size: 2rem;
   font-weight: 700;
@@ -126,7 +146,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   line-height: 2.9rem;
 }
 
-.c13 {
+.c15 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -173,7 +193,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   color: red;
 }
 
-.c15 {
+.c17 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -188,7 +208,28 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   text-decoration: none;
 }
 
-.c16 {
+.c14.c14 {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c14.c14 .text {
+  display: none;
+}
+
+.c14.c14:hover {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c14.c14:hover .text {
+  display: inline;
+}
+
+.c18 {
   font-size: 1.6rem;
   font-weight: 400;
   -webkit-text-decoration: none solid rgb(170,170,170);
@@ -196,7 +237,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   line-height: 2rem;
 }
 
-.c18 {
+.c20 {
   width: 100%;
   padding: 1rem 4rem;
   gap: 2rem;
@@ -424,7 +465,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
                 >
                   <label
                     class="form-label"
-                    for="typeahead-organizationId"
+                    for="typeahead-organization"
                   >
                     Link to an existing organization
                   </label>
@@ -577,8 +618,45 @@ exports[`CreateContactContainer component should render as expected 1`] = `
               </div>
               <div
                 class="col-md-2"
-                style="padding-left: 0px; padding-bottom: 2rem;"
-              />
+                style="padding-left: 0px; padding-top: 3rem;"
+              >
+                <div
+                  class="c13 h-100"
+                >
+                  <button
+                    class="Button c14 btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="2rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                        />
+                      </svg>
+                       
+                      <span
+                        class="text"
+                      >
+                        Remove
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
             <button
               class="Button btn btn-link"
@@ -671,8 +749,45 @@ exports[`CreateContactContainer component should render as expected 1`] = `
               </div>
               <div
                 class="col-md-2"
-                style="padding-left: 0px; padding-bottom: 2rem;"
-              />
+                style="padding-left: 0px; padding-top: 3rem;"
+              >
+                <div
+                  class="c13 h-100"
+                >
+                  <button
+                    class="Button c14 btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="2rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                        />
+                      </svg>
+                       
+                      <span
+                        class="text"
+                      >
+                        Remove
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
             <button
               class="Button btn btn-link"
@@ -694,7 +809,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
               Address
             </h2>
             <h3
-              class="c13"
+              class="c15"
             >
               Mailing Address
             </h3>
@@ -880,7 +995,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
             class="c9"
           >
             <h3
-              class="c13"
+              class="c15"
             >
               Property Address
             </h3>
@@ -1066,7 +1181,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
             class="c9"
           >
             <h3
-              class="c13"
+              class="c15"
             >
               Billing Address
             </h3>
@@ -1252,15 +1367,15 @@ exports[`CreateContactContainer component should render as expected 1`] = `
             class="c9"
           >
             <div
-              class="c14"
+              class="c16"
             >
               <label
-                class="c15 form-label"
+                class="c17 form-label"
               >
                 Comments
               </label>
               <span
-                class="c16"
+                class="c18"
               >
                 (Optional)
               </span>
@@ -1280,7 +1395,7 @@ exports[`CreateContactContainer component should render as expected 1`] = `
       </form>
     </div>
     <div
-      class="c17 c18"
+      class="c19 c20"
     >
       <button
         class="Button btn btn-secondary"

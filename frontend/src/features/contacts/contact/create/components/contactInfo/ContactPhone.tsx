@@ -37,9 +37,9 @@ export const ContactPhone: React.FunctionComponent<IContactPhone> = ({ namespace
             placeholder="Select..."
           />
         </Col>
-        <Col md={2} style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
+        <Col md={2} style={{ paddingLeft: 0, paddingTop: '3rem' }}>
           {onRemove && (
-            <Stack justifyContent="flex-end" className="h-100">
+            <Stack justifyContent="flex-start" className="h-100">
               <Styled.RemoveButton onClick={onRemove}>
                 <MdClose size="2rem" /> <span className="text">Remove</span>
               </Styled.RemoveButton>

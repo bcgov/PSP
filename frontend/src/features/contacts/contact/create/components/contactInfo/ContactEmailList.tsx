@@ -1,13 +1,15 @@
 import { Button } from 'components/common/form';
-import { FieldArray } from 'formik';
-import { ICreateContactMethodForm } from 'interfaces/ICreateContact';
+import { ArrayHelpers, FieldArray } from 'formik';
+import { IEditableContactMethodForm } from 'interfaces/editable-contact';
 import React from 'react';
 
 import { ContactEmail } from './ContactEmail';
 
+const emptyContactMethod: IEditableContactMethodForm = { value: '', contactMethodTypeCode: '' };
+
 export interface IContactEmailList {
   field: string;
-  contactEmails: ICreateContactMethodForm[];
+  contactEmails: IEditableContactMethodForm[];
 }
 
 /**
@@ -18,18 +20,25 @@ export const ContactEmailList: React.FunctionComponent<IContactEmailList> = ({
   field,
   contactEmails = [],
 }) => {
+  // clear out existing values instead of removing last item from array
+  const onRemove = (array: Array<any>, index: number, arrayHelpers: ArrayHelpers) => {
+    if (index >= 1) return () => arrayHelpers.remove(index);
+    if (array.length === 1) return () => arrayHelpers.replace(index, { ...emptyContactMethod });
+    return undefined;
+  };
+
   return (
     <FieldArray name={field}>
-      {({ push, remove }) => (
+      {arrayHelpers => (
         <>
-          {contactEmails.map((email, index) => (
+          {contactEmails.map((email, index, array) => (
             <ContactEmail
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
-              onRemove={index > 0 ? () => remove(index) : undefined}
+              onRemove={onRemove(array, index, arrayHelpers)}
             />
           ))}
-          <Button variant="link" onClick={() => push({ value: '', contactMethodTypeCode: '' })}>
+          <Button variant="link" onClick={() => arrayHelpers.push({ ...emptyContactMethod })}>
             + Add another email address
           </Button>
         </>
