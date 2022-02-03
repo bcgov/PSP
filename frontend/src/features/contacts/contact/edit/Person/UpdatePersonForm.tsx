@@ -1,4 +1,4 @@
-import { Button, Input } from 'components/common/form';
+import { AsyncTypeahead, Button, Input, Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -9,18 +9,18 @@ import {
   CommentNotes,
   ContactEmailList,
   ContactPhoneList,
-  DuplicateContactModal,
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/create/styles';
 import {
   hasAddress,
   hasEmail,
   hasPhoneNumber,
-  OrganizationValidationSchema,
+  PersonValidationSchema,
 } from 'features/contacts/contact/create/validation';
-import { organizationCreateFormToApiOrganization } from 'features/contacts/contactUtils';
-import useAddContact from 'features/contacts/hooks/useAddContact';
+import * as Styled from 'features/contacts/contact/edit/styles';
+import { apiPersonToFormPerson, formPersonToApiPerson } from 'features/contacts/contactUtils';
+import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
+import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import {
   Formik,
   FormikHelpers,
@@ -29,21 +29,25 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/editable-contact';
-import { useMemo, useRef, useState } from 'react';
+import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
+import { IAutocompletePrediction } from 'interfaces';
+import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
+import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 /**
- * Formik-connected form to Create Organizational Contacts
+ * Formik-connected form to Update Individual Contacts
  */
-export const CreateOrganizationForm: React.FunctionComponent = () => {
+export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
-  const { addOrganization } = useAddContact();
+  const { updatePerson } = useUpdateContact();
 
-  const [showDuplicateModal, setDuplicateModal] = useState(false);
-  const [allowDuplicate, setAllowDuplicate] = useState(false);
+  // fetch person details from API for the supplied person's Id
+  const { person } = usePersonDetail(id);
+  const formPerson = useMemo(() => apiPersonToFormPerson(person), [person]);
 
   // validation needs to be adjusted when country == OTHER
   const { countries } = useAddressHelpers();
@@ -52,13 +56,9 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
     [countries],
   );
 
-  const formikRef = useRef<FormikProps<ICreateOrganizationForm>>(null);
-
-  const onValidate = (values: ICreateOrganizationForm) => {
+  const onValidate = (values: IEditablePersonForm) => {
     try {
-      validateYupSchema(values, OrganizationValidationSchema, true, {
-        otherCountry: otherCountryId,
-      });
+      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
       const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
@@ -72,59 +72,37 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
   };
 
   const onSubmit = async (
-    formOrganization: ICreateOrganizationForm,
-    { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
+    formPerson: IEditablePersonForm,
+    { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
-      setDuplicateModal(false);
-      let newOrganization = organizationCreateFormToApiOrganization(formOrganization);
+      let apiPerson = formPersonToApiPerson(formPerson);
+      const personResponse = await updatePerson(apiPerson);
+      const personId = personResponse?.id;
 
-      const organizationResponse = await addOrganization(
-        newOrganization,
-        setDuplicateModal,
-        allowDuplicate,
-      );
-
-      if (!!organizationResponse?.id) {
-        history.push('/contact/list');
+      if (!!personId) {
+        history.push(`/contact/P${personId}`);
       }
     } finally {
       setSubmitting(false);
     }
   };
 
-  const saveDuplicate = async () => {
-    setAllowDuplicate(true);
-    if (formikRef.current) {
-      formikRef.current.handleSubmit();
-    }
-  };
-
   return (
-    <>
-      <Formik
-        component={CreateOrganizationComponent}
-        initialValues={defaultCreateOrganization}
-        enableReinitialize
-        validate={onValidate}
-        onSubmit={onSubmit}
-        innerRef={formikRef}
-      />
-      <DuplicateContactModal
-        display={showDuplicateModal}
-        handleOk={() => saveDuplicate()}
-        handleCancel={() => setAllowDuplicate(false)}
-      ></DuplicateContactModal>
-    </>
+    <Formik
+      component={UpdatePersonComponent}
+      initialValues={!!formPerson ? { ...defaultCreatePerson, ...formPerson } : defaultCreatePerson}
+      enableReinitialize
+      validate={onValidate}
+      onSubmit={onSubmit}
+    />
   );
 };
-
-export default CreateOrganizationForm;
 
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>> = ({
+const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   values,
   errors,
   touched,
@@ -136,11 +114,35 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const personId = values.id;
+
+  // organization type-ahead state
+  const { getOrganizationPredictions } = useApiAutocomplete();
+  const [isTypeaheadLoading, setIsTypeaheadLoading] = useState(false);
+  const [matchedOrgs, setMatchedOrgs] = useState<IAutocompletePrediction[]>([]);
+
+  // fetch autocomplete suggestions from server
+  const handleTypeaheadSearch = async (query: string) => {
+    try {
+      setIsTypeaheadLoading(true);
+      const { data } = await getOrganizationPredictions(query);
+      setMatchedOrgs(data.predictions);
+      setIsTypeaheadLoading(false);
+    } catch (e) {
+      setMatchedOrgs([]);
+      toast.error('Failed to get autocomplete results for supplied organization', {
+        autoClose: 7000,
+      });
+    } finally {
+      setIsTypeaheadLoading(false);
+    }
+  };
+
   const onCancel = () => {
     if (dirty) {
       setShowConfirmation(true);
     } else {
-      history.push('/contact/list');
+      history.push(`/contact/P${personId}`);
     }
   };
 
@@ -157,29 +159,64 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
           resetForm({ values: initialValues });
           // need a timeout here to give the form time to reset before navigating away
           // or else the router guard prompt will also be shown
-          setTimeout(() => history.push('/contact/list'), 100);
+          setTimeout(() => history.push(`/contact/P${personId}`), 100);
         }}
       />
 
-      <Styled.CreateFormLayout>
-        <Styled.Form id="createForm">
+      <Styled.ScrollingFormLayout>
+        <Styled.Form id="updateForm">
           <FlexBox column gap="1.6rem">
+            <FormSection className="py-2">
+              <Styled.RowAligned className="align-items-center">
+                <Col className="d-flex">
+                  <span>Individual</span>
+                </Col>
+                <Col md="auto" className="d-flex ml-auto">
+                  <Select
+                    className="mb-0"
+                    field="isDisabled"
+                    options={[
+                      { label: 'Inactive', value: 'true' },
+                      { label: 'Active', value: 'false' },
+                    ]}
+                  ></Select>
+                </Col>
+              </Styled.RowAligned>
+            </FormSection>
+
             <FormSection>
               <Row>
+                <Col md={4}>
+                  <Input field="firstName" label="First Name" required />
+                </Col>
+                <Col md={3}>
+                  <Input field="middleNames" label="Middle" />
+                </Col>
                 <Col>
-                  <Input field="name" label="Organization Name" required />
+                  <Input field="surname" label="Last Name" required />
                 </Col>
               </Row>
               <Row>
-                <Col>
-                  <Input field="alias" label="Alias" />
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <Input field="incorporationNumber" label="Incorporation Number" />
+                <Col md={7}>
+                  <Input field="preferredName" label="Preferred Name" />
                 </Col>
                 <Col></Col>
+              </Row>
+            </FormSection>
+
+            <FormSection>
+              <Styled.H2>Organization</Styled.H2>
+              <Row>
+                <Col md={7}>
+                  <AsyncTypeahead
+                    field="organization"
+                    label="Link to an existing organization"
+                    labelKey="text"
+                    isLoading={isTypeaheadLoading}
+                    options={matchedOrgs}
+                    onSearch={handleTypeaheadSearch}
+                  />
+                </Col>
               </Row>
             </FormSection>
 
@@ -227,7 +264,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
             </FormSection>
           </FlexBox>
         </Styled.Form>
-      </Styled.CreateFormLayout>
+      </Styled.ScrollingFormLayout>
 
       <Styled.ButtonGroup>
         {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
@@ -244,3 +281,5 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
     </>
   );
 };
+
+export default UpdatePersonForm;

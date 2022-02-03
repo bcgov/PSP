@@ -1,12 +1,18 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// PersonOrganization class, provides an entity for the datamodel to manage a list of addresses for a person.
     /// </summary>
-    public partial class PimsPersonOrganization : IDisableBaseAppEntity
+    public partial class PimsPersonOrganization : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
+        #region Properties
+        [NotMapped]
+        public override long Id { get => this.PersonOrganizationId; set => this.PersonOrganizationId = value; }
+        #endregion
+
         #region Constructors
         public PimsPersonOrganization() { }
 

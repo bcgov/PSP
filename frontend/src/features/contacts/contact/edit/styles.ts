@@ -23,15 +23,8 @@ export const H3 = styled.h3`
   line-height: 2rem;
 `;
 
-export const CreateFormLayout = styled(FlexBox).attrs({ column: true })`
-  width: 100%;
-  overflow: auto;
-  padding-right: 1rem;
-`;
-
-// TODO: This is common form look-and-feel. Should be abstracted for all forms
 export const Form = styled(FormikForm)`
-  &#createForm {
+  &#updateForm {
     ${sharedFormStyles}
   }
 `;

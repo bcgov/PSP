@@ -1,6 +1,6 @@
 import { IPagedItems } from 'interfaces';
+import { ICreateOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { IContact } from 'interfaces/IContact';
-import { ICreateOrganization, ICreatePerson } from 'interfaces/ICreateContact';
 import queryString from 'query-string';
 import React from 'react';
 
@@ -21,11 +21,16 @@ export const useApiContacts = () => {
         api.get<IPagedItems<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
+      // This endpoint returns contact data in read-only form, including formatting some fields; e.g. full name = first + middle + last
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
-      postPerson: (person: ICreatePerson, userOverride: boolean) =>
-        api.post<ICreatePerson>(`/persons?userOverride=${userOverride}`, person),
+      // This is different than getContact above. This endpoints returns person data that can be edited in a form
+      getPerson: (id: number) => api.get<IEditablePerson>(`/persons/${id}`),
+      postPerson: (person: IEditablePerson, userOverride: boolean) =>
+        api.post<IEditablePerson>(`/persons?userOverride=${userOverride}`, person),
       postOrganization: (organization: ICreateOrganization, userOverride: boolean) =>
         api.post<ICreateOrganization>(`/organizations?userOverride=${userOverride}`, organization),
+      putPerson: (person: IEditablePerson) =>
+        api.put<IEditablePerson>(`/persons/${person.id}`, person),
     }),
     [api],
   );

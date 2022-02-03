@@ -8,13 +8,15 @@ using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
     /// <summary>
     /// Provides a service layer to administrate persons within the datasource.
     /// </summary>
-    public class PersonService : BaseRepository<PimsPerson>, IPersonService
+    public class PersonRepository : BaseRepository<PimsPerson>, IPersonRepository
     {
         #region Constructors
         /// <summary>
@@ -24,7 +26,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public PersonService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PersonService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<PersonRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -38,6 +40,12 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsPerson> GetAll()
         {
             return this.Context.PimsPeople.AsNoTracking().ToArray();
+        }
+
+        public long GetRowVersion(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.ContactView);
+            return this.Context.PimsPeople.AsNoTracking().Where(p => p.PersonId == id)?.Select(p => p.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -94,10 +102,35 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            var createdPerson = this.Context.PimsPeople.Add(person);
-            this.Context.CommitTransaction();
+            this.Context.PimsPeople.Add(person);
+            return person;
+        }
 
-            return Get(createdPerson.Entity.Id);
+        /// <summary>
+        /// Update the passed person/contact in the database assuming the user has the require claims.
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns></returns>
+        public PimsPerson Update(PimsPerson person)
+        {
+            person.ThrowIfNull(nameof(person));
+            this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
+
+            var personId = person.Id;
+            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == personId).FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+
+            // update main entity - PimsPerson
+            Context.Entry(existingPerson).CurrentValues.SetValues(person);
+
+            // update direct relationships - contact_methods, organizations
+            this.Context.UpdateChild<PimsPerson, long, PimsContactMethod>(p => p.PimsContactMethods, personId, person.PimsContactMethods.ToArray());
+            this.Context.UpdateChild<PimsPerson, long, PimsPersonOrganization>(p => p.PimsPersonOrganizations, personId, person.PimsPersonOrganizations.ToArray());
+
+            // update addresses via UpdateGrandchild method
+            this.Context.UpdateGrandchild<PimsPerson, long, PimsPersonAddress>(p => p.PimsPersonAddresses, pa => pa.Address, personId, person.PimsPersonAddresses.ToArray());
+
+            return existingPerson;
         }
         #endregion
     }

@@ -5,7 +5,6 @@ import * as Styled from 'features/contacts/contact/create/styles';
 import { useFormikContext } from 'formik';
 import useCounter from 'hooks/useCounter';
 import { Dictionary } from 'interfaces/Dictionary';
-import { ICreatePersonForm } from 'interfaces/ICreateContact';
 import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdClose } from 'react-icons/md';
@@ -33,7 +32,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({ namespace }) =
     setSelectedCountryId,
   } = useAddressHelpers();
 
-  const { setFieldValue } = useFormikContext<ICreatePersonForm>();
+  const { setFieldValue } = useFormikContext();
 
   // clear associated fields (province, other country name) whenever country value is changed
   const onCountryChanged = useCallback(
