@@ -1,12 +1,18 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// Address class, provides an entity for the datamodel to manage property addresses.
     /// </summary>
-    public partial class PimsAddress : IBaseAppEntity
+    public partial class PimsAddress : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
+        #region Properties
+        [NotMapped]
+        public override long Id { get => this.AddressId; set => this.AddressId = value; }
+        #endregion
+
         #region Constructors
         /// <summary>
         /// Create a new instance of a Address class.

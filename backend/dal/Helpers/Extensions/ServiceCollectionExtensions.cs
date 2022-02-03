@@ -27,7 +27,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IProvinceService, Repositories.ProvinceService>();
             repositories.AddScoped<Repositories.ILookupService, Repositories.LookupService>();
             repositories.AddScoped<Repositories.ISystemConstantService, Repositories.SystemConstantService>();
-            repositories.AddScoped<Repositories.IPersonService, Repositories.PersonService>();
+            repositories.AddScoped<Repositories.IPersonRepository, Repositories.PersonRepository>();
             repositories.AddScoped<Repositories.IUserService, Repositories.UserService>();
             repositories.AddScoped<Repositories.IRoleService, Repositories.RoleService>();
             repositories.AddScoped<Repositories.IClaimService, Repositories.ClaimService>();
@@ -59,7 +59,8 @@ namespace Pims.Dal
             services.AddScoped<Services.ILeasePaymentService, Services.LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();
             services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();
-            return services; // TODO: Use reflection to find all services.
+            services.AddScoped<Services.IPersonService, Services.PersonService>();
+            return services; // TODO: Use reflection to find all Repositories.
         }
 
         /// <summary>

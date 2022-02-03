@@ -19,8 +19,8 @@ export const useCalculateActualGst = (isGstEligible?: boolean) => {
   useEffect(() => {
     if (amountTotalTouched) {
       if (gstDecimal && isGstEligible) {
-        const calculatedGst = amountTotal * (gstDecimal / 100);
-        const calculatedPreTax = amountTotal - calculatedGst;
+        const calculatedPreTax = amountTotal / (gstDecimal / 100 + 1);
+        const calculatedGst = amountTotal - calculatedPreTax;
         setFieldValue('amountGst', calculatedGst);
         setFieldValue('amountPreTax', calculatedPreTax);
       } else {

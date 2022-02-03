@@ -13,7 +13,7 @@ namespace Pims.Dal
         ISystemConstantService SystemConstant { get; }
 
         #region Accounts
-        IPersonService Person { get; }
+        IPersonRepository Person { get; }
         IOrganizationService Organization { get; }
         IUserOrganizationService UserOrganization { get; }
         ClaimsPrincipal Principal { get; }

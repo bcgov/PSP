@@ -1,14 +1,19 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// ContactMethod class, provides an entity for the datamodel to manage personal contact method.
     /// </summary>
-    public partial class PimsContactMethod : IBaseAppEntity
+    public partial class PimsContactMethod : IdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
+        [NotMapped]
+        public override long Id { get => this.ContactMethodId; set => this.ContactMethodId = value; }
+        #endregion
 
+        #region Constructors
         public PimsContactMethod()
         {
         }

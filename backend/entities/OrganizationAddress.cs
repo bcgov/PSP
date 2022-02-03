@@ -1,12 +1,18 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pims.Dal.Entities
 {
     /// <summary>
     /// OrganizationAddress class, provides an entity for the datamodel to manage a list of addresses for an organization.
     /// </summary>
-    public partial class PimsOrganizationAddress : IDisableBaseAppEntity
+    public partial class PimsOrganizationAddress : IdentityBaseAppEntity<long>, IDisableBaseAppEntity
     {
+        #region Properties
+        [NotMapped]
+        public override long Id { get => this.OrganizationAddressId; set => this.OrganizationAddressId = value; }
+        #endregion
+
         #region Constructors
         public PimsOrganizationAddress() {}
 
