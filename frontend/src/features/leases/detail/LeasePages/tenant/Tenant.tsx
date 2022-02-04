@@ -1,9 +1,8 @@
 import { FormSection } from 'components/common/form/styles';
-import OverflowTip from 'components/common/OverflowTip';
 import * as Styled from 'features/leases/detail/styles';
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { ILease, IOrganization, IPerson, ITenant } from 'interfaces';
-import { find, findIndex } from 'lodash';
+import { findIndex } from 'lodash';
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
