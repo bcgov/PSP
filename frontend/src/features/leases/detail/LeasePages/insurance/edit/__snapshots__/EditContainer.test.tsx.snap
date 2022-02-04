@@ -332,6 +332,7 @@ exports[`Lease Insurance renders as expected 1`] = `
       >
         <button
           class="mr-5 btn btn-primary"
+          disabled=""
           type="button"
         >
           Save

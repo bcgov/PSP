@@ -178,7 +178,12 @@ const InsuranceEditContainer: React.FunctionComponent<InsuranceEditContainerProp
                 </Button>
               </Col>
               <Col>
-                <Button className="mr-5" type="button" onClick={formikProps.submitForm}>
+                <Button
+                  className="mr-5"
+                  type="button"
+                  disabled={!formikProps.dirty}
+                  onClick={formikProps.submitForm}
+                >
                   Save
                 </Button>
               </Col>
