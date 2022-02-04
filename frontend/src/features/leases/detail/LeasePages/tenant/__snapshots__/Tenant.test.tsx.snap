@@ -6,10 +6,6 @@ exports[`Tenant component renders as expected 1`] = `
 
 }
 
-@media only screen and (max-width:1500px) {
-
-}
-
 <div
     class="Toastify"
   />
@@ -17,14 +13,10 @@ exports[`Tenant component renders as expected 1`] = `
 
 }
 
-@media only screen and (max-width:1500px) {
-
-}
-
 <div
     class="Toastify"
   />
-  .c5 {
+  .c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,7 +28,7 @@ exports[`Tenant component renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c5 .form-label {
+.c6 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -48,13 +40,21 @@ exports[`Tenant component renders as expected 1`] = `
   padding: 2.5rem;
 }
 
-.c4 {
+.c5 {
   font-family: 'BcSans-Bold';
   font-size: 2rem;
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
   border-bottom: solid 0.3rem;
+}
+
+.c8 {
+  font-size: 1.6rem;
+  color: black;
+  text-align: left;
+  padding-top: 1.5rem;
+  font-family: BcSans-Bold;
 }
 
 .c3 {
@@ -115,7 +115,7 @@ exports[`Tenant component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c6 {
+.c7 {
   padding: 0.6rem 1.2rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -123,15 +123,25 @@ exports[`Tenant component renders as expected 1`] = `
   display: flex;
 }
 
-.c6 .form-label {
+.c7 .form-label {
   min-width: 7rem;
 }
 
+.c9 input {
+  font-size: 1.8rem;
+}
+
+.c4 input {
+  font-size: 1.8rem;
+}
+
 .c1 {
-  -webkit-column-count: 2;
-  column-count: 2;
+  -webkit-column-count: 1;
+  column-count: 1;
   -webkit-column-gap: 10rem;
   column-gap: 10rem;
+  background-color: white;
+  min-width: 75rem;
 }
 
 .c1 > * {
@@ -152,10 +162,6 @@ exports[`Tenant component renders as expected 1`] = `
   }
 }
 
-@media only screen and (max-width:1500px) {
-
-}
-
 <div
     class="c0 c1"
   >
@@ -166,100 +172,129 @@ exports[`Tenant component renders as expected 1`] = `
         class="c0"
       >
         <div
-          class="c3"
+          class="row"
         >
-          <label
-            class="form-label"
-          >
-            Tenant Name:
-          </label>
           <div
-            class="input form-group"
+            class="col"
           >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.fullName"
-              name="persons.0.fullName"
-              value=""
-            />
-          </div>
-          <h3
-            class="c4"
-          >
-            Contact Info
-          </h3>
-          <label
-            class="form-label"
-          >
-            Address:
-          </label>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.address.province"
-              name="persons.0.address.province"
-              value=""
-            />
-          </div>
-          <br />
-          <label
-            class="form-label"
-          >
-            E-mail address:
-          </label>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.email"
-              name="persons.0.email"
-              value=""
-            />
-          </div>
-          <label
-            class="form-label"
-          >
-            Phone:
-          </label>
-          <div
-            class="c5 c6 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-persons.0.landline"
+            <div
+              class="c3"
             >
-              Landline: 
-            </label>
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.landline"
-              name="persons.0.landline"
-              value="222-333-4444"
-            />
+              <label
+                class="form-label"
+              >
+                Tenant Name:
+              </label>
+              <div
+                class="c4 input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-persons.0.fullName"
+                  name="persons.0.fullName"
+                  value=""
+                />
+              </div>
+              <h3
+                class="c5"
+              >
+                Contact Info
+              </h3>
+              <label
+                class="form-label"
+              >
+                Address:
+              </label>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-persons.0.address.province"
+                  name="persons.0.address.province"
+                  value=""
+                />
+              </div>
+              <br />
+              <label
+                class="form-label"
+              >
+                E-mail address:
+              </label>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-persons.0.email"
+                  name="persons.0.email"
+                  value=""
+                />
+              </div>
+              <label
+                class="form-label"
+              >
+                Phone:
+              </label>
+              <div
+                class="c6 c7 input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-persons.0.landline"
+                >
+                  Landline: 
+                </label>
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-persons.0.landline"
+                  name="persons.0.landline"
+                  title="222-333-4444"
+                  value="222-333-4444"
+                />
+              </div>
+              <div
+                class="c6 c7 input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-persons.0.mobile"
+                >
+                  Mobile: 
+                </label>
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-persons.0.mobile"
+                  name="persons.0.mobile"
+                  title="555-666-7777"
+                  value="555-666-7777"
+                />
+              </div>
+            </div>
           </div>
           <div
-            class="c5 c6 input form-group"
+            class="col"
           >
-            <label
-              class="form-label"
-              for="input-persons.0.mobile"
+            <h5
+              class="c8"
             >
-              Mobile: 
-            </label>
-            <input
-              class="form-control"
-              disabled=""
-              id="input-persons.0.mobile"
-              name="persons.0.mobile"
-              value="555-666-7777"
-            />
+              Notes
+            </h5>
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="notes form-control"
+                disabled=""
+                id="input-tenants.-1.note"
+                name="tenants.-1.note"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -271,160 +306,195 @@ exports[`Tenant component renders as expected 1`] = `
         class="c0"
       >
         <div
-          class="c3"
+          class="row"
         >
-          <label
-            class="form-label"
-          >
-            Tenant organization:
-          </label>
           <div
-            class="input form-group"
+            class="col"
           >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.name"
-              name="organizations.0.name"
-              value="Ministry of Transportation & Infrastructure"
-            />
-          </div>
-          <label
-            class="form-label"
-          >
-            Contact name:
-          </label>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.contactName"
-              name="organizations.0.contactName"
-              value=""
-            />
-          </div>
-          <h3
-            class="c4"
-          >
-            Contact Info
-          </h3>
-          <label
-            class="form-label"
-          >
-            Address:
-          </label>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.address.streetAddress1"
-              name="organizations.0.address.streetAddress1"
-              value="1234 mock Street"
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.address.streetAddress2"
-              name="organizations.0.address.streetAddress2"
-              value="N/A"
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.address.municipality"
-              name="organizations.0.address.municipality"
-              value="Victoria"
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.address.postal"
-              name="organizations.0.address.postal"
-              value="V1V1V1"
-            />
-          </div>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.address.province"
-              name="organizations.0.address.province"
-              value="BC"
-            />
-          </div>
-          <br />
-          <label
-            class="form-label"
-          >
-            E-mail address:
-          </label>
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.email"
-              name="organizations.0.email"
-              value=""
-            />
-          </div>
-          <label
-            class="form-label"
-          >
-            Phone:
-          </label>
-          <div
-            class="c5 c6 input form-group"
-          >
-            <label
-              class="form-label"
-              for="input-organizations.0.landline"
+            <div
+              class="c3"
             >
-              Landline: 
-            </label>
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.landline"
-              name="organizations.0.landline"
-              value="1 222-333-4444"
-            />
+              <label
+                class="form-label"
+              >
+                Tenant organization:
+              </label>
+              <div
+                class="c9 input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.name"
+                  name="organizations.0.name"
+                  title="Ministry of Transportation & Infrastructure"
+                  value="Ministry of Transportation & Infrastructure"
+                />
+              </div>
+              <label
+                class="form-label"
+              >
+                Contact name:
+              </label>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.contactName"
+                  name="organizations.0.contactName"
+                  value=""
+                />
+              </div>
+              <h3
+                class="c5"
+              >
+                Contact Info
+              </h3>
+              <label
+                class="form-label"
+              >
+                Address:
+              </label>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.address.streetAddress1"
+                  name="organizations.0.address.streetAddress1"
+                  title="1234 mock Street"
+                  value="1234 mock Street"
+                />
+              </div>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.address.streetAddress2"
+                  name="organizations.0.address.streetAddress2"
+                  title="N/A"
+                  value="N/A"
+                />
+              </div>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.address.municipality"
+                  name="organizations.0.address.municipality"
+                  title="Victoria"
+                  value="Victoria"
+                />
+              </div>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.address.postal"
+                  name="organizations.0.address.postal"
+                  title="V1V1V1"
+                  value="V1V1V1"
+                />
+              </div>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.address.province"
+                  name="organizations.0.address.province"
+                  title="BC"
+                  value="BC"
+                />
+              </div>
+              <br />
+              <label
+                class="form-label"
+              >
+                E-mail address:
+              </label>
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.email"
+                  name="organizations.0.email"
+                  value=""
+                />
+              </div>
+              <label
+                class="form-label"
+              >
+                Phone:
+              </label>
+              <div
+                class="c6 c7 input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-organizations.0.landline"
+                >
+                  Landline: 
+                </label>
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.landline"
+                  name="organizations.0.landline"
+                  title="1 222-333-4444"
+                  value="1 222-333-4444"
+                />
+              </div>
+              <div
+                class="c6 c7 input form-group"
+              >
+                <label
+                  class="form-label"
+                  for="input-organizations.0.mobile"
+                >
+                  Mobile: 
+                </label>
+                <input
+                  class="form-control"
+                  disabled=""
+                  id="input-organizations.0.mobile"
+                  name="organizations.0.mobile"
+                  title="1 555-666-7777"
+                  value="1 555-666-7777"
+                />
+              </div>
+            </div>
           </div>
           <div
-            class="c5 c6 input form-group"
+            class="col"
           >
-            <label
-              class="form-label"
-              for="input-organizations.0.mobile"
+            <h5
+              class="c8"
             >
-              Mobile: 
-            </label>
-            <input
-              class="form-control"
-              disabled=""
-              id="input-organizations.0.mobile"
-              name="organizations.0.mobile"
-              value="1 555-666-7777"
-            />
+              Notes
+            </h5>
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="notes form-control"
+                disabled=""
+                id="input-tenants.-1.note"
+                name="tenants.-1.note"
+              />
+            </div>
           </div>
         </div>
       </div>

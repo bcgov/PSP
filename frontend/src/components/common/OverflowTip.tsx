@@ -22,14 +22,10 @@ const OverflowTip: React.FunctionComponent<IOverflowTextProps> = ({ title, fullT
   useEffect(() => {
     compareSize();
     window.addEventListener('resize', compareSize);
-  }, []);
-
-  useEffect(
-    () => () => {
+    return () => {
       window.removeEventListener('resize', compareSize);
-    },
-    [],
-  );
+    };
+  }, [fullText]);
 
   // Define state and function to update the value
   const [hoverStatus, setHover] = useState(false);

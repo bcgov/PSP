@@ -113,6 +113,7 @@ exports[`HelpContainer renders correctly... 1`] = `
             class="form-control"
             id="input-user"
             name="user"
+            title="Chester Tester"
             value="Chester Tester"
           />
         </div>
@@ -129,6 +130,7 @@ exports[`HelpContainer renders correctly... 1`] = `
             class="form-control"
             id="input-email"
             name="email"
+            title="test@test.com"
             value="test@test.com"
           />
         </div>
@@ -145,6 +147,7 @@ exports[`HelpContainer renders correctly... 1`] = `
             class="form-control"
             id="input-page"
             name="page"
+            title="/"
             value="/"
           />
         </div>
@@ -161,6 +164,7 @@ exports[`HelpContainer renders correctly... 1`] = `
             class="form-control"
             id="input-question"
             name="question"
+            title=""
           />
         </div>
       </form>

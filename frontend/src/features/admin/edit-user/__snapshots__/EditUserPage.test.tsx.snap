@@ -47,6 +47,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             id="input-businessIdentifier"
             name="businessIdentifier"
             readonly=""
+            title="admin"
             type="text"
             value="admin"
           />
@@ -65,6 +66,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             id="input-lastLogin"
             name="lastLogin"
             readonly=""
+            title=""
             type="text"
             value=""
           />
@@ -89,6 +91,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
                 id="input-firstName"
                 name="firstName"
                 placeholder="George"
+                title="George"
                 type="text"
                 value="George"
               />
@@ -111,6 +114,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
                 id="input-surname"
                 name="surname"
                 placeholder="User"
+                title="User"
                 type="text"
                 value="User"
               />
@@ -131,6 +135,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             id="input-email"
             name="email"
             placeholder="admin@pims.gov.bc.ca"
+            title="admin@pims.gov.bc.ca"
             type="email"
             value="admin@pims.gov.bc.ca"
           />
@@ -179,6 +184,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             id="input-position"
             name="position"
             placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
+            title=""
             type="text"
             value=""
           />
@@ -238,6 +244,7 @@ exports[`Edit user page EditUserPage renders 1`] = `
             id="input-note"
             name="note"
             placeholder="A note about this user"
+            title=""
             type="text"
           />
         </div>

@@ -1,8 +1,11 @@
 import { FormSection } from 'components/common/form/styles';
+import OverflowTip from 'components/common/OverflowTip';
 import * as Styled from 'features/leases/detail/styles';
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import { ILease, IOrganization, IPerson } from 'interfaces';
+import { ILease, IOrganization, IPerson, ITenant } from 'interfaces';
+import { find, findIndex } from 'lodash';
 import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 import { withNameSpace } from 'utils/formUtils';
 
@@ -23,31 +26,53 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
   const persons: IPerson[] = getIn(values, withNameSpace(nameSpace, 'persons')) ?? [];
   const organizations: IOrganization[] =
     getIn(values, withNameSpace(nameSpace, 'organizations')) ?? [];
-  const tenantNotes: string[] = getIn(values, withNameSpace(nameSpace, 'tenantNotes')) ?? [];
 
   return (
     <FormSectionOne>
-      <TenantsFieldArray
+      <FieldArray
         name={withNameSpace(nameSpace, 'properties')}
         render={renderProps => (
           <>
             {persons.map((person: IPerson, index) => (
               <Styled.SpacedInlineListItem key={`person-${index}`}>
                 <FormSection>
-                  <TenantPersonContactInfo
-                    disabled={true}
-                    nameSpace={withNameSpace(nameSpace, `persons.${index}`)}
-                  />
+                  <Row>
+                    <Col>
+                      <TenantPersonContactInfo
+                        disabled={true}
+                        nameSpace={withNameSpace(nameSpace, `persons.${index}`)}
+                      />
+                    </Col>
+                    <Col>
+                      <TenantNotes
+                        disabled={true}
+                        nameSpace={`tenants.${getTenantPersonIndex(values.tenants, person.id)}`}
+                      />
+                    </Col>
+                  </Row>
                 </FormSection>
               </Styled.SpacedInlineListItem>
             ))}
             {organizations.map((organization: IOrganization, index) => (
               <Styled.SpacedInlineListItem key={`organizations-${index}`}>
                 <FormSection>
-                  <TenantOrganizationContactInfo
-                    disabled={true}
-                    nameSpace={withNameSpace(nameSpace, `organizations.${index}`)}
-                  />
+                  <Row>
+                    <Col>
+                      <TenantOrganizationContactInfo
+                        disabled={true}
+                        nameSpace={withNameSpace(nameSpace, `organizations.${index}`)}
+                      />
+                    </Col>
+                    <Col>
+                      <TenantNotes
+                        disabled={true}
+                        nameSpace={`tenants.${getTenantOrganizationIndex(
+                          values.tenants,
+                          organization.id,
+                        )}`}
+                      />
+                    </Col>
+                  </Row>
                 </FormSection>
               </Styled.SpacedInlineListItem>
             ))}
@@ -57,19 +82,6 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
                 <p>Click the edit icon to add tenants.</p>
               </>
             )}
-            {tenantNotes.map(
-              (tenantNote: string, index) =>
-                !!tenantNote && (
-                  <Styled.SpacedInlineListItem key={`notes-${index}`}>
-                    <FormSection>
-                      <TenantNotes
-                        disabled={true}
-                        nameSpace={withNameSpace(nameSpace, `tenantNotes.${index}`)}
-                      />
-                    </FormSection>
-                  </Styled.SpacedInlineListItem>
-                ),
-            )}
           </>
         )}
       />
@@ -77,28 +89,21 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
   );
 };
 
-export const FormSectionOne = styled(FormSection)`
-  column-count: 2;
-  & > * {
-    break-inside: avoid-column;
-  }
-  column-gap: 10rem;
-  li {
-    list-style-type: none;
-    padding: 2rem 0;
-    margin: 0;
-  }
-  @media only screen and (max-width: 1500px) {
-    column-count: 1;
-  }
-`;
+const getTenantOrganizationIndex = (tenants: ITenant[], organizationId?: number) => {
+  return findIndex(tenants, (tenant: ITenant) => tenant.organizationId === organizationId);
+};
 
-export const TenantsFieldArray = styled(FieldArray)`
-  column-count: 2;
+const getTenantPersonIndex = (tenants: ITenant[], personId?: number) => {
+  return findIndex(tenants, (tenant: ITenant) => tenant.personId === personId);
+};
+
+export const FormSectionOne = styled(FormSection)`
+  column-count: 1;
   & > * {
     break-inside: avoid-column;
   }
   column-gap: 10rem;
+  background-color: white;
   li {
     list-style-type: none;
     padding: 2rem 0;
@@ -106,6 +111,10 @@ export const TenantsFieldArray = styled(FieldArray)`
   }
   @media only screen and (max-width: 1500px) {
     column-count: 1;
+  }
+  min-width: 75rem;
+  .form-control {
+    color: ${props => props.theme.css.formTextColor};
   }
 `;
 

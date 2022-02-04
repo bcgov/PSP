@@ -113,6 +113,7 @@ exports[`Lease Filter matches snapshot 1`] = `
             id="input-lFileNo"
             name="lFileNo"
             placeholder="Enter an LIS File Number"
+            title=""
             value=""
           />
         </div>
@@ -131,6 +132,7 @@ exports[`Lease Filter matches snapshot 1`] = `
         class="form-control"
         id="input-tenantName"
         name="tenantName"
+        title=""
         value=""
       />
     </div>

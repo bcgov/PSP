@@ -314,6 +314,7 @@ exports[`Contact Filter matches snapshot 1`] = `
         id="input-summary"
         name="summary"
         placeholder="Name of person or organization"
+        title=""
         value=""
       />
     </div>
@@ -330,6 +331,7 @@ exports[`Contact Filter matches snapshot 1`] = `
         class="form-control"
         id="input-municipality"
         name="municipality"
+        title=""
         value=""
       />
     </div>

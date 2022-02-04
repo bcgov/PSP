@@ -1,4 +1,5 @@
 import { Form, Input } from 'components/common/form';
+import OverflowTip from 'components/common/OverflowTip';
 import { getIn, useFormikContext } from 'formik';
 import { IFormLease } from 'interfaces';
 import * as React from 'react';

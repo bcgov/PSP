@@ -129,6 +129,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
             id="input-user.position"
             name="user.position"
             placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
+            title=""
             type="text"
             value=""
           />
@@ -187,6 +188,7 @@ exports[`AccessRequestPage renders correctly 1`] = `
             id="input-note"
             name="note"
             placeholder="Please specify why you need access to PIMS and include your manager's name."
+            title=""
           />
         </div>
         <p>
