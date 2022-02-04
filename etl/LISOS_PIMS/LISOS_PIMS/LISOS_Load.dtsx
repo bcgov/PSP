@@ -12,8 +12,8 @@
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="385"
-  DTS:VersionGUID="{523DAEDF-B401-4698-A4CA-AE285218293B}">
+  DTS:VersionBuild="397"
+  DTS:VersionGUID="{6CBD52EB-9DA8-4FF3-A744-CDA9FD4E66DB}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -31554,14 +31554,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Error Output]" />
             <path
               refId="Package\Insert Property Leases.Paths[Lookup Match Output1]"
-              endId="Package\Insert Property Leases\Filter Pre-existing Property Leases.Inputs[Lookup Input]"
-              name="Lookup Match Output"
-              startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Insert Property Leases.Paths[Lookup Match Output]"
               endId="Package\Insert Property Leases\Split PIDs by &quot;,&quot;.Inputs[Input 0]"
               name="Lookup Match Output"
               startId="Package\Insert Property Leases\Find Matching Leases.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert Property Leases.Paths[Lookup Match Output]"
+              endId="Package\Insert Property Leases\Filter Pre-existing Property Leases.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Insert Property Leases.Paths[Lookup No Match Output]"
               endId="Package\Insert Property Leases\Format output columns.Inputs[Derived Column Input]"
@@ -46900,9 +46900,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                   startId="Package\Sequence Container\Insert Leases\Filter leases with no TFA or PS #.Outputs[Leases with identifiers]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
-                  endId="Package\Sequence Container\Insert Leases\Format output columns.Inputs[Derived Column Input]"
+                  endId="Package\Sequence Container\Insert Leases\Merge.Inputs[Merge Input 2]"
                   name="Lookup Match Output"
-                  startId="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id.Outputs[Lookup Match Output]" />
+                  startId="Package\Sequence Container\Insert Leases\Lease Program Lookup.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output1]"
                   endId="Package\Sequence Container\Insert Leases\Merge 1.Inputs[Merge Input 2]"
@@ -46910,9 +46910,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                   startId="Package\Sequence Container\Insert Leases\Payment Frequency Lookup.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
-                  endId="Package\Sequence Container\Insert Leases\Merge.Inputs[Merge Input 2]"
+                  endId="Package\Sequence Container\Insert Leases\Format output columns.Inputs[Derived Column Input]"
                   name="Lookup Match Output"
-                  startId="Package\Sequence Container\Insert Leases\Lease Program Lookup.Outputs[Lookup Match Output]" />
+                  startId="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id.Outputs[Lookup Match Output]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output]"
                   endId="Package\Sequence Container\Insert Leases\Default Payment Frequency.Inputs[Derived Column Input]"
@@ -47142,14 +47142,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="149,42"
           Id="Package\Sequence Container 1\SET LFILENO"
-          TopLeft="14.5,92.5" />
+          TopLeft="15.5,24.5" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="232,216"
-          Size="232,259"
+          PanelSize="207,99"
+          Size="207,142"
           Id="Package\Sequence Container 1"
-          TopLeft="738,627" />
+          TopLeft="685,663" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="136,353.5">
@@ -47378,26 +47378,26 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="161,13.5"
+              EndConnector="108,-9"
               Start="0,0"
-              End="153.5,13.5">
+              End="100.5,-9">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="76.5,0" />
+                    End="50,0" />
                   <mssgle:CubicBezierSegment
-                    Point1="76.5,0"
-                    Point2="80.5,0"
-                    Point3="80.5,4" />
+                    Point1="50,0"
+                    Point2="54,0"
+                    Point3="54,-4" />
                   <mssgle:LineSegment
-                    End="80.5,9.5" />
+                    End="54,-5" />
                   <mssgle:CubicBezierSegment
-                    Point1="80.5,9.5"
-                    Point2="80.5,13.5"
-                    Point3="84.5,13.5" />
+                    Point1="54,-5"
+                    Point2="54,-9"
+                    Point3="58,-9" />
                   <mssgle:LineSegment
-                    End="153.5,13.5" />
+                    End="100.5,-9" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -49871,7 +49871,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
           TopLeft="197.166666666667,455.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -49907,7 +49907,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
           TopLeft="400.166666666667,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -50673,7 +50673,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
           TopLeft="361.833333333333,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -50745,7 +50745,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
+          Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
           TopLeft="331,1475.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
