@@ -1,4 +1,5 @@
 import { Button, Form as FormBase } from 'components/common/form';
+import { sharedFormStyles } from 'components/common/form/styles';
 import { FlexBox } from 'components/common/styles';
 import { Form as FormikForm } from 'formik';
 import styled from 'styled-components';
@@ -31,43 +32,7 @@ export const CreateFormLayout = styled(FlexBox).attrs({ column: true })`
 // TODO: This is common form look-and-feel. Should be abstracted for all forms
 export const Form = styled(FormikForm)`
   &#createForm {
-    .form-control {
-      &.is-invalid {
-        border: 2px solid #d8292f;
-      }
-    }
-
-    .invalid-feedback {
-      color: #d8292f;
-    }
-
-    .form-group {
-      label {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: ${props => props.theme.css.formTextColor};
-        text-decoration: none solid rgb(33, 37, 41);
-        line-height: 2rem;
-      }
-
-      input,
-      select,
-      textarea {
-        border: 2px solid #606060;
-        border-radius: 4px;
-        background-color: #ffffff;
-        font-size: 1.6rem;
-        color: #000000;
-        text-decoration: none;
-      }
-
-      &.required {
-        label:after {
-          content: ' *';
-          color: red;
-        }
-      }
-    }
+    ${sharedFormStyles}
   }
 `;
 

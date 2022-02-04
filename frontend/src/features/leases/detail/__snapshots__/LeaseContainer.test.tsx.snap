@@ -485,12 +485,6 @@ exports[`LeaseContainer component renders as expected 1`] = `
         class="c12 disabled"
         href="/lease/1"
       >
-        Physical Security
-      </a>
-      <a
-        class="c12 disabled"
-        href="/lease/1"
-      >
         Surplus Declaration
       </a>
     </div>

@@ -29,7 +29,7 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/ICreateContact';
+import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/editable-contact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';

@@ -1,9 +1,12 @@
+using Pims.Dal.Repositories;
+using Pims.Dal.Entities;
+
 namespace Pims.Dal.Services
 {
     public class LeaseService : ILeaseService
     {
-        readonly Repositories.ILeaseService _leaseRepository;
-        public LeaseService(Repositories.ILeaseService leaseRepository)
+        readonly ILeaseRepository _leaseRepository;
+        public LeaseService(ILeaseRepository leaseRepository)
         {
             _leaseRepository = leaseRepository;
         }
@@ -11,6 +14,11 @@ namespace Pims.Dal.Services
         {
             long currentRowVersion = _leaseRepository.GetRowVersion(leaseId);
             return currentRowVersion == rowVersion;
+        }
+
+        public PimsLease GetById(long leaseId)
+        {
+            return _leaseRepository.Get(leaseId);
         }
     }
 }

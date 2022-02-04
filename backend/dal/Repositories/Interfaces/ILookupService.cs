@@ -33,6 +33,9 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsInsuranceType> GetInsuranceTypes();
         IEnumerable<PimsContactMethodType> GetContactMethodTypes();
         IEnumerable<PimsPropertyImprovementType> GetPropertyImprovementTypes();
+        IEnumerable<PimsSecurityDepositType> GetSecurityDepositTypes();
+        IEnumerable<PimsLeasePaymentStatusType> GetLeasePaymentStatusTypes();
+        IEnumerable<PimsLeasePaymentMethodType> GetLeasePaymentMethodTypes();
     }
 }
 

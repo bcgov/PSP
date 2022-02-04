@@ -175,6 +175,10 @@ exports[`SideNavbar display and logic renders 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
               d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
             />
           </svg>
@@ -331,6 +335,10 @@ exports[`SideNavbar display and logic renders 1`] = `
         <title>
           expand
         </title>
+        <path
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
         <path
           d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
         />

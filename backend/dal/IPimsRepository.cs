@@ -13,7 +13,7 @@ namespace Pims.Dal
         ISystemConstantService SystemConstant { get; }
 
         #region Accounts
-        IPersonService Person { get; }
+        IPersonRepository Person { get; }
         IOrganizationService Organization { get; }
         IUserOrganizationService UserOrganization { get; }
         ClaimsPrincipal Principal { get; }
@@ -28,8 +28,12 @@ namespace Pims.Dal
         #endregion
 
         #region Leases
-        ILeaseService Lease { get; }
+        ILeaseRepository Lease { get; }
         ILeaseTermRepository LeaseTerm { get; }
+        #endregion
+
+        #region Deposits
+        ISecurityDepositRepository SecurityDeposit { get; }
         #endregion
 
         #region Contacts

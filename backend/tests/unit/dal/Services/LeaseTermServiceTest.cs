@@ -1,18 +1,15 @@
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Pims.Core.Test;
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
-using Pims.Dal.Services;
-using Pims.Dal.Security;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Xunit;
-using Entity = Pims.Dal.Entities;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
+using Pims.Dal.Security;
+using Pims.Dal.Services;
+using Xunit;
 
 namespace Pims.Dal.Test.Services
 {
@@ -38,14 +35,14 @@ namespace Pims.Dal.Test.Services
 
             var service = helper.Create<LeaseTermService>();
             var leaseService = helper.GetService<Mock<ILeaseService>>();
-            var leaseRepository = helper.GetService<Mock<Repositories.ILeaseService>>();
+            var leaseRepository = helper.GetService<Mock<Repositories.ILeaseRepository>>();
             var leaseTermRepository = helper.GetService<Mock<Repositories.ILeaseTermRepository>>();
             leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
 
             // Act
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease };
-            
+
             var updatedLease = service.AddTerm(lease.Id, 1, term);
 
             // Assert
@@ -58,7 +55,7 @@ namespace Pims.Dal.Test.Services
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission( Permissions.LeaseView);
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
@@ -154,7 +151,7 @@ namespace Pims.Dal.Test.Services
 
             var service = helper.Create<LeaseTermService>();
             var leaseService = helper.GetService<Mock<ILeaseService>>();
-            var leaseRepository = helper.GetService<Mock<Repositories.ILeaseService>>();
+            var leaseRepository = helper.GetService<Mock<Repositories.ILeaseRepository>>();
             leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
             var leaseTermRepository = helper.GetService<Mock<Repositories.ILeaseTermRepository>>();
@@ -274,7 +271,7 @@ namespace Pims.Dal.Test.Services
 
             var service = helper.Create<LeaseTermService>();
             var leaseService = helper.GetService<Mock<ILeaseService>>();
-            var leaseRepository = helper.GetService<Mock<Repositories.ILeaseService>>();
+            var leaseRepository = helper.GetService<Mock<Repositories.ILeaseRepository>>();
             leaseService.Setup(x => x.IsRowVersionEqual(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
             var leaseTermRepository = helper.GetService<Mock<Repositories.ILeaseTermRepository>>();
@@ -336,7 +333,7 @@ namespace Pims.Dal.Test.Services
             var payment = new PimsLeasePayment();
             var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, LeaseId = lease.Id, Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { payment } };
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>() { term };
-            
+
             helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             var service = helper.Create<LeaseTermService>();
@@ -402,7 +399,7 @@ namespace Pims.Dal.Test.Services
             // Act
             var ex = Assert.Throws<InvalidOperationException>(() => service.DeleteTerm(lease.Id, 1, term));
             ex.Message.Should().Be("You must delete all renewals before deleting the initial term.");
-            
+
         }
         #endregion
         #endregion

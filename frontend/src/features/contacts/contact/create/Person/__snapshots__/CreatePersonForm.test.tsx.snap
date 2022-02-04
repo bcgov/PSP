@@ -49,7 +49,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   gap: 0.5rem;
 }
 
-.c9 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -60,6 +60,26 @@ exports[`CreatePersonForm renders as expected 1`] = `
   gap: 1.6rem;
 }
 
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 0rem;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
 .c5 {
   font-size: 2rem;
   font-weight: 700;
@@ -68,7 +88,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   line-height: 2.9rem;
 }
 
-.c8 {
+.c10 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -115,7 +135,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
   color: red;
 }
 
-.c10 {
+.c12 {
   font-size: 1.6rem;
   font-weight: 700;
   -webkit-text-decoration: none solid rgb(33,37,41);
@@ -130,7 +150,28 @@ exports[`CreatePersonForm renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c11 {
+.c9.c9 {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c9.c9 .text {
+  display: none;
+}
+
+.c9.c9:hover {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c9.c9:hover .text {
+  display: inline;
+}
+
+.c13 {
   font-size: 1.6rem;
   font-weight: 400;
   -webkit-text-decoration: none solid rgb(170,170,170);
@@ -263,7 +304,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
               >
                 <label
                   class="form-label"
-                  for="typeahead-organizationId"
+                  for="typeahead-organization"
                 >
                   Link to an existing organization
                 </label>
@@ -416,8 +457,45 @@ exports[`CreatePersonForm renders as expected 1`] = `
             </div>
             <div
               class="col-md-2"
-              style="padding-left: 0px; padding-bottom: 2rem;"
-            />
+              style="padding-left: 0px; padding-top: 3rem;"
+            >
+              <div
+                class="c8 h-100"
+              >
+                <button
+                  class="Button c9 btn btn-link"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
           <button
             class="Button btn btn-link"
@@ -510,8 +588,45 @@ exports[`CreatePersonForm renders as expected 1`] = `
             </div>
             <div
               class="col-md-2"
-              style="padding-left: 0px; padding-bottom: 2rem;"
-            />
+              style="padding-left: 0px; padding-top: 3rem;"
+            >
+              <div
+                class="c8 h-100"
+              >
+                <button
+                  class="Button c9 btn btn-link"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
           <button
             class="Button btn btn-link"
@@ -533,7 +648,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
             Address
           </h2>
           <h3
-            class="c8"
+            class="c10"
           >
             Mailing Address
           </h3>
@@ -719,7 +834,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
           class="c4"
         >
           <h3
-            class="c8"
+            class="c10"
           >
             Property Address
           </h3>
@@ -905,7 +1020,7 @@ exports[`CreatePersonForm renders as expected 1`] = `
           class="c4"
         >
           <h3
-            class="c8"
+            class="c10"
           >
             Billing Address
           </h3>
@@ -1091,15 +1206,15 @@ exports[`CreatePersonForm renders as expected 1`] = `
           class="c4"
         >
           <div
-            class="c9"
+            class="c11"
           >
             <label
-              class="c10 form-label"
+              class="c12 form-label"
             >
               Comments
             </label>
             <span
-              class="c11"
+              class="c13"
             >
               (Optional)
             </span>

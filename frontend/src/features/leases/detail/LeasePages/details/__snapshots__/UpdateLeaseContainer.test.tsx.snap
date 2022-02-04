@@ -8,11 +8,11 @@ exports[`Update lease container component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c3.form-control.is-valid {
+  .c3.c3.form-control.is-valid {
   background-image: none;
 }
 
-.c3.form-control.is-invalid {
+.c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 

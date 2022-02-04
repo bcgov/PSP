@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { defaultFormLease, IFormLease, IProperty } from 'interfaces';
 import { noop } from 'lodash';
-import { mockOrganization, mockProperties, mockUser } from 'mocks/filterDataMock';
+import { mockOrganization, mockPerson, mockProperties } from 'mocks/filterDataMock';
 import { prettyFormatDate } from 'utils';
 import { render, RenderOptions, RenderResult } from 'utils/test-utils';
 
@@ -27,7 +27,7 @@ describe('Lease Surplus Declaration', () => {
 
   it('renders as expected', () => {
     const result = setup({
-      lease: { ...defaultFormLease, persons: [mockUser], organizations: [mockOrganization] },
+      lease: { ...defaultFormLease, persons: [mockPerson], organizations: [mockOrganization] },
     });
     expect(result.asFragment()).toMatchSnapshot();
   });
@@ -37,7 +37,7 @@ describe('Lease Surplus Declaration', () => {
       lease: {
         ...defaultFormLease,
         properties: mockProperties,
-        persons: [mockUser],
+        persons: [mockPerson],
         organizations: [mockOrganization],
       },
     });
@@ -52,7 +52,7 @@ describe('Lease Surplus Declaration', () => {
       lease: {
         ...defaultFormLease,
         properties: [testProperty],
-        persons: [mockUser],
+        persons: [mockPerson],
         organizations: [mockOrganization],
       },
     });
@@ -74,7 +74,7 @@ describe('Lease Surplus Declaration', () => {
       lease: {
         ...defaultFormLease,
         properties: [testProperty],
-        persons: [mockUser],
+        persons: [mockPerson],
         organizations: [mockOrganization],
       },
     });

@@ -177,6 +177,21 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
+
+        public IEnumerable<PimsSecurityDepositType> GetSecurityDepositTypes()
+        {
+            return this.Context.PimsSecurityDepositTypes.AsNoTracking().OrderBy(d => d.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsLeasePaymentStatusType> GetLeasePaymentStatusTypes()
+        {
+            return this.Context.PimsLeasePaymentStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsLeasePaymentMethodType> GetLeasePaymentMethodTypes()
+        {
+            return this.Context.PimsLeasePaymentMethodTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
         #endregion
     }
 }

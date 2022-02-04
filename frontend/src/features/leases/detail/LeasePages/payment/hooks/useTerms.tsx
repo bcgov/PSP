@@ -13,6 +13,7 @@ export const useLeaseTerms = () => {
   const dispatch = useDispatch();
 
   const updateLeaseTerm = async (term: ILeaseTerm) => {
+    term = { ...term, payments: [] }; // Do not send payment information, this api only updates terms.
     try {
       const axiosPromise = term.id ? putLeaseTerm(term) : postLeaseTerm(term);
       const response = await handleAxiosResponse(dispatch, 'UpdateLeaseTerm', axiosPromise);

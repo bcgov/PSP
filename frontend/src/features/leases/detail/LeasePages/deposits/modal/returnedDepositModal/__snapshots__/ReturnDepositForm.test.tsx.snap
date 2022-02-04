@@ -1,0 +1,437 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReturnDepositForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="py-3 mb-4 pl-3"
+  >
+    <div
+      class="pb-3 row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit type:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        Pet deposit
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit amount:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        $1,234
+      </div>
+    </div>
+  </div>
+  .c2.c2.form-control.is-valid {
+  background-image: none;
+}
+
+.c2.c2.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group .form-label {
+  font-weight: bold;
+}
+
+.c0 .form-group input {
+  width: 90%;
+}
+
+<form
+    class="c0 mx-3"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-terminationDate"
+          >
+            Termination or surrender date:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-terminationDate"
+                name="terminationDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-claimsAgainst"
+          >
+            Claims against deposit ($): 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-claimsAgainst"
+              name="claimsAgainst"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="input-returnAmount"
+          >
+            Returned amount ($): 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-returnAmount"
+              name="returnAmount"
+              placeholder=""
+              required=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-returnDate"
+          >
+            Returned date:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-returnDate"
+                name="returnDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;
+
+exports[`ReturnDepositForm component renders with data as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  <div
+    class="py-3 mb-4 pl-3"
+  >
+    <div
+      class="pb-3 row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit type:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        Pet deposit
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-4"
+      >
+        <strong>
+          Deposit amount:
+        </strong>
+      </div>
+      <div
+        class="col"
+      >
+        $1,234
+      </div>
+    </div>
+  </div>
+  .c2.c2.form-control.is-valid {
+  background-image: none;
+}
+
+.c2.c2.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group .form-label {
+  font-weight: bold;
+}
+
+.c0 .form-group input {
+  width: 90%;
+}
+
+<form
+    class="c0 mx-3"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-terminationDate"
+          >
+            Termination or surrender date:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-terminationDate"
+                name="terminationDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-claimsAgainst"
+          >
+            Claims against deposit ($): 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-claimsAgainst"
+              name="claimsAgainst"
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="input-returnAmount"
+          >
+            Returned amount ($): 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-returnAmount"
+              name="returnAmount"
+              placeholder=""
+              required=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-returnDate"
+          >
+            Returned date:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-returnDate"
+                name="returnDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

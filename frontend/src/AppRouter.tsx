@@ -5,7 +5,7 @@ import { LogoutPage } from 'features/account/Logout';
 import { ContactListView } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
-import ContactEditContainer from 'features/contacts/contact/edit/Container';
+import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
 import { AddLeaseContainer } from 'features/leases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import AuthLayout from 'layouts/AuthLayout';
@@ -184,7 +184,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/:id?/edit"
-          component={ContactEditContainer}
+          component={UpdateContactContainer}
           layout={AuthLayout}
           claim={[Claims.CONTACT_EDIT]}
           title={getTitle('Edit Contact')}

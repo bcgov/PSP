@@ -1,13 +1,12 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
+import { NotesModal } from 'components/common/form/NotesModal';
 import { ColumnWithProps } from 'components/Table';
 import { IContactSearchResult } from 'interfaces';
 import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-
-import AddLeaseTenantNote from './AddLeaseTenantNote';
 
 const columns = [
   {
@@ -100,7 +99,15 @@ const columns = [
     width: 30,
     maxWidth: 50,
     Cell: (props: CellProps<IContactSearchResult>) => (
-      <AddLeaseTenantNote nameSpace={`tenants.${props.row.index}`} />
+      <NotesModal
+        nameSpace={`tenants.${props.row.index}`}
+        notesLabel={
+          <p>
+            Notes pertaining to <b>{props.row.original.summary}</b>
+          </p>
+        }
+        title="Tenant Notes"
+      />
     ),
   },
 ] as ColumnWithProps<IContactSearchResult>[];
