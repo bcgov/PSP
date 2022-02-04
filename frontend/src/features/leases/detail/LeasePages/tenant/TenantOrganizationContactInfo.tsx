@@ -2,6 +2,7 @@ import { Form, Input } from 'components/common/form';
 import * as Styled from 'features/leases/detail/styles';
 import { FieldArrayRenderProps } from 'formik';
 import * as React from 'react';
+import styled from 'styled-components';
 import { phoneFormatter, withNameSpace } from 'utils/formUtils';
 
 import AddressSubForm from '../AddressSubForm';
@@ -21,7 +22,7 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<ITenantOrgan
     <>
       <Styled.FormGrid>
         <Form.Label>Tenant organization:</Form.Label>
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'name')} />
+        <StyledLargeTextInput disabled={disabled} field={withNameSpace(nameSpace, 'name')} />
         <Form.Label>Contact name:</Form.Label>
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'contactName')} />
         <Styled.LeaseH3>Contact Info</Styled.LeaseH3>
@@ -48,5 +49,11 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<ITenantOrgan
     </>
   );
 };
+
+const StyledLargeTextInput = styled(Input)`
+  input {
+    font-size: 1.8rem;
+  }
+`;
 
 export default TenantOrganizationContactInfo;

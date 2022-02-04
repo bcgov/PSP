@@ -24,7 +24,6 @@ export const TermModal: React.FunctionComponent<ITermModalProps> = ({
   onSave,
 }) => {
   const formikRef = useRef<FormikProps<IFormLeaseTerm>>(null);
-  console.log(initialValues);
   return (
     <CommonStyled.PrimaryGenericModal
       title="Add a Term"

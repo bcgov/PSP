@@ -540,6 +540,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     id="input-summary"
                     name="summary"
                     placeholder="Name of person or organization"
+                    title=""
                     value=""
                   />
                 </div>
@@ -556,6 +557,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                     class="form-control"
                     id="input-municipality"
                     name="municipality"
+                    title=""
                     value=""
                   />
                 </div>

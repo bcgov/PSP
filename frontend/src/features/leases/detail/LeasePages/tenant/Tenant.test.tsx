@@ -44,12 +44,19 @@ describe('Tenant component', () => {
 
   it('renders one notes section per tenant note', () => {
     const { component } = setup({
-      lease: { ...defaultFormLease, tenantNotes: ['note one', 'note two'] },
+      lease: {
+        ...defaultFormLease,
+        persons: [mockPerson, mockOrganization],
+        tenants: [
+          { personId: mockPerson.id, note: 'person note' },
+          { organizationId: mockOrganization.id, note: 'organization id' },
+        ],
+      },
     });
     const { getAllByText } = component;
-    const personTenant = getAllByText('Notes:');
+    const personTenant = getAllByText('Notes');
 
-    expect(personTenant).toHaveLength(2);
+    expect(personTenant).toHaveLength(1);
   });
 
   it('renders no person information section if there are no persons', () => {
