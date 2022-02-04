@@ -36,8 +36,8 @@ const InsuranceContainer: React.FunctionComponent = () => {
           leaseId={leaseId}
           insuranceList={insuranceList}
           insuranceTypes={insuranceTypes}
-          onSuccess={() => {
-            refresh();
+          onSuccess={async () => {
+            await refresh();
             history.push(location.pathname);
           }}
           onCancel={() => {
