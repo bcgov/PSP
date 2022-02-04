@@ -42,12 +42,7 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
                         nameSpace={withNameSpace(nameSpace, `persons.${index}`)}
                       />
                     </Col>
-                    <Col>
-                      <TenantNotes
-                        disabled={true}
-                        nameSpace={`tenants.${getTenantPersonIndex(values.tenants, person.id)}`}
-                      />
-                    </Col>
+                    <Col>{getTenantPersonNotes(person, values.tenants)}</Col>
                   </Row>
                 </FormSection>
               </Styled.SpacedInlineListItem>
@@ -62,15 +57,7 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
                         nameSpace={withNameSpace(nameSpace, `organizations.${index}`)}
                       />
                     </Col>
-                    <Col>
-                      <TenantNotes
-                        disabled={true}
-                        nameSpace={`tenants.${getTenantOrganizationIndex(
-                          values.tenants,
-                          organization.id,
-                        )}`}
-                      />
-                    </Col>
+                    <Col>{getTenantOrganizationNotes(organization, values.tenants)}</Col>
                   </Row>
                 </FormSection>
               </Styled.SpacedInlineListItem>
@@ -88,12 +75,21 @@ export const Tenant: React.FunctionComponent<ITenantProps> = ({ nameSpace }) => 
   );
 };
 
-const getTenantOrganizationIndex = (tenants: ITenant[], organizationId?: number) => {
-  return findIndex(tenants, (tenant: ITenant) => tenant.organizationId === organizationId);
+const getTenantPersonNotes = (person: IPerson, tenants: ITenant[]) => {
+  const personNoteIndex = findIndex(tenants, (tenant: ITenant) => tenant.personId === person.id);
+  return personNoteIndex >= 0 ? (
+    <TenantNotes disabled={true} nameSpace={`tenants.${personNoteIndex}`} />
+  ) : null;
 };
 
-const getTenantPersonIndex = (tenants: ITenant[], personId?: number) => {
-  return findIndex(tenants, (tenant: ITenant) => tenant.personId === personId);
+const getTenantOrganizationNotes = (organization: IOrganization, tenants: ITenant[]) => {
+  const organizationNodeIndex = findIndex(
+    tenants,
+    (tenant: ITenant) => tenant.organizationId === organization.id,
+  );
+  return organizationNodeIndex >= 0 ? (
+    <TenantNotes disabled={true} nameSpace={`tenants.${organizationNodeIndex}`} />
+  ) : null;
 };
 
 export const FormSectionOne = styled(FormSection)`
