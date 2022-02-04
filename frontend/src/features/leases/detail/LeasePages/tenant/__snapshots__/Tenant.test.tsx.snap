@@ -49,14 +49,6 @@ exports[`Tenant component renders as expected 1`] = `
   border-bottom: solid 0.3rem;
 }
 
-.c8 {
-  font-size: 1.6rem;
-  color: black;
-  text-align: left;
-  padding-top: 1.5rem;
-  font-family: BcSans-Bold;
-}
-
 .c3 {
   display: grid;
   grid-template-columns: [labels] minMax(min-content,1fr) [controls] 5fr;
@@ -127,7 +119,7 @@ exports[`Tenant component renders as expected 1`] = `
   min-width: 7rem;
 }
 
-.c9 input {
+.c8 input {
   font-size: 1.8rem;
 }
 
@@ -279,23 +271,7 @@ exports[`Tenant component renders as expected 1`] = `
           </div>
           <div
             class="col"
-          >
-            <h5
-              class="c8"
-            >
-              Notes
-            </h5>
-            <div
-              class="textarea input form-group"
-            >
-              <textarea
-                class="notes form-control"
-                disabled=""
-                id="input-tenants.-1.note"
-                name="tenants.-1.note"
-              />
-            </div>
-          </div>
+          />
         </div>
       </div>
     </li>
@@ -320,7 +296,7 @@ exports[`Tenant component renders as expected 1`] = `
                 Tenant organization:
               </label>
               <div
-                class="c9 input form-group"
+                class="c8 input form-group"
               >
                 <input
                   class="form-control"
@@ -479,23 +455,7 @@ exports[`Tenant component renders as expected 1`] = `
           </div>
           <div
             class="col"
-          >
-            <h5
-              class="c8"
-            >
-              Notes
-            </h5>
-            <div
-              class="textarea input form-group"
-            >
-              <textarea
-                class="notes form-control"
-                disabled=""
-                id="input-tenants.-1.note"
-                name="tenants.-1.note"
-              />
-            </div>
-          </div>
+          />
         </div>
       </div>
     </li>

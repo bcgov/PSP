@@ -56,7 +56,7 @@ describe('Tenant component', () => {
     const { getAllByText } = component;
     const personTenant = getAllByText('Notes');
 
-    expect(personTenant).toHaveLength(2);
+    expect(personTenant).toHaveLength(1);
   });
 
   it('renders no person information section if there are no persons', () => {
