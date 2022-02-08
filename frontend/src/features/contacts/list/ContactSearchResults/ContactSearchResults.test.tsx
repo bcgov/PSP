@@ -104,4 +104,26 @@ describe('Contact Search Results Table', () => {
     // should be sorted in ascending order
     expect(setSort).toHaveBeenCalledWith({ summary: 'asc' });
   });
+
+  describe('when user has CONTACT_EDIT claim', () => {
+    it('shows edit contact button on each table row', async () => {
+      mockKeycloak({ claims: [Claims.CONTACT_VIEW, Claims.CONTACT_EDIT] });
+      const { tableRows, findAllByTitle } = setup({ results: mockResults });
+      const editButtons = await findAllByTitle(/edit contact/i);
+
+      // all rows should show edit buttons
+      expect(editButtons).toHaveLength(tableRows.length);
+      expect(editButtons[0]).toBeInTheDocument();
+    });
+  });
+
+  describe(`when user doesn't have CONTACT_EDIT claim`, () => {
+    it('does not show the edit button on table rows', () => {
+      const { queryAllByTitle } = setup({ results: mockResults });
+      const editButtons = queryAllByTitle(/edit contact/i);
+
+      // edit buttons should not be rendered
+      expect(editButtons).toHaveLength(0);
+    });
+  });
 });
