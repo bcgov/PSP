@@ -1,6 +1,5 @@
 import { ReactComponent as Active } from 'assets/images/active.svg';
 import { ReactComponent as Inactive } from 'assets/images/inactive.svg';
-import { ProtectedComponent } from 'components/common/ProtectedComponent';
 import { IconButton, InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
 import { Claims } from 'constants/claims';
@@ -113,9 +112,10 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 40,
     Cell: (props: CellProps<IContactSearchResult>) => {
       const history = useHistory();
+      const { hasClaim } = useKeycloakWrapper();
       return (
         <StyledDiv>
-          <ProtectedComponent hideIfNotAuthorized claims={[Claims.CONTACT_EDIT]}>
+          {hasClaim(Claims.CONTACT_EDIT) && (
             <IconButton
               title="Edit Contact"
               variant="light"
@@ -123,9 +123,9 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
             >
               <MdEdit size={22} />
             </IconButton>
-          </ProtectedComponent>
+          )}
 
-          <ProtectedComponent hideIfNotAuthorized claims={[Claims.CONTACT_VIEW]}>
+          {hasClaim(Claims.CONTACT_VIEW) && (
             <IconButton
               title="View Contact"
               variant="light"
@@ -133,7 +133,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
             >
               <MdContactMail size={22} />
             </IconButton>
-          </ProtectedComponent>
+          )}
         </StyledDiv>
       );
     },
