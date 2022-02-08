@@ -45,7 +45,7 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   const history = useHistory();
   const { addPerson } = useAddContact();
 
-  const [showDuplicateModal, setDuplicateModal] = useState(false);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   // validation needs to be adjusted when country == OTHER
@@ -78,9 +78,9 @@ export const CreatePersonForm: React.FunctionComponent = () => {
     { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
-      setDuplicateModal(false);
+      setShowDuplicateModal(false);
       let newPerson = formPersonToApiPerson(formPerson);
-      const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+      const personResponse = await addPerson(newPerson, setShowDuplicateModal, allowDuplicate);
 
       if (!!personResponse?.id) {
         history.push('/contact/list');
@@ -110,7 +110,10 @@ export const CreatePersonForm: React.FunctionComponent = () => {
       <DuplicateContactModal
         display={showDuplicateModal}
         handleOk={() => saveDuplicate()}
-        handleCancel={() => setAllowDuplicate(false)}
+        handleCancel={() => {
+          setAllowDuplicate(false);
+          setShowDuplicateModal(false);
+        }}
       ></DuplicateContactModal>
     </>
   );
