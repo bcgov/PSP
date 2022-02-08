@@ -111,6 +111,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           class="form-control"
           id="input-programName"
           name="programName"
+          title="A program"
           value="A program"
         />
       </div>
@@ -267,6 +268,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           class="form-control"
           id="input-lFileNo"
           name="lFileNo"
+          title="222"
           value="222"
         />
       </div>
@@ -282,6 +284,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           class="form-control"
           id="input-motiName"
           name="motiName"
+          title="test moti name"
           value="test moti name"
         />
       </div>
@@ -297,6 +300,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           class="form-control"
           id="input-tfaFileNo"
           name="tfaFileNo"
+          title="333"
           value="333"
         />
       </div>
@@ -312,6 +316,7 @@ exports[`DetailAdministration component renders a complete lease as expected 1`]
           class="form-control"
           id="input-psFileNo"
           name="psFileNo"
+          title="444"
           value="444"
         />
       </div>
@@ -431,6 +436,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-programName"
           name="programName"
+          title=""
           value=""
         />
       </div>
@@ -587,6 +593,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-lFileNo"
           name="lFileNo"
+          title=""
           value=""
         />
       </div>
@@ -602,6 +609,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-motiName"
           name="motiName"
+          title=""
           value=""
         />
       </div>
@@ -617,6 +625,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-tfaFileNo"
           name="tfaFileNo"
+          title=""
           value=""
         />
       </div>
@@ -632,6 +641,7 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
           class="form-control"
           id="input-psFileNo"
           name="psFileNo"
+          title=""
           value=""
         />
       </div>

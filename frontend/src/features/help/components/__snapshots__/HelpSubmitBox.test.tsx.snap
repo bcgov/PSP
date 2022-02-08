@@ -84,6 +84,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-control"
             id="input-user"
             name="user"
+            title="Test User"
             value="Test User"
           />
         </div>
@@ -100,6 +101,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-control"
             id="input-email"
             name="email"
+            title="test@test.com"
             value="test@test.com"
           />
         </div>
@@ -116,6 +118,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-control"
             id="input-page"
             name="page"
+            title="Landing Page"
             value="Landing Page"
           />
         </div>
@@ -132,6 +135,7 @@ exports[`Help Box tests.. renders properly 1`] = `
             class="form-control"
             id="input-question"
             name="question"
+            title=""
           />
         </div>
       </form>

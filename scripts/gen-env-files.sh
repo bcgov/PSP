@@ -61,17 +61,8 @@ TZ=America/Los_Angeles
 DB_NAME=pims
 DB_USER=admin
 DB_PASSWORD=$passvar
+SERVER_NAME=localhost,5433
 TIMEOUT_LENGTH=120" >> ./database/mssql/.env
-fi
-
-# API Database
-if test -f "./database/postgres/.env"; then
-    echo "./database/postgres/.env exists"
-else
-echo \
-"POSTGRES_USER=$varApiDb
-POSTGRES_PASSWORD=$passvar
-POSTGRES_DB=pims" >> ./database/postgres/.env
 fi
 
 # API
@@ -103,27 +94,6 @@ echo \
 "NODE_ENV=development
 API_URL=http://backend:8080/
 CHOKIDAR_USEPOLLING=true" >> ./frontend/.env
-fi
-
-# Import tool
-if test -f "./tools/import/.env"; then
-    echo "./tools/import/.env exists"
-else
-echo \
-"Import__Quantity=50
-# Import__Skip=8500
-# Import__Delay=3000
-
-# Local
-ASPNETCORE_ENVIRONMENT=Local
-Auth__Keycloak__Secret=
-
-# Property Import
-Import__File=./Data/properties-todds.json
-
-# Project Import
-# Import__File=./Data/projects.json
-# Api__ImportUrl=/tools/import/projects?stopOnError=false&defaults=workflow=SPL" >> ./tools/import/.env
 fi
 
 # Keycloak sync tool

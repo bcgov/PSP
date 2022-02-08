@@ -275,6 +275,7 @@ exports[`TermForm component renders as expected 1`] = `
         class="form-control"
         id="input-paymentDueDate"
         name="paymentDueDate"
+        title=""
         value=""
       />
     </div>
@@ -636,6 +637,7 @@ exports[`TermForm component renders with data as expected 1`] = `
         class="form-control"
         id="input-paymentDueDate"
         name="paymentDueDate"
+        title=""
         value=""
       />
     </div>
