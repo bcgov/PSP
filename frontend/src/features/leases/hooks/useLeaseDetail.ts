@@ -7,13 +7,17 @@ import { logError } from 'store/slices/network/networkSlice';
 
 import { LeaseStateContext } from './../context/LeaseContext';
 
-export function useLeaseDetail(leaseId: number) {
+export function useLeaseDetail(leaseId?: number) {
   const { lease, setLease } = useContext(LeaseStateContext);
+  leaseId = leaseId ?? lease?.id;
   const { getLease } = useApiLeases();
   const dispatch = useDispatch();
 
   const getLeaseById = useMemo(
-    () => async (id: number) => {
+    () => async (id?: number) => {
+      if (!id) {
+        throw Error(`cannot retrieve lease with id of ${id}`);
+      }
       try {
         dispatch(showLoading());
         const { data } = await getLease(id);
@@ -43,6 +47,6 @@ export function useLeaseDetail(leaseId: number) {
   return {
     lease,
     setLease,
-    refresh: () => getLeaseById(leaseId),
+    refresh: () => leaseId && getLeaseById(leaseId),
   };
 }
