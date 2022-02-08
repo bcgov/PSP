@@ -1,8 +1,9 @@
 import { IInsurance } from 'interfaces';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { formatMoney, prettyFormatDate } from 'utils';
 
-import { LabelCol, SubTitle } from './styles';
+import { BoldHeader, BoldValueText, LabelCol, SubTitle } from './styles';
 
 interface PolicyProps {
   insurance: IInsurance;
@@ -14,6 +15,7 @@ interface PolicyView {
   expiryDate: string;
   coverageDescription: string;
   otherInsuranceType?: string;
+  insuranceType?: string;
 }
 
 const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
@@ -24,32 +26,33 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
     expiryDate: prettyFormatDate(insurance.expiryDate),
     coverageDescription: insurance.coverageDescription || '',
     otherInsuranceType: insurance.otherInsuranceType,
+    insuranceType: insurance.insuranceType.description,
   };
   return (
-    <Row className="pt-3">
+    <Row>
       <Col>
-        <SubTitle>
-          Policy
-          {policy.otherInsuranceType && <span> - Other type: {policy.otherInsuranceType}</span>}
+        <SubTitle data-testid="insurance-title">
+          {policy.insuranceType}
+          {policy.otherInsuranceType && <span>: {policy.otherInsuranceType}</span>}
         </SubTitle>
 
         <Row>
           <Col>
             <Row>
               <LabelCol xs={columnWidth}>Insurance in place:</LabelCol>
-              <Col>{policy.insuranceInPlace}</Col>
+              <BoldValueText>{policy.insuranceInPlace}</BoldValueText>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Limit:</LabelCol>
-              <Col>{policy.limit}</Col>
+              <BoldValueText>{policy.limit}</BoldValueText>
             </Row>
             <Row>
               <LabelCol xs={columnWidth}>Policy expiry date:</LabelCol>
-              <Col>{policy.expiryDate}</Col>
+              <BoldValueText>{policy.expiryDate}</BoldValueText>
             </Row>
           </Col>
           <Col>
-            <h2>Description of Coverage</h2>
+            <BoldHeader>Description of Coverage</BoldHeader>
             <div>{policy.coverageDescription}</div>
           </Col>
         </Row>
