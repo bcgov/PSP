@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { noop } from 'lodash';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -80,27 +79,37 @@ export interface ModalProps {
 const GenericModal = (props: ModalProps) => {
   const [show, setShow] = useState(true);
 
-  const handleCancel = props.handleCancel ?? noop;
+  if (
+    props.display !== undefined &&
+    props.setDisplay === undefined &&
+    props.handleOk === undefined &&
+    props.handleCancel === undefined
+  ) {
+    throw Error('Modal has insufficient parameters');
+  }
+  const showState = props.display !== undefined ? props.display : show;
+  const showControl = props.setDisplay !== undefined ? props.setDisplay : setShow;
 
   const close = () => {
-    props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
-    handleCancel();
+    if (props.handleCancel !== undefined) {
+      props.handleCancel();
+    } else {
+      showControl(false);
+    }
   };
 
-  const handleOk =
-    props.handleOk ??
-    (() => {
-      props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
-    });
   const ok = () => {
-    props.setDisplay !== undefined ? props.setDisplay(false) : setShow(false);
-    handleOk();
+    if (props.handleOk !== undefined) {
+      props.handleOk();
+    } else {
+      showControl(false);
+    }
   };
 
   return (
     <Container>
       <Modal
-        show={props.display !== undefined ? props.display : show}
+        show={showState}
         onHide={close}
         dialogClassName={classNames(props.size, props.className)}
       >
