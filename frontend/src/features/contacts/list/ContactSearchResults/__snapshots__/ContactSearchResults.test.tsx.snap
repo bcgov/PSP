@@ -503,6 +503,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             >
               <button
                 class="c5 btn btn-light"
+                title="View Contact"
                 type="button"
               >
                 <svg
@@ -648,6 +649,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             >
               <button
                 class="c5 btn btn-light"
+                title="View Contact"
                 type="button"
               >
                 <svg
@@ -793,6 +795,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             >
               <button
                 class="c5 btn btn-light"
+                title="View Contact"
                 type="button"
               >
                 <svg

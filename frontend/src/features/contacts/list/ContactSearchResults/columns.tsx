@@ -44,9 +44,13 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     sortable: true,
     width: 80,
     maxWidth: 120,
-    Cell: (props: CellProps<IContactSearchResult>) => (
-      <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>
-    ),
+    Cell: (props: CellProps<IContactSearchResult>) => {
+      const { hasClaim } = useKeycloakWrapper();
+      if (hasClaim(Claims.CONTACT_VIEW)) {
+        return <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>;
+      }
+      return props.row.original.summary;
+    },
   },
   {
     Header: 'Last Name',
@@ -109,11 +113,11 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Cell: (props: CellProps<IContactSearchResult>) => {
       const history = useHistory();
       const { hasClaim } = useKeycloakWrapper();
-
       return (
         <StyledDiv>
           {hasClaim(Claims.CONTACT_EDIT) && (
             <IconButton
+              title="Edit Contact"
               variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
             >
@@ -123,6 +127,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
 
           {hasClaim(Claims.CONTACT_VIEW) && (
             <IconButton
+              title="View Contact"
               variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}`)}
             >
