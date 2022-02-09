@@ -14,22 +14,46 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string PinOrPid { get; set; }
 
         /// <summary>
-        /// get/set - The value of the tenant name.
-        /// </summary>
-        /// <value></value>
-        public string TenantName { get; set; }
-
-        /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
         /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
-        /// get/set - The Program(s) to filter by.
+        /// get/set - The lease status type.
+        /// </summary>
+        public string LeaseStatusType { get; set; }
+
+        /// <summary>
+        /// get/set - The value of the tenant name.
         /// </summary>
         /// <value></value>
+        public string TenantName { get; set; }
+
+        /// <summary>
+        /// get/set - The Program(s) to filter by.
+        /// </summary>
         public IList<string> Programs { get; set; } = new List<string>();
+
+        /// <summary>
+        /// get/set - The expiry filter start date.
+        /// </summary>
+        public DateTime? ExpiryStartDate { get; set; }
+
+        /// <summary>
+        /// get/set - The expiry filter end date.
+        /// </summary>
+        public DateTime? ExpiryEndDate { get; set; }
+
+        /// <summary>
+        /// get/set - The region type.
+        /// </summary>
+        public int? RegionType { get; set; }
+
+        /// <summary>
+        /// get/set - Filter for additional lease details.
+        /// </summary>
+        public string Details { get; set; }
         #endregion
 
         #region Constructors
@@ -49,9 +73,14 @@ namespace Pims.Api.Areas.Lease.Models.Search
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
-            this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
+            this.LeaseStatusType = filter.GetStringValue(nameof(this.LeaseStatusType));
+            this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
+            this.ExpiryStartDate = filter.GetDateTimeNullValue(nameof(this.ExpiryStartDate));
+            this.ExpiryEndDate = filter.GetDateTimeNullValue(nameof(this.ExpiryEndDate));
+            this.RegionType = filter.GetIntNullValue(nameof(this.RegionType));
+            this.Details = filter.GetStringValue(nameof(this.Details));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion
@@ -65,13 +94,15 @@ namespace Pims.Api.Areas.Lease.Models.Search
         {
             var filter = new LeaseFilter
             {
-                Page = model.Page,
-                Quantity = model.Quantity,
-
                 PinOrPid = model.PinOrPid,
-                TenantName = model.TenantName,
                 LFileNo = model.LFileNo,
+                LeaseStatusType = model.LeaseStatusType,
+                TenantName = model.TenantName,
                 Programs = model.Programs,
+                ExpiryStartDate = model.ExpiryStartDate,
+                ExpiryEndDate = model.ExpiryEndDate,
+                RegionType = model.RegionType,
+                Details = model.Details,
 
                 Sort = model.Sort
             };

@@ -8,6 +8,7 @@ import { ILeaseSearchResult } from 'interfaces';
 import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
@@ -81,19 +82,25 @@ export const LeaseListView: React.FunctionComponent = () => {
       <Styled.Scrollable>
         <Styled.PageHeader>Leases &amp; Licenses</Styled.PageHeader>
         <Styled.PageToolbar>
-          <LeaseFilter filter={filter} setFilter={changeFilter} />
-          <Styled.Spacer />
-          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
-            <Styled.FileIcon>
-              <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
-            </Styled.FileIcon>
-          </TooltipWrapper>
-          <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
-            <Styled.FileIcon>
-              <FaFileAlt data-testid="csv-icon" size={36} onClick={() => fetch('csv')} />
-            </Styled.FileIcon>
-          </TooltipWrapper>
-          <Styled.Spacer />
+          <Row>
+            <Col>
+              <LeaseFilter filter={filter} setFilter={changeFilter} />
+            </Col>
+            <Col md="auto" className="px-0">
+              <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to Excel">
+                <Styled.FileIcon>
+                  <FaFileExcel data-testid="excel-icon" size={36} onClick={() => fetch('excel')} />
+                </Styled.FileIcon>
+              </TooltipWrapper>
+            </Col>
+            <Col md="auto" className="px-0">
+              <TooltipWrapper toolTipId="export-to-excel" toolTip="Export to CSV">
+                <Styled.FileIcon>
+                  <FaFileAlt data-testid="csv-icon" size={36} onClick={() => fetch('csv')} />
+                </Styled.FileIcon>
+              </TooltipWrapper>
+            </Col>
+          </Row>
         </Styled.PageToolbar>
         {hasClaim(Claims.LEASE_ADD) && (
           <StyledAddButton onClick={() => history.push('/lease/new')}>

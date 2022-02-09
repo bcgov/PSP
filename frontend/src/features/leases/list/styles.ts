@@ -22,8 +22,6 @@ export const PageHeader = styled.h3`
 `;
 
 export const PageToolbar = styled.div`
-  display: flex;
-  flex-direction: row;
   align-items: center;
   padding: 0;
   padding-bottom: 2rem;
@@ -43,14 +41,6 @@ export const FileIcon = styled(Button)`
 
 export const FilterBox = styled(InlineForm)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
-  flex: 1 1 auto;
-  padding: 1.5rem;
-  .form-check-label {
-    display: flex;
-    p {
-      margin-left: 1rem;
-    }
-  }
 `;
 
 export const LongInlineInput = styled(InlineInput)`

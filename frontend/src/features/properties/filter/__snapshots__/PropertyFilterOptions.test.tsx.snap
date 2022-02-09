@@ -2,37 +2,59 @@
 
 exports[`renders correctly... 1`] = `
 <DocumentFragment>
-  <div
-    class="input-group"
+  .c0 {
+  padding-right: 0;
+}
+
+.c0 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c1:not(:first-child) {
+  padding-left: 0;
+}
+
+.c1:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+<div
+    class="row"
   >
     <div
-      class="input-group-prepend"
+      class="c0 col-auto"
     >
       <div
-        class="form-group"
+        class="input-group-prepend"
       >
-        <select
-          class="form-select form-control"
-          id="input-searchBy"
-          name="searchBy"
+        <div
+          class="form-group"
         >
-          <option
-            class="option"
-            value="pinOrPid"
+          <select
+            class="form-select form-control"
+            id="input-searchBy"
+            name="searchBy"
           >
-            PID/PIN
-          </option>
-          <option
-            class="option"
-            value="address"
-          >
-            Address
-          </option>
-        </select>
+            <option
+              class="option"
+              value="pinOrPid"
+            >
+              PID/PIN
+            </option>
+            <option
+              class="option"
+              value="address"
+            >
+              Address
+            </option>
+          </select>
+        </div>
       </div>
     </div>
     <div
-      class="input-group-content"
+      class="c1 col"
     >
       <div
         class="input form-group"

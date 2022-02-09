@@ -8,7 +8,16 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   <div
     class="Toastify"
   />
-  .c0 {
+  .c2:not(:first-child) {
+  padding-left: 0;
+}
+
+.c2:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c0 {
   font-family: 'BcSans-Bold';
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -139,10 +148,10 @@ exports[`PropertiesInformation component renders as expected 1`] = `
         Area
       </label>
       <div
-        class="input-group"
+        class="row"
       >
         <div
-          class="input-group-content"
+          class="c2 col"
         >
           <div
             class="input form-group"
