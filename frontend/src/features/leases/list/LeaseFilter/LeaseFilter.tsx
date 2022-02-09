@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import { mapLookupCode } from 'utils';
 
 import { ILeaseFilter } from '../../interfaces';
+import { LeaseFilterSchema } from './LeaseFilterYupSchema';
 
 export interface ILeaseFilterProps {
   filter?: ILeaseFilter;
@@ -83,7 +84,12 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
   });
 
   return (
-    <Formik enableReinitialize initialValues={filter ?? defaultFilter} onSubmit={onSearchSubmit}>
+    <Formik
+      enableReinitialize
+      initialValues={filter ?? defaultFilter}
+      onSubmit={onSearchSubmit}
+      validationSchema={LeaseFilterSchema}
+    >
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
@@ -129,7 +135,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                           multiselectContainer: {
                             width: 'auto',
                             color: 'black',
-                            'padding-bottom': '12px',
+                            paddingBottom: '12px',
                           },
                           searchBox: {
                             background: 'white',
