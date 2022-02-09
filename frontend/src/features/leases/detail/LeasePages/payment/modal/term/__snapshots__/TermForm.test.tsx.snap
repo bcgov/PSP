@@ -95,7 +95,7 @@ exports[`TermForm component renders as expected 1`] = `
           Start date:
         </label>
         <div
-          class="react-datepicker-wrapper"
+          class="react-datepicker-wrapper d-block"
         >
           <div
             class="react-datepicker__input-container"
@@ -123,7 +123,7 @@ exports[`TermForm component renders as expected 1`] = `
           End date:
         </label>
         <div
-          class="react-datepicker-wrapper"
+          class="react-datepicker-wrapper d-block"
         >
           <div
             class="react-datepicker__input-container"
@@ -456,7 +456,7 @@ exports[`TermForm component renders with data as expected 1`] = `
           Start date:
         </label>
         <div
-          class="react-datepicker-wrapper"
+          class="react-datepicker-wrapper d-block"
         >
           <div
             class="react-datepicker__input-container"
@@ -484,7 +484,7 @@ exports[`TermForm component renders with data as expected 1`] = `
           End date:
         </label>
         <div
-          class="react-datepicker-wrapper"
+          class="react-datepicker-wrapper d-block"
         >
           <div
             class="react-datepicker__input-container"

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
 using System.Linq;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -46,10 +46,42 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(l => filter.Programs.Any(p => p == l.LeaseProgramTypeCode));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.LeaseStatusType))
+            {
+                query = query.Where(l => l.LeaseStatusTypeCode == filter.LeaseStatusType);
+            }
+
+            if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
+            {
+                query = query.Where(l => l.OrigExpiryDate >= filter.ExpiryStartDate && l.OrigExpiryDate <= filter.ExpiryEndDate);
+            }
+            else if (filter.ExpiryStartDate != null)
+            {
+                query = query.Where(l => l.OrigExpiryDate >= filter.ExpiryStartDate);
+            }
+            else if (filter.ExpiryEndDate != null)
+            {
+                query = query.Where(l => l.OrigExpiryDate <= filter.ExpiryEndDate);
+            }
+
+            if (filter.RegionType.HasValue)
+            {
+                query = query.Where(l => l.RegionCode == filter.RegionType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Details))
+            {
+                query = query.Where(l => EF.Functions.Like(l.LeaseDescription.ToLower(), $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
+            }
+
             if (filter.Sort?.Any() == true)
+            {
                 query = query.OrderByProperty(filter.Sort);
+            }
             else
+            {
                 query = query.OrderBy(l => l.LFileNo);
+            }
 
             return query.Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)

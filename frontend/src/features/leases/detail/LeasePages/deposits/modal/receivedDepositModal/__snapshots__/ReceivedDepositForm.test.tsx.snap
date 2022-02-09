@@ -183,7 +183,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
             Paid date:
           </label>
           <div
-            class="react-datepicker-wrapper"
+            class="react-datepicker-wrapper d-block"
           >
             <div
               class="react-datepicker__input-container"
@@ -390,7 +390,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
             Paid date:
           </label>
           <div
-            class="react-datepicker-wrapper"
+            class="react-datepicker-wrapper d-block"
           >
             <div
               class="react-datepicker__input-container"

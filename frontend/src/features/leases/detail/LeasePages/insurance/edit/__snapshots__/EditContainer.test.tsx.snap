@@ -269,7 +269,7 @@ exports[`Lease Insurance renders as expected 1`] = `
             class="form-group"
           >
             <div
-              class="react-datepicker-wrapper"
+              class="react-datepicker-wrapper d-block"
             >
               <div
                 class="react-datepicker__input-container"
