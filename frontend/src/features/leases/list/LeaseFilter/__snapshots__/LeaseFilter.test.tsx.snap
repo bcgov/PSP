@@ -113,6 +113,7 @@ exports[`Lease Filter matches snapshot 1`] = `
                         id="input-lFileNo"
                         name="lFileNo"
                         placeholder="Enter an LIS File Number"
+                        title=""
                         value=""
                       />
                     </div>
@@ -189,6 +190,7 @@ exports[`Lease Filter matches snapshot 1`] = `
                     id="input-tenantName"
                     name="tenantName"
                     placeholder="Tenant Name"
+                    title=""
                     value=""
                   />
                 </div>
@@ -203,42 +205,112 @@ exports[`Lease Filter matches snapshot 1`] = `
         <div
           class="row"
         >
-          <input
-            class="form-control"
-            id="input-lFileNo"
-            name="lFileNo"
-            placeholder="Enter an LIS File Number"
-            title=""
-            value=""
-          />
+          <div
+            class="col-lg-auto"
+          >
+            <strong>
+              Expiry date:
+            </strong>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="react-datepicker-wrapper d-block"
+                  >
+                    <div
+                      class="react-datepicker__input-container"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="c3 form-control date-picker"
+                        id="datepicker-expiryStartDate"
+                        name="expiryStartDate"
+                        placeholder="from date"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="react-datepicker-wrapper d-block"
+                  >
+                    <div
+                      class="react-datepicker__input-container"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="c3 form-control date-picker"
+                        id="datepicker-expiryEndDate"
+                        name="expiryEndDate"
+                        placeholder="to date"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-regionType"
+                    name="regionType"
+                  >
+                    <option
+                      value=""
+                    >
+                      All Regions
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-details"
+                    name="details"
+                    placeholder="Keyword"
+                    title=""
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c2 c3 ml-3 mr-5 input form-group"
-    >
-      <label
-        class="form-label"
-        for="input-tenantName"
-      >
-        Tenant Name 
-      </label>
-      <input
-        class="form-control"
-        id="input-tenantName"
-        name="tenantName"
-        title=""
-        value=""
-      />
-    </div>
-    <span>
-      Program
-    </span>
-    <div
-      class="multiselect-container multiSelectContainer "
-      id="properties-selector"
-      style="width: auto; color: black; flex: 3 1 auto; max-width: 32em;"
-    >
       <div
         class="col-lg-1"
       >
