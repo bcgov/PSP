@@ -116,10 +116,15 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <returns></returns>
         public override bool IsValid()
         {
+            if (ExpiryStartDate.HasValue && ExpiryEndDate.HasValue && this.ExpiryStartDate > this.ExpiryEndDate)
+            {
+                return false;
+            }
+
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.PinOrPid)
-                || !String.IsNullOrWhiteSpace(this.TenantName)
-                || !String.IsNullOrWhiteSpace(this.LFileNo);
+                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(TenantName)
+                || !string.IsNullOrWhiteSpace(LFileNo);
         }
         #endregion
     }
