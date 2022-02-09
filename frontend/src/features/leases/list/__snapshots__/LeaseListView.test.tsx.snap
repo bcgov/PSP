@@ -190,6 +190,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                                   id="input-lFileNo"
                                   name="lFileNo"
                                   placeholder="Enter an LIS File Number"
+                                  title=""
                                   value=""
                                 />
                               </div>
@@ -266,6 +267,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                               id="input-tenantName"
                               name="tenantName"
                               placeholder="Tenant Name"
+                              title=""
                               value=""
                             />
                           </div>
