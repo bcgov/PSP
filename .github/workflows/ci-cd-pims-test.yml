@@ -8,7 +8,7 @@ env:
 
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
-  DESTINATION: "dev"
+  DESTINATION: "test"
   OC_JOB_NAME: "test"
   GIT_URL: "${{github.server_url}}/${{github.repository}}"
   GIT_BRANCH: "${{github.ref}}"
