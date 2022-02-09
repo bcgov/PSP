@@ -117,6 +117,7 @@ export const Input: React.FC<InputProps> = ({
           {...rest}
           isValid={false}
           value={pattern ? restricted : rest.value ?? value}
+          title={pattern ? restricted : rest.value ?? value}
           placeholder={placeholder}
           onBlur={(e: any) => {
             if (onBlurFormatter) {

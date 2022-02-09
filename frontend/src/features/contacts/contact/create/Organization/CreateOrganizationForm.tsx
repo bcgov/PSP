@@ -42,7 +42,7 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
   const history = useHistory();
   const { addOrganization } = useAddContact();
 
-  const [showDuplicateModal, setDuplicateModal] = useState(false);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   // validation needs to be adjusted when country == OTHER
@@ -75,12 +75,12 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
     { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
   ) => {
     try {
-      setDuplicateModal(false);
+      setShowDuplicateModal(false);
       let newOrganization = organizationCreateFormToApiOrganization(formOrganization);
 
       const organizationResponse = await addOrganization(
         newOrganization,
-        setDuplicateModal,
+        setShowDuplicateModal,
         allowDuplicate,
       );
 
@@ -112,7 +112,10 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
       <DuplicateContactModal
         display={showDuplicateModal}
         handleOk={() => saveDuplicate()}
-        handleCancel={() => setAllowDuplicate(false)}
+        handleCancel={() => {
+          setAllowDuplicate(false);
+          setShowDuplicateModal(false);
+        }}
       ></DuplicateContactModal>
     </>
   );

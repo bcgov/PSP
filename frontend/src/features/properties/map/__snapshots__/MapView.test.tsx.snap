@@ -168,6 +168,7 @@ exports[`MapView Renders the map 1`] = `
                     id="input-pinOrPid"
                     name="pinOrPid"
                     placeholder="Enter a PID or PIN"
+                    title=""
                     value=""
                   />
                 </div>

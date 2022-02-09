@@ -49,13 +49,8 @@ const ErrorTabs: React.FunctionComponent<IErrorTabsProps> = ({
       {showTabErrorModal && (
         <GenericModal
           display={showTabErrorModal}
+          setDisplay={setShowTabErrorModal}
           okButtonText="Ok"
-          handleOk={() => {
-            setShowTabErrorModal(false);
-          }}
-          handleCancel={() => {
-            setShowTabErrorModal(false);
-          }}
           title="The form has errors"
           message={tabErrorWarning}
         />
