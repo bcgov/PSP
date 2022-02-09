@@ -126,6 +126,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                 id="input-firstName"
                 name="firstName"
                 placeholder="First name"
+                title=""
                 value=""
               />
             </div>

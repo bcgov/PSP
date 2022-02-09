@@ -1,7 +1,8 @@
-import { Form, TextArea } from 'components/common/form';
-import * as Styled from 'features/leases/detail/styles';
+import { TextArea } from 'components/common/form';
 import * as React from 'react';
 import { withNameSpace } from 'utils/formUtils';
+
+import { LeaseH5 } from '../../styles';
 
 export interface ITenantNotesProps {
   nameSpace?: string;
@@ -18,15 +19,12 @@ export const TenantNotes: React.FunctionComponent<ITenantNotesProps> = ({
 }) => {
   return (
     <>
-      <Styled.FormGrid>
-        <Form.Label>Notes:</Form.Label>
-        <TextArea
-          innerClassName="notes"
-          disabled={disabled}
-          style={{ marginLeft: '1rem' }}
-          field={withNameSpace(nameSpace, '')}
-        />
-      </Styled.FormGrid>
+      <LeaseH5>Notes</LeaseH5>
+      <TextArea
+        innerClassName="notes"
+        disabled={disabled}
+        field={withNameSpace(nameSpace, 'note')}
+      />
     </>
   );
 };

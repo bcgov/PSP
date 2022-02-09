@@ -137,6 +137,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
             id="input-description"
             name="description"
             rows="4"
+            title=""
           />
         </div>
       </div>
@@ -344,6 +345,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
             id="input-description"
             name="description"
             rows="4"
+            title=""
           />
         </div>
       </div>

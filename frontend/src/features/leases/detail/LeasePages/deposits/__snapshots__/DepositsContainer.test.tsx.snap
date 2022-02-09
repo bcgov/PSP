@@ -499,6 +499,7 @@ Integer nec odio.
           id="input-returnNotes"
           name="returnNotes"
           rows="5"
+          title="Tenant no longer has a dog, deposit returned, less fee for carpet cleaning"
         >
           Tenant no longer has a dog, deposit returned, less fee for carpet cleaning
         </textarea>
