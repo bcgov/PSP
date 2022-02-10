@@ -21,6 +21,12 @@ namespace Pims.Dal.Entities.Models
         public string LFileNo { get; set; }
 
         /// <summary>
+        /// get/set - The address to search by.
+        /// </summary>
+        /// <value></value>
+        public string Address { get; set; }
+
+        /// <summary>
         /// get/set - The lease status type.
         /// </summary>
         public string LeaseStatusType { get; set; }
@@ -71,10 +77,15 @@ namespace Pims.Dal.Entities.Models
         /// <returns></returns>
         public override bool IsValid()
         {
+            if (ExpiryStartDate.HasValue && ExpiryEndDate.HasValue && this.ExpiryStartDate > this.ExpiryEndDate)
+            {
+                return false;
+            }
+
             return base.IsValid()
-                || !String.IsNullOrWhiteSpace(this.PinOrPid)
-                || !String.IsNullOrWhiteSpace(this.TenantName)
-                || !String.IsNullOrWhiteSpace(this.LFileNo);
+                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(TenantName)
+                || !string.IsNullOrWhiteSpace(LFileNo);
         }
         #endregion
     }
