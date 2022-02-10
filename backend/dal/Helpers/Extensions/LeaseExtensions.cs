@@ -81,7 +81,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.Details))
             {
-                query = query.Where(l => EF.Functions.Like(l.LeaseDescription.ToLower(), $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
+                query = query.Where(l => EF.Functions.Like(l.LeaseDescription, $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
             }
 
             if (filter.Sort?.Any() == true)
