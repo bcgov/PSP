@@ -20,6 +20,12 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public string LFileNo { get; set; }
 
         /// <summary>
+        /// get/set - The address to search by.
+        /// </summary>
+        /// <value></value>
+        public string Address { get; set; }
+
+        /// <summary>
         /// get/set - The lease status type.
         /// </summary>
         public string LeaseStatusType { get; set; }
@@ -74,6 +80,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
 
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
+            this.Address = filter.GetStringValue(nameof(this.Address));
             this.LeaseStatusType = filter.GetStringValue(nameof(this.LeaseStatusType));
             this.TenantName = filter.GetStringValue(nameof(this.TenantName));
             this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
@@ -96,6 +103,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             {
                 PinOrPid = model.PinOrPid,
                 LFileNo = model.LFileNo,
+                Address = model.Address,
                 LeaseStatusType = model.LeaseStatusType,
                 TenantName = model.TenantName,
                 Programs = model.Programs,
@@ -129,3 +137,4 @@ namespace Pims.Api.Areas.Lease.Models.Search
         #endregion
     }
 }
+

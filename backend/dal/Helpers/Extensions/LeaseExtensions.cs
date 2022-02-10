@@ -41,6 +41,16 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.Where(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null &&
+                    (EF.Functions.Like(pl.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pl.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pl.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%")
+                    )));
+            }
+
             if (filter.Programs.Count > 0)
             {
                 query = query.Where(l => filter.Programs.Any(p => p == l.LeaseProgramTypeCode));
@@ -84,17 +94,17 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             return query.Include(l => l.PimsPropertyLeases)
-                .ThenInclude(p => p.Property)
-                .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.Address)
                 .Include(l => l.PimsPropertyLeases)
                 .Include(l => l.PimsPropertyImprovements)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
-                .ThenInclude(t => t.Person)
+                    .ThenInclude(t => t.Person)
                 .Include(l => l.PimsLeaseTenants)
-                .ThenInclude(t => t.Organization)
+                    .ThenInclude(t => t.Organization)
                 .Include(p => p.PimsLeaseTerms);
         }
 

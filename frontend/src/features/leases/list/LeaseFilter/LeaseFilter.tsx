@@ -1,6 +1,7 @@
 import { FastDatePicker, Form, Input, Select } from 'components/common/form';
 import ResetButton from 'components/common/form/ResetButton';
 import SearchButton from 'components/common/form/SearchButton';
+import TooltipIcon from 'components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES, REGION_TYPES } from 'constants/API';
 import { PropertyFilterOptions } from 'features/properties/filter';
 import { Formik } from 'formik';
@@ -29,7 +30,7 @@ export const defaultFilter: ILeaseFilter = {
   pinOrPid: '',
   lFileNo: '',
   searchBy: 'lFileNo',
-  leaseStatusType: '',
+  leaseStatusType: 'ACTIVE',
   programs: [],
   tenantName: '',
   expiryStartDate: '',
@@ -47,11 +48,16 @@ const idFilterOptions = [
     label: 'L-File #',
     value: 'lFileNo',
   },
+  {
+    label: 'Address',
+    value: 'address',
+  },
 ];
 
 const idFilterPlaceholders = {
   pinOrPid: 'Enter a PID or PIN',
   lFileNo: 'Enter an LIS File Number',
+  address: 'Enter an address',
 };
 
 /**
@@ -75,8 +81,8 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
 
   const lookupCodes = useLookupCodeHelpers();
 
-  const leaseStatusTypes = lookupCodes.getByType(LEASE_STATUS_TYPES).map(c => mapLookupCode(c));
-  const regionTypes = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
+  const leaseStatusOptions = lookupCodes.getByType(LEASE_STATUS_TYPES).map(c => mapLookupCode(c));
+  const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
 
   const leaseProgramTypes = lookupCodes.getByType(LEASE_PROGRAM_TYPES);
   const programFilterOptions: MultiSelectOption[] = leaseProgramTypes.map<MultiSelectOption>(x => {
@@ -93,10 +99,10 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col lg="7">
+            <Col lg="6">
               <Row>
-                <Col lg="auto">
-                  <strong className="d-inline">Search by:</strong>
+                <Col xl="auto">
+                  <strong>Search by:</strong>
                 </Col>
                 <Col>
                   <Row>
@@ -109,7 +115,7 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                     <Col lg="4">
                       <Select
                         field="leaseStatusType"
-                        options={leaseStatusTypes}
+                        options={leaseStatusOptions}
                         placeholder="Status"
                       />
                     </Col>
@@ -151,9 +157,9 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                 </Col>
               </Row>
             </Col>
-            <Col lg="4">
+            <Col lg="5">
               <Row>
-                <Col lg="auto">
+                <Col xl="auto">
                   <strong>Expiry date:</strong>
                 </Col>
                 <Col>
@@ -175,26 +181,45 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
                   </Row>
                   <Row>
                     <Col>
-                      <Select field="regionType" options={regionTypes} placeholder="All Regions" />
+                      <Select
+                        field="regionType"
+                        options={regionOptions}
+                        placeholder="All Regions"
+                      />
                     </Col>
                     <Col>
-                      <Input field="details" placeholder="Keyword" />
+                      <Row>
+                        <Col xs="10" className="pr-0 mr-0">
+                          <Input field="details" placeholder="Keyword" />
+                        </Col>
+                        <Col xs="1" className="pl-0 ml-0">
+                          <TooltipIcon
+                            toolTipId="lease-search-keyword-tooltip"
+                            toolTip="Search 'Lease description' and 'Notes' fields"
+                          />
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Col>
-            <Col lg="1">
-              <SearchButton disabled={formikProps.isSubmitting} className="d-inline-block" />
-              <ResetButton
-                className="d-inline-block"
-                disabled={formikProps.isSubmitting}
-                onClick={() => {
-                  formikProps.resetForm();
-                  resetFilter();
-                }}
-              />
-            </Col>
+            <ColButtons lg="1">
+              <Row>
+                <Col xs="auto" className="pr-0">
+                  <SearchButton disabled={formikProps.isSubmitting} />
+                </Col>
+                <Col xs="auto">
+                  <ResetButton
+                    disabled={formikProps.isSubmitting}
+                    onClick={() => {
+                      formikProps.resetForm();
+                      resetFilter();
+                    }}
+                  />
+                </Col>
+              </Row>
+            </ColButtons>
           </Row>
         </FilterBoxForm>
       )}
@@ -204,7 +229,11 @@ export const LeaseFilter: React.FunctionComponent<ILeaseFilterProps> = ({ filter
 
 export default LeaseFilter;
 
-export const FilterBoxForm = styled(Form)`
+const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
+`;
+
+const ColButtons = styled(Col)`
+  border-left: 2px solid white;
 `;
