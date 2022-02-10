@@ -10,22 +10,22 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsOrganizationAddress, Model.OrganizationAddressModel>()
-                            .Map(dest => dest.Id, src => src.AddressId)
-                            .Map(dest => dest.RowVersion, src => src.Address.ConcurrencyControlNumber)
-                            .Map(dest => dest.OrganizationId, src => src.OrganizationId)
-                            .Map(dest => dest.OrganizationAddressId, src => src.OrganizationAddressId)
-                            .Map(dest => dest.OrganizationAddressRowVersion, src => src.ConcurrencyControlNumber)
-                            .Map(dest => dest.StreetAddress1, src => src.Address.StreetAddress1)
-                            .Map(dest => dest.StreetAddress2, src => src.Address.StreetAddress2)
-                            .Map(dest => dest.StreetAddress3, src => src.Address.StreetAddress3)
-                            .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
-                            .Map(dest => dest.RegionId, src => src.Address.RegionCode)
-                            .Map(dest => dest.DistrictId, src => src.Address.DistrictCode)
-                            .Map(dest => dest.ProvinceId, src => src.Address.ProvinceStateId)
-                            .Map(dest => dest.CountryId, src => src.Address.CountryId)
-                            .Map(dest => dest.Postal, src => src.Address.PostalCode)
-                            .Map(dest => dest.CountryOther, src => src.Address.OtherCountry)
-                            .Map(dest => dest.AddressTypeId, src => src.AddressUsageTypeCodeNavigation);
+                .Map(dest => dest.Id, src => src.AddressId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.OrganizationAddressId, src => src.OrganizationAddressId)
+                .Map(dest => dest.OrganizationAddressRowVersion, src => src.ConcurrencyControlNumber)
+                .Map(dest => dest.StreetAddress1, src => src.Address.StreetAddress1)
+                .Map(dest => dest.StreetAddress2, src => src.Address.StreetAddress2)
+                .Map(dest => dest.StreetAddress3, src => src.Address.StreetAddress3)
+                .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
+                .Map(dest => dest.RegionId, src => src.Address.RegionCode)
+                .Map(dest => dest.DistrictId, src => src.Address.DistrictCode)
+                .Map(dest => dest.ProvinceId, src => src.Address.ProvinceStateId)
+                .Map(dest => dest.CountryId, src => src.Address.CountryId)
+                .Map(dest => dest.Postal, src => src.Address.PostalCode)
+                .Map(dest => dest.CountryOther, src => src.Address.OtherCountry)
+                .Map(dest => dest.AddressTypeId, src => src.AddressUsageTypeCodeNavigation)
+                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.OrganizationAddressModel, Entity.PimsOrganizationAddress>()
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
@@ -38,7 +38,6 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
 
             config.NewConfig<Model.OrganizationAddressModel, Entity.PimsAddress>()
                 .Map(dest => dest.AddressId, src => src.Id)
-                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.StreetAddress1, src => src.StreetAddress1)
                 .Map(dest => dest.StreetAddress2, src => src.StreetAddress2)
                 .Map(dest => dest.StreetAddress3, src => src.StreetAddress3)
@@ -49,6 +48,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.CountryId, src => src.CountryId)
                 .Map(dest => dest.PostalCode, src => src.Postal)
                 .Map(dest => dest.OtherCountry, src => src.CountryOther)
+                .Inherits<Api.Models.BaseAppModel, Entity.IBaseAppEntity>()
                 .IgnoreNullValues(true);
         }
     }
