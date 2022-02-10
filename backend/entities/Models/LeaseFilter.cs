@@ -84,8 +84,15 @@ namespace Pims.Dal.Entities.Models
 
             return base.IsValid()
                 || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(LFileNo)
+                || !string.IsNullOrWhiteSpace(Address)
+                || !string.IsNullOrWhiteSpace(LeaseStatusType)
                 || !string.IsNullOrWhiteSpace(TenantName)
-                || !string.IsNullOrWhiteSpace(LFileNo);
+                || (Programs.Count != 0)
+                || ExpiryStartDate.HasValue
+                || ExpiryEndDate.HasValue
+                || RegionType.HasValue
+                || !string.IsNullOrWhiteSpace(Details);
         }
         #endregion
     }
