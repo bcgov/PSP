@@ -77,9 +77,15 @@ export const TermPaymentsContainer: React.FunctionComponent<ITermPaymentsContain
     [lease?.id, lease?.rowVersion, setLease, updateLeasePayment],
   );
 
-  const onEdit = useCallback((values: IFormLeaseTerm) => {
-    setEditModalValues(values);
-  }, []);
+  const onEdit = useCallback(
+    (values: IFormLeaseTerm) => {
+      if (lease?.terms?.length === 0) {
+        values = { ...values, startDate: lease?.startDate };
+      }
+      setEditModalValues(values);
+    },
+    [lease],
+  );
 
   const onEditPayment = useCallback((values: IFormLeasePayment) => {
     setEditPaymentModalValues(values);
