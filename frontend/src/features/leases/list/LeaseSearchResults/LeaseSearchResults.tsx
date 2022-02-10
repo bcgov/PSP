@@ -1,5 +1,5 @@
 import TooltipIcon from 'components/common/TooltipIcon';
-import { ColumnWithProps, renderDate, renderTypeCode, Table } from 'components/Table';
+import { ColumnWithProps, renderTypeCode, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { ILeaseSearchResult } from 'interfaces';
 import moment from 'moment';
