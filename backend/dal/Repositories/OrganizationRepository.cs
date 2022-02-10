@@ -8,13 +8,15 @@ using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Constants;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
     /// <summary>
     /// Provides a service layer to administrate organizations within the datasource.
     /// </summary>
-    public class OrganizationService : BaseRepository<PimsOrganization>, IOrganizationService
+    public class OrganizationRepository : BaseRepository<PimsOrganization>, IOrganizationRepository
     {
         #region Constructors
         /// <summary>
@@ -24,7 +26,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public OrganizationService(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<OrganizationService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<OrganizationRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         #region Methods
@@ -38,6 +40,12 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsOrganization> GetAll()
         {
             return this.Context.PimsOrganizations.AsNoTracking().ToArray();
+        }
+
+        public long GetRowVersion(long id)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.ContactView);
+            return this.Context.PimsOrganizations.AsNoTracking().Where(o => o.OrganizationId == id)?.Select(p => p.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -93,10 +101,36 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            var createdOrganization = this.Context.PimsOrganizations.Add(organization);
-            this.Context.CommitTransaction();
+            this.Context.PimsOrganizations.Add(organization);
+            return organization;
+        }
 
-            return createdOrganization.Entity;
+        /// <summary>
+        /// Update the specified organization contact.
+        /// </summary>
+        /// <param name="organization"></param>
+        /// <returns></returns>
+        public PimsOrganization Update(PimsOrganization organization)
+        {
+            organization.ThrowIfNull(nameof(organization));
+            this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
+
+            var orgId = organization.Id;
+            var existingOrganization = this.Context.PimsOrganizations.Where(o => o.OrganizationId == orgId).FirstOrDefault()
+                 ?? throw new KeyNotFoundException();
+
+            // update main entity - PimsOrganization
+            Context.Entry(existingOrganization).CurrentValues.SetValues(organization);
+
+            // TODO: Verify these are working as expected!!!
+
+            // update direct relationships - contact_methods, organizations
+            this.Context.UpdateChild<PimsOrganization, long, PimsContactMethod>(o => o.PimsContactMethods, orgId, organization.PimsContactMethods.ToArray());
+
+            // update addresses via UpdateGrandchild method
+            this.Context.UpdateGrandchild<PimsOrganization, long, PimsOrganizationAddress>(o => o.PimsOrganizationAddresses, oa => oa.Address, orgId, organization.PimsOrganizationAddresses.ToArray());
+
+            return existingOrganization;
         }
         #endregion
     }
