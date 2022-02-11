@@ -8,16 +8,16 @@ import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { IContactFilter } from '../interfaces';
 import {
   ContactFilterComponent,
   defaultFilter,
 } from './ContactFilterComponent/ContactFilterComponent';
 import { ContactResultComponent } from './ContactResultComponent/ContactResultComponent';
+import { IContactFilter } from './IContactFilter';
 
 interface IContactManagerViewProps {
-  setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
-  selectedRows: IContactSearchResult[];
+  setSelectedRows?: (selectedContacts: IContactSearchResult[]) => void;
+  selectedRows?: IContactSearchResult[];
   showSelectedRowCount?: boolean;
   className?: string;
   showAddButton?: boolean;

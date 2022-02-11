@@ -1,8 +1,9 @@
 import { Check } from 'components/common/form';
-import { IContactFilter } from 'features/contacts/interfaces';
 import { useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as React from 'react';
+
+import { IContactFilter } from '../IContactFilter';
 
 interface IActiveFilterCheckProps {
   setFilter: (filter: IContactFilter) => void;

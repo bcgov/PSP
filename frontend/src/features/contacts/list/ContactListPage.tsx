@@ -1,83 +1,31 @@
+import { Scrollable as ScrollableBase } from 'components/common/Scrollable/Scrollable';
 import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
-import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { IContactSearchResult } from 'interfaces/IContactSearchResult';
-import { noop } from 'lodash';
-import { useCallback, useEffect } from 'react';
-import { IoMdPersonAdd } from 'react-icons/io';
-import { useHistory } from 'react-router';
-import { toast } from 'react-toastify';
-
-import { useSearch } from '../../../hooks/useSearch';
-import { IContactFilter } from '../interfaces';
-import { ContactSearchResults } from './ContactSearchResults/ContactSearchResults';
-import ContactFilter, { defaultFilter } from './filter/ContactFilter';
-import * as Styled from './styles';
-
-interface IContactListViewProps {
-  setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
-  selectedRows: IContactSearchResult[];
-  showSelectedRowCount?: boolean;
-  className?: string;
-  hideAddButton?: boolean;
-}
+import styled from 'styled-components';
 
 /**
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
-export const ContactListPage = ({
-  setSelectedRows,
-  selectedRows,
-  className,
-  showSelectedRowCount,
-  hideAddButton,
-}: IContactListViewProps) => {
-  const history = useHistory();
-  const { getContacts } = useApiContacts();
-  const {
-    results,
-    filter,
-    sort,
-    error,
-    currentPage,
-    totalPages,
-    pageSize,
-    setFilter,
-    setSort,
-    setCurrentPage,
-    setPageSize,
-    loading,
-  } = useSearch<IContactSearchResult, IContactFilter>(
-    defaultFilter,
-    getContacts,
-    'Search returned no results',
-  );
-
-  // update internal state whenever the filter bar changes
-  const changeFilter = useCallback(
-    (filter: IContactFilter) => {
-      setFilter(filter as any);
-      setCurrentPage(0);
-    },
-    [setFilter, setCurrentPage],
-  );
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error?.message);
-    }
-  }, [error]);
-
+export const ContactListPage = () => {
   return (
-    <Styled.ListPage className={className}>
-      <Styled.Scrollable>
-        <Styled.PageHeader>Contacts</Styled.PageHeader>
-        <ContactManagerView
-          showActiveSelector
-          showAddButton
-          setSelectedRows={noop}
-          selectedRows={[]}
-        />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+    <ListPage>
+      <Scrollable>
+        <PageHeader>Contacts</PageHeader>
+        <ContactManagerView showActiveSelector showAddButton />
+      </Scrollable>
+    </ListPage>
   );
 };
+
+export const ListPage = styled.div`
+  width: 100%;
+  font-size: 14px;
+`;
+
+export const Scrollable = styled(ScrollableBase)`
+  padding: 1.6rem 3.2rem;
+  width: 100%;
+`;
+
+export const PageHeader = styled.h3`
+  text-align: left;
+`;

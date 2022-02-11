@@ -4,8 +4,3 @@ export interface IContactFilter {
   activeContactsOnly: boolean;
   searchBy: string;
 }
-
-export enum ContactTypes {
-  ORGANIZATION = 'O',
-  INDIVIDUAL = 'P',
-}

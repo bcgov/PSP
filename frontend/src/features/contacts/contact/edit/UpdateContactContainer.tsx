@@ -1,4 +1,5 @@
-import { ContactBreadcrumb, ContactTypes } from 'features/contacts';
+import { ContactBreadcrumb } from 'features/contacts';
+import { ContactTypes } from 'features/contacts/interfaces';
 import * as Styled from 'features/contacts/styles';
 import React from 'react';
 import { useParams } from 'react-router-dom';
