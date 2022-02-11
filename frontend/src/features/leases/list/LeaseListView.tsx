@@ -1,11 +1,13 @@
 import { Button } from 'components/common/form';
+import GenericModal, { ModalSize } from 'components/common/GenericModal';
 import TooltipWrapper from 'components/common/TooltipWrapper';
+import ContactListView2 from 'components/contactlist/contacts/ContactManagerView/ContactManager';
 import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
-import { ILeaseSearchResult } from 'interfaces';
-import { isEmpty } from 'lodash';
+import { IContactSearchResult, ILeaseSearchResult } from 'interfaces';
+import { isEmpty, size } from 'lodash';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -108,6 +110,7 @@ export const LeaseListView: React.FunctionComponent = () => {
             &nbsp;Add A Lease/License
           </StyledAddButton>
         )}
+        <span>asdasdsa</span>
         <LeaseSearchResults
           results={results}
           pageIndex={currentPage}
@@ -119,6 +122,31 @@ export const LeaseListView: React.FunctionComponent = () => {
           setPageIndex={setCurrentPage}
         />
       </Styled.Scrollable>
+
+      <GenericModal
+        title="Select a contact"
+        message={
+          <>
+            <p>
+              Individuals and contacts must already be in the Contact Manager and be an active
+              contact to be found in this search.
+            </p>
+            <ContactListView2
+              setSelectedRows={(selectedContacts: IContactSearchResult[]) => {
+                console.log(selectedContacts);
+              }}
+              selectedRows={[]}
+              isSummary
+              showSelectedRowCount
+            />
+          </>
+        }
+        okButtonText="Select"
+        cancelButtonText="Cancel"
+        handleOk={() => window.location.reload()}
+        handleCancel={() => history.replace('/')}
+        size={ModalSize.XLARGE}
+      ></GenericModal>
     </Styled.ListPage>
   );
 };
