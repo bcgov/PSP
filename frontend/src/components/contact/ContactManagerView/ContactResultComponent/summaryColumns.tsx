@@ -1,12 +1,7 @@
-import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps } from 'components/Table';
-import { Claims } from 'constants/claims';
-import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { IContactSearchResult } from 'interfaces';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import styled from 'styled-components';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   {

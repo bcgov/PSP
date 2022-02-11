@@ -3,7 +3,7 @@ import { SearchButton } from 'components/common/form';
 import { RadioGroup } from 'components/common/form/RadioGroup';
 import ResetButton from 'components/common/form/ResetButton';
 import { InlineInput } from 'components/common/form/styles';
-import { IContactFilter } from 'components/contact/interfaces';
+import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';

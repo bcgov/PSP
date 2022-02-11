@@ -1,11 +1,10 @@
-import { IPagedItems } from 'interfaces';
+import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
+import { IContactSearchResult, IPagedItems } from 'interfaces';
 import { ICreateOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
 
-import { IContactFilter } from '../../features/contacts/interfaces';
-import { IContactSearchResult } from './../../interfaces/IContactSearchResult';
 import { IPaginateRequest, useAxiosApi } from '.';
 
 /**

@@ -16,8 +16,8 @@ export interface IContactResultComponentProps {
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
-  setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
-  selectedRows: IContactSearchResult[];
+  setSelectedRows?: (selectedContacts: IContactSearchResult[]) => void;
+  selectedRows?: IContactSearchResult[];
   showSelectedRowCount?: boolean;
   isSummary?: boolean;
 }
