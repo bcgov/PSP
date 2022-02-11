@@ -1,7 +1,7 @@
 import { Button } from 'components/common/form';
 import GenericModal, { ModalSize } from 'components/common/GenericModal';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import ContactListView2 from 'components/contactlist/contacts/ContactManagerView/ContactManager';
+import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
 import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
@@ -131,7 +131,7 @@ export const LeaseListView: React.FunctionComponent = () => {
               Individuals and contacts must already be in the Contact Manager and be an active
               contact to be found in this search.
             </p>
-            <ContactListView2
+            <ContactManagerView
               setSelectedRows={(selectedContacts: IContactSearchResult[]) => {
                 console.log(selectedContacts);
               }}

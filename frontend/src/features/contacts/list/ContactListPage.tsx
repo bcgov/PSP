@@ -1,4 +1,4 @@
-import ContactListView2 from 'components/contactlist/contacts/list/ContactListView';
+import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import { noop } from 'lodash';
@@ -71,7 +71,7 @@ export const ContactListPage = ({
     <Styled.ListPage className={className}>
       <Styled.Scrollable>
         <Styled.PageHeader>Contacts</Styled.PageHeader>
-        <ContactListView2
+        <ContactManagerView
           showActiveSelector
           showAddButton
           setSelectedRows={noop}
