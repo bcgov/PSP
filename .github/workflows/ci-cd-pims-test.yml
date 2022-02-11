@@ -21,6 +21,8 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
+  INSTANCE: "-test"
+  NAMESPACE_OVERRIDE: "3cd915-dev"
 
 on:
   pull_request_target:
