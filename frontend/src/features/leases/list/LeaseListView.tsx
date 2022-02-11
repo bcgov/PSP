@@ -1,13 +1,11 @@
 import { Button } from 'components/common/form';
-import GenericModal, { ModalSize } from 'components/common/GenericModal';
 import TooltipWrapper from 'components/common/TooltipWrapper';
-import ContactManagerView from 'components/contact/ContactManagerView/ContactManagerView';
 import Claims from 'constants/claims';
 import { useApiLeases } from 'hooks/pims-api/useApiLeases';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
-import { IContactSearchResult, ILeaseSearchResult } from 'interfaces';
-import { isEmpty, size } from 'lodash';
+import { ILeaseSearchResult } from 'interfaces';
+import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -122,31 +120,6 @@ export const LeaseListView: React.FunctionComponent = () => {
           setPageIndex={setCurrentPage}
         />
       </Styled.Scrollable>
-
-      <GenericModal
-        title="Select a contact"
-        message={
-          <>
-            <p>
-              Individuals and contacts must already be in the Contact Manager and be an active
-              contact to be found in this search.
-            </p>
-            <ContactManagerView
-              setSelectedRows={(selectedContacts: IContactSearchResult[]) => {
-                console.log(selectedContacts);
-              }}
-              selectedRows={[]}
-              isSummary
-              showSelectedRowCount
-            />
-          </>
-        }
-        okButtonText="Select"
-        cancelButtonText="Cancel"
-        handleOk={() => window.location.reload()}
-        handleCancel={() => history.replace('/')}
-        size={ModalSize.XLARGE}
-      ></GenericModal>
     </Styled.ListPage>
   );
 };

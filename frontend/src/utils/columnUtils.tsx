@@ -13,7 +13,7 @@ export const getColumnsWithRemove = <T extends object>(
   }
   cols.unshift({
     Header: '',
-    align: 'left',
+    align: 'center',
     accessor: 'id' as any,
     maxWidth: 20,
     Cell: (props: any) => (
