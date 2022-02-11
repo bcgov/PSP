@@ -4,7 +4,6 @@ import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
 import { act, fillInput, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
-
 import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
 
