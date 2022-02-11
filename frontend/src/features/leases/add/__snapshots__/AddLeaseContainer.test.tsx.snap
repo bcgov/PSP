@@ -611,7 +611,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               Start Date
             </label>
             <div
-              class="react-datepicker-wrapper"
+              class="react-datepicker-wrapper d-block"
             >
               <div
                 class="react-datepicker__input-container"
@@ -639,7 +639,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               Expiry Date (if known)
             </label>
             <div
-              class="react-datepicker-wrapper"
+              class="react-datepicker-wrapper d-block"
             >
               <div
                 class="react-datepicker__input-container"
@@ -1460,7 +1460,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
               Effective date of responsibility:
             </label>
             <div
-              class="react-datepicker-wrapper"
+              class="react-datepicker-wrapper d-block"
             >
               <div
                 class="react-datepicker__input-container"
