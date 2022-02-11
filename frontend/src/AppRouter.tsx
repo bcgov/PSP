@@ -2,7 +2,7 @@ import LoadingBackdrop from 'components/maps/leaflet/LoadingBackdrop/LoadingBack
 import { Claims } from 'constants/claims';
 import { IENotSupportedPage } from 'features/account/IENotSupportedPage';
 import { LogoutPage } from 'features/account/Logout';
-import { ContactListView } from 'features/contacts';
+import { ContactListPage } from 'features/contacts';
 import CreateContactContainer from 'features/contacts/contact/create/CreateContactContainer';
 import ContactViewContainer from 'features/contacts/contact/detail/Container';
 import UpdateContactContainer from 'features/contacts/contact/edit/UpdateContactContainer';
@@ -168,7 +168,7 @@ const AppRouter: React.FC = () => {
         <AppRoute
           protected
           path="/contact/list"
-          component={ContactListView}
+          component={ContactListPage}
           layout={AuthLayout}
           claim={Claims.CONTACT_VIEW}
           title={getTitle('View Contacts')}

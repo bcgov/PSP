@@ -1,36 +1,42 @@
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { useSearch } from 'hooks/useSearch';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import { useCallback, useEffect } from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
-import { useSearch } from '../../../hooks/useSearch';
 import { IContactFilter } from '../interfaces';
-import { ContactSearchResults } from './ContactSearchResults/ContactSearchResults';
-import ContactFilter, { defaultFilter } from './filter/ContactFilter';
-import * as Styled from './styles';
+import { ContactSearchResults } from './ResultComponent/ContactSearchResults';
+import { ContactFilter, defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 
-interface IContactListViewProps {
+interface IContactManagerViewProps {
   setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
   selectedRows: IContactSearchResult[];
   showSelectedRowCount?: boolean;
   className?: string;
-  hideAddButton?: boolean;
+  showAddButton?: boolean;
+  showActiveSelector?: boolean;
+  isSummary?: boolean;
 }
 
 /**
  * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
  */
-export const ContactListView = ({
+const ContactManagerView = ({
   setSelectedRows,
   selectedRows,
   className,
   showSelectedRowCount,
-  hideAddButton,
-}: IContactListViewProps) => {
+  showAddButton,
+  showActiveSelector,
+  isSummary,
+}: IContactManagerViewProps) => {
   const history = useHistory();
   const { getContacts } = useApiContacts();
+
   const {
     results,
     filter,
@@ -66,20 +72,25 @@ export const ContactListView = ({
   }, [error]);
 
   return (
-    <Styled.ListPage className={className}>
-      <Styled.Scrollable>
-        <Styled.PageHeader>Contacts</Styled.PageHeader>
-        <Styled.PageToolbar>
-          <ContactFilter filter={filter as any} setFilter={changeFilter} />
-          <Styled.Spacer />
-          {!hideAddButton && (
-            <Styled.PrimaryButton onClick={() => history.push('/contact/new')}>
+    <div className={className}>
+      <Row>
+        <Col className="">
+          <ContactFilter
+            filter={filter as any}
+            setFilter={changeFilter}
+            showActiveSelector={showActiveSelector}
+          />
+        </Col>
+        {showAddButton && (
+          <ColButton xs="auto" xl="3" className="pl-0">
+            <PrimaryButton onClick={() => history.push('/contact/new')}>
               <IoMdPersonAdd color="white" />
-              Add new contact
-            </Styled.PrimaryButton>
-          )}
-          <Styled.Spacer />
-        </Styled.PageToolbar>
+              <span>Add new contact</span>
+            </PrimaryButton>
+          </ColButton>
+        )}
+      </Row>
+      <div>
         <ContactSearchResults
           loading={loading}
           results={results}
@@ -93,10 +104,20 @@ export const ContactListView = ({
           selectedRows={selectedRows}
           setSelectedRows={setSelectedRows}
           showSelectedRowCount={showSelectedRowCount}
+          isSummary={isSummary}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </div>
+    </div>
   );
 };
 
-export default ContactListView;
+export default ContactManagerView;
+
+export const ColButton = styled(Col)``;
+
+export const PrimaryButton = styled(Button)`
+  margin: 0.4rem 0.6rem;
+  white-space: nowrap;
+  display: inline-block;
+  gap: 1rem;
+`;

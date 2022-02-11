@@ -4,9 +4,9 @@ import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
 import { act, fillInput, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
+import ContactListView from './ContactManager';
 
-import { ContactListPage } from './ContactListPage';
-import { defaultFilter } from './filter/ContactFilter';
+import { defaultFilter } from './ContactFilterComponent/ContactFilter';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -19,7 +19,7 @@ const getContacts = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<ContactListPage selectedRows={[]} setSelectedRows={noop} />, {
+  const utils = render(<ContactListView selectedRows={[]} setSelectedRows={noop} />, {
     ...renderOptions,
   });
   const searchButton = utils.getByTestId('search');
