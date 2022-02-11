@@ -51,6 +51,8 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
+        with:
+          ref: test
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -70,6 +72,8 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
+        with:
+          ref: test
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -88,6 +92,8 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
+        with:
+          ref: test
       - name: Fetch Tags
         run: git fetch --unshallow --tags
       - name: Login to OpenShift
@@ -108,6 +114,8 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
+        with:
+          ref: test
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
