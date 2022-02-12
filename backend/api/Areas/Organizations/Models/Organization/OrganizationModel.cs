@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Pims.Api.Models;
 using Pims.Api.Models.Contact;
 
 namespace Pims.Api.Areas.Organizations.Models.Organization
@@ -7,19 +8,13 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
     /// <summary>
     /// Provides a contact-oriented organization model.
     /// </summary>
-    public class OrganizationModel
+    public class OrganizationModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - The organization's id.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The organization's disabled status flag.
