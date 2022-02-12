@@ -46,7 +46,7 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
         /// get/set - The organization's persons. This collection is read-only
         /// Changing this collection will NOT modify the organization's persons.
         /// </summary>
-        public IList<PersonSummaryModel> Persons { get; set; }
+        public IList<Pims.Api.Areas.Persons.Models.Person.PersonModel> Persons { get; set; }
 
         /// <summary>
         /// get/set - The organization's addresses.
