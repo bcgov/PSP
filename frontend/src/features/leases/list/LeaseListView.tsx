@@ -108,7 +108,6 @@ export const LeaseListView: React.FunctionComponent = () => {
             &nbsp;Add A Lease/License
           </StyledAddButton>
         )}
-        <span>asdasdsa</span>
         <LeaseSearchResults
           results={results}
           pageIndex={currentPage}
