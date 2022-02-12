@@ -19,10 +19,11 @@ interface IContactManagerViewProps {
   setSelectedRows?: (selectedContacts: IContactSearchResult[]) => void;
   selectedRows?: IContactSearchResult[];
   showSelectedRowCount?: boolean;
+  isSummary?: boolean;
+  noInitialSearch?: boolean;
   className?: string;
   showAddButton?: boolean;
   showActiveSelector?: boolean;
-  isSummary?: boolean;
 }
 
 /**
@@ -32,13 +33,18 @@ const ContactManagerView = ({
   setSelectedRows,
   selectedRows,
   className,
+  isSummary,
+  noInitialSearch,
   showSelectedRowCount,
   showAddButton,
   showActiveSelector,
-  isSummary,
 }: IContactManagerViewProps) => {
   const history = useHistory();
   const { getContacts } = useApiContacts();
+
+  var initialFilter: IContactFilter = (noInitialSearch
+    ? undefined
+    : defaultFilter) as IContactFilter;
 
   const {
     results,
@@ -54,7 +60,7 @@ const ContactManagerView = ({
     setPageSize,
     loading,
   } = useSearch<IContactSearchResult, IContactFilter>(
-    defaultFilter,
+    initialFilter,
     getContacts,
     'Search returned no results',
   );
@@ -62,7 +68,7 @@ const ContactManagerView = ({
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
     (filter: IContactFilter) => {
-      setFilter(filter as any);
+      setFilter(filter);
       setCurrentPage(0);
     },
     [setFilter, setCurrentPage],
@@ -79,7 +85,7 @@ const ContactManagerView = ({
       <Row>
         <Col className="">
           <ContactFilterComponent
-            filter={filter as any}
+            filter={filter}
             setFilter={changeFilter}
             showActiveSelector={showActiveSelector}
           />

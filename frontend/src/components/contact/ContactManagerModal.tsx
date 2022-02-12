@@ -6,7 +6,6 @@ import ContactManagerView from './ContactManagerView/ContactManagerView';
 export interface ILeasePropertiesProps {
   setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
   selectedRows: IContactSearchResult[];
-  showSelectedRowCount?: boolean;
   showAddButton?: boolean;
   showActiveSelector?: boolean;
   handleModalOk?: Function;
@@ -26,10 +25,11 @@ export const ContactManagerModal: React.FunctionComponent<ILeasePropertiesProps>
           <ContactManagerView
             setSelectedRows={props.setSelectedRows}
             selectedRows={props.selectedRows}
-            isSummary
-            showSelectedRowCount={props.showSelectedRowCount}
             showAddButton={props.showAddButton}
             showActiveSelector={props.showActiveSelector}
+            noInitialSearch
+            isSummary
+            showSelectedRowCount
           />
         </>
       }
