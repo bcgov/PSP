@@ -19,9 +19,12 @@ const getContacts = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<ContactManagerView selectedRows={[]} setSelectedRows={noop} />, {
-    ...renderOptions,
-  });
+  const utils = render(
+    <ContactManagerView selectedRows={[]} setSelectedRows={noop} showActiveSelector />,
+    {
+      ...renderOptions,
+    },
+  );
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
 };
@@ -61,7 +64,7 @@ const defaultPagedFilter = {
   sort: undefined,
 };
 
-describe('Contact List View', () => {
+describe('ContactManagerView', () => {
   beforeEach(() => {
     getContacts.mockClear();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
