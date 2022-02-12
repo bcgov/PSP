@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { ICreateOrganization } from 'interfaces/editable-contact';
+import { IEditableOrganization } from 'interfaces/editable-contact';
 import { IApiError } from 'interfaces/IApiError';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ import { logError } from 'store/slices/network/networkSlice';
  * @param organizationId
  */
 export const useOrganizationDetail = (organizationId?: number) => {
-  const [organization, setOrganization] = useState<ICreateOrganization>();
+  const [organization, setOrganization] = useState<IEditableOrganization>();
   const { getOrganization } = useApiContacts();
   const dispatch = useDispatch();
 

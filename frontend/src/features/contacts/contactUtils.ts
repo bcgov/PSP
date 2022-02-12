@@ -3,16 +3,17 @@ import { AddressTypes } from 'constants/index';
 import {
   getDefaultAddress,
   getDefaultContactMethod,
-  ICreateOrganization,
-  ICreateOrganizationForm,
   IEditableContactMethod,
   IEditableContactMethodForm,
+  IEditableOrganization,
+  IEditableOrganizationForm,
   IEditablePerson,
   IEditablePersonAddress,
   IEditablePersonAddressForm,
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
 import { stringToBoolean, stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
+import { formatFullName } from 'utils/personUtils';
 
 export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditablePerson {
   // exclude form-specific fields from API payload object
@@ -77,8 +78,8 @@ export function apiPersonToFormPerson(person?: IEditablePerson) {
 }
 
 export function formOrganizationToApiOrganization(
-  formValues: ICreateOrganizationForm,
-): ICreateOrganization {
+  formValues: IEditableOrganizationForm,
+): IEditableOrganization {
   // exclude form-specific fields from API payload object
   const {
     mailingAddress,
@@ -99,18 +100,20 @@ export function formOrganizationToApiOrganization(
 
   const apiOrganization = {
     ...restObject,
+    isDisabled: stringToBoolean(formValues.isDisabled),
     addresses,
     contactMethods,
-  } as ICreateOrganization;
+    persons: undefined, // do not send the list of persons back to the server. will not be saved
+  } as IEditableOrganization;
 
   return apiOrganization;
 }
 
-export function apiOrganizationToFormOrganization(organization?: ICreateOrganization) {
+export function apiOrganizationToFormOrganization(organization?: IEditableOrganization) {
   if (!organization) return undefined;
 
   // exclude api-specific fields from form values
-  const { addresses, contactMethods, ...restObject } = organization;
+  const { addresses, contactMethods, persons, ...restObject } = organization;
 
   // split address array into sub-types: MAILING, RESIDENTIAL, BILLING
   const formAddresses = addresses?.map(apiAddressToFormAddress) || [];
@@ -121,8 +124,12 @@ export function apiOrganizationToFormOrganization(organization?: ICreateOrganiza
   const emailContactMethods = formContactMethods.filter(isEmail);
   const phoneContactMethods = formContactMethods.filter(isPhone);
 
+  // Format person API values - need full names here
+  const formPersonList = (persons || []).map(p => ({ id: p.id, fullName: formatFullName(p) }));
+
   const formValues = {
     ...restObject,
+    persons: formPersonList,
     mailingAddress:
       addressDictionary[AddressTypes.Mailing] ?? getDefaultAddress(AddressTypes.Mailing),
     propertyAddress:
@@ -133,7 +140,7 @@ export function apiOrganizationToFormOrganization(organization?: ICreateOrganiza
       emailContactMethods.length > 0 ? emailContactMethods : [getDefaultContactMethod()],
     phoneContactMethods:
       phoneContactMethods.length > 0 ? phoneContactMethods : [getDefaultContactMethod()],
-  } as ICreateOrganizationForm;
+  } as IEditableOrganizationForm;
 
   return formValues;
 }

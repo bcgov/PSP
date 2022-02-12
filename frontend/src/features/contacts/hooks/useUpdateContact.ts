@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
-import { ICreateOrganization, IEditablePerson } from 'interfaces/editable-contact';
+import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { IApiError } from 'interfaces/IApiError';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -41,7 +41,7 @@ export const useUpdateContact = () => {
     }
   };
 
-  const updateOrganization = async (organization: ICreateOrganization) => {
+  const updateOrganization = async (organization: IEditableOrganization) => {
     try {
       dispatch(showLoading());
       const response = await putOrganization(organization);

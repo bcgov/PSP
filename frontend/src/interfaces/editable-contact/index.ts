@@ -19,13 +19,15 @@ export interface IEditablePerson {
   contactMethods?: IEditableContactMethod[];
 }
 
-export interface ICreateOrganization {
+export interface IEditableOrganization {
   id?: number;
+  rowVersion?: number;
   name: string;
   alias?: string;
   incorporationNumber?: string;
   comment?: string;
   isDisabled: boolean;
+  persons?: Partial<IEditablePerson>[];
   addresses?: IEditableOrganizationAddress[];
   contactMethods?: IEditableContactMethod[];
 }
@@ -86,9 +88,9 @@ export interface IEditablePersonForm
     }
   > {}
 
-export interface ICreateOrganizationForm
+export interface IEditableOrganizationForm
   extends ExtendOverride<
-    ICreateOrganization,
+    IEditableOrganization,
     {
       emailContactMethods: IEditableContactMethodForm[];
       phoneContactMethods: IEditableContactMethodForm[];
@@ -147,7 +149,7 @@ export const defaultCreatePerson: IEditablePersonForm = {
   billingAddress: getDefaultAddress(AddressTypes.Billing),
 };
 
-export const defaultCreateOrganization: ICreateOrganizationForm = {
+export const defaultCreateOrganization: IEditableOrganizationForm = {
   isDisabled: false,
   name: '',
   alias: '',

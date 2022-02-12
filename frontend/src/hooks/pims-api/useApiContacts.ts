@@ -1,6 +1,6 @@
 import { IContactFilter } from 'components/contact/ContactManagerView/IContactFilter';
 import { IContactSearchResult, IPagedItems } from 'interfaces';
-import { ICreateOrganization, IEditablePerson } from 'interfaces/editable-contact';
+import { IEditableOrganization, IEditablePerson } from 'interfaces/editable-contact';
 import { IContact } from 'interfaces/IContact';
 import queryString from 'query-string';
 import React from 'react';
@@ -28,11 +28,14 @@ export const useApiContacts = () => {
         api.post<IEditablePerson>(`/persons?userOverride=${userOverride}`, person),
       putPerson: (person: IEditablePerson) =>
         api.put<IEditablePerson>(`/persons/${person.id}`, person),
-      getOrganization: (id: number) => api.get<ICreateOrganization>(`/organizations/${id}`),
-      postOrganization: (organization: ICreateOrganization, userOverride: boolean) =>
-        api.post<ICreateOrganization>(`/organizations?userOverride=${userOverride}`, organization),
-      putOrganization: (organization: ICreateOrganization) =>
-        api.put<ICreateOrganization>(`/organizations/${organization.id}`, organization),
+      getOrganization: (id: number) => api.get<IEditableOrganization>(`/organizations/${id}`),
+      postOrganization: (organization: IEditableOrganization, userOverride: boolean) =>
+        api.post<IEditableOrganization>(
+          `/organizations?userOverride=${userOverride}`,
+          organization,
+        ),
+      putOrganization: (organization: IEditableOrganization) =>
+        api.put<IEditableOrganization>(`/organizations/${organization.id}`, organization),
     }),
     [api],
   );

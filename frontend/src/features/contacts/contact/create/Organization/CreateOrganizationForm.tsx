@@ -29,7 +29,7 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/editable-contact';
+import { defaultCreateOrganization, IEditableOrganizationForm } from 'interfaces/editable-contact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -52,8 +52,8 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
     [countries],
   );
 
-  const formikRef = useRef<FormikProps<ICreateOrganizationForm>>(null);
-  const onValidate = (values: ICreateOrganizationForm) => {
+  const formikRef = useRef<FormikProps<IEditableOrganizationForm>>(null);
+  const onValidate = (values: IEditableOrganizationForm) => {
     const errors = {} as any;
     try {
       // combine yup schema validation with custom rules
@@ -71,8 +71,8 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
   };
 
   const onSubmit = async (
-    formOrganization: ICreateOrganizationForm,
-    { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
+    formOrganization: IEditableOrganizationForm,
+    { setSubmitting }: FormikHelpers<IEditableOrganizationForm>,
   ) => {
     try {
       setShowDuplicateModal(false);
@@ -126,7 +126,7 @@ export default CreateOrganizationForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>> = ({
+const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationForm>> = ({
   values,
   errors,
   touched,
