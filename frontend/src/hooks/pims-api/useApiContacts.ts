@@ -26,10 +26,13 @@ export const useApiContacts = () => {
       getPerson: (id: number) => api.get<IEditablePerson>(`/persons/${id}`),
       postPerson: (person: IEditablePerson, userOverride: boolean) =>
         api.post<IEditablePerson>(`/persons?userOverride=${userOverride}`, person),
-      postOrganization: (organization: ICreateOrganization, userOverride: boolean) =>
-        api.post<ICreateOrganization>(`/organizations?userOverride=${userOverride}`, organization),
       putPerson: (person: IEditablePerson) =>
         api.put<IEditablePerson>(`/persons/${person.id}`, person),
+      getOrganization: (id: number) => api.get<ICreateOrganization>(`/organizations/${id}`),
+      postOrganization: (organization: ICreateOrganization, userOverride: boolean) =>
+        api.post<ICreateOrganization>(`/organizations?userOverride=${userOverride}`, organization),
+      putOrganization: (organization: ICreateOrganization) =>
+        api.put<ICreateOrganization>(`/organizations/${organization.id}`, organization),
     }),
     [api],
   );

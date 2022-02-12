@@ -76,7 +76,7 @@ export function apiPersonToFormPerson(person?: IEditablePerson) {
   return formPerson;
 }
 
-export function organizationCreateFormToApiOrganization(
+export function formOrganizationToApiOrganization(
   formValues: ICreateOrganizationForm,
 ): ICreateOrganization {
   // exclude form-specific fields from API payload object
@@ -104,6 +104,38 @@ export function organizationCreateFormToApiOrganization(
   } as ICreateOrganization;
 
   return apiOrganization;
+}
+
+export function apiOrganizationToFormOrganization(organization?: ICreateOrganization) {
+  if (!organization) return undefined;
+
+  // exclude api-specific fields from form values
+  const { addresses, contactMethods, ...restObject } = organization;
+
+  // split address array into sub-types: MAILING, RESIDENTIAL, BILLING
+  const formAddresses = addresses?.map(apiAddressToFormAddress) || [];
+  const addressDictionary = toDictionary(formAddresses, 'addressTypeId');
+
+  // split contact methods array into phone and email values
+  const formContactMethods = contactMethods?.map(apiContactMethodToFormContactMethod) || [];
+  const emailContactMethods = formContactMethods.filter(isEmail);
+  const phoneContactMethods = formContactMethods.filter(isPhone);
+
+  const formValues = {
+    ...restObject,
+    mailingAddress:
+      addressDictionary[AddressTypes.Mailing] ?? getDefaultAddress(AddressTypes.Mailing),
+    propertyAddress:
+      addressDictionary[AddressTypes.Residential] ?? getDefaultAddress(AddressTypes.Residential),
+    billingAddress:
+      addressDictionary[AddressTypes.Billing] ?? getDefaultAddress(AddressTypes.Billing),
+    emailContactMethods:
+      emailContactMethods.length > 0 ? emailContactMethods : [getDefaultContactMethod()],
+    phoneContactMethods:
+      phoneContactMethods.length > 0 ? phoneContactMethods : [getDefaultContactMethod()],
+  } as ICreateOrganizationForm;
+
+  return formValues;
 }
 
 function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boolean {

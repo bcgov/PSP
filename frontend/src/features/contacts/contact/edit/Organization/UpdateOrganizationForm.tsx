@@ -1,26 +1,28 @@
-import { Button, Input } from 'components/common/form';
+import { Button, Input, Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
-import { CountryCodes } from 'constants/countryCodes';
 import {
   Address,
   CancelConfirmationModal,
   CommentNotes,
   ContactEmailList,
   ContactPhoneList,
-  DuplicateContactModal,
   useAddressHelpers,
 } from 'features/contacts/contact/create/components';
-import * as Styled from 'features/contacts/contact/create/styles';
 import {
   hasAddress,
   hasEmail,
   hasPhoneNumber,
   OrganizationValidationSchema,
 } from 'features/contacts/contact/create/validation';
-import { formOrganizationToApiOrganization } from 'features/contacts/contactUtils';
-import useAddContact from 'features/contacts/hooks/useAddContact';
+import * as Styled from 'features/contacts/contact/edit/styles';
+import {
+  apiOrganizationToFormOrganization,
+  formOrganizationToApiOrganization,
+} from 'features/contacts/contactUtils';
+import { useOrganizationDetail } from 'features/contacts/hooks/useOrganizationDetail';
+import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import {
   Formik,
   FormikHelpers,
@@ -30,29 +32,25 @@ import {
   yupToFormErrors,
 } from 'formik';
 import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/editable-contact';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
 /**
- * Formik-connected form to Create Organizational Contacts
+ * Formik-connected form to Update Organizational Contacts
  */
-export const CreateOrganizationForm: React.FunctionComponent = () => {
+export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
-  const { addOrganization } = useAddContact();
+  const { updateOrganization } = useUpdateContact();
+  const { organization } = useOrganizationDetail(id);
+  const { otherCountryId } = useAddressHelpers();
 
-  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
-  const [allowDuplicate, setAllowDuplicate] = useState(false);
+  // fetch organization details from API for the supplied Id
+  const formOrganization = useMemo(() => apiOrganizationToFormOrganization(organization), [
+    organization,
+  ]);
 
-  // validation needs to be adjusted when country == OTHER
-  const { countries } = useAddressHelpers();
-  const otherCountryId = useMemo(
-    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
-    [countries],
-  );
-
-  const formikRef = useRef<FormikProps<ICreateOrganizationForm>>(null);
   const onValidate = (values: ICreateOrganizationForm) => {
     const errors = {} as any;
     try {
@@ -75,58 +73,37 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
     { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
   ) => {
     try {
-      setShowDuplicateModal(false);
-      let newOrganization = formOrganizationToApiOrganization(formOrganization);
+      const apiOrganization = formOrganizationToApiOrganization(formOrganization);
+      const organizationResponse = await updateOrganization(apiOrganization);
+      const organizationId = organizationResponse?.id;
 
-      const organizationResponse = await addOrganization(
-        newOrganization,
-        setShowDuplicateModal,
-        allowDuplicate,
-      );
-
-      if (!!organizationResponse?.id) {
-        history.push('/contact/list');
+      if (!!organizationId) {
+        history.push(`/contact/O${organizationId}`);
       }
     } finally {
       setSubmitting(false);
     }
   };
 
-  const saveDuplicate = async () => {
-    setAllowDuplicate(true);
-    if (formikRef.current) {
-      formikRef.current.handleSubmit();
-    }
-  };
-
   return (
-    <>
-      <Formik
-        component={CreateOrganizationComponent}
-        initialValues={defaultCreateOrganization}
-        validate={onValidate}
-        enableReinitialize
-        onSubmit={onSubmit}
-        innerRef={formikRef}
-      />
-      <DuplicateContactModal
-        display={showDuplicateModal}
-        handleOk={() => saveDuplicate()}
-        handleCancel={() => {
-          setAllowDuplicate(false);
-          setShowDuplicateModal(false);
-        }}
-      ></DuplicateContactModal>
-    </>
+    <Formik
+      component={UpdateOrganization}
+      initialValues={
+        !!formOrganization
+          ? { ...defaultCreateOrganization, ...formOrganization }
+          : defaultCreateOrganization
+      }
+      validate={onValidate}
+      enableReinitialize
+      onSubmit={onSubmit}
+    />
   );
 };
-
-export default CreateOrganizationForm;
 
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>> = ({
+const UpdateOrganization: React.FC<FormikProps<ICreateOrganizationForm>> = ({
   values,
   errors,
   touched,
@@ -138,11 +115,13 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const organizationId = values.id;
+
   const onCancel = () => {
     if (dirty) {
       setShowConfirmation(true);
     } else {
-      history.push('/contact/list');
+      history.push(`/contact/O${organizationId}`);
     }
   };
 
@@ -170,13 +149,31 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
           resetForm({ values: initialValues });
           // need a timeout here to give the form time to reset before navigating away
           // or else the router guard prompt will also be shown
-          setTimeout(() => history.push('/contact/list'), 100);
+          setTimeout(() => history.push(`/contact/O${organizationId}`), 100);
         }}
       />
 
-      <Styled.CreateFormLayout>
-        <Styled.Form id="createForm">
+      <Styled.ScrollingFormLayout>
+        <Styled.Form id="updateForm">
           <FlexBox column gap="1.6rem">
+            <FormSection className="py-2">
+              <Styled.RowAligned className="align-items-center">
+                <Col className="d-flex">
+                  <span>Organization</span>
+                </Col>
+                <Col md="auto" className="d-flex ml-auto">
+                  <Select
+                    className="mb-0"
+                    field="isDisabled"
+                    options={[
+                      { label: 'Inactive', value: 'true' },
+                      { label: 'Active', value: 'false' },
+                    ]}
+                  ></Select>
+                </Col>
+              </Styled.RowAligned>
+            </FormSection>
+
             <FormSection>
               <Row>
                 <Col>
@@ -220,6 +217,11 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
             </FormSection>
 
             <FormSection>
+              <Styled.H2>Individual Contacts</Styled.H2>
+              <Styled.H3>Connected to this organization:</Styled.H3>
+            </FormSection>
+
+            <FormSection>
               <Styled.H2>Address</Styled.H2>
               <Styled.H3>Mailing Address</Styled.H3>
               <Address namespace="mailingAddress" />
@@ -240,7 +242,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
             </FormSection>
           </FlexBox>
         </Styled.Form>
-      </Styled.CreateFormLayout>
+      </Styled.ScrollingFormLayout>
 
       <Styled.ButtonGroup>
         {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 ? (
@@ -257,3 +259,5 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
     </>
   );
 };
+
+export default UpdateOrganizationForm;
