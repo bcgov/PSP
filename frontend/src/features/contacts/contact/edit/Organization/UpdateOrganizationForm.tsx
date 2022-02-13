@@ -32,10 +32,12 @@ import {
   yupToFormErrors,
 } from 'formik';
 import { defaultCreateOrganization, IEditableOrganizationForm } from 'interfaces/editable-contact';
+import { IContactPerson } from 'interfaces/IContact';
 import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { useHistory } from 'react-router-dom';
+import { FaInfoCircle } from 'react-icons/fa';
+import { Link, useHistory } from 'react-router-dom';
 
 /**
  * Formik-connected form to Update Organizational Contacts
@@ -43,13 +45,7 @@ import { useHistory } from 'react-router-dom';
 export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   const history = useHistory();
   const { updateOrganization } = useUpdateContact();
-  const { organization } = useOrganizationDetail(id);
   const { otherCountryId } = useAddressHelpers();
-
-  // fetch organization details from API for the supplied Id
-  const formOrganization = useMemo(() => apiOrganizationToFormOrganization(organization), [
-    organization,
-  ]);
 
   const onValidate = (values: IEditableOrganizationForm) => {
     const errors = {} as any;
@@ -85,14 +81,20 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
     }
   };
 
+  // fetch organization details from API for the supplied Id
+  const { organization } = useOrganizationDetail(id);
+  const formOrganization = useMemo(() => apiOrganizationToFormOrganization(organization), [
+    organization,
+  ]);
+
+  const initialValues = !!formOrganization
+    ? { ...defaultCreateOrganization, ...formOrganization }
+    : defaultCreateOrganization;
+
   return (
     <Formik
       component={UpdateOrganization}
-      initialValues={
-        !!formOrganization
-          ? { ...defaultCreateOrganization, ...formOrganization }
-          : defaultCreateOrganization
-      }
+      initialValues={initialValues}
       validate={onValidate}
       enableReinitialize
       onSubmit={onSubmit}
@@ -115,7 +117,8 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
   const history = useHistory();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const organizationId = values.id;
+  const organizationId = getIn(values, 'id');
+  const persons = getIn(values, 'persons') as Partial<IContactPerson>[];
 
   const onCancel = () => {
     if (dirty) {
@@ -217,8 +220,26 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
             </FormSection>
 
             <FormSection>
+              <FaInfoCircle className="position-absolute" />
               <Styled.H2>Individual Contacts</Styled.H2>
               <Styled.H3>Connected to this organization:</Styled.H3>
+              <Styled.RowAligned>
+                <Col>
+                  {persons &&
+                    persons.map((person, index: number) => (
+                      <>
+                        <Link
+                          to={'/contact/P' + person.id}
+                          data-testid={`contact-organization-person-${index}`}
+                          key={`org-person-${index}`}
+                        >
+                          {person.fullName}
+                        </Link>
+                        <br />
+                      </>
+                    ))}
+                </Col>
+              </Styled.RowAligned>
             </FormSection>
 
             <FormSection>

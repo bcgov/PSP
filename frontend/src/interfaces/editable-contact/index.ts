@@ -1,4 +1,5 @@
 import { AddressTypes } from 'constants/addressTypes';
+import { IContactPerson } from 'interfaces/IContact';
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import ITypeCode from '../ITypeCode';
@@ -92,6 +93,7 @@ export interface IEditableOrganizationForm
   extends ExtendOverride<
     IEditableOrganization,
     {
+      persons: Partial<IContactPerson>[];
       emailContactMethods: IEditableContactMethodForm[];
       phoneContactMethods: IEditableContactMethodForm[];
       mailingAddress: IEditableOrganizationAddressForm;
@@ -155,6 +157,7 @@ export const defaultCreateOrganization: IEditableOrganizationForm = {
   alias: '',
   incorporationNumber: '',
   comment: '',
+  persons: [],
   emailContactMethods: [getDefaultContactMethod()],
   phoneContactMethods: [getDefaultContactMethod()],
   mailingAddress: getDefaultAddress(AddressTypes.Mailing),

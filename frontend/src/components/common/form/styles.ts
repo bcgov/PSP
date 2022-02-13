@@ -75,6 +75,7 @@ export const InlineFastDatePicker = styled(FastDatePicker)`
 `;
 
 export const FormSection = styled.div`
+  position: relative;
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;

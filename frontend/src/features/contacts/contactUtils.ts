@@ -12,6 +12,7 @@ import {
   IEditablePersonAddressForm,
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
+import { IContactPerson } from 'interfaces/IContact';
 import { stringToBoolean, stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
 import { formatFullName } from 'utils/personUtils';
 
@@ -125,7 +126,9 @@ export function apiOrganizationToFormOrganization(organization?: IEditableOrgani
   const phoneContactMethods = formContactMethods.filter(isPhone);
 
   // Format person API values - need full names here
-  const formPersonList = (persons || []).map(p => ({ id: p.id, fullName: formatFullName(p) }));
+  const formPersonList: Partial<IContactPerson>[] = (persons || []).map(p => {
+    return { id: p.id, fullName: formatFullName(p) };
+  });
 
   const formValues = {
     ...restObject,
