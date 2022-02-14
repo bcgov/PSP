@@ -30,7 +30,6 @@ namespace Pims.Dal.Entities
             PimsLeaseTerms = new HashSet<PimsLeaseTerm>();
             PimsPropertyImprovements = new HashSet<PimsPropertyImprovement>();
             PimsPropertyLeases = new HashSet<PimsPropertyLease>();
-            PimsSecurityDepositReturns = new HashSet<PimsSecurityDepositReturn>();
             PimsSecurityDeposits = new HashSet<PimsSecurityDeposit>();
         }
 
@@ -213,8 +212,6 @@ namespace Pims.Dal.Entities
         public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; }
         [InverseProperty(nameof(PimsPropertyLease.Lease))]
         public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; }
-        [InverseProperty(nameof(PimsSecurityDepositReturn.Lease))]
-        public virtual ICollection<PimsSecurityDepositReturn> PimsSecurityDepositReturns { get; set; }
         [InverseProperty(nameof(PimsSecurityDeposit.Lease))]
         public virtual ICollection<PimsSecurityDeposit> PimsSecurityDeposits { get; set; }
     }
