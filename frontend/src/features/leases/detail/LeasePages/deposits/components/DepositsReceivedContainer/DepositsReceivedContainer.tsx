@@ -2,7 +2,7 @@ import { FormSection } from 'components/common/form/styles';
 import { Table } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import { ILeaseSecurityDeposit, ILeaseSecurityDepositReturn } from 'interfaces';
+import { ILeaseSecurityDeposit } from 'interfaces';
 import { Button } from 'react-bootstrap';
 
 import * as Styled from '../../styles';
@@ -10,7 +10,6 @@ import { DepositListEntry, getColumns } from './columns';
 
 export interface IDepositsReceivedContainerProps {
   securityDeposits: ILeaseSecurityDeposit[];
-  depositReturns: ILeaseSecurityDepositReturn[];
   onAdd: () => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
@@ -19,7 +18,6 @@ export interface IDepositsReceivedContainerProps {
 
 const DepositsReceivedContainer: React.FC<IDepositsReceivedContainerProps> = ({
   securityDeposits,
-  depositReturns,
   onAdd,
   onEdit,
   onDelete,
@@ -28,7 +26,7 @@ const DepositsReceivedContainer: React.FC<IDepositsReceivedContainerProps> = ({
   const { hasClaim } = useKeycloakWrapper();
   const columns = getColumns({ onEdit, onDelete, onReturn });
   const dataSource = securityDeposits.map<DepositListEntry>(d => {
-    return new DepositListEntry(d, depositReturns.filter(r => r.parentDepositId === d.id).length);
+    return new DepositListEntry(d);
   });
   return (
     <FormSection>
