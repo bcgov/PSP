@@ -21,14 +21,8 @@ namespace Pims.Dal.Entities
         public DateTime? EndDateHist { get; set; }
         [Column("SECURITY_DEPOSIT_RETURN_ID")]
         public long SecurityDepositReturnId { get; set; }
-        [Column("LEASE_ID")]
-        public long LeaseId { get; set; }
-        [Required]
-        [Column("SECURITY_DEPOSIT_TYPE_CODE")]
-        [StringLength(20)]
-        public string SecurityDepositTypeCode { get; set; }
         [Column("SECURITY_DEPOSIT_ID")]
-        public long? SecurityDepositId { get; set; }
+        public long SecurityDepositId { get; set; }
         [Column("TERMINATION_DATE", TypeName = "datetime")]
         public DateTime TerminationDate { get; set; }
         [Column("CLAIMS_AGAINST", TypeName = "money")]
@@ -37,13 +31,6 @@ namespace Pims.Dal.Entities
         public decimal ReturnAmount { get; set; }
         [Column("RETURN_DATE", TypeName = "datetime")]
         public DateTime ReturnDate { get; set; }
-        [Required]
-        [Column("PAYEE_NAME")]
-        [StringLength(100)]
-        public string PayeeName { get; set; }
-        [Column("PAYEE_ADDRESS")]
-        [StringLength(500)]
-        public string PayeeAddress { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
         [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]

@@ -1416,13 +1416,11 @@ namespace Pims.Dal
                 entity.HasOne(d => d.OrgIdentifierTypeCodeNavigation)
                     .WithMany(p => p.PimsOrganizations)
                     .HasForeignKey(d => d.OrgIdentifierTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ORGIDT_PIM_ORG_FK");
 
                 entity.HasOne(d => d.OrganizationTypeCodeNavigation)
                     .WithMany(p => p.PimsOrganizations)
                     .HasForeignKey(d => d.OrganizationTypeCode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_ORGTYP_PIM_ORG_FK");
 
                 entity.HasOne(d => d.PrntOrganization)
@@ -2873,32 +2871,17 @@ namespace Pims.Dal
 
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-                entity.Property(e => e.PayeeAddress).HasComment("Address of cheque recipient");
-
-                entity.Property(e => e.PayeeName).HasComment("Name of cheque recipient");
-
                 entity.Property(e => e.ReturnAmount).HasComment("Amount returned minus claims");
 
                 entity.Property(e => e.ReturnDate).HasComment("Date of deposit return");
 
                 entity.Property(e => e.TerminationDate).HasComment("Date the lease/license was terminated or surrendered");
 
-                entity.HasOne(d => d.Lease)
-                    .WithMany(p => p.PimsSecurityDepositReturns)
-                    .HasForeignKey(d => d.LeaseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_LEASE_PIM_SDRTRN_FK");
-
                 entity.HasOne(d => d.SecurityDeposit)
                     .WithMany(p => p.PimsSecurityDepositReturns)
                     .HasForeignKey(d => d.SecurityDepositId)
-                    .HasConstraintName("PIM_SECDEP_PIM_SDRTRN_FK");
-
-                entity.HasOne(d => d.SecurityDepositTypeCodeNavigation)
-                    .WithMany(p => p.PimsSecurityDepositReturns)
-                    .HasForeignKey(d => d.SecurityDepositTypeCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PIM_SECDPT_PIM_SDRTRN_FK");
+                    .HasConstraintName("PIM_SECDEP_PIM_SDRTRN_FK");
             });
 
             modelBuilder.Entity<PimsSecurityDepositReturnHist>(entity =>

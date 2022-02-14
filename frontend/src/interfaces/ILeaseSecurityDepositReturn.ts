@@ -4,18 +4,14 @@ import { IBaseModel } from './IBaseModel';
 import { ILeaseSecurityDeposit } from './ILeaseSecurityDeposit';
 import { IOrganization } from './IOrganization';
 import { IPerson } from './IPerson';
-import ITypeCode from './ITypeCode';
 
 export interface ILeaseSecurityDepositReturn extends IBaseModel {
   id?: number;
   parentDepositId: number;
-  depositType: ITypeCode<string>;
   terminationDate?: string;
   claimsAgainst?: number;
   returnAmount: number;
   returnDate?: string;
-  payeeName: string;
-  payeeAddress?: string;
   personDepositReturnHolder?: IPerson;
   personDepositReturnHolderId?: number;
   organizationDepositReturnHolder?: IOrganization;
@@ -32,8 +28,6 @@ export class FormLeaseDepositReturn {
   public claimsAgainst: NumberFieldValue;
   public returnAmount: NumberFieldValue;
   public returnDate: string;
-  public payeeName: string;
-  public payeeAddress: string;
   public personDepositReturnHolderId: NumberFieldValue;
   public organizationDepositReturnHolderId: NumberFieldValue;
   public rowVersion: number;
@@ -48,8 +42,6 @@ export class FormLeaseDepositReturn {
     this.claimsAgainst = '';
     this.returnAmount = '';
     this.returnDate = '';
-    this.payeeName = '';
-    this.payeeAddress = '';
     this.personDepositReturnHolderId = '';
     this.organizationDepositReturnHolderId = '';
     this.parentDepositAmount = 0;
@@ -84,8 +76,6 @@ export class FormLeaseDepositReturn {
     model.claimsAgainst = baseModel.claimsAgainst || '';
     model.returnAmount = baseModel.returnAmount;
     model.returnDate = baseModel.returnDate || '';
-    model.payeeName = baseModel.payeeName;
-    model.payeeAddress = baseModel.payeeAddress || '';
     model.personDepositReturnHolderId = baseModel.personDepositReturnHolderId || '';
     model.organizationDepositReturnHolderId = baseModel.organizationDepositReturnHolderId || '';
     model.rowVersion = baseModel.rowVersion;
@@ -96,13 +86,10 @@ export class FormLeaseDepositReturn {
     return {
       id: this.id,
       parentDepositId: this.parentDepositId,
-      depositType: { id: this.depositTypeCode },
       terminationDate: this.terminationDate === '' ? undefined : this.terminationDate,
       claimsAgainst: this.claimsAgainst === '' ? undefined : this.claimsAgainst,
       returnAmount: this.returnAmount === '' ? 0 : this.returnAmount,
       returnDate: this.returnDate === '' ? undefined : this.returnDate,
-      payeeName: this.payeeName,
-      payeeAddress: this.payeeAddress,
       personDepositReturnHolderId:
         this.personDepositReturnHolderId === '' ? undefined : this.personDepositReturnHolderId,
       organizationDepositReturnHolderId:
