@@ -35,6 +35,7 @@ export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditabl
 
   const apiPerson = {
     ...restObject,
+    organization: restObject.organization ? restObject.organization : null,
     isDisabled: stringToBoolean(formValues.isDisabled),
     addresses,
     contactMethods,
