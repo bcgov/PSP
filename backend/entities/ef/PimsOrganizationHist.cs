@@ -27,11 +27,9 @@ namespace Pims.Dal.Entities
         public short? RegionCode { get; set; }
         [Column("DISTRICT_CODE")]
         public short? DistrictCode { get; set; }
-        [Required]
         [Column("ORGANIZATION_TYPE_CODE")]
         [StringLength(20)]
         public string OrganizationTypeCode { get; set; }
-        [Required]
         [Column("ORG_IDENTIFIER_TYPE_CODE")]
         [StringLength(20)]
         public string OrgIdentifierTypeCode { get; set; }

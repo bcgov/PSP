@@ -1,6 +1,7 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 
 import { IBaseModel } from './IBaseModel';
+import { ILeaseSecurityDepositReturn } from './ILeaseSecurityDepositReturn';
 import { IOrganization } from './IOrganization';
 import { IPerson } from './IPerson';
 import ITypeCode from './ITypeCode';
@@ -16,6 +17,7 @@ export interface ILeaseSecurityDeposit extends IBaseModel {
   personDepositHolder?: IPerson;
   organizationDepositHolderId?: number;
   organizationDepositHolder?: IOrganization;
+  depositReturns: ILeaseSecurityDepositReturn[];
 }
 
 export class FormLeaseDeposit implements IBaseModel {
@@ -71,6 +73,7 @@ export class FormLeaseDeposit implements IBaseModel {
         this.personDepositHolderId === '' ? undefined : this.personDepositHolderId,
       organizationDepositHolderId:
         this.organizationDepositHolderId === '' ? undefined : this.organizationDepositHolderId,
+      depositReturns: [],
       rowVersion: this.rowVersion,
     };
   }

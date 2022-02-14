@@ -19,6 +19,7 @@ const mockDeposit: ILeaseSecurityDeposit = {
     description: 'Pet deposit',
     isDisabled: false,
   },
+  depositReturns: [],
   rowVersion: 1,
 };
 
@@ -96,8 +97,6 @@ describe('ReturnedDepositModal component', () => {
       parentDepositAmount: 1234,
       parentDepositId: 7,
       parentDepositOtherDescription: '',
-      payeeAddress: '',
-      payeeName: '',
       personDepositReturnHolderId: '',
       returnAmount: 2000,
       returnDate: '2020-01-02',
