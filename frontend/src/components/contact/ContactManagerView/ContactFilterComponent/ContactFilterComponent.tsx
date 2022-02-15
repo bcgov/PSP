@@ -48,7 +48,7 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
       validateOnChange={true}
     >
       {({ resetForm, isSubmitting, values, submitForm }) => (
-        <FilterBoxForm>
+        <StyledFilterBoxForm>
           <Row>
             <Col xs="auto">
               <RadioGroup
@@ -89,16 +89,16 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
             <Col>
               <Row>
                 <Col className="pl-0">
-                  <NameInput field="summary" placeholder="Name of person or organization" />
+                  <StyledNameInput field="summary" placeholder="Name of person or organization" />
                 </Col>
                 <Col xs="auto" className="pl-0">
-                  <CityInput field="municipality" label="City" />
+                  <StyledCityInput field="municipality" label="City" />
                 </Col>
               </Row>
             </Col>
             <Col xs="auto">
               <Row className="align-items-center">
-                <ColButton xs="auto">
+                <StyledColButton xs="auto">
                   <SearchButton
                     type="button"
                     disabled={isSubmitting}
@@ -106,8 +106,8 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
                       submitForm();
                     }}
                   />
-                </ColButton>
-                <ColButton xs="auto">
+                </StyledColButton>
+                <StyledColButton xs="auto">
                   <ResetButton
                     type=""
                     disabled={isSubmitting}
@@ -116,7 +116,7 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
                       resetFilter(values);
                     }}
                   />
-                </ColButton>
+                </StyledColButton>
 
                 <Col className="pl-0">
                   {showActiveSelector && (
@@ -130,28 +130,28 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
               </Row>
             </Col>
           </Row>
-        </FilterBoxForm>
+        </StyledFilterBoxForm>
       )}
     </Formik>
   );
 };
 
-const FilterBoxForm = styled(Form)`
+const StyledFilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.4rem;
   padding: 1rem;
   max-width: 85em;
 `;
 
-const ColButton = styled(Col)`
+const StyledColButton = styled(Col)`
   padding-right: 0rem;
   padding-left: 0rem;
 `;
 
-export const NameInput = styled(InlineInput)`
+export const StyledNameInput = styled(InlineInput)`
   max-width: 32em;
 `;
 
-export const CityInput = styled(InlineInput)`
+export const StyledCityInput = styled(InlineInput)`
   max-width: 20rem;
 `;
