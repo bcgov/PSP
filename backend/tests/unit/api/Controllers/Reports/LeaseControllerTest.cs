@@ -342,7 +342,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var actionResult = Assert.IsType<FileStreamResult>(result);
             Assert.Equal(ContentTypes.CONTENT_TYPE_EXCELX, actionResult.ContentType);
             Assert.NotNull(actionResult.FileDownloadName);
-            Assert.True(actionResult.FileStream.Length == 13175);
+            Assert.True(actionResult.FileStream.Length > 0);
             service.Setup(m => m.LeaseReportsService.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
         }
 
