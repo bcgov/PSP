@@ -91,7 +91,7 @@ export const ContactFilterComponent: React.FunctionComponent<IContactFilterCompo
                 <Col className="pl-0">
                   <StyledNameInput field="summary" placeholder="Name of person or organization" />
                 </Col>
-                <Col xs="auto" className="pl-0">
+                <Col md="auto" className="pl-0">
                   <StyledCityInput field="municipality" label="City" />
                 </Col>
               </Row>

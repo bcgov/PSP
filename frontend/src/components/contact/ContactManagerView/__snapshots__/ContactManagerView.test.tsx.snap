@@ -310,7 +310,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pl-0 col-auto"
+                  class="pl-0 col-md-auto"
                 >
                   <div
                     class="c3 c5 input form-group"

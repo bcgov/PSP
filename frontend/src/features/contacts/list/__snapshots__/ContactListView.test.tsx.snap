@@ -350,7 +350,7 @@ exports[`Contact List View matches snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="pl-0 col-auto"
+                      class="pl-0 col-md-auto"
                     >
                       <div
                         class="c7 c9 input form-group"

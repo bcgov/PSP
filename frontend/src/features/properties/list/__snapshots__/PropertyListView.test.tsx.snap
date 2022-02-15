@@ -109,7 +109,7 @@ exports[`Property list view matches snapshot 1`] = `
               </span>
             </div>
             <div
-              class="col-5"
+              class="col-xl-3 col-lg-4 col-md-5 col-6"
             >
               <div
                 class="row"
