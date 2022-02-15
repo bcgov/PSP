@@ -3,29 +3,29 @@ import ContactManagerView from 'components/contact/ContactManagerView/ContactMan
 import styled from 'styled-components';
 
 /**
- * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
+ * Page that displays a list of contacts.
  */
 export const ContactListPage = () => {
   return (
-    <ListPage>
-      <Scrollable>
-        <PageHeader>Contacts</PageHeader>
+    <StyledListPage>
+      <StyledScrollable>
+        <StyledPageHeader>Contacts</StyledPageHeader>
         <ContactManagerView showActiveSelector showAddButton />
-      </Scrollable>
-    </ListPage>
+      </StyledScrollable>
+    </StyledListPage>
   );
 };
 
-export const ListPage = styled.div`
+const StyledListPage = styled.div`
   width: 100%;
   font-size: 14px;
 `;
 
-export const Scrollable = styled(ScrollableBase)`
+const StyledScrollable = styled(ScrollableBase)`
   padding: 1.6rem 3.2rem;
   width: 100%;
 `;
 
-export const PageHeader = styled.h3`
+const StyledPageHeader = styled.h3`
   text-align: left;
 `;

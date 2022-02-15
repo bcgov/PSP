@@ -27,7 +27,7 @@ interface IContactManagerViewProps {
 }
 
 /**
- * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
+ * Component that provides functionality manage contacts. Can be embedded as a widget.
  */
 const ContactManagerView = ({
   setSelectedRows,
