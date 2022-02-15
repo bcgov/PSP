@@ -81,7 +81,7 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "user" })]
         public IActionResult AddAccessRequest([FromBody] Model.AccessRequestModel model)
         {
-            if (model == null || model.OrganizationId == null || model.RoleId == null) throw new BadRequestException("Invalid access request specified");
+            if (model == null || model.RoleId == null) throw new BadRequestException("Invalid access request specified");
 
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
             accessRequest = _pimsService.AccessRequest.Add(accessRequest);
@@ -102,7 +102,7 @@ namespace Pims.Api.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is used for consistent routing.")]
         public IActionResult UpdateAccessRequest(long id, [FromBody] Model.AccessRequestModel model)
         {
-            if (model == null || model.OrganizationId == null || model.RoleId == null) throw new BadRequestException("Invalid access request specified");
+            if (model == null || model.RoleId == null) throw new BadRequestException("Invalid access request specified");
 
             var accessRequest = _mapper.Map<Entity.PimsAccessRequest>(model);
             accessRequest = _pimsService.AccessRequest.Update(accessRequest);

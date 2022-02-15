@@ -43,7 +43,6 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.OrganizationId, actualResult.OrganizationId, new DeepPropertyCompare());
             Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(), Times.Once());
@@ -92,7 +91,6 @@ namespace PimsApi.Test.Controllers
             var actionResult = Assert.IsType<JsonResult>(result);
             var actualResult = Assert.IsType<Model.AccessRequestModel>(actionResult.Value);
             Assert.Equal(model, actualResult, new ShallowPropertyCompare());
-            Assert.Equal(model.OrganizationId, actualResult.OrganizationId, new DeepPropertyCompare());
             Assert.Equal(model.RoleId, actualResult.RoleId, new DeepPropertyCompare());
             Assert.Equal(model.User.Id, actualResult.User.Id);
             service.Verify(m => m.AccessRequest.Get(1), Times.Once());
