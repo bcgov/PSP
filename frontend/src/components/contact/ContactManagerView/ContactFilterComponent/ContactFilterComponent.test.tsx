@@ -1,20 +1,29 @@
 import userEvent from '@testing-library/user-event';
 import { act, fillInput, render, RenderOptions } from 'utils/test-utils';
 
-import { ContactFilter, defaultFilter, IContactFilterProps } from './ContactFilter';
+import {
+  ContactFilterComponent,
+  defaultFilter,
+  IContactFilterComponentProps,
+} from './ContactFilterComponent';
 
 const setFilter = jest.fn();
 
 // render component under test
-const setup = (renderOptions: RenderOptions & IContactFilterProps = { setFilter }) => {
+const setup = (renderOptions: RenderOptions & IContactFilterComponentProps = { setFilter }) => {
   const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
-  const utils = render(<ContactFilter filter={filter} setFilter={setFilterFn} />, { ...rest });
+  const utils = render(
+    <ContactFilterComponent filter={filter} setFilter={setFilterFn} showActiveSelector />,
+    {
+      ...rest,
+    },
+  );
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
 };
 
-describe('Contact Filter', () => {
+describe('ContactFilterComponent', () => {
   beforeEach(() => {
     setFilter.mockClear();
   });

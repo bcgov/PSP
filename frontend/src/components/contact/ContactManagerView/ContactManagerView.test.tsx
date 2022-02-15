@@ -1,11 +1,12 @@
 import userEvent from '@testing-library/user-event';
-import { defaultFilter } from 'components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { Claims } from 'constants/claims';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from 'interfaces';
+import { noop } from 'lodash';
 import { act, fillInput, mockKeycloak, render, RenderOptions, waitFor } from 'utils/test-utils';
 
-import { ContactListPage } from './ContactListPage';
+import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
+import ContactManagerView from './ContactManagerView';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -18,9 +19,12 @@ const getContacts = jest.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<ContactListPage />, {
-    ...renderOptions,
-  });
+  const utils = render(
+    <ContactManagerView selectedRows={[]} setSelectedRows={noop} showActiveSelector />,
+    {
+      ...renderOptions,
+    },
+  );
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
 };
@@ -60,7 +64,7 @@ const defaultPagedFilter = {
   sort: undefined,
 };
 
-describe('Contact List View', () => {
+describe('ContactManagerView', () => {
   beforeEach(() => {
     getContacts.mockClear();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });

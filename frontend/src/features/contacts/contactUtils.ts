@@ -1,4 +1,4 @@
-import { emailContactMethods, phoneContactMethods } from 'constants/contactMethodType';
+import { EmailContactMethods, PhoneContactMethods } from 'constants/contactMethodType';
 import { AddressTypes } from 'constants/index';
 import {
   getDefaultAddress,
@@ -171,9 +171,9 @@ function toDictionary(array: any[], key: string) {
 }
 
 function isEmail(contactMethod?: IEditableContactMethodForm): boolean {
-  return !!contactMethod && emailContactMethods.includes(contactMethod.contactMethodTypeCode);
+  return !!contactMethod && EmailContactMethods.includes(contactMethod.contactMethodTypeCode);
 }
 
 function isPhone(contactMethod?: IEditableContactMethodForm): boolean {
-  return !!contactMethod && phoneContactMethods.includes(contactMethod.contactMethodTypeCode);
+  return !!contactMethod && PhoneContactMethods.includes(contactMethod.contactMethodTypeCode);
 }

@@ -5,7 +5,7 @@ import { noop } from 'lodash';
 import React from 'react';
 import { act, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
-import { ContactSearchResults, IContactSearchResultsProps } from './ContactSearchResults';
+import { ContactResultComponent, IContactResultComponentProps } from './ContactResultComponent';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -14,11 +14,11 @@ const setSort = jest.fn();
 
 // render component under test
 const setup = (
-  renderOptions: Partial<RenderOptions & IContactSearchResultsProps> = { results: [] },
+  renderOptions: Partial<RenderOptions & IContactResultComponentProps> = { results: [] },
 ) => {
   const { results, ...rest } = renderOptions;
   const utils = render(
-    <ContactSearchResults
+    <ContactResultComponent
       setSelectedRows={noop}
       selectedRows={[]}
       results={results ?? []}
