@@ -1,15 +1,15 @@
-import { ICreateOrganizationForm, IEditablePersonForm } from 'interfaces/editable-contact';
+import { IEditableOrganizationForm, IEditablePersonForm } from 'interfaces/editable-contact';
 import * as Yup from 'yup';
 
-export function hasPhoneNumber(values: IEditablePersonForm | ICreateOrganizationForm): boolean {
+export function hasPhoneNumber(values: IEditablePersonForm | IEditableOrganizationForm): boolean {
   return values?.phoneContactMethods.some(obj => !!obj.value);
 }
 
-export function hasEmail(values: IEditablePersonForm | ICreateOrganizationForm): boolean {
+export function hasEmail(values: IEditablePersonForm | IEditableOrganizationForm): boolean {
   return values?.emailContactMethods.some(obj => !!obj.value);
 }
 
-export function hasAddress(values: IEditablePersonForm | ICreateOrganizationForm): boolean {
+export function hasAddress(values: IEditablePersonForm | IEditableOrganizationForm): boolean {
   return (
     !!values?.mailingAddress?.streetAddress1 ||
     !!values?.propertyAddress?.streetAddress1 ||

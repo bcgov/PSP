@@ -11,6 +11,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
         {
             config.NewConfig<Entity.PimsOrganizationAddress, Model.OrganizationAddressModel>()
                 .Map(dest => dest.Id, src => src.AddressId)
+                .Map(dest => dest.RowVersion, src => src.Address.ConcurrencyControlNumber)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.OrganizationAddressId, src => src.OrganizationAddressId)
                 .Map(dest => dest.OrganizationAddressRowVersion, src => src.ConcurrencyControlNumber)
@@ -24,8 +25,7 @@ namespace Pims.Api.Areas.Organizations.Mapping.Organization
                 .Map(dest => dest.CountryId, src => src.Address.CountryId)
                 .Map(dest => dest.Postal, src => src.Address.PostalCode)
                 .Map(dest => dest.CountryOther, src => src.Address.OtherCountry)
-                .Map(dest => dest.AddressTypeId, src => src.AddressUsageTypeCodeNavigation)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
+                .Map(dest => dest.AddressTypeId, src => src.AddressUsageTypeCodeNavigation);
 
             config.NewConfig<Model.OrganizationAddressModel, Entity.PimsOrganizationAddress>()
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)

@@ -83,3 +83,9 @@ export const ButtonGroup = styled(FlexBox)`
   justify-content: flex-end;
   align-items: stretch;
 `;
+
+export const TopRightCorner = styled.div`
+  position: absolute;
+  top: 2.5rem;
+  right: 2.5rem;
+`;

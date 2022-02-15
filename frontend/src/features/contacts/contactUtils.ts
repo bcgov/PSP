@@ -3,16 +3,18 @@ import { AddressTypes } from 'constants/index';
 import {
   getDefaultAddress,
   getDefaultContactMethod,
-  ICreateOrganization,
-  ICreateOrganizationForm,
   IEditableContactMethod,
   IEditableContactMethodForm,
+  IEditableOrganization,
+  IEditableOrganizationForm,
   IEditablePerson,
   IEditablePersonAddress,
   IEditablePersonAddressForm,
   IEditablePersonForm,
 } from 'interfaces/editable-contact';
+import { IContactPerson } from 'interfaces/IContact';
 import { stringToBoolean, stringToNull, stringToTypeCode, typeCodeToString } from 'utils/formUtils';
+import { formatFullName } from 'utils/personUtils';
 
 export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditablePerson {
   // exclude form-specific fields from API payload object
@@ -76,9 +78,9 @@ export function apiPersonToFormPerson(person?: IEditablePerson) {
   return formPerson;
 }
 
-export function organizationCreateFormToApiOrganization(
-  formValues: ICreateOrganizationForm,
-): ICreateOrganization {
+export function formOrganizationToApiOrganization(
+  formValues: IEditableOrganizationForm,
+): IEditableOrganization {
   // exclude form-specific fields from API payload object
   const {
     mailingAddress,
@@ -99,11 +101,51 @@ export function organizationCreateFormToApiOrganization(
 
   const apiOrganization = {
     ...restObject,
+    isDisabled: stringToBoolean(formValues.isDisabled),
     addresses,
     contactMethods,
-  } as ICreateOrganization;
+    persons: undefined, // do not send the list of persons back to the server. will not be saved
+  } as IEditableOrganization;
 
   return apiOrganization;
+}
+
+export function apiOrganizationToFormOrganization(organization?: IEditableOrganization) {
+  if (!organization) return undefined;
+
+  // exclude api-specific fields from form values
+  const { addresses, contactMethods, persons, ...restObject } = organization;
+
+  // split address array into sub-types: MAILING, RESIDENTIAL, BILLING
+  const formAddresses = addresses?.map(apiAddressToFormAddress) || [];
+  const addressDictionary = toDictionary(formAddresses, 'addressTypeId');
+
+  // split contact methods array into phone and email values
+  const formContactMethods = contactMethods?.map(apiContactMethodToFormContactMethod) || [];
+  const emailContactMethods = formContactMethods.filter(isEmail);
+  const phoneContactMethods = formContactMethods.filter(isPhone);
+
+  // Format person API values - need full names here
+  const formPersonList: Partial<IContactPerson>[] = (persons || []).map(p => {
+    return { id: p.id, fullName: formatFullName(p) };
+  });
+
+  const formValues = {
+    ...restObject,
+    persons: formPersonList,
+    mailingAddress:
+      addressDictionary[AddressTypes.Mailing] ?? getDefaultAddress(AddressTypes.Mailing),
+    propertyAddress:
+      addressDictionary[AddressTypes.Residential] ?? getDefaultAddress(AddressTypes.Residential),
+    billingAddress:
+      addressDictionary[AddressTypes.Billing] ?? getDefaultAddress(AddressTypes.Billing),
+    emailContactMethods:
+      emailContactMethods.length > 0 ? emailContactMethods : [getDefaultContactMethod()],
+    phoneContactMethods:
+      phoneContactMethods.length > 0 ? phoneContactMethods : [getDefaultContactMethod()],
+  } as IEditableOrganizationForm;
+
+  return formValues;
 }
 
 function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boolean {
