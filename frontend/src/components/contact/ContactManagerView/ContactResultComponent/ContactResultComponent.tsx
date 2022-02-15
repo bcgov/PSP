@@ -4,8 +4,9 @@ import { IContactSearchResult } from 'interfaces';
 import { useCallback } from 'react';
 
 import columns from './columns';
+import summaryColumns from './summaryColumns';
 
-export interface IContactSearchResultsProps {
+export interface IContactResultComponentProps {
   results: IContactSearchResult[];
   pageCount?: number;
   pageSize?: number;
@@ -15,16 +16,17 @@ export interface IContactSearchResultsProps {
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
-  setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
-  selectedRows: IContactSearchResult[];
+  setSelectedRows?: (selectedContacts: IContactSearchResult[]) => void;
+  selectedRows?: IContactSearchResult[];
   showSelectedRowCount?: boolean;
+  isSummary?: boolean;
 }
 
 /**
  * Display a react table with the results filtered by the {@link ContactFilter}
  * @param {IContactSearchResult} props
  */
-export function ContactSearchResults(props: IContactSearchResultsProps) {
+export function ContactResultComponent(props: IContactResultComponentProps) {
   const { results, sort = {}, setSort, setPageSize, setPageIndex, ...rest } = props;
 
   // results sort handler
@@ -52,10 +54,14 @@ export function ContactSearchResults(props: IContactSearchResultsProps) {
     ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
     [setPageIndex],
   );
+
+  const listColumns =
+    props.isSummary === undefined || props.isSummary === false ? columns : summaryColumns;
+
   return (
     <Table<IContactSearchResult>
       name="contactsTable"
-      columns={columns}
+      columns={listColumns}
       data={results ?? []}
       sort={sort}
       manualSortBy={true}
@@ -63,6 +69,7 @@ export function ContactSearchResults(props: IContactSearchResultsProps) {
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="No Contacts match the search criteria"
+      showSelectedRowCount={props.showSelectedRowCount}
       {...rest}
     ></Table>
   );

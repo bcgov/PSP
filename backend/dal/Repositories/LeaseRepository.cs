@@ -123,10 +123,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(i => i.InsuranceTypeCodeNavigation)
 
                 .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
                 .Include(l => l.PimsSecurityDeposits)
-                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
-                .Include(l => l.PimsSecurityDepositReturns)
-                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
+                    .ThenInclude(s => s.PimsSecurityDepositReturns)
 
                 .Include(l => l.PimsLeaseTerms)
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
