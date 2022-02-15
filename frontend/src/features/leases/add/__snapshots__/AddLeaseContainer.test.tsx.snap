@@ -344,9 +344,11 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
 }
 
 .c5 {
-  max-width: 11rem;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
   max-height: 100%;
-  min-width: 10rem;
+  min-width: 11rem;
   white-space: nowrap;
   border-radius: 1rem;
   background-color: white;

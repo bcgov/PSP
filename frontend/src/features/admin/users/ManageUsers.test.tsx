@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, wait, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import * as actionTypes from 'constants/actionTypes';
@@ -38,20 +38,6 @@ const mockStore = configureMockStore([thunk]);
 
 const lCodes = {
   lookupCodes: [
-    {
-      id: 1,
-      name: 'organizationVal',
-      code: '',
-      isDisabled: false,
-      type: API.ORGANIZATION_TYPES,
-    },
-    {
-      id: 2,
-      name: 'disabledOrganization',
-      code: '',
-      isDisabled: true,
-      type: API.ORGANIZATION_TYPES,
-    },
     { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_TYPES },
     { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_TYPES },
   ] as ILookupCode[],
@@ -133,20 +119,6 @@ describe('Manage Users Component', () => {
     const { container } = testRender(getStore());
     const rows = container.querySelectorAll('.tbody .tr');
     expect(rows.length).toBe(2);
-  });
-
-  it('displays organizations dropdown', async () => {
-    const { getByRole, container } = testRender(getStore());
-    const organization = container.querySelector('input[name="organization"]');
-
-    await wait(() => {
-      fireEvent.change(organization!, {
-        target: {
-          value: 'age',
-        },
-      });
-    });
-    expect(getByRole('listbox')).toBeInTheDocument();
   });
 
   it('displays enabled roles', () => {
