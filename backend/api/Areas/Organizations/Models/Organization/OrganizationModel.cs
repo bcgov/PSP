@@ -42,11 +42,16 @@ namespace Pims.Api.Areas.Organizations.Models.Organization
         /// </summary>
         public string IncorporationNumber { get; set; }
 
+        /// <summary>
+        /// get/set - The organization's persons. This collection is read-only
+        /// Changing this collection will NOT modify the organization's persons.
+        /// </summary>
+        public IList<PersonSummaryModel> Persons { get; set; }
 
         /// <summary>
         /// get/set - The organization's addresses.
         /// </summary>
-        public IList<AddressModel> Addresses { get; set; }
+        public IList<OrganizationAddressModel> Addresses { get; set; }
 
         /// <summary>
         /// get/set - The organization's contact methods.

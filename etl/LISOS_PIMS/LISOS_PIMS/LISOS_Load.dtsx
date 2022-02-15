@@ -7,13 +7,13 @@
   DTS:CreatorName="Xerces\Devin Smith"
   DTS:DTSID="{A72DFE5E-8934-4CE4-8ACC-E596CC0081EC}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LastModifiedProductVersion="15.0.2000.166"
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="397"
-  DTS:VersionGUID="{6CBD52EB-9DA8-4FF3-A744-CDA9FD4E66DB}">
+  DTS:VersionBuild="416"
+  DTS:VersionGUID="{BA78607D-9793-40C2-955A-856651721D19}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -278,6 +278,117 @@
                       refId="Package\Associate Organizations With Leases\Add LEASE_TENANT.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\Associate Organizations With Leases\Add LEASE_TENANT.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Associate Organizations With Leases\Create Candidate Key"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Create Candidate Key"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input].Columns[P_S_File]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="P_S_File"
+                      lineageId="Package\Associate Organizations With Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]" />
+                    <inputColumn
+                      refId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input].Columns[Notes]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="Notes"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Associate Organizations With Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Notes]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">([ISNULL](#{Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]}) ? "" : (DT_WSTR,30)#{Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]}) + ([ISNULL](#{Package\Associate Organizations With Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]}) ? "" : #{Package\Associate Organizations With Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(TFA_FILE_NO) ? "" : (DT_WSTR,30)TFA_FILE_NO) + (ISNULL(P_S_File) ? "" : P_S_File)</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input].Columns[TFA_FILE_NO]"
+                      cachedDataType="i4"
+                      cachedName="TFA_FILE_NO"
+                      lineageId="Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="130"
+                      lineageId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]"
+                      name="LEASE_IDENTIFIER"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">([ISNULL](#{Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]}) ? "" : (DT_WSTR,30)#{Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]}) + ([ISNULL](#{Package\Associate Organizations With Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]}) ? "" : #{Package\Associate Organizations With Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(ISNULL(TFA_FILE_NO) ? "" : (DT_WSTR,30)TFA_FILE_NO) + (ISNULL(P_S_File) ? "" : P_S_File)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -891,7 +1002,7 @@ where [refTable].[LEASE_ID] = ? and [refTable].[ORGANIZATION_ID] = ?</property>
                   expressionType="Notify"
                   name="SqlCommandParam"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
-where [refTable].[TFA_FILE_NO] = ?</property>
+where (ISNULL(CAST([refTable].[TFA_FILE_NO] as VARCHAR(30)), '')+ISNULL([refTable].[PS_FILE_NO], '')) = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the type of connection used to access the reference dataset."
@@ -901,7 +1012,7 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                   dataType="System.Int32"
                   description="Specifies the cache type of the lookup table."
                   name="CacheType"
-                  typeConverter="CacheType">0</property>
+                  typeConverter="CacheType">1</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
@@ -922,12 +1033,12 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="LEASE_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PURPOSE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_STATUS_TYPE_CODE" dataType="DT_WSTR" length="450" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PMT_FREQ_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PROGRAM_TYPE_CODE" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="L_FILE_NO" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TFA_FILE_NO" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PS_FILE_NO" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TERM_START_DATE" dataType="DT_DBTIMESTAMP2" length="0" precision="0" scale="7" codePage="0"/&gt;&lt;referenceColumn name="TERM_RENEWAL_DATE" dataType="DT_DBTIMESTAMP2" length="0" precision="0" scale="7" codePage="0"/&gt;&lt;referenceColumn name="TERM_EXPIRY_DATE" dataType="DT_DBTIMESTAMP2" length="0" precision="0" scale="7" codePage="0"/&gt;&lt;referenceColumn name="LEASE_AMOUNT" dataType="DT_CY" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INSURANCE_START_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INSURANCE_END_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SECURITY_START_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SECURITY_END_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INSPECTION_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INSPECTION_NOTES" dataType="DT_WSTR" length="4000" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_NOTES" dataType="DT_WSTR" length="4000" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="UNIT" dataType="DT_WSTR" length="2000" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_EXPIRED" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_PHYSICAL_FILE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_DIGITAL_FILE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_PHYSICAL_LICENSE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_DIGITAL_LICENSE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CONCURRENCY_CONTROL_NUMBER" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INCLUDED_RENEWALS" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_ORIG_EXPIRY_REQUIRED" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_CATEGORY_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_DESCRIPTION" dataType="DT_WSTR" length="4000" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_LICENSE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PAY_RVBL_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PURPOSE_OTHER_DESC" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MOTI_NAME_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ORIG_EXPIRY_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ORIG_START_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RENEWAL_COUNT" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RENEWAL_TERM_MONTHS" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_COMM_BLDG" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_OTHER_IMPROVEMENT" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_SUBJECT_TO_RTA" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_INITIATOR_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_RESPONSIBILITY_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RESPONSIBILITY_EFFECTIVE_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="LEASE_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PAY_RVBL_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_LICENSE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_CATEGORY_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PURPOSE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PROGRAM_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_INITIATOR_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_RESPONSIBILITY_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_STATUS_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="REGION_CODE" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="L_FILE_NO" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TFA_FILE_NO" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PS_FILE_NO" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_DESCRIPTION" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_CATEGORY_OTHER_DESC" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_PURPOSE_OTHER_DESC" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_NOTES" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MOTI_CONTACT" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOCUMENTATION_REFERENCE" dataType="DT_WSTR" length="500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RETURN_NOTES" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="OTHER_LEASE_PROGRAM_TYPE" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="OTHER_LEASE_LICENSE_TYPE" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="OTHER_LEASE_PURPOSE_TYPE" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ORIG_START_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ORIG_EXPIRY_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LEASE_AMOUNT" dataType="DT_CY" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="RESPONSIBILITY_EFFECTIVE_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INSPECTION_DATE" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="INSPECTION_NOTES" dataType="DT_NTEXT" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_SUBJECT_TO_RTA" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_COMM_BLDG" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_OTHER_IMPROVEMENT" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_EXPIRED" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_PHYSICAL_FILE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_DIGITAL_FILE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_PHYSICIAL_LICENSE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HAS_DIGITAL_LICENSE" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CONCURRENCY_CONTROL_NUMBER" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]};</property>
+                  name="ParameterMap">#{Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -951,15 +1062,16 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                   name="Lookup Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Associate Organizations With Leases\Get Existing Lease Ids.Inputs[Lookup Input].Columns[TFA_FILE_NO]"
-                      cachedDataType="i4"
-                      cachedName="TFA_FILE_NO"
-                      lineageId="Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]">
+                      refId="Package\Associate Organizations With Leases\Get Existing Lease Ids.Inputs[Lookup Input].Columns[LEASE_IDENTIFIER]"
+                      cachedDataType="wstr"
+                      cachedLength="130"
+                      cachedName="LEASE_IDENTIFIER"
+                      lineageId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Specifies the column in the reference table that a column joins."
-                          name="JoinToReferenceColumn">TFA_FILE_NO</property>
+                          name="JoinToReferenceColumn">PS_FILE_NO</property>
                         <property
                           dataType="System.Null"
                           description="Specifies the column in the reference table from which a column is copied."
@@ -2299,7 +2411,7 @@ where [refTable].[ORGANIZATION_NAME] = ?</property>
           <paths>
             <path
               refId="Package\Associate Organizations With Leases.Paths[Data Conversion Output]"
-              endId="Package\Associate Organizations With Leases\Get Existing Lease Ids.Inputs[Lookup Input]"
+              endId="Package\Associate Organizations With Leases\Create Candidate Key.Inputs[Derived Column Input]"
               name="Data Conversion Output"
               startId="Package\Associate Organizations With Leases\Data Conversion.Outputs[Data Conversion Output]" />
             <path
@@ -2312,6 +2424,11 @@ where [refTable].[ORGANIZATION_NAME] = ?</property>
               endId="Package\Associate Organizations With Leases\Add LEASE_TENANT.Inputs[OLE DB Destination Input]"
               name="Derived Column Output"
               startId="Package\Associate Organizations With Leases\Format output columns.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Associate Organizations With Leases.Paths[Derived Column Output2]"
+              endId="Package\Associate Organizations With Leases\Get Existing Lease Ids.Inputs[Lookup Input]"
+              name="Derived Column Output"
+              startId="Package\Associate Organizations With Leases\Create Candidate Key.Outputs[Derived Column Output]" />
             <path
               refId="Package\Associate Organizations With Leases.Paths[If Tenant Name is valued]"
               endId="Package\Associate Organizations With Leases\Remove '-' from TFA File No.Inputs[Derived Column Input]"
@@ -31554,14 +31671,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Error Output]" />
             <path
               refId="Package\Insert Property Leases.Paths[Lookup Match Output1]"
-              endId="Package\Insert Property Leases\Split PIDs by &quot;,&quot;.Inputs[Input 0]"
-              name="Lookup Match Output"
-              startId="Package\Insert Property Leases\Find Matching Leases.Outputs[Lookup Match Output]" />
-            <path
-              refId="Package\Insert Property Leases.Paths[Lookup Match Output]"
               endId="Package\Insert Property Leases\Filter Pre-existing Property Leases.Inputs[Lookup Input]"
               name="Lookup Match Output"
               startId="Package\Insert Property Leases\Lookup PID.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Insert Property Leases.Paths[Lookup Match Output]"
+              endId="Package\Insert Property Leases\Split PIDs by &quot;,&quot;.Inputs[Input 0]"
+              name="Lookup Match Output"
+              startId="Package\Insert Property Leases\Find Matching Leases.Outputs[Lookup Match Output]" />
             <path
               refId="Package\Insert Property Leases.Paths[Lookup No Match Output]"
               endId="Package\Insert Property Leases\Format output columns.Inputs[Derived Column Input]"
@@ -31626,6 +31743,93 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             <pipeline
               version="1">
               <components>
+                <component
+                  refId="Package\Sequence Container\Insert Leases\Create Candidate Key"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Create Candidate Key"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Inputs[Derived Column Input].Columns[P_S_File]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="P_S_File"
+                          lineageId="Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Inputs[Derived Column Input].Columns[TFA_FILE_NO]"
+                          cachedDataType="i4"
+                          cachedName="TFA_FILE_NO"
+                          lineageId="Package\Sequence Container\Insert Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Sequence Container\Insert Leases\Create Candidate Key.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="130"
+                          lineageId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]"
+                          name="LEASE_IDENTIFIER"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">([ISNULL](#{Package\Sequence Container\Insert Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]}) ? "" : (DT_WSTR,30)#{Package\Sequence Container\Insert Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]}) + ([ISNULL](#{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]}) ? "" : #{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[P_S_File]})</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(ISNULL(TFA_FILE_NO) ? "" : (DT_WSTR,30)TFA_FILE_NO) + (ISNULL(P_S_File) ? "" : P_S_File)</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Sequence Container\Insert Leases\Create Candidate Key.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
                 <component
                   refId="Package\Sequence Container\Insert Leases\Data Casting Errors"
                   componentClassID="Microsoft.ManagedComponentHost"
@@ -33355,13 +33559,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">(DT_WSTR,2000)(#{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Comments]} + " " + #{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Notes]})</property>
+                              name="Expression">(DT_WSTR,2000)(([ISNULL](#{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Comments]}) ? "" : #{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Comments]}) + " " + ([ISNULL](#{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Notes]}) ? "" : #{Package\Sequence Container\Insert Leases\OLE DB Source.Outputs[OLE DB Source Output].Columns[Notes]}))</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">(DT_WSTR,2000)(Comments + " " + Notes)</property>
+                              name="FriendlyExpression">(DT_WSTR,2000)((ISNULL(Comments) ? "" : Comments) + " " + (ISNULL(Notes) ? "" : Notes))</property>
                           </properties>
                         </outputColumn>
                         <outputColumn
@@ -33549,7 +33753,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=]]></arrayElement>
                       expressionType="Notify"
                       name="SqlCommandParam"
                       UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [dbo].[PIMS_LEASE]) [refTable]
-where [refTable].[TFA_FILE_NO] = ?</property>
+where (ISNULL(CAST([refTable].[TFA_FILE_NO] as VARCHAR(30)), '')+ISNULL([refTable].[PS_FILE_NO], '')) = ?</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the type of connection used to access the reference dataset."
@@ -33559,7 +33763,7 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                       dataType="System.Int32"
                       description="Specifies the cache type of the lookup table."
                       name="CacheType"
-                      typeConverter="CacheType">0</property>
+                      typeConverter="CacheType">1</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
@@ -33585,7 +33789,7 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                       containsID="true"
                       dataType="System.String"
                       description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                      name="ParameterMap">#{Package\Sequence Container\Insert Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]};</property>
+                      name="ParameterMap">#{Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]};</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -33609,15 +33813,16 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                       name="Lookup Input">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #.Inputs[Lookup Input].Columns[TFA_FILE_NO]"
-                          cachedDataType="i4"
-                          cachedName="TFA_FILE_NO"
-                          lineageId="Package\Sequence Container\Insert Leases\Data Conversion.Outputs[Data Conversion Output].Columns[TFA_FILE_NO]">
+                          refId="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #.Inputs[Lookup Input].Columns[LEASE_IDENTIFIER]"
+                          cachedDataType="wstr"
+                          cachedLength="130"
+                          cachedName="LEASE_IDENTIFIER"
+                          lineageId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Output].Columns[LEASE_IDENTIFIER]">
                           <properties>
                             <property
                               dataType="System.String"
                               description="Specifies the column in the reference table that a column joins."
-                              name="JoinToReferenceColumn">TFA_FILE_NO</property>
+                              name="JoinToReferenceColumn">PS_FILE_NO</property>
                             <property
                               dataType="System.Null"
                               description="Specifies the column in the reference table from which a column is copied."
@@ -33815,11 +34020,6 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                               name="FriendlyExpression">ISNULL(Expected_Annual_Payment_exclusive_of_GST) || TRIM(Expected_Annual_Payment_exclusive_of_GST) == "$-" || LEN(TRIM((Expected_Annual_Payment_exclusive_of_GST))) == 0 ? NULL(DT_CY) : (DT_CY)Expected_Annual_Payment_exclusive_of_GST</property>
                           </properties>
                         </inputColumn>
-                        <inputColumn
-                          refId="Package\Sequence Container\Insert Leases\Format output columns.Inputs[Derived Column Input].Columns[EXPIRY_DATE]"
-                          cachedDataType="dbDate"
-                          cachedName="EXPIRY_DATE"
-                          lineageId="Package\Sequence Container\Insert Leases\Merge 1.Outputs[Merge Output 1].Columns[EXPIRY_DATE]" />
                         <inputColumn
                           refId="Package\Sequence Container\Insert Leases\Format output columns.Inputs[Derived Column Input].Columns[LEASE_PROGRAM_TYPE_CODE]"
                           cachedDataType="wstr"
@@ -34096,7 +34296,7 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                           dataType="wstr"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          length="8"
+                          length="6"
                           lineageId="Package\Sequence Container\Insert Leases\Format output columns.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]"
                           name="LEASE_STATUS_TYPE_CODE"
                           truncationRowDisposition="FailComponent">
@@ -34105,13 +34305,13 @@ where [refTable].[TFA_FILE_NO] = ?</property>
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Expression"
-                              name="Expression">#{Package\Sequence Container\Insert Leases\Merge 1.Outputs[Merge Output 1].Columns[EXPIRY_DATE]} &gt; [GETDATE]() || [ISNULL](#{Package\Sequence Container\Insert Leases\Merge 1.Outputs[Merge Output 1].Columns[EXPIRY_DATE]}) ? "ACTIVE" : "INACTIVE"</property>
+                              name="Expression">"ACTIVE"</property>
                             <property
                               containsID="true"
                               dataType="System.String"
                               description="Derived Column Friendly Expression"
                               expressionType="Notify"
-                              name="FriendlyExpression">EXPIRY_DATE &gt; GETDATE() || ISNULL(EXPIRY_DATE) ? "ACTIVE" : "INACTIVE"</property>
+                              name="FriendlyExpression">"ACTIVE"</property>
                           </properties>
                         </outputColumn>
                         <outputColumn
@@ -38901,7 +39101,7 @@ where [refTable].[SURNAME] = ?</property>
                         <inputColumn
                           refId="Package\Sequence Container\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LEASE_STATUS_TYPE_CODE]"
                           cachedDataType="wstr"
-                          cachedLength="8"
+                          cachedLength="6"
                           cachedName="LEASE_STATUS_TYPE_CODE"
                           externalMetadataColumnId="Package\Sequence Container\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LEASE_STATUS_TYPE_CODE]"
                           lineageId="Package\Sequence Container\Insert Leases\Format output columns.Outputs[Derived Column Output].Columns[LEASE_STATUS_TYPE_CODE]" />
@@ -46860,7 +47060,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                   startId="Package\Sequence Container\Insert Leases\Filter leases with no TFA or PS #.Outputs[Conditional Split Default Output]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Data Conversion Output]"
-                  endId="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #.Inputs[Lookup Input]"
+                  endId="Package\Sequence Container\Insert Leases\Create Candidate Key.Inputs[Derived Column Input]"
                   name="Data Conversion Output"
                   startId="Package\Sequence Container\Insert Leases\Data Conversion.Outputs[Data Conversion Output]" />
                 <path
@@ -46869,37 +47069,42 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                   name="Derived Column Error Output"
                   startId="Package\Sequence Container\Insert Leases\Format output columns.Outputs[Derived Column Error Output]" />
                 <path
-                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output]"
-                  endId="Package\Sequence Container\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output4]"
+                  endId="Package\Sequence Container\Insert Leases\Sort.Inputs[Sort Input]"
                   name="Derived Column Output"
-                  startId="Package\Sequence Container\Insert Leases\Format output columns.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output1]"
-                  endId="Package\Sequence Container\Insert Leases\Data Conversion.Inputs[Data Conversion Input]"
-                  name="Derived Column Output"
-                  startId="Package\Sequence Container\Insert Leases\Remove '-' from TFA File No.Outputs[Derived Column Output]" />
-                <path
-                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output2]"
-                  endId="Package\Sequence Container\Insert Leases\Merge 1.Inputs[Merge Input 1]"
-                  name="Derived Column Output"
-                  startId="Package\Sequence Container\Insert Leases\Default Payment Frequency.Outputs[Derived Column Output]" />
+                  startId="Package\Sequence Container\Insert Leases\Derived Column.Outputs[Derived Column Output]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output3]"
                   endId="Package\Sequence Container\Insert Leases\Merge.Inputs[Merge Input 1]"
                   name="Derived Column Output"
                   startId="Package\Sequence Container\Insert Leases\Default Lease Program.Outputs[Derived Column Output]" />
                 <path
-                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output4]"
-                  endId="Package\Sequence Container\Insert Leases\Sort.Inputs[Sort Input]"
+                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output5]"
+                  endId="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #.Inputs[Lookup Input]"
                   name="Derived Column Output"
-                  startId="Package\Sequence Container\Insert Leases\Derived Column.Outputs[Derived Column Output]" />
+                  startId="Package\Sequence Container\Insert Leases\Create Candidate Key.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output1]"
+                  endId="Package\Sequence Container\Insert Leases\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\Sequence Container\Insert Leases\Remove '-' from TFA File No.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output]"
+                  endId="Package\Sequence Container\Insert Leases\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Sequence Container\Insert Leases\Format output columns.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Sequence Container\Insert Leases.Paths[Derived Column Output2]"
+                  endId="Package\Sequence Container\Insert Leases\Merge 1.Inputs[Merge Input 1]"
+                  name="Derived Column Output"
+                  startId="Package\Sequence Container\Insert Leases\Default Payment Frequency.Outputs[Derived Column Output]" />
                 <path
                   refId="Package\Sequence Container\Insert Leases.Paths[Leases with identifiers]"
                   endId="Package\Sequence Container\Insert Leases\Remove '-' from TFA File No.Inputs[Derived Column Input]"
                   name="Leases with identifiers"
                   startId="Package\Sequence Container\Insert Leases\Filter leases with no TFA or PS #.Outputs[Leases with identifiers]" />
                 <path
-                  refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
+                  refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
                   endId="Package\Sequence Container\Insert Leases\Merge.Inputs[Merge Input 2]"
                   name="Lookup Match Output"
                   startId="Package\Sequence Container\Insert Leases\Lease Program Lookup.Outputs[Lookup Match Output]" />
@@ -46909,7 +47114,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                   name="Lookup Match Output"
                   startId="Package\Sequence Container\Insert Leases\Payment Frequency Lookup.Outputs[Lookup Match Output]" />
                 <path
-                  refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
+                  refId="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
                   endId="Package\Sequence Container\Insert Leases\Format output columns.Inputs[Derived Column Input]"
                   name="Lookup Match Output"
                   startId="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id.Outputs[Lookup Match Output]" />
@@ -47095,7 +47300,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="261,42"
           Id="Package\Associate Organizations With Leases"
-          TopLeft="5.50000000000009,821.5" />
+          TopLeft="5.50000000000009,823.5" />
         <NodeLayout
           Size="255,42"
           Id="Package\Associate Person With Organization"
@@ -47212,9 +47417,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-105.5,76.8333333333334"
+              EndConnector="-105.5,78.8333333333334"
               Start="0,0"
-              End="-97.9999999999999,76.8333333333334">
+              End="-97.9999999999999,78.8333333333334">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -47225,13 +47430,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
                     Point2="-42.8956043956044,0"
                     Point3="-42.8956043956044,4" />
                   <mssgle:LineSegment
-                    End="-42.8956043956044,72.8333333333334" />
+                    End="-42.8956043956044,74.8333333333334" />
                   <mssgle:CubicBezierSegment
-                    Point1="-42.8956043956044,72.8333333333334"
-                    Point2="-42.8956043956044,76.8333333333334"
-                    Point3="-46.8956043956044,76.8333333333334" />
+                    Point1="-42.8956043956044,74.8333333333334"
+                    Point2="-42.8956043956044,78.8333333333334"
+                    Point3="-46.8956043956044,78.8333333333334" />
                   <mssgle:LineSegment
-                    End="-97.9999999999999,76.8333333333334" />
+                    End="-97.9999999999999,78.8333333333334" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -47264,18 +47469,18 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="136,863.5">
+          TopLeft="136,865.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="0,58"
               Start="0,0"
-              End="0,52.5">
+              End="0,50.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,50.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -47421,7 +47626,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="239,42"
           Id="Package\Associate Organizations With Leases\Filter pre-existing Lease Tenants"
-          TopLeft="15.0000000000001,719.5" />
+          TopLeft="15.0000000000001,821.5" />
         <NodeLayout
           Size="161,42"
           Id="Package\Associate Organizations With Leases\Data Conversion"
@@ -47433,11 +47638,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="189,42"
           Id="Package\Associate Organizations With Leases\Get Existing Lease Ids"
-          TopLeft="40.0000000000001,515.5" />
+          TopLeft="40.0000000000001,617.5" />
         <NodeLayout
           Size="191,42"
           Id="Package\Associate Organizations With Leases\Format output columns"
-          TopLeft="38.0000000000001,821.5" />
+          TopLeft="39.0000000000001,923.5" />
         <NodeLayout
           Size="258,42"
           Id="Package\Associate Organizations With Leases\Filter any rows with no Tenant Name"
@@ -47445,15 +47650,15 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="217,42"
           Id="Package\Associate Organizations With Leases\Remove '-' from TFA File No"
-          TopLeft="26,311.5" />
+          TopLeft="26.0000000000001,311.5" />
         <NodeLayout
           Size="187,42"
           Id="Package\Associate Organizations With Leases\Add LEASE_TENANT"
-          TopLeft="41.0000000000001,923.5" />
+          TopLeft="41.0000000000001,1025.5" />
         <NodeLayout
           Size="221,42"
           Id="Package\Associate Organizations With Leases\Get Existing Organization Ids"
-          TopLeft="24.0000000000001,617.5" />
+          TopLeft="24.0000000000001,719.5" />
         <EdgeLayout
           Id="Package\Associate Organizations With Leases.Paths[If Tenant Name is valued]"
           TopLeft="134.5,251.5">
@@ -47480,7 +47685,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Associate Organizations With Leases.Paths[Derived Column Output1]"
-          TopLeft="134,863.5">
+          TopLeft="134.5,965.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -47497,9 +47702,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -47521,33 +47724,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Associate Organizations With Leases.Paths[Data Conversion Output]"
-          TopLeft="134.5,455.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -47569,14 +47746,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Associate Organizations With Leases.Paths[Lookup No Match Output]"
-          TopLeft="134,761.5">
+          TopLeft="134.5,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -47600,7 +47775,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Associate Organizations With Leases.Paths[Lookup Match Output1]"
-          TopLeft="134.5,659.5">
+          TopLeft="134.5,761.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -47624,7 +47799,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Associate Organizations With Leases.Paths[Lookup Match Output]"
-          TopLeft="134.5,557.5">
+          TopLeft="134.5,659.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -47668,6 +47843,54 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             <mssgm:EdgeLabel
               BoundingBox="-49.357578125,21.35107421875,98.71515625,9.7978515625"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Associate Organizations With Leases\Create Candidate Key"
+          TopLeft="41.0000000000001,515.5" />
+        <EdgeLayout
+          Id="Package\Associate Organizations With Leases.Paths[Data Conversion Output]"
+          TopLeft="134.5,455.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Associate Organizations With Leases.Paths[Derived Column Output2]"
+          TopLeft="134.5,557.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -47715,7 +47938,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">true</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -49872,42 +50095,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Insert Property Leases.Paths[Lookup Match Output1]"
-          TopLeft="197.166666666667,455.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="224.333333333333,60"
-              Start="0,0"
-              End="224.333333333333,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,20.3070362473348" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,20.3070362473348"
-                    Point2="0,24.3070362473348"
-                    Point3="4,24.3070362473348" />
-                  <mssgle:LineSegment
-                    End="220.333333333333,24.3070362473348" />
-                  <mssgle:CubicBezierSegment
-                    Point1="220.333333333333,24.3070362473348"
-                    Point2="224.333333333333,24.3070362473348"
-                    Point3="224.333333333333,28.3070362473348" />
-                  <mssgle:LineSegment
-                    End="224.333333333333,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="63.9752799479165,29.3070362473348,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
           TopLeft="400.166666666667,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -49939,6 +50126,42 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="-183.524720052084,29.4186046511628,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Insert Property Leases.Paths[Lookup Match Output]"
+          TopLeft="197.166666666667,455.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="224.333333333333,60"
+              Start="0,0"
+              End="224.333333333333,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3070362473348" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.3070362473348"
+                    Point2="0,24.3070362473348"
+                    Point3="4,24.3070362473348" />
+                  <mssgle:LineSegment
+                    End="220.333333333333,24.3070362473348" />
+                  <mssgle:CubicBezierSegment
+                    Point1="220.333333333333,24.3070362473348"
+                    Point2="224.333333333333,24.3070362473348"
+                    Point3="224.333333333333,28.3070362473348" />
+                  <mssgle:LineSegment
+                    End="224.333333333333,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="63.9752799479165,29.3070362473348,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -50327,7 +50550,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="191,42"
           Id="Package\Sequence Container\Insert Leases\Format output columns"
-          TopLeft="235.5,1535.5" />
+          TopLeft="235.5,1637.5" />
         <NodeLayout
           Size="157,42"
           Id="Package\Sequence Container\Insert Leases\OLE DB Source"
@@ -50335,19 +50558,19 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="192,42"
           Id="Package\Sequence Container\Insert Leases\Default Lease Program"
-          TopLeft="78.0000000000001,923.5" />
+          TopLeft="78.0000000000002,1025.5" />
         <NodeLayout
           Size="110,42"
           Id="Package\Sequence Container\Insert Leases\Merge"
-          TopLeft="276,1025.5" />
+          TopLeft="276,1127.5" />
         <NodeLayout
           Size="193,42"
           Id="Package\Sequence Container\Insert Leases\Lease Program Lookup"
-          TopLeft="234.5,821.5" />
+          TopLeft="234.5,923.5" />
         <NodeLayout
           Size="216,42"
           Id="Package\Sequence Container\Insert Leases\Payment Frequency Lookup"
-          TopLeft="223,1127.5" />
+          TopLeft="223,1229.5" />
         <NodeLayout
           Size="161,42"
           Id="Package\Sequence Container\Insert Leases\Data Conversion"
@@ -50359,19 +50582,19 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="226,42"
           Id="Package\Sequence Container\Insert Leases\Lookup Placeholder Person Id"
-          TopLeft="218,1433.5" />
+          TopLeft="218,1535.5" />
         <NodeLayout
           Size="205,42"
           Id="Package\Sequence Container\Insert Leases\Store Data Casting Errors"
-          TopLeft="228.5,1739.5" />
+          TopLeft="228.5,1841.5" />
         <NodeLayout
           Size="158,42"
           Id="Package\Sequence Container\Insert Leases\Derived Column"
-          TopLeft="252,617.5" />
+          TopLeft="252,719.5" />
         <NodeLayout
           Size="139,42"
           Id="Package\Sequence Container\Insert Leases\Parse Dates"
-          TopLeft="261.5,515.5" />
+          TopLeft="261.5,617.5" />
         <NodeLayout
           Size="217,42"
           Id="Package\Sequence Container\Insert Leases\Remove '-' from TFA File No"
@@ -50387,30 +50610,30 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         <NodeLayout
           Size="99,42"
           Id="Package\Sequence Container\Insert Leases\Sort"
-          TopLeft="281.5,719.5" />
+          TopLeft="281.5,821.5" />
         <NodeLayout
           Size="215,42"
           Id="Package\Sequence Container\Insert Leases\Default Payment Frequency"
-          TopLeft="54.5000000000001,1229.5" />
+          TopLeft="54.5000000000002,1331.5" />
         <NodeLayout
           Size="119,42"
           Id="Package\Sequence Container\Insert Leases\Merge 1"
-          TopLeft="271.5,1331.5" />
+          TopLeft="271.5,1433.5" />
         <NodeLayout
           Size="175,42"
           Id="Package\Sequence Container\Insert Leases\Data Casting Errors"
-          TopLeft="243.5,1637.5" />
+          TopLeft="243.5,1739.5" />
         <NodeLayout
           Size="177,42"
           Id="Package\Sequence Container\Insert Leases\OLE DB Destination"
-          TopLeft="5.50000000000017,1637.5" />
+          TopLeft="5.50000000000028,1739.5" />
         <NodeLayout
           Size="261,42"
           Id="Package\Sequence Container\Insert Leases\Filter Existing Leases by PS or TFA #"
-          TopLeft="200.5,413.5" />
+          TopLeft="200.5,515.5" />
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Sort Output]"
-          TopLeft="331,761.5">
+          TopLeft="331,863.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50427,14 +50650,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Output 02]"
-          TopLeft="331,1679.5">
+          TopLeft="331,1781.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50451,9 +50672,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50475,14 +50694,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Output 0]"
-          TopLeft="331,557.5">
+          TopLeft="331,659.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50499,9 +50716,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50523,14 +50738,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[New Leases Only]"
-          TopLeft="331,455.5">
+          TopLeft="331,557.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50554,7 +50767,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Merge Output 11]"
-          TopLeft="331,1067.5">
+          TopLeft="331,1169.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50571,14 +50784,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Merge Output 1]"
-          TopLeft="331,1373.5">
+          TopLeft="331,1475.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50595,14 +50806,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output1]"
-          TopLeft="300.166666666667,863.5">
+          TopLeft="300.166666666667,965.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50632,13 +50841,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-118.889720052084,29.2959917780062,111.6127734375,11.609375"
+              BoundingBox="-118.889720052083,29.2959917780062,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Lookup No Match Output]"
-          TopLeft="296.333333333333,1169.5">
+          TopLeft="296.333333333334,1271.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50674,43 +50883,31 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output2]"
-          TopLeft="361.833333333333,863.5">
+          TopLeft="331,1577.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-13.8333333333333,162"
+              EndConnector="0,60"
               Start="0,0"
-              End="-13.8333333333333,154.5">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,76.3842278805642" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,76.3842278805642"
-                    Point2="0,80.3842278805642"
-                    Point3="-4,80.3842278805642" />
-                  <mssgle:LineSegment
-                    End="-9.83333333333331,80.3842278805642" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-9.83333333333331,80.3842278805642"
-                    Point2="-13.8333333333333,80.3842278805642"
-                    Point3="-13.8333333333333,84.3842278805642" />
-                  <mssgle:LineSegment
-                    End="-13.8333333333333,154.5" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-55.1080533854167,85.3842278805642,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output1]"
-          TopLeft="365.666666666667,1169.5">
+          TopLeft="365.666666666667,1271.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50746,25 +50943,37 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Lookup Match Output]"
-          TopLeft="331,1475.5">
+          TopLeft="361.833333333333,965.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="-13.8333333333333,162"
               Start="0,0"
-              End="0,52.5">
+              End="-13.8333333333333,154.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,76.3842278805642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,76.3842278805642"
+                    Point2="0,80.3842278805642"
+                    Point3="-4,80.3842278805642" />
+                  <mssgle:LineSegment
+                    End="-9.83333333333331,80.3842278805642" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9.83333333333331,80.3842278805642"
+                    Point2="-13.8333333333333,80.3842278805642"
+                    Point3="-13.8333333333333,84.3842278805642" />
+                  <mssgle:LineSegment
+                    End="-13.8333333333333,154.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              BoundingBox="-55.1080533854167,85.3842278805642,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -50806,7 +51015,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output4]"
-          TopLeft="331,659.5">
+          TopLeft="331,761.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50823,14 +51032,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output3]"
-          TopLeft="174,965.5">
+          TopLeft="174,1067.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50859,14 +51066,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output2]"
-          TopLeft="162,1271.5">
+          TopLeft="162,1373.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50895,9 +51100,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -50919,14 +51122,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output]"
-          TopLeft="300.5,1577.5">
+          TopLeft="300.5,1679.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50955,14 +51156,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Error Output]"
-          TopLeft="361.5,1577.5">
+          TopLeft="361.5,1679.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -50992,31 +51191,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-80.2113867187499,29.2990654205607,129.9227734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\Insert Leases.Paths[Data Conversion Output]"
-          TopLeft="331,353.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
+              BoundingBox="-80.21138671875,29.2990654205607,129.9227734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -51054,6 +51229,54 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             <mssgm:EdgeLabel
               BoundingBox="-89.86390625,29.2394014962594,141.2278125,11.658203125"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Sequence Container\Insert Leases\Create Candidate Key"
+          TopLeft="237.5,413.5" />
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Data Conversion Output]"
+          TopLeft="331,353.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\Insert Leases.Paths[Derived Column Output5]"
+          TopLeft="331,455.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -51186,7 +51409,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">true</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -51196,7 +51419,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

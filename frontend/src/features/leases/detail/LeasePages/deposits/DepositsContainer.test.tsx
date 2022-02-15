@@ -19,6 +19,7 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     amountPaid: 500.0,
     depositDate: '2021-09-15T00:00:00',
     rowVersion: 0,
+    depositReturns: [],
   },
   {
     id: 7,
@@ -28,6 +29,7 @@ const mockDeposits: ILeaseSecurityDeposit[] = [
     amountPaid: 2000.0,
     depositDate: '2019-03-01T00:00:00',
     rowVersion: 0,
+    depositReturns: [],
   },
 ];
 
@@ -35,17 +37,10 @@ const mockDepositReturns: ILeaseSecurityDepositReturn[] = [
   {
     id: 1,
     parentDepositId: 7,
-    depositType: {
-      id: 'SECURITY',
-      description: 'Security deposit',
-      isDisabled: false,
-    },
     terminationDate: '2022-02-01',
     claimsAgainst: 1234.0,
     returnAmount: 123.0,
     returnDate: '2022-02-16',
-    payeeName: '',
-    payeeAddress: '',
     rowVersion: 1,
   },
 ];

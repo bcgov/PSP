@@ -44,6 +44,10 @@ namespace Pims.Dal
         /// get - The person service.
         /// </summary>
         public IPersonService PersonService { get { return _serviceProvider.GetService<IPersonService>(); } }
+        /// <summary>
+        /// get - The organization service.
+        /// </summary>
+        public IOrganizationService OrganizationService { get { return _serviceProvider.GetService<IOrganizationService>(); } }
         #endregion
 
         #region Constructors

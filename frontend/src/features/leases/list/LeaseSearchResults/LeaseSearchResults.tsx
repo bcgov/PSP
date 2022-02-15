@@ -1,9 +1,15 @@
-import { ColumnWithProps, Table } from 'components/Table';
+import TooltipIcon from 'components/common/TooltipIcon';
+import { ColumnWithProps, renderTypeCode, Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import { ILeaseSearchResult } from 'interfaces';
+import moment from 'moment';
 import { useCallback } from 'react';
+import { Tooltip } from 'react-bootstrap';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import styled from 'styled-components';
+import { prettyFormatDate } from 'utils';
 
 import LeaseProperties from './LeaseProperties';
 import LeaseTenants from './LeaseTenants';
@@ -17,9 +23,52 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     align: 'right',
     clickable: true,
     width: 10,
+    maxWidth: 20,
     Cell: (props: CellProps<ILeaseSearchResult>) => (
       <Link to={`/lease/${props.row.original.id}`}>{props.row.original.lFileNo}</Link>
     ),
+  },
+  {
+    Header: 'Expiry Date',
+    accessor: 'expiryDate',
+    align: 'left',
+    width: 15,
+    maxWidth: 25,
+    Cell: (props: CellProps<ILeaseSearchResult>) => {
+      const expiryDate = props.row.original.expiryDate;
+      const isExpired = moment().isAfter(moment(expiryDate, 'YYYY-MM-DD'), 'day');
+
+      var icon = (
+        <ExpiredIcon className="mx-2">
+          <AiOutlineExclamationCircle size={16} />
+        </ExpiredIcon>
+      );
+      var overlay = (
+        <ExpiredOverlay>
+          <strong>EXPIRED</strong>
+        </ExpiredOverlay>
+      );
+      return (
+        <>
+          <span>{prettyFormatDate(expiryDate)}</span>
+          {isExpired && (
+            <TooltipIcon
+              toolTipId="lease-row-tooltip-expired"
+              placement="right"
+              customToolTipIcon={icon}
+              customOverlay={overlay}
+            />
+          )}
+        </>
+      );
+    },
+  },
+  {
+    Header: 'Program Name',
+    accessor: 'programName',
+    align: 'left',
+    width: 40,
+    maxWidth: 80,
   },
   {
     Header: 'Tenant Names',
@@ -37,13 +86,6 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     },
   },
   {
-    Header: 'Program Name',
-    accessor: 'programName',
-    align: 'left',
-    width: 40,
-    maxWidth: 80,
-  },
-  {
     Header: 'Properties',
     accessor: 'properties',
     align: 'left',
@@ -56,6 +98,14 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
         ></LeaseProperties>
       );
     },
+  },
+  {
+    Header: 'Status',
+    accessor: 'statusType',
+    align: 'left',
+    width: 20,
+    maxWidth: 20,
+    Cell: renderTypeCode,
   },
 ];
 
@@ -113,3 +163,19 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
     ></Table>
   );
 }
+
+const ExpiredIcon = styled('span')`
+  color: ${props => props.theme.css.dangerColor};
+`;
+
+const ExpiredOverlay = styled(Tooltip)`
+  .tooltip-inner {
+    color: ${props => props.theme.css.dangerColor};
+    background-color: ${props => props.theme.css.dangerBackgroundColor};
+  }
+
+  .arrow::before {
+    color: ${props => props.theme.css.dangerColor};
+    background-color: ${props => props.theme.css.dangerBackgroundColor};
+  }
+`;

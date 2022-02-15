@@ -9,36 +9,54 @@ exports[`Property list view matches snapshot 1`] = `
     class="Toastify"
   />
   .c0 {
+  padding-right: 0;
+}
+
+.c0 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c1:not(:first-child) {
+  padding-left: 0;
+}
+
+.c1:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.c0 div:nth-child(2) div:nth-child(1) {
+.c2 div:nth-child(2) div:nth-child(1) {
   cursor: auto;
 }
 
-.c0 div:nth-child(2) div:nth-child(1) svg {
+.c2 div:nth-child(2) div:nth-child(1) svg {
   fill: #909090;
 }
 
-.c0 div:nth-child(1) div:nth-child(1) {
+.c2 div:nth-child(1) div:nth-child(1) {
   cursor: pointer;
 }
 
-.c0 div:nth-child(1) div:nth-child(1) svg {
+.c2 div:nth-child(1) div:nth-child(1) svg {
   fill: #003366;
 }
 
-.c1 {
+.c3 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   width: 100%;
 }
 
-.c2 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -55,13 +73,13 @@ exports[`Property list view matches snapshot 1`] = `
   align-items: center;
 }
 
-.c2 svg {
+.c4 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
 }
 
-.c3 {
+.c5 {
   background-color: #fff !important;
   color: primaryColor !important;
   padding: 6px 0.5rem;
@@ -81,51 +99,53 @@ exports[`Property list view matches snapshot 1`] = `
           novalidate=""
         >
           <div
-            class="map-filter-bar m-0 form-row"
+            class="map-filter-bar pb-4 form-row"
           >
             <div
-              class="bar-item filter-options col"
+              class="col-auto"
             >
-              <p
-                class="m-0"
-              >
-                Search: 
-              </p>
+              <span>
+                Search:
+              </span>
             </div>
             <div
-              class="bar-item filter-options col"
+              class="col-5"
             >
               <div
-                class="input-group"
+                class="row"
               >
                 <div
-                  class="input-group-prepend"
+                  class="c0 col-auto"
                 >
                   <div
-                    class="form-group"
+                    class="input-group-prepend"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-searchBy"
-                      name="searchBy"
+                    <div
+                      class="form-group"
                     >
-                      <option
-                        class="option"
-                        value="pinOrPid"
+                      <select
+                        class="form-select form-control"
+                        id="input-searchBy"
+                        name="searchBy"
                       >
-                        PID/PIN
-                      </option>
-                      <option
-                        class="option"
-                        value="address"
-                      >
-                        Address
-                      </option>
-                    </select>
+                        <option
+                          class="option"
+                          value="pinOrPid"
+                        >
+                          PID/PIN
+                        </option>
+                        <option
+                          class="option"
+                          value="address"
+                        >
+                          Address
+                        </option>
+                      </select>
+                    </div>
                   </div>
                 </div>
                 <div
-                  class="input-group-content"
+                  class="c1 col"
                 >
                   <div
                     class="input form-group"
@@ -143,7 +163,7 @@ exports[`Property list view matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="bar-item col"
+              class="col-auto"
             >
               <button
                 class="Button Button--icon-only primary btn btn-primary"
@@ -171,7 +191,7 @@ exports[`Property list view matches snapshot 1`] = `
               </button>
             </div>
             <div
-              class="bar-item col"
+              class="col-auto"
             >
               <button
                 class="Button Button--icon-only btn btn-info"
@@ -199,16 +219,16 @@ exports[`Property list view matches snapshot 1`] = `
               </button>
             </div>
             <div
-              class="bar-item col"
+              class="bar-item col-auto"
             >
               <div
-                class="c0"
+                class="c2"
               >
                 <div
-                  class="c1"
+                  class="c3"
                 >
                   <div
-                    class="c2"
+                    class="c4"
                   >
                     <svg>
                       icon-map.svg
@@ -216,10 +236,10 @@ exports[`Property list view matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c1"
+                  class="c3"
                 >
                   <div
-                    class="c2"
+                    class="c4"
                   >
                     <svg>
                       icon-table.svg
@@ -245,7 +265,7 @@ exports[`Property list view matches snapshot 1`] = `
           class="menu"
         />
         <button
-          class="c3 btn btn-primary"
+          class="c5 btn btn-primary"
           type="button"
         >
           <svg
@@ -264,7 +284,7 @@ exports[`Property list view matches snapshot 1`] = `
           </svg>
         </button>
         <button
-          class="c3 btn btn-primary"
+          class="c5 btn btn-primary"
           type="button"
         >
           <svg

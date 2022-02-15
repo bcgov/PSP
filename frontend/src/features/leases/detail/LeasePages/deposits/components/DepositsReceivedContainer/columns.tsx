@@ -19,7 +19,7 @@ export class DepositListEntry {
   public organizationDepositHolder?: IOrganization;
   public depositReturnCount: number;
 
-  public constructor(baseDeposit: ILeaseSecurityDeposit, depositReturnCount: number) {
+  public constructor(baseDeposit: ILeaseSecurityDeposit) {
     this.id = baseDeposit.id || -1;
     if (baseDeposit.depositType.id === 'OTHER') {
       this.depositTypeDescription = (baseDeposit.otherTypeDescription || '') + ' (Other)';
@@ -31,7 +31,7 @@ export class DepositListEntry {
     this.paidDate = baseDeposit.depositDate || '';
     this.personDepositHolder = baseDeposit.personDepositHolder;
     this.organizationDepositHolder = baseDeposit.organizationDepositHolder;
-    this.depositReturnCount = depositReturnCount;
+    this.depositReturnCount = baseDeposit.depositReturns.length;
   }
 }
 

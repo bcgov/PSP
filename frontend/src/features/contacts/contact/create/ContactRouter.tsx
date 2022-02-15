@@ -1,4 +1,4 @@
-import { ContactTypes } from 'features/contacts';
+import { ContactTypes } from 'features/contacts/interfaces';
 import React from 'react';
 import { Redirect, Switch, useRouteMatch } from 'react-router-dom';
 import AppRoute from 'utils/AppRoute';

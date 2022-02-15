@@ -82,7 +82,7 @@ namespace Pims.Dal.Services
             {
                 throw new InvalidOperationException("Exercised terms cannot be deleted. Remove all payments from this term and set this term to 'Not Exercised' to delete this term.");
             }
-            IEnumerable<PimsLeaseTerm> termsForLease = _leaseTermRepository.GetByLeaseId(term.LeaseId).OrderBy(t => t.TermStartDate);
+            IEnumerable<PimsLeaseTerm> termsForLease = _leaseTermRepository.GetByLeaseId(term.LeaseId).OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId);
             if (term.Id == termsForLease.FirstOrDefault()?.Id && termsForLease.Count() > 1)
             {
                 throw new InvalidOperationException("You must delete all renewals before deleting the initial term.");
@@ -136,7 +136,7 @@ namespace Pims.Dal.Services
         {
             IEnumerable<PimsLeaseTerm> terms = _leaseTermRepository.GetByLeaseId(term.LeaseId);
 
-            return terms.Any(t => t.Id != term.Id && (t.TermExpiryDate > term.TermStartDate && t.TermStartDate < term.TermStartDate
+            return terms.Any(t => t.Id != term.Id && (t.TermExpiryDate > term.TermStartDate && t.TermStartDate <= term.TermStartDate
                 || (t.TermExpiryDate == null && t.TermStartDate <= term.TermStartDate)
                 || (term.TermExpiryDate == null && t.TermStartDate >= term.TermStartDate)));
         }
