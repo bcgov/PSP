@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Pims.Api.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Lease
@@ -34,6 +35,11 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         /// get/set - Other type description.
         /// </summary>
         public string OtherTypeDescription { get; set; }
+
+        /// <summary>
+        /// get/set - Child return security deposits.
+        /// </summary>
+        public IList<SecurityDepositReturnModel> DepositReturns { get; set; }
 
         /// <summary>
         /// get/set - Person deposit holder.

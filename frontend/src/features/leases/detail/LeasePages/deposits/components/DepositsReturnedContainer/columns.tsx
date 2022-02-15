@@ -30,10 +30,10 @@ export class ReturnListEntry {
     parentDeposit: ILeaseSecurityDeposit,
   ) {
     this.id = baseDeposit.id || -1;
-    if (baseDeposit.depositType.id === 'OTHER') {
+    if (parentDeposit.depositType.id === 'OTHER') {
       this.depositTypeDescription = (parentDeposit.otherTypeDescription || '') + ' (Other)';
     } else {
-      this.depositTypeDescription = baseDeposit.depositType.description || '';
+      this.depositTypeDescription = parentDeposit.depositType.description || '';
     }
 
     this.terminationDate = baseDeposit.terminationDate || '';

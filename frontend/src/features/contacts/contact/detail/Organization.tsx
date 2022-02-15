@@ -174,16 +174,12 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           <Col>
             {organization.persons &&
               organization.persons.map((person: IContactPerson, index: number) => (
-                <>
-                  <Link
-                    to={'/contact/P' + person.id}
-                    data-testid="contact-organization-person"
-                    key={'org-person-' + index}
-                  >
+                <span>
+                  <Link to={'/contact/P' + person.id} data-testid="contact-organization-person">
                     {person.fullName}
                   </Link>
                   <br />
-                </>
+                </span>
               ))}
           </Col>
         </Styled.RowAligned>
