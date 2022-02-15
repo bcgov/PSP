@@ -15,13 +15,13 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.StartDate = src.OrigStartDate.FilterSqlMinDate();
             dest.EndDate = src.OrigExpiryDate.FilterSqlMinDate();
             dest.CurrentTermStartDate = src.GetCurrentTermStartDate().FilterSqlMinDate();
-            dest.CurrentTermEndDate = src.GetCurrentTermEndDate();
+            dest.CurrentTermEndDate = src.GetCurrentTermEndDate().FilterSqlMinDate();
             dest.ProgramName = src?.LeaseProgramTypeCodeNavigation?.Description;
             dest.PurposeType = src?.LeasePurposeTypeCodeNavigation?.Description;
             dest.StatusType = src?.LeaseStatusTypeCodeNavigation?.Description;
             dest.PsFileNo = src.PsFileNo;
             dest.InspectionNotes = src.InspectionNotes;
-            dest.InspectionDate = src.InspectionDate;
+            dest.InspectionDate = src.InspectionDate.FilterSqlMinDate();
             dest.LeaseNotes = src.LeaseNotes;
             dest.IsExpired = src.GetExpiryDate() < DateTime.Now;
         }

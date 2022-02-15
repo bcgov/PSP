@@ -60,4 +60,9 @@
     <ProjectReference Include="..\ltsa\Pims.Ltsa.csproj" />
     <ProjectReference Include="..\keycloak\Pims.Keycloak.csproj" />
   </ItemGroup>
+  <ItemGroup> 
+  <Content Include="Resources\**"> 
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+  </Content> 
+</ItemGroup>
 </Project>
