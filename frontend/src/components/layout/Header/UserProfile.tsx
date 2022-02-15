@@ -1,14 +1,11 @@
 import variables from '_variables.module.scss';
 import profileUrl from 'assets/images/profile.svg';
-import * as API from 'constants/API';
 import { useConfiguration } from 'hooks/useConfiguration';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 
 /** the styling for the dropdown menu that appears after clicking the user's name */

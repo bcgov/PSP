@@ -9,9 +9,11 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
     class="Toastify"
   />
   .c0 {
-  max-width: 11rem;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
   max-height: 100%;
-  min-width: 10rem;
+  min-width: 11rem;
   white-space: nowrap;
   border-radius: 1rem;
   background-color: white;
@@ -68,9 +70,11 @@ exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
     class="Toastify"
   />
   .c0 {
-  max-width: 11rem;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
   max-height: 100%;
-  min-width: 10rem;
+  min-width: 11rem;
   white-space: nowrap;
   border-radius: 1rem;
   background-color: white;

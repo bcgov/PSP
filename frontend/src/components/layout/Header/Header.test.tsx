@@ -120,25 +120,5 @@ describe('App Header', () => {
       const { findByText } = setup();
       expect(await findByText('firstName surname')).toBeVisible();
     });
-
-    it('displays appropriate organization', async () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          authenticated: true,
-          userInfo: {
-            organizations: ['1'],
-            firstName: 'test',
-            surname: 'user',
-          },
-        },
-      });
-
-      const { findByText } = setup();
-      const userLink = await findByText(/test user/i);
-      expect(userLink).toBeVisible();
-      fireEvent.click(userLink);
-      expect(await findByText(/organizationVal/i)).toBeInTheDocument();
-    });
   });
 });

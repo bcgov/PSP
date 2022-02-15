@@ -3,7 +3,6 @@ import 'leaflet/dist/leaflet.css';
 
 import { useKeycloak } from '@react-keycloak/web';
 import { render } from '@testing-library/react';
-import * as API from 'constants/API';
 import {
   AddressTypes,
   PropertyAreaUnitTypes,

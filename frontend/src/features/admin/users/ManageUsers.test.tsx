@@ -121,20 +121,6 @@ describe('Manage Users Component', () => {
     expect(rows.length).toBe(2);
   });
 
-  it('displays organizations dropdown', async () => {
-    const { getByRole, container } = testRender(getStore());
-    const organization = container.querySelector('input[name="organization"]');
-
-    await wait(() => {
-      fireEvent.change(organization!, {
-        target: {
-          value: 'age',
-        },
-      });
-    });
-    expect(getByRole('listbox')).toBeInTheDocument();
-  });
-
   it('displays enabled roles', () => {
     const { queryByText } = testRender(getStore());
     expect(queryByText('roleVal')).toBeVisible();

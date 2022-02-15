@@ -6,7 +6,6 @@ import { IPaginateParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IUser, IUsersFilter } from 'interfaces';
-import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
 import { useCallback, useEffect, useMemo } from 'react';
