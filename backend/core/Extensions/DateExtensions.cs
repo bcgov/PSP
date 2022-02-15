@@ -54,7 +54,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static DateTime? FilterSqlMinDate(this DateTime? date)
         {
-            return date.HasValue && date.Value <= SqlDateTime.MinValue ? null : date;
+            return date.HasValue && date.Value <= (DateTime)SqlDateTime.MinValue ? null : date;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static DateTime? FilterSqlMinDate(this DateTime date)
         {
-            return date <= SqlDateTime.MinValue ? null : date;
+            return date <= (DateTime)SqlDateTime.MinValue ? null : date;
         }
     }
 }
