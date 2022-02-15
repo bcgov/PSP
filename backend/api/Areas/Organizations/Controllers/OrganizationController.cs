@@ -83,14 +83,9 @@ namespace Pims.Api.Areas.Organizations.Controllers
             }
 
             var entity = _mapper.Map<Dal.Entities.PimsOrganization>(model);
-
-            // FIXME: Missed requirements lead to hardcoding these values here. This needs to be fixed!!
-            entity.OrganizationTypeCode = "OTHER";
-            entity.OrgIdentifierTypeCode = "OTHINCORPNO";
-
             try
             {
-                var createdOrganization = _pimsRepository.Organization.Add(entity, userOverride);
+                var createdOrganization = _pimsService.OrganizationService.AddOrganization(entity, userOverride);
                 var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);
@@ -113,11 +108,6 @@ namespace Pims.Api.Areas.Organizations.Controllers
         public IActionResult UpdateOrganization([FromBody] Models.Organization.OrganizationModel organizationModel)
         {
             var orgEntity = _mapper.Map<Pims.Dal.Entities.PimsOrganization>(organizationModel);
-
-            // FIXME: Missed requirements lead to hardcoding these values here. This needs to be fixed!!
-            orgEntity.OrganizationTypeCode = orgEntity.OrganizationTypeCode ?? "OTHER";
-            orgEntity.OrgIdentifierTypeCode =  orgEntity.OrgIdentifierTypeCode ?? "OTHINCORPNO";
-
             var updatedOrganization = _pimsService.OrganizationService.UpdateOrganization(orgEntity, organizationModel.RowVersion);
 
             return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(updatedOrganization));
