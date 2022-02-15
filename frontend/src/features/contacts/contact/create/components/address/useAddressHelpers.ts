@@ -35,6 +35,11 @@ export default function useAddressHelpers() {
     [countries],
   );
 
+  const otherCountryId = useMemo(
+    () => countries.find(c => c.code === CountryCodes.Other)?.value?.toString(),
+    [countries],
+  );
+
   // adjust form labels and province/states based on selected country
   useEffect(() => {
     // find country code (e.g. 'CA' for currently selected country id)
@@ -48,6 +53,7 @@ export default function useAddressHelpers() {
 
   return {
     defaultCountryId,
+    otherCountryId,
     countries,
     provinces,
     formLabels,
