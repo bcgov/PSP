@@ -138,7 +138,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             AggregatedLeasesModel model = new AggregatedLeasesModel(leasesForFiscal, fiscalYearStart, programs, regions);
 
-            using (var template = new XLTemplate(Path.Combine(_webHostEnvironment.ContentRootPath, @"Resources\AggregatedLeasesTemplate.xlsx")))
+            using (var template = new XLTemplate(Path.Combine(_webHostEnvironment.ContentRootPath, "Resources", "AggregatedLeasesTemplate.xlsx")))
             {
                 template.AddVariable(model);
                 template.Generate();
