@@ -8,7 +8,7 @@ namespace Pims.Api.Mapping
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.IDisableBaseAppEntity, Models.BaseAppModel>()
-                .Inherits<Entity.IBaseAppEntity, Models.BaseModel>();
+                .Inherits<Entity.IBaseAppEntity, Models.BaseAppModel>();
 
             config.NewConfig<Entity.IBaseAppEntity, Models.BaseAppModel>()
                 .Map(dest => dest.AppCreateTimestamp, src => src.AppCreateTimestamp)
