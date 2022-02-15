@@ -14,6 +14,7 @@ export interface IEditablePerson {
   comment?: string;
   isDisabled: boolean;
   organization?: IOrganizationLink;
+  useOrganizationAddress: boolean;
   personOrganizationId?: number;
   personOrganizationRowVersion?: number;
   addresses?: IEditablePersonAddress[];
@@ -144,6 +145,7 @@ export const defaultCreatePerson: IEditablePersonForm = {
   preferredName: '',
   comment: '',
   organization: undefined,
+  useOrganizationAddress: false,
   emailContactMethods: [getDefaultContactMethod()],
   phoneContactMethods: [getDefaultContactMethod()],
   mailingAddress: getDefaultAddress(AddressTypes.Mailing),

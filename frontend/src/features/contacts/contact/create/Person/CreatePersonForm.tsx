@@ -1,4 +1,4 @@
-import { AsyncTypeahead, Button, Input } from 'components/common/form';
+import { AsyncTypeahead, Button, Check, Input } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
@@ -32,7 +32,7 @@ import {
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
@@ -131,9 +131,11 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   dirty,
   resetForm,
   submitForm,
+  setFieldValue,
   initialValues,
 }) => {
   const history = useHistory();
+  const { organization, useOrganizationAddress } = values;
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   // organization type-ahead state
@@ -176,6 +178,12 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       getIn(errors, 'needsContactMethod')
     );
   }, [touched, errors]);
+
+  useEffect(() => {
+    if (useOrganizationAddress === true && organization) {
+      setFieldValue('mailingAddress.streetAddress1', 'TEST');
+    }
+  }, [useOrganizationAddress, organization, setFieldValue]);
 
   return (
     <>
@@ -263,7 +271,12 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
             <FormSection>
               <Styled.H2>Address</Styled.H2>
               <Styled.H3>Mailing Address</Styled.H3>
-              <Address namespace="mailingAddress" />
+              <Check
+                field="useOrganizationAddress"
+                postLabel="Use mailing address from organization"
+                disabled={!organization}
+              />
+              <Address namespace="mailingAddress" disabled={useOrganizationAddress} />
             </FormSection>
 
             <FormSection>

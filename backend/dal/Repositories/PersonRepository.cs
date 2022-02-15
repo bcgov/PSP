@@ -132,6 +132,92 @@ namespace Pims.Dal.Repositories
 
             return existingPerson;
         }
+
+        public bool IsUsingOrganizationAddress(PimsPerson person, long organizationId)
+        {
+            person.ThrowIfNull(nameof(person));
+            this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
+
+            // get existing person along with all its organizations and addresses
+            var personId = person.Id;
+            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == personId)
+                .Include(p => p.PimsPersonAddresses)
+                .Include(p => p.PimsPersonOrganizations)
+                    .ThenInclude(o => o.Organization)
+                    .ThenInclude(o => o.PimsOrganizationAddresses)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+
+            // The database supports many organizations for a person but the app currently supports only one linked organization per person.
+            var linkedOrganization = existingPerson
+                .PimsPersonOrganizations?
+                .FirstOrDefault(p => p != null && p.Organization != null && p.OrganizationId == organizationId)?.Organization;
+
+            if (linkedOrganization == null)
+            {
+                return false; // person not linked to supplied org
+            }
+
+            var orgAddress = linkedOrganization.PimsOrganizationAddresses.Where(a => a.AddressUsageTypeCode == AddressUsageTypes.Mailing).FirstOrDefault();
+            var personAddress = existingPerson.PimsPersonAddresses.Where(a => a.AddressUsageTypeCode == AddressUsageTypes.Mailing).FirstOrDefault();
+
+            return orgAddress != null && personAddress != null && personAddress.AddressId == orgAddress.AddressId;
+        }
+
+        public void LinkAddressToOrganization(PimsPerson person, long organizationId)
+        {
+            person.ThrowIfNull(nameof(person));
+            this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
+
+            var personId = person.Id;
+            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == personId)
+                .Include(p => p.PimsPersonAddresses)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+
+            var organizationAddress = this.Context.PimsOrganizationAddresses.AsNoTracking()
+                .Where(o => o.OrganizationId == organizationId && o.AddressUsageTypeCode == AddressUsageTypes.Mailing)
+                .FirstOrDefault() ?? throw new KeyNotFoundException("Cannot link the organization address to this person. No mailing address found.");
+
+            // delete any pre-existing mailing addresses on the person
+            var existingMailing = existingPerson.PimsPersonAddresses.Where(a => a.AddressUsageTypeCode == AddressUsageTypes.Mailing).FirstOrDefault();
+            if (existingMailing != null)
+            {
+                existingPerson.PimsPersonAddresses.Remove(existingMailing);
+                this.Context.Remove(existingMailing);
+            }
+
+            // add new mailing address pointing to the organization address
+            var newMailing = new PimsPersonAddress();
+            newMailing.AddressUsageTypeCode = AddressUsageTypes.Mailing;
+            newMailing.IsDisabled = false;
+            newMailing.PersonId = existingPerson.PersonId;
+            newMailing.AddressId = organizationAddress.AddressId;
+
+            existingPerson.PimsPersonAddresses.Add(newMailing);
+            this.Context.Add(newMailing);
+        }
+
+        public void UnlinkAddressFromOrganization(PimsPerson person, long organizationId)
+        {
+            person.ThrowIfNull(nameof(person));
+            this.User.ThrowIfNotAuthorized(Permissions.ContactEdit);
+
+            var personId = person.Id;
+            var existingPerson = this.Context.PimsPeople.Where(p => p.PersonId == personId)
+                .Include(p => p.PimsPersonAddresses)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+
+            var organizationAddress = this.Context.PimsOrganizationAddresses.AsNoTracking()
+                .Where(o => o.OrganizationId == organizationId && o.AddressUsageTypeCode == AddressUsageTypes.Mailing)
+                .FirstOrDefault() ?? throw new KeyNotFoundException("Cannot unlink the organization address from this person. No mailing address found.");
+
+            var existingMailing = existingPerson.PimsPersonAddresses.Where(a => a.AddressUsageTypeCode == AddressUsageTypes.Mailing).FirstOrDefault();
+            if (existingMailing != null && existingMailing.AddressId == organizationAddress.AddressId)
+            {
+                existingPerson.PimsPersonAddresses.Remove(existingMailing);
+                this.Context.Remove(existingMailing);
+            }
+        }
+
         #endregion
     }
 }
