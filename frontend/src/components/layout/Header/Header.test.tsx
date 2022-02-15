@@ -25,7 +25,6 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_TYPES },
     { name: 'roleVal', id: 2, isDisabled: false, type: API.ROLE_TYPES },
   ] as ILookupCode[],
 };

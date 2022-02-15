@@ -62,23 +62,12 @@ export const UserProfile: React.FC = () => {
       ? `${keycloak.firstName} ${keycloak.surname}`
       : 'default');
   const configuration = useConfiguration();
-  const lookupCodes = useLookupCodeHelpers();
-  const organizationOptions = lookupCodes.getByType(API.ORGANIZATION_TYPES);
   const roles = keycloak.roles.join(', ');
 
   return (
     <>
       <ProfileAvatar src={profileUrl} rounded />
       <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
-        <p style={{ margin: 5 }}>
-          <b>
-            {
-              organizationOptions.find(
-                (x: ILookupCode) => x.id.toString() === keycloak.organizationId?.toString(),
-              )?.name
-            }
-          </b>
-        </p>
         {!!keycloak.roles.length && (
           <RolesBox>
             <p style={{ margin: 5 }}>

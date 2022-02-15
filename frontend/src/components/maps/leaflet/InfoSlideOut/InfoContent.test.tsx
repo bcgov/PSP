@@ -80,22 +80,7 @@ const mockParcel = {
 } as IProperty;
 
 const lCodes = {
-  lookupCodes: [
-    {
-      code: 'AEST',
-      id: 1,
-      isDisabled: false,
-      name: 'Ministry of Advanced Education',
-      type: API.ORGANIZATION_TYPES,
-    },
-    {
-      code: 'KPU',
-      id: 181,
-      isDisabled: false,
-      name: 'Kwantlen Polytechnic University',
-      type: API.ORGANIZATION_TYPES,
-    },
-  ],
+  lookupCodes: [],
 };
 
 const mockStore = configureMockStore([thunk]);

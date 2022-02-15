@@ -15,18 +15,6 @@ namespace Pims.Api.Mapping.AccessRequest
                 .Map(dest => dest.RoleId, src => src.RoleId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Status, src => src.AccessRequestStatusTypeCode)
-                .AfterMapping((src, dest) =>
-                {
-                    Entity.PimsOrganization organization = src.PimsAccessRequestOrganizations.FirstOrDefault()?.Organization;
-                    if (organization != null)
-                    {
-                        dest.OrganizationId = organization?.Id;
-                    }
-                    else if (src.GetOrganizations().Any())
-                    {
-                        dest.OrganizationId = organization?.Id;
-                    }
-                })
                 .Inherits<Entity.IBaseAppEntity, Models.BaseAppModel>();
 
             config.NewConfig<Model.AccessRequestModel, Entity.PimsAccessRequest>()
@@ -35,13 +23,6 @@ namespace Pims.Api.Mapping.AccessRequest
                 .Map(dest => dest.RoleId, src => src.RoleId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.AccessRequestStatusTypeCode, src => src.Status)
-                .AfterMapping((src, dest) =>
-                {
-                    if (src.OrganizationId != null)
-                    {
-                        dest.PimsAccessRequestOrganizations.Add(new Entity.PimsAccessRequestOrganization() { OrganizationId = (long)src.OrganizationId });
-                    }
-                })
                 .Inherits<Models.BaseAppModel, Entity.IBaseAppEntity>();
         }
     }

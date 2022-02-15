@@ -9,20 +9,11 @@ import { mapLookupCodeWithParentString } from 'utils';
 
 interface IProps {
   value: IUsersFilter;
-  organizationLookups: ILookupCode[];
   rolesLookups: ILookupCode[];
   onChange: (value: IUsersFilter) => void;
 }
 
-export const UsersFilterBar: React.FC<IProps> = ({
-  value,
-  organizationLookups,
-  rolesLookups,
-  onChange,
-}) => {
-  const organizationOptions = (organizationLookups ?? []).map(c =>
-    mapLookupCodeWithParentString(c, organizationLookups),
-  );
+export const UsersFilterBar: React.FC<IProps> = ({ value, rolesLookups, onChange }) => {
   const roleOptions = rolesLookups.map(rl => ({ label: rl.name, value: rl.name } as SelectOption));
 
   return (
@@ -41,14 +32,6 @@ export const UsersFilterBar: React.FC<IProps> = ({
       </Col>
       <Col className="bar-item">
         <Input field="position" placeholder="Position" />
-      </Col>
-      <Col className="bar-item">
-        <ParentSelect
-          field="organization"
-          options={organizationOptions}
-          filterBy={['code', 'label', 'parent']}
-          placeholder="Enter an Organization"
-        />
       </Col>
       <Col className="bar-item">
         <Select field="role" placeholder="Role" options={roleOptions} />

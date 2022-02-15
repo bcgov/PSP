@@ -45,7 +45,6 @@ const downloadUsers = (filter: IPaginateParams) =>
 export const ManageUsers = () => {
   const dispatch = useDispatch();
   const { getByType } = useLookupCodeHelpers();
-  const organizations = useMemo(() => getByType(API.ORGANIZATION_TYPES), [getByType]);
   const roles = useMemo(() => getByType(API.ROLE_TYPES), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
 
@@ -100,7 +99,6 @@ export const ManageUsers = () => {
       surname: u.surname,
       isDisabled: u.isDisabled,
       roles: u.roles ? u.roles.map(r => r.name).join(', ') : '',
-      organization: u.organizations && u.organizations.length > 0 ? u.organizations[0].name : '',
       position: u.position ?? '',
       lastLogin: formatApiDateTime(u.lastLogin),
       appCreateTimestamp: formatApiDateTime(u.appCreateTimestamp),
@@ -136,19 +134,9 @@ export const ManageUsers = () => {
         <Styled.WithShadow fluid>
           <UsersFilterBar
             value={filter}
-            organizationLookups={organizations}
             rolesLookups={roles}
             onChange={value => {
-              (value as any)?.organization
-                ? dispatch(
-                    setUsersFilter({
-                      ...value,
-                      organization: (find(organizations, {
-                        id: +(value as any)?.organization,
-                      }) as any)?.name,
-                    }),
-                  )
-                : dispatch(setUsersFilter({ ...value, organization: '' }));
+              dispatch(setUsersFilter({ ...value }));
               dispatch(setUsersPageIndex(0));
             }}
           />
