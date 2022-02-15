@@ -328,7 +328,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var lookup = helper.GetService<Mock<IPimsRepository>>();
             var mapper = helper.GetService<IMapper>();
             var webHost = helper.GetService<Mock<IWebHostEnvironment>>();
-            var path = Path.Combine(VisualStudioProvider.TryGetSolutionDirectoryInfo().FullName, "api");
+            var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
             webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
             lookup.Setup(m => m.Lookup.GetRegions()).Returns(new List<PimsRegion>() { lease.RegionCodeNavigation });
@@ -363,7 +363,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var service = helper.GetService<Mock<IPimsService>>();
             var mapper = helper.GetService<IMapper>();
             var webHost = helper.GetService<Mock<IWebHostEnvironment>>();
-            var path = Path.Combine(VisualStudioProvider.TryGetSolutionDirectoryInfo().FullName, "api");
+            var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
             webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
             service.Setup(m => m.LeaseReportsService.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
