@@ -173,7 +173,7 @@ export const WarningTextBox = styled(InlineFlexDiv)`
 `;
 
 export const AddActualButton = styled(Button)`
-  && {
+  &&& {
     background-color: ${props => props.theme.css.completedColor};
     color: white;
     &:hover {

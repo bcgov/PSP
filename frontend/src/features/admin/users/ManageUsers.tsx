@@ -8,7 +8,7 @@ import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IUser, IUsersFilter } from 'interfaces';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -46,6 +46,7 @@ export const ManageUsers = () => {
   const { getByType } = useLookupCodeHelpers();
   const roles = useMemo(() => getByType(API.ROLE_TYPES), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
+  const [pageIndex, setPageIndex] = useState(0);
 
   const pagedUsers = useAppSelector(state => {
     return state.users.pagedUsers;
@@ -53,10 +54,6 @@ export const ManageUsers = () => {
 
   const pageSize = useAppSelector(state => {
     return state.users.rowsPerPage;
-  });
-
-  const pageIndex = useAppSelector(state => {
-    return state.users.pageIndex;
   });
 
   const sort = useAppSelector(state => {
@@ -69,11 +66,9 @@ export const ManageUsers = () => {
 
   const users = useAppSelector(state => state.network[actionTypes.GET_USERS]);
 
-  const onRequestData = useCallback(
-    ({ changedPageIndex }) => {
-      dispatch(setUsersPageIndex(changedPageIndex));
-    },
-    [dispatch],
+  const updateCurrentPage = useCallback(
+    ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
+    [setPageIndex],
   );
 
   const { fetchUsers } = useUsers();
@@ -158,7 +153,7 @@ export const ManageUsers = () => {
             defaultCanSort={true}
             pageCount={Math.ceil(pagedUsers.total / pageSize)}
             pageSize={pageSize}
-            onRequestData={onRequestData}
+            onRequestData={updateCurrentPage}
             onSortChange={(column, direction) => {
               if (!!direction) {
                 dispatch(setUsersPageSort({ [column]: direction }));
