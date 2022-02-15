@@ -2,6 +2,7 @@ import { Button, Input, Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
+import TooltipIcon from 'components/common/TooltipIcon';
 import {
   Address,
   CancelConfirmationModal,
@@ -36,7 +37,6 @@ import { IContactPerson } from 'interfaces/IContact';
 import { useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { FaInfoCircle } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 
 /**
@@ -219,8 +219,14 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
               />
             </FormSection>
 
-            <FormSection>
-              <FaInfoCircle className="position-absolute" />
+            <FormSection className="position-relative">
+              <Styled.TopRightCorner>
+                <TooltipIcon
+                  placement="left"
+                  toolTipId="individual-contacts"
+                  toolTip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
+                />
+              </Styled.TopRightCorner>
               <Styled.H2>Individual Contacts</Styled.H2>
               <Styled.H3>Connected to this organization:</Styled.H3>
               <Styled.RowAligned>
