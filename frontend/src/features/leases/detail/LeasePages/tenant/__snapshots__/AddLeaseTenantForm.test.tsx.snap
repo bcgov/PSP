@@ -422,7 +422,7 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="pl-0 col-auto"
+                        class="pl-0 col-md-auto"
                       >
                         <div
                           class="c6 c8 input form-group"

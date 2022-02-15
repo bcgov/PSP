@@ -174,7 +174,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           <Col>
             {organization.persons &&
               organization.persons.map((person: IContactPerson, index: number) => (
-                <span>
+                <span key={`organization-person-${index}`}>
                   <Link to={'/contact/P' + person.id} data-testid="contact-organization-person">
                     {person.fullName}
                   </Link>
