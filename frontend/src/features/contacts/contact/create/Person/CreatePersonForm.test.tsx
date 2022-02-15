@@ -85,6 +85,7 @@ const expectedFormData = {
   surname: 'Tester',
   preferredName: '',
   comment: '',
+  organization: null,
   addresses: [],
   contactMethods: [
     {
