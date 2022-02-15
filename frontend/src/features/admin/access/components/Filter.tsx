@@ -32,13 +32,6 @@ export const AccessRequestFilter = (props: IProps) => {
     fetchLookupCodes();
   }, [fetchLookupCodes]);
 
-  const organizations: IMenuItemProps[] = lookupCodes.getByType('Organization').map(value => {
-    return {
-      label: value.name,
-      onClick: () => setFilterState({ ...filterState, organization: value.name }),
-    };
-  });
-
   const roles: IMenuItemProps[] = lookupCodes.getByType('Role').map(value => {
     return {
       label: value.name,
