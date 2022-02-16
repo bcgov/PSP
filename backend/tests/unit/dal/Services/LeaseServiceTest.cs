@@ -32,6 +32,15 @@ namespace Pims.Dal.Test.Services
                 new object[] { new LeaseFilter() { LFileNo = "fake" }, 0 },
                 new object[] { new LeaseFilter() { PinOrPid = "456" }, 1 },
                 new object[] { new LeaseFilter() { PinOrPid = "789" }, 0 },
+                new object[] { new LeaseFilter() { ExpiryAfterDate = new DateTime(2001,1,1) }, 0 },
+                new object[] { new LeaseFilter() { ExpiryAfterDate = new DateTime(2000,1,1) }, 1 },
+                new object[] { new LeaseFilter() { StartBeforeDate = new DateTime(1999, 1,1) }, 0 },
+                new object[] { new LeaseFilter() { StartBeforeDate = new DateTime(2000,1,1) }, 1 },
+                new object[] { new LeaseFilter() { NotInStatus = new List<string>() { "testStatusType" } }, 0 },
+                new object[] { new LeaseFilter() { NotInStatus = new List<string>() { "someOtherValue" } }, 1 },
+                new object[] { new LeaseFilter() { IsReceivable = true }, 0 },
+                    new object[] { new LeaseFilter() { IsReceivable = false }, 1 },
+                new object[] { new LeaseFilter() { PinOrPid = "789" }, 0 },
                 new object[] { new LeaseFilter(), 1 },
             };
         #endregion
@@ -64,8 +73,12 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true);
+            elease.Id = 1;
+            elease.OrigExpiryDate = new DateTime(2000, 1, 1);
+            elease.OrigStartDate = new DateTime(2000, 1, 1);
 
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
 
             var service = helper.CreateRepository<LeaseRepository>(user);
 
@@ -101,8 +114,12 @@ namespace Pims.Dal.Test.Services
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true);
+            elease.Id = 1;
+            elease.OrigExpiryDate = new DateTime(2000, 1, 1);
+            elease.OrigStartDate = new DateTime(2000, 1, 1);
 
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
 
             var service = helper.CreateRepository<LeaseRepository>(user);
 

@@ -182,45 +182,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="form-group"
             >
-              <div
-                class="rbt"
-                style="outline: none; position: relative;"
-                tabindex="-1"
-              >
-                <div
-                  style="display: flex; flex: 1; height: 100%; position: relative;"
-                >
-                  <input
-                    aria-autocomplete="both"
-                    aria-expanded="false"
-                    aria-haspopup="listbox"
-                    autocomplete="off"
-                    class="rbt-input-main form-control rbt-input"
-                    id="organization-field"
-                    name="organization"
-                    placeholder="Enter an Organization"
-                    role="combobox"
-                    type="text"
-                    value=""
-                  />
-                  <input
-                    aria-hidden="true"
-                    class="rbt-input-hint"
-                    readonly=""
-                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
-                    tabindex="-1"
-                    value=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="bar-item col"
-          >
-            <div
-              class="form-group"
-            >
               <select
                 class="form-select form-control"
                 id="input-role"
@@ -340,7 +301,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 980px;"
+            style="display: flex; flex: 1 0 auto; min-width: 780px;"
           >
             <div
               class="th"
@@ -621,51 +582,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
               <div
                 class="sortable-column"
               >
-                Organization
-                <div
-                  class="c6"
-                >
-                  <svg
-                    class="c7"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    style="margin-bottom: -8px;"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 320l128-128 128 128z"
-                    />
-                  </svg>
-                  <svg
-                    class="c8"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M128 192l128 128 128-128z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div
-              class="th"
-              colspan="1"
-              role="columnheader"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            >
-              <div
-                class="sortable-column"
-              >
                 Roles
               </div>
             </div>
@@ -750,7 +666,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 980px;"
+              style="display: flex; flex: 1 0 auto; min-width: 780px;"
             >
               <div
                 class="td"
@@ -815,14 +731,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
                   />
                 </svg>
-              </div>
-              <div
-                class="td clickable"
-                role="cell"
-                style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title="Click IDIR/BCeID link to view User Information page"
-              >
-                HLTH
               </div>
               <div
                 class="td clickable"
@@ -926,7 +834,7 @@ exports[`Manage Users Component Snapshot matches 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 980px;"
+              style="display: flex; flex: 1 0 auto; min-width: 780px;"
             >
               <div
                 class="td"
@@ -991,14 +899,6 @@ exports[`Manage Users Component Snapshot matches 1`] = `
                     d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
                   />
                 </svg>
-              </div>
-              <div
-                class="td clickable"
-                role="cell"
-                style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title="Click IDIR/BCeID link to view User Information page"
-              >
-                HLTH
               </div>
               <div
                 class="td clickable"

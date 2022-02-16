@@ -55,6 +55,7 @@ namespace Pims.Dal
         {
             services.AddScoped<IPimsService, PimsService>();
             services.AddScoped<ILeaseService, LeaseService>();
+            services.AddScoped<ILeaseReportsService, LeaseReportsService>();
             services.AddScoped<ILeaseTermService, LeaseTermService>();
             services.AddScoped<Services.ILeasePaymentService, Services.LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();

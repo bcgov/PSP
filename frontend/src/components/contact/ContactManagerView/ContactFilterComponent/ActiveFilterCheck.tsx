@@ -1,9 +1,9 @@
-import { IContactFilter } from 'features/contacts/interfaces';
+import { Check } from 'components/common/form';
 import { useFormikContext } from 'formik';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import * as React from 'react';
 
-import * as Styled from '../styles';
+import { IContactFilter } from '../IContactFilter';
 
 interface IActiveFilterCheckProps {
   setFilter: (filter: IContactFilter) => void;
@@ -22,7 +22,7 @@ const ActiveFilterCheck: React.FunctionComponent<IActiveFilterCheckProps> = ({
   useDeepCompareEffect(() => {
     setFilter(values);
   }, [activeContactsOnly, setFilter]);
-  return <Styled.FilterCheck field="activeContactsOnly" />;
+  return <Check field="activeContactsOnly" className="d-inline-block m-0" />;
 };
 
 export default ActiveFilterCheck;

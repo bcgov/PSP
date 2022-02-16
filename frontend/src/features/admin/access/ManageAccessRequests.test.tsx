@@ -57,7 +57,6 @@ const mockStore = configureMockStore([thunk]);
 
 const lCodes = {
   lookupCodes: [
-    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_TYPES },
     { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_TYPES },
   ] as ILookupCode[],
 };

@@ -38,19 +38,6 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
-        /// <summary>
-        /// Get all of the organization code values
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("organizations")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.OrganizationModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "lookup" })]
-        public IActionResult GetOrganizations()
-        {
-            var organizationCodes = _mapper.Map<Model.OrganizationModel[]>(_pimsService.Lookup.GetOrganizations());
-            return new JsonResult(organizationCodes.ToArray());
-        }
 
         /// <summary>
         /// Get all of the role code values
@@ -109,7 +96,6 @@ namespace Pims.Api.Controllers
             var leaseTermStatusTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseTermStatusTypes());
             var leaseTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetLeaseTypes());
             var organizationTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetOrganizationTypes());
-            var organizations = _mapper.Map<Model.OrganizationModel[]>(_pimsService.Lookup.GetOrganizations());
             var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyImprovementTypes());
             var propertyTypes = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetPropertyTypes());
             var provinces = _mapper.Map<Model.LookupModel[]>(_pimsService.Lookup.GetProvinces());
@@ -138,7 +124,6 @@ namespace Pims.Api.Controllers
             codes.AddRange(leaseTermStatusTypes);
             codes.AddRange(leaseTypes);
             codes.AddRange(organizationTypes);
-            codes.AddRange(organizations);
             codes.AddRange(propertyImprovementTypes);
             codes.AddRange(propertyTypes);
             codes.AddRange(provinces);

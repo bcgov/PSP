@@ -25,6 +25,8 @@ type OptionalAttributes = {
   placeholder?: string;
   /** Adds a custom class to the input element of the <Input> component */
   className?: string;
+  /** Adds a custom class to the group element of the radio component */
+  radioGroupClassName?: string;
   /** Whether the field is required. Makes the field border blue. */
   required?: boolean;
   /** Specifies that the HTML element should be disabled */
@@ -57,6 +59,7 @@ export const RadioGroup = ({
   as: is, // `as` is reserved in typescript
   placeholder,
   className,
+  radioGroupClassName,
   innerClassName,
   required,
   disabled,
@@ -85,7 +88,7 @@ export const RadioGroup = ({
       )}
       <div className="radio-group">
         {radioValues.map(({ radioLabel, radioValue }, index) => (
-          <InlineFlexDiv key={`field-${radioValue}-${index}`}>
+          <InlineFlexDiv key={`field-${radioValue}-${index}`} className={radioGroupClassName}>
             <Form.Check
               id={`input-${radioValue}`}
               name={field}

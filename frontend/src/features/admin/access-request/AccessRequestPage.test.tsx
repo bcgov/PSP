@@ -40,20 +40,6 @@ jest.mock('store/slices/accessRequests/useAccessRequests');
 const lCodes = {
   lookupCodes: [
     { id: 1, name: 'One', code: '', isDisabled: false, type: 'core operational' },
-    {
-      id: 1,
-      name: 'organizationVal',
-      code: '',
-      isDisabled: false,
-      type: API.ORGANIZATION_TYPES,
-    },
-    {
-      id: 2,
-      name: 'disabledOrganization',
-      code: '',
-      isDisabled: true,
-      type: API.ORGANIZATION_TYPES,
-    },
     { id: 1, name: 'roleVal', code: '', isDisabled: false, type: API.ROLE_TYPES },
     { id: 2, name: 'disabledRole', code: '', isDisabled: true, type: API.ROLE_TYPES },
     {

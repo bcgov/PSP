@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
+using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Dal.Helpers.Extensions
 {
@@ -20,7 +20,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="query"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static IQueryable<Entities.PimsLease> GenerateCommonLeaseQuery(this IQueryable<Entities.PimsLease> query, Entity.Models.LeaseFilter filter)
+        private static IQueryable<Entities.PimsLease> GenerateCommonLeaseQuery(this IQueryable<Entities.PimsLease> query, Entity.Models.LeaseFilter filter, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -49,6 +49,28 @@ namespace Pims.Dal.Helpers.Extensions
                     EF.Functions.Like(pl.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
                     EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%")
                     )));
+            }
+
+            if (filter.IsReceivable == true)
+            {
+                query = query.Where(l => l.LeasePayRvblTypeCode == "RCVBL");
+            }
+
+            if (filter.NotInStatus.Count > 0)
+            {
+                query = query.Where(l => !filter.NotInStatus.Contains(l.LeaseStatusTypeCode));
+            }
+
+            if (filter.ExpiryAfterDate.HasValue)
+            {
+                // additional terms may "extend" the original expiry date.
+                query = query.Where(l => (l.OrigExpiryDate >= filter.ExpiryAfterDate.Value || l.OrigExpiryDate == null)
+                    || l.PimsLeaseTerms.Any(t => t.TermExpiryDate >= filter.ExpiryAfterDate.Value || t.TermExpiryDate == null));
+            }
+
+            if (filter.StartBeforeDate.HasValue)
+            {
+                query = query.Where(l => l.OrigStartDate <= filter.StartBeforeDate);
             }
 
             if (filter.Programs.Count > 0)
@@ -93,7 +115,7 @@ namespace Pims.Dal.Helpers.Extensions
                 query = query.OrderBy(l => l.LFileNo);
             }
 
-            return query.Include(l => l.PimsPropertyLeases)
+            query = query.Include(l => l.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.Address)
                 .Include(l => l.PimsPropertyLeases)
@@ -105,7 +127,16 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(t => t.Person)
                 .Include(l => l.PimsLeaseTenants)
                     .ThenInclude(t => t.Organization)
-                .Include(p => p.PimsLeaseTerms);
+                .Include(p => p.RegionCodeNavigation)
+                .Include(l => l.PimsLeaseTerms);
+            
+
+            if (loadPayments)
+            {
+                query = query.Include(l => l.PimsLeaseTerms)
+                    .ThenInclude(l => l.PimsLeasePayments);
+            }
+            return query;
         }
 
         /// <summary>
@@ -114,13 +145,13 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="context"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entities.PimsLease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter)
+        public static IQueryable<Entities.PimsLease> GenerateLeaseQuery(this PimsContext context, Entity.Models.LeaseFilter filter, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var query = context.PimsLeases.AsNoTracking();
 
-            query = query.GenerateCommonLeaseQuery(filter);
+            query = query.GenerateCommonLeaseQuery(filter, loadPayments);
 
             return query;
         }

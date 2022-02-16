@@ -92,7 +92,7 @@ export const PropertyFilter: React.FC<IPropertyFilterProps> = ({
             <Col xs="auto">
               <span>Search:</span>
             </Col>
-            <Col xs="5">
+            <Col xs="6" md="5" lg="4" xl="3">
               <PropertyFilterOptions />
             </Col>
             <Col xs="auto">

@@ -227,11 +227,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
 
         /// <summary>
-        /// get/set - A collection of Security Deposit Returns associated to this Lease
-        /// </summary>
-        public IEnumerable<SecurityDepositReturnModel> SecurityDepositReturns { get; set; }
-
-        /// <summary>
         /// get/set - Notes accompanying Lease.
         /// </summary>
         public string ReturnNotes { get; set; }
