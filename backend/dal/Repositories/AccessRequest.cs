@@ -144,9 +144,6 @@ namespace Pims.Dal.Repositories
         public PimsAccessRequest Add(PimsAccessRequest addRequest)
         {
             if (addRequest == null) throw new ArgumentNullException(nameof(addRequest));
-            if (addRequest.PimsAccessRequestOrganizations?.Any() == false) throw new ArgumentException($"Argument '{nameof(addRequest)}.{nameof(addRequest.PimsAccessRequestOrganizations)}' is required.", nameof(addRequest));
-            var organizations = addRequest.PimsAccessRequestOrganizations.Select(o => new PimsAccessRequestOrganization() { OrganizationId = o.OrganizationId.Value }).ToList();
-            addRequest.PimsAccessRequestOrganizations.Clear();
 
             var key = this.User.GetUserKey();
             var position = addRequest.User.Position;
@@ -155,11 +152,7 @@ namespace Pims.Dal.Repositories
             addRequest.UserId = addRequest.User.UserId;
             addRequest.AccessRequestStatusTypeCodeNavigation = this.Context.PimsAccessRequestStatusTypes.FirstOrDefault(a => a.AccessRequestStatusTypeCode == "RECEIVED");
 
-            // TODO: PIMS_ACRQOR_I_S_I_TR causes the insert to fail, likely due to the trigger running at an innapropriate time when the generated sql is running.
-            // adding the access request and then adding the organizations after resolves this issue.
             this.Context.PimsAccessRequests.Add(addRequest);
-            this.Context.CommitTransaction();
-            organizations.ForEach(o => addRequest.PimsAccessRequestOrganizations.Add(new PimsAccessRequestOrganization() { OrganizationId = o.OrganizationId, AccessRequestId = addRequest.AccessRequestId }));
             this.Context.CommitTransaction();
             return addRequest;
         }
@@ -172,7 +165,6 @@ namespace Pims.Dal.Repositories
         public PimsAccessRequest Update(PimsAccessRequest updateRequest)
         {
             if (updateRequest == null) throw new ArgumentNullException(nameof(updateRequest));
-            if (updateRequest.PimsAccessRequestOrganizations?.Any() == false) throw new ArgumentException($"Argument '{nameof(updateRequest)}.{nameof(updateRequest.PimsAccessRequestOrganizations)}' is required.", nameof(updateRequest));
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
@@ -188,14 +180,6 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PimsAccessRequestOrganizations)
                 .ThenInclude(a => a.Organization)
                 .FirstOrDefault(a => a.AccessRequestId == updateRequest.AccessRequestId) ?? throw new KeyNotFoundException();
-
-            // Remove organizations and roles if required.
-            var removeOrganizations = accessRequest.PimsAccessRequestOrganizations.Except(updateRequest.PimsAccessRequestOrganizations, new AccessRequestOrganizationOrganizationIdComparer());
-            if (removeOrganizations.Any()) accessRequest.PimsAccessRequestOrganizations.RemoveAll(a => removeOrganizations.Any(r => r.OrganizationId == a.OrganizationId));
-
-            // Add organizations and roles if required.
-            var addOrganizations = updateRequest.PimsAccessRequestOrganizations.Except(accessRequest.PimsAccessRequestOrganizations, new AccessRequestOrganizationOrganizationIdComparer());
-            addOrganizations.ForEach(a => accessRequest.PimsAccessRequestOrganizations.Add(a));
 
             // Copy values into entity.
             accessRequest.RoleId = updateRequest.RoleId;

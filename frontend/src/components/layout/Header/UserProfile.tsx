@@ -1,14 +1,11 @@
 import variables from '_variables.module.scss';
 import profileUrl from 'assets/images/profile.svg';
-import * as API from 'constants/API';
 import { useConfiguration } from 'hooks/useConfiguration';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { ILookupCode } from 'store/slices/lookupCodes';
 import styled from 'styled-components';
 
 /** the styling for the dropdown menu that appears after clicking the user's name */
@@ -62,23 +59,12 @@ export const UserProfile: React.FC = () => {
       ? `${keycloak.firstName} ${keycloak.surname}`
       : 'default');
   const configuration = useConfiguration();
-  const lookupCodes = useLookupCodeHelpers();
-  const organizationOptions = lookupCodes.getByType(API.ORGANIZATION_TYPES);
   const roles = keycloak.roles.join(', ');
 
   return (
     <>
       <ProfileAvatar src={profileUrl} rounded />
       <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
-        <p style={{ margin: 5 }}>
-          <b>
-            {
-              organizationOptions.find(
-                (x: ILookupCode) => x.id.toString() === keycloak.organizationId?.toString(),
-              )?.name
-            }
-          </b>
-        </p>
         {!!keycloak.roles.length && (
           <RolesBox>
             <p style={{ margin: 5 }}>

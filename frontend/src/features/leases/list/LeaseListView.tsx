@@ -24,7 +24,7 @@ import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
 import * as Styled from './styles';
 
 /**
- * Component that displays a list of leases within PSP as well as a filter bar to control the displayed leases.
+ * Page that displays leases information.
  */
 export const LeaseListView: React.FunctionComponent = () => {
   const history = useHistory();
@@ -123,7 +123,7 @@ export const LeaseListView: React.FunctionComponent = () => {
   );
 };
 
-export const StyledAddButton = styled(Button)`
+const StyledAddButton = styled(Button)`
   &.btn.btn-primary {
     background-color: ${props => props.theme.css.completedColor};
   }

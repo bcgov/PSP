@@ -43,6 +43,30 @@ namespace Pims.Dal.Entities.Models
         public IList<string> Programs { get; set; } = new List<string>();
 
         /// <summary>
+        /// get/set - The Program(s) to filter by.
+        /// </summary>
+        /// <value></value>
+        public IList<string> NotInStatus { get; set; } = new List<string>();
+
+        /// <summary>
+        /// get/set - Filter to return leases that have expired after or on a given date.
+        /// </summary>
+        /// <value></value>
+        public DateTime? ExpiryAfterDate { get; set; }
+
+        /// <summary>
+        /// get/set - Filter to return leases that had a start date before or on the given date.
+        /// </summary>
+        /// <value></value>
+        public DateTime? StartBeforeDate { get; set; }
+
+        /// <summary>
+        /// get/set - Filter to return only receivable leases.
+        /// </summary>
+        /// <value></value>
+        public bool? IsReceivable { get; set; }
+
+        /// <summary>
         /// get/set - The expiry filter start date.
         /// </summary>
         public DateTime? ExpiryStartDate { get; set; }
@@ -51,6 +75,13 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The expiry filter end date.
         /// </summary>
         public DateTime? ExpiryEndDate { get; set; }
+        public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string[] sort)
+        {
+            this.LFileNo = lFileNo;
+            this.TenantName = tenantName;
+            this.PinOrPid = pinOrPid;
+            this.Sort = sort;
+        }
 
         /// <summary>
         /// get/set - The region type.

@@ -13,7 +13,6 @@ namespace Pims.Dal.Entities
     {
         public PimsSecurityDepositType()
         {
-            PimsSecurityDepositReturns = new HashSet<PimsSecurityDepositReturn>();
             PimsSecurityDeposits = new HashSet<PimsSecurityDeposit>();
         }
 
@@ -45,8 +44,6 @@ namespace Pims.Dal.Entities
         [StringLength(30)]
         public string DbLastUpdateUserid { get; set; }
 
-        [InverseProperty(nameof(PimsSecurityDepositReturn.SecurityDepositTypeCodeNavigation))]
-        public virtual ICollection<PimsSecurityDepositReturn> PimsSecurityDepositReturns { get; set; }
         [InverseProperty(nameof(PimsSecurityDeposit.SecurityDepositTypeCodeNavigation))]
         public virtual ICollection<PimsSecurityDeposit> PimsSecurityDeposits { get; set; }
     }

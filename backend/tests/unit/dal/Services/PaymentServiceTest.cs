@@ -13,6 +13,7 @@ using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Moq;
+using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
 namespace Pims.Dal.Test.Services
 {
@@ -102,10 +103,10 @@ namespace Pims.Dal.Test.Services
             paymentService.AddPayment(lease.Id, 1, partialPayment);
 
             // Assert
-            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.UNPAID && x.PaymentAmountTotal == 0)));
-            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.OVERPAID && x.PaymentAmountTotal == 3)));
-            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.PAID && x.PaymentAmountTotal == 2)));
-            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeaseStatusTypes.PARTIAL && x.PaymentAmountTotal == 1)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.UNPAID && x.PaymentAmountTotal == 0)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.OVERPAID && x.PaymentAmountTotal == 3)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.PAID && x.PaymentAmountTotal == 2)));
+            leasePaymentRepository.Verify(x => x.Add(It.Is<PimsLeasePayment>(x => x.LeasePaymentStatusTypeCode == PimsLeasePaymentStatusTypes.PARTIAL && x.PaymentAmountTotal == 1)));
         }
 
         [Fact]

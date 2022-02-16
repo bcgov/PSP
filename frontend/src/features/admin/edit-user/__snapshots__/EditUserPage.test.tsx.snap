@@ -140,36 +140,6 @@ exports[`Edit user page EditUserPage renders 1`] = `
             value="admin@pims.gov.bc.ca"
           />
         </div>
-        <div
-          class="required form-group"
-        >
-          <label
-            class="form-label"
-            for="input-organization"
-          >
-            Organization
-             
-          </label>
-          <select
-            class="form-select form-control"
-            data-testid="organization"
-            id="input-organization"
-            name="organization"
-            required=""
-          >
-            <option
-              value=""
-            >
-              Please Select
-            </option>
-            <option
-              class="option"
-              value="1"
-            >
-              organizationVal
-            </option>
-          </select>
-        </div>
         <p
           class="c0 label"
         >

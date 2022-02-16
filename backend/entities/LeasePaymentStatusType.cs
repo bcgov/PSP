@@ -11,5 +11,13 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Id { get => LeasePaymentStatusTypeCode; set => LeasePaymentStatusTypeCode = value; }
         #endregion
+
+        public static class PimsLeasePaymentStatusTypes
+        {
+            public const string PAID = "PAID";
+            public const string OVERPAID = "OVERPAID";
+            public const string PARTIAL = "PARTIAL";
+            public const string UNPAID = "UNPAID";
+        }
     }
 }

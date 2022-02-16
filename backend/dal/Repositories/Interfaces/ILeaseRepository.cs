@@ -10,7 +10,7 @@ namespace Pims.Dal.Repositories
     public interface ILeaseRepository : IRepository<PimsLease>
     {
         int Count();
-        IEnumerable<PimsLease> Get(LeaseFilter filter);
+        IEnumerable<PimsLease> Get(LeaseFilter filter, bool loadPayments = false);
         long GetRowVersion(long id);
         PimsLease Get(long id);
         Paged<PimsLease> GetPage(LeaseFilter filter);

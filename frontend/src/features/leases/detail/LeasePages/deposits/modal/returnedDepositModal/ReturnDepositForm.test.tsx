@@ -20,6 +20,7 @@ const mockDeposit: ILeaseSecurityDeposit = {
     description: 'Pet deposit',
     isDisabled: false,
   },
+  depositReturns: [],
   rowVersion: 1,
 };
 
