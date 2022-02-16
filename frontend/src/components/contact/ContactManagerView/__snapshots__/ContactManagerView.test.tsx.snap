@@ -749,8 +749,18 @@ exports[`ContactManagerView matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="table-toolbar"
-      />
+        class="row"
+      >
+        <div
+          class="align-self-center col-auto"
+        />
+        <div
+          class="ml-auto align-self-center col-auto"
+        />
+        <div
+          class="align-self-center col-auto"
+        />
+      </div>
     </div>
   </div>
 </DocumentFragment>

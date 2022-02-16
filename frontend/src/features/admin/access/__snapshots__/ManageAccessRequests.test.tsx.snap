@@ -681,157 +681,171 @@ exports[`Manage access requests Snapshot matches 1`] = `
       </div>
     </div>
     <div
-      className="table-toolbar"
+      className="row"
     >
-      <ul
-        className="pagination"
-      >
-        <li
-          className="page-item disabled"
-        >
-          <a
-            aria-disabled="true"
-            aria-label="Previous page"
-            className="page-link"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            rel="prev"
-            role="button"
-            tabIndex="0"
-          >
-            &lt;
-          </a>
-        </li>
-        <li
-          className="page-item active"
-        >
-          <a
-            aria-current="page"
-            aria-label="Page 1 is your current page"
-            className="page-link"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            tabIndex="0"
-          >
-            1
-          </a>
-        </li>
-        <li
-          className="page-item disabled"
-        >
-          <a
-            aria-disabled="true"
-            aria-label="Next page"
-            className="page-link"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            rel="next"
-            role="button"
-            tabIndex="0"
-          >
-            &gt;
-          </a>
-        </li>
-      </ul>
       <div
-        onClick={[Function]}
-        onTouchEnd={[Function]}
+        className="align-self-center col-auto"
+      />
+      <div
+        className="ml-auto align-self-center col-auto"
+      />
+      <div
+        className="align-self-center col-auto"
       >
         <div
-          className="Menu-root"
+          onClick={[Function]}
+          onTouchEnd={[Function]}
         >
           <div
-            className="Menu-button"
-            onClick={[Function]}
+            className="Menu-root"
           >
             <div
-              style={
-                Object {
-                  "display": "flex",
-                }
-              }
+              className="Menu-button"
+              onClick={[Function]}
             >
-              <span
-                className="c0"
-              >
-                Show
-              </span>
-              <input
-                className="form-control form-control-sm"
-                onChange={[Function]}
+              <div
                 style={
                   Object {
-                    "marginLeft": 10,
-                    "marginRight": 10,
-                    "width": 50,
+                    "display": "flex",
                   }
                 }
-                type="number"
-                value="10"
-              />
-              <span
-                className="c0"
               >
-                Entries
-              </span>
+                <span
+                  className="c0"
+                >
+                  Show
+                </span>
+                <input
+                  className="form-control form-control-sm"
+                  onChange={[Function]}
+                  style={
+                    Object {
+                      "marginLeft": 10,
+                      "marginRight": 10,
+                      "width": 50,
+                    }
+                  }
+                  type="number"
+                  value="10"
+                />
+                <span
+                  className="c0"
+                >
+                  Entries
+                </span>
+              </div>
             </div>
-          </div>
-          <div
-            className="Menu-items"
-            style={
-              Object {
-                "width": "6.0rem",
-              }
-            }
-          >
             <div
-              className="Menu-options scrollable list-group"
-              onKeyDown={[Function]}
+              className="Menu-items"
+              style={
+                Object {
+                  "width": "10.0rem",
+                }
+              }
             >
               <div
-                className="Menu-item list-group-item"
-                data-rb-event-key={null}
-                disabled={false}
-                onClick={[Function]}
+                className="Menu-options scrollable list-group"
+                onKeyDown={[Function]}
               >
-                5
-              </div>
-              <div
-                className="Menu-item list-group-item"
-                data-rb-event-key={null}
-                disabled={false}
-                onClick={[Function]}
-              >
-                10
-              </div>
-              <div
-                className="Menu-item list-group-item"
-                data-rb-event-key={null}
-                disabled={false}
-                onClick={[Function]}
-              >
-                20
-              </div>
-              <div
-                className="Menu-item list-group-item"
-                data-rb-event-key={null}
-                disabled={false}
-                onClick={[Function]}
-              >
-                50
-              </div>
-              <div
-                className="Menu-item list-group-item"
-                data-rb-event-key={null}
-                disabled={false}
-                onClick={[Function]}
-              >
-                100
+                <div
+                  className="Menu-item list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  5
+                </div>
+                <div
+                  className="Menu-item list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  10
+                </div>
+                <div
+                  className="Menu-item list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  20
+                </div>
+                <div
+                  className="Menu-item list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  50
+                </div>
+                <div
+                  className="Menu-item list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  100
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div
+        className="align-self-center col-auto"
+      >
+        <ul
+          className="pagination"
+        >
+          <li
+            className="page-item disabled"
+          >
+            <a
+              aria-disabled="true"
+              aria-label="Previous page"
+              className="page-link"
+              onClick={[Function]}
+              onKeyPress={[Function]}
+              rel="prev"
+              role="button"
+              tabIndex="0"
+            >
+              &lt;
+            </a>
+          </li>
+          <li
+            className="page-item active"
+          >
+            <a
+              aria-current="page"
+              aria-label="Page 1 is your current page"
+              className="page-link"
+              onClick={[Function]}
+              onKeyPress={[Function]}
+              role="button"
+              tabIndex="0"
+            >
+              1
+            </a>
+          </li>
+          <li
+            className="page-item disabled"
+          >
+            <a
+              aria-disabled="true"
+              aria-label="Next page"
+              className="page-link"
+              onClick={[Function]}
+              onKeyPress={[Function]}
+              rel="next"
+              role="button"
+              tabIndex="0"
+            >
+              &gt;
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
