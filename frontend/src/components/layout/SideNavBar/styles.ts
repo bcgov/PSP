@@ -48,6 +48,7 @@ export const ZIndexWrapper = styled.div`
 export const SideTrayPage = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
   a {
     font-size: 1.7rem;
   }

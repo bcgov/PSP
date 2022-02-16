@@ -24,7 +24,7 @@ namespace Pims.Dal
         /// <summary>
         /// get - The organization repository.
         /// </summary>
-        public IOrganizationService Organization { get { return _serviceProvider.GetService<IOrganizationService>(); } }
+        public IOrganizationRepository Organization { get { return _serviceProvider.GetService<IOrganizationRepository>(); } }
 
         /// <summary>
         /// get - The user organization service (legacy).

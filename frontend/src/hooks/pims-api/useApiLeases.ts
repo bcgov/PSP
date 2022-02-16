@@ -36,6 +36,13 @@ export const useApiLeases = () => {
             },
           },
         ),
+      exportAggregatedLeases: (fiscalYearStart: number) =>
+        api.get(`/reports/leases/aggregated?fiscalYearStart=${fiscalYearStart}`, {
+          responseType: 'blob',
+          headers: {
+            Accept: 'application/vnd.ms-excel',
+          },
+        }),
     }),
     [api],
   );

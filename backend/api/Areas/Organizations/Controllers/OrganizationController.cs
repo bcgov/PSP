@@ -6,6 +6,7 @@ using Pims.Api.Policies;
 using Pims.Core.Exceptions;
 using Pims.Dal;
 using Pims.Dal.Security;
+using Pims.Dal.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Organizations.Controllers
@@ -22,6 +23,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
     public class OrganizationController : ControllerBase
     {
         #region Variables
+        private readonly IPimsService _pimsService;
         private readonly IPimsRepository _pimsRepository;
         private readonly IMapper _mapper;
         #endregion
@@ -30,11 +32,13 @@ namespace Pims.Api.Areas.Organizations.Controllers
         /// <summary>
         /// Creates a new instance of a PersonController class, initializes it with the specified arguments.
         /// </summary>
+        /// <param name="pimsService"></param>
         /// <param name="pimsRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public OrganizationController(IPimsRepository pimsRepository, IMapper mapper)
+        public OrganizationController(IPimsService pimsService, IPimsRepository pimsRepository, IMapper mapper)
         {
+            _pimsService = pimsService;
             _pimsRepository = pimsRepository;
             _mapper = mapper;
         }
@@ -42,7 +46,22 @@ namespace Pims.Api.Areas.Organizations.Controllers
 
         #region Endpoints
         /// <summary>
-        /// Get the contact for the specified primary key 'id'.
+        /// Get the organization for the specified primary key 'id'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}")]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Models.Organization.OrganizationModel), 200)]
+        [SwaggerOperation(Tags = new[] { "organization" })]
+        public IActionResult GetOrganization(int id)
+        {
+            var organization = _pimsService.OrganizationService.GetOrganization(id);
+            return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(organization));
+        }
+
+        /// <summary>
+        /// Add the organization to the datastore.
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -64,14 +83,9 @@ namespace Pims.Api.Areas.Organizations.Controllers
             }
 
             var entity = _mapper.Map<Dal.Entities.PimsOrganization>(model);
-
-            // FIXME: Missed requirements lead to hardcoding these values here. This needs to be fixed next sprint!
-            entity.OrganizationTypeCode = "OTHER";
-            entity.OrgIdentifierTypeCode = "OTHINCORPNO";
-
             try
             {
-                var createdOrganization = _pimsRepository.Organization.Add(entity, userOverride);
+                var createdOrganization = _pimsService.OrganizationService.AddOrganization(entity, userOverride);
                 var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);
@@ -80,6 +94,23 @@ namespace Pims.Api.Areas.Organizations.Controllers
             {
                 return Conflict(e.Message);
             }
+        }
+
+        /// <summary>
+        /// Update the specified organization, and attached properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}")]
+        [HasPermission(Permissions.ContactEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Models.Organization.OrganizationModel), 200)]
+        [SwaggerOperation(Tags = new[] { "person" })]
+        public IActionResult UpdateOrganization([FromBody] Models.Organization.OrganizationModel organizationModel)
+        {
+            var orgEntity = _mapper.Map<Pims.Dal.Entities.PimsOrganization>(organizationModel);
+            var updatedOrganization = _pimsService.OrganizationService.UpdateOrganization(orgEntity, organizationModel.RowVersion);
+
+            return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(updatedOrganization));
         }
         #endregion
     }

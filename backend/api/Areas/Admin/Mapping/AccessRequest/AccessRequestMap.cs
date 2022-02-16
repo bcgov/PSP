@@ -15,14 +15,7 @@ namespace Pims.Api.Areas.Admin.Mapping.AccessRequest
                 .Map(dest => dest.User, src => src.User)
                 .Map(dest => dest.Role, src => src.Role)
                 .Map(dest => dest.Note, src => src.Note)
-                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>()
-                .AfterMapping((src, dest) =>
-                {
-                    if (src.PimsAccessRequestOrganizations.FirstOrDefault()?.Organization != null)
-                        dest.Organization = new Model.OrganizationModel() { Id = src.PimsAccessRequestOrganizations.FirstOrDefault().Organization.Id, Name = src.PimsAccessRequestOrganizations.FirstOrDefault().Organization.OrganizationName };
-                    else if (src.GetOrganizations().Any())
-                        dest.Organization = new Model.OrganizationModel() { Id = src.GetOrganizations().FirstOrDefault().Id, Name = src.GetOrganizations().FirstOrDefault().OrganizationName };
-                });
+                .Inherits<Entity.IBaseAppEntity, Api.Models.BaseAppModel>();
 
             config.NewConfig<Model.AccessRequestModel, Entity.PimsAccessRequest>()
                 .Map(dest => dest.AccessRequestId, src => src.Id)

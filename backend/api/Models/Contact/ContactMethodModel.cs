@@ -5,19 +5,13 @@ namespace Pims.Api.Models.Contact
     /// <summary>
     /// Provides a contact-oriented contact method model.
     /// </summary>
-    public class ContactMethodModel
+    public class ContactMethodModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - The primary key to identify the contact method.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The optional key to the parent person of this contact method.

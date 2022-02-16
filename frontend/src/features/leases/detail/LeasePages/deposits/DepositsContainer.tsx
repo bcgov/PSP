@@ -27,8 +27,9 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
   const { lease, setLease } = useContext(LeaseStateContext);
   const { values } = useFormikContext<IFormLease>();
   const securityDeposits: ILeaseSecurityDeposit[] = getIn(values, 'securityDeposits') ?? [];
-  const depositReturns: ILeaseSecurityDepositReturn[] =
-    getIn(values, 'securityDepositReturns') ?? [];
+  const depositReturns: ILeaseSecurityDepositReturn[] = securityDeposits.flatMap(
+    x => x.depositReturns,
+  );
 
   const [showDepositEditModal, setShowEditModal] = useState<boolean>(false);
   const [deleteModalWarning, setDeleteModalWarning] = useState<boolean>(false);
@@ -184,7 +185,6 @@ export const DepositsContainer: React.FunctionComponent<IDepositsContainerProps>
     <Styled.DepositsContainer>
       <DepositsReceivedContainer
         securityDeposits={securityDeposits}
-        depositReturns={depositReturns}
         onAdd={onAddDeposit}
         onEdit={onEditDeposit}
         onDelete={onDeleteDeposit}

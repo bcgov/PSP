@@ -61,14 +61,6 @@ export const columnDefinitions: ColumnWithProps<IUserRecord>[] = [
       props.row.original.isDisabled ? <FaTimes /> : <FaCheck />,
   },
   {
-    Header: 'Organization',
-    accessor: 'organization',
-    align: 'left',
-    sortable: true,
-    clickable: true,
-    minWidth: 200,
-  },
-  {
     Header: 'Roles',
     accessor: 'roles',
     align: 'left',

@@ -41,16 +41,6 @@ namespace Pims.Api.Areas.Lease.Models.Lease
         public DateTime ReturnDate { get; set; }
 
         /// <summary>
-        /// get/set - The payee name.
-        /// </summary>
-        public string PayeeName { get; set; }
-
-        /// <summary>
-        /// get/set - The payee address.
-        /// </summary>
-        public string PayeeAddress { get; set; }
-
-        /// <summary>
         /// get/set - Person deposit holder return holder.
         /// </summary>
         public PersonModel PersonDepositReturnHolder { get; set; }
