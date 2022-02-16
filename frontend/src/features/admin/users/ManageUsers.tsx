@@ -153,6 +153,7 @@ export const ManageUsers = () => {
             defaultCanSort={true}
             pageCount={Math.ceil(pagedUsers.total / pageSize)}
             pageSize={pageSize}
+            totalItems={pagedUsers.total}
             onRequestData={updateCurrentPage}
             onSortChange={(column, direction) => {
               if (!!direction) {

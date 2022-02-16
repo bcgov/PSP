@@ -32,7 +32,7 @@ export const TablePageSizeSelector: React.FC<IProps> = ({ options, value, onChan
     onClick: () => handleValueChange(option),
   }));
   return (
-    <Menu options={pageSizeOptions} width="6.0rem" alignTop={alignTop}>
+    <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div style={{ display: 'flex' }}>
         <StyledText>Show</StyledText>
         <Form.Control

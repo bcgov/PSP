@@ -148,8 +148,21 @@ exports[`Contact List View matches snapshot 1`] = `
 }
 
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   width: 100%;
   font-size: 14px;
+  gap: 2.5rem;
+  padding: 0;
 }
 
 .c2 {
@@ -477,6 +490,7 @@ exports[`Contact List View matches snapshot 1`] = `
               type="button"
             >
               <svg
+                class="mr-3"
                 color="white"
                 fill="currentColor"
                 height="1em"
@@ -816,8 +830,18 @@ exports[`Contact List View matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="table-toolbar"
-          />
+            class="row"
+          >
+            <div
+              class="align-self-center col-auto"
+            />
+            <div
+              class="ml-auto align-self-center col-auto"
+            />
+            <div
+              class="align-self-center col-auto"
+            />
+          </div>
         </div>
       </div>
     </div>

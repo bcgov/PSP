@@ -35,6 +35,7 @@ export const LeaseListView: React.FunctionComponent = () => {
     filter,
     sort,
     error,
+    totalItems,
     currentPage,
     totalPages,
     pageSize,
@@ -110,6 +111,7 @@ export const LeaseListView: React.FunctionComponent = () => {
         )}
         <LeaseSearchResults
           results={results}
+          totalItems={totalItems}
           pageIndex={currentPage}
           pageSize={pageSize}
           pageCount={totalPages}

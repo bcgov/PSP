@@ -11,6 +11,7 @@ export interface IContactResultComponentProps {
   pageCount?: number;
   pageSize?: number;
   pageIndex?: number;
+  totalItems?: number;
   sort?: TableSort<IContactSearchResult>;
   setSort?: (value: TableSort<IContactSearchResult>) => void;
   setPageSize?: (value: number) => void;
@@ -70,6 +71,7 @@ export function ContactResultComponent(props: IContactResultComponentProps) {
       onPageSizeChange={setPageSize}
       noRowsMessage="No Contacts match the search criteria"
       showSelectedRowCount={props.showSelectedRowCount}
+      totalItems={props.totalItems}
       {...rest}
     ></Table>
   );
