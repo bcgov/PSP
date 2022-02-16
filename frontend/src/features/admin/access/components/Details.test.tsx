@@ -16,7 +16,6 @@ describe('Access request details', () => {
       email: 'user@email.com',
       position: 'position 1',
       role: 'Role',
-      organization: 'Organization Name',
       note: 'Note here',
       status: AccessRequestStatus.Received,
     };
