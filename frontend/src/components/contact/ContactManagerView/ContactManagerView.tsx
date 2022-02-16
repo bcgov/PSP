@@ -51,6 +51,7 @@ const ContactManagerView = ({
     filter,
     sort,
     error,
+    totalItems,
     currentPage,
     totalPages,
     pageSize,
@@ -106,6 +107,7 @@ const ContactManagerView = ({
           sort={sort}
           pageSize={pageSize}
           pageIndex={currentPage}
+          totalItems={totalItems}
           setSort={setSort}
           setPageSize={setPageSize}
           setPageIndex={setCurrentPage}

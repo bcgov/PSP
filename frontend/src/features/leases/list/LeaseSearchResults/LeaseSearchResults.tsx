@@ -160,7 +160,6 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       onPageSizeChange={setPageSize}
       noRowsMessage="Lease / License details do not exist in PIMS inventory"
       totalItems={props.totalItems}
-      tableToolbarText="This is my text!"
       {...rest}
     ></Table>
   );

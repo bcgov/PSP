@@ -694,7 +694,9 @@ const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       {!props.hideToolbar && (
         <RowBootstrap>
           <ColBootstrap xs="auto" className="align-self-center">
-            {canShowTotals && <span>{`${initialCount} - ${finalCount} of  ${totalItems}`}</span>}
+            {canShowTotals && props.data.length > 0 && (
+              <span>{`${initialCount} - ${finalCount} of  ${totalItems}`}</span>
+            )}
           </ColBootstrap>
           <ColBootstrap xs="auto" className="ml-auto align-self-center">
             {!!props.showSelectedRowCount && (

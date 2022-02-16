@@ -632,18 +632,10 @@ exports[`Lease and License List View matches snapshot 1`] = `
       >
         <div
           class="align-self-center col-auto"
-        >
-          <span>
-            1 - 0 of  0
-          </span>
-        </div>
+        />
         <div
           class="ml-auto align-self-center col-auto"
-        >
-          <span>
-            This is my text!
-          </span>
-        </div>
+        />
         <div
           class="align-self-center col-auto"
         />

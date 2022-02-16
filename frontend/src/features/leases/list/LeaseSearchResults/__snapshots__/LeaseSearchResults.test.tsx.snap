@@ -347,11 +347,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
     />
     <div
       class="ml-auto align-self-center col-auto"
-    >
-      <span>
-        This is my text!
-      </span>
-    </div>
+    />
     <div
       class="align-self-center col-auto"
     >
