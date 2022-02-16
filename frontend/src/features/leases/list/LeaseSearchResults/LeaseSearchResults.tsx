@@ -32,8 +32,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     Header: 'Expiry Date',
     accessor: 'expiryDate',
     align: 'left',
-    width: 15,
-    maxWidth: 25,
+    width: 40,
     Cell: (props: CellProps<ILeaseSearchResult>) => {
       const expiryDate = props.row.original.expiryDate;
       const isExpired = moment().isAfter(moment(expiryDate, 'YYYY-MM-DD'), 'day');
@@ -111,6 +110,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
 
 export interface ILeaseSearchResultsProps {
   results: ILeaseSearchResult[];
+  totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageIndex?: number;
@@ -159,6 +159,8 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
       noRowsMessage="Lease / License details do not exist in PIMS inventory"
+      totalItems={props.totalItems}
+      tableToolbarText="This is my text!"
       {...rest}
     ></Table>
   );

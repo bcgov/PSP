@@ -91,12 +91,12 @@ const ContactManagerView = ({
           />
         </Col>
         {showAddButton && (
-          <ColButton xs="auto" xl="3" className="pl-0">
-            <PrimaryButton onClick={() => history.push('/contact/new')}>
-              <IoMdPersonAdd color="white" />
+          <Col xs="auto" xl="3" className="pl-0">
+            <StyledPrimaryButton onClick={() => history.push('/contact/new')}>
+              <IoMdPersonAdd color="white" className="mr-3" />
               <span>Add new contact</span>
-            </PrimaryButton>
-          </ColButton>
+            </StyledPrimaryButton>
+          </Col>
         )}
       </Row>
       <div>
@@ -122,9 +122,7 @@ const ContactManagerView = ({
 
 export default ContactManagerView;
 
-export const ColButton = styled(Col)``;
-
-export const PrimaryButton = styled(Button)`
+const StyledPrimaryButton = styled(Button)`
   margin: 0.4rem 0.6rem;
   white-space: nowrap;
   display: inline-block;

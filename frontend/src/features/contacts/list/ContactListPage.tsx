@@ -17,8 +17,13 @@ export const ContactListPage = () => {
 };
 
 const StyledListPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   width: 100%;
   font-size: 14px;
+  gap: 2.5rem;
+  padding: 0;
 `;
 
 const StyledScrollable = styled(ScrollableBase)`
