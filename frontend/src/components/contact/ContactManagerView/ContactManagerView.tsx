@@ -1,4 +1,6 @@
+import { Claims } from 'constants/claims';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { useKeycloakWrapper } from 'hooks/useKeycloakWrapper';
 import { useSearch } from 'hooks/useSearch';
 import { IContactSearchResult } from 'interfaces/IContactSearchResult';
 import { useCallback, useEffect } from 'react';
@@ -40,6 +42,7 @@ const ContactManagerView = ({
   showActiveSelector,
 }: IContactManagerViewProps) => {
   const history = useHistory();
+  const { hasClaim } = useKeycloakWrapper();
   const { getContacts } = useApiContacts();
 
   var initialFilter: IContactFilter = (noInitialSearch
@@ -91,7 +94,7 @@ const ContactManagerView = ({
             showActiveSelector={showActiveSelector}
           />
         </Col>
-        {showAddButton && (
+        {showAddButton && hasClaim(Claims.CONTACT_ADD) && (
           <Col xs="auto" xl="3" className="pl-0">
             <StyledPrimaryButton onClick={() => history.push('/contact/new')}>
               <IoMdPersonAdd color="white" className="mr-3" />
