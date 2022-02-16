@@ -36,7 +36,7 @@ exports[`Contact List View matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c12 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -55,12 +55,12 @@ exports[`Contact List View matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c14 {
+.c13 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c13 {
+.c12 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -138,13 +138,6 @@ exports[`Contact List View matches snapshot 1`] = `
   -ms-flex-positive: 1;
   flex-grow: 1;
   overflow-y: auto;
-}
-
-.c11 {
-  margin: 0.4rem 0.6rem;
-  white-space: nowrap;
-  display: inline-block;
-  gap: 1rem;
 }
 
 .c0 {
@@ -482,34 +475,6 @@ exports[`Contact List View matches snapshot 1`] = `
               </div>
             </form>
           </div>
-          <div
-            class="pl-0 col-xl-3 col-auto"
-          >
-            <button
-              class="c11 btn btn-primary"
-              type="button"
-            >
-              <svg
-                class="mr-3"
-                color="white"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: white;"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M304 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96zM112 224v-64H80v64H16v32h64v64h32v-64h64v-32h-64z"
-                />
-              </svg>
-              <span>
-                Add new contact
-              </span>
-            </button>
-          </div>
         </div>
         <div>
           <div
@@ -556,10 +521,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     Summary
                     <div
-                      class="c12"
+                      class="c11"
                     >
                       <svg
-                        class="c13"
+                        class="c12"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -574,7 +539,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c14"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -601,10 +566,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     Last Name
                     <div
-                      class="c12"
+                      class="c11"
                     >
                       <svg
-                        class="c13"
+                        class="c12"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -619,7 +584,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c14"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -646,10 +611,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     First Name
                     <div
-                      class="c12"
+                      class="c11"
                     >
                       <svg
-                        class="c13"
+                        class="c12"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -664,7 +629,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c14"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -691,10 +656,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     Organization
                     <div
-                      class="c12"
+                      class="c11"
                     >
                       <svg
-                        class="c13"
+                        class="c12"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -709,7 +674,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c14"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -760,10 +725,10 @@ exports[`Contact List View matches snapshot 1`] = `
                   >
                     City
                     <div
-                      class="c12"
+                      class="c11"
                     >
                       <svg
-                        class="c13"
+                        class="c12"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -778,7 +743,7 @@ exports[`Contact List View matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c14"
+                        class="c13"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
