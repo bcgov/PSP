@@ -38,7 +38,6 @@ import {
   useSortBy,
   useTable,
 } from 'react-table';
-import styled from 'styled-components';
 
 import { TablePagination } from '.';
 import ColumnFilter from './ColumnFilter';
