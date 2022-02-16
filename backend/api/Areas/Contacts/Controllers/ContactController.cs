@@ -53,19 +53,20 @@ namespace Pims.Api.Areas.Contact.Controllers
         {
             var contactView = _pimsService.Contact.Get(id);
 
-            if (contactView.OrganizationId.HasValue)
-            {
-                var organization = _pimsService.Organization.Get(contactView.OrganizationId.Value);
-                var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
-                mappedOrganization.Id = contactView.Id;
-                return new JsonResult(mappedOrganization);
-            }
-            else
+            if (id.StartsWith("P"))
             {
                 var person = _pimsService.Person.Get(contactView.PersonId.Value);
                 var mappedPerson = _mapper.Map<Models.Contact.ContactModel>(person);
                 mappedPerson.Id = contactView.Id;
                 return new JsonResult(mappedPerson);
+                
+            }
+            else
+            {
+                var organization = _pimsService.Organization.Get(contactView.OrganizationId.Value);
+                var mappedOrganization = _mapper.Map<Models.Contact.ContactModel>(organization);
+                mappedOrganization.Id = contactView.Id;
+                return new JsonResult(mappedOrganization);
             }
         }
         #endregion
