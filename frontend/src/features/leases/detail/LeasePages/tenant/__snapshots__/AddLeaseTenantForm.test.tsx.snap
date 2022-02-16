@@ -881,13 +881,23 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="table-toolbar"
+              class="row"
             >
-              <p
-                class="c13 mr-auto"
+              <div
+                class="align-self-center col-auto"
+              />
+              <div
+                class="ml-auto align-self-center col-auto"
               >
-                0 selected
-              </p>
+                <p
+                  class="c13"
+                >
+                  0 selected
+                </p>
+              </div>
+              <div
+                class="align-self-center col-auto"
+              />
             </div>
           </div>
         </div>
@@ -1074,8 +1084,18 @@ exports[`AddLeaseTenantForm component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="table-toolbar"
-        />
+          class="row"
+        >
+          <div
+            class="align-self-center col-auto"
+          />
+          <div
+            class="ml-auto align-self-center col-auto"
+          />
+          <div
+            class="align-self-center col-auto"
+          />
+        </div>
       </div>
     </div>
     <div

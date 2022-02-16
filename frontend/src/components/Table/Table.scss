@@ -118,16 +118,3 @@
     }
   }
 }
-
-.table-toolbar {
-  display: flex;
-  flex-direction: row-reverse;
-  align-content: center;
-  align-items: baseline;
-  div {
-    .Menu-root {
-      margin-top: 0.5rem;
-      margin-right: 3rem;
-    }
-  }
-}
