@@ -101,6 +101,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
         {
             var filter = new LeaseFilter
             {
+                Page = model.Page,
+                Quantity = model.Quantity,
+
                 PinOrPid = model.PinOrPid,
                 LFileNo = model.LFileNo,
                 Address = model.Address,
