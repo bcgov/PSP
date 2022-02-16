@@ -11,6 +11,8 @@ PSP_PIMS S21.00 Sprint 21 2022-Feb-11
   - PIMS_ORGANIZATION
     - Alter ORGANIZATION_TYPE_CODE to nullable
     - Alter ORG_IDENTIFIER_TYPE_CODE to nullable
+  - PIMS_PERSON
+    - Add USE_ORGANIZATION_ADDRESS
 - Altered views:
   - PIMS_PERSON_CONTACT_VW
     - Top contact method for each contact method type returned is ordered by the following:
