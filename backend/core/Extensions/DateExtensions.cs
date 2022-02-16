@@ -38,13 +38,13 @@ namespace Pims.Core.Extensions
 
         /// <summary>
         /// Generate the fiscal year string value (i.e. 20/21).
-        /// The result treats the specified 'fiscalYear' as the last year.
+        /// The result treats the specified 'fiscalYear' as the first year.
         /// </summary>
         /// <param name="fiscalYear"></param>
         /// <returns></returns>
         public static string FiscalYear(this int fiscalYear)
         {
-            return $"{(fiscalYear - 1).ToString().Substring(2, 2)}/{(fiscalYear).ToString().Substring(2, 2)}";
+            return $"{(fiscalYear).ToString().Substring(2, 2)}/{(fiscalYear + 1).ToString().Substring(2, 2)}";
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static DateTime? FilterSqlMinDate(this DateTime? date)
         {
-            return date.HasValue && date.Value <= SqlDateTime.MinValue ? null : date;
+            return date.HasValue && date.Value <= (DateTime)SqlDateTime.MinValue ? null : date;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static DateTime? FilterSqlMinDate(this DateTime date)
         {
-            return date <= SqlDateTime.MinValue ? null : date;
+            return date <= (DateTime)SqlDateTime.MinValue ? null : date;
         }
     }
 }

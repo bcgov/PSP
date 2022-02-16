@@ -46,13 +46,13 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> Get(LeaseFilter filter)
+        public IEnumerable<PimsLease> Get(LeaseFilter filter, bool loadPayments = false)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
-            var query = this.Context.GenerateLeaseQuery(filter);
+            var query = this.Context.GenerateLeaseQuery(filter, loadPayments);
 
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
 
