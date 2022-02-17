@@ -1538,6 +1538,8 @@ namespace Pims.Dal
                 entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
                 entity.Property(e => e.IsDisabled).HasDefaultValueSql("(CONVERT([bit],(0)))");
+
+                entity.Property(e => e.UseOrganizationAddress).HasDefaultValueSql("(CONVERT([bit],(0)))");
             });
 
             modelBuilder.Entity<PimsPersonAddress>(entity =>
@@ -2824,8 +2826,8 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_PERSON_PIM_SCDPHL_FK");
 
                 entity.HasOne(d => d.SecurityDeposit)
-                    .WithMany(p => p.PimsSecurityDepositHolders)
-                    .HasForeignKey(d => d.SecurityDepositId)
+                    .WithOne(p => p.PimsSecurityDepositHolder)
+                    .HasForeignKey<PimsSecurityDepositHolder>(d => d.SecurityDepositId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_SECDEP_PIM_SCDPHL_FK");
             });
@@ -2934,8 +2936,8 @@ namespace Pims.Dal
                     .HasConstraintName("PIM_PERSON_PIM_SCDPRH_FK");
 
                 entity.HasOne(d => d.SecurityDepositReturn)
-                    .WithMany(p => p.PimsSecurityDepositReturnHolders)
-                    .HasForeignKey(d => d.SecurityDepositReturnId)
+                    .WithOne(p => p.PimsSecurityDepositReturnHolder)
+                    .HasForeignKey<PimsSecurityDepositReturnHolder>(d => d.SecurityDepositReturnId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PIM_SDRTRN_PIM_SCDPRH_FK");
             });

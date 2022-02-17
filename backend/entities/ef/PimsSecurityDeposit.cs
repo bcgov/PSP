@@ -15,7 +15,6 @@ namespace Pims.Dal.Entities
     {
         public PimsSecurityDeposit()
         {
-            PimsSecurityDepositHolders = new HashSet<PimsSecurityDepositHolder>();
             PimsSecurityDepositReturns = new HashSet<PimsSecurityDepositReturn>();
         }
 
@@ -84,8 +83,8 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(SecurityDepositTypeCode))]
         [InverseProperty(nameof(PimsSecurityDepositType.PimsSecurityDeposits))]
         public virtual PimsSecurityDepositType SecurityDepositTypeCodeNavigation { get; set; }
-        [InverseProperty(nameof(PimsSecurityDepositHolder.SecurityDeposit))]
-        public virtual ICollection<PimsSecurityDepositHolder> PimsSecurityDepositHolders { get; set; }
+        [InverseProperty("SecurityDeposit")]
+        public virtual PimsSecurityDepositHolder PimsSecurityDepositHolder { get; set; }
         [InverseProperty(nameof(PimsSecurityDepositReturn.SecurityDeposit))]
         public virtual ICollection<PimsSecurityDepositReturn> PimsSecurityDepositReturns { get; set; }
     }

@@ -51,6 +51,8 @@ namespace Pims.Dal.Entities
         [Column("ADDRESS_COMMENT")]
         [StringLength(2000)]
         public string AddressComment { get; set; }
+        [Column("USE_ORGANIZATION_ADDRESS")]
+        public bool? UseOrganizationAddress { get; set; }
         [Required]
         [Column("IS_DISABLED")]
         public bool? IsDisabled { get; set; }
