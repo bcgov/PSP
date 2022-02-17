@@ -15,7 +15,7 @@ if [ -z "$passvar" ]
 then
     # Generate a random password that satisfies MSSQL password requirements.
     echo 'A password is randomly being generated.'
-    passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!
+    passvar=$(date +%s | sha256sum | base64 | head -c 29)A8
     echo $passvar
 fi
 
@@ -70,8 +70,10 @@ if test -f "./backend/api/.env"; then
     echo "./backend/api/.env exists"
 else
 echo \
-"ASPNETCORE_ENVIRONMENT=Development
-ASPNETCORE_URLS=http://*:8080
+"ASPNETCORE_ENVIRONMENT=Local
+ASPNETCORE_URLS=http://*:5000
+TZ=America/Los_Angeles
+ConnectionStrings__PIMS=Server=localhost,5433;uid=$varApiDb;Password=$passvar;Database=pims
 DB_PASSWORD=$passvar
 Keycloak__Secret=
 Keycloak__ServiceAccount__Secret=" >> ./backend/api/.env
@@ -82,7 +84,8 @@ if test -f "./backend/dal/.env"; then
     echo "./backend/dal/.env exists"
 else
 echo \
-"ConnectionStrings__PIMS=Server=localhost,5433;Database=pims;User Id=$varApiDb;
+"ASPNETCORE_ENVIRONMENT=Local
+ConnectionStrings__PIMS=Server=localhost,5433;uid=$varApiDb;Password=$passvar;Database=pims
 DB_PASSWORD=$passvar" >> ./backend/dal/.env
 fi
 
@@ -102,6 +105,7 @@ if test -f "./tools/keycloak/sync/.env"; then
 else
 echo \
 "# Local
+TZ=America/Los_Angeles
 ASPNETCORE_ENVIRONMENT=Local
 Auth__Keycloak__Secret=" >> ./tools/keycloak/sync/.env
 fi
@@ -153,8 +157,8 @@ LOGIN_STATUS=on
 # https://docs.geoserver.org/latest/en/user/production/config.html#disable-the-geoserver-web-administration-interface
 WEB_INTERFACE=false
 # Rendering settings
-ENABLE_JSONP=true 
-MAX_FILTER_RULES=20 
+ENABLE_JSONP=true
+MAX_FILTER_RULES=20
 OPTIMIZE_LINE_WIDTH=false
 # Install the stable plugin specified in https://github.com/kartoza/docker-geoserver/blob/master/build_data/stable_plugins.txt
 STABLE_EXTENSIONS=sqlserver-plugin
@@ -162,35 +166,35 @@ STABLE_EXTENSIONS=sqlserver-plugin
 COMMUNITY_EXTENSIONS=
 # SSL Settings explained here https://github.com/AtomGraph/letsencrypt-tomcat
 SSL=false
-HTTP_PORT=8080 
-HTTP_PROXY_NAME= 
-HTTP_PROXY_PORT= 
-HTTP_REDIRECT_PORT= 
-HTTP_CONNECTION_TIMEOUT=20000 
-HTTPS_PORT=8443 
-HTTPS_MAX_THREADS=150 
-HTTPS_CLIENT_AUTH= 
-HTTPS_PROXY_NAME= 
-HTTPS_PROXY_PORT= 
-JKS_FILE=letsencrypt.jks 
-JKS_KEY_PASSWORD='geoserver' 
-KEY_ALIAS=letsencrypt 
-JKS_STORE_PASSWORD='geoserver' 
-P12_FILE=letsencrypt.p12 
-PKCS12_PASSWORD='geoserver' 
+HTTP_PORT=8080
+HTTP_PROXY_NAME=
+HTTP_PROXY_PORT=
+HTTP_REDIRECT_PORT=
+HTTP_CONNECTION_TIMEOUT=20000
+HTTPS_PORT=8443
+HTTPS_MAX_THREADS=150
+HTTPS_CLIENT_AUTH=
+HTTPS_PROXY_NAME=
+HTTPS_PROXY_PORT=
+JKS_FILE=letsencrypt.jks
+JKS_KEY_PASSWORD='geoserver'
+KEY_ALIAS=letsencrypt
+JKS_STORE_PASSWORD='geoserver'
+P12_FILE=letsencrypt.p12
+PKCS12_PASSWORD='geoserver'
 LETSENCRYPT_CERT_DIR=/etc/letsencrypt
-CHARACTER_ENCODING='UTF-8' 
+CHARACTER_ENCODING='UTF-8'
 # Clustering  variables
 # Activates clustering using JMS cluster plugin
 CLUSTERING=False
 # cluster env variables specified https://docs.geoserver.org/stable/en/user/community/jms-cluster/index.html
-CLUSTER_DURABILITY=true 
-BROKER_URL= 
-READONLY=disabled 
-RANDOMSTRING=23bd87cfa327d47e 
-INSTANCE_STRING=ac3bcba2fa7d989678a01ef4facc4173010cd8b40d2e5f5a8d18d5f863ca976f 
-TOGGLE_MASTER=true 
-TOGGLE_SLAVE=true 
+CLUSTER_DURABILITY=true
+BROKER_URL=
+READONLY=disabled
+RANDOMSTRING=23bd87cfa327d47e
+INSTANCE_STRING=ac3bcba2fa7d989678a01ef4facc4173010cd8b40d2e5f5a8d18d5f863ca976f
+TOGGLE_MASTER=true
+TOGGLE_SLAVE=true
 EMBEDDED_BROKER=enabled" >> ./geoserver/.env
 fi
 
@@ -236,7 +240,5 @@ echo \
   <dateModified>2021-09-26 20:42:24.266 UTC</dateModified>
 </dataStore>" >> ./geoserver/geoserver_data/psp/mssql/datastore.xml
 fi
-
-
 
 echo 'Before running all the docker containers, update the .env files with the Keycloak Client Secret (pims-service-account).'
