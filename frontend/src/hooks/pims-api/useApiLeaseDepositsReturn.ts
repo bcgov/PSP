@@ -14,14 +14,20 @@ export const useApiLeaseDepositReturns = () => {
   return React.useMemo(
     () => ({
       deleteLeaseDepositReturn: (request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn>) =>
-        api.delete<ILease>(`/leases/${request.parentId}/deposit-returns`, { data: request }),
+        api.delete<ILease>(
+          `/leases/${request.parentId}/deposits/${request.payload.parentDepositId}/returns`,
+          { data: request },
+        ),
       putLeaseDepositReturn: (request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn>) =>
         api.put<ILease>(
-          `/leases/${request.parentId}/deposit-returns/${request.payload.id}`,
+          `/leases/${request.parentId}/deposits/${request.payload.parentDepositId}/returns/${request.payload.id}`,
           request,
         ),
       postLeaseDepositReturn: (request: IParentConcurrencyGuard<ILeaseSecurityDepositReturn>) =>
-        api.post<ILease>(`/leases/${request.parentId}/deposit-returns`, request),
+        api.post<ILease>(
+          `/leases/${request.parentId}/deposits/${request.payload.parentDepositId}/returns`,
+          request,
+        ),
     }),
     [api],
   );

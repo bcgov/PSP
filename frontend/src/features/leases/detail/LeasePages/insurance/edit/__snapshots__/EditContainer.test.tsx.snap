@@ -256,6 +256,7 @@ exports[`Lease Insurance renders as expected 1`] = `
               data-testid="insurance-form-limit"
               id="input-insurances.0.coverageLimit"
               name="insurances.0.coverageLimit"
+              title="777"
               type="number"
               value="777"
             />
@@ -269,7 +270,7 @@ exports[`Lease Insurance renders as expected 1`] = `
             class="form-group"
           >
             <div
-              class="react-datepicker-wrapper"
+              class="react-datepicker-wrapper d-block"
             >
               <div
                 class="react-datepicker__input-container"
@@ -304,6 +305,7 @@ exports[`Lease Insurance renders as expected 1`] = `
               id="input-insurances.0.coverageDescription"
               name="insurances.0.coverageDescription"
               rows="4"
+              title=""
             />
           </div>
         </div>
@@ -332,6 +334,7 @@ exports[`Lease Insurance renders as expected 1`] = `
       >
         <button
           class="mr-5 btn btn-primary"
+          disabled=""
           type="button"
         >
           Save

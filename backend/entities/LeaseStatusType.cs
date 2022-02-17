@@ -25,13 +25,14 @@ namespace Pims.Dal.Entities
             Id = id;
         }
         #endregion
-    }
 
-    public static class PimsLeaseStatusTypes
-    {
-        public const string PAID = "PAID";
-        public const string OVERPAID = "OVERPAID";
-        public const string PARTIAL = "PARTIAL";
-        public const string UNPAID = "UNPAID";
+        public static class PimsLeaseStatusTypes
+        {
+            public const string ACTIVE = "ACTIVE";
+            public const string DISCARD = "DISCARD";
+            public const string DRAFT = "DRAFT";
+            public const string INACTIVE = "INACTIVE";
+            public const string TERMINATED = "TERMINATED";
+        }
     }
 }

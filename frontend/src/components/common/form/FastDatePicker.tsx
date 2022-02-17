@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import { ErrorMessage, FormikProps, getIn } from 'formik';
 import moment from 'moment';
 import * as Popper from 'popper.js';
-import React, { FunctionComponent, memo, useEffect } from 'react';
-import { Form, FormControlProps, FormGroup } from 'react-bootstrap';
+import { FunctionComponent, memo, useEffect } from 'react';
+import { Form, FormControlProps } from 'react-bootstrap';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import styled from 'styled-components';
 import { formikFieldMemo } from 'utils';
@@ -81,7 +81,7 @@ const FormikDatePicker: FunctionComponent<FastDatePickerProps> = ({
   const isInvalid = error && touch ? 'is-invalid ' : '';
   const isValid = !error && touch && value && !disabled ? 'is-valid ' : '';
   return (
-    <FormGroup
+    <Form.Group
       className={classNames(!!required ? 'required' : '', className)}
       controlId={`datepicker-${field}`}
     >
@@ -109,9 +109,10 @@ const FormikDatePicker: FunctionComponent<FastDatePickerProps> = ({
         onChange={(val: any) => {
           setFieldValue(field, val ? moment.utc(val).format('YYYY-MM-DD') : '');
         }}
+        wrapperClassName="d-block"
       />
       <ErrorMessage component="div" className="invalid-feedback" name={field}></ErrorMessage>
-    </FormGroup>
+    </Form.Group>
   );
 };
 

@@ -24,8 +24,8 @@ namespace Pims.Api.Test.Core.Extensions
 
         public static IEnumerable<object[]> YearData = new List<object[]>()
         {
-            new object[] { 2020, "19/20" },
-            new object[] { 2021, "20/21" }
+            new object[] { 2020, "20/21" },
+            new object[] { 2021, "21/22" }
         };
         #endregion
 

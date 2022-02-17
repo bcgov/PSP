@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities
     [Index(nameof(OrganizationId), Name = "SCDPRH_ORGANIZATION_ID_IDX")]
     [Index(nameof(PersonId), Name = "SCDPRH_PERSON_ID_IDX")]
     [Index(nameof(SecurityDepositReturnId), Name = "SCDPRH_SECURITY_DEPOSIT_RETURN_ID_IDX")]
+    [Index(nameof(SecurityDepositReturnId), Name = "SCDPRH_SECURITY_DEPOSIT_RETURN_ID_TUC", IsUnique = true)]
     public partial class PimsSecurityDepositReturnHolder
     {
         [Key]
@@ -69,7 +70,7 @@ namespace Pims.Dal.Entities
         [InverseProperty(nameof(PimsPerson.PimsSecurityDepositReturnHolders))]
         public virtual PimsPerson Person { get; set; }
         [ForeignKey(nameof(SecurityDepositReturnId))]
-        [InverseProperty(nameof(PimsSecurityDepositReturn.PimsSecurityDepositReturnHolders))]
+        [InverseProperty(nameof(PimsSecurityDepositReturn.PimsSecurityDepositReturnHolder))]
         public virtual PimsSecurityDepositReturn SecurityDepositReturn { get; set; }
     }
 }

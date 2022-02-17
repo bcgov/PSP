@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Pims.Api.Models;
 
 namespace Pims.Api.Areas.Lease.Models.Search
 {
@@ -13,26 +15,32 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The LIS L File #.
         /// </summary>
-        /// <value></value>
         public string LFileNo { get; set; }
 
         /// <summary>
-        /// get/set - The list of tenants for this lease
+        /// get/set - The expiry date time
         /// </summary>
-        /// <value></value>
-        public IList<string> TenantNames { get; set; } = new List<string>();
+        public DateTime? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
-        /// <value></value>
         public string ProgramName { get; set; }
+
+        /// <summary>
+        /// get/set - The list of tenants for this lease
+        /// </summary>
+        public IList<string> TenantNames { get; set; } = new List<string>();
 
         /// <summary>
         /// get/set - The list of programs associated to the lease.
         /// </summary>
-        /// <value></value>
         public IList<PropertyModel> Properties { get; set; } = new List<PropertyModel>();
+
+        /// <summary>
+        /// get/set - The status of this lease.
+        /// </summary>
+        public TypeModel<string> StatusType { get; set; }
         #endregion
     }
 }

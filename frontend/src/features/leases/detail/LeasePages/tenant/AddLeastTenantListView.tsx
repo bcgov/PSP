@@ -27,8 +27,8 @@ export const AddLeaseTenantListView: React.FunctionComponent<IAddLeaseTenantList
       <Styled.ContactListViewWrapper
         setSelectedRows={setSelectedTenants}
         selectedRows={selectedTenants}
+        showActiveSelector
         showSelectedRowCount
-        hideAddButton
       />
     </>
   );
