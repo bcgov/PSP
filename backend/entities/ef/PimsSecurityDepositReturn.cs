@@ -12,11 +12,6 @@ namespace Pims.Dal.Entities
     [Index(nameof(SecurityDepositId), Name = "SDRTRN_SECURITY_DEPOSIT_ID_IDX")]
     public partial class PimsSecurityDepositReturn
     {
-        public PimsSecurityDepositReturn()
-        {
-            PimsSecurityDepositReturnHolders = new HashSet<PimsSecurityDepositReturnHolder>();
-        }
-
         [Key]
         [Column("SECURITY_DEPOSIT_RETURN_ID")]
         public long SecurityDepositReturnId { get; set; }
@@ -72,7 +67,7 @@ namespace Pims.Dal.Entities
         [ForeignKey(nameof(SecurityDepositId))]
         [InverseProperty(nameof(PimsSecurityDeposit.PimsSecurityDepositReturns))]
         public virtual PimsSecurityDeposit SecurityDeposit { get; set; }
-        [InverseProperty(nameof(PimsSecurityDepositReturnHolder.SecurityDepositReturn))]
-        public virtual ICollection<PimsSecurityDepositReturnHolder> PimsSecurityDepositReturnHolders { get; set; }
+        [InverseProperty("SecurityDepositReturn")]
+        public virtual PimsSecurityDepositReturnHolder PimsSecurityDepositReturnHolder { get; set; }
     }
 }
