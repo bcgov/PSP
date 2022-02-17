@@ -29,7 +29,7 @@ import {
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/ICreateContact';
+import { defaultCreateOrganization, ICreateOrganizationForm } from 'interfaces/editable-contact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -42,7 +42,7 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
   const history = useHistory();
   const { addOrganization } = useAddContact();
 
-  const [showDuplicateModal, setDuplicateModal] = useState(false);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   // validation needs to be adjusted when country == OTHER
@@ -53,21 +53,20 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
   );
 
   const formikRef = useRef<FormikProps<ICreateOrganizationForm>>(null);
-
   const onValidate = (values: ICreateOrganizationForm) => {
+    const errors = {} as any;
     try {
-      validateYupSchema(values, OrganizationValidationSchema, true, {
-        otherCountry: otherCountryId,
-      });
       // combine yup schema validation with custom rules
-      const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
         errors.needsContactMethod =
           'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
       }
+      validateYupSchema(values, OrganizationValidationSchema, true, {
+        otherCountry: otherCountryId,
+      });
       return errors;
     } catch (err) {
-      return yupToFormErrors(err);
+      return { ...errors, ...yupToFormErrors(err) };
     }
   };
 
@@ -76,12 +75,12 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
     { setSubmitting }: FormikHelpers<ICreateOrganizationForm>,
   ) => {
     try {
-      setDuplicateModal(false);
+      setShowDuplicateModal(false);
       let newOrganization = organizationCreateFormToApiOrganization(formOrganization);
 
       const organizationResponse = await addOrganization(
         newOrganization,
-        setDuplicateModal,
+        setShowDuplicateModal,
         allowDuplicate,
       );
 
@@ -105,15 +104,18 @@ export const CreateOrganizationForm: React.FunctionComponent = () => {
       <Formik
         component={CreateOrganizationComponent}
         initialValues={defaultCreateOrganization}
-        enableReinitialize
         validate={onValidate}
+        enableReinitialize
         onSubmit={onSubmit}
         innerRef={formikRef}
       />
       <DuplicateContactModal
         display={showDuplicateModal}
         handleOk={() => saveDuplicate()}
-        handleCancel={() => setAllowDuplicate(false)}
+        handleCancel={() => {
+          setAllowDuplicate(false);
+          setShowDuplicateModal(false);
+        }}
       ></DuplicateContactModal>
     </>
   );
@@ -143,6 +145,17 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
       history.push('/contact/list');
     }
   };
+
+  const isContactMethodInvalid = useMemo(() => {
+    return (
+      !!touched.phoneContactMethods &&
+      !!touched.emailContactMethods &&
+      (!!touched.mailingAddress?.streetAddress1 ||
+        !!touched.propertyAddress?.streetAddress1 ||
+        !!touched.billingAddress?.streetAddress1) &&
+      getIn(errors, 'needsContactMethod')
+    );
+  }, [touched, errors]);
 
   return (
     <>
@@ -186,7 +199,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<ICreateOrganizationForm>
             <FormSection>
               <Styled.H2>Contact info</Styled.H2>
               <Styled.SectionMessage
-                appearance={getIn(errors, 'needsContactMethod') ? 'error' : 'information'}
+                appearance={isContactMethodInvalid ? 'error' : 'information'}
                 gap="0.5rem"
               >
                 <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />

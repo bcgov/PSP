@@ -25,9 +25,25 @@ namespace Pims.Dal
         /// </summary>
         public ILeaseTermService LeaseTermService { get { return _serviceProvider.GetService<ILeaseTermService>(); } }
         /// <summary>
+        /// get - The lease payment service.
+        /// </summary>
+        public ILeasePaymentService LeasePaymentService { get { return _serviceProvider.GetService<ILeasePaymentService>(); } }
+        /// <summary>
         /// get - The lease service.
         /// </summary>
         public ILeaseService LeaseService { get { return _serviceProvider.GetService<ILeaseService>(); } }
+        /// <summary>
+        /// get - The security deposit service.
+        /// </summary>
+        public ISecurityDepositService SecurityDepositService { get { return _serviceProvider.GetService<ISecurityDepositService>(); } }
+        /// <summary>
+        /// get - The security deposit return service.
+        /// </summary>
+        public ISecurityDepositReturnService SecurityDepositReturnService { get { return _serviceProvider.GetService<ISecurityDepositReturnService>(); } }
+        /// <summary>
+        /// get - The person service.
+        /// </summary>
+        public IPersonService PersonService { get { return _serviceProvider.GetService<IPersonService>(); } }
         #endregion
 
         #region Constructors

@@ -1,10 +1,14 @@
 import userEvent from '@testing-library/user-event';
+import { Claims } from 'constants/claims';
 import { IContactSearchResult } from 'interfaces';
 import { noop } from 'lodash';
 import React from 'react';
-import { act, render, RenderOptions } from 'utils/test-utils';
+import { act, mockKeycloak, render, RenderOptions } from 'utils/test-utils';
 
 import { ContactSearchResults, IContactSearchResultsProps } from './ContactSearchResults';
+
+// mock auth library
+jest.mock('@react-keycloak/web');
 
 const setSort = jest.fn();
 
@@ -70,6 +74,7 @@ const mockResults: IContactSearchResult[] = [
 describe('Contact Search Results Table', () => {
   beforeEach(() => {
     setSort.mockClear();
+    mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
 
   it('matches snapshot', async () => {
@@ -98,5 +103,27 @@ describe('Contact Search Results Table', () => {
     await act(async () => userEvent.click(sortButtons));
     // should be sorted in ascending order
     expect(setSort).toHaveBeenCalledWith({ summary: 'asc' });
+  });
+
+  describe('when user has CONTACT_EDIT claim', () => {
+    it('shows edit contact button on each table row', async () => {
+      mockKeycloak({ claims: [Claims.CONTACT_VIEW, Claims.CONTACT_EDIT] });
+      const { tableRows, findAllByTitle } = setup({ results: mockResults });
+      const editButtons = await findAllByTitle(/edit contact/i);
+
+      // all rows should show edit buttons
+      expect(editButtons).toHaveLength(tableRows.length);
+      expect(editButtons[0]).toBeInTheDocument();
+    });
+  });
+
+  describe(`when user doesn't have CONTACT_EDIT claim`, () => {
+    it('does not show the edit button on table rows', () => {
+      const { queryAllByTitle } = setup({ results: mockResults });
+      const editButtons = queryAllByTitle(/edit contact/i);
+
+      // edit buttons should not be rendered
+      expect(editButtons).toHaveLength(0);
+    });
   });
 });

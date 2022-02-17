@@ -29,3 +29,23 @@ export const StatusIndicators = styled.div`
     border: 1px solid ${props => props.theme.css.completedColor};
   }
 `;
+
+export const HalfWidthLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  height: 100%;
+  width: 50%;
+  min-width: 30rem;
+  overflow: hidden;
+  padding: 1rem;
+  gap: 1.6rem;
+`;
+
+export const ScrollingFormLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+  padding-right: 1rem;
+`;

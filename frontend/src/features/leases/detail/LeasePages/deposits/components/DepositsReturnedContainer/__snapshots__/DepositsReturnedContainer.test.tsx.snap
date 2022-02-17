@@ -1,0 +1,243 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DepositsReturnedContainer component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1 {
+  font-size: 1.6rem;
+  font-family: 'BCSans-Bold';
+}
+
+.c2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.c4 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
+}
+
+<div
+    class="c0"
+  >
+    <label
+      class="c1 c2 form-label"
+    >
+      Deposits Returned
+    </label>
+    <div
+      class="table"
+      data-testid="securityDepositReturnsTable"
+      role="table"
+    >
+      <div
+        class="thead thead-light"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+        >
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Deposit Type
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Termination or Surrender Date
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Deposit amount
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Claims against Deposit
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Returned Amount
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Return Date
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Payee Name
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Actions
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tbody"
+        role="rowgroup"
+      >
+        <div
+          class="tr-wrapper"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 240px;"
+          >
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Security deposit
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Feb 1, 2022
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              $1,234
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              $1,234
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              $123
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Feb 16, 2022
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            />
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              <div
+                class="c3 c4"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

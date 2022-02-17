@@ -1,7 +1,7 @@
 import { NumberFieldValue } from 'typings/NumberFieldValue';
 import { stringToNull } from 'utils/formUtils';
 
-import { ILeasePayment } from './ILeasePayment';
+import { formLeasePaymentToApiPayment, IFormLeasePayment, ILeasePayment } from './ILeasePayment';
 import ITypeCode, { defaultTypeCode } from './ITypeCode';
 export interface ILeaseTerm {
   id?: number;
@@ -36,6 +36,7 @@ export interface IFormLeaseTerm
       paymentNote: string;
       isGstEligible: boolean;
       isTermExercised: boolean;
+      payments: IFormLeasePayment[];
     }
   > {}
 
@@ -74,5 +75,7 @@ export const formLeaseTermToApiLeaseTerm = (
     leasePmtFreqTypeCode: formLeaseTerm.leasePmtFreqTypeCode?.id
       ? formLeaseTerm.leasePmtFreqTypeCode
       : undefined,
+    statusTypeCode: formLeaseTerm.statusTypeCode?.id ? formLeaseTerm.statusTypeCode : undefined,
+    payments: formLeaseTerm.payments.map(payment => formLeasePaymentToApiPayment(payment)),
   };
 };

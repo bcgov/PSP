@@ -26,6 +26,10 @@ exports[`ContactViewContainer component renders as expected 1`] = `
   background-color: white;
 }
 
+.c3 {
+  text-align: left;
+}
+
 .c2 {
   text-align: left;
 }
@@ -65,11 +69,22 @@ exports[`ContactViewContainer component renders as expected 1`] = `
         </li>
       </ol>
     </nav>
-    <h1
-      class="c2"
+    <div
+      class="c2 row"
     >
-      Contact
-    </h1>
+      <div
+        class="col"
+      >
+        <h1
+          class="c3"
+        >
+          Contact
+        </h1>
+      </div>
+      <div
+        class="ml-auto col-md-auto"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;

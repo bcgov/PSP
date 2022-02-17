@@ -19,7 +19,7 @@ import {
   hasPhoneNumber,
   PersonValidationSchema,
 } from 'features/contacts/contact/create/validation';
-import { personCreateFormToApiPerson } from 'features/contacts/contactUtils';
+import { formPersonToApiPerson } from 'features/contacts/contactUtils';
 import useAddContact from 'features/contacts/hooks/useAddContact';
 import {
   Formik,
@@ -31,7 +31,7 @@ import {
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson, ICreatePersonForm } from 'interfaces/ICreateContact';
+import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
 import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -45,7 +45,7 @@ export const CreatePersonForm: React.FunctionComponent = () => {
   const history = useHistory();
   const { addPerson } = useAddContact();
 
-  const [showDuplicateModal, setDuplicateModal] = useState(false);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [allowDuplicate, setAllowDuplicate] = useState(false);
 
   // validation needs to be adjusted when country == OTHER
@@ -55,31 +55,32 @@ export const CreatePersonForm: React.FunctionComponent = () => {
     [countries],
   );
 
-  const formikRef = useRef<FormikProps<ICreatePersonForm>>(null);
+  const formikRef = useRef<FormikProps<IEditablePersonForm>>(null);
 
-  const onValidate = (values: ICreatePersonForm) => {
+  const onValidate = (values: IEditablePersonForm) => {
+    const errors = {} as any;
     try {
-      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
       // combine yup schema validation with custom rules
-      const errors = {} as any;
       if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
         errors.needsContactMethod =
           'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
       }
+      validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
+
       return errors;
     } catch (err) {
-      return yupToFormErrors(err);
+      return { ...errors, ...yupToFormErrors(err) };
     }
   };
 
   const onSubmit = async (
-    formPerson: ICreatePersonForm,
-    { setSubmitting }: FormikHelpers<ICreatePersonForm>,
+    formPerson: IEditablePersonForm,
+    { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
-      setDuplicateModal(false);
-      let newPerson = personCreateFormToApiPerson(formPerson);
-      const personResponse = await addPerson(newPerson, setDuplicateModal, allowDuplicate);
+      setShowDuplicateModal(false);
+      let newPerson = formPersonToApiPerson(formPerson);
+      const personResponse = await addPerson(newPerson, setShowDuplicateModal, allowDuplicate);
 
       if (!!personResponse?.id) {
         history.push('/contact/list');
@@ -109,7 +110,10 @@ export const CreatePersonForm: React.FunctionComponent = () => {
       <DuplicateContactModal
         display={showDuplicateModal}
         handleOk={() => saveDuplicate()}
-        handleCancel={() => setAllowDuplicate(false)}
+        handleCancel={() => {
+          setAllowDuplicate(false);
+          setShowDuplicateModal(false);
+        }}
       ></DuplicateContactModal>
     </>
   );
@@ -120,7 +124,7 @@ export default CreatePersonForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
+const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   values,
   errors,
   touched,
@@ -161,6 +165,17 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
       history.push('/contact/list');
     }
   };
+
+  const isContactMethodInvalid = useMemo(() => {
+    return (
+      !!touched.phoneContactMethods &&
+      !!touched.emailContactMethods &&
+      (!!touched.mailingAddress?.streetAddress1 ||
+        !!touched.propertyAddress?.streetAddress1 ||
+        !!touched.billingAddress?.streetAddress1) &&
+      getIn(errors, 'needsContactMethod')
+    );
+  }, [touched, errors]);
 
   return (
     <>
@@ -207,7 +222,7 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
               <Row>
                 <Col md={7}>
                   <AsyncTypeahead
-                    field="organizationId"
+                    field="organization"
                     label="Link to an existing organization"
                     labelKey="text"
                     isLoading={isTypeaheadLoading}
@@ -221,7 +236,11 @@ const CreatePersonComponent: React.FC<FormikProps<ICreatePersonForm>> = ({
             <FormSection>
               <Styled.H2>Contact info</Styled.H2>
               <Styled.SectionMessage
-                appearance={getIn(errors, 'needsContactMethod') ? 'error' : 'information'}
+                appearance={
+                  isContactMethodInvalid && getIn(errors, 'needsContactMethod')
+                    ? 'error'
+                    : 'information'
+                }
                 gap="0.5rem"
               >
                 <AiOutlineExclamationCircle size="1.8rem" className="mt-2" />

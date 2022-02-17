@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Repositories
 {
@@ -18,7 +18,7 @@ namespace Pims.Dal.Repositories
         /// <param name="user"></param>
         /// <param name="service"></param>
         /// <param name="logger"></param>
-        public LeaseTermRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseService> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
+        public LeaseTermRepository(PimsContext dbContext, ClaimsPrincipal user, IPimsRepository service, ILogger<LeaseRepository> logger, IMapper mapper) : base(dbContext, user, service, logger, mapper) { }
         #endregion
 
         public void Delete(long leaseTermId)
@@ -29,6 +29,7 @@ namespace Pims.Dal.Repositories
 
         public PimsLeaseTerm Update(PimsLeaseTerm pimsLeaseTerm)
         {
+            this.Context.Entry(pimsLeaseTerm).Collection(t => t.PimsLeasePayments).IsModified = false;
             this.Context.Update(pimsLeaseTerm);
             return pimsLeaseTerm;
         }
@@ -47,7 +48,7 @@ namespace Pims.Dal.Repositories
         public PimsLeaseTerm GetById(long leaseTermId, bool loadPayments = false)
         {
             var query = this.Context.PimsLeaseTerms.AsNoTracking().Where(t => t.LeaseTermId == leaseTermId);
-            if(loadPayments)
+            if (loadPayments)
             {
                 query.Include(t => t.PimsLeasePayments);
             }

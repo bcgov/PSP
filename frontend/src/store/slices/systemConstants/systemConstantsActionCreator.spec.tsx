@@ -56,34 +56,42 @@ describe('SystemConstants slice action creator', () => {
     mockAxios.onGet(apiUrl).reply(200, mockResponse);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
-    await waitFor(async () =>
-      expect(mockAxios.history.get[0]).toMatchObject({
-        url: apiUrl,
-      }),
+    await waitFor(
+      async () =>
+        expect(mockAxios.history.get[0]).toMatchObject({
+          url: apiUrl,
+        }),
+      { timeout: 5000 },
     );
   });
   it('gets all codes when paramaters contains all', async () => {
     mockAxios.onGet(apiUrl).reply(200, mockResponse);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
-    await waitFor(async () => {
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
-      expect(currentStore.getActions()).toContainEqual({
-        payload: mockResponse,
-        type: 'systemConstant/storeSystemConstants',
-      });
-    });
+    await waitFor(
+      async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logSuccess' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).not.toBeDefined();
+        expect(currentStore.getActions()).toContainEqual({
+          payload: mockResponse,
+          type: 'systemConstant/storeSystemConstants',
+        });
+      },
+      { timeout: 5000 },
+    );
   });
 
   it('Request failure, dispatches error with correct response', async () => {
     mockAxios.onGet(apiUrl).reply(400, MOCK.ERROR);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
-    await waitFor(async () => {
-      expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
-    });
+    await waitFor(
+      async () => {
+        expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+      },
+      { timeout: 5000 },
+    );
   });
 });

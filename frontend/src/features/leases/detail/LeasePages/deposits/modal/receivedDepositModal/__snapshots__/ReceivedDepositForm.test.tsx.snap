@@ -1,0 +1,415 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReceivedDepositForm component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c2 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group .form-label {
+  font-weight: bold;
+}
+
+.c0 .form-group textarea {
+  resize: none;
+}
+
+<form
+    class="c0 px-4"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-8"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-depositTypeCode"
+          >
+            Deposit type: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-depositTypeCode"
+            name="depositTypeCode"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select
+            </option>
+            <option
+              class="option"
+              value="OTHER"
+            >
+              Other deposit
+            </option>
+            <option
+              class="option"
+              value="PET"
+            >
+              Pet deposit
+            </option>
+            <option
+              class="option"
+              value="SECURITY"
+            >
+              Security deposit
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-description"
+          >
+            Description: 
+          </label>
+          <textarea
+            class="form-control"
+            id="input-description"
+            name="description"
+            rows="4"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountPaid"
+          >
+            Depost Amount: 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountPaid"
+              name="amountPaid"
+              placeholder=""
+              required=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="required c2 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-depositDate"
+          >
+            Paid date:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-depositDate"
+                name="depositDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;
+
+exports[`ReceivedDepositForm component renders with data as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3.c3.form-control.is-valid {
+  background-image: none;
+}
+
+.c3.c3.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c1 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c2 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 .form-group {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0 .form-group .form-label {
+  font-weight: bold;
+}
+
+.c0 .form-group textarea {
+  resize: none;
+}
+
+<form
+    class="c0 px-4"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-8"
+      >
+        <div
+          class="required c1 form-group"
+        >
+          <label
+            class="form-label"
+            for="input-depositTypeCode"
+          >
+            Deposit type: 
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-depositTypeCode"
+            name="depositTypeCode"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select
+            </option>
+            <option
+              class="option"
+              value="OTHER"
+            >
+              Other deposit
+            </option>
+            <option
+              class="option"
+              value="PET"
+            >
+              Pet deposit
+            </option>
+            <option
+              class="option"
+              value="SECURITY"
+            >
+              Security deposit
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="textarea input form-group"
+        >
+          <label
+            class="form-label"
+            for="input-description"
+          >
+            Description: 
+          </label>
+          <textarea
+            class="form-control"
+            id="input-description"
+            name="description"
+            rows="4"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="required form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountPaid"
+          >
+            Depost Amount: 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountPaid"
+              name="amountPaid"
+              placeholder=""
+              required=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col"
+      >
+        <div
+          class="required c2 form-group"
+        >
+          <label
+            class="form-label"
+            for="datepicker-depositDate"
+          >
+            Paid date:
+          </label>
+          <div
+            class="react-datepicker-wrapper"
+          >
+            <div
+              class="react-datepicker__input-container"
+            >
+              <input
+                autocomplete="off"
+                class="c3 form-control date-picker"
+                id="datepicker-depositDate"
+                name="depositDate"
+                placeholder="--/--/----"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

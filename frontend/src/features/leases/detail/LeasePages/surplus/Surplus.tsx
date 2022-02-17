@@ -5,7 +5,7 @@ import { ILease, IProperty } from 'interfaces';
 import { prettyFormatDate } from 'utils';
 
 interface IDeclaration {
-  id: number;
+  id?: number;
   identifier: string;
   declarationType: string;
   date: string;
@@ -55,7 +55,7 @@ const Surplus: React.FunctionComponent = () => {
 
   let declarations: IDeclaration[] = properties.map<IDeclaration>(x => {
     return {
-      id: x.id || Math.random(),
+      id: x.id,
       identifier: x.pid,
       comments: x.surplusDeclaration?.comment || '',
       declarationType: x.surplusDeclaration?.type?.description || 'Unknown',

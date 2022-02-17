@@ -9,6 +9,7 @@
   primaryColor: $primary-color;
   primaryLightColor: $primary-light-color;
   secondaryVariantColor: $secondary-variant-color;
+  selectedColor: $selected-color;
   lightVariantColor: $light-variant-color;
   darkVariantColor: $dark-variant-color;
   textColor: $text-color;
@@ -33,6 +34,8 @@
   subtleColor: $subtle-color;
   discardedColor: $discarded-color;
   dangerBackgroundColor: $danger-background-color;
+  summaryColor: $summary-color;
+  summaryBorderColor: $summary-border-color;
 
   // table ui
   tableHoverColor: $table-hover-color;

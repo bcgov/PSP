@@ -1,0 +1,268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DepositsReceivedContainer component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div
+    class="Toastify"
+  />
+  .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c0 {
+  border-radius: 1rem;
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.c1 {
+  font-size: 1.6rem;
+  font-family: 'BCSans-Bold';
+}
+
+.c2 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.c4 .btn.btn-primary {
+  background-color: transparent;
+  padding: 0;
+}
+
+<div
+    class="c0"
+  >
+    <label
+      class="c1 c2 form-label"
+    >
+      Deposits Received
+    </label>
+    <button
+      class="mb-4 px-5 btn btn-secondary"
+      disabled=""
+      type="button"
+    >
+      Add a deposit
+    </button>
+    <div
+      class="table"
+      data-testid="securityDepositsTable"
+      role="table"
+    >
+      <div
+        class="thead thead-light"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 300px;"
+        >
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Deposit Type
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Description
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Amount Paid
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Paid Date
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Deposit holder
+            </div>
+          </div>
+          <div
+            class="th"
+            colspan="1"
+            role="columnheader"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          >
+            <div
+              class="sortable-column"
+            >
+              Actions
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tbody"
+        role="rowgroup"
+      >
+        <div
+          class="tr-wrapper"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 300px;"
+          >
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Pet deposit
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Test deposit 1
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              $1,234
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Feb 9, 2022
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            />
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              <div
+                class="c3 c4"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="tr-wrapper"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 300px;"
+          >
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              TestCustomDeposit (Other)
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Test deposit 2
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              $444
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              Feb 9, 2022
+            </div>
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            />
+            <div
+              class="td"
+              role="cell"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              title=""
+            >
+              <div
+                class="c3 c4"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

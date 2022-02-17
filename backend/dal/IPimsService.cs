@@ -5,7 +5,11 @@ namespace Pims.Dal.Services
     {
         #region Leases
         ILeaseTermService LeaseTermService { get; }
+        ILeasePaymentService LeasePaymentService { get; }
         ILeaseService LeaseService { get; }
+        ISecurityDepositService SecurityDepositService { get; }
+        ISecurityDepositReturnService SecurityDepositReturnService { get; }
+        IPersonService PersonService { get; }
         #endregion
     }
 }

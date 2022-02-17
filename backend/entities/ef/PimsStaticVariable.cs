@@ -21,6 +21,30 @@ namespace Pims.Dal.Entities
         public string StaticVariableValue { get; set; }
         [Column("CONCURRENCY_CONTROL_NUMBER")]
         public long ConcurrencyControlNumber { get; set; }
+        [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
+        public DateTime AppCreateTimestamp { get; set; }
+        [Required]
+        [Column("APP_CREATE_USERID")]
+        [StringLength(30)]
+        public string AppCreateUserid { get; set; }
+        [Column("APP_CREATE_USER_GUID")]
+        public Guid? AppCreateUserGuid { get; set; }
+        [Required]
+        [Column("APP_CREATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppCreateUserDirectory { get; set; }
+        [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
+        public DateTime AppLastUpdateTimestamp { get; set; }
+        [Required]
+        [Column("APP_LAST_UPDATE_USERID")]
+        [StringLength(30)]
+        public string AppLastUpdateUserid { get; set; }
+        [Column("APP_LAST_UPDATE_USER_GUID")]
+        public Guid? AppLastUpdateUserGuid { get; set; }
+        [Required]
+        [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+        [StringLength(30)]
+        public string AppLastUpdateUserDirectory { get; set; }
         [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
         public DateTime DbCreateTimestamp { get; set; }
         [Required]
