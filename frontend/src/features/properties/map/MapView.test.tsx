@@ -1,5 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -7,7 +7,6 @@ import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { createPoints } from 'components/maps/leaflet/mapUtils';
 import {
   AddressTypes,
-  Claims,
   PropertyAreaUnitTypes,
   PropertyClassificationTypes,
   PropertyDataSourceTypes,
@@ -15,7 +14,6 @@ import {
   PropertyTenureTypes,
   PropertyTypes,
 } from 'constants/index';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
@@ -31,7 +29,6 @@ import {
   propertiesSlice,
   useProperties,
 } from 'store/slices/properties';
-import { mockKeycloak } from 'utils/test-utils';
 import TestCommonWrapper from 'utils/TestCommonWrapper';
 
 import MapView from './MapView';
@@ -41,14 +38,8 @@ jest.mock('@react-keycloak/web');
 const mockStore = configureMockStore([thunk]);
 jest.mock('hooks/useApi');
 jest.mock('components/maps/leaflet/LayerPopup');
-jest.mock('features/properties/common/slices/usePropertyNames');
 jest.mock('store/slices/properties/useProperties');
 jest.mock('hooks/pims-api');
-
-const fetchPropertyNames = jest.fn(() => () => Promise.resolve(['test']));
-(usePropertyNames as any).mockImplementation(() => ({
-  fetchPropertyNames,
-}));
 
 (useProperties as any).mockImplementation(() => ({
   deleteParcel: jest.fn(),
@@ -251,27 +242,6 @@ describe('MapView', () => {
   it('Renders markers when provided', async () => {
     await waitFor(() => render(getMap()));
     expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
-  });
-
-  it('Rendered markers can be clicked', async () => {
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
-    const text = await screen.findByText('Property Info');
-    expect(text).toBeVisible();
-  });
-
-  it('Rendered markers can be clicked and displayed with permissions', async () => {
-    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
-    await waitFor(() => render(getMap()));
-    const cluster = document.querySelector('.leaflet-marker-icon');
-    fireEvent.click(cluster!);
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    fireEvent.click(marker!);
-    const text = await screen.findByText('Property Info');
-    expect(text).toBeVisible();
   });
 
   it('the map can zoom in until no clusters are visible', async () => {

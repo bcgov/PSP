@@ -2,7 +2,6 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import * as API from 'constants/API';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
@@ -13,7 +12,6 @@ import { ILookupCode, lookupCodesSlice } from 'store/slices/lookupCodes';
 import { TenantProvider } from 'tenants';
 import { fillInput } from 'utils/test-utils';
 
-import propertyNameSlice from '../common/slices/propertyNameSlice';
 import { PropertyFilter } from '.';
 import { IPropertyFilter } from './IPropertyFilter';
 
@@ -21,12 +19,6 @@ const onFilterChange = jest.fn<void, [IPropertyFilter]>();
 //prevent web calls from being made during tests.
 jest.mock('axios');
 jest.mock('@react-keycloak/web');
-jest.mock('features/properties/common/slices/usePropertyNames');
-
-const fetchPropertyNames = jest.fn(() => Promise.resolve(['test']));
-(usePropertyNames as any).mockImplementation(() => ({
-  fetchPropertyNames,
-}));
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockKeycloak = (claims: string[]) => {
@@ -83,7 +75,6 @@ const lCodes = {
 const getStore = (filter: any) =>
   mockStore({
     [filterSlice.name]: filter,
-    [propertyNameSlice.name]: ['test'],
     [lookupCodesSlice.name]: lCodes,
   });
 
