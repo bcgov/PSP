@@ -3,14 +3,12 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Claims } from 'constants/claims';
 import { PropertyTypes } from 'constants/propertyTypes';
-import { usePropertyNames } from 'features/properties/common/slices/usePropertyNames';
 import { FeatureCollection } from 'geojson';
 import { useApiProperties } from 'hooks/pims-api';
 import { useApi } from 'hooks/useApi';
 import { IProperty } from 'interfaces';
 import { mockParcel } from 'mocks/filterDataMock';
 import React from 'react';
-import leafletMouseSlice from 'store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { IPropertyDetail, propertiesSlice } from 'store/slices/properties';
 import { cleanup, deferred, render, RenderOptions, waitFor } from 'utils/test-utils';
@@ -21,12 +19,6 @@ import { createPoints } from './mapUtils';
 const mockAxios = new MockAdapter(axios);
 
 jest.mock('@react-keycloak/web');
-
-jest.mock('features/properties/common/slices/usePropertyNames');
-const fetchPropertyNames = jest.fn(() => Promise.resolve(['test']));
-(usePropertyNames as jest.Mock<ReturnType<typeof usePropertyNames>>).mockReturnValue({
-  fetchPropertyNames,
-});
 
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
@@ -50,7 +42,6 @@ const mockDetails: IPropertyDetail = {
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
   [propertiesSlice.name]: { propertyDetail: mockDetails, draftProperties: [] },
-  [leafletMouseSlice.name]: { propertyDetail: mockDetails },
 };
 
 // To check for alert message
@@ -179,17 +170,6 @@ describe('MapProperties View', () => {
     const { component, ready } = setup({ ...props, disableMapFilterBar: true });
     await waitFor(() => ready);
     expect(component.asFragment()).toMatchSnapshot();
-  });
-
-  it('should open the slide out when clicked', async () => {
-    const props = createProps();
-    const { component, ready, findSlideOutButton } = setup({ ...props, disableMapFilterBar: true });
-    await waitFor(() => ready);
-    const infoButton = findSlideOutButton();
-    userEvent.dblClick(infoButton);
-    const { findByText } = component;
-    const expectedText = await findByText(/Click a pin to view the property details/i);
-    expect(expectedText).toBeVisible();
   });
 
   it('should open the layer list when clicked', async () => {

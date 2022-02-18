@@ -1,4 +1,3 @@
-import propertyNameSlice from 'features/properties/common/slices/propertyNameSlice';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import { accessRequestsSlice } from 'store/slices/accessRequests';
 import filterSlice from 'store/slices/filter/filterSlice';
@@ -29,6 +28,5 @@ export const reducer = {
   [filterSlice.name]: filterSlice.reducer,
   [keycloakReadySlice.name]: keycloakReadySlice.reducer,
   [mapViewZoomSlice.name]: mapViewZoomSlice.reducer,
-  [propertyNameSlice.name]: propertyNameSlice.reducer,
   [tenantsSlice.name]: tenantsSlice.reducer,
 };
