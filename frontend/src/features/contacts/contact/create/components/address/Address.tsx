@@ -2,7 +2,7 @@ import { Button, Input, Select, SelectOption } from 'components/common/form';
 import { Stack } from 'components/common/Stack/Stack';
 import { CountryCodes } from 'constants/countryCodes';
 import * as Styled from 'features/contacts/contact/create/styles';
-import { useFormikContext } from 'formik';
+import { getIn, useFormikContext } from 'formik';
 import useCounter from 'hooks/useCounter';
 import { Dictionary } from 'interfaces/Dictionary';
 import React, { useCallback, useEffect } from 'react';
@@ -36,16 +36,20 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
     setSelectedCountryId,
   } = useAddressHelpers();
 
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
+  const countryId = getIn(values, withNameSpace(namespace, 'countryId'));
+
+  useEffect(() => {
+    setSelectedCountryId(countryId);
+  }, [countryId, namespace, setFieldValue, setSelectedCountryId]);
 
   // clear associated fields (province, other country name) whenever country value is changed
   const onCountryChanged = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelectedCountryId(e.target.value);
       setFieldValue(withNameSpace(namespace, 'provinceId'), '');
       setFieldValue(withNameSpace(namespace, 'countryOther'), '');
     },
-    [namespace, setFieldValue, setSelectedCountryId],
+    [namespace, setFieldValue],
   );
 
   // this counter determines how many address lines we render in the form; e.g. street1, street2, etc
