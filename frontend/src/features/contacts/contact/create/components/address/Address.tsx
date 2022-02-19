@@ -90,7 +90,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
           )}
         </Col>
         <Col style={{ paddingLeft: 0, paddingBottom: '2rem' }}>
-          {count > 1 && (
+          {count > 1 && !disabled && (
             <Stack justifyContent="flex-end" className="h-100">
               <Styled.RemoveButton onClick={decrement}>
                 <MdClose size="2rem" /> <span className="text">Remove</span>
@@ -99,7 +99,7 @@ export const Address: React.FunctionComponent<IAddressProps> = ({
           )}
         </Col>
       </Row>
-      {count < 3 && (
+      {count < 3 && !disabled && (
         <Row style={{ marginTop: '-1rem', marginBottom: '1rem' }}>
           <Col>
             <Button variant="link" onClick={increment}>

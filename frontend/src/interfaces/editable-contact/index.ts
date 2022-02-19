@@ -35,7 +35,7 @@ export interface IEditableOrganization {
 }
 
 // internal interface - not meant to be imported/shared
-interface IBaseAddress {
+export interface IBaseAddress {
   id?: number;
   rowVersion?: number;
   addressTypeId: ITypeCode<string>;

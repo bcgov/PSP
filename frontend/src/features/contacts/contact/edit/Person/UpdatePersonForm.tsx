@@ -1,7 +1,8 @@
-import { AsyncTypeahead, Button, Input, Select } from 'components/common/form';
+import { AsyncTypeahead, Button, Check, Input, Select } from 'components/common/form';
 import { FormSection } from 'components/common/form/styles';
 import { UnsavedChangesPrompt } from 'components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from 'components/common/styles';
+import { AddressTypes } from 'constants/addressTypes';
 import { CountryCodes } from 'constants/countryCodes';
 import {
   Address,
@@ -18,7 +19,12 @@ import {
   PersonValidationSchema,
 } from 'features/contacts/contact/create/validation';
 import * as Styled from 'features/contacts/contact/edit/styles';
-import { apiPersonToFormPerson, formPersonToApiPerson } from 'features/contacts/contactUtils';
+import {
+  apiAddressToFormAddress,
+  apiPersonToFormPerson,
+  formPersonToApiPerson,
+  getApiMailingAddress,
+} from 'features/contacts/contactUtils';
 import { usePersonDetail } from 'features/contacts/hooks/usePersonDetail';
 import useUpdateContact from 'features/contacts/hooks/useUpdateContact';
 import {
@@ -30,9 +36,14 @@ import {
   yupToFormErrors,
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
+import { useApiContacts } from 'hooks/pims-api/useApiContacts';
 import { IAutocompletePrediction } from 'interfaces';
-import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
-import { useMemo, useState } from 'react';
+import {
+  defaultCreatePerson,
+  getDefaultAddress,
+  IEditablePersonForm,
+} from 'interfaces/editable-contact';
+import { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
@@ -109,12 +120,16 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   dirty,
   resetForm,
   submitForm,
+  setFieldValue,
   initialValues,
 }) => {
   const history = useHistory();
+  const { getOrganization } = useApiContacts();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const personId = values.id;
+  const useOrganizationAddress = values.useOrganizationAddress;
+  const organizationId = values.organization?.id;
 
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
@@ -145,6 +160,25 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       history.push(`/contact/P${personId}`);
     }
   };
+
+  // update mailing address sub-form when "useOrganizationAddress" checkbox is toggled
+  useEffect(() => {
+    // toggle is on - set mailing address values to match organization address
+    if (useOrganizationAddress === true && organizationId) {
+      getOrganization(organizationId)
+        .then(({ data }) => getApiMailingAddress(data))
+        .then(mailing => setFieldValue('mailingAddress', apiAddressToFormAddress(mailing)))
+        .catch(() => {
+          setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
+          toast.error('Failed to get organization address.');
+        });
+    }
+
+    // toggle is off - clear out existing values
+    if (useOrganizationAddress === false) {
+      setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
+    }
+  }, [useOrganizationAddress, organizationId, setFieldValue, getOrganization]);
 
   return (
     <>
@@ -246,7 +280,12 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
             <FormSection>
               <Styled.H2>Address</Styled.H2>
               <Styled.H3>Mailing Address</Styled.H3>
-              <Address namespace="mailingAddress" />
+              <Check
+                field="useOrganizationAddress"
+                postLabel="Use mailing address from organization"
+                disabled={!organizationId}
+              />
+              <Address namespace="mailingAddress" disabled={useOrganizationAddress} />
             </FormSection>
 
             <FormSection>

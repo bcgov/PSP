@@ -32,7 +32,7 @@ import {
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { IAutocompletePrediction } from 'interfaces';
 import { defaultCreatePerson, IEditablePersonForm } from 'interfaces/editable-contact';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
@@ -178,12 +178,6 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       getIn(errors, 'needsContactMethod')
     );
   }, [touched, errors]);
-
-  useEffect(() => {
-    if (useOrganizationAddress === true && organization) {
-      setFieldValue('mailingAddress.streetAddress1', 'TEST');
-    }
-  }, [useOrganizationAddress, organization, setFieldValue]);
 
   return (
     <>
