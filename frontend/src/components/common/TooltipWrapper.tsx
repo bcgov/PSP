@@ -28,7 +28,7 @@ interface ITooltipWrapperProps extends Partial<OverlayTriggerProps> {
  * Wrap whatever you want in a tooltip.
  * @param props ITooltipWrapperProps
  */
-const TooltipWrapper: React.FunctionComponent<ITooltipWrapperProps> = props => {
+export const TooltipWrapper: React.FunctionComponent<ITooltipWrapperProps> = props => {
   return (
     <>
       <OverlayTrigger

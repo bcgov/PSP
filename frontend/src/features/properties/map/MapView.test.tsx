@@ -187,11 +187,7 @@ describe('MapView', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     return (
       <TestCommonWrapper store={store} history={history}>
-        <MapView
-          disableMapFilterBar={false}
-          showParcelBoundaries={true}
-          onMarkerPopupClosed={noop}
-        />
+        <MapView showParcelBoundaries={true} onMarkerPopupClosed={noop} />
       </TestCommonWrapper>
     );
   };

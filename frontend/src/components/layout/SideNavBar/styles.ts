@@ -37,6 +37,9 @@ export const SideNavBar = styled.div`
     cursor: pointer;
     flex-shrink: 0;
   }
+  .nav-link {
+    padding: 0.8rem 1.6rem;
+  }
 `;
 
 //place high z-index on grandparent so that negative z-index tray still draws over map(but under navbar parent).

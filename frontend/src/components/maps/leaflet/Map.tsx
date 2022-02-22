@@ -1,9 +1,9 @@
-import './Map.scss';
-
 import axios from 'axios';
+import classNames from 'classnames';
 import { useLayerQuery } from 'components/maps/leaflet/LayerPopup';
 import { IGeoSearchParams } from 'constants/API';
 import { MAP_MAX_ZOOM } from 'constants/strings';
+import useMapSideBarQueryParams from 'features/mapSideBar/hooks/useMapSideBarQueryParams';
 import { PropertyFilter } from 'features/properties/filter';
 import { IPropertyFilter } from 'features/properties/filter/IPropertyFilter';
 import { Feature } from 'geojson';
@@ -60,7 +60,7 @@ export type MapProps = {
   onViewportChanged?: (e: MapViewportChangeEvent) => void;
   onMapClick?: (e: LeafletMouseEvent) => void;
   disableMapFilterBar?: boolean;
-  interactive?: boolean;
+  showSideBar?: boolean;
   showParcelBoundaries?: boolean;
   whenCreated?: (map: LeafletMap) => void;
   whenReady?: () => void;
@@ -112,9 +112,10 @@ const Map: React.FC<MapProps> = ({
   zoom: zoomProp,
   selectedProperty,
   onMapClick,
-  disableMapFilterBar,
+  showSideBar,
   whenReady,
   whenCreated,
+  disableMapFilterBar,
 }) => {
   const keycloak = useKeycloakWrapper();
   const dispatch = useDispatch();
@@ -131,6 +132,7 @@ const Map: React.FC<MapProps> = ({
   const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
   const { setChanged } = useFilterContext();
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>();
+  const { setShowSideBar } = useMapSideBarQueryParams();
 
   // a reference to the internal Leaflet map instance (this is NOT a react-leaflet class but the underlying leaflet map)
   const mapRef = useRef<LeafletMap | null>(null);
@@ -274,9 +276,9 @@ const Map: React.FC<MapProps> = ({
   const [layersOpen, setLayersOpen] = React.useState(false);
 
   return (
-    <Styled.MapGrid ref={resizeRef} className="px-0 map">
+    <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map', { sidebar: showSideBar })}>
       <LoadingBackdrop show={showLoadingBackdrop} />
-      {!disableMapFilterBar ? (
+      {!showSideBar && !disableMapFilterBar ? (
         <Container fluid className="px-0 map-filter-container">
           <PropertyFilter
             defaultFilter={{
@@ -359,6 +361,7 @@ const Map: React.FC<MapProps> = ({
                 if (!infoOpen) {
                   setLayersOpen(false);
                   setInfoOpen(true);
+                  setShowSideBar(true);
                 }
               }}
               selected={selectedProperty}
