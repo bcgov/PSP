@@ -63,7 +63,7 @@ describe('Lease Surplus Declaration', () => {
   });
 
   it('Values are displayed', () => {
-    const testProperty: IProperty = mockProperties[0];
+    const testProperty: IProperty = { ...mockProperties[0], pid: '1' };
     testProperty.surplusDeclaration = {
       type: { id: 'YES', isDisabled: false, description: 'Yes' },
       date: '2021-01-01',
@@ -81,7 +81,7 @@ describe('Lease Surplus Declaration', () => {
     const dataRow = result.getAllByRole('row')[1];
     const columns = dataRow.querySelectorAll('[role="cell"]');
 
-    expect(columns[0].textContent).toBe(testProperty.pid);
+    expect(columns[0].textContent).toBe('000-000-001');
     expect(columns[1].textContent).toBe(testProperty.surplusDeclaration?.type?.description);
     expect(columns[2].textContent).toBe(prettyFormatDate(testProperty.surplusDeclaration?.date));
     expect(columns[3].textContent).toBe(testProperty.surplusDeclaration?.comment);
