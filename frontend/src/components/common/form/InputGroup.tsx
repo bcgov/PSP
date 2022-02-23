@@ -1,10 +1,10 @@
-import './InputGroup.scss';
-
 import classNames from 'classnames';
 import { FormikProps } from 'formik';
 import React, { CSSProperties } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import BootstrapInputGroup from 'react-bootstrap/InputGroup';
+import styled from 'styled-components';
 
 import { Label } from '../Label';
 import { FastInput } from './FastInput';
@@ -74,16 +74,14 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   ...rest
 }) => {
   return (
-    <div
+    <Row
       className={classNames(
-        'input-group',
         !!required ? 'required' : '',
         outerClassName,
         disabled ? 'disabled' : '',
       )}
     >
-      {!!label && !required && <Label>{label}</Label>}
-      {!!label && required && <Label required>{label}</Label>}
+      {!!label && required && <Label required={required}>{label}</Label>}
 
       {preText && (
         <BootstrapInputGroup.Prepend>
@@ -91,9 +89,11 @@ export const InputGroup: React.FC<InputGroupProps> = ({
         </BootstrapInputGroup.Prepend>
       )}
       {PrependComponent && (
-        <BootstrapInputGroup.Prepend>{PrependComponent}</BootstrapInputGroup.Prepend>
+        <ColPrepend xs="auto">
+          <BootstrapInputGroup.Prepend>{PrependComponent}</BootstrapInputGroup.Prepend>
+        </ColPrepend>
       )}
-      <div className="input-group-content">
+      <ColContent>
         {fast ? (
           <FastInput
             formikProps={formikProps}
@@ -116,7 +116,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
             {...rest}
           />
         )}
-      </div>
+      </ColContent>
       {postText && (
         <BootstrapInputGroup.Append>
           <BootstrapInputGroup.Text className={disabled ? 'append-disabled' : ''}>
@@ -124,6 +124,24 @@ export const InputGroup: React.FC<InputGroupProps> = ({
           </BootstrapInputGroup.Text>
         </BootstrapInputGroup.Append>
       )}
-    </div>
+    </Row>
   );
 };
+
+const ColPrepend = styled(Col)`
+  padding-right: 0;
+  .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`;
+
+const ColContent = styled(Col)`
+  &:not(:first-child) {
+    padding-left: 0;
+    .form-control {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+`;

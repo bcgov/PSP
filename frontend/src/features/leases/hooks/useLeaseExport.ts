@@ -12,7 +12,10 @@ import { downloadFile } from 'utils/download';
  * hook that allows the user to export the currently filtered lease data.
  */
 export const useLeaseExport = () => {
-  const { exportLeases: apiExportLeases } = useApiLeases();
+  const {
+    exportLeases: apiExportLeases,
+    exportAggregatedLeases: apiExportAggregatedLeases,
+  } = useApiLeases();
   const dispatch = useDispatch();
 
   const exportLeases = useCallback(
@@ -39,5 +42,24 @@ export const useLeaseExport = () => {
     [dispatch, apiExportLeases],
   );
 
-  return { exportLeases };
+  const exportAggregatedLeases = useCallback(
+    async (fiscalYearStart: number, requestId = 'leases-aggregated-report') => {
+      dispatch(logRequest(requestId));
+      dispatch(showLoading());
+      try {
+        const { data, status } = await apiExportAggregatedLeases(fiscalYearStart);
+        dispatch(logSuccess({ name: requestId, status }));
+        dispatch(hideLoading());
+        // trigger file download in client browser
+        downloadFile(`pims-aggregated-leases-${fiscalYearStart}-${fiscalYearStart + 1}.xlsx`, data);
+      } catch (axiosError) {
+        if (axios.isAxiosError(axiosError)) {
+          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+        }
+      }
+    },
+    [dispatch, apiExportAggregatedLeases],
+  );
+
+  return { exportLeases, exportAggregatedLeases };
 };

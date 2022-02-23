@@ -4,6 +4,7 @@ using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 using System;
 using System.Security.Claims;
+using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
 namespace Pims.Dal.Services
 {
@@ -91,18 +92,18 @@ namespace Pims.Dal.Services
             decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
             if (payment.PaymentAmountTotal == 0)
             {
-                return PimsLeaseStatusTypes.UNPAID;
+                return PimsLeasePaymentStatusTypes.UNPAID;
             } else if (payment.PaymentAmountTotal < expectedTotal)
             {
-                return PimsLeaseStatusTypes.PARTIAL;
+                return PimsLeasePaymentStatusTypes.PARTIAL;
             }
             else if (payment.PaymentAmountTotal == expectedTotal)
             {
-                return PimsLeaseStatusTypes.PAID;
+                return PimsLeasePaymentStatusTypes.PAID;
             }
             else if (payment.PaymentAmountTotal > expectedTotal)
             {
-                return PimsLeaseStatusTypes.OVERPAID;
+                return PimsLeasePaymentStatusTypes.OVERPAID;
             } else
             {
                 throw new InvalidOperationException("Invalid payment value provided");

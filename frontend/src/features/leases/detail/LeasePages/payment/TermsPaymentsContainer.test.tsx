@@ -44,7 +44,15 @@ describe('PaymentsContainer component', () => {
     // render component under test
     const component = await renderAsync(
       <LeaseStateContext.Provider
-        value={{ lease: { ...defaultLease, ...renderOptions.initialValues, id: 1 }, setLease }}
+        value={{
+          lease: {
+            ...defaultLease,
+            ...renderOptions.initialValues,
+            id: 1,
+            startDate: '2020-01-01',
+          },
+          setLease,
+        }}
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
           <TermPaymentsContainer />
@@ -80,6 +88,17 @@ describe('PaymentsContainer component', () => {
   });
 
   describe('term logic tests', () => {
+    it('when adding a new initial term, the start date is set to the start date of the lease', async () => {
+      const {
+        component: { getAllByText, getByDisplayValue },
+      } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
+      mockAxios.onPost().reply(200, { id: 1 });
+
+      const addButton = getAllByText('Add a Term')[0];
+      userEvent.click(addButton);
+
+      expect(getByDisplayValue('01/01/2020')).toBeVisible();
+    });
     it('makes a post request when adding a new term', async () => {
       const {
         component: { getAllByText, getByText },

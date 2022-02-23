@@ -31,8 +31,6 @@ const history = createMemoryHistory();
 
 const lCodes = {
   lookupCodes: [
-    { name: 'organizationVal', id: 1, isDisabled: false, type: API.ORGANIZATION_TYPES },
-    { name: 'disabledOrganization', id: 2, isDisabled: true, type: API.ORGANIZATION_TYPES },
     { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_TYPES },
     { name: 'disabledRole', id: 2, isDisabled: true, type: API.ROLE_TYPES },
   ] as ILookupCode[],
@@ -113,18 +111,7 @@ describe('Edit user page', () => {
     const { getAllByText, getByTestId } = renderEditUserPage();
     expect(getAllByText(/Roles/i));
     expect(getAllByText(/roleVal/i));
-    expect(getAllByText(/organizationVal/i));
     expect(getByTestId('isDisabled').getAttribute('value')).toEqual('false');
-  });
-
-  it('displays enabled organizations', () => {
-    const { queryByText } = testRender();
-    expect(queryByText('organizationVal')).toBeVisible();
-  });
-
-  it('Does not display disabled organizations', () => {
-    const { queryByText } = testRender();
-    expect(queryByText('disabledOrganization')).toBeNull();
   });
 
   it('displays enabled roles', () => {

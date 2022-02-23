@@ -10,6 +10,8 @@ namespace Pims.Dal.Services
         ISecurityDepositService SecurityDepositService { get; }
         ISecurityDepositReturnService SecurityDepositReturnService { get; }
         IPersonService PersonService { get; }
+        IOrganizationService OrganizationService { get; }
+        ILeaseReportsService LeaseReportsService { get; }
         #endregion
     }
 }

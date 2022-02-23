@@ -51,11 +51,6 @@ exports[`DepositsContainer renders as expected 1`] = `
   padding: 0;
 }
 
-.c6 .btn.btn-primary {
-  background-color: transparent;
-  padding: 0;
-}
-
 <div
     class="c0"
   >
@@ -402,83 +397,9 @@ Integer nec odio.
           </div>
         </div>
         <div
-          class="tbody"
-          role="rowgroup"
+          class="no-rows-message"
         >
-          <div
-            class="tr-wrapper"
-          >
-            <div
-              class="tr"
-              role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 240px;"
-            >
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Security deposit
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Feb 1, 2022
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                $2,000
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                $1,234
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                $123
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                Feb 16, 2022
-              </div>
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              />
-              <div
-                class="td"
-                role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              >
-                <div
-                  class="c4 c6"
-                />
-              </div>
-            </div>
-          </div>
+          There is no corresponding data
         </div>
       </div>
     </div>

@@ -23,13 +23,13 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 120px;"
+        style="display: flex; flex: 1 0 auto; min-width: 180px;"
       >
         <div
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -46,7 +46,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Tenant Names
+            Expiry Date
           </div>
         </div>
         <div
@@ -65,12 +65,36 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Tenant Names
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
           style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
           >
             Properties
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Status
           </div>
         </div>
       </div>
@@ -85,12 +109,12 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 120px;"
+          style="display: flex; flex: 1 0 auto; min-width: 180px;"
         >
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <a
@@ -98,6 +122,22 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             >
               L-123-456
             </a>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <span />
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            TRAN-IT
           </div>
           <div
             class="td"
@@ -120,14 +160,6 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="td"
-            role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            title=""
-          >
-            TRAN-IT
           </div>
           <div
             class="td"
@@ -178,6 +210,12 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
               </div>
             </div>
           </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
         </div>
       </div>
       <div
@@ -186,12 +224,12 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 120px;"
+          style="display: flex; flex: 1 0 auto; min-width: 180px;"
         >
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <a
@@ -199,6 +237,22 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             >
               L-999-888
             </a>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <span />
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            TRAN-IT
           </div>
           <div
             class="td"
@@ -221,14 +275,6 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="td"
-            role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-            title=""
-          >
-            TRAN-IT
           </div>
           <div
             class="td"
@@ -279,6 +325,12 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
               </div>
             </div>
           </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
         </div>
       </div>
     </div>
@@ -288,211 +340,225 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
 }
 
 <div
-    class="table-toolbar"
+    class="row"
   >
-    <ul
-      class="pagination"
+    <div
+      class="align-self-center col-auto"
+    />
+    <div
+      class="ml-auto align-self-center col-auto"
+    />
+    <div
+      class="align-self-center col-auto"
     >
-      <li
-        class="page-item disabled"
-      >
-        <a
-          aria-disabled="true"
-          aria-label="Previous page"
-          class="page-link"
-          rel="prev"
-          role="button"
-          tabindex="0"
-        >
-          &lt;
-        </a>
-      </li>
-      <li
-        class="page-item active"
-      >
-        <a
-          aria-current="page"
-          aria-label="Page 1 is your current page"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          1
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 2"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          2
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 3"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          3
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 4"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          4
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 5"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          5
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 6"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          6
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          ...
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 9"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          9
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-label="Page 10"
-          class="page-link"
-          role="button"
-          tabindex="0"
-        >
-          10
-        </a>
-      </li>
-      <li
-        class="page-item"
-      >
-        <a
-          aria-disabled="false"
-          aria-label="Next page"
-          class="page-link"
-          rel="next"
-          role="button"
-          tabindex="0"
-        >
-          &gt;
-        </a>
-      </li>
-    </ul>
-    <div>
-      <div
-        class="Menu-root"
-      >
+      <div>
         <div
-          class="Menu-button"
+          class="Menu-root"
         >
           <div
-            style="display: flex;"
+            class="Menu-button"
           >
-            <span
-              class="c0"
+            <div
+              style="display: flex;"
             >
-              Show
-            </span>
-            <input
-              class="form-control form-control-sm"
-              style="width: 50px; margin-left: 10px; margin-right: 10px;"
-              type="number"
-              value="10"
-            />
-            <span
-              class="c0"
-            >
-              Entries
-            </span>
+              <span
+                class="c0"
+              >
+                Show
+              </span>
+              <input
+                class="form-control form-control-sm"
+                style="width: 50px; margin-left: 10px; margin-right: 10px;"
+                type="number"
+                value="10"
+              />
+              <span
+                class="c0"
+              >
+                Entries
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          class="Menu-items"
-          style="width: 6.0rem;"
-        >
           <div
-            class="Menu-options scrollable list-group"
+            class="Menu-items"
+            style="width: 10.0rem;"
           >
             <div
-              class="Menu-item list-group-item"
+              class="Menu-options scrollable list-group"
             >
-              5
-            </div>
-            <div
-              class="Menu-item list-group-item"
-            >
-              10
-            </div>
-            <div
-              class="Menu-item list-group-item"
-            >
-              20
-            </div>
-            <div
-              class="Menu-item list-group-item"
-            >
-              50
-            </div>
-            <div
-              class="Menu-item list-group-item"
-            >
-              100
+              <div
+                class="Menu-item list-group-item"
+              >
+                5
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                10
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                20
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                50
+              </div>
+              <div
+                class="Menu-item list-group-item"
+              >
+                100
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class="align-self-center col-auto"
+    >
+      <ul
+        class="pagination"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Previous page"
+            class="page-link"
+            rel="prev"
+            role="button"
+            tabindex="0"
+          >
+            &lt;
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            aria-current="page"
+            aria-label="Page 1 is your current page"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 2"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            2
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 3"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            3
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 4"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            4
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 5"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            5
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 6"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            6
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            ...
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 9"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            9
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-label="Page 10"
+            class="page-link"
+            role="button"
+            tabindex="0"
+          >
+            10
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-disabled="false"
+            aria-label="Next page"
+            class="page-link"
+            rel="next"
+            role="button"
+            tabindex="0"
+          >
+            &gt;
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </DocumentFragment>

@@ -1,22 +1,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Pims.Api.Models;
 using Pims.Api.Models.Contact;
 
 namespace Pims.Api.Areas.Persons.Models.Person
 {
-    public class PersonModel
+    public class PersonModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - The person's id.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - The person's disabled status flag.

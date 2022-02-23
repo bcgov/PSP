@@ -6,10 +6,9 @@ import { IPaginateParams } from 'constants/API';
 import { ENVIRONMENT } from 'constants/environment';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
 import { IUser, IUsersFilter } from 'interfaces';
-import find from 'lodash/find';
 import isEmpty from 'lodash/isEmpty';
 import queryString from 'query-string';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { FaFileExcel } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -45,9 +44,9 @@ const downloadUsers = (filter: IPaginateParams) =>
 export const ManageUsers = () => {
   const dispatch = useDispatch();
   const { getByType } = useLookupCodeHelpers();
-  const organizations = useMemo(() => getByType(API.ORGANIZATION_TYPES), [getByType]);
   const roles = useMemo(() => getByType(API.ROLE_TYPES), [getByType]);
   const columns = useMemo(() => columnDefinitions, []);
+  const [pageIndex, setPageIndex] = useState(0);
 
   const pagedUsers = useAppSelector(state => {
     return state.users.pagedUsers;
@@ -55,10 +54,6 @@ export const ManageUsers = () => {
 
   const pageSize = useAppSelector(state => {
     return state.users.rowsPerPage;
-  });
-
-  const pageIndex = useAppSelector(state => {
-    return state.users.pageIndex;
   });
 
   const sort = useAppSelector(state => {
@@ -71,11 +66,9 @@ export const ManageUsers = () => {
 
   const users = useAppSelector(state => state.network[actionTypes.GET_USERS]);
 
-  const onRequestData = useCallback(
-    ({ changedPageIndex }) => {
-      dispatch(setUsersPageIndex(changedPageIndex));
-    },
-    [dispatch],
+  const updateCurrentPage = useCallback(
+    ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
+    [setPageIndex],
   );
 
   const { fetchUsers } = useUsers();
@@ -100,7 +93,6 @@ export const ManageUsers = () => {
       surname: u.surname,
       isDisabled: u.isDisabled,
       roles: u.roles ? u.roles.map(r => r.name).join(', ') : '',
-      organization: u.organizations && u.organizations.length > 0 ? u.organizations[0].name : '',
       position: u.position ?? '',
       lastLogin: formatApiDateTime(u.lastLogin),
       appCreateTimestamp: formatApiDateTime(u.appCreateTimestamp),
@@ -136,19 +128,9 @@ export const ManageUsers = () => {
         <Styled.WithShadow fluid>
           <UsersFilterBar
             value={filter}
-            organizationLookups={organizations}
             rolesLookups={roles}
             onChange={value => {
-              (value as any)?.organization
-                ? dispatch(
-                    setUsersFilter({
-                      ...value,
-                      organization: (find(organizations, {
-                        id: +(value as any)?.organization,
-                      }) as any)?.name,
-                    }),
-                  )
-                : dispatch(setUsersFilter({ ...value, organization: '' }));
+              dispatch(setUsersFilter({ ...value }));
               dispatch(setUsersPageIndex(0));
             }}
           />
@@ -171,7 +153,8 @@ export const ManageUsers = () => {
             defaultCanSort={true}
             pageCount={Math.ceil(pagedUsers.total / pageSize)}
             pageSize={pageSize}
-            onRequestData={onRequestData}
+            totalItems={pagedUsers.total}
+            onRequestData={updateCurrentPage}
             onSortChange={(column, direction) => {
               if (!!direction) {
                 dispatch(setUsersPageSort({ [column]: direction }));

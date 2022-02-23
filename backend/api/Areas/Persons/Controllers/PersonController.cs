@@ -61,7 +61,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         }
 
         /// <summary>
-        /// Get the contact for the specified primary key 'id'.
+        /// Add the specified person to the datastore.
         /// </summary>
         /// <returns></returns>
         [HttpPost]

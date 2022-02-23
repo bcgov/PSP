@@ -46,13 +46,13 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> Get(LeaseFilter filter)
+        public IEnumerable<PimsLease> Get(LeaseFilter filter, bool loadPayments = false)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid()) throw new ArgumentException("Argument must have a valid filter", nameof(filter));
 
-            var query = this.Context.GenerateLeaseQuery(filter);
+            var query = this.Context.GenerateLeaseQuery(filter, loadPayments);
 
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
 
@@ -123,10 +123,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(i => i.InsuranceTypeCodeNavigation)
 
                 .Include(l => l.PimsSecurityDeposits)
+                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
                 .Include(l => l.PimsSecurityDeposits)
-                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
-                .Include(l => l.PimsSecurityDepositReturns)
-                    .ThenInclude(s => s.SecurityDepositTypeCodeNavigation)
+                    .ThenInclude(s => s.PimsSecurityDepositReturns)
 
                 .Include(l => l.PimsLeaseTerms)
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
@@ -143,7 +142,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
-            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).Select(t => {
+            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t => {
                 t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
                 return t;
             }).ToArray();

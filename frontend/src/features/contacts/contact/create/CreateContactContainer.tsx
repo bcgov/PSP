@@ -1,4 +1,5 @@
-import { ContactBreadcrumb, ContactTypes, ContactTypeSelector } from 'features/contacts';
+import { ContactBreadcrumb, ContactTypeSelector } from 'features/contacts';
+import { ContactTypes } from 'features/contacts/interfaces';
 import * as Styled from 'features/contacts/styles';
 import { getIn } from 'formik';
 import React from 'react';

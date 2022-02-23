@@ -4,19 +4,13 @@ namespace Pims.Api.Models.Contact
     /// <summary>
     /// Provides a contact-oriented address model.
     /// </summary>
-    public class AddressModel
+    public class AddressModel : BaseAppModel
     {
         #region Properties
         /// <summary>
         /// get/set - The primary key to identify the address.
         /// </summary>
         public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        /// <value></value>
-        public long RowVersion { get; set; }
 
         /// <summary>
         /// get/set - Foreign key to the address type.
