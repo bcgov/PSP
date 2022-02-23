@@ -3,13 +3,12 @@ import { PropertyTypes } from 'constants/propertyTypes';
 import { BBox, Feature } from 'geojson';
 import { useApi } from 'hooks/useApi';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import { IProperty } from 'interfaces';
 import { geoJSON, LatLngBounds } from 'leaflet';
 import { uniqBy } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { toast } from 'react-toastify';
-import { useAppSelector } from 'store/hooks';
-import { IPropertyDetail } from 'store/slices/properties';
 import { tilesInBbox } from 'tiles-in-bbox';
 
 import { useMapRefreshEvent } from '../hooks/useMapRefreshEvent';
@@ -31,9 +30,7 @@ export type InventoryLayerProps = {
   /** Callback function to display/hide backdrop*/
   onRequestData: (showBackdrop: boolean) => void;
   /** What to do when the marker is clicked. */
-  onMarkerClick: () => void;
-
-  selected?: IPropertyDetail | null;
+  onMarkerClick: (property: IProperty) => void;
 };
 
 /**
@@ -134,7 +131,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   zoom,
   filter,
   onMarkerClick,
-  selected,
   onRequestData,
 }) => {
   const mapInstance = useMap();
@@ -142,10 +138,6 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   const [loadingTiles, setLoadingTiles] = useState(false);
   const { loadProperties } = useApi();
   const { changed: filterChanged } = useFilterContext();
-
-  const draftProperties: PointFeature[] = useAppSelector(
-    state => state.properties?.draftProperties ?? [],
-  );
 
   if (!mapInstance) {
     throw new Error('<InventoryLayer /> must be used under a <Map> leaflet component');
@@ -235,13 +227,11 @@ export const InventoryLayer: React.FC<InventoryLayerProps> = ({
   return (
     <PointClusterer
       points={features}
-      draftPoints={draftProperties}
       zoom={zoom}
       bounds={bbox}
       onMarkerClick={onMarkerClick}
       zoomToBoundsOnClick={true}
       spiderfyOnMaxZoom={true}
-      selected={selected}
       tilesLoaded={!loadingTiles}
     />
   );

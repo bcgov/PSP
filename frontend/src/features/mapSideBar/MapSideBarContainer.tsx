@@ -10,14 +10,13 @@ import { InventoryTabs } from './tabs/InventoryTabs';
  */
 const MotiInventoryContainer: React.FunctionComponent = () => {
   const formikRef = React.useRef<FormikProps<FormikValues>>();
-  const { showSideBar, setShowSideBar, size } = useMapSideBarQueryParams(formikRef);
+  const { showSideBar, setShowSideBar } = useMapSideBarQueryParams(formikRef);
 
   return (
     <MapSideBarLayout
       title="Property Information"
       show={showSideBar}
       setShowSideBar={setShowSideBar}
-      size={size}
       hidePolicy={true}
     >
       <InventoryTabs PropertyForm={<></>} />

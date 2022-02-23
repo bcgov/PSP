@@ -6,6 +6,7 @@ import { Table } from 'components/Table';
 import { SortDirection, TableSort } from 'components/Table/TableSort';
 import * as API from 'constants/API';
 import { Form, Formik, FormikProps } from 'formik';
+import { useProperties } from 'hooks';
 import { useApiProperties } from 'hooks/pims-api';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
@@ -16,7 +17,6 @@ import noop from 'lodash/noop';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
-import { useProperties } from 'store/slices/properties';
 import { generateMultiSortCriteria } from 'utils';
 import { toFilteredApiPaginateParams } from 'utils/CommonFunctions';
 

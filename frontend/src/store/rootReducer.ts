@@ -9,14 +9,12 @@ import { networkSlice } from 'store/slices/network/networkSlice';
 import parcelLayerDataSlice from 'store/slices/parcelLayerData/parcelLayerDataSlice';
 
 import { lookupCodesSlice } from './slices/lookupCodes/lookupCodesSlice';
-import { propertiesSlice } from './slices/properties/propertiesSlice';
 import { systemConstantsSlice } from './slices/systemConstants/systemConstantsSlice';
 import { tenantsSlice } from './slices/tenants';
 import { usersSlice } from './slices/users/usersSlice';
 
 export const reducer = {
   loadingBar: loadingBarReducer,
-  [propertiesSlice.name]: propertiesSlice.reducer,
   [usersSlice.name]: usersSlice.reducer,
   [accessRequestsSlice.name]: accessRequestsSlice.reducer,
   [lookupCodesSlice.name]: lookupCodesSlice.reducer,

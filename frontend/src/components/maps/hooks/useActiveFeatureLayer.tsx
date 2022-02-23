@@ -1,19 +1,17 @@
 import { GeoJsonObject } from 'geojson';
 import useDeepCompareEffect from 'hooks/useDeepCompareEffect';
+import { IProperty } from 'interfaces';
 import { GeoJSON, geoJSON, LatLng, Map as LeafletMap } from 'leaflet';
 import { useState } from 'react';
-import { useAppSelector } from 'store/hooks';
-import { IPropertyDetail } from 'store/slices/properties';
 
 import { parcelLayerPopupConfig, PARCELS_LAYER_URL, useLayerQuery } from '../leaflet/LayerPopup';
 import { LayerPopupInformation } from '../leaflet/Map';
-import { PointFeature } from '../types';
 
 interface IUseActiveParcelMapLayer {
   /** the current leaflet map reference. This hook will add layers to this map reference. */
   mapRef: React.RefObject<LeafletMap>;
   /** The currently selected property on the map */
-  selectedProperty?: IPropertyDetail | null;
+  selectedProperty?: IProperty | null;
   /** the currently displayed layer popup information */
   layerPopup?: LayerPopupInformation;
   /** set the display of the layer popup imperatively */
@@ -35,9 +33,6 @@ const useActiveFeatureLayer = ({
 }: IUseActiveParcelMapLayer) => {
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<GeoJSON>();
   const parcelsService = useLayerQuery(PARCELS_LAYER_URL);
-  const draftProperties: PointFeature[] = useAppSelector(
-    state => state.properties?.draftProperties ?? [],
-  );
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -95,41 +90,14 @@ const useActiveFeatureLayer = ({
         activeFeatureLayer?.addData(parcelLayerData.features[0]);
       }
     };
-    if (
-      !!activeFeatureLayer &&
-      !!selectedProperty?.propertyDetail?.latitude &&
-      !!selectedProperty?.propertyDetail?.longitude
-    ) {
+    if (!!activeFeatureLayer && !!selectedProperty?.latitude && !!selectedProperty?.longitude) {
       activeFeatureLayer.clearLayers();
       highlightSelectedProperty({
-        lat: selectedProperty.propertyDetail?.latitude,
-        lng: selectedProperty.propertyDetail?.longitude,
+        lat: selectedProperty?.latitude,
+        lng: selectedProperty?.longitude,
       } as LatLng);
     }
   }, [selectedProperty, activeFeatureLayer]);
-
-  /**
-   * If there is a draft property on the map, attempt to retrieve the corresponding parcel. If we find matching parcel data, use that to draw the active parcel.
-   * Note: currently this is limited to finding one parent in the case of a building. in the future, we may need to find/display all matching parcels.
-   */
-  useDeepCompareEffect(() => {
-    const highlightSelectedProperty = async () => {
-      const draftProperty = draftProperties[0];
-      const parcelLayerData = await parcelsService.findOneWhereContains({
-        lat: draftProperty.geometry.coordinates[1] || 0,
-        lng: draftProperty.geometry.coordinates[0] || 0,
-      } as LatLng);
-      if (parcelLayerData?.features?.length > 0) {
-        activeFeatureLayer?.addData(parcelLayerData.features[0]);
-      }
-    };
-    if (!!activeFeatureLayer && draftProperties.length) {
-      activeFeatureLayer.clearLayers();
-      highlightSelectedProperty();
-    }
-  }, [draftProperties, activeFeatureLayer]);
-
-  return { activeFeatureLayer };
 };
 
 export default useActiveFeatureLayer;

@@ -28,7 +28,7 @@ let findOneWhereContains = jest.fn();
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
-const getStore = (values?: any) => mockStore(values ?? { properties: { draftProperties: [] } });
+const getStore = (values?: any) => mockStore(values ?? { properties: {} });
 const getWrapper = (store: any) => ({ children }: any) => (
   <Provider store={store}>
     <Router history={history}>{children}</Router>
@@ -65,7 +65,7 @@ describe('useActiveFeatureLayer hook tests', () => {
       () =>
         useActiveFeatureLayer({
           mapRef: mapRef as any,
-          selectedProperty: { propertyDetail: { latitude: 1, longitude: 1 } } as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
           layerPopup: undefined,
           setLayerPopup: noop,
         }),
@@ -86,62 +86,12 @@ describe('useActiveFeatureLayer hook tests', () => {
       () =>
         useActiveFeatureLayer({
           mapRef: mapRef as any,
-          selectedProperty: { propertyDetail: { latitude: 1, longitude: 1 } } as any,
+          selectedProperty: { latitude: 1, longitude: 1 } as any,
           layerPopup: undefined,
           setLayerPopup: noop,
         }),
       {
         wrapper: getWrapper(getStore()),
-      },
-    );
-    expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await waitFor(() => {
-      expect(geoJSON().addTo({} as any).addData).not.toHaveBeenCalled();
-    });
-  });
-
-  it('sets the active feature based on draft parcels', async () => {
-    findOneWhereContains.mockResolvedValue({ features: [{}] });
-    renderHook(
-      () =>
-        useActiveFeatureLayer({
-          mapRef: mapRef as any,
-          selectedProperty: undefined,
-          layerPopup: undefined,
-          setLayerPopup: noop,
-        }),
-      {
-        wrapper: getWrapper(
-          getStore({
-            properties: { draftProperties: [{ geometry: { coordinates: [-122, 56] } }] },
-          }),
-        ),
-      },
-    );
-    expect(clearLayers).toHaveBeenCalled();
-    expect(findOneWhereContains).toHaveBeenCalledTimes(1);
-    await waitFor(() => {
-      expect(geoJSON().addTo({} as any).addData).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  it('does not set the active parcel when the draft property has no matching parcel data', async () => {
-    findOneWhereContains.mockResolvedValue({});
-    renderHook(
-      () =>
-        useActiveFeatureLayer({
-          mapRef: mapRef as any,
-          selectedProperty: undefined,
-          layerPopup: undefined,
-          setLayerPopup: noop,
-        }),
-      {
-        wrapper: getWrapper(
-          getStore({
-            properties: { draftProperties: [{ geometry: { coordinates: [-122, 56] } }] },
-          }),
-        ),
       },
     );
     expect(clearLayers).toHaveBeenCalled();

@@ -7,19 +7,11 @@ import { FaWindowClose } from 'react-icons/fa';
 import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
-import { SidebarContextType, SidebarSize } from '../hooks/useMapSideBarQueryParams';
-
 interface IMapSideBarLayoutProps {
   show: boolean;
-  setShowSideBar: (
-    show: boolean,
-    contextName?: SidebarContextType,
-    size?: SidebarSize,
-    resetIds?: boolean,
-  ) => void;
+  setShowSideBar: (show: boolean) => void;
   title: React.ReactNode;
   hidePolicy?: boolean;
-  size?: SidebarSize;
   /** property name for title */
   propertyName?: string;
 }
@@ -33,7 +25,6 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
   setShowSideBar,
   hidePolicy,
   title,
-  size,
   propertyName,
   ...props
 }) => {
@@ -41,7 +32,6 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
     <StyledMapSideBarLayout
       className={classNames('map-side-drawer', {
         show: show,
-        narrow: size === 'narrow',
       })}
     >
       <VisibilitySensor partialVisibility={true}>
@@ -53,10 +43,7 @@ const MapSideBarLayout: React.FunctionComponent<IMapSideBarLayoutProps> = ({
                 <Styled.H1 className="mr-auto">{title}</Styled.H1>
               </Underline>
               <TooltipWrapper toolTipId="close-sidebar-tooltip" toolTip="Close Form">
-                <CloseIcon
-                  title="close"
-                  onClick={() => setShowSideBar(false, undefined, undefined, true)}
-                />
+                <CloseIcon title="close" onClick={() => setShowSideBar(false)} />
               </TooltipWrapper>
             </TitleBar>
             <Header>Placeholder</Header>

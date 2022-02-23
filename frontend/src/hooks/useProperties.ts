@@ -8,10 +8,8 @@ import { IProperty } from 'interfaces';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import { logError, logRequest, logSuccess } from 'store/slices/network/networkSlice';
 import { downloadFile } from 'utils/download';
-
-import { logError, logRequest, logSuccess } from '../network/networkSlice';
-import { storeProperties, storeProperty } from './propertiesSlice';
 
 export const useProperties = () => {
   const dispatch = useDispatch();
@@ -36,7 +34,6 @@ export const useProperties = () => {
       return getPropertiesPaged(propertyBounds)
         .then(response => {
           dispatch(logSuccess({ name: actionTypes.GET_PARCELS }));
-          dispatch(storeProperties(response.data.items));
           dispatch(hideLoading());
           return Promise.resolve(response);
         })
@@ -76,7 +73,6 @@ export const useProperties = () => {
             longitude,
           };
           dispatch(logSuccess({ name: actionTypes.GET_PARCEL_DETAIL }));
-          dispatch(storeProperty({ property, position }));
           dispatch(hideLoading());
           return property;
         })
@@ -106,7 +102,6 @@ export const useProperties = () => {
       try {
         const { data, status } = await postProperty(property);
         dispatch(logSuccess({ name: actionTypes.ADD_PARCEL, status }));
-        dispatch(storeProperty(data));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
@@ -129,7 +124,6 @@ export const useProperties = () => {
       try {
         const { data, status } = await putProperty(property);
         dispatch(logSuccess({ name: actionTypes.UPDATE_PARCEL, status }));
-        dispatch(storeProperty(data));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
@@ -152,7 +146,6 @@ export const useProperties = () => {
       try {
         const { data, status } = await deleteProperty(property);
         dispatch(logSuccess({ name: actionTypes.DELETE_PARCEL, status }));
-        dispatch(storeProperty(null));
         dispatch(hideLoading());
         return data;
       } catch (axiosError) {
