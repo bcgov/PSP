@@ -1,8 +1,7 @@
-version: '3.9'
+version: "3.9"
 
-x-mayan-container:
-  &mayan-container
-  env_file: .env
+x-mayan-container: &mayan-container
+  env_file: .mayan-env
   environment:
     MAYAN_CELERY_BROKER_URL: amqp://${MAYAN_RABBITMQ_USER:-mayan}:${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}@rabbitmq:5672/${MAYAN_RABBITMQ_VHOST:-mayan}
     MAYAN_CELERY_RESULT_BACKEND: redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/1
@@ -11,7 +10,7 @@ x-mayan-container:
     MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/2'}"
   image: ${MAYAN_DOCKER_IMAGE_NAME:-mayanedms/mayanedms}:${MAYAN_DOCKER_IMAGE_TAG:-s4.2}
   networks:
-    - mayan
+    - psp
   restart: unless-stopped
   volumes:
     - ${MAYAN_APP_VOLUME:-app}:/var/lib/mayan
@@ -20,18 +19,15 @@ x-mayan-container:
     # - /opt/watch_folder:/watch_folder
 
 networks:
-  mayan:
-    driver: bridge
-    # Change to true when using Traefik for increased security.
-    internal: false
-  traefik: {}
+  psp:
+    external: true
+    name: psp-net
 
 services:
   app:
     <<: *mayan-container
     profiles:
       - all_in_one
-    # Disable ports if using Traefik.
     ports:
       - "7080:8000"
 
@@ -45,7 +41,7 @@ services:
       - ELASTIC_PASSWORD=${MAYAN_ELASTICSEARCH_PASSWORD:-mayanespassword}
     image: ${MAYAN_DOCKER_ELASTICSEARCH_IMAGE:-docker.elastic.co/elasticsearch/elasticsearch}:${MAYAN_DOCKER_ELASTICSEARCH_TAG:-7.16.0}
     networks:
-      - mayan
+      - psp
     # Enable to allow external access to the database.
     # ports:
     #  - "9200:9200"
@@ -80,7 +76,7 @@ services:
       POSTGRES_USER: ${MAYAN_DATABASE_USER:-mayan}
     image: postgres:${MAYAN_DOCKER_POSTGRES_TAG:-12.9-alpine}
     networks:
-      - mayan
+      - psp
     # Enable to allow external access to the database.
     # ports:
     #  - "5432:5432"
@@ -111,35 +107,12 @@ services:
       - "${MAYAN_REDIS_PASSWORD:-mayanredispassword}"
     image: redis:${MAYAN_DOCKER_REDIS_TAG:-6.2-alpine}
     networks:
-      - mayan
+      - psp
     profiles:
       - redis
     restart: unless-stopped
     volumes:
       - ${MAYAN_REDIS_VOLUME:-redis}:/data
-
-  # Run a frontend gunicorn container
-  frontend:
-    <<: *mayan-container
-    command:
-      - run_frontend
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.middlewares.mayan_redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.mayan_redirect.redirectscheme.permanent=false"
-      - "traefik.http.routers.mayan_frontend.rule=Host(`${MAYAN_TRAEFIK_EXTERNAL_DOMAIN}`)"
-      - "traefik.http.routers.mayan_frontend.entrypoints=http"
-      - "traefik.http.routers.mayan_frontend.middlewares=mayan_redirect"
-      - "traefik.http.routers.mayan_frontend_https.rule=Host(`${MAYAN_TRAEFIK_EXTERNAL_DOMAIN}`)"
-      - "traefik.http.routers.mayan_frontend_https.entrypoints=https"
-      - "traefik.http.routers.mayan_frontend_https.tls=true"
-      - "traefik.http.routers.mayan_frontend_https.tls.certresolver=letsencrypt"
-      - "traefik.http.services.mayan_frontend.loadbalancer.server.port=8000"
-    # Disable ports if using Traefik.
-    ports:
-      - "80:8000"
-    profiles:
-      - extra_frontend
 
   # Enable to run standalone workers
   mountindex:
@@ -151,15 +124,15 @@ services:
     entrypoint:
       - /bin/sh
       - -c
-      - 'mkdir --parents /mnt/index && chown mayan:mayan /mnt/index && /usr/local/bin/entrypoint.sh run_command "mountindex --allow-other creation_date /mnt/index"'  # Replace "creation_date" with the index of your choice.
+      - 'mkdir --parents /mnt/index && chown mayan:mayan /mnt/index && /usr/local/bin/entrypoint.sh run_command "mountindex --allow-other creation_date /mnt/index"' # Replace "creation_date" with the index of your choice.
     profiles:
       - mountindex
     security_opt:
       - apparmor:unconfined
     volumes:
       - type: bind
-        source: /mnt/mayan_indexes/creation_date  # Host location where the index will show up.
-        target: /mnt/index  # Location inside the container where the index will be mounted. Must the same is in the "entrypoint" section.
+        source: /mnt/mayan_indexes/creation_date # Host location where the index will show up.
+        target: /mnt/index # Location inside the container where the index will be mounted. Must the same is in the "entrypoint" section.
         bind:
           propagation: shared
 
@@ -208,7 +181,7 @@ services:
     command:
       - /bin/sh
       - -c
-      - 'MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST} /usr/local/bin/run_worker.sh --prefetch-multiplier=1'
+      - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
     profiles:
       - extra_worker_custom
 
@@ -235,13 +208,8 @@ services:
       RABBITMQ_DEFAULT_USER: ${MAYAN_RABBITMQ_USER:-mayan}
       RABBITMQ_DEFAULT_PASS: ${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}
       RABBITMQ_DEFAULT_VHOST: ${MAYAN_RABBITMQ_VHOST:-mayan}
-    labels:
-      - "traefik.enable=${MAYAN_TRAEFIK_RABBITMQ_ENABLE:-false}"
-      - "traefik.http.routers.mayan_frontend_https.tls=true"
-      - "traefik.http.routers.mayan_frontend.rule=Host(`${MAYAN_TRAEFIK_EXTERNAL_DOMAIN}`)"
-      - "traefik.http.routers.mayan_frontend.entrypoints=:15672"
     networks:
-      - mayan
+      - psp
     # Enable to allow access to the administration interface.
     # ports:
     #   - "15672:15672"
@@ -250,34 +218,6 @@ services:
     restart: unless-stopped
     volumes:
       - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq
-
-  traefik:
-    container_name: "traefik"
-    command:
-      # - "--log.level=DEBUG"
-      - "--api.insecure=${MAYAN_TRAEFIK_API_INSECURE:-false}"
-      - "--certificatesresolvers.letsencrypt.acme.caserver=${MAYAN_TRAEFIK_LETS_ENCRYPT_SERVER:-https://acme-staging-v02.api.letsencrypt.org/directory}"
-      - "--certificatesresolvers.letsencrypt.acme.email=${MAYAN_TRAEFIK_LETS_ENCRYPT_EMAIL}"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/traefik-certificates-letsencrypt/acme.json"
-      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=${MAYAN_TRAEFIK_LETS_ENCRYPT_TLS_CHALLENGE:-false}"
-      - "--entrypoints.http.address=:7080"
-      - "--entrypoints.https.address=:70443"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-    image: traefik:${MAYAN_DOCKER_TRAEFIK_TAG:-v2.5}
-    networks:
-      - mayan
-      - traefik
-    ports:
-      - "7080:7080"
-      - "70443:70443"
-      - "78080:78080"
-    profiles:
-      - traefik
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik-certificates-letsencrypt:/traefik-certificates-letsencrypt
-
 volumes:
   app:
   elasticsearch:
@@ -286,4 +226,3 @@ volumes:
   mountindex:
   rabbitmq:
   redis:
-  traefik-certificates-letsencrypt:
