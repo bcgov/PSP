@@ -30,9 +30,12 @@ export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditabl
     ...restObject
   } = formValues;
 
-  const addresses = [mailingAddress, propertyAddress, billingAddress]
-    .filter(hasAddress)
-    .map(formAddressToApiAddress);
+  // Skip mailing address here when using the linked organization's address
+  const addressArray = formValues.useOrganizationAddress
+    ? [propertyAddress, billingAddress]
+    : [mailingAddress, propertyAddress, billingAddress];
+
+  const addresses = addressArray.filter(hasAddress).map(formAddressToApiAddress);
 
   const contactMethods = [...emailContactMethods, ...phoneContactMethods]
     .filter(hasContactMethod)
@@ -155,9 +158,7 @@ export function getApiMailingAddress(contact: IEditablePerson | IEditableOrganiz
   if (!contact) return undefined;
 
   const addresses: IBaseAddress[] = contact.addresses || [];
-  const mailing = addresses.find(addr => addr.addressTypeId?.id === AddressTypes.Mailing);
-
-  return mailing;
+  return addresses.find(addr => addr.addressTypeId?.id === AddressTypes.Mailing);
 }
 
 function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boolean {

@@ -37,6 +37,7 @@ import {
 } from 'formik';
 import { useApiAutocomplete } from 'hooks/pims-api/useApiAutocomplete';
 import { useApiContacts } from 'hooks/pims-api/useApiContacts';
+import { usePrevious } from 'hooks/usePrevious';
 import { IAutocompletePrediction } from 'interfaces';
 import {
   defaultCreatePerson,
@@ -128,8 +129,9 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const personId = values.id;
-  const useOrganizationAddress = values.useOrganizationAddress;
   const organizationId = values.organization?.id;
+  const useOrganizationAddress = values.useOrganizationAddress;
+  const previousUseOrganizationAddress = usePrevious(useOrganizationAddress);
 
   // organization type-ahead state
   const { getOrganizationPredictions } = useApiAutocomplete();
@@ -173,12 +175,20 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
           toast.error('Failed to get organization address.');
         });
     }
+  }, [useOrganizationAddress, organizationId, setFieldValue, getOrganization]);
 
-    // toggle is off - clear out existing values
-    if (useOrganizationAddress === false) {
+  // toggle is off - clear out existing values
+  useEffect(() => {
+    if (previousUseOrganizationAddress === true && useOrganizationAddress === false) {
       setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
     }
-  }, [useOrganizationAddress, organizationId, setFieldValue, getOrganization]);
+  }, [previousUseOrganizationAddress, useOrganizationAddress, setFieldValue]);
+
+  useEffect(() => {
+    if (!organizationId) {
+      setFieldValue('useOrganizationAddress', false);
+    }
+  }, [organizationId, setFieldValue]);
 
   return (
     <>
