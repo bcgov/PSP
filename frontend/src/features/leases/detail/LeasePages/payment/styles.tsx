@@ -181,3 +181,7 @@ export const AddActualButton = styled(Button)`
     }
   }
 `;
+
+export const UnOrderedListNoStyle = styled.ul`
+  list-style-type: none;
+`;
