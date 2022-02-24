@@ -28,7 +28,6 @@ import BasemapToggle, { BaseLayer, BasemapToggleEvent } from '../BasemapToggle';
 import useActiveFeatureLayer from '../hooks/useActiveFeatureLayer';
 import { useFilterContext } from '../providers/FIlterProvider';
 import { PropertyPopUpContextProvider } from '../providers/PropertyPopUpProvider';
-import InfoSlideOut from './InfoSlideOut/InfoSlideOut';
 import { InventoryLayer } from './InventoryLayer';
 import {
   MUNICIPALITY_LAYER_URL,
@@ -350,16 +349,6 @@ const Map: React.FC<MapProps> = ({
               open={layersOpen}
               setOpen={() => {
                 setLayersOpen(!layersOpen);
-                setInfoOpen(false);
-              }}
-            />
-            <InfoSlideOut
-              open={infoOpen}
-              setOpen={(state: boolean) => {
-                setInfoOpen(state);
-                setLayersOpen(false);
-              }}
-              onHeaderActionClick={() => {
                 setInfoOpen(false);
               }}
             />
