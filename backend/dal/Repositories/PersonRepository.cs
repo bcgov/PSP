@@ -103,6 +103,14 @@ namespace Pims.Dal.Repositories
             }
 
             this.Context.PimsPeople.Add(person);
+
+            // Ensure we don't add existing address from linked organization again
+            var mailing = person.GetMailingAddress();
+            if (person.UseOrganizationAddress == true && mailing != null)
+            {
+                this.Context.Entry(mailing).State = EntityState.Unchanged;
+            }
+
             return person;
         }
 
@@ -120,8 +128,6 @@ namespace Pims.Dal.Repositories
             var existingPerson = this.Context.PimsPeople.FirstOrDefault(p => p.PersonId == personId)
                  ?? throw new KeyNotFoundException();
 
-
-            var organizationId = person.PimsPersonOrganizations.FirstOrDefault()?.OrganizationId;
 
             // update main entity - PimsPerson
             this.Context.Entry(existingPerson).CurrentValues.SetValues(person);
