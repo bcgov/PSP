@@ -3,6 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { ContactMethodTypes } from 'constants/contactMethodType';
 import { createMemoryHistory } from 'history';
+import { IEditablePerson } from 'interfaces/editable-contact';
 import { mockLookups } from 'mocks/mockLookups';
 import { lookupCodesSlice } from 'store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, waitFor } from 'utils/test-utils';
@@ -78,7 +79,7 @@ describe('CreatePersonForm', () => {
   });
 });
 
-const expectedFormData = {
+const expectedFormData: IEditablePerson = {
   isDisabled: false,
   firstName: 'Chester',
   middleNames: '',
@@ -86,6 +87,7 @@ const expectedFormData = {
   preferredName: '',
   comment: '',
   organization: null,
+  useOrganizationAddress: false,
   addresses: [],
   contactMethods: [
     {

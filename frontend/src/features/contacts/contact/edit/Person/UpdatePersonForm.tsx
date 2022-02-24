@@ -128,9 +128,9 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   const { getOrganization } = useApiContacts();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const personId = values.id;
-  const organizationId = values.organization?.id;
-  const useOrganizationAddress = values.useOrganizationAddress;
+  const personId = getIn(values, 'id');
+  const organizationId = getIn(values, 'organization.id');
+  const useOrganizationAddress = getIn(values, 'useOrganizationAddress');
   const previousUseOrganizationAddress = usePrevious(useOrganizationAddress);
 
   // organization type-ahead state

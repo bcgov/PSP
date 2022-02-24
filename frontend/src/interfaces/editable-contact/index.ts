@@ -13,7 +13,7 @@ export interface IEditablePerson {
   preferredName?: string;
   comment?: string;
   isDisabled: boolean;
-  organization?: IOrganizationLink;
+  organization: IOrganizationLink | null;
   useOrganizationAddress: boolean;
   personOrganizationId?: number;
   personOrganizationRowVersion?: number;
