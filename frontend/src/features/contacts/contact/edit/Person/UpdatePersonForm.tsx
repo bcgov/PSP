@@ -184,6 +184,7 @@ const UpdatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
     }
   }, [previousUseOrganizationAddress, useOrganizationAddress, setFieldValue]);
 
+  // uncheck the checkbox when organization field is cleared
   useEffect(() => {
     if (!organizationId) {
       setFieldValue('useOrganizationAddress', false);

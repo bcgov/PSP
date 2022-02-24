@@ -30,12 +30,9 @@ export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditabl
     ...restObject
   } = formValues;
 
-  // Skip mailing address here when using the linked organization's address
-  const addressArray = formValues.useOrganizationAddress
-    ? [propertyAddress, billingAddress]
-    : [mailingAddress, propertyAddress, billingAddress];
-
-  const addresses = addressArray.filter(hasAddress).map(formAddressToApiAddress);
+  const addresses = [mailingAddress, propertyAddress, billingAddress]
+    .filter(hasAddress)
+    .map(formAddressToApiAddress);
 
   const contactMethods = [...emailContactMethods, ...phoneContactMethods]
     .filter(hasContactMethod)
