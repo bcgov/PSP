@@ -1,13 +1,17 @@
 import { FastCurrencyInput, TextArea } from 'components/common/form';
+import { ContactInput } from 'components/common/form/ContactInput';
 import { InlineFastDatePicker, InlineInput, InlineSelect } from 'components/common/form/styles';
+import { ContactManagerModal } from 'components/contact/ContactManagerModal';
 import * as API from 'constants/API';
 import { Formik, FormikProps } from 'formik';
 import useLookupCodeHelpers from 'hooks/useLookupCodeHelpers';
-import { FormLeaseDeposit } from 'interfaces';
+import { IContactSearchResult } from 'interfaces';
 import * as React from 'react';
+import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import { ReceivedDepositYupSchema } from './ReceivedDepositYupSchema';
 
 export interface IReceivedDepositFormProps {
@@ -21,6 +25,12 @@ export const ReceivedDepositForm: React.FunctionComponent<IReceivedDepositFormPr
   formikRef,
   onSave,
 }) => {
+  const initialContacts =
+    initialValues.contactHolder !== undefined ? [initialValues.contactHolder] : [];
+  const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);
+
+  const [showContactManager, setShowContactManager] = useState(false);
+
   const lookups = useLookupCodeHelpers();
   const depositTypeOptions = lookups.getOptionsByType(API.SECURITY_DEPOSIT_TYPES);
 
@@ -65,7 +75,7 @@ export const ReceivedDepositForm: React.FunctionComponent<IReceivedDepositFormPr
             <Col>
               <FastCurrencyInput
                 formikProps={formikProps}
-                label="Depost Amount:"
+                label="Deposit Amount:"
                 field="amountPaid"
                 required
               />
@@ -79,6 +89,31 @@ export const ReceivedDepositForm: React.FunctionComponent<IReceivedDepositFormPr
               />
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <ContactInput
+                label="Deposit Holder:"
+                field="contactHolder"
+                setShowContactManager={setShowContactManager}
+                onClear={() => {
+                  formikProps.setFieldValue('contactHolder', undefined);
+                  setSelectedContacts([]);
+                }}
+                required
+              />
+            </Col>
+          </Row>
+          <ContactManagerModal
+            display={showContactManager}
+            setDisplay={setShowContactManager}
+            setSelectedRows={setSelectedContacts}
+            selectedRows={selectedContacts}
+            handleModalOk={() => {
+              formikProps.setFieldValue('contactHolder', selectedContacts[0]);
+              setShowContactManager(false);
+            }}
+            isSingleSelect
+          ></ContactManagerModal>
         </StyledFormBody>
       )}
     </Formik>

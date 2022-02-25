@@ -68,7 +68,6 @@ export const InlineCol = styled(Col)`
 export const InlineFastDatePicker = styled(FastDatePicker)`
   display: flex;
   align-items: baseline;
-  gap: 0.8rem;
   .form-label {
     flex-shrink: 0;
   }
