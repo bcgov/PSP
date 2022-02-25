@@ -3,12 +3,8 @@ import { InlineFlexDiv } from 'components/common/styles';
 import { ColumnWithProps, renderDate, renderMoney } from 'components/Table';
 import Claims from 'constants/claims';
 import useKeycloakWrapper from 'hooks/useKeycloakWrapper';
-import {
-  ILeaseSecurityDeposit,
-  ILeaseSecurityDepositReturn,
-  IOrganization,
-  IPerson,
-} from 'interfaces';
+import { Api_Contact } from 'models/api/Contact';
+import { Api_SecurityDeposit, Api_SecurityDepositReturn } from 'models/api/SecurityDeposit';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { CellProps } from 'react-table';
@@ -22,13 +18,9 @@ export class ReturnListEntry {
   public claimsAgainst: number;
   public returnAmount: number;
   public returnDate: string;
-  public personDepositHolder?: IPerson;
-  public organizationDepositHolder?: IOrganization;
+  public contactHolder?: Api_Contact;
 
-  public constructor(
-    baseDeposit: ILeaseSecurityDepositReturn,
-    parentDeposit: ILeaseSecurityDeposit,
-  ) {
+  public constructor(baseDeposit: Api_SecurityDepositReturn, parentDeposit: Api_SecurityDeposit) {
     this.id = baseDeposit.id || -1;
     if (parentDeposit.depositType.id === 'OTHER') {
       this.depositTypeDescription = (parentDeposit.otherTypeDescription || '') + ' (Other)';
@@ -41,13 +33,20 @@ export class ReturnListEntry {
     this.claimsAgainst = baseDeposit.claimsAgainst || 0;
     this.returnAmount = baseDeposit.returnAmount;
     this.returnDate = baseDeposit.returnDate || '';
-    this.personDepositHolder = baseDeposit.personDepositReturnHolder;
-    this.organizationDepositHolder = baseDeposit.organizationDepositReturnHolder;
+    this.contactHolder = baseDeposit.contactHolder;
   }
 }
 
-function renderPerson({ row: { original } }: CellProps<ReturnListEntry, string>) {
-  return original.personDepositHolder?.fullName || '';
+function renderHolder({ row: { original } }: CellProps<ReturnListEntry, string>) {
+  if (original.contactHolder?.person !== undefined) {
+    var person = original.contactHolder?.person;
+    return person.firstName + ' ' + person.surname;
+  } else if (original.contactHolder?.organization !== undefined) {
+    var organization = original.contactHolder?.organization;
+    return organization.name;
+  } else {
+    return '';
+  }
 }
 
 function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => void) {
@@ -135,9 +134,9 @@ export const getColumns = ({
 
     {
       Header: 'Payee Name',
-      accessor: 'personDepositHolder',
+      accessor: 'contactHolder',
       maxWidth: 70,
-      Cell: renderPerson,
+      Cell: renderHolder,
     },
     {
       Header: 'Actions',

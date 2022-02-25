@@ -26,6 +26,7 @@ interface IContactManagerViewProps {
   className?: string;
   showAddButton?: boolean;
   showActiveSelector?: boolean;
+  isSingleSelect?: boolean;
 }
 
 /**
@@ -40,6 +41,7 @@ const ContactManagerView = ({
   showSelectedRowCount,
   showAddButton,
   showActiveSelector,
+  isSingleSelect,
 }: IContactManagerViewProps) => {
   const history = useHistory();
   const { hasClaim } = useKeycloakWrapper();
@@ -119,6 +121,7 @@ const ContactManagerView = ({
           setSelectedRows={setSelectedRows}
           showSelectedRowCount={showSelectedRowCount}
           isSummary={isSummary}
+          isSingleSelect={isSingleSelect}
         />
       </div>
     </div>
