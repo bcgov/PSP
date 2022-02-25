@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-// Hook
+// React state hook that returns the previous state or props
 export function usePrevious<T>(value: T): T {
   const ref: any = useRef<T>();
 
